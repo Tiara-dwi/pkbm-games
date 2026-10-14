@@ -305,3 +305,42 @@ function retryFromElsa() {
     window.location.reload();
   }
 }
+
+// 5. Language Toggle Engine (EN <-> ID)
+window.currentLang = 'en';
+
+function setLanguage(lang) {
+  window.currentLang = lang;
+  try {
+    localStorage.setItem('pkbm_lang', lang);
+  } catch(e) {}
+
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const text = el.getAttribute('data-' + lang);
+    if (text !== null && text !== undefined) {
+      el.innerHTML = text;
+    }
+  });
+
+  const btnEn = document.getElementById('btn-lang-en');
+  const btnId = document.getElementById('btn-lang-id');
+  if (btnEn && btnId) {
+    if (lang === 'en') {
+      btnEn.classList.add('active');
+      btnId.classList.remove('active');
+    } else {
+      btnId.classList.add('active');
+      btnEn.classList.remove('active');
+    }
+  }
+}
+
+function initLanguageToggle(defaultLang = 'en') {
+  let saved = 'en';
+  try {
+    saved = localStorage.getItem('pkbm_lang') || defaultLang;
+  } catch(e) {
+    saved = defaultLang;
+  }
+  setLanguage(saved);
+}
