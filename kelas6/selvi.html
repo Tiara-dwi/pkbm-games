@@ -5,20 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Misi Selvi: Editor Kritis Laporan Konservasi</title>
   <link rel="stylesheet" href="../assets/style.css">
-  <style>
-    .photo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .photo-grid img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-  </style>
 </head>
 <body>
   <div class="header-bar">
@@ -32,103 +18,106 @@
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count" style="color:#7C3AED;">⭐ Bintang: <span id="star-display">0</span>/3</div>
+      <div class="star-count" style="color:#7C3AED;">⭐ Bintang: <span id="star-display">0</span>/5</div>
       <div class="progress-pills">
         <div class="pill-dot active" id="dot-1"></div>
         <div class="pill-dot" id="dot-2"></div>
         <div class="pill-dot" id="dot-3"></div>
+        <div class="pill-dot" id="dot-4"></div>
+        <div class="pill-dot" id="dot-5"></div>
       </div>
     </div>
 
-    <div class="photo-grid">
-      <img src="../assets/images/indo_kls6_perahu_kelotok.jpg" alt="Perahu Kelotok Sekonyer" onerror="this.style.display='none'">
-      <img src="../assets/images/indo_kls6_tanjung_puting_orangutan.jpg" alt="Orangutan Tanjung Puting" onerror="this.style.display='none'">
-    </div>
-
-    <!-- MISI 1: DETEKSI BIAS -->
+    <!-- SOAL 1 -->
     <div class="challenge-card" id="stage-1">
       <div class="challenge-question">
-        Misi 1: Evaluasi Kritis! Bacalah kutipan draf laporan berikut. Manakah kalimat yang mengandung <u>bias subjektif (generalisasi berlebihan & opini emosional)</u> yang harus disunting?
+        Misi 1: Evaluasi Kritis! Bacalah draf berikut. Manakah kalimat yang mengandung <u>bias subjektif</u> yang harus disunting?
       </div>
       <div class="reading-box">
         <p class="reading-text">
-          (1) Shine, Zahra, dan Yusman menyusuri Sungai Sekonyer menggunakan perahu kayu kelotok berkecepatan 12 km/jam.<br>
-          (2) Hutan gambut di kanan-kiri sungai didominasi oleh pohon nipah dan pandan rawa.<br>
-          <b>(3) Perjalanan di atas air gelap ini adalah pengalaman paling menakutkan di bumi dan semua wisatawan pasti cemas.</b><br>
-          (4) Pada pukul 15.00 WIB, tim tiba di dermaga Camp Leakey untuk mengamati pemberian makan orangutan.
+          (1) Shine, Zahra, dan Yusman menyusuri Sungai Sekonyer menaiki perahu kelotok berkecepatan 12 km/jam.<br>
+          (2) Hutan gambut di tepi sungai didominasi oleh pohon nipah.<br>
+          <b>(3) Perjalanan di atas air gelap ini adalah pengalaman paling menakutkan di bumi dan semua pengunjung pasti cemas.</b><br>
+          (4) Pada pukul 15.00 WIB, tim tiba di dermaga Camp Leakey.
         </p>
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(1, 0)">
-          <span>A.</span> Kalimat (1) — Karena ada angka kecepatan 12 km/jam
-        </button>
-        <button class="btn-option" onclick="checkAnswer(1, 1)">
-          <span>B.</span> Kalimat (2) — Karena menyebutkan nama pohon nipah dan pandan
-        </button>
-        <button class="btn-option" onclick="checkAnswer(1, 2)">
-          <span>C.</span> <b>Kalimat (3)</b> — Karena ada klaim sepihak "paling menakutkan" dan generalisasi "semua wisatawan pasti cemas" tanpa bukti
-        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> Kalimat (1)</button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> <b>Kalimat (3) — Ada klaim emosional "paling menakutkan" dan generalisasi "semua pasti cemas"</b></button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> Kalimat (4)</button>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
       <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Lanjut ke Misi 2 →</button>
     </div>
 
-    <!-- MISI 2: REKONSTRUKSI FAKTA -->
+    <!-- SOAL 2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
       <div class="challenge-question">
-        Misi 2: Rekonstruksi Kalimat! Bagaimana cara kamu merevisi Kalimat (3) tadi agar berubah menjadi <u>kalimat fakta ilmiah yang objektif</u>?
+        Misi 2: Rekonstruksi Kalimat! Bagaimana merevisi Kalimat (3) menjadi <u>fakta ilmiah yang objektif</u>?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(2, 0)">
-          <span>A.</span> "Air sungai yang berwarna kehitaman disebabkan oleh kandungan tannin alami dari pembusukan vegetasi gambut di dasar hutan."
-        </button>
-        <button class="btn-option" onclick="checkAnswer(2, 1)">
-          <span>B.</span> "Sungai Sekonyer sangat mengerikan karena banyak makhluk misterius di dalamnya."
-        </button>
-        <button class="btn-option" onclick="checkAnswer(2, 2)">
-          <span>C.</span> "Sebagian besar orang sebaiknya tidak perlu datang ke Tanjung Puting karena sungainya gelap."
-        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> <b>"Air sungai yang berwarna kehitaman disebabkan oleh kandungan tannin alami dari pelapukan vegetasi gambut."</b></button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> "Sungai Sekonyer sangat mengerikan karena banyak monster."</button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
       <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Lanjut ke Misi 3 →</button>
     </div>
 
-    <!-- MISI 3: VALIDASI LAPORAN -->
+    <!-- SOAL 3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
       <div class="challenge-question">
-        Misi 3: Standar Laporan Pengamatan! Mengapa laporan observasi konservasi alam <u>wajib bebas dari opini subjektif</u>?
+        Misi 3: Standar Laporan Ilmiah! Mengapa laporan observasi konservasi alam <u>wajib bebas dari opini subjektif</u>?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(3, 0)">
-          <span>A.</span> Agar data ilmiah populasi satwa akurat, dapat diverifikasi peneliti lain, dan tidak menyesatkan kebijakan perlindungan hutan.
-        </button>
-        <button class="btn-option" onclick="checkAnswer(3, 1)">
-          <span>B.</span> Agar buku laporan terlihat sangat tebal dan memiliki banyak istilah asing.
-        </button>
-        <button class="btn-option" onclick="checkAnswer(3, 2)">
-          <span>C.</span> Supaya wisatawan tidak mau lagi datang berkunjung ke taman nasional.
-        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> <b>Agar data populasi satwa akurat, dapat diverifikasi peneliti lain, dan tidak menyesatkan kebijakan perlindungan hutan.</b></button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Agar buku laporan terlihat sangat tebal.</button>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
-      <button class="btn-action" id="next-3" style="display:none;" onclick="finishGame()">Selesaikan Misi! 🏆</button>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Lanjut ke Misi 4 →</button>
+    </div>
+
+    <!-- SOAL 4 -->
+    <div class="challenge-card" id="stage-4" style="display:none;">
+      <div class="challenge-question">
+        Misi 4: Deteksi Distorsi Angka! Jika dalam catatan tertulis: <i>"Perahu berjalan lambat sekali seperti siput"</i>, bagaimana perbaikan redaksi berbasis data?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> <b>"Perahu kelotok melaju dengan kecepatan rata-rata 10-12 km/jam mengikuti arus Sungai Sekonyer."</b></button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> "Perahu ini mesinnya rusak dan malas berjalan."</button>
+      </div>
+      <div class="feedback-box" id="feedback-4"></div>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Lanjut ke Misi 5 →</button>
+    </div>
+
+    <!-- SOAL 5 -->
+    <div class="challenge-card" id="stage-5" style="display:none;">
+      <div class="challenge-question">
+        Misi 5: Menulis Rekomendasi! Bagaimanakah kalimat rekomendasi pengamatan yang paling etis dan ilmiah?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> <b>"Pengunjung disarankan menjaga jarak minimal 10 meter dari orangutan liar guna mencegah penularan penyakit zoonosis."</b></button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> "Semua orang harus memberi makan roti kepada orangutan agar mereka senang."</button>
+      </div>
+      <div class="feedback-box" id="feedback-5"></div>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeSelvi()">Lihat Hasil Akhir! 🏁</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 ✍️ 🎓</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Keahlian Editor Luar Biasa, Selvi!</h2>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Keahlian Editor Hebat, Selvi!</h2>
       <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
-        Analisis kritismu terhadap bias opini dan kemampuan merevisi menjadi fakta objektif sangat mengagumkan!
+        Semua analisis bias dan rekonstruksi fakta objektifmu telah memenuhi standar penulisan laporan ilmiah!
       </p>
-      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#7C3AED;">Kembali ke Menu Kelas</a>
+      <a href="../index.html" class="btn-action" style="background:#7C3AED; margin: 0 auto;">Kembali ke Menu Kelas</a>
     </div>
   </div>
 
   <script src="../assets/game.js"></script>
   <script>
     let stars = 0;
-    const correctAnswers = { 1: 2, 2: 0, 3: 0 };
+    const correctAnswers = { 1: 1, 2: 0, 3: 0, 4: 0, 5: 0 };
 
     function checkAnswer(stage, chosenIndex) {
       const card = document.getElementById(`stage-${stage}`);
@@ -142,25 +131,18 @@
         playSfx('correct');
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "✅ <b>Sangat Cermat!</b> Analisis kritismu sesuai dengan kaidah penulisan ilmiah.";
+        feedback.innerHTML = "✅ <b>Tepat dan Kritis!</b>";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
         document.getElementById(`dot-${stage}`).classList.add('completed');
-        nextBtn.style.display = "inline-flex";
       } else {
         playSfx('wrong');
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Pertimbangan belum tepat. Evaluasi kembali unsur objektivitas faktanya ya!";
-        setTimeout(() => {
-          buttons.forEach(b => {
-            b.disabled = false;
-            b.classList.remove('selected-wrong');
-          });
-          feedback.className = "feedback-box";
-        }, 1600);
+        feedback.innerHTML = "❌ Belum tepat.";
       }
+      nextBtn.style.display = "inline-flex";
     }
 
     function goToStage(nextStage) {
@@ -170,10 +152,8 @@
       document.getElementById(`dot-${nextStage}`).classList.add('active');
     }
 
-    function finishGame() {
-      playSfx('win');
-      launchConfetti();
-      document.getElementById('victory-modal').classList.add('active');
+    function completeSelvi() {
+      triggerGameOutcome(stars, 5, "Selvi");
     }
   </script>
 </body>
