@@ -433,3 +433,61 @@ body.dyslexia-mode .reading-box {
   background: #0284C7;
   transform: translateY(-2px);
 }
+
+/* Language Toggle Switch Styling */
+.lang-toggle-container {
+  display: inline-flex;
+  align-items: center;
+  background: #F1F5F9;
+  border: 2px solid #E2E8F0;
+  border-radius: 30px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.lang-toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #64748B;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lang-toggle-btn:hover {
+  color: #1E293B;
+}
+
+.lang-toggle-btn.active {
+  background: #FFFFFF;
+  color: #4F46E5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.lang-toggle-btn.active.lang-en {
+  color: #0284C7;
+}
+
+/* Bilingual Helper Hint in Game Pages */
+.translation-hint {
+  background: #F8FAFC;
+  border-left: 4px solid #0284C7;
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.92rem;
+  color: #475569;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+  display: none;
+}
+
+.translation-hint.show {
+  display: block;
+}
