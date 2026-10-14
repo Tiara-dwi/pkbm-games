@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Hendra: Pos Lembar Pengamatan 5W+1H</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .pos-card {
+      background: white;
+      border: 2px solid #E2E8F0;
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pos-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #15803D;
+    }
+    .slot-select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #CBD5E1;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #F8FAFC;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#16A34A;">🗺️</div>
+      <div>Pos 5W+1H Hendra</div>
+    </a>
+    <div class="student-tag" style="background:#F0FDF4; color:#15803D;">Kelas 6 • Hendra</div>
+    <a href="../index.html" class="btn-back">← Menu Utama</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="color:#15803D;">⭐ Bintang: <span id="star-display">0</span>/5</div>
+      <div style="font-weight:600; color:var(--text-muted);">Misi Penyelidik Laporan</div>
+    </div>
+
+    <div class="reading-box">
+      <div class="reading-title">📋 Catatan Lapangan Tanjung Puting</div>
+      <p class="reading-text">
+        "Pada hari Rabu pukul 08.00 WIB, Shine, Zahra, dan Yusman melakukan pengamatan satwa orangutan di Camp Leakey, Taman Nasional Tanjung Puting. Mereka menyusuri aliran Sungai Sekonyer selama 4 jam dengan menaiki perahu kelotok kayu agar tidak mencemari lingkungan sungai."
+      </p>
+    </div>
+
+    <div class="challenge-card">
+      <div class="challenge-question">
+        Kelompokkan fakta di atas ke dalam pos 5W+1H yang benar:
+      </div>
+
+      <!-- POS 1: APA -->
+      <div class="pos-card">
+        <div class="pos-header">
+          <span>1. Pos APA (What) - Kegiatan apa yang dilakukan?</span>
+        </div>
+        <select class="slot-select" id="pos-apa">
+          <option value="">-- Pilih Fakta yang Sesuai --</option>
+          <option value="salah1">Hari Rabu pukul 08.00 WIB</option>
+          <option value="benar">Pengamatan satwa orangutan di habitat alaminya</option>
+          <option value="salah2">Shine, Zahra, dan Yusman</option>
+        </select>
+      </div>
+
+      <!-- POS 2: SIAPA -->
+      <div class="pos-card">
+        <div class="pos-header">
+          <span>2. Pos SIAPA (Who) - Siapa pelaku pengamatan?</span>
+        </div>
+        <select class="slot-select" id="pos-siapa">
+          <option value="">-- Pilih Fakta yang Sesuai --</option>
+          <option value="benar">Shine, Zahra, dan Yusman</option>
+          <option value="salah1">Perahu kelotok kayu</option>
+          <option value="salah2">Sungai Sekonyer</option>
+        </select>
+      </div>
+
+      <!-- POS 3: DI MANA -->
+      <div class="pos-card">
+        <div class="pos-header">
+          <span>3. Pos DI MANA (Where) - Di mana lokasi pengamatannya?</span>
+        </div>
+        <select class="slot-select" id="pos-dimana">
+          <option value="">-- Pilih Fakta yang Sesuai --</option>
+          <option value="salah1">Menyusuri selama 4 jam</option>
+          <option value="benar">Camp Leakey, Taman Nasional Tanjung Puting</option>
+          <option value="salah2">Di ruang kelas sekolah</option>
+        </select>
+      </div>
+
+      <!-- POS 4: KAPAN -->
+      <div class="pos-card">
+        <div class="pos-header">
+          <span>4. Pos KAPAN (When) - Kapan pengamatan dilaksanakan?</span>
+        </div>
+        <select class="slot-select" id="pos-kapan">
+          <option value="">-- Pilih Fakta yang Sesuai --</option>
+          <option value="benar">Hari Rabu pukul 08.00 WIB</option>
+          <option value="salah1">Tahun depan saat liburan</option>
+          <option value="salah2">Pengamatan satwa</option>
+        </select>
+      </div>
+
+      <!-- POS 5: BAGAIMANA -->
+      <div class="pos-card">
+        <div class="pos-header">
+          <span>5. Pos BAGAIMANA (How) - Bagaimana cara tim menuju ke lokasi?</span>
+        </div>
+        <select class="slot-select" id="pos-bagaimana">
+          <option value="">-- Pilih Fakta yang Sesuai --</option>
+          <option value="salah1">Berjalan kaki lewat jalan tol</option>
+          <option value="benar">Menyusuri Sungai Sekonyer selama 4 jam menaiki perahu kelotok kayu</option>
+          <option value="salah2">Shine, Zahra, dan Yusman</option>
+        </select>
+      </div>
+
+      <div class="feedback-box" id="feedback-box"></div>
+      <button class="btn-action" style="background:#16A34A;" onclick="checkAllSlots()">Periksa Lembar Pengamatan 🔍</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🗺️ 🌟 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Misi Selesai, Penyelidik Hendra!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Semua pos pengamatan 5W+1H telah terisi dengan sempurna! Buku catatan laporanmu sangat rapi.
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#16A34A;">Kembali ke Menu Kelas</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    function checkAllSlots() {
+      const apa = document.getElementById('pos-apa').value;
+      const siapa = document.getElementById('pos-siapa').value;
+      const dimana = document.getElementById('pos-dimana').value;
+      const kapan = document.getElementById('pos-kapan').value;
+      const bagaimana = document.getElementById('pos-bagaimana').value;
+
+      const feedback = document.getElementById('feedback-box');
+
+      if (!apa || !siapa || !dimana || !kapan || !bagaimana) {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "⚠️ Masih ada pos yang belum kamu pilih. Silakan lengkapi semua pos ya!";
+        return;
+      }
+
+      let correctCount = 0;
+      if (apa === 'benar') correctCount++;
+      if (siapa === 'benar') correctCount++;
+      if (dimana === 'benar') correctCount++;
+      if (kapan === 'benar') correctCount++;
+      if (bagaimana === 'benar') correctCount++;
+
+      document.getElementById('star-display').innerText = correctCount;
+
+      if (correctCount === 5) {
+        playSfx('correct');
+        playSfx('star');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "🎉 <b>Hebat Sekali!</b> Semua elemen 5W+1H tepat 100%!";
+        setTimeout(() => {
+          playSfx('win');
+          launchConfetti();
+          document.getElementById('victory-modal').classList.add('active');
+        }, 800);
+      } else {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = `⚠️ Kamu benar <b>${correctCount} dari 5</b> pos. Cek kembali pos yang masih keliru!`;
+      }
+    }
+  </script>
+</body>
+</html>
