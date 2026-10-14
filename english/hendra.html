@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hendra's Mission: 5W+1H Past Diary Investigator</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .pos-card {
+      background: white;
+      border: 2px solid #E2E8F0;
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pos-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #15803D;
+    }
+    .slot-select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #CBD5E1;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #F8FAFC;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#16A34A;">📖</div>
+      <div>Hendra's Diary Mission</div>
+    </a>
+    <div class="student-tag" style="background:#F0FDF4; color:#15803D;">Grade 6 • Hendra</div>
+    <a href="../index.html" class="btn-back">← Main Portal</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="color:#15803D;">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div style="font-weight:600; color:var(--text-muted);">Past Diary Investigation</div>
+    </div>
+
+    <!-- READING CASE -->
+    <div class="reading-box">
+      <div class="reading-title">📖 Weekend Diary Entry</div>
+      <p class="reading-text">
+        "Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they bought fresh oranges 
+        at the market and cooked fried rice together at home. They recorded all their experiences in their English diaries."
+      </p>
+    </div>
+
+    <div class="challenge-card">
+      <div class="challenge-question">
+        Match the diary facts to the correct 5W+1H investigation question:
+      </div>
+
+      <!-- POS 1: WHO -->
+      <div class="pos-card">
+        <div class="pos-header"><span>1. WHO - Who explored the city last weekend?</span></div>
+        <select class="slot-select" id="pos-who">
+          <option value="">-- Choose the Matching Fact --</option>
+          <option value="correct">Shine, Zahra, and Yusman</option>
+          <option value="wrong1">Acip and Nanda</option>
+          <option value="wrong2">The bus driver</option>
+        </select>
+      </div>
+
+      <!-- POS 2: WHERE -->
+      <div class="pos-card">
+        <div class="pos-header"><span>2. WHERE - Where did they go in the morning?</span></div>
+        <select class="slot-select" id="pos-where">
+          <option value="">-- Choose the Matching Fact --</option>
+          <option value="wrong1">To the airport</option>
+          <option value="correct">To the city museum and market</option>
+          <option value="wrong2">To the swimming pool</option>
+        </select>
+      </div>
+
+      <!-- POS 3: WHEN -->
+      <div class="pos-card">
+        <div class="pos-header"><span>3. WHEN - When did this weekend journey take place?</span></div>
+        <select class="slot-select" id="pos-when">
+          <option value="">-- Choose the Matching Fact --</option>
+          <option value="correct">Last Saturday</option>
+          <option value="wrong1">Next month</option>
+          <option value="wrong2">Every single day</option>
+        </select>
+      </div>
+
+      <!-- POS 4: WHAT -->
+      <div class="pos-card">
+        <div class="pos-header"><span>4. WHAT - What did they cook in the afternoon?</span></div>
+        <select class="slot-select" id="pos-what">
+          <option value="">-- Choose the Matching Fact --</option>
+          <option value="wrong1">Chocolate cake</option>
+          <option value="correct">Fried rice at home</option>
+          <option value="wrong2">Pizza</option>
+        </select>
+      </div>
+
+      <!-- POS 5: HOW -->
+      <div class="pos-card">
+        <div class="pos-header"><span>5. HOW - How did they save their memories?</span></div>
+        <select class="slot-select" id="pos-how">
+          <option value="">-- Choose the Matching Fact --</option>
+          <option value="correct">By writing in their personal English diaries</option>
+          <option value="wrong1">By losing their books</option>
+          <option value="wrong2">By sleeping all afternoon</option>
+        </select>
+      </div>
+
+      <div class="feedback-box" id="feedback-box"></div>
+      <button class="btn-action" style="background:#16A34A;" onclick="checkAllSlots()">Verify Diary Investigation 🔍</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">📖 🌟 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Investigation Complete, Hendra!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        All 5W+1H diary details were identified perfectly! You are a brilliant investigator!
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#16A34A;">Back to Main Portal</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    function checkAllSlots() {
+      const who = document.getElementById('pos-who').value;
+      const where = document.getElementById('pos-where').value;
+      const when = document.getElementById('pos-when').value;
+      const what = document.getElementById('pos-what').value;
+      const how = document.getElementById('pos-how').value;
+
+      const feedback = document.getElementById('feedback-box');
+
+      if (!who || !where || !when || !what || !how) {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "⚠️ Please answer all investigation slots before checking!";
+        return;
+      }
+
+      let correctCount = 0;
+      if (who === 'correct') correctCount++;
+      if (where === 'correct') correctCount++;
+      if (when === 'correct') correctCount++;
+      if (what === 'correct') correctCount++;
+      if (how === 'correct') correctCount++;
+
+      document.getElementById('star-display').innerText = correctCount;
+      triggerGameOutcome(correctCount, 5, "Hendra", null, true);
+    }
+  </script>
+</body>
+</html>
