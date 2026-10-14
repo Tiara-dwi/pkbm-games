@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acip's Mission: Kitchen Grammar & Safety Detective</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#3B82F6;">🍳</div>
+      <div>Acip's Detective Mission</div>
+    </a>
+    <div class="student-tag">Grade 4 • Acip</div>
+    <a href="../index.html" class="btn-back">← Main Portal</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+        <div class="pill-dot" id="dot-4"></div>
+        <div class="pill-dot" id="dot-5"></div>
+      </div>
+    </div>
+
+    <!-- READING CASE -->
+    <div class="reading-box">
+      <div class="reading-title">🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen</div>
+      <p class="reading-text">
+        Every Sunday morning, Hasyif and Nanda help their parents in the kitchen. In the clean kitchen, there is a big stove, 
+        a frying pan, and a white refrigerator beside the dining table. Nanda is washing two green apples in the sink, while 
+        Hasyif is preparing a glass of warm milk. On the table, there are plates, spoons, and a loaf of bread.
+        Hasyif says, "Cooking together is fun, but we must be careful with the hot stove and sharp knives!"
+      </p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="challenge-card" id="stage-1">
+      <div class="challenge-question">
+        Challenge 1: Which sentence correctly uses the <u>Present Continuous Tense (is/are + Verb-ing)</u> to describe an ongoing action?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> Nanda wash two green apples yesterday.</button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> Nanda is washing two green apples in the sink.</button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> Nanda are washing two green apples.</button>
+      </div>
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+    </div>
+
+    <!-- Q2 -->
+    <div class="challenge-card" id="stage-2" style="display:none;">
+      <div class="challenge-question">
+        Challenge 2: Preposition Analysis! Where is the white refrigerator located according to the text?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> Inside the hot stove.</button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> Beside the dining table.</button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> Under the sink.</button>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+    </div>
+
+    <!-- Q3 -->
+    <div class="challenge-card" id="stage-3" style="display:none;">
+      <div class="challenge-question">
+        Challenge 3: Cause-and-Effect Logic! Why does Hasyif remind Nanda to be careful in the kitchen?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Because the kitchen has a hot stove and sharp knives.</button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Because the milk is too sweet.</button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> Because the apples are green.</button>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+    </div>
+
+    <!-- Q4 -->
+    <div class="challenge-card" id="stage-4" style="display:none;">
+      <div class="challenge-question">
+        Challenge 4: Vocabulary Categorization! Which pair contains only <u>cooking appliances and storage</u>?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> Stove and refrigerator.</button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> Spoon and fork.</button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> Glass and plate.</button>
+      </div>
+      <div class="feedback-box" id="feedback-4"></div>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+    </div>
+
+    <!-- Q5 -->
+    <div class="challenge-card" id="stage-5" style="display:none;">
+      <div class="challenge-question">
+        Challenge 5: Sentence Construction! If Hasyif is making warm milk right now, what is the correct sentence?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> Hasyif is preparing a glass of warm milk.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> Hasyif prepares yesterday a glass of milk.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> Hasyif are drink warm milk.</button>
+      </div>
+      <div class="feedback-box" id="feedback-5"></div>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeAcip()">Finish Mission! 🏁</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🏆 ⭐ 🍳</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Brilliant Detective, Acip!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        You solved all 5 kitchen grammar and safety challenges with sharp logical thinking!
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto;">Back to Main Portal</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+    const correctAnswers = { 1: 1, 2: 1, 3: 0, 4: 0, 5: 0 };
+
+    function checkAnswer(stage, chosenIndex) {
+      const card = document.getElementById(`stage-${stage}`);
+      const buttons = card.querySelectorAll('.btn-option');
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIndex === correctAnswers[stage]) {
+        playSfx('correct');
+        buttons[chosenIndex].classList.add('selected-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Excellent!</b> Accurate grammar analysis!";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
+      } else {
+        playSfx('wrong');
+        buttons[chosenIndex].classList.add('selected-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Not quite right. Review the grammar formula!";
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
+    }
+
+    function completeAcip() {
+      triggerGameOutcome(stars, 5, "Acip", null, true);
+    }
+  </script>
+</body>
+</html>
