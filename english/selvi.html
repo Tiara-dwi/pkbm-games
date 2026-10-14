@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selvi's Mission: Past Tense Diary & Travel Editor</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#8B5CF6;">🏛️</div>
+      <div>Selvi's Past Editor Mission</div>
+    </a>
+    <div class="student-tag" style="background:#FAF5FF; color:#7C3AED;">Grade 6 • Selvi</div>
+    <a href="../index.html" class="btn-back">← Main Portal</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="color:#7C3AED;">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+        <div class="pill-dot" id="dot-4"></div>
+        <div class="pill-dot" id="dot-5"></div>
+      </div>
+    </div>
+
+    <!-- READING CASE -->
+    <div class="reading-box">
+      <div class="reading-title">🏛️ Diary: Shine, Zahra, and Yusman's Weekend</div>
+      <p class="reading-text">
+        Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they went to a traditional 
+        culinary market. Shine bought a kilo of fresh oranges, while Zahra and Yusman ordered delicious chicken satay. In the 
+        afternoon, they cooked fried rice together at home.
+        Zahra said, "Last week was wonderful! We studied hard for the test, but we enjoyed our weekend together."
+      </p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="challenge-card" id="stage-1">
+      <div class="challenge-question">
+        Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> Last Saturday, they goed to the traditional culinary market.</button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> They visited the city museum in the morning.</button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> Zahra bought a kilo of fresh oranges.</button>
+      </div>
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+    </div>
+
+    <!-- Q2 -->
+    <div class="challenge-card" id="stage-2" style="display:none;">
+      <div class="challenge-question">
+        Challenge 2: Verb Classification! In the sentence: <i>"They cooked fried rice and studied together"</i>, what type of past verbs are 'cooked' and 'studied'?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> Regular past verbs (formed by adding -ed to the base verb).</button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> Irregular past verbs.</button>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+    </div>
+
+    <!-- Q3 -->
+    <div class="challenge-card" id="stage-3" style="display:none;">
+      <div class="challenge-question">
+        Challenge 3: Sentence Editing! How do you rewrite: <i>"Yesterday, we (eat) satay and (go) home"</i> into proper Simple Past Tense?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Yesterday, we ate satay and went home.</button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Yesterday, we eaten satay and gone home.</button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> Yesterday, we eat satay and go home.</button>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+    </div>
+
+    <!-- Q4 -->
+    <div class="challenge-card" id="stage-4" style="display:none;">
+      <div class="challenge-question">
+        Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> Last weekend and two days ago.</button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> Right now and at the moment.</button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> Tomorrow and next year.</button>
+      </div>
+      <div class="feedback-box" id="feedback-4"></div>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+    </div>
+
+    <!-- Q5 -->
+    <div class="challenge-card" id="stage-5" style="display:none;">
+      <div class="challenge-question">
+        Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> Zahra didn't cook fried rice yesterday.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> Zahra didn't cooked fried rice yesterday.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> Zahra wasn't cook fried rice yesterday.</button>
+      </div>
+      <div class="feedback-box" id="feedback-5"></div>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeSelvi()">Finish Mission! 🏁</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 🏛️ 🎓</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Masterful Editor, Selvi!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Your critical analysis of regular, irregular past verbs, and negative formulas was flawless!
+      </p>
+      <a href="../index.html" class="btn-action" style="background:#7C3AED; margin: 0 auto;">Back to Main Portal</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+    const correctAnswers = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+    function checkAnswer(stage, chosenIndex) {
+      const card = document.getElementById(`stage-${stage}`);
+      const buttons = card.querySelectorAll('.btn-option');
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIndex === correctAnswers[stage]) {
+        playSfx('correct');
+        buttons[chosenIndex].classList.add('selected-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Spot on!</b> Excellent grammar editing!";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
+      } else {
+        playSfx('wrong');
+        buttons[chosenIndex].classList.add('selected-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Not quite right. Review the past verb rules!";
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
+    }
+
+    function completeSelvi() {
+      triggerGameOutcome(stars, 5, "Selvi", null, true);
+    }
+  </script>
+</body>
+</html>
