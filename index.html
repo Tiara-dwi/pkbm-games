@@ -11,9 +11,10 @@
       color: white;
       padding: 36px 24px;
       border-radius: var(--radius-lg);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       text-align: center;
       box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.4);
+      transition: background 0.4s ease;
     }
     .hero-title {
       font-size: 2.1rem;
@@ -26,7 +27,6 @@
       max-width: 620px;
       margin: 0 auto;
     }
-    /* Subject Switcher Bar */
     .subject-switcher {
       display: flex;
       justify-content: center;
@@ -163,12 +163,22 @@
   </style>
 </head>
 <body>
+  <!-- HEADER BAR WITH SLEEK LANGUAGE TOGGLE -->
   <div class="header-bar">
     <div class="logo-badge">
       <div class="badge-icon">🚀</div>
-      <div>PKBM Penerus Bangsa</div>
+      <div id="brand-title">PKBM Penerus Bangsa</div>
     </div>
-    <div class="student-tag">📅 Semester 1 • Multigrade 4, 5, 6</div>
+
+    <!-- Toggle Bahasa / Language Switcher -->
+    <div class="lang-toggle-container">
+      <button class="lang-toggle-btn active" id="toggle-id" onclick="setLanguage('indo')">
+        🇮🇩 Indonesia
+      </button>
+      <button class="lang-toggle-btn lang-en" id="toggle-en" onclick="setLanguage('eng')">
+        🇬🇧 English
+      </button>
+    </div>
   </div>
 
   <div class="container">
@@ -177,12 +187,12 @@
       <p class="hero-sub" id="banner-sub">Pilih mata pelajaran, cari namamu, dan selesaikan misi petualangan kata hari ini!</p>
     </div>
 
-    <!-- PENGALIH MAPEL (TABS) -->
+    <!-- TABS SWITCHER -->
     <div class="subject-switcher">
-      <button class="tab-btn active" id="tab-indo" onclick="switchSubject('indo')">
+      <button class="tab-btn active" id="tab-indo" onclick="setLanguage('indo')">
         🇮🇩 B. Indonesia
       </button>
-      <button class="tab-btn tab-english" id="tab-eng" onclick="switchSubject('eng')">
+      <button class="tab-btn tab-english" id="tab-eng" onclick="setLanguage('eng')">
         🇬🇧 English Class
       </button>
     </div>
@@ -414,8 +424,12 @@
 
   <script src="assets/game.js"></script>
   <script>
-    function switchSubject(subj) {
+    function setLanguage(lang) {
       playSfx('click');
+      localStorage.setItem('pkbm_selected_lang', lang);
+
+      const toggleId = document.getElementById('toggle-id');
+      const toggleEn = document.getElementById('toggle-en');
       const tabIndo = document.getElementById('tab-indo');
       const tabEng = document.getElementById('tab-eng');
       const paneIndo = document.getElementById('pane-indo');
@@ -424,7 +438,9 @@
       const bannerTitle = document.getElementById('banner-title');
       const bannerSub = document.getElementById('banner-sub');
 
-      if (subj === 'eng') {
+      if (lang === 'eng') {
+        toggleId.classList.remove('active');
+        toggleEn.classList.add('active');
         tabIndo.classList.remove('active');
         tabEng.classList.add('active');
         paneIndo.classList.remove('active');
@@ -433,6 +449,8 @@
         bannerTitle.innerText = "🇬🇧 English Adventure (My Next Words)";
         bannerSub.innerText = "Select your name and complete your English learning missions today!";
       } else {
+        toggleEn.classList.remove('active');
+        toggleId.classList.add('active');
         tabEng.classList.remove('active');
         tabIndo.classList.add('active');
         paneEng.classList.remove('active');
@@ -442,6 +460,14 @@
         bannerSub.innerText = "Pilih namamu dan selesaikan misi petualangan kata hari ini!";
       }
     }
+
+    // Auto load saved language preference
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('pkbm_selected_lang');
+      if (saved === 'eng') {
+        setLanguage('eng');
+      }
+    });
   </script>
 </body>
 </html>
