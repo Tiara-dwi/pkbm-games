@@ -10,20 +10,19 @@
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
       <div class="badge-icon" style="background:#3B82F6;">🍳</div>
-      <div>Acip's Detective Mission</div>
+      <div data-en="Acip's Detective Mission" data-id="Misi Detektif Acip">Acip's Detective Mission</div>
     </a>
-    <div class="student-tag">Grade 4 • Acip</div>
-    <div class="lang-toggle-container" style="margin-left: auto; margin-right: 12px;">
-      <button class="lang-toggle-btn" onclick="window.location.href='../kelas4/acip.html'" title="Ganti ke Game Bahasa Indonesia">🇮🇩 ID</button>
-      <button class="lang-toggle-btn active lang-en" title="English Mode">🇬🇧 EN</button>
+    <div class="lang-switch-wrap">
+      <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
+      <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-
-    <a href="../index.html" class="btn-back">← Main Portal</a>
+    <div class="student-tag">Grade 4 • Acip</div>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="star-count"><span data-en="⭐ Stars: " data-id="⭐ Bintang: ">⭐ Stars: </span><span id="star-display">0</span>/5</div>
       <div class="progress-pills">
         <div class="pill-dot active" id="dot-1"></div>
         <div class="pill-dot" id="dot-2"></div>
@@ -35,94 +34,137 @@
 
     <!-- READING CASE -->
     <div class="reading-box">
-      <div class="reading-title">🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen</div>
-      <p class="reading-text">
-        Every Sunday morning, Hasyif and Nanda help their parents in the kitchen. In the clean kitchen, there is a big stove, 
-        a frying pan, and a white refrigerator beside the dining table. Nanda is washing two green apples in the sink, while 
-        Hasyif is preparing a glass of warm milk. On the table, there are plates, spoons, and a loaf of bread.
-        Hasyif says, "Cooking together is fun, but we must be careful with the hot stove and sharp knives!"
+      <div class="reading-title" data-en="🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen" data-id="🍳 Studi Kasus: Pagi Hari Hasyif dan Nanda di Dapur">
+        🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen
+      </div>
+      <p class="reading-text" 
+         data-en="Every Sunday morning, Hasyif and Nanda help their parents in the kitchen. In the clean kitchen, there is a big stove, a frying pan, and a white refrigerator beside the dining table. Nanda is washing two green apples in the sink, while Hasyif is preparing a glass of warm milk. On the table, there are plates, spoons, and a loaf of bread. Hasyif says, 'Cooking together is fun, but we must be careful with the hot stove and sharp knives!'"
+         data-id="Setiap Minggu pagi, Hasyif dan Nanda membantu orang tua mereka di dapur. Di dapur yang bersih, ada kompor besar, wajan penggorengan, dan kulkas putih di samping meja makan. Nanda sedang mencuci dua apel hijau di wastafel, sementara Hasyif sedang menyiapkan segelas susu hangat. Di atas meja, ada piring, sendok, dan sepotong roti tawar. Hasyif berkata, 'Memasak bersama itu menyenangkan, tetapi kita harus berhati-hati dengan kompor panas dan pisau tajam!'">
+        Every Sunday morning, Hasyif and Nanda help their parents in the kitchen. In the clean kitchen, there is a big stove, a frying pan, and a white refrigerator beside the dining table. Nanda is washing two green apples in the sink, while Hasyif is preparing a glass of warm milk. On the table, there are plates, spoons, and a loaf of bread. Hasyif says, 'Cooking together is fun, but we must be careful with the hot stove and sharp knives!'
       </p>
     </div>
 
     <!-- Q1 -->
     <div class="challenge-card" id="stage-1">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 1: Which sentence correctly uses the <u>Present Continuous Tense (is/are + Verb-ing)</u> to describe an ongoing action?"
+           data-id="Tantangan 1: Manakah kalimat yang menggunakan <u>Present Continuous Tense (is/are + Verb-ing)</u> dengan benar untuk menyatakan kegiatan yang sedang berlangsung?">
         Challenge 1: Which sentence correctly uses the <u>Present Continuous Tense (is/are + Verb-ing)</u> to describe an ongoing action?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> Nanda wash two green apples yesterday.</button>
-        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> Nanda is washing two green apples in the sink.</button>
-        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> Nanda are washing two green apples.</button>
+        <button class="btn-option" onclick="checkAnswer(1, 0)">
+          <span>A.</span> <span data-en="Nanda wash two green apples yesterday." data-id="Nanda wash two green apples yesterday. (Bentuk lampau salah)">Nanda wash two green apples yesterday.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)">
+          <span>B.</span> <span data-en="Nanda is washing two green apples in the sink." data-id="Nanda is washing two green apples in the sink. (Benar: is + washing)">Nanda is washing two green apples in the sink.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)">
+          <span>A.</span> <span data-en="Nanda are washing two green apples." data-id="Nanda are washing two green apples. (Salah: Nanda tunggal, bukan are)">Nanda are washing two green apples.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
-      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 2: Preposition Analysis! Where is the white refrigerator located according to the text?"
+           data-id="Tantangan 2: Analisis Preposisi Tempat! Di manakah letak kulkas putih berdasarkan teks cerita?">
         Challenge 2: Preposition Analysis! Where is the white refrigerator located according to the text?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> Inside the hot stove.</button>
-        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> Beside the dining table.</button>
-        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> Under the sink.</button>
+        <button class="btn-option" onclick="checkAnswer(2, 0)">
+          <span>A.</span> <span data-en="Inside the hot stove" data-id="Inside the hot stove (Di dalam kompor panas)">Inside the hot stove</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)">
+          <span>B.</span> <span data-en="Beside the dining table" data-id="Beside the dining table (Di samping meja makan)">Beside the dining table</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)">
+          <span>C.</span> <span data-en="Under the sink" data-id="Under the sink (Di bawah wastafel)">Under the sink</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
-      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 3: Cause-and-Effect Logic! Why does Hasyif remind Nanda to be careful in the kitchen?"
+           data-id="Tantangan 3: Logika Sebab-Akibat! Mengapa Hasyif mengingatkan Nanda agar berhati-hati di dapur?">
         Challenge 3: Cause-and-Effect Logic! Why does Hasyif remind Nanda to be careful in the kitchen?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Because the kitchen has a hot stove and sharp knives.</button>
-        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Because the milk is too sweet.</button>
-        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> Because the apples are green.</button>
+        <button class="btn-option" onclick="checkAnswer(3, 0)">
+          <span>A.</span> <span data-en="Because the kitchen has a hot stove and sharp knives." data-id="Karena di dapur ada kompor panas dan pisau tajam.">Because the kitchen has a hot stove and sharp knives.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)">
+          <span>B.</span> <span data-en="Because the milk is too sweet." data-id="Karena susunya terlalu manis.">Because the milk is too sweet.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)">
+          <span>C.</span> <span data-en="Because the apples are green." data-id="Karena apelnya berwarna hijau.">Because the apples are green.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
-      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q4 -->
     <div class="challenge-card" id="stage-4" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 4: Vocabulary Categorization! Which pair contains only <u>cooking appliances and storage</u>?"
+           data-id="Tantangan 4: Klasifikasi Kosakata! Manakah pasangan yang hanya berisi <u>peralatan memasak dan tempat penyimpanan</u>?">
         Challenge 4: Vocabulary Categorization! Which pair contains only <u>cooking appliances and storage</u>?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> Stove and refrigerator.</button>
-        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> Spoon and fork.</button>
-        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> Glass and plate.</button>
+        <button class="btn-option" onclick="checkAnswer(4, 0)">
+          <span>A.</span> <span data-en="Stove and refrigerator" data-id="Stove and refrigerator (Kompor dan kulkas)">Stove and refrigerator</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)">
+          <span>B.</span> <span data-en="Spoon and fork" data-id="Spoon and fork (Sendok dan garpu)">Spoon and fork</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)">
+          <span>C.</span> <span data-en="Glass and plate" data-id="Glass and plate (Gelas dan piring)">Glass and plate</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
-      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q5 -->
     <div class="challenge-card" id="stage-5" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 5: Sentence Construction! If Hasyif is making warm milk right now, what is the correct sentence?"
+           data-id="Tantangan 5: Susunan Kalimat! Jika Hasyif sedang membuat susu hangat sekarang, manakah kalimat yang benar?">
         Challenge 5: Sentence Construction! If Hasyif is making warm milk right now, what is the correct sentence?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> Hasyif is preparing a glass of warm milk.</button>
-        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> Hasyif prepares yesterday a glass of milk.</button>
-        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> Hasyif are drink warm milk.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 0)">
+          <span>A.</span> <span data-en="Hasyif is preparing a glass of warm milk." data-id="Hasyif is preparing a glass of warm milk. (Sedang menyiapkan)">Hasyif is preparing a glass of warm milk.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)">
+          <span>B.</span> <span data-en="Hasyif prepares yesterday a glass of milk." data-id="Hasyif prepares yesterday a glass of milk. (Salah tata bahasa)">Hasyif prepares yesterday a glass of milk.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(5, 2)">
+          <span>C.</span> <span data-en="Hasyif are drink warm milk." data-id="Hasyif are drink warm milk. (Salah to be dan bentuk kata kerja)">Hasyif are drink warm milk.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
-      <button class="btn-action" id="next-5" style="display:none;" onclick="completeAcip()">Finish Mission! 🏁</button>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeAcip()" data-en="Finish Mission! 🏁" data-id="Selesaikan Misi! 🏁">Finish Mission! 🏁</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">🏆 ⭐ 🍳</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Brilliant Detective, Acip!</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Brilliant Detective, Acip!" data-id="Detektif Hebat, Acip!">Brilliant Detective, Acip!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;" 
+         data-en="You solved all 5 kitchen grammar and safety challenges with sharp logical thinking!"
+         data-id="Kamu memecahkan kelima tantangan tata bahasa dan keselamatan dapur dengan nalar logis yang tajam!">
         You solved all 5 kitchen grammar and safety challenges with sharp logical thinking!
       </p>
-      <a href="../index.html" class="btn-action" style="margin: 0 auto;">Back to Main Portal</a>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
   </div>
 
@@ -143,7 +185,9 @@
         playSfx('correct');
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "✅ <b>Excellent!</b> Accurate grammar analysis!";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "✅ <b>Tepat sekali!</b> Analisis tata bahasa dan pemahamanmu sangat akurat!"
+          : "✅ <b>Excellent!</b> Accurate grammar analysis!";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
@@ -152,7 +196,9 @@
         playSfx('wrong');
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Not quite right. Review the grammar formula!";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "❌ <b>Belum tepat.</b> Periksa kembali rumus kalimatnya ya!"
+          : "❌ Not quite right. Review the grammar formula!";
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -167,6 +213,8 @@
     function completeAcip() {
       triggerGameOutcome(stars, 5, "Acip", null, true);
     }
+
+    initLanguageToggle('en');
   </script>
 </body>
 </html>
