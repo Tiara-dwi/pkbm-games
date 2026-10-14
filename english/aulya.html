@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aulya's Mission: Regular vs Irregular Past Verb Sorter</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .card-swipe {
+      background: white;
+      border: 3px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #1E293B;
+    }
+    .sort-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .btn-regular {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn-irregular {
+      background: #8B5CF6;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#8B5CF6;">⚖️</div>
+      <div>Aulya's Verb Sorter</div>
+    </a>
+    <div class="student-tag" style="background:#F5F3FF; color:#7C3AED;">Grade 6 • Aulya</div>
+    <a href="../index.html" class="btn-back">← Main Portal</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="color:#7C3AED;">⭐ Score: <span id="score-display">0</span>/5</div>
+      <div style="font-weight:600; color:var(--text-muted);">Card <span id="card-num">1</span> of 5</div>
+    </div>
+
+    <div class="card-swipe" id="statement-box">
+      <span style="font-size:0.9rem; color:#64748B; font-weight:600; letter-spacing:0; margin-bottom:6px;">Classify this past verb:</span>
+      <span id="verb-text">VISITED</span>
+    </div>
+
+    <div class="sort-buttons">
+      <button class="btn-regular" onclick="submitSort('REGULAR')">📘 REGULAR VERB (+ed)</button>
+      <button class="btn-irregular" onclick="submitSort('IRREGULAR')">📙 IRREGULAR VERB</button>
+    </div>
+
+    <div class="feedback-box" id="feedback-box"></div>
+    <div style="text-align: center; margin-top: 18px;">
+      <button class="btn-action" id="next-btn" style="display:none;" onclick="nextCard()">Next Verb →</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">⚖️ 🌟 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Brilliant Sorting, Aulya!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        You classified all regular and irregular past verbs with complete accuracy!
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#8B5CF6;">Back to Main Portal</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    const deck = [
+      { verb: "VISITED", type: "REGULAR", reason: "Formed by adding -ed to base verb 'visit'." },
+      { verb: "WENT", type: "IRREGULAR", reason: "Irregular past form of 'go' (changes form completely)." },
+      { verb: "COOKED", type: "REGULAR", reason: "Formed by adding -ed to base verb 'cook'." },
+      { verb: "BOUGHT", type: "IRREGULAR", reason: "Irregular past form of 'buy'." },
+      { verb: "STUDIED", type: "REGULAR", reason: "Formed by changing 'study' (-y into -ied)." }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+
+    function submitSort(choice) {
+      const current = deck[currentIndex];
+      const feedback = document.getElementById('feedback-box');
+      const nextBtn = document.getElementById('next-btn');
+      const buttons = document.querySelectorAll('.sort-buttons button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (choice === current.type) {
+        playSfx('correct');
+        score++;
+        document.getElementById('score-display').innerText = score;
+        playSfx('star');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = `✅ <b>Correct! (${current.type})</b><br>${current.reason}`;
+      } else {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = `❌ <b>Correct Answer: ${current.type}</b><br>${current.reason}`;
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    function nextCard() {
+      playSfx('click');
+      currentIndex++;
+      if (currentIndex < deck.length) {
+        document.getElementById('card-num').innerText = currentIndex + 1;
+        document.getElementById('verb-text').innerText = deck[currentIndex].verb;
+        document.getElementById('feedback-box').className = "feedback-box";
+        document.getElementById('next-btn').style.display = "none";
+        document.querySelectorAll('.sort-buttons button').forEach(b => b.disabled = false);
+      } else {
+        triggerGameOutcome(score, 5, "Aulya", null, true);
+      }
+    }
+  </script>
+</body>
+</html>
