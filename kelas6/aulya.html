@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Aulya: Sortir Fakta vs Opini Tanjung Puting</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .card-swipe {
+      background: white;
+      border: 3px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+    .sort-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .btn-fakta {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-fakta:hover { transform: scale(1.03); background: #059669; }
+    .btn-opini {
+      background: #F59E0B;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(245, 158, 11, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-opini:hover { transform: scale(1.03); background: #D97706; }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#8B5CF6;">⚖️</div>
+      <div>Sortir Fakta vs Opini Aulya</div>
+    </a>
+    <div class="student-tag" style="background:#F5F3FF; color:#7C3AED;">Kelas 6 • Aulya</div>
+    <a href="../index.html" class="btn-back">← Menu Utama</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="color:#7C3AED;">⭐ Skor: <span id="score-display">0</span>/5</div>
+      <div style="font-weight:600; color:var(--text-muted);">Kartu <span id="card-num">1</span> dari 5</div>
+    </div>
+
+    <div class="card-swipe" id="statement-box">
+      "Taman Nasional Tanjung Puting memiliki luas wilayah sekitar 415.040 hektare di Kalimantan Tengah."
+    </div>
+
+    <div class="sort-buttons">
+      <button class="btn-fakta" onclick="submitSort('FAKTA')">📊 INI FAKTA</button>
+      <button class="btn-opini" onclick="submitSort('OPINI')">💭 INI OPINI</button>
+    </div>
+
+    <div class="feedback-box" id="feedback-box"></div>
+    <div style="text-align: center; margin-top: 18px;">
+      <button class="btn-action" id="next-btn" style="display:none;" onclick="nextCard()">Kartu Berikutnya →</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">⚖️ 🌟 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Luar Biasa, Aulya!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Kamu berhasil memilah semua kartu fakta dan opini ekspedisi Tanjung Puting dengan sangat tepat!
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#8B5CF6;">Kembali ke Menu Kelas</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    const deck = [
+      { text: "Taman Nasional Tanjung Puting memiliki luas wilayah sekitar 415.040 hektare di Kalimantan Tengah.", type: "FAKTA", reason: "Memiliki data numerik resmi dan batas wilayah geografis konkret." },
+      { text: "Melihat bekantan bertengger di pohon nipah adalah pemandangan paling menakjubkan bagi seluruh pengunjung.", type: "OPINI", reason: "Ada kata relatif 'paling menakjubkan' yang merupakan penilaian rasa subjektif." },
+      { text: "Perahu kelotok yang ditumpangi Shine, Zahra, dan Yusman membutuhkan waktu tempuh 4 jam menuju Camp Leakey.", type: "FAKTA", reason: "Fakta empiris durasi waktu yang dapat diukur dengan jam." },
+      { text: "Suara deru mesin kelotok pasti membuat semua turis merasa pusing dan ingin segera pulang.", type: "OPINI", reason: "Klaim dugaan perasaan tanpa bukti ilmiah." },
+      { text: "Pusat rehabilitasi orangutan Camp Leakey didirikan oleh Dr. Biruté Galdikas pada tahun 1971.", type: "FAKTA", reason: "Catatan sejarah dengan bukti nama tokoh dan tahun pendirian yang valid." }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+
+    function submitSort(choice) {
+      const current = deck[currentIndex];
+      const feedback = document.getElementById('feedback-box');
+      const nextBtn = document.getElementById('next-btn');
+      const buttons = document.querySelectorAll('.sort-buttons button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (choice === current.type) {
+        playSfx('correct');
+        score++;
+        document.getElementById('score-display').innerText = score;
+        playSfx('star');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = `✅ <b>Tepat Sekali! (${current.type})</b><br>${current.reason}`;
+      } else {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = `❌ <b>Jawaban yang benar: ${current.type}</b><br>${current.reason}`;
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    function nextCard() {
+      playSfx('click');
+      currentIndex++;
+      if (currentIndex < deck.length) {
+        document.getElementById('card-num').innerText = currentIndex + 1;
+        document.getElementById('statement-box').innerText = `"${deck[currentIndex].text}"`;
+        document.getElementById('feedback-box').className = "feedback-box";
+        document.getElementById('next-btn').style.display = "none";
+        document.querySelectorAll('.sort-buttons button').forEach(b => b.disabled = false);
+      } else {
+        playSfx('win');
+        launchConfetti();
+        document.getElementById('victory-modal').classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
