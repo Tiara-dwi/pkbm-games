@@ -46,8 +46,13 @@
 
     <!-- READING CASE -->
     <div class="reading-box">
-      <div class="reading-title" data-en="🍜 Case: Aditya at the School Food Fair" data-id="🍜 Kasus: Aditya di Festival Kuliner Sekolah">
-        🍜 Case: Aditya at the School Food Fair
+      <div class="card-header-flex">
+        <div class="reading-title" style="margin-bottom:0;" data-en="🍜 Case: Aditya at the School Food Fair" data-id="🍜 Kasus: Aditya di Festival Kuliner Sekolah">
+          🍜 Case: Aditya at the School Food Fair
+        </div>
+        <button class="btn-card-lang" onclick="toggleReadingLanguage(this)">
+          🌐 <span>Terjemahkan Cerita</span>
+        </button>
       </div>
       <p class="reading-text"
          data-en="During the school culinary festival, Aditya visits the canteen. At the food stall, Aditya orders a hot bowl of bakso and a fresh glass of iced tea. The soup tastes savory and salty, while the iced tea tastes sweet. Aditya also buys a bar of chocolate and a bottle of mineral water for his friend. Liquids and mass foods cannot be counted one by one, so we must use measuring containers!"
@@ -58,10 +63,15 @@
 
     <!-- Q1 -->
     <div class="challenge-card" id="stage-1">
-      <div class="challenge-question"
-           data-en="Challenge 1: How do we correctly quantify hot bakso soup in English?"
-           data-id="Tantangan 1: Bagaimana cara yang benar menyatakan 'semangkuk bakso' dalam bahasa Inggris?">
-        Challenge 1: How do we correctly quantify hot bakso soup in English?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 1: How do we correctly quantify hot bakso soup in English?"
+             data-id="Tantangan 1: Bagaimana cara yang benar menyatakan 'semangkuk bakso' dalam bahasa Inggris?">
+          Challenge 1: How do we correctly quantify hot bakso soup in English?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-1', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> <span data-en="A glass of bakso" data-id="A glass of bakso (Segelas bakso)">A glass of bakso</span></button>
@@ -74,10 +84,15 @@
 
     <!-- Q2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 2: How do we correctly order iced tea?"
-           data-id="Tantangan 2: Bagaimana cara yang benar memesan 'segelas es teh'?">
-        Challenge 2: How do we correctly order iced tea?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 2: How do we correctly order iced tea?"
+             data-id="Tantangan 2: Bagaimana cara yang benar memesan 'segelas es teh'?">
+          Challenge 2: How do we correctly order iced tea?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-2', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> <span data-en="A bar of iced tea" data-id="A bar of iced tea (Sebatang es teh)">A bar of iced tea</span></button>
@@ -90,10 +105,15 @@
 
     <!-- Q3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 3: Taste Vocabulary! How does Aditya's warm bakso soup taste?"
-           data-id="Tantangan 3: Kosakata Rasa! Bagaimanakah rasa kuah bakso hangat pesanan Aditya?">
-        Challenge 3: Taste Vocabulary! How does Aditya's warm bakso soup taste?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 3: Taste Vocabulary! How does Aditya's warm bakso soup taste?"
+             data-id="Tantangan 3: Kosakata Rasa! Bagaimanakah rasa kuah bakso hangat pesanan Aditya?">
+          Challenge 3: Taste Vocabulary! How does Aditya's warm bakso soup taste?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-3', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> <span data-en="Savory and salty" data-id="Savory and salty (Gurih dan asin)">Savory and salty</span></button>
@@ -106,10 +126,15 @@
 
     <!-- Q4 -->
     <div class="challenge-card" id="stage-4" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 4: Which quantifier matches a piece of solid chocolate?"
-           data-id="Tantangan 4: Kata penakar manakah yang cocok untuk 'sebatang cokelat padat'?">
-        Challenge 4: Which quantifier matches a piece of solid chocolate?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 4: Which quantifier matches a piece of solid chocolate?"
+             data-id="Tantangan 4: Kata penakar manakah yang cocok untuk 'sebatang cokelat padat'?">
+          Challenge 4: Which quantifier matches a piece of solid chocolate?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-4', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> <span data-en="A bar of chocolate" data-id="A bar of chocolate (Sebatang cokelat)">A bar of chocolate</span></button>
@@ -122,10 +147,15 @@
 
     <!-- Q5 -->
     <div class="challenge-card" id="stage-5" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 5: Grammar Rule! Why do water, tea, and soup need quantifiers like 'a glass of' or 'a bowl of'?"
-           data-id="Tantangan 5: Aturan Tata Bahasa! Mengapa air, teh, dan sup memerlukan wadah penakar seperti 'a glass of' atau 'a bowl of'?">
-        Challenge 5: Grammar Rule! Why do water, tea, and soup need quantifiers like 'a glass of' or 'a bowl of'?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 5: Grammar Rule! Why do water, tea, and soup need quantifiers like 'a glass of' or 'a bowl of'?"
+             data-id="Tantangan 5: Aturan Tata Bahasa! Mengapa air, teh, dan sup memerlukan wadah penakar seperti 'a glass of' atau 'a bowl of'?">
+          Challenge 5: Grammar Rule! Why do water, tea, and soup need quantifiers like 'a glass of' or 'a bowl of'?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-5', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(5, 0)">
