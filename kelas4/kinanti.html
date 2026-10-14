@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Kinanti: Penyusun Paragraf Runtut</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .puzzle-item {
+      background: #F8FAFC;
+      border: 2px solid #CBD5E1;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .puzzle-item.active-drag {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .puzzle-controls button {
+      background: white;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+    .puzzle-controls button:hover {
+      background: #E2E8F0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon">🧩</div>
+      <div>Misi Penyusun Kinanti</div>
+    </a>
+    <div class="student-tag">Kelas 4 • Kinanti</div>
+    <a href="../index.html" class="btn-back">← Menu Utama</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count">⭐ Bintang: <span id="star-display">0</span>/3</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+      </div>
+    </div>
+
+    <!-- Misi 1: Susun Kalimat Acak -->
+    <div class="challenge-card" id="stage-1">
+      <div class="challenge-question">
+        Misi 1: Susun 4 kalimat acak kegiatan Hasyif & Nanda berikut agar menjadi <u>paragraf prosedur yang runtut</u>! Gunakan tombol ⬆️ dan ⬇️.
+      </div>
+
+      <div id="puzzle-list">
+        <div class="puzzle-item" data-id="3">
+          <span>(3) Setelah semua perlengkapan terpasang rapi, barulah mereka mulai meluncur di lintasan datar.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+        <div class="puzzle-item" data-id="1">
+          <span>(1) Pertama, Hasyif dan Nanda meletakkan tas serta memeriksa kelayakan papan luncur mereka.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+        <div class="puzzle-item" data-id="4">
+          <span>(4) Akhirnya, mereka dapat berlatih manuver berputar dengan aman dan percaya diri.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+        <div class="puzzle-item" data-id="2">
+          <span>(2) Selanjutnya, keduanya memakai helm pelindung kepala serta bantalan lutut dengan kencang.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" onclick="checkPuzzle()">Periksa Susunan Paragraf 🔍</button>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Lanjut ke Misi 2 →</button>
+    </div>
+
+    <!-- Misi 2: Lengkapi Konjungsi -->
+    <div class="challenge-card" id="stage-2" style="display:none;">
+      <div class="challenge-question">
+        Misi 2: Pilihlah <u>kata penghubung (konjungsi)</u> yang paling tepat untuk mengisi bagian rumpang berikut:
+      </div>
+      <div class="reading-box" style="margin-bottom: 18px;">
+        <p class="reading-text">
+          Hasyif gemar mencoba trik melompat yang tinggi di lintasan rampa. <b>[ . . . . . . . . . . ]</b>, Nanda mengingatkan agar selalu mengutamakan keseimbangan sebelum menambah kecepatan.
+        </p>
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(2, 0)">
+          <span>A.</span> Meskipun demikian
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)">
+          <span>B.</span> Karena itu
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)">
+          <span>C.</span> Kemudian
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Lanjut ke Misi 3 →</button>
+    </div>
+
+    <!-- Misi 3: Kalimat Sumbang -->
+    <div class="challenge-card" id="stage-3" style="display:none;">
+      <div class="challenge-question">
+        Misi 3: Temukan <u>kalimat sumbang</u> (yang tidak padu / tidak nyambung dengan tema keselamatan) dalam paragraf ini!
+      </div>
+      <div class="reading-box" style="margin-bottom: 18px;">
+        <p class="reading-text">
+          (1) Setiap pemain skateboard wajib mematuhi rambu-rambu di sekitar taman bermain.<br>
+          (2) Rambu peringatan dipasang agar tidak ada tabrakan antarpeseluncur.<br>
+          (3) Harga es krim cokelat di dekat pintu gerbang taman sangat murah.<br>
+          (4) Oleh sebab itu, kewaspadaan tinggi membuat semua orang merasa aman.
+        </p>
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(3, 0)">
+          <span>A.</span> Kalimat (1)
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)">
+          <span>B.</span> Kalimat (2)
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)">
+          <span>C.</span> Kalimat (3) - Karena membicarakan harga es krim yang tidak nyambung
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="finishGame()">Selesaikan Misi! 🏆</button>
+    </div>
+  </div>
+
+  <!-- Modal Kemenangan -->
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 🧩 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Hebat Sekali, Kinanti!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Susunan paragrafmu sangat runtut dan padu! Kamu membuktikan pemahaman hebat dalam merangkai kalimat Bahasa Indonesia.
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto;">Kembali ke Menu Kelas</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+
+    function moveItem(btn, direction) {
+      playSfx('click');
+      const item = btn.closest('.puzzle-item');
+      const parent = item.parentNode;
+      if (direction === -1 && item.previousElementSibling) {
+        parent.insertBefore(item, item.previousElementSibling);
+      } else if (direction === 1 && item.nextElementSibling) {
+        parent.insertBefore(item.nextElementSibling, item);
+      }
+    }
+
+    function checkPuzzle() {
+      const items = document.querySelectorAll('#puzzle-list .puzzle-item');
+      const order = Array.from(items).map(i => i.getAttribute('data-id')).join('');
+      const feedback = document.getElementById('feedback-1');
+      const nextBtn = document.getElementById('next-1');
+
+      if (order === '1234') {
+        playSfx('correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Urutan Sempurna!</b> (1) Pertama... -> (2) Selanjutnya... -> (3) Setelah... -> (4) Akhirnya...";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById('dot-1').classList.add('completed');
+        nextBtn.style.display = "inline-flex";
+      } else {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Urutan belum runtut. Perhatikan kata kunci penunjuk urutan: <i>Pertama, Selanjutnya, Setelah, Akhirnya</i>!";
+      }
+    }
+
+    const correctAnswers = { 2: 0, 3: 2 };
+
+    function checkAnswer(stage, chosenIndex) {
+      const card = document.getElementById(`stage-${stage}`);
+      const buttons = card.querySelectorAll('.btn-option');
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIndex === correctAnswers[stage]) {
+        playSfx('correct');
+        buttons[chosenIndex].classList.add('selected-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Tepat sekali!</b> Pilihan kata dan analisismu sangat akurat.";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
+        nextBtn.style.display = "inline-flex";
+      } else {
+        playSfx('wrong');
+        buttons[chosenIndex].classList.add('selected-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Belum tepat, ayo coba baca lagi dengan tenang!";
+        setTimeout(() => {
+          buttons.forEach(b => {
+            b.disabled = false;
+            b.classList.remove('selected-wrong');
+          });
+          feedback.className = "feedback-box";
+        }, 1600);
+      }
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
+    }
+
+    function finishGame() {
+      playSfx('win');
+      launchConfetti();
+      document.getElementById('victory-modal').classList.add('active');
+    }
+  </script>
+</body>
+</html>
