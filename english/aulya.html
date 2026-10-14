@@ -72,8 +72,13 @@
     </div>
 
     <div class="card-swipe" id="statement-box">
-      <span style="font-size:0.95rem; color:#64748B; font-weight:600; letter-spacing:0; margin-bottom:6px;"
-            data-en="Classify this past verb:" data-id="Pilah jenis kata kerja lampau ini:">Classify this past verb:</span>
+      <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-size:0.95rem; color:#64748B; font-weight:600; letter-spacing:0;"
+              data-en="Classify this past verb:" data-id="Pilah jenis kata kerja lampau ini:">Classify this past verb:</span>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('statement-box', this)">
+          🌐 <span>Terjemahkan</span>
+        </button>
+      </div>
       <span id="verb-text">VISITED</span>
     </div>
 
