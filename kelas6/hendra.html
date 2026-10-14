@@ -62,11 +62,9 @@
         Kelompokkan fakta di atas ke dalam pos 5W+1H yang benar:
       </div>
 
-      <!-- POS 1: APA -->
+      <!-- POS 1 -->
       <div class="pos-card">
-        <div class="pos-header">
-          <span>1. Pos APA (What) - Kegiatan apa yang dilakukan?</span>
-        </div>
+        <div class="pos-header"><span>1. Pos APA (What) - Kegiatan apa yang dilakukan?</span></div>
         <select class="slot-select" id="pos-apa">
           <option value="">-- Pilih Fakta yang Sesuai --</option>
           <option value="salah1">Hari Rabu pukul 08.00 WIB</option>
@@ -75,55 +73,43 @@
         </select>
       </div>
 
-      <!-- POS 2: SIAPA -->
+      <!-- POS 2 -->
       <div class="pos-card">
-        <div class="pos-header">
-          <span>2. Pos SIAPA (Who) - Siapa pelaku pengamatan?</span>
-        </div>
+        <div class="pos-header"><span>2. Pos SIAPA (Who) - Siapa pelaku pengamatan?</span></div>
         <select class="slot-select" id="pos-siapa">
           <option value="">-- Pilih Fakta yang Sesuai --</option>
           <option value="benar">Shine, Zahra, dan Yusman</option>
           <option value="salah1">Perahu kelotok kayu</option>
-          <option value="salah2">Sungai Sekonyer</option>
         </select>
       </div>
 
-      <!-- POS 3: DI MANA -->
+      <!-- POS 3 -->
       <div class="pos-card">
-        <div class="pos-header">
-          <span>3. Pos DI MANA (Where) - Di mana lokasi pengamatannya?</span>
-        </div>
+        <div class="pos-header"><span>3. Pos DI MANA (Where) - Di mana lokasi pengamatannya?</span></div>
         <select class="slot-select" id="pos-dimana">
           <option value="">-- Pilih Fakta yang Sesuai --</option>
           <option value="salah1">Menyusuri selama 4 jam</option>
           <option value="benar">Camp Leakey, Taman Nasional Tanjung Puting</option>
-          <option value="salah2">Di ruang kelas sekolah</option>
         </select>
       </div>
 
-      <!-- POS 4: KAPAN -->
+      <!-- POS 4 -->
       <div class="pos-card">
-        <div class="pos-header">
-          <span>4. Pos KAPAN (When) - Kapan pengamatan dilaksanakan?</span>
-        </div>
+        <div class="pos-header"><span>4. Pos KAPAN (When) - Kapan pengamatan dilaksanakan?</span></div>
         <select class="slot-select" id="pos-kapan">
           <option value="">-- Pilih Fakta yang Sesuai --</option>
           <option value="benar">Hari Rabu pukul 08.00 WIB</option>
-          <option value="salah1">Tahun depan saat liburan</option>
-          <option value="salah2">Pengamatan satwa</option>
+          <option value="salah1">Pengamatan satwa</option>
         </select>
       </div>
 
-      <!-- POS 5: BAGAIMANA -->
+      <!-- POS 5 -->
       <div class="pos-card">
-        <div class="pos-header">
-          <span>5. Pos BAGAIMANA (How) - Bagaimana cara tim menuju ke lokasi?</span>
-        </div>
+        <div class="pos-header"><span>5. Pos BAGAIMANA (How) - Bagaimana cara tim menuju ke lokasi?</span></div>
         <select class="slot-select" id="pos-bagaimana">
           <option value="">-- Pilih Fakta yang Sesuai --</option>
           <option value="salah1">Berjalan kaki lewat jalan tol</option>
           <option value="benar">Menyusuri Sungai Sekonyer selama 4 jam menaiki perahu kelotok kayu</option>
-          <option value="salah2">Shine, Zahra, dan Yusman</option>
         </select>
       </div>
 
@@ -169,22 +155,7 @@
       if (bagaimana === 'benar') correctCount++;
 
       document.getElementById('star-display').innerText = correctCount;
-
-      if (correctCount === 5) {
-        playSfx('correct');
-        playSfx('star');
-        feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "🎉 <b>Hebat Sekali!</b> Semua elemen 5W+1H tepat 100%!";
-        setTimeout(() => {
-          playSfx('win');
-          launchConfetti();
-          document.getElementById('victory-modal').classList.add('active');
-        }, 800);
-      } else {
-        playSfx('wrong');
-        feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = `⚠️ Kamu benar <b>${correctCount} dari 5</b> pos. Cek kembali pos yang masih keliru!`;
-      }
+      triggerGameOutcome(correctCount, 5, "Hendra");
     }
   </script>
 </body>
