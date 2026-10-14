@@ -154,14 +154,14 @@
         document.getElementById('streak-num').innerText = streak;
         playSfx('star');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = isId ? `⚡ <b>KILAT & TEPAT!</b> ${exp}` : `⚡ <b>FAST & ACCURATE!</b> ${exp}`;
+        feedback.innerHTML = isId ? `⚡ KILAT & TEPAT! ${exp}` : `⚡ FAST & ACCURATE! ${exp}`;
       } else {
         playSfx('wrong');
         buttons[idx].classList.add('selected-wrong');
         streak = 0;
         document.getElementById('streak-num').innerText = streak;
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = isId ? `❌ <b>Jawaban tepat: ${q.opts[q.correct]}</b>` : `❌ <b>Correct answer: ${q.opts[q.correct]}</b>`;
+        feedback.innerHTML = isId ? `❌ Jawaban tepat: ${q.opts[q.correct]}` : `❌ Correct answer: ${q.opts[q.correct]}`;
       }
       document.getElementById('next-btn').style.display = 'inline-flex';
     }
