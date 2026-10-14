@@ -344,3 +344,51 @@ function initLanguageToggle(defaultLang = 'en') {
   }
   setLanguage(saved);
 }
+
+// 6. Per-Section Language Toggle (Story Card & Question Cards)
+function toggleReadingLanguage(btn) {
+  playSfx('click');
+  const box = btn.closest('.reading-box');
+  if (!box) return;
+  const textEl = box.querySelector('.reading-text');
+  const titleEl = box.querySelector('.reading-title');
+  const isEn = btn.getAttribute('data-curr') !== 'id';
+
+  if (isEn) {
+    btn.setAttribute('data-curr', 'id');
+    btn.classList.add('active-id');
+    btn.innerHTML = '🇬🇧 <span>English Story</span>';
+    if (textEl && textEl.getAttribute('data-id')) textEl.innerHTML = textEl.getAttribute('data-id');
+    if (titleEl && titleEl.getAttribute('data-id')) titleEl.innerHTML = titleEl.getAttribute('data-id');
+  } else {
+    btn.setAttribute('data-curr', 'en');
+    btn.classList.remove('active-id');
+    btn.innerHTML = '🌐 <span>Terjemahkan Cerita</span>';
+    if (textEl && textEl.getAttribute('data-en')) textEl.innerHTML = textEl.getAttribute('data-en');
+    if (titleEl && titleEl.getAttribute('data-en')) titleEl.innerHTML = titleEl.getAttribute('data-en');
+  }
+}
+
+function toggleCardLanguage(stageId, btn) {
+  playSfx('click');
+  const card = document.getElementById(stageId) || btn.closest('.challenge-card') || btn.closest('.alisya-box');
+  if (!card) return;
+  const isEn = btn.getAttribute('data-curr') !== 'id';
+
+  const translatable = card.querySelectorAll('[data-en]');
+  if (isEn) {
+    btn.setAttribute('data-curr', 'id');
+    btn.classList.add('active-id');
+    btn.innerHTML = '🇬🇧 <span>English</span>';
+    translatable.forEach(el => {
+      if (el.getAttribute('data-id')) el.innerHTML = el.getAttribute('data-id');
+    });
+  } else {
+    btn.setAttribute('data-curr', 'en');
+    btn.classList.remove('active-id');
+    btn.innerHTML = '🌐 <span>Terjemahkan</span>';
+    translatable.forEach(el => {
+      if (el.getAttribute('data-en')) el.innerHTML = el.getAttribute('data-en');
+    });
+  }
+}
