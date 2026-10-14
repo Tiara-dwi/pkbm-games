@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinanti's Mission: Kitchen Actions & Recipe Sequencer</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .puzzle-item {
+      background: #F8FAFC;
+      border: 2px solid #CBD5E1;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .puzzle-controls button {
+      background: white;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#10B981;">🥗</div>
+      <div>Kinanti's Chef Mission</div>
+    </a>
+    <div class="student-tag">Grade 4 • Kinanti</div>
+    <a href="../index.html" class="btn-back">← Main Portal</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+        <div class="pill-dot" id="dot-4"></div>
+        <div class="pill-dot" id="dot-5"></div>
+      </div>
+    </div>
+
+    <!-- Q1: PUZZLE -->
+    <div class="challenge-card" id="stage-1">
+      <div class="challenge-question">
+        Challenge 1: Reorder Hasyif & Nanda's morning kitchen steps in the correct sequence (Use ⬆️ and ⬇️)!
+      </div>
+      <div id="puzzle-list">
+        <div class="puzzle-item" data-id="3">
+          <span>(3) Then, Hasyif pours warm milk into a clean glass.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+        <div class="puzzle-item" data-id="1">
+          <span>(1) First, Hasyif and Nanda enter the kitchen and wash their hands.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+        <div class="puzzle-item" data-id="4">
+          <span>(4) Finally, they sit together at the table to enjoy breakfast.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+        <div class="puzzle-item" data-id="2">
+          <span>(2) Next, Nanda washes two green apples in the sink.</span>
+          <div class="puzzle-controls">
+            <button onclick="moveItem(this, -1)">⬆️</button>
+            <button onclick="moveItem(this, 1)">⬇️</button>
+          </div>
+        </div>
+      </div>
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="btn-check-puzzle" onclick="checkPuzzle()">Check Sequence 🔍</button>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+    </div>
+
+    <!-- Q2 -->
+    <div class="challenge-card" id="stage-2" style="display:none;">
+      <div class="challenge-question">
+        Challenge 2: Complete the sentence! "Look! Nanda is ________ two green apples in the sink."
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> washing</button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> sleeping</button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> running</button>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+    </div>
+
+    <!-- Q3 -->
+    <div class="challenge-card" id="stage-3" style="display:none;">
+      <div class="challenge-question">
+        Challenge 3: Choose the correct preposition! "The fresh bread is ________ the dining table."
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> on</button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> under</button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> behind</button>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+    </div>
+
+    <!-- Q4 -->
+    <div class="challenge-card" id="stage-4" style="display:none;">
+      <div class="challenge-question">
+        Challenge 4: Odd One Out! Which item does NOT belong in the kitchen?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> Bicycle</button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> Frying pan</button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> Refrigerator</button>
+      </div>
+      <div class="feedback-box" id="feedback-4"></div>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+    </div>
+
+    <!-- Q5 -->
+    <div class="challenge-card" id="stage-5" style="display:none;">
+      <div class="challenge-question">
+        Challenge 5: Action Pair! What is Hasyif doing in the kitchen?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> He is preparing a glass of warm milk.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> He is driving a car.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> He is kicking a football.</button>
+      </div>
+      <div class="feedback-box" id="feedback-5"></div>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeKinanti()">Finish Mission! 🏁</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 🥗 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Wonderful Job, Kinanti!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        All your kitchen recipe sequences and vocabulary matches are spot on!
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#10B981;">Back to Main Portal</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+
+    function moveItem(btn, direction) {
+      playSfx('click');
+      const item = btn.closest('.puzzle-item');
+      const parent = item.parentNode;
+      if (direction === -1 && item.previousElementSibling) {
+        parent.insertBefore(item, item.previousElementSibling);
+      } else if (direction === 1 && item.nextElementSibling) {
+        parent.insertBefore(item.nextElementSibling, item);
+      }
+    }
+
+    function checkPuzzle() {
+      const items = document.querySelectorAll('#puzzle-list .puzzle-item');
+      const order = Array.from(items).map(i => i.getAttribute('data-id')).join('');
+      const feedback = document.getElementById('feedback-1');
+      const nextBtn = document.getElementById('next-1');
+      document.getElementById('btn-check-puzzle').disabled = true;
+
+      if (order === '1234') {
+        playSfx('correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Perfect Order!</b> (1) First... -> (2) Next... -> (3) Then... -> (4) Finally...";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById('dot-1').classList.add('completed');
+      } else {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Sequence is not in order yet. Follow: First -> Next -> Then -> Finally.";
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    const correctAnswers = { 2: 0, 3: 0, 4: 0, 5: 0 };
+
+    function checkAnswer(stage, chosenIndex) {
+      const card = document.getElementById(`stage-${stage}`);
+      const buttons = card.querySelectorAll('.btn-option');
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIndex === correctAnswers[stage]) {
+        playSfx('correct');
+        buttons[chosenIndex].classList.add('selected-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Spot on!</b> Great vocabulary knowledge!";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
+      } else {
+        playSfx('wrong');
+        buttons[chosenIndex].classList.add('selected-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Try again, look at the picture!";
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
+    }
+
+    function completeKinanti() {
+      triggerGameOutcome(stars, 5, "Kinanti", null, true);
+    }
+  </script>
+</body>
+</html>
