@@ -31,20 +31,19 @@
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
       <div class="badge-icon" style="background:#10B981;">🥗</div>
-      <div>Kinanti's Chef Mission</div>
+      <div data-en="Kinanti's Chef Mission" data-id="Misi Chef Kinanti">Kinanti's Chef Mission</div>
     </a>
-    <div class="student-tag">Grade 4 • Kinanti</div>
-    <div class="lang-toggle-container" style="margin-left: auto; margin-right: 12px;">
-      <button class="lang-toggle-btn" onclick="window.location.href='../kelas4/kinanti.html'" title="Ganti ke Game Bahasa Indonesia">🇮🇩 ID</button>
-      <button class="lang-toggle-btn active lang-en" title="English Mode">🇬🇧 EN</button>
+    <div class="lang-switch-wrap">
+      <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
+      <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-
-    <a href="../index.html" class="btn-back">← Main Portal</a>
+    <div class="student-tag">Grade 4 • Kinanti</div>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="star-count"><span data-en="⭐ Stars: " data-id="⭐ Bintang: ">⭐ Stars: </span><span id="star-display">0</span>/5</div>
       <div class="progress-pills">
         <div class="pill-dot active" id="dot-1"></div>
         <div class="pill-dot" id="dot-2"></div>
@@ -56,33 +55,35 @@
 
     <!-- Q1: PUZZLE -->
     <div class="challenge-card" id="stage-1">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 1: Reorder Hasyif & Nanda's morning kitchen steps in the correct sequence (Use ⬆️ and ⬇️)!"
+           data-id="Tantangan 1: Urutkan langkah kegiatan dapur pagi Hasyif & Nanda secara runtut (Gunakan ⬆️ dan ⬇️)!">
         Challenge 1: Reorder Hasyif & Nanda's morning kitchen steps in the correct sequence (Use ⬆️ and ⬇️)!
       </div>
       <div id="puzzle-list">
         <div class="puzzle-item" data-id="3">
-          <span>(3) Then, Hasyif pours warm milk into a clean glass.</span>
+          <span data-en="(3) Then, Hasyif pours warm milk into a clean glass." data-id="(3) Kemudian, Hasyif menuang susu hangat ke gelas bersih.">(3) Then, Hasyif pours warm milk into a clean glass.</span>
           <div class="puzzle-controls">
             <button onclick="moveItem(this, -1)">⬆️</button>
             <button onclick="moveItem(this, 1)">⬇️</button>
           </div>
         </div>
         <div class="puzzle-item" data-id="1">
-          <span>(1) First, Hasyif and Nanda enter the kitchen and wash their hands.</span>
+          <span data-en="(1) First, Hasyif and Nanda enter the kitchen and wash their hands." data-id="(1) Pertama, Hasyif dan Nanda masuk ke dapur dan mencuci tangan.">(1) First, Hasyif and Nanda enter the kitchen and wash their hands.</span>
           <div class="puzzle-controls">
             <button onclick="moveItem(this, -1)">⬆️</button>
             <button onclick="moveItem(this, 1)">⬇️</button>
           </div>
         </div>
         <div class="puzzle-item" data-id="4">
-          <span>(4) Finally, they sit together at the table to enjoy breakfast.</span>
+          <span data-en="(4) Finally, they sit together at the table to enjoy breakfast." data-id="(4) Akhirnya, mereka duduk bersama di meja menikmati sarapan.">(4) Finally, they sit together at the table to enjoy breakfast.</span>
           <div class="puzzle-controls">
             <button onclick="moveItem(this, -1)">⬆️</button>
             <button onclick="moveItem(this, 1)">⬇️</button>
           </div>
         </div>
         <div class="puzzle-item" data-id="2">
-          <span>(2) Next, Nanda washes two green apples in the sink.</span>
+          <span data-en="(2) Next, Nanda washes two green apples in the sink." data-id="(2) Selanjutnya, Nanda mencuci dua apel hijau di wastafel.">(2) Next, Nanda washes two green apples in the sink.</span>
           <div class="puzzle-controls">
             <button onclick="moveItem(this, -1)">⬆️</button>
             <button onclick="moveItem(this, 1)">⬇️</button>
@@ -90,75 +91,85 @@
         </div>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
-      <button class="btn-action" id="btn-check-puzzle" onclick="checkPuzzle()">Check Sequence 🔍</button>
-      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+      <button class="btn-action" id="btn-check-puzzle" onclick="checkPuzzle()" data-en="Check Sequence 🔍" data-id="Periksa Urutan 🔍">Check Sequence 🔍</button>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
-      <div class="challenge-question">
-        Challenge 2: Complete the sentence! "Look! Nanda is ________ two green apples in the sink."
+      <div class="challenge-question"
+           data-en="Challenge 2: Complete the sentence! 'Look! Nanda is ________ two green apples in the sink.'"
+           data-id="Tantangan 2: Lengkapi kalimat! 'Lihat! Nanda is ________ two green apples in the sink (sedang mencuci dua apel).' ">
+        Challenge 2: Complete the sentence! 'Look! Nanda is ________ two green apples in the sink.'
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> washing</button>
-        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> sleeping</button>
-        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> running</button>
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> <span data-en="washing" data-id="washing (sedang mencuci)">washing</span></button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> <span data-en="sleeping" data-id="sleeping (sedang tidur)">sleeping</span></button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> <span data-en="running" data-id="running (sedang berlari)">running</span></button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
-      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
-      <div class="challenge-question">
-        Challenge 3: Choose the correct preposition! "The fresh bread is ________ the dining table."
+      <div class="challenge-question"
+           data-en="Challenge 3: Choose the correct preposition! 'The fresh bread is ________ the dining table.'"
+           data-id="Tantangan 3: Pilih preposisi yang tepat! 'Roti segar berada ________ meja makan.'">
+        Challenge 3: Choose the correct preposition! 'The fresh bread is ________ the dining table.'
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> on</button>
-        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> under</button>
-        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> behind</button>
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> <span data-en="on" data-id="on (di atas)">on</span></button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> <span data-en="under" data-id="under (di bawah)">under</span></button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> <span data-en="behind" data-id="behind (di belakang)">behind</span></button>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
-      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q4 -->
     <div class="challenge-card" id="stage-4" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 4: Odd One Out! Which item does NOT belong in the kitchen?"
+           data-id="Tantangan 4: Temukan yang beda! Benda manakah yang BUKAN merupakan perlengkapan dapur?">
         Challenge 4: Odd One Out! Which item does NOT belong in the kitchen?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> Bicycle</button>
-        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> Frying pan</button>
-        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> Refrigerator</button>
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> <span data-en="Bicycle" data-id="Bicycle (Sepeda)">Bicycle</span></button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> <span data-en="Frying pan" data-id="Frying pan (Wajan)">Frying pan</span></button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> <span data-en="Refrigerator" data-id="Refrigerator (Kulkas)">Refrigerator</span></button>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
-      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q5 -->
     <div class="challenge-card" id="stage-5" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 5: Action Pair! What is Hasyif doing in the kitchen?"
+           data-id="Tantangan 5: Menjodohkan kegiatan! Apa yang sedang dilakukan Hasyif di dapur?">
         Challenge 5: Action Pair! What is Hasyif doing in the kitchen?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> He is preparing a glass of warm milk.</button>
-        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> He is driving a car.</button>
-        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> He is kicking a football.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> <span data-en="He is preparing a glass of warm milk." data-id="Ia sedang menyiapkan segelas susu hangat.">He is preparing a glass of warm milk.</span></button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> <span data-en="He is driving a car." data-id="Ia sedang menyetir mobil.">He is driving a car.</span></button>
+        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> <span data-en="He is kicking a football." data-id="Ia sedang menendang bola.">He is kicking a football.</span></button>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
-      <button class="btn-action" id="next-5" style="display:none;" onclick="completeKinanti()">Finish Mission! 🏁</button>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeKinanti()" data-en="Finish Mission! 🏁" data-id="Selesaikan Misi! 🏁">Finish Mission! 🏁</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 🥗 👏</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Wonderful Job, Kinanti!</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Wonderful Job, Kinanti!" data-id="Luar Biasa, Kinanti!">Wonderful Job, Kinanti!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
+         data-en="All your kitchen recipe sequences and vocabulary matches are spot on!"
+         data-id="Semua urutan langkah dan kosakata dapur bahasa Inggrismu tersusun rapi!">
         All your kitchen recipe sequences and vocabulary matches are spot on!
       </p>
-      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#10B981;">Back to Main Portal</a>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#10B981;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
   </div>
 
@@ -187,7 +198,9 @@
       if (order === '1234') {
         playSfx('correct');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "✅ <b>Perfect Order!</b> (1) First... -> (2) Next... -> (3) Then... -> (4) Finally...";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "✅ <b>Urutan Sempurna!</b> (1) Pertama cuci tangan... -> (2) Cuci apel... -> (3) Tuang susu... -> (4) Sarapan..."
+          : "✅ <b>Perfect Order!</b> (1) First... -> (2) Next... -> (3) Then... -> (4) Finally...";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
@@ -195,7 +208,9 @@
       } else {
         playSfx('wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Sequence is not in order yet. Follow: First -> Next -> Then -> Finally.";
+        feedback.innerHTML = window.currentLang === 'id'
+          ? "❌ Urutan belum runtut. Ikuti: Pertama -> Selanjutnya -> Kemudian -> Akhirnya."
+          : "❌ Sequence is not in order yet. Follow: First -> Next -> Then -> Finally.";
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -214,7 +229,9 @@
         playSfx('correct');
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "✅ <b>Spot on!</b> Great vocabulary knowledge!";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "✅ <b>Tepat sekali!</b> Pemahaman kosakatamu sangat baik!"
+          : "✅ <b>Spot on!</b> Great vocabulary knowledge!";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
@@ -223,7 +240,7 @@
         playSfx('wrong');
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Try again, look at the picture!";
+        feedback.innerHTML = window.currentLang === 'id' ? "❌ Belum tepat. Coba lagi!" : "❌ Try again, look at the picture!";
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -238,6 +255,8 @@
     function completeKinanti() {
       triggerGameOutcome(stars, 5, "Kinanti", null, true);
     }
+
+    initLanguageToggle('en');
   </script>
 </body>
 </html>
