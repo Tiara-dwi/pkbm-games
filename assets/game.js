@@ -115,7 +115,7 @@ function playSfx(type) {
       letItGoNotes.forEach(n => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
-        osc.type = 'sine'; // flute/bell like tone
+        osc.type = 'sine';
         osc.frequency.setValueAtTime(n.f, now + n.t);
         gain.gain.setValueAtTime(0.26, now + n.t);
         gain.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
@@ -130,31 +130,42 @@ function playSfx(type) {
   }
 }
 
-// 2. Text-to-Speech Engine
+// 2. Multilingual Text-to-Speech Engine (Indonesian + English)
 let indonesianVoice = null;
+let englishVoice = null;
+
 function initVoices() {
   if (!('speechSynthesis' in window)) return;
   const loadVoices = () => {
     const voices = window.speechSynthesis.getVoices();
     indonesianVoice = voices.find(v => v.lang.startsWith('id') || v.name.includes('Indonesia')) || null;
+    englishVoice = voices.find(v => (v.lang.startsWith('en') && (v.lang.includes('US') || v.lang.includes('GB') || v.name.includes('English')))) || 
+                   voices.find(v => v.lang.startsWith('en')) || null;
   };
   loadVoices();
   window.speechSynthesis.onvoiceschanged = loadVoices;
 }
 initVoices();
 
-function speak(text, btnElement = null) {
-  if (!('speechSynthesis' in window)) {
-    return;
-  }
+function speak(text, btnElement = null, lang = 'id') {
+  if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
 
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'id-ID';
-  utterance.rate = 0.88;
-  utterance.pitch = 1.05;
-  if (indonesianVoice) {
-    utterance.voice = indonesianVoice;
+  if (lang === 'en') {
+    utterance.lang = 'en-US';
+    utterance.rate = 0.84; // calm, clear educational pace for kids
+    utterance.pitch = 1.05;
+    if (englishVoice) {
+      utterance.voice = englishVoice;
+    }
+  } else {
+    utterance.lang = 'id-ID';
+    utterance.rate = 0.88;
+    utterance.pitch = 1.05;
+    if (indonesianVoice) {
+      utterance.voice = indonesianVoice;
+    }
   }
 
   if (btnElement) {
@@ -164,6 +175,10 @@ function speak(text, btnElement = null) {
   }
 
   window.speechSynthesis.speak(utterance);
+}
+
+function speakEn(text, btnElement = null) {
+  speak(text, btnElement, 'en');
 }
 
 // 3. Lightweight Canvas Confetti
@@ -231,8 +246,8 @@ function launchConfetti() {
 }
 
 // 4. Outcome Decision: Happy Win Fanfare vs Elsa "Let It Go"
-function triggerGameOutcome(score, total, studentName, onRetry = null) {
-  const isHappy = score >= Math.ceil(total * 0.6); // Lebih banyak benar
+function triggerGameOutcome(score, total, studentName, onRetry = null, isEnglish = false) {
+  const isHappy = score >= Math.ceil(total * 0.6);
 
   if (isHappy) {
     playSfx('win');
@@ -242,27 +257,32 @@ function triggerGameOutcome(score, total, studentName, onRetry = null) {
       modal.classList.add('active');
     }
   } else {
-    // Elsa Frozen: Let it go, let it gooo!
     playSfx('letitgo');
     let elsaModal = document.getElementById('elsa-modal');
     if (!elsaModal) {
       elsaModal = document.createElement('div');
       elsaModal.id = 'elsa-modal';
       elsaModal.className = 'modal-overlay active';
+      
+      const elsaSubtitle = isEnglish 
+        ? `Don't worry, <b>${studentName}</b>! Mistakes are part of learning.<br>Let it go, take a deep breath, and let's try again together!`
+        : `Jangan bersedih, <b>${studentName}</b>! Kesalahan itu wajar dalam proses belajar.<br>Lepaskan rasa ragumu, tarik napas dalam-dalam, dan yuk kita coba sekali lagi!`;
+      
+      const btnText = isEnglish ? `❄️ Melt the Snow & Try Again!` : `❄️ Cairkan Salju & Coba Lagi!`;
+
       elsaModal.innerHTML = `
         <div class="modal-card modal-elsa">
           <div class="elsa-snowflakes">❄️ 🌨️ ❄️ 🌨️ ❄️</div>
           <div class="elsa-avatar">👑 ❄️</div>
           <h2 style="font-size: 1.8rem; color: #0369A1; margin-bottom: 8px;">Let It Go, Let It Gooo... ❄️</h2>
           <p style="color: #0C4A6E; font-size: 1.05rem; line-height: 1.6; margin-bottom: 18px;">
-            Jangan bersedih, <b>${studentName}</b>! Kesalahan itu wajar dalam proses belajar.<br>
-            Lepaskan rasa ragumu, tarik napas dalam-dalam, dan yuk kita coba sekali lagi!
+            ${elsaSubtitle}
           </p>
           <div style="font-size: 0.95rem; color: #0284C7; font-weight: 700; margin-bottom: 14px;">
-            Skor Kamu: ${score}/${total}
+            ${isEnglish ? 'Your Score' : 'Skor Kamu'}: ${score}/${total}
           </div>
           <button class="btn-elsa-retry" onclick="retryFromElsa()">
-            ❄️ Cairkan Salju & Coba Lagi!
+            ${btnText}
           </button>
         </div>
       `;
@@ -271,7 +291,6 @@ function triggerGameOutcome(score, total, studentName, onRetry = null) {
       elsaModal.classList.add('active');
     }
     
-    // Store retry callback on window
     window._retryCallback = onRetry || (() => window.location.reload());
   }
 }
