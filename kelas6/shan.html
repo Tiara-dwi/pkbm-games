@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Shan: Tantangan Kuis Kilat 5W+1H & Fakta</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .energy-bar-wrap {
+      height: 10px;
+      background: #FEE2E2;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .energy-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #EF4444, #F59E0B);
+      width: 100%;
+      transition: width 0.3s;
+    }
+    .badge-streak {
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 2px solid #FCA5A5;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#DC2626;">🏆</div>
+      <div>Kuis Kilat Shan</div>
+    </a>
+    <div class="student-tag" style="background:#FEF2F2; color:#DC2626;">Kelas 6 • Shan</div>
+    <a href="../index.html" class="btn-back">← Menu Utama</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="badge-streak">🔥 Kombo: <span id="streak-num">0</span></div>
+      <div class="star-count" style="color:#DC2626;">⭐ Skor: <span id="score-display">0</span>/4</div>
+    </div>
+
+    <div class="energy-bar-wrap">
+      <div class="energy-bar-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- SOAL DINAMIS -->
+    <div class="challenge-card" id="quiz-card">
+      <div class="challenge-question" id="question-text">
+        Loading soal...
+      </div>
+      <div class="option-grid" id="options-container"></div>
+      <div class="feedback-box" id="feedback-box"></div>
+      <div style="text-align: right; margin-top: 16px;">
+        <button class="btn-action" id="next-btn" style="display:none; background:#DC2626;" onclick="nextQuestion()">Tantangan Berikutnya ⚡</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.8rem; margin-bottom: 12px;">🥇 🏆 ⚡</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Juara Sprint, Shan!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Kecepatan dan ketepatan analisismu dalam menuntaskan kuis 5W+1H Tanjung Puting sungguh luar biasa!
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#DC2626;">Kembali ke Menu Kelas</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    const questions = [
+      {
+        q: "Siapakah nama tiga penjelajah muda yang melakukan pengamatan di Taman Nasional Tanjung Puting?",
+        opts: ["Shine, Zahra, dan Yusman", "Acip, Kinanti, dan Alisya", "Aditya dan Nanda", "Pak Joko dan Bu Guru"],
+        correct: 0,
+        exp: "Shine, Zahra, dan Yusman adalah tokoh penyelidik pengamatan konservasi di Tanjung Puting."
+      },
+      {
+        q: "Alat transportasi air apakah yang digunakan mereka selama menyusuri Sungai Sekonyer?",
+        opts: ["Speedboat cepat berbahan fiber", "Perahu kayu kelotok bermesin tradisional", "Kano dayung karet", "Kapal pesiar mewah"],
+        correct: 1,
+        exp: "Perahu kelotok kayu adalah transportasi khas di Sungai Sekonyer."
+      },
+      {
+        q: "Manakah informasi di bawah ini yang menjawab unsur 'DI MANA' (Where)?",
+        opts: ["Pukul 08.00 WIB pagi", "Camp Leakey, Kabupaten Kotawaringin Barat", "Karena orangutan terancam punah", "Dengan cara mencatat di buku"],
+        correct: 1,
+        exp: "Camp Leakey, Kotawaringin Barat menerangkan lokasi geografis."
+      },
+      {
+        q: "Manakah kalimat berikut yang merupakan FAKTA (terbukti secara ilmiah)?",
+        opts: ["Bekantan adalah monyet yang wajahnya paling lucu di dunia.", "Orangutan kalimantan (Pongo pygmaeus) termasuk primata yang dilindungi undang-undang.", "Semua pengunjung pasti takut melihat air sungai hitam.", "Menaiki kelotok terasa sangat membosankan."],
+        correct: 1,
+        exp: "Status perlindungan orangutan kalimantan adalah fakta hukum dan sains resmi."
+      }
+    ];
+
+    let qIdx = 0;
+    let score = 0;
+    let streak = 0;
+
+    function renderQuestion() {
+      const q = questions[qIdx];
+      document.getElementById('question-text').innerText = `${qIdx + 1}. ${q.q}`;
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}.</span> ${opt}`;
+        btn.onclick = () => chooseAnswer(idx);
+        container.appendChild(btn);
+      });
+      document.getElementById('progress-fill').style.width = `${((qIdx + 1) / questions.length) * 100}%`;
+    }
+
+    function chooseAnswer(idx) {
+      const q = questions[qIdx];
+      const buttons = document.querySelectorAll('.btn-option');
+      const feedback = document.getElementById('feedback-box');
+      buttons.forEach(b => b.disabled = true);
+
+      if (idx === q.correct) {
+        playSfx('correct');
+        buttons[idx].classList.add('selected-correct');
+        score++;
+        streak++;
+        document.getElementById('score-display').innerText = score;
+        document.getElementById('streak-num').innerText = streak;
+        playSfx('star');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = `⚡ <b>KILAT & BENAR!</b> ${q.exp}`;
+      } else {
+        playSfx('wrong');
+        buttons[idx].classList.add('selected-wrong');
+        streak = 0;
+        document.getElementById('streak-num').innerText = streak;
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = `❌ <b>Jawaban tepat: ${q.opts[q.correct]}</b><br>${q.exp}`;
+      }
+      document.getElementById('next-btn').style.display = 'inline-flex';
+    }
+
+    function nextQuestion() {
+      playSfx('click');
+      qIdx++;
+      if (qIdx < questions.length) {
+        document.getElementById('feedback-box').className = "feedback-box";
+        document.getElementById('next-btn').style.display = "none";
+        renderQuestion();
+      } else {
+        playSfx('win');
+        launchConfetti();
+        document.getElementById('victory-modal').classList.add('active');
+      }
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
