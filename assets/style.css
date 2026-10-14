@@ -491,3 +491,33 @@ body.dyslexia-mode .reading-box {
 .translation-hint.show {
   display: block;
 }
+
+/* Language Toggle Switcher (English vs Indonesian) */
+.lang-switch-wrap {
+  display: inline-flex;
+  background: #E2E8F0;
+  padding: 4px;
+  border-radius: 30px;
+  gap: 4px;
+}
+
+.btn-lang {
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-lang.active {
+  background: white;
+  color: #0284C7;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
