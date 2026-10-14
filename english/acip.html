@@ -34,8 +34,13 @@
 
     <!-- READING CASE -->
     <div class="reading-box">
-      <div class="reading-title" data-en="🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen" data-id="🍳 Studi Kasus: Pagi Hari Hasyif dan Nanda di Dapur">
-        🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen
+      <div class="card-header-flex">
+        <div class="reading-title" style="margin-bottom:0;" data-en="🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen" data-id="🍳 Studi Kasus: Pagi Hari Hasyif dan Nanda di Dapur">
+          🍳 Case Study: Hasyif and Nanda's Morning in the Kitchen
+        </div>
+        <button class="btn-card-lang" onclick="toggleReadingLanguage(this)">
+          🌐 <span>Terjemahkan Cerita</span>
+        </button>
       </div>
       <p class="reading-text" 
          data-en="Every Sunday morning, Hasyif and Nanda help their parents in the kitchen. In the clean kitchen, there is a big stove, a frying pan, and a white refrigerator beside the dining table. Nanda is washing two green apples in the sink, while Hasyif is preparing a glass of warm milk. On the table, there are plates, spoons, and a loaf of bread. Hasyif says, 'Cooking together is fun, but we must be careful with the hot stove and sharp knives!'"
@@ -46,10 +51,15 @@
 
     <!-- Q1 -->
     <div class="challenge-card" id="stage-1">
-      <div class="challenge-question"
-           data-en="Challenge 1: Which sentence correctly uses the <u>Present Continuous Tense (is/are + Verb-ing)</u> to describe an ongoing action?"
-           data-id="Tantangan 1: Manakah kalimat yang menggunakan <u>Present Continuous Tense (is/are + Verb-ing)</u> dengan benar untuk menyatakan kegiatan yang sedang berlangsung?">
-        Challenge 1: Which sentence correctly uses the <u>Present Continuous Tense (is/are + Verb-ing)</u> to describe an ongoing action?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 1: Which sentence correctly uses the <u>Present Continuous Tense (is/are + Verb-ing)</u> to describe an ongoing action?"
+             data-id="Tantangan 1: Manakah kalimat yang menggunakan <u>Present Continuous Tense (is/are + Verb-ing)</u> dengan benar untuk menyatakan kegiatan yang sedang berlangsung?">
+          Challenge 1: Which sentence correctly uses the <u>Present Continuous Tense (is/are + Verb-ing)</u> to describe an ongoing action?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-1', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(1, 0)">
@@ -59,7 +69,7 @@
           <span>B.</span> <span data-en="Nanda is washing two green apples in the sink." data-id="Nanda is washing two green apples in the sink. (Benar: is + washing)">Nanda is washing two green apples in the sink.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(1, 2)">
-          <span>A.</span> <span data-en="Nanda are washing two green apples." data-id="Nanda are washing two green apples. (Salah: Nanda tunggal, bukan are)">Nanda are washing two green apples.</span>
+          <span>C.</span> <span data-en="Nanda are washing two green apples." data-id="Nanda are washing two green apples. (Salah: Nanda tunggal, bukan are)">Nanda are washing two green apples.</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
@@ -68,10 +78,15 @@
 
     <!-- Q2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 2: Preposition Analysis! Where is the white refrigerator located according to the text?"
-           data-id="Tantangan 2: Analisis Preposisi Tempat! Di manakah letak kulkas putih berdasarkan teks cerita?">
-        Challenge 2: Preposition Analysis! Where is the white refrigerator located according to the text?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 2: Preposition Analysis! Where is the white refrigerator located according to the text?"
+             data-id="Tantangan 2: Analisis Preposisi Tempat! Di manakah letak kulkas putih berdasarkan teks cerita?">
+          Challenge 2: Preposition Analysis! Where is the white refrigerator located according to the text?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-2', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(2, 0)">
@@ -90,10 +105,15 @@
 
     <!-- Q3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 3: Cause-and-Effect Logic! Why does Hasyif remind Nanda to be careful in the kitchen?"
-           data-id="Tantangan 3: Logika Sebab-Akibat! Mengapa Hasyif mengingatkan Nanda agar berhati-hati di dapur?">
-        Challenge 3: Cause-and-Effect Logic! Why does Hasyif remind Nanda to be careful in the kitchen?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 3: Cause-and-Effect Logic! Why does Hasyif remind Nanda to be careful in the kitchen?"
+             data-id="Tantangan 3: Logika Sebab-Akibat! Mengapa Hasyif mengingatkan Nanda agar berhati-hati di dapur?">
+          Challenge 3: Cause-and-Effect Logic! Why does Hasyif remind Nanda to be careful in the kitchen?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-3', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(3, 0)">
@@ -112,10 +132,15 @@
 
     <!-- Q4 -->
     <div class="challenge-card" id="stage-4" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 4: Vocabulary Categorization! Which pair contains only <u>cooking appliances and storage</u>?"
-           data-id="Tantangan 4: Klasifikasi Kosakata! Manakah pasangan yang hanya berisi <u>peralatan memasak dan tempat penyimpanan</u>?">
-        Challenge 4: Vocabulary Categorization! Which pair contains only <u>cooking appliances and storage</u>?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 4: Vocabulary Categorization! Which pair contains only <u>cooking appliances and storage</u>?"
+             data-id="Tantangan 4: Klasifikasi Kosakata! Manakah pasangan yang hanya berisi <u>peralatan memasak dan tempat penyimpanan</u>?">
+          Challenge 4: Vocabulary Categorization! Which pair contains only <u>cooking appliances and storage</u>?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-4', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(4, 0)">
@@ -134,10 +159,15 @@
 
     <!-- Q5 -->
     <div class="challenge-card" id="stage-5" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 5: Sentence Construction! If Hasyif is making warm milk right now, what is the correct sentence?"
-           data-id="Tantangan 5: Susunan Kalimat! Jika Hasyif sedang membuat susu hangat sekarang, manakah kalimat yang benar?">
-        Challenge 5: Sentence Construction! If Hasyif is making warm milk right now, what is the correct sentence?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 5: Sentence Construction! If Hasyif is making warm milk right now, what is the correct sentence?"
+             data-id="Tantangan 5: Susunan Kalimat! Jika Hasyif sedang membuat susu hangat sekarang, manakah kalimat yang benar?">
+          Challenge 5: Sentence Construction! If Hasyif is making warm milk right now, what is the correct sentence?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-5', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(5, 0)">
