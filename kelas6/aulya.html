@@ -122,11 +122,11 @@
         document.getElementById('score-display').innerText = score;
         playSfx('star');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = `✅ <b>Tepat Sekali! (${current.type})</b><br>${current.reason}`;
+        feedback.innerHTML = `✅ Tepat Sekali! (${current.type})<br>${current.reason}`;
       } else {
         playSfx('wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = `❌ <b>Jawaban yang benar: ${current.type}</b><br>${current.reason}`;
+        feedback.innerHTML = `❌ Jawaban yang tepat: ${current.type}<br>${current.reason}`;
       }
       nextBtn.style.display = "inline-flex";
     }
