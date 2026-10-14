@@ -126,14 +126,14 @@
         document.getElementById('streak-num').innerText = streak;
         playSfx('star');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = `⚡ <b>KILAT & BENAR!</b> ${q.exp}`;
+        feedback.innerHTML = `⚡ KILAT & BENAR! ${q.exp}`;
       } else {
         playSfx('wrong');
         buttons[idx].classList.add('selected-wrong');
         streak = 0;
         document.getElementById('streak-num').innerText = streak;
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = `❌ <b>Jawaban tepat: ${q.opts[q.correct]}</b>`;
+        feedback.innerHTML = `❌ Jawaban tepat: ${q.opts[q.correct]}`;
       }
       document.getElementById('next-btn').style.display = 'inline-flex';
     }
