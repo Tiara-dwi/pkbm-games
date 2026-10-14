@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alisya's Kitchen & Food Adventure 🌟</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    body {
+      background: #FFFDF7 !important;
+      color: #1F2421 !important;
+      font-size: 1.25rem !important;
+      line-height: 1.9 !important;
+      letter-spacing: 0.08em !important;
+    }
+    .alisya-box {
+      background: #FFFFFF;
+      border: 3px solid #E2D9C8;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .alisya-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #78350F;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .photo-preview {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      border: 2px solid #FEF3C7;
+    }
+    .card-choice {
+      background: #FFFFFF;
+      border: 3px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    .card-choice:hover { border-color: #F59E0B; background: #FFFBEB; }
+    .card-icon { font-size: 3.2rem; }
+    .card-label { font-size: 1.3rem; font-weight: 800; }
+  </style>
+</head>
+<body class="dyslexia-mode">
+  <div class="header-bar" style="background:#FFFDF7;">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#F59E0B;">🌟</div>
+      <div>Alisya's Adventure</div>
+    </a>
+    <div class="student-tag" style="background:#FEF3C7; color:#92400E;">Grade 4 • Alisya</div>
+    <a href="../index.html" class="btn-back">← Main Portal</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="font-size: 1.3rem;">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <button class="btn-speaker" onclick="speakEn('Hello Alisya! Listen to the English words and tap the picture!', this)">
+        🔊 Listen Guide
+      </button>
+    </div>
+
+    <!-- MISI 1: FRYING PAN -->
+    <div class="alisya-box" id="stage-1">
+      <div class="alisya-title">🍳 Mission 1: Cooking in the Pan</div>
+      <img src="../assets/images/eng_kls4_frying_pan_egg.jpg" class="photo-preview" alt="Frying Pan" onerror="this.style.display='none'">
+      <button class="btn-speaker" onclick="speakEn('Hasyif is making a fried egg in the frying pan. Which one is the frying pan?', this)">
+        🔊 Listen Question
+      </button>
+      <div class="option-grid two-col" style="margin-top:14px;">
+        <div class="card-choice" onclick="chooseAlisya(1, 'pan')">
+          <div class="card-icon">🍳</div>
+          <div class="card-label">FRYING PAN</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Frying pan', this)">🔊 Listen</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(1, 'spoon')">
+          <div class="card-icon">🥄</div>
+          <div class="card-label">SPOON</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Spoon', this)">🔊 Listen</button>
+        </div>
+      </div>
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="next-1" style="display:none; margin-top:16px;" onclick="goToStage(2)">Next Mission 🌟 →</button>
+    </div>
+
+    <!-- MISI 2: WARM MILK -->
+    <div class="alisya-box" id="stage-2" style="display:none;">
+      <div class="alisya-title">🥛 Mission 2: A Glass of Milk</div>
+      <img src="../assets/images/eng_kls4_glass_of_milk.jpg" class="photo-preview" alt="Glass of Milk" onerror="this.style.display='none'">
+      <button class="btn-speaker" onclick="speakEn('Nanda is drinking a glass of warm milk. Which one is milk?', this)">
+        🔊 Listen Question
+      </button>
+      <div class="option-grid two-col" style="margin-top:14px;">
+        <div class="card-choice" onclick="chooseAlisya(2, 'milk')">
+          <div class="card-icon">🥛</div>
+          <div class="card-label">WARM MILK</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('A glass of warm milk', this)">🔊 Listen</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(2, 'pizza')">
+          <div class="card-icon">🍕</div>
+          <div class="card-label">PIZZA</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Pizza', this)">🔊 Listen</button>
+        </div>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none; margin-top:16px;" onclick="goToStage(3)">Next Mission 🌟 →</button>
+    </div>
+
+    <!-- MISI 3: REFRIGERATOR -->
+    <div class="alisya-box" id="stage-3" style="display:none;">
+      <div class="alisya-title">🧊 Mission 3: Cold Refrigerator</div>
+      <button class="btn-speaker" onclick="speakEn('The white refrigerator keeps our food cold. Which word is refrigerator?', this)">
+        🔊 Listen Question
+      </button>
+      <div class="option-grid two-col" style="margin-top:14px;">
+        <div class="card-choice" onclick="chooseAlisya(3, 'fridge')">
+          <div class="card-icon">🧊</div>
+          <div class="card-label">REFRIGERATOR</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Refrigerator', this)">🔊 Listen</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(3, 'bed')">
+          <div class="card-icon">🛏️</div>
+          <div class="card-label">BED</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Bed', this)">🔊 Listen</button>
+        </div>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none; margin-top:16px;" onclick="goToStage(4)">Next Mission 🌟 →</button>
+    </div>
+
+    <!-- MISI 4: KITCHEN ITEM OR PET -->
+    <div class="alisya-box" id="stage-4" style="display:none;">
+      <div class="alisya-title">🍳 Mission 4: Word Category</div>
+      <button class="btn-speaker" onclick="speakEn('Is a frying pan a kitchen item or a pet animal?', this)">
+        🔊 Listen Question
+      </button>
+      <div class="option-grid two-col" style="margin-top:14px;">
+        <div class="card-choice" onclick="chooseAlisya(4, 'kitchen')">
+          <div class="card-icon">🏠</div>
+          <div class="card-label">KITCHEN THING</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Kitchen thing', this)">🔊 Listen</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(4, 'pet')">
+          <div class="card-icon">🐶</div>
+          <div class="card-label">PET ANIMAL</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Pet animal', this)">🔊 Listen</button>
+        </div>
+      </div>
+      <div class="feedback-box" id="feedback-4"></div>
+      <button class="btn-action" id="next-4" style="display:none; margin-top:16px;" onclick="goToStage(5)">Next Mission 🌟 →</button>
+    </div>
+
+    <!-- MISI 5: TWO GREEN APPLES -->
+    <div class="alisya-box" id="stage-5" style="display:none;">
+      <div class="alisya-title">🍏 Mission 5: Green Apples</div>
+      <button class="btn-speaker" onclick="speakEn('Nanda has sweet green apples on the plate. Which picture is apples?', this)">
+        🔊 Listen Question
+      </button>
+      <div class="option-grid two-col" style="margin-top:14px;">
+        <div class="card-choice" onclick="chooseAlisya(5, 'apple')">
+          <div class="card-icon">🍏</div>
+          <div class="card-label">GREEN APPLES</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Sweet green apples', this)">🔊 Listen</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(5, 'car')">
+          <div class="card-icon">🚗</div>
+          <div class="card-label">CAR</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Car', this)">🔊 Listen</button>
+        </div>
+      </div>
+      <div class="feedback-box" id="feedback-5"></div>
+      <button class="btn-action" id="next-5" style="display:none; margin-top:16px;" onclick="completeAlisya()">Open Star Reward! 👑</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card" style="border: 4px solid #F59E0B;">
+      <div style="font-size: 4rem; margin-bottom: 12px;">🌟 👑 💖</div>
+      <h2 style="font-size: 2rem; color: #92400E; margin-bottom: 10px;">Awesome, Alisya!</h2>
+      <p style="font-size: 1.25rem; color: #4B5563; margin-bottom: 24px; line-height: 1.7;">
+        You did fantastic! All kitchen and food English words matched perfectly!
+      </p>
+      <button class="btn-speaker" onclick="speakEn('Awesome Alisya! Great job! You collected all five stars!', this)">
+        🔊 Hear Cheer
+      </button>
+      <div style="margin-top: 20px;">
+        <a href="../index.html" class="btn-action">Finish Playing 🎉</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+    const correctTargets = { 1: 'pan', 2: 'milk', 3: 'fridge', 4: 'kitchen', 5: 'apple' };
+
+    function chooseAlisya(stage, answer) {
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      if (answer === correctTargets[stage]) {
+        playSfx('correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "🎉 <b>Awesome Alisya!</b> That is correct!";
+        speakEn('Awesome Alisya! That is correct!');
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+      } else {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "🌸 Let's try again, listen carefully!";
+        speakEn('Let us try again, listen carefully!');
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+    }
+
+    function completeAlisya() {
+      triggerGameOutcome(stars, 5, "Alisya", null, true);
+    }
+  </script>
+</body>
+</html>
