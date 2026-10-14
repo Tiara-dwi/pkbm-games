@@ -20,20 +20,19 @@
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
       <div class="badge-icon" style="background:#10B981;">🍜</div>
-      <div>Ardiansyah's Quantifier Mission</div>
+      <div data-en="Ardiansyah's Quantifier Mission" data-id="Misi Penakar Ardiansyah">Ardiansyah's Quantifier Mission</div>
     </a>
-    <div class="student-tag" style="background:#ECFDF5; color:#065F46;">Grade 5 • Ardiansyah</div>
-    <div class="lang-toggle-container" style="margin-left: auto; margin-right: 12px;">
-      <button class="lang-toggle-btn" onclick="window.location.href='../kelas5/ardiansyah.html'" title="Ganti ke Game Bahasa Indonesia">🇮🇩 ID</button>
-      <button class="lang-toggle-btn active lang-en" title="English Mode">🇬🇧 EN</button>
+    <div class="lang-switch-wrap">
+      <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
+      <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-
-    <a href="../index.html" class="btn-back">← Main Portal</a>
+    <div class="student-tag" style="background:#ECFDF5; color:#065F46;">Grade 5 • Ardiansyah</div>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count" style="color:#059669;">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="star-count" style="color:#059669;"><span data-en="⭐ Stars: " data-id="⭐ Bintang: ">⭐ Stars: </span><span id="star-display">0</span>/5</div>
       <div class="progress-pills">
         <div class="pill-dot active" id="dot-1"></div>
         <div class="pill-dot" id="dot-2"></div>
@@ -47,93 +46,110 @@
 
     <!-- READING CASE -->
     <div class="reading-box">
-      <div class="reading-title">🍜 Case: Aditya at the School Food Fair</div>
-      <p class="reading-text">
-        During the school culinary festival, Aditya visits the canteen. At the food stall, Aditya orders a hot <b>bowl of bakso</b> 
-        and a fresh <b>glass of iced tea</b>. The soup tastes savory and salty, while the iced tea tastes sweet. 
-        Aditya also buys a <b>bar of chocolate</b> and a <b>bottle of mineral water</b> for his friend.
-        Liquids and mass foods cannot be counted one by one, so we must use measuring containers!
+      <div class="reading-title" data-en="🍜 Case: Aditya at the School Food Fair" data-id="🍜 Kasus: Aditya di Festival Kuliner Sekolah">
+        🍜 Case: Aditya at the School Food Fair
+      </div>
+      <p class="reading-text"
+         data-en="During the school culinary festival, Aditya visits the canteen. At the food stall, Aditya orders a hot bowl of bakso and a fresh glass of iced tea. The soup tastes savory and salty, while the iced tea tastes sweet. Aditya also buys a bar of chocolate and a bottle of mineral water for his friend. Liquids and mass foods cannot be counted one by one, so we must use measuring containers!"
+         data-id="Selama festival kuliner sekolah, Aditya mengunjungi kantin. Di gerai makanan, Aditya memesan semangkuk bakso hangat (a bowl of bakso) dan segelas es teh segar (a glass of iced tea). Kuah baksonya gurih dan asin (savory and salty), sedangkan es tehnya berasa manis (sweet). Aditya juga membeli sebatang cokelat (a bar of chocolate) dan sebotol air mineral untuk temannya. Benda cair dan massal tidak bisa dihitung satu-satu, jadi kita wajib memakai kata wadah penakar (quantifiers)!">
+        During the school culinary festival, Aditya visits the canteen. At the food stall, Aditya orders a hot bowl of bakso and a fresh glass of iced tea. The soup tastes savory and salty, while the iced tea tastes sweet. Aditya also buys a bar of chocolate and a bottle of mineral water for his friend. Liquids and mass foods cannot be counted one by one, so we must use measuring containers!
       </p>
     </div>
 
     <!-- Q1 -->
     <div class="challenge-card" id="stage-1">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 1: How do we correctly quantify hot bakso soup in English?"
+           data-id="Tantangan 1: Bagaimana cara yang benar menyatakan 'semangkuk bakso' dalam bahasa Inggris?">
         Challenge 1: How do we correctly quantify hot bakso soup in English?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> A glass of bakso</button>
-        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> A bowl of bakso</button>
-        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> A loaf of bakso</button>
+        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> <span data-en="A glass of bakso" data-id="A glass of bakso (Segelas bakso)">A glass of bakso</span></button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> <span data-en="A bowl of bakso" data-id="A bowl of bakso (Semangkuk bakso)">A bowl of bakso</span></button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> <span data-en="A loaf of bakso" data-id="A loaf of bakso (Sepotong roti bakso)">A loaf of bakso</span></button>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
-      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 2: How do we correctly order iced tea?"
+           data-id="Tantangan 2: Bagaimana cara yang benar memesan 'segelas es teh'?">
         Challenge 2: How do we correctly order iced tea?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> A bar of iced tea</button>
-        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> A glass of iced tea</button>
-        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> A plate of iced tea</button>
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> <span data-en="A bar of iced tea" data-id="A bar of iced tea (Sebatang es teh)">A bar of iced tea</span></button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> <span data-en="A glass of iced tea" data-id="A glass of iced tea (Segelas es teh)">A glass of iced tea</span></button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> <span data-en="A plate of iced tea" data-id="A plate of iced tea (Sepiring es teh)">A plate of iced tea</span></button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
-      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 3: Taste Vocabulary! How does Aditya's warm bakso soup taste?"
+           data-id="Tantangan 3: Kosakata Rasa! Bagaimanakah rasa kuah bakso hangat pesanan Aditya?">
         Challenge 3: Taste Vocabulary! How does Aditya's warm bakso soup taste?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Savory and salty</button>
-        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Sour and bitter</button>
-        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> Very sweet like candy</button>
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> <span data-en="Savory and salty" data-id="Savory and salty (Gurih dan asin)">Savory and salty</span></button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> <span data-en="Sour and bitter" data-id="Sour and bitter (Asam dan pahit)">Sour and bitter</span></button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> <span data-en="Very sweet like candy" data-id="Very sweet like candy (Sangat manis seperti permen)">Very sweet like candy</span></button>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
-      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q4 -->
     <div class="challenge-card" id="stage-4" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 4: Which quantifier matches a piece of solid chocolate?"
+           data-id="Tantangan 4: Kata penakar manakah yang cocok untuk 'sebatang cokelat padat'?">
         Challenge 4: Which quantifier matches a piece of solid chocolate?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> A bar of chocolate</button>
-        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> A bottle of chocolate</button>
-        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> A cup of chocolate</button>
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> <span data-en="A bar of chocolate" data-id="A bar of chocolate (Sebatang cokelat)">A bar of chocolate</span></button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> <span data-en="A bottle of chocolate" data-id="A bottle of chocolate (Sebotol cokelat)">A bottle of chocolate</span></button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> <span data-en="A cup of chocolate" data-id="A cup of chocolate (Secangkir cokelat)">A cup of chocolate</span></button>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
-      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q5 -->
     <div class="challenge-card" id="stage-5" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 5: Grammar Rule! Why do water, tea, and soup need quantifiers like 'a glass of' or 'a bowl of'?"
+           data-id="Tantangan 5: Aturan Tata Bahasa! Mengapa air, teh, dan sup memerlukan wadah penakar seperti 'a glass of' atau 'a bowl of'?">
         Challenge 5: Grammar Rule! Why do water, tea, and soup need quantifiers like 'a glass of' or 'a bowl of'?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> Because liquids are uncountable nouns and require containers to measure.</button>
-        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> Because they are always served in cold weather.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 0)">
+          <span>A.</span> <span data-en="Because liquids are uncountable nouns and require containers to measure." data-id="Karena benda cair termasuk kata benda tak dapat dihitung (uncountable) sehingga butuh wadah untuk menakarnya.">Because liquids are uncountable nouns and require containers to measure.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)">
+          <span>B.</span> <span data-en="Because they are always served in cold weather." data-id="Karena makanan tersebut hanya disajikan saat cuaca dingin.">Because they are always served in cold weather.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
-      <button class="btn-action" id="next-5" style="display:none;" onclick="completeArdiansyah()">Finish Mission! 🏁</button>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeArdiansyah()" data-en="Finish Mission! 🏁" data-id="Selesaikan Misi! 🏁">Finish Mission! 🏁</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">🎯 🍜 👏</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Superb Job, Ardiansyah!</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Superb Job, Ardiansyah!" data-id="Hebat Sekali, Ardiansyah!">Superb Job, Ardiansyah!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
+         data-en="You mastered quantifying containers and food tastes in English with high precision!"
+         data-id="Kamu menguasai kata penakar wadah makanan dan rasa dalam bahasa Inggris dengan sangat tepat!">
         You mastered quantifying containers and food tastes in English with high precision!
       </p>
-      <a href="../index.html" class="btn-action" style="background:#10B981; margin: 0 auto;">Back to Main Portal</a>
+      <a href="../index.html" class="btn-action" style="background:#10B981; margin: 0 auto;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
   </div>
 
@@ -154,7 +170,9 @@
         playSfx('correct');
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "✅ <b>Spot on!</b> Accurate quantifier match!";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "✅ <b>Tepat sekali!</b> Penakar dan kosakatamu sangat pas!"
+          : "✅ <b>Spot on!</b> Accurate quantifier match!";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
@@ -163,7 +181,9 @@
         playSfx('wrong');
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Not quite right. Remember the container used!";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "❌ Belum tepat. Perhatikan jenis wadah yang digunakan ya!"
+          : "❌ Not quite right. Remember the container used!";
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -178,6 +198,8 @@
     function completeArdiansyah() {
       triggerGameOutcome(stars, 5, "Ardiansyah", null, true);
     }
+
+    initLanguageToggle('en');
   </script>
 </body>
 </html>
