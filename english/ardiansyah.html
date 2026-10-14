@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ardiansyah's Mission: Food & Quantifier Detective</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .photo-preview {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      border: 2px solid #E2E8F0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#10B981;">🍜</div>
+      <div>Ardiansyah's Quantifier Mission</div>
+    </a>
+    <div class="student-tag" style="background:#ECFDF5; color:#065F46;">Grade 5 • Ardiansyah</div>
+    <a href="../index.html" class="btn-back">← Main Portal</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="color:#059669;">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+        <div class="pill-dot" id="dot-4"></div>
+        <div class="pill-dot" id="dot-5"></div>
+      </div>
+    </div>
+
+    <img src="../assets/images/eng_kls5_bowl_of_bakso.jpg" class="photo-preview" alt="Bowl of Bakso" onerror="this.style.display='none'">
+
+    <!-- READING CASE -->
+    <div class="reading-box">
+      <div class="reading-title">🍜 Case: Aditya at the School Food Fair</div>
+      <p class="reading-text">
+        During the school culinary festival, Aditya visits the canteen. At the food stall, Aditya orders a hot <b>bowl of bakso</b> 
+        and a fresh <b>glass of iced tea</b>. The soup tastes savory and salty, while the iced tea tastes sweet. 
+        Aditya also buys a <b>bar of chocolate</b> and a <b>bottle of mineral water</b> for his friend.
+        Liquids and mass foods cannot be counted one by one, so we must use measuring containers!
+      </p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="challenge-card" id="stage-1">
+      <div class="challenge-question">
+        Challenge 1: How do we correctly quantify hot bakso soup in English?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> A glass of bakso</button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> A bowl of bakso</button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> A loaf of bakso</button>
+      </div>
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+    </div>
+
+    <!-- Q2 -->
+    <div class="challenge-card" id="stage-2" style="display:none;">
+      <div class="challenge-question">
+        Challenge 2: How do we correctly order iced tea?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> A bar of iced tea</button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> A glass of iced tea</button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> A plate of iced tea</button>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+    </div>
+
+    <!-- Q3 -->
+    <div class="challenge-card" id="stage-3" style="display:none;">
+      <div class="challenge-question">
+        Challenge 3: Taste Vocabulary! How does Aditya's warm bakso soup taste?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Savory and salty</button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Sour and bitter</button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> Very sweet like candy</button>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+    </div>
+
+    <!-- Q4 -->
+    <div class="challenge-card" id="stage-4" style="display:none;">
+      <div class="challenge-question">
+        Challenge 4: Which quantifier matches a piece of solid chocolate?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> A bar of chocolate</button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> A bottle of chocolate</button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> A cup of chocolate</button>
+      </div>
+      <div class="feedback-box" id="feedback-4"></div>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+    </div>
+
+    <!-- Q5 -->
+    <div class="challenge-card" id="stage-5" style="display:none;">
+      <div class="challenge-question">
+        Challenge 5: Grammar Rule! Why do water, tea, and soup need quantifiers like 'a glass of' or 'a bowl of'?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> Because liquids are uncountable nouns and require containers to measure.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> Because they are always served in cold weather.</button>
+      </div>
+      <div class="feedback-box" id="feedback-5"></div>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeArdiansyah()">Finish Mission! 🏁</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🎯 🍜 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Superb Job, Ardiansyah!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        You mastered quantifying containers and food tastes in English with high precision!
+      </p>
+      <a href="../index.html" class="btn-action" style="background:#10B981; margin: 0 auto;">Back to Main Portal</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+    const correctAnswers = { 1: 1, 2: 1, 3: 0, 4: 0, 5: 0 };
+
+    function checkAnswer(stage, chosenIndex) {
+      const card = document.getElementById(`stage-${stage}`);
+      const buttons = card.querySelectorAll('.btn-option');
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIndex === correctAnswers[stage]) {
+        playSfx('correct');
+        buttons[chosenIndex].classList.add('selected-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Spot on!</b> Accurate quantifier match!";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
+      } else {
+        playSfx('wrong');
+        buttons[chosenIndex].classList.add('selected-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Not quite right. Remember the container used!";
+      }
+      nextBtn.style.display = "inline-flex";
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
+    }
+
+    function completeArdiansyah() {
+      triggerGameOutcome(stars, 5, "Ardiansyah", null, true);
+    }
+  </script>
+</body>
+</html>
