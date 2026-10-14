@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Ardiansyah: Pilah Paragraf Deduktif vs Induktif</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .photo-preview {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      border: 2px solid #E2E8F0;
+    }
+    .highlight-lead {
+      background: #FEF08A;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#10B981;">🎯</div>
+      <div>Misi Ardiansyah</div>
+    </a>
+    <div class="student-tag" style="background:#ECFDF5; color:#065F46;">Kelas 5 • Ardiansyah</div>
+    <a href="../index.html" class="btn-back">← Menu Utama</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="color:#059669;">⭐ Bintang: <span id="star-display">0</span>/3</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+      </div>
+    </div>
+
+    <img src="../assets/images/indo_kls5_perpustakaan_craft.jpg" class="photo-preview" alt="Pojok Baca & Wirausaha" onerror="this.style.display='none'">
+
+    <!-- MISI 1: DEDUKTIF -->
+    <div class="challenge-card" id="stage-1">
+      <div class="challenge-question">
+        Misi 1: Baca paragraf wirausaha Aditya berikut! Di manakah letak <u>Kalimat Utama</u> paragraf ini?
+      </div>
+      <div class="reading-box">
+        <p class="reading-text">
+          <b>(1) Aditya mengembangkan wirausaha kreatif pembuatan pembatas buku bernuansa alam di sudut perpustakaan sekolah.</b> 
+          (2) Ia mengumpulkan daun-daun sirsak kering yang berguguran di halaman. 
+          (3) Daun tersebut dibersihkan secara teliti lalu dilapisi laminasi bening agar tahan lama. 
+          (4) Pembatas buku ramah lingkungan tersebut kini dipajang rapi di etalase pojok baca.
+        </p>
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(1, 0)">
+          <span>A.</span> <b>Di Awal Paragraf (Kalimat 1)</b> — Paragraf DEDUKTIF
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)">
+          <span>B.</span> <b>Di Akhir Paragraf (Kalimat 4)</b> — Paragraf INDUKTIF
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)">
+          <span>C.</span> Tidak memiliki kalimat utama sama sekali
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Lanjut ke Misi 2 →</button>
+    </div>
+
+    <!-- MISI 2: INDUKTIF -->
+    <div class="challenge-card" id="stage-2" style="display:none;">
+      <div class="challenge-question">
+        Misi 2: Perhatikan paragraf kedua tentang proses produksi Aditya. Apakah jenis paragraf ini?
+      </div>
+      <div class="reading-box">
+        <p class="reading-text">
+          (1) Pada tahap awal, setiap lembar daun disikat perlahan dengan air hangat.<br>
+          (2) Setelah itu, daun ditekan di antara lembaran buku tebal selama tiga hari agar permukaannya rata.<br>
+          (3) Tak lupa, pita warna-warni diikatkan pada bagian tangkai daun sebagai hiasan pemanis.<br>
+          <b>(4) Oleh karena itu, pembuatan pembatas buku daun karya Aditya memerlukan ketelatenan tinggi dari awal hingga akhir.</b>
+        </p>
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(2, 0)">
+          <span>A.</span> <b>Paragraf DEDUKTIF</b> (karena dimulai dari simpulan umum)
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)">
+          <span>B.</span> <b>Paragraf INDUKTIF</b> (karena dimulai dari rincian proses, lalu simpulannya ada di akhir kalimat 4)
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)">
+          <span>C.</span> Paragraf Narasi Fiksi Dongeng
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Lanjut ke Misi 3 →</button>
+    </div>
+
+    <!-- MISI 3: KATA KUNCI SIMPULAN -->
+    <div class="challenge-card" id="stage-3" style="display:none;">
+      <div class="challenge-question">
+        Misi 3: Kata penghubung manakah di bawah ini yang menjadi <u>ciri khas penanda paragraf Induktif</u> (kesimpulan di akhir)?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(3, 0)">
+          <span>A.</span> "Pada suatu hari yang cerah..."
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)">
+          <span>B.</span> "Oleh karena itu...", "Dengan demikian...", atau "Jadi..."
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)">
+          <span>C.</span> "Sedangkan...", "Atau...", "Yaitu..."
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="finishGame()">Selesaikan Misi! 🏆</button>
+    </div>
+  </div>
+
+  <!-- Modal Kemenangan -->
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🎯 🌟 👏</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Mantap Sekali, Ardiansyah!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Kamu sukses menguasai perbedaan Paragraf Deduktif (Gagasan di Awal) dan Induktif (Gagasan di Akhir) dengan sangat baik!
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#10B981;">Kembali ke Menu Kelas</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+    const correctAnswers = { 1: 0, 2: 1, 3: 1 };
+
+    function checkAnswer(stage, chosenIndex) {
+      const card = document.getElementById(`stage-${stage}`);
+      const buttons = card.querySelectorAll('.btn-option');
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIndex === correctAnswers[stage]) {
+        playSfx('correct');
+        buttons[chosenIndex].classList.add('selected-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Tepat sekali!</b> Pemahaman struktur paragrafmu sangat bagus!";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
+        nextBtn.style.display = "inline-flex";
+      } else {
+        playSfx('wrong');
+        buttons[chosenIndex].classList.add('selected-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ Masih keliru. Ingat: <b>D</b>eduktif = di <b>D</b>epan/Awal; <b>In</b>duktif = di Akhir.";
+        setTimeout(() => {
+          buttons.forEach(b => {
+            b.disabled = false;
+            b.classList.remove('selected-wrong');
+          });
+          feedback.className = "feedback-box";
+        }, 1600);
+      }
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
+    }
+
+    function finishGame() {
+      playSfx('win');
+      launchConfetti();
+      document.getElementById('victory-modal').classList.add('active');
+    }
+  </script>
+</body>
+</html>
