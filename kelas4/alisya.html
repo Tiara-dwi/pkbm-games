@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petualangan Kata Alisya 🌟</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    /* Styling Ramah Disleksia Khusus Alisya */
+    body {
+      background: #FFFDF7 !important;
+      color: #1F2421 !important;
+      font-size: 1.25rem !important;
+      line-height: 1.9 !important;
+      letter-spacing: 0.08em !important;
+    }
+    .alisya-box {
+      background: #FFFFFF;
+      border: 3px solid #E2D9C8;
+      border-radius: 24px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .alisya-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #78350F;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .photo-preview {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 16px;
+      border: 3px solid #FEF3C7;
+    }
+    .card-choice {
+      background: #FFFFFF;
+      border: 3px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-choice:hover {
+      border-color: #F59E0B;
+      background: #FFFBEB;
+      transform: scale(1.02);
+    }
+    .card-choice.correct-card {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+    }
+    .card-icon {
+      font-size: 3.2rem;
+    }
+    .card-label {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1E293B;
+    }
+  </style>
+</head>
+<body class="dyslexia-mode">
+  <div class="header-bar" style="background:#FFFDF7;">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#F59E0B;">🌟</div>
+      <div>Petualangan Alisya</div>
+    </a>
+    <div class="student-tag" style="background:#FEF3C7; color:#92400E;">Kelas 4 • Alisya</div>
+    <a href="../index.html" class="btn-back">← Kembali</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count" style="font-size: 1.3rem;">⭐ Bintang Alisya: <span id="star-display">0</span>/3</div>
+      <button class="btn-speaker" onclick="speak('Halo Alisya! Ayo kita bermain mencocokkan kata dan gambar bersama-sama!', this)">
+        🔊 Baca Panduan
+      </button>
+    </div>
+
+    <!-- MISI 1 -->
+    <div class="alisya-box" id="stage-1">
+      <div class="alisya-title">
+        <span>🛹 Misi 1: Helm Pengaman Hasyif</span>
+      </div>
+      <img src="../assets/images/indo_kls4_skateboard_park.jpg" class="photo-preview" alt="Lintasan Skateboard" onerror="this.style.display='none'">
+      
+      <p style="margin-bottom: 14px;">
+        Dengarkan suara cerita ini:
+      </p>
+      <button class="btn-speaker" onclick="speak('Hasyif memakai helm pelindung di kepala saat bermain skateboard. Benda apakah yang dipakai Hasyif di kepala?', this)">
+        🔊 Dengarkan Pertanyaan
+      </button>
+
+      <div style="font-weight: 700; margin: 16px 0 12px 0;">Pilih gambar yang benar:</div>
+      <div class="option-grid two-col">
+        <div class="card-choice" onclick="chooseAlisya(1, 'helm')">
+          <div class="card-icon">🪖</div>
+          <div class="card-label">HELM</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speak('Helm pengaman kepala', this)">🔊 Dengar</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(1, 'sepatu')">
+          <div class="card-icon">👟</div>
+          <div class="card-label">SEPATU</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speak('Sepatu olahraga', this)">🔊 Dengar</button>
+        </div>
+      </div>
+
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="next-1" style="display:none; margin-top:20px; font-size:1.25rem;" onclick="goToStage(2)">
+        Lanjut ke Misi 2 🌟 →
+      </button>
+    </div>
+
+    <!-- MISI 2 -->
+    <div class="alisya-box" id="stage-2" style="display:none;">
+      <div class="alisya-title">
+        <span>⚠️ Misi 2: Rambu Hati-Hati</span>
+      </div>
+      <p style="margin-bottom: 14px;">
+        Dengarkan petunjuk suara:
+      </p>
+      <button class="btn-speaker" onclick="speak('Di pinggir rampa ada rambu kuning bertuliskan Hati-Hati. Manakah kata yang bunyinya HATI-HATI?', this)">
+        🔊 Dengarkan Petunjuk
+      </button>
+
+      <div style="font-weight: 700; margin: 16px 0 12px 0;">Pilih kata yang sama bunyinya:</div>
+      <div class="option-grid two-col">
+        <div class="card-choice" onclick="chooseAlisya(2, 'hati-hati')">
+          <div class="card-icon">⚠️</div>
+          <div class="card-label">HATI-HATI</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speak('Ha-ti ha-ti', this)">🔊 Dengar</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(2, 'lari')">
+          <div class="card-icon">🏃</div>
+          <div class="card-label">LARI CEPAT</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speak('Lari cepat', this)">🔊 Dengar</button>
+        </div>
+      </div>
+
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none; margin-top:20px; font-size:1.25rem;" onclick="goToStage(3)">
+        Lanjut ke Misi 3 🌟 →
+      </button>
+    </div>
+
+    <!-- MISI 3 -->
+    <div class="alisya-box" id="stage-3" style="display:none;">
+      <div class="alisya-title">
+        <span>🛡️ Misi 3: Pelindung Lutut Nanda</span>
+      </div>
+      <p style="margin-bottom: 14px;">
+        Dengarkan cerita penutup:
+      </p>
+      <button class="btn-speaker" onclick="speak('Nanda memasang pelindung lutut agar tidak lecet saat terjatuh. Apa fungsi pelindung lutut?', this)">
+        🔊 Dengarkan Cerita
+      </button>
+
+      <div class="option-grid two-col">
+        <div class="card-choice" onclick="chooseAlisya(3, 'aman')">
+          <div class="card-icon">🛡️</div>
+          <div class="card-label">AGAR AMAN</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speak('Agar aman dan terlindung', this)">🔊 Dengar</button>
+        </div>
+        <div class="card-choice" onclick="chooseAlisya(3, 'tidur')">
+          <div class="card-icon">😴</div>
+          <div class="card-label">UNTUK TIDUR</div>
+          <button class="btn-speaker" onclick="event.stopPropagation(); speak('Untuk tidur nyenyak', this)">🔊 Dengar</button>
+        </div>
+      </div>
+
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none; margin-top:20px; font-size:1.25rem;" onclick="finishAlisya()">
+        Selesai & Buka Hadiah Bintang! 🏆
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Kemenangan Alisya -->
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card" style="border: 4px solid #F59E0B;">
+      <div style="font-size: 4rem; margin-bottom: 12px;">🌟 👑 💖</div>
+      <h2 style="font-size: 2rem; color: #92400E; margin-bottom: 10px;">Hebat Sekali, Alisya!</h2>
+      <p style="font-size: 1.25rem; color: #4B5563; margin-bottom: 24px; line-height: 1.7;">
+        Alisya pintar sekali! Semua kata dan gambar berhasil dicocokkan dengan sangat baik. Ibu guru sangat bangga padamu!
+      </p>
+      <button class="btn-speaker" onclick="speak('Hebat sekali Alisya! Alisya pintar sekali! Semua bintang berhasil kamu kumpulkan! Ibu guru sangat bangga padamu!', this)">
+        🔊 Dengar Ucapan Selamat
+      </button>
+      <div style="margin-top: 20px;">
+        <a href="../index.html" class="btn-action" style="font-size:1.2rem;">Selesai Bermain 🎉</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+    const correctTargets = { 1: 'helm', 2: 'hati-hati', 3: 'aman' };
+
+    function chooseAlisya(stage, answer) {
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      if (answer === correctTargets[stage]) {
+        playSfx('correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "🎉 <b>Hebat Alisya!</b> Pilihanmu benar sekali!";
+        speak('Hebat Alisya! Pilihanmu benar sekali!');
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        nextBtn.style.display = "inline-flex";
+      } else {
+        playSfx('wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "🌸 Ayo coba lagi ya sayang, dengarkan suaranya pelan-pelan.";
+        speak('Ayo coba lagi ya Alisya, dengarkan suaranya pelan-pelan.');
+      }
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+    }
+
+    function finishAlisya() {
+      playSfx('win');
+      launchConfetti();
+      document.getElementById('victory-modal').classList.add('active');
+      speak('Selamat Alisya! Kamu menyelesaikan semua petualangan!');
+    }
+  </script>
+</body>
+</html>
