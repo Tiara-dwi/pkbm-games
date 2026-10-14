@@ -63,13 +63,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(1, 0)">
-          <span>A.</span> <span data-en="Nanda wash two green apples yesterday." data-id="Nanda wash two green apples yesterday. (Bentuk lampau salah)">Nanda wash two green apples yesterday.</span>
+          <span>A.</span> <span data-en="Nanda wash two green apples yesterday." data-id="Nanda wash two green apples yesterday.">Nanda wash two green apples yesterday.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(1, 1)">
-          <span>B.</span> <span data-en="Nanda is washing two green apples in the sink." data-id="Nanda is washing two green apples in the sink. (Benar: is + washing)">Nanda is washing two green apples in the sink.</span>
+          <span>B.</span> <span data-en="Nanda is washing two green apples in the sink." data-id="Nanda is washing two green apples in the sink.">Nanda is washing two green apples in the sink.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(1, 2)">
-          <span>C.</span> <span data-en="Nanda are washing two green apples." data-id="Nanda are washing two green apples. (Salah: Nanda tunggal, bukan are)">Nanda are washing two green apples.</span>
+          <span>C.</span> <span data-en="Nanda are washing two green apples." data-id="Nanda are washing two green apples.">Nanda are washing two green apples.</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
@@ -90,13 +90,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(2, 0)">
-          <span>A.</span> <span data-en="Inside the hot stove" data-id="Inside the hot stove (Di dalam kompor panas)">Inside the hot stove</span>
+          <span>A.</span> <span data-en="Inside the hot stove" data-id="Di dalam kompor panas">Inside the hot stove</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(2, 1)">
-          <span>B.</span> <span data-en="Beside the dining table" data-id="Beside the dining table (Di samping meja makan)">Beside the dining table</span>
+          <span>B.</span> <span data-en="Beside the dining table" data-id="Di samping meja makan">Beside the dining table</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(2, 2)">
-          <span>C.</span> <span data-en="Under the sink" data-id="Under the sink (Di bawah wastafel)">Under the sink</span>
+          <span>C.</span> <span data-en="Under the sink" data-id="Di bawah wastafel">Under the sink</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
@@ -144,13 +144,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(4, 0)">
-          <span>A.</span> <span data-en="Stove and refrigerator" data-id="Stove and refrigerator (Kompor dan kulkas)">Stove and refrigerator</span>
+          <span>A.</span> <span data-en="Stove and refrigerator" data-id="Kompor dan kulkas">Stove and refrigerator</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(4, 1)">
-          <span>B.</span> <span data-en="Spoon and fork" data-id="Spoon and fork (Sendok dan garpu)">Spoon and fork</span>
+          <span>B.</span> <span data-en="Spoon and fork" data-id="Sendok dan garpu">Spoon and fork</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(4, 2)">
-          <span>C.</span> <span data-en="Glass and plate" data-id="Glass and plate (Gelas dan piring)">Glass and plate</span>
+          <span>C.</span> <span data-en="Glass and plate" data-id="Gelas dan piring">Glass and plate</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
@@ -171,13 +171,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(5, 0)">
-          <span>A.</span> <span data-en="Hasyif is preparing a glass of warm milk." data-id="Hasyif is preparing a glass of warm milk. (Sedang menyiapkan)">Hasyif is preparing a glass of warm milk.</span>
+          <span>A.</span> <span data-en="Hasyif is preparing a glass of warm milk." data-id="Hasyif is preparing a glass of warm milk.">Hasyif is preparing a glass of warm milk.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(5, 1)">
-          <span>B.</span> <span data-en="Hasyif prepares yesterday a glass of milk." data-id="Hasyif prepares yesterday a glass of milk. (Salah tata bahasa)">Hasyif prepares yesterday a glass of milk.</span>
+          <span>B.</span> <span data-en="Hasyif prepares yesterday a glass of milk." data-id="Hasyif prepares yesterday a glass of milk.">Hasyif prepares yesterday a glass of milk.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(5, 2)">
-          <span>C.</span> <span data-en="Hasyif are drink warm milk." data-id="Hasyif are drink warm milk. (Salah to be dan bentuk kata kerja)">Hasyif are drink warm milk.</span>
+          <span>C.</span> <span data-en="Hasyif are drink warm milk." data-id="Hasyif are drink warm milk.">Hasyif are drink warm milk.</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
@@ -216,8 +216,8 @@
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
         feedback.innerHTML = window.currentLang === 'id' 
-          ? "✅ <b>Tepat sekali!</b> Analisis tata bahasa dan pemahamanmu sangat akurat!"
-          : "✅ <b>Excellent!</b> Accurate grammar analysis!";
+          ? "✅ Tepat sekali! Analisis tata bahasa dan pemahamanmu sangat akurat!"
+          : "✅ Excellent! Accurate grammar analysis!";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
@@ -227,7 +227,7 @@
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
         feedback.innerHTML = window.currentLang === 'id' 
-          ? "❌ <b>Belum tepat.</b> Periksa kembali rumus kalimatnya ya!"
+          ? "❌ Belum tepat. Periksa kembali rumus kalimatnya ya!"
           : "❌ Not quite right. Review the grammar formula!";
       }
       nextBtn.style.display = "inline-flex";
