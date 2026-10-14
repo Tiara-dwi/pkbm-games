@@ -84,7 +84,7 @@
 
     <div class="sort-buttons">
       <button class="btn-regular" onclick="submitSort('REGULAR')">
-        <span data-en="📘 REGULAR (+ed)" data-id="📘 BERATURAN (+ed)">📘 REGULAR (+ed)</span>
+        <span data-en="📘 REGULAR" data-id="📘 BERATURAN">📘 REGULAR</span>
       </button>
       <button class="btn-irregular" onclick="submitSort('IRREGULAR')">
         <span data-en="📙 IRREGULAR" data-id="📙 TIDAK BERATURAN">📙 IRREGULAR</span>
@@ -165,14 +165,14 @@
         playSfx('star');
         feedback.className = "feedback-box show correct";
         feedback.innerHTML = isId 
-          ? `✅ <b>Tepat Sekali! (${current.type})</b><br>${reason}`
-          : `✅ <b>Correct! (${current.type})</b><br>${reason}`;
+          ? `✅ Tepat Sekali! (${current.type})<br>${reason}`
+          : `✅ Correct! (${current.type})<br>${reason}`;
       } else {
         playSfx('wrong');
         feedback.className = "feedback-box show wrong";
         feedback.innerHTML = isId
-          ? `❌ <b>Jawaban yang benar: ${current.type}</b><br>${reason}`
-          : `❌ <b>Correct Answer: ${current.type}</b><br>${reason}`;
+          ? `❌ Jawaban yang tepat: ${current.type}<br>${reason}`
+          : `❌ Correct Answer: ${current.type}<br>${reason}`;
       }
       nextBtn.style.display = "inline-flex";
     }
