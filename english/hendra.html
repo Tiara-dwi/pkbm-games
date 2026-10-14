@@ -56,7 +56,12 @@
 
     <!-- READING CASE -->
     <div class="reading-box">
-      <div class="reading-title" data-en="📖 Weekend Diary Entry" data-id="📖 Catatan Buku Harian">📖 Weekend Diary Entry</div>
+      <div class="card-header-flex">
+        <div class="reading-title" style="margin-bottom:0;" data-en="📖 Weekend Diary Entry" data-id="📖 Catatan Buku Harian">📖 Weekend Diary Entry</div>
+        <button class="btn-card-lang" onclick="toggleReadingLanguage(this)">
+          🌐 <span>Terjemahkan Cerita</span>
+        </button>
+      </div>
       <p class="reading-text"
          data-en="'Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they bought fresh oranges at the market and cooked fried rice together at home. They recorded all their experiences in their English diaries.'"
          data-id="'Sabtu lalu, Shine, Zahra, dan Yusman mengunjungi museum kota di pagi hari. Setelah itu, mereka membeli jeruk segar di pasar dan memasak nasi goreng bersama di rumah. Mereka mencatat semua pengalaman berkesan ini di buku harian bahasa Inggris mereka.'">
@@ -66,10 +71,15 @@
     </div>
 
     <div class="challenge-card">
-      <div class="challenge-question"
-           data-en="Match the diary facts to the correct 5W+1H investigation question:"
-           data-id="Jodohkan fakta buku harian ke pertanyaan investigasi 5W+1H yang benar:">
-        Match the diary facts to the correct 5W+1H investigation question:
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Match the diary facts to the correct 5W+1H investigation question:"
+             data-id="Jodohkan fakta buku harian ke pertanyaan investigasi 5W+1H yang benar:">
+          Match the diary facts to the correct 5W+1H investigation question:
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('challenge-card', this)">
+          🌐 <span>Terjemahkan Pos</span>
+        </button>
       </div>
 
       <!-- POS 1: WHO -->
