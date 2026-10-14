@@ -6,30 +6,9 @@
   <title>Misi Shan: Tantangan Kuis Kilat 5W+1H & Fakta</title>
   <link rel="stylesheet" href="../assets/style.css">
   <style>
-    .energy-bar-wrap {
-      height: 10px;
-      background: #FEE2E2;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    .energy-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #EF4444, #F59E0B);
-      width: 100%;
-      transition: width 0.3s;
-    }
-    .badge-streak {
-      background: #FEF2F2;
-      color: #DC2626;
-      border: 2px solid #FCA5A5;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .energy-bar-wrap { height: 10px; background: #FEE2E2; border-radius: 20px; margin-bottom: 20px; overflow: hidden; }
+    .energy-bar-fill { height: 100%; background: linear-gradient(90deg, #EF4444, #F59E0B); width: 100%; transition: width 0.3s; }
+    .badge-streak { background: #FEF2F2; color: #DC2626; border: 2px solid #FCA5A5; padding: 6px 14px; border-radius: 20px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
   </style>
 </head>
 <body>
@@ -45,18 +24,15 @@
   <div class="container">
     <div class="tracker-bar">
       <div class="badge-streak">🔥 Kombo: <span id="streak-num">0</span></div>
-      <div class="star-count" style="color:#DC2626;">⭐ Skor: <span id="score-display">0</span>/4</div>
+      <div class="star-count" style="color:#DC2626;">⭐ Skor: <span id="score-display">0</span>/5</div>
     </div>
 
     <div class="energy-bar-wrap">
       <div class="energy-bar-fill" id="progress-fill"></div>
     </div>
 
-    <!-- SOAL DINAMIS -->
     <div class="challenge-card" id="quiz-card">
-      <div class="challenge-question" id="question-text">
-        Loading soal...
-      </div>
+      <div class="challenge-question" id="question-text">Loading...</div>
       <div class="option-grid" id="options-container"></div>
       <div class="feedback-box" id="feedback-box"></div>
       <div style="text-align: right; margin-top: 16px;">
@@ -80,28 +56,34 @@
   <script>
     const questions = [
       {
-        q: "Siapakah nama tiga penjelajah muda yang melakukan pengamatan di Taman Nasional Tanjung Puting?",
-        opts: ["Shine, Zahra, dan Yusman", "Acip, Kinanti, dan Alisya", "Aditya dan Nanda", "Pak Joko dan Bu Guru"],
+        q: "Siapakah nama tiga penjelajah muda yang melakukan pengamatan di TN Tanjung Puting?",
+        opts: ["Shine, Zahra, dan Yusman", "Acip, Kinanti, dan Alisya", "Aditya dan Nanda"],
         correct: 0,
-        exp: "Shine, Zahra, dan Yusman adalah tokoh penyelidik pengamatan konservasi di Tanjung Puting."
+        exp: "Shine, Zahra, dan Yusman adalah tokoh penyelidik pengamatan."
       },
       {
-        q: "Alat transportasi air apakah yang digunakan mereka selama menyusuri Sungai Sekonyer?",
-        opts: ["Speedboat cepat berbahan fiber", "Perahu kayu kelotok bermesin tradisional", "Kano dayung karet", "Kapal pesiar mewah"],
+        q: "Alat transportasi air apakah yang digunakan mereka menyusuri Sungai Sekonyer?",
+        opts: ["Speedboat cepat fiber", "Perahu kayu kelotok bermesin tradisional", "Kapal pesiar"],
         correct: 1,
         exp: "Perahu kelotok kayu adalah transportasi khas di Sungai Sekonyer."
       },
       {
-        q: "Manakah informasi di bawah ini yang menjawab unsur 'DI MANA' (Where)?",
-        opts: ["Pukul 08.00 WIB pagi", "Camp Leakey, Kabupaten Kotawaringin Barat", "Karena orangutan terancam punah", "Dengan cara mencatat di buku"],
+        q: "Manakah informasi berikut yang menjawab unsur 'DI MANA' (Where)?",
+        opts: ["Pukul 08.00 WIB pagi", "Camp Leakey, Kotawaringin Barat", "Karena orangutan langka"],
         correct: 1,
         exp: "Camp Leakey, Kotawaringin Barat menerangkan lokasi geografis."
       },
       {
-        q: "Manakah kalimat berikut yang merupakan FAKTA (terbukti secara ilmiah)?",
-        opts: ["Bekantan adalah monyet yang wajahnya paling lucu di dunia.", "Orangutan kalimantan (Pongo pygmaeus) termasuk primata yang dilindungi undang-undang.", "Semua pengunjung pasti takut melihat air sungai hitam.", "Menaiki kelotok terasa sangat membosankan."],
+        q: "Manakah informasi berikut yang menjawab unsur 'KAPAN' (When)?",
+        opts: ["Hari Rabu pukul 08.00 WIB", "Sungai Sekonyer", "Menaiki perahu kayu"],
+        correct: 0,
+        exp: "Hari Rabu pukul 08.00 WIB menerangkan waktu kejadian."
+      },
+      {
+        q: "Manakah kalimat berikut yang merupakan FAKTA ilmiah resmi?",
+        opts: ["Bekantan adalah monyet paling lucu di dunia.", "Orangutan kalimantan (Pongo pygmaeus) termasuk satwa yang dilindungi undang-undang.", "Sungai hitam selalu menakutkan."],
         correct: 1,
-        exp: "Status perlindungan orangutan kalimantan adalah fakta hukum dan sains resmi."
+        exp: "Status perlindungan hukum orangutan kalimantan adalah fakta sains & hukum resmi."
       }
     ];
 
@@ -146,7 +128,7 @@
         streak = 0;
         document.getElementById('streak-num').innerText = streak;
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = `❌ <b>Jawaban tepat: ${q.opts[q.correct]}</b><br>${q.exp}`;
+        feedback.innerHTML = `❌ <b>Jawaban tepat: ${q.opts[q.correct]}</b>`;
       }
       document.getElementById('next-btn').style.display = 'inline-flex';
     }
@@ -159,9 +141,7 @@
         document.getElementById('next-btn').style.display = "none";
         renderQuestion();
       } else {
-        playSfx('win');
-        launchConfetti();
-        document.getElementById('victory-modal').classList.add('active');
+        triggerGameOutcome(score, 5, "Shan");
       }
     }
 
