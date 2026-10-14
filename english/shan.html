@@ -15,21 +15,20 @@
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
       <div class="badge-icon" style="background:#DC2626;">⚡</div>
-      <div>Shan's Past Sprint</div>
+      <div data-en="Shan's Past Sprint" data-id="Kuis Sprint Shan">Shan's Past Sprint</div>
     </a>
-    <div class="student-tag" style="background:#FEF2F2; color:#DC2626;">Grade 6 • Shan</div>
-    <div class="lang-toggle-container" style="margin-left: auto; margin-right: 12px;">
-      <button class="lang-toggle-btn" onclick="window.location.href='../kelas6/shan.html'" title="Ganti ke Game Bahasa Indonesia">🇮🇩 ID</button>
-      <button class="lang-toggle-btn active lang-en" title="English Mode">🇬🇧 EN</button>
+    <div class="lang-switch-wrap">
+      <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
+      <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-
-    <a href="../index.html" class="btn-back">← Main Portal</a>
+    <div class="student-tag" style="background:#FEF2F2; color:#DC2626;">Grade 6 • Shan</div>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="badge-streak">🔥 Streak: <span id="streak-num">0</span></div>
-      <div class="star-count" style="color:#DC2626;">⭐ Score: <span id="score-display">0</span>/5</div>
+      <div class="badge-streak"><span data-en="🔥 Streak: " data-id="🔥 Kombo: ">🔥 Streak: </span><span id="streak-num">0</span></div>
+      <div class="star-count" style="color:#DC2626;"><span data-en="⭐ Score: " data-id="⭐ Skor: ">⭐ Score: </span><span id="score-display">0</span>/5</div>
     </div>
 
     <div class="energy-bar-wrap">
@@ -41,7 +40,7 @@
       <div class="option-grid" id="options-container"></div>
       <div class="feedback-box" id="feedback-box"></div>
       <div style="text-align: right; margin-top: 16px;">
-        <button class="btn-action" id="next-btn" style="display:none; background:#DC2626;" onclick="nextQuestion()">Next Fast Challenge ⚡</button>
+        <button class="btn-action" id="next-btn" style="display:none; background:#DC2626;" onclick="nextQuestion()" data-en="Next Fast Challenge ⚡" data-id="Tantangan Kilat Berikutnya ⚡">Next Fast Challenge ⚡</button>
       </div>
     </div>
   </div>
@@ -49,11 +48,13 @@
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.8rem; margin-bottom: 12px;">🥇 🏆 ⚡</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Sprint Champion, Shan!</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Sprint Champion, Shan!" data-id="Juara Sprint, Shan!">Sprint Champion, Shan!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
+         data-en="Lightning speed and great accuracy on Simple Past Tense verbs!"
+         data-id="Kecepatan kilat dan ketepatan tinggi dalam menaklukkan kata kerja lampau!">
         Lightning speed and great accuracy on Simple Past Tense verbs!
       </p>
-      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#DC2626;">Back to Main Portal</a>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#DC2626;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
   </div>
 
@@ -61,34 +62,44 @@
   <script>
     const questions = [
       {
-        q: "What is the Simple Past (Verb 2) form of 'GO'?",
+        qEn: "What is the Simple Past (Verb 2) form of 'GO'?",
+        qId: "Apakah bentuk kata kerja lampau (Verb 2) dari 'GO'?",
         opts: ["Went", "Goed", "Going"],
         correct: 0,
-        exp: "'Go' is irregular: go -> went."
+        expEn: "'Go' is irregular: go -> went.",
+        expId: "'Go' adalah kata kerja tidak beraturan: go -> went."
       },
       {
-        q: "What is the Simple Past form of 'EAT'?",
+        qEn: "What is the Simple Past form of 'EAT'?",
+        qId: "Apakah bentuk kata kerja lampau (Verb 2) dari 'EAT'?",
         opts: ["Ate", "Eated", "Eating"],
         correct: 0,
-        exp: "'Eat' is irregular: eat -> ate."
+        expEn: "'Eat' is irregular: eat -> ate.",
+        expId: "'Eat' adalah kata kerja tidak beraturan: eat -> ate."
       },
       {
-        q: "What is the Simple Past form of 'VISIT'?",
+        qEn: "What is the Simple Past form of 'VISIT'?",
+        qId: "Apakah bentuk kata kerja lampau (Verb 2) dari 'VISIT'?",
         opts: ["Visited", "Visitted", "Visit"],
         correct: 0,
-        exp: "'Visit' is regular: visit + ed = visited."
+        expEn: "'Visit' is regular: visit + ed = visited.",
+        expId: "'Visit' adalah kata kerja beraturan: visit + ed = visited."
       },
       {
-        q: "What is the Simple Past form of 'BUY'?",
+        qEn: "What is the Simple Past form of 'BUY'?",
+        qId: "Apakah bentuk kata kerja lampau (Verb 2) dari 'BUY'?",
         opts: ["Bought", "Buyed", "Buying"],
         correct: 0,
-        exp: "'Buy' is irregular: buy -> bought."
+        expEn: "'Buy' is irregular: buy -> bought.",
+        expId: "'Buy' adalah kata kerja tidak beraturan: buy -> bought."
       },
       {
-        q: "Which sentence is correctly written in Simple Past Tense?",
+        qEn: "Which sentence is correctly written in Simple Past Tense?",
+        qId: "Kalimat manakah yang ditulis dengan Simple Past Tense secara benar?",
         opts: ["Shine visited the museum yesterday.", "Shine is visiting the museum tomorrow.", "Shine visits the museum right now."],
         correct: 0,
-        exp: "'Visited' + 'yesterday' indicates Simple Past."
+        expEn: "'Visited' + 'yesterday' indicates Simple Past.",
+        expId: "Bentuk 'visited' dan penanda waktu 'yesterday' menunjukkan Simple Past."
       }
     ];
 
@@ -98,7 +109,8 @@
 
     function renderQuestion() {
       const q = questions[qIdx];
-      document.getElementById('question-text').innerText = `${qIdx + 1}. ${q.q}`;
+      const isId = window.currentLang === 'id';
+      document.getElementById('question-text').innerText = `${qIdx + 1}. ${isId ? q.qId : q.qEn}`;
       const container = document.getElementById('options-container');
       container.innerHTML = '';
       q.opts.forEach((opt, idx) => {
@@ -117,6 +129,9 @@
       const feedback = document.getElementById('feedback-box');
       buttons.forEach(b => b.disabled = true);
 
+      const isId = window.currentLang === 'id';
+      const exp = isId ? q.expId : q.expEn;
+
       if (idx === q.correct) {
         playSfx('correct');
         buttons[idx].classList.add('selected-correct');
@@ -126,14 +141,14 @@
         document.getElementById('streak-num').innerText = streak;
         playSfx('star');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = `⚡ <b>FAST & ACCURATE!</b> ${q.exp}`;
+        feedback.innerHTML = isId ? `⚡ <b>KILAT & TEPAT!</b> ${exp}` : `⚡ <b>FAST & ACCURATE!</b> ${exp}`;
       } else {
         playSfx('wrong');
         buttons[idx].classList.add('selected-wrong');
         streak = 0;
         document.getElementById('streak-num').innerText = streak;
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = `❌ <b>Correct answer: ${q.opts[q.correct]}</b>`;
+        feedback.innerHTML = isId ? `❌ <b>Jawaban tepat: ${q.opts[q.correct]}</b>` : `❌ <b>Correct answer: ${q.opts[q.correct]}</b>`;
       }
       document.getElementById('next-btn').style.display = 'inline-flex';
     }
@@ -150,6 +165,16 @@
       }
     }
 
+    // Re-render question text when language switched
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function(lang) {
+      originalSetLanguage(lang);
+      if (document.getElementById('question-text')) {
+        renderQuestion();
+      }
+    };
+
+    initLanguageToggle('en');
     renderQuestion();
   </script>
 </body>
