@@ -35,7 +35,7 @@
       border: none;
       padding: 16px;
       border-radius: var(--radius-md);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       cursor: pointer;
     }
@@ -45,7 +45,7 @@
       border: none;
       padding: 16px;
       border-radius: var(--radius-md);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       cursor: pointer;
     }
@@ -55,58 +55,89 @@
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
       <div class="badge-icon" style="background:#8B5CF6;">⚖️</div>
-      <div>Aulya's Verb Sorter</div>
+      <div data-en="Aulya's Verb Sorter" data-id="Sortir Kata Kerja Aulya">Aulya's Verb Sorter</div>
     </a>
-    <div class="student-tag" style="background:#F5F3FF; color:#7C3AED;">Grade 6 • Aulya</div>
-    <div class="lang-toggle-container" style="margin-left: auto; margin-right: 12px;">
-      <button class="lang-toggle-btn" onclick="window.location.href='../kelas6/aulya.html'" title="Ganti ke Game Bahasa Indonesia">🇮🇩 ID</button>
-      <button class="lang-toggle-btn active lang-en" title="English Mode">🇬🇧 EN</button>
+    <div class="lang-switch-wrap">
+      <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
+      <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-
-    <a href="../index.html" class="btn-back">← Main Portal</a>
+    <div class="student-tag" style="background:#F5F3FF; color:#7C3AED;">Grade 6 • Aulya</div>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count" style="color:#7C3AED;">⭐ Score: <span id="score-display">0</span>/5</div>
-      <div style="font-weight:600; color:var(--text-muted);">Card <span id="card-num">1</span> of 5</div>
+      <div class="star-count" style="color:#7C3AED;"><span data-en="⭐ Score: " data-id="⭐ Skor: ">⭐ Score: </span><span id="score-display">0</span>/5</div>
+      <div style="font-weight:600; color:var(--text-muted);"><span data-en="Card " data-id="Kartu ">Card </span><span id="card-num">1</span> <span data-en="of 5" data-id="dari 5">of 5</span></div>
     </div>
 
     <div class="card-swipe" id="statement-box">
-      <span style="font-size:0.9rem; color:#64748B; font-weight:600; letter-spacing:0; margin-bottom:6px;">Classify this past verb:</span>
+      <span style="font-size:0.95rem; color:#64748B; font-weight:600; letter-spacing:0; margin-bottom:6px;"
+            data-en="Classify this past verb:" data-id="Pilah jenis kata kerja lampau ini:">Classify this past verb:</span>
       <span id="verb-text">VISITED</span>
     </div>
 
     <div class="sort-buttons">
-      <button class="btn-regular" onclick="submitSort('REGULAR')">📘 REGULAR VERB (+ed)</button>
-      <button class="btn-irregular" onclick="submitSort('IRREGULAR')">📙 IRREGULAR VERB</button>
+      <button class="btn-regular" onclick="submitSort('REGULAR')">
+        <span data-en="📘 REGULAR (+ed)" data-id="📘 BERATURAN (+ed)">📘 REGULAR (+ed)</span>
+      </button>
+      <button class="btn-irregular" onclick="submitSort('IRREGULAR')">
+        <span data-en="📙 IRREGULAR" data-id="📙 TIDAK BERATURAN">📙 IRREGULAR</span>
+      </button>
     </div>
 
     <div class="feedback-box" id="feedback-box"></div>
     <div style="text-align: center; margin-top: 18px;">
-      <button class="btn-action" id="next-btn" style="display:none;" onclick="nextCard()">Next Verb →</button>
+      <button class="btn-action" id="next-btn" style="display:none;" onclick="nextCard()" data-en="Next Verb →" data-id="Kata Kerja Berikutnya →">Next Verb →</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">⚖️ 🌟 👏</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Brilliant Sorting, Aulya!</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Brilliant Sorting, Aulya!" data-id="Sortir Hebat, Aulya!">Brilliant Sorting, Aulya!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
+         data-en="You classified all regular and irregular past verbs with complete accuracy!"
+         data-id="Semua kata kerja lampau beraturan dan tidak beraturan berhasil kamu pilah dengan tepat!">
         You classified all regular and irregular past verbs with complete accuracy!
       </p>
-      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#8B5CF6;">Back to Main Portal</a>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#8B5CF6;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
   </div>
 
   <script src="../assets/game.js"></script>
   <script>
     const deck = [
-      { verb: "VISITED", type: "REGULAR", reason: "Formed by adding -ed to base verb 'visit'." },
-      { verb: "WENT", type: "IRREGULAR", reason: "Irregular past form of 'go' (changes form completely)." },
-      { verb: "COOKED", type: "REGULAR", reason: "Formed by adding -ed to base verb 'cook'." },
-      { verb: "BOUGHT", type: "IRREGULAR", reason: "Irregular past form of 'buy'." },
-      { verb: "STUDIED", type: "REGULAR", reason: "Formed by changing 'study' (-y into -ied)." }
+      { 
+        verb: "VISITED", 
+        type: "REGULAR", 
+        reasonEn: "Formed by adding -ed to base verb 'visit'.",
+        reasonId: "Dibentuk dengan menambahkan akhiran -ed pada kata dasar 'visit'."
+      },
+      { 
+        verb: "WENT", 
+        type: "IRREGULAR", 
+        reasonEn: "Irregular past form of 'go' (changes form completely).",
+        reasonId: "Bentuk lampau tidak beraturan dari 'go' (berubah bentuk total)."
+      },
+      { 
+        verb: "COOKED", 
+        type: "REGULAR", 
+        reasonEn: "Formed by adding -ed to base verb 'cook'.",
+        reasonId: "Dibentuk dengan menambahkan -ed pada kata dasar 'cook'."
+      },
+      { 
+        verb: "BOUGHT", 
+        type: "IRREGULAR", 
+        reasonEn: "Irregular past form of 'buy'.",
+        reasonId: "Bentuk lampau tidak beraturan dari 'buy' (membeli)."
+      },
+      { 
+        verb: "STUDIED", 
+        type: "REGULAR", 
+        reasonEn: "Formed by changing 'study' (-y into -ied).",
+        reasonId: "Kata beraturan: huruf 'y' berubah menjadi '-ied' (study -> studied)."
+      }
     ];
 
     let currentIndex = 0;
@@ -119,17 +150,24 @@
       const buttons = document.querySelectorAll('.sort-buttons button');
       buttons.forEach(b => b.disabled = true);
 
+      const isId = window.currentLang === 'id';
+      const reason = isId ? current.reasonId : current.reasonEn;
+
       if (choice === current.type) {
         playSfx('correct');
         score++;
         document.getElementById('score-display').innerText = score;
         playSfx('star');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = `✅ <b>Correct! (${current.type})</b><br>${current.reason}`;
+        feedback.innerHTML = isId 
+          ? `✅ <b>Tepat Sekali! (${current.type})</b><br>${reason}`
+          : `✅ <b>Correct! (${current.type})</b><br>${reason}`;
       } else {
         playSfx('wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = `❌ <b>Correct Answer: ${current.type}</b><br>${current.reason}`;
+        feedback.innerHTML = isId
+          ? `❌ <b>Jawaban yang benar: ${current.type}</b><br>${reason}`
+          : `❌ <b>Correct Answer: ${current.type}</b><br>${reason}`;
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -147,6 +185,8 @@
         triggerGameOutcome(score, 5, "Aulya", null, true);
       }
     }
+
+    initLanguageToggle('en');
   </script>
 </body>
 </html>
