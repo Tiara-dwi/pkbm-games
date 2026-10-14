@@ -15,11 +15,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.2s;
-    }
-    .puzzle-item.active-drag {
-      border-color: var(--primary);
-      background: var(--primary-light);
     }
     .puzzle-controls button {
       background: white;
@@ -29,9 +24,6 @@
       font-weight: 700;
       cursor: pointer;
       margin-left: 4px;
-    }
-    .puzzle-controls button:hover {
-      background: #E2E8F0;
     }
   </style>
 </head>
@@ -47,30 +39,31 @@
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count">⭐ Bintang: <span id="star-display">0</span>/3</div>
+      <div class="star-count">⭐ Bintang: <span id="star-display">0</span>/5</div>
       <div class="progress-pills">
         <div class="pill-dot active" id="dot-1"></div>
         <div class="pill-dot" id="dot-2"></div>
         <div class="pill-dot" id="dot-3"></div>
+        <div class="pill-dot" id="dot-4"></div>
+        <div class="pill-dot" id="dot-5"></div>
       </div>
     </div>
 
-    <!-- Misi 1: Susun Kalimat Acak -->
+    <!-- SOAL 1: PUZZLE SUSUN KALIMAT -->
     <div class="challenge-card" id="stage-1">
       <div class="challenge-question">
-        Misi 1: Susun 4 kalimat acak kegiatan Hasyif & Nanda berikut agar menjadi <u>paragraf prosedur yang runtut</u>! Gunakan tombol ⬆️ dan ⬇️.
+        Misi 1: Susun 4 kalimat prosedur bermain aman Hasyif & Nanda berikut secara runtut (Gunakan ⬆️ dan ⬇️)!
       </div>
-
       <div id="puzzle-list">
         <div class="puzzle-item" data-id="3">
-          <span>(3) Setelah semua perlengkapan terpasang rapi, barulah mereka mulai meluncur di lintasan datar.</span>
+          <span>(3) Setelah semua perlengkapan terpasang, mereka mulai meluncur di lintasan datar.</span>
           <div class="puzzle-controls">
             <button onclick="moveItem(this, -1)">⬆️</button>
             <button onclick="moveItem(this, 1)">⬇️</button>
           </div>
         </div>
         <div class="puzzle-item" data-id="1">
-          <span>(1) Pertama, Hasyif dan Nanda meletakkan tas serta memeriksa kelayakan papan luncur mereka.</span>
+          <span>(1) Pertama, Hasyif dan Nanda memeriksa kelayakan papan luncur mereka.</span>
           <div class="puzzle-controls">
             <button onclick="moveItem(this, -1)">⬆️</button>
             <button onclick="moveItem(this, 1)">⬇️</button>
@@ -84,80 +77,94 @@
           </div>
         </div>
         <div class="puzzle-item" data-id="2">
-          <span>(2) Selanjutnya, keduanya memakai helm pelindung kepala serta bantalan lutut dengan kencang.</span>
+          <span>(2) Selanjutnya, keduanya memakai helm pelindung kepala serta bantalan lutut.</span>
           <div class="puzzle-controls">
             <button onclick="moveItem(this, -1)">⬆️</button>
             <button onclick="moveItem(this, 1)">⬇️</button>
           </div>
         </div>
       </div>
-
       <div class="feedback-box" id="feedback-1"></div>
-      <button class="btn-action" onclick="checkPuzzle()">Periksa Susunan Paragraf 🔍</button>
+      <button class="btn-action" id="btn-check-puzzle" onclick="checkPuzzle()">Periksa Susunan 🔍</button>
       <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Lanjut ke Misi 2 →</button>
     </div>
 
-    <!-- Misi 2: Lengkapi Konjungsi -->
+    <!-- SOAL 2: KONJUNGSI -->
     <div class="challenge-card" id="stage-2" style="display:none;">
       <div class="challenge-question">
         Misi 2: Pilihlah <u>kata penghubung (konjungsi)</u> yang paling tepat untuk mengisi bagian rumpang berikut:
       </div>
-      <div class="reading-box" style="margin-bottom: 18px;">
+      <div class="reading-box">
         <p class="reading-text">
-          Hasyif gemar mencoba trik melompat yang tinggi di lintasan rampa. <b>[ . . . . . . . . . . ]</b>, Nanda mengingatkan agar selalu mengutamakan keseimbangan sebelum menambah kecepatan.
+          Hasyif gemar mencoba trik rampa yang tinggi. <b>[ . . . . . . . . . . ]</b>, Nanda mengingatkan agar selalu mengutamakan keseimbangan sebelum menambah kecepatan.
         </p>
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(2, 0)">
-          <span>A.</span> Meskipun demikian
-        </button>
-        <button class="btn-option" onclick="checkAnswer(2, 1)">
-          <span>B.</span> Karena itu
-        </button>
-        <button class="btn-option" onclick="checkAnswer(2, 2)">
-          <span>C.</span> Kemudian
-        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> Meskipun demikian</button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> Karena itu</button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)"><span>C.</span> Kemudian</button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
       <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Lanjut ke Misi 3 →</button>
     </div>
 
-    <!-- Misi 3: Kalimat Sumbang -->
+    <!-- SOAL 3: KALIMAT SUMBANG -->
     <div class="challenge-card" id="stage-3" style="display:none;">
       <div class="challenge-question">
-        Misi 3: Temukan <u>kalimat sumbang</u> (yang tidak padu / tidak nyambung dengan tema keselamatan) dalam paragraf ini!
+        Misi 3: Temukan <u>kalimat sumbang</u> (yang tidak nyambung dengan tema aturan taman) dalam paragraf ini!
       </div>
-      <div class="reading-box" style="margin-bottom: 18px;">
+      <div class="reading-box">
         <p class="reading-text">
-          (1) Setiap pemain skateboard wajib mematuhi rambu-rambu di sekitar taman bermain.<br>
-          (2) Rambu peringatan dipasang agar tidak ada tabrakan antarpeseluncur.<br>
-          (3) Harga es krim cokelat di dekat pintu gerbang taman sangat murah.<br>
-          (4) Oleh sebab itu, kewaspadaan tinggi membuat semua orang merasa aman.
+          (1) Setiap peseluncur wajib mematuhi rambu lintasan.<br>
+          (2) Rambu peringatan dipasang agar tidak ada benturan.<br>
+          (3) Harga es krim cokelat di dekat pintu gerbang sangat murah.<br>
+          (4) Oleh sebab itu, ketertiban membuat arena tetap aman.
         </p>
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(3, 0)">
-          <span>A.</span> Kalimat (1)
-        </button>
-        <button class="btn-option" onclick="checkAnswer(3, 1)">
-          <span>B.</span> Kalimat (2)
-        </button>
-        <button class="btn-option" onclick="checkAnswer(3, 2)">
-          <span>C.</span> Kalimat (3) - Karena membicarakan harga es krim yang tidak nyambung
-        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Kalimat (1)</button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Kalimat (2)</button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> <b>Kalimat (3) - Membicarakan harga es krim yang tidak nyambung</b></button>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
-      <button class="btn-action" id="next-3" style="display:none;" onclick="finishGame()">Selesaikan Misi! 🏆</button>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Lanjut ke Misi 4 →</button>
+    </div>
+
+    <!-- SOAL 4: KATA TRANSISI WAKTU -->
+    <div class="challenge-card" id="stage-4" style="display:none;">
+      <div class="challenge-question">
+        Misi 4: Manakah kata transisi yang paling cocok untuk menandai <u>langkah terakhir</u> dalam suatu teks panduan?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> "Mula-mula..."</button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> <b>"Akhirnya..." atau "Sebagai penutup..."</b></button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> "Lalu kemudian..."</button>
+      </div>
+      <div class="feedback-box" id="feedback-4"></div>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Lanjut ke Misi 5 →</button>
+    </div>
+
+    <!-- SOAL 5: BAGIAN PENUTUP PARAGRAF -->
+    <div class="challenge-card" id="stage-5" style="display:none;">
+      <div class="challenge-question">
+        Misi 5: Apa ciri utama dari <u>kalimat penutup simpulan</u> dalam sebuah paragraf argumentasi?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> <b>Menegaskan kembali pesan utama atau memberikan imbauan ringkas.</b></button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> Membuka topik baru yang sama sekali berbeda.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> Menanyakan alamat rumah pembaca.</button>
+      </div>
+      <div class="feedback-box" id="feedback-5"></div>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeKinanti()">Lihat Hasil Akhir! 🏁</button>
     </div>
   </div>
 
-  <!-- Modal Kemenangan -->
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 🧩 👏</div>
       <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Hebat Sekali, Kinanti!</h2>
       <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
-        Susunan paragrafmu sangat runtut dan padu! Kamu membuktikan pemahaman hebat dalam merangkai kalimat Bahasa Indonesia.
+        Semua susunan kalimat dan kata penghubungmu tersusun sangat rapi dan padu!
       </p>
       <a href="../index.html" class="btn-action" style="margin: 0 auto;">Kembali ke Menu Kelas</a>
     </div>
@@ -183,6 +190,7 @@
       const order = Array.from(items).map(i => i.getAttribute('data-id')).join('');
       const feedback = document.getElementById('feedback-1');
       const nextBtn = document.getElementById('next-1');
+      document.getElementById('btn-check-puzzle').disabled = true;
 
       if (order === '1234') {
         playSfx('correct');
@@ -192,15 +200,15 @@
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
         document.getElementById('dot-1').classList.add('completed');
-        nextBtn.style.display = "inline-flex";
       } else {
         playSfx('wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Urutan belum runtut. Perhatikan kata kunci penunjuk urutan: <i>Pertama, Selanjutnya, Setelah, Akhirnya</i>!";
+        feedback.innerHTML = "❌ Urutan belum runtut. Urutan yang tepat: 1 -> 2 -> 3 -> 4.";
       }
+      nextBtn.style.display = "inline-flex";
     }
 
-    const correctAnswers = { 2: 0, 3: 2 };
+    const correctAnswers = { 2: 0, 3: 2, 4: 1, 5: 0 };
 
     function checkAnswer(stage, chosenIndex) {
       const card = document.getElementById(`stage-${stage}`);
@@ -214,25 +222,18 @@
         playSfx('correct');
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "✅ <b>Tepat sekali!</b> Pilihan kata dan analisismu sangat akurat.";
+        feedback.innerHTML = "✅ <b>Tepat sekali!</b> Pilihanmu sangat padu.";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
         document.getElementById(`dot-${stage}`).classList.add('completed');
-        nextBtn.style.display = "inline-flex";
       } else {
         playSfx('wrong');
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Belum tepat, ayo coba baca lagi dengan tenang!";
-        setTimeout(() => {
-          buttons.forEach(b => {
-            b.disabled = false;
-            b.classList.remove('selected-wrong');
-          });
-          feedback.className = "feedback-box";
-        }, 1600);
+        feedback.innerHTML = "❌ Belum tepat.";
       }
+      nextBtn.style.display = "inline-flex";
     }
 
     function goToStage(nextStage) {
@@ -242,10 +243,8 @@
       document.getElementById(`dot-${nextStage}`).classList.add('active');
     }
 
-    function finishGame() {
-      playSfx('win');
-      launchConfetti();
-      document.getElementById('victory-modal').classList.add('active');
+    function completeKinanti() {
+      triggerGameOutcome(stars, 5, "Kinanti");
     }
   </script>
 </body>
