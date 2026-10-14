@@ -3,28 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Petualangan Bahasa Indonesia - PKBM Penerus Bangsa</title>
+  <title>Portal Game Pembelajaran Interaktif - PKBM Penerus Bangsa</title>
   <link rel="stylesheet" href="assets/style.css">
   <style>
     .hero-banner {
       background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
       color: white;
-      padding: 40px 24px;
+      padding: 36px 24px;
       border-radius: var(--radius-lg);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       text-align: center;
       box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.4);
     }
     .hero-title {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 800;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .hero-sub {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       opacity: 0.95;
-      max-width: 600px;
+      max-width: 620px;
       margin: 0 auto;
+    }
+    /* Subject Switcher Bar */
+    .subject-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      background: #E2E8F0;
+      padding: 6px;
+      border-radius: 40px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      background: transparent;
+      color: #475569;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transform: scale(1.02);
+    }
+    .tab-btn.active.tab-english {
+      color: #0284C7;
     }
     .grade-section {
       margin-bottom: 36px;
@@ -111,129 +149,299 @@
       font-weight: 700;
       color: var(--primary);
     }
+    .subject-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .subject-pane.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
   <div class="header-bar">
     <div class="logo-badge">
-      <div class="badge-icon">📖</div>
+      <div class="badge-icon">🚀</div>
       <div>PKBM Penerus Bangsa</div>
     </div>
-    <div class="student-tag">📅 Semester 1 - On-Site</div>
+    <div class="student-tag">📅 Semester 1 • Multigrade 4, 5, 6</div>
   </div>
 
   <div class="container">
-    <div class="hero-banner">
-      <h1 class="hero-title">🚀 Petualangan Bahasa Indonesia</h1>
-      <p class="hero-sub">Pilih namamu dan mulai selesaikan misi petualangan kata hari ini!</p>
+    <div class="hero-banner" id="hero-banner">
+      <h1 class="hero-title" id="banner-title">🎮 Petualangan Belajar Interaktif</h1>
+      <p class="hero-sub" id="banner-sub">Pilih mata pelajaran, cari namamu, dan selesaikan misi petualangan kata hari ini!</p>
     </div>
 
-    <!-- MEJA KELAS 4 -->
-    <div class="grade-section">
-      <div class="grade-header">
-        <span class="grade-badge" style="background:#3B82F6;">Kelas 4</span>
-        <span class="grade-topic">Ide Pokok & Paragraf Argumentasi (Lintasan Skateboard)</span>
+    <!-- PENGALIH MAPEL (TABS) -->
+    <div class="subject-switcher">
+      <button class="tab-btn active" id="tab-indo" onclick="switchSubject('indo')">
+        🇮🇩 B. Indonesia
+      </button>
+      <button class="tab-btn tab-english" id="tab-eng" onclick="switchSubject('eng')">
+        🇬🇧 English Class
+      </button>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 1. PANE BAHASA INDONESIA -->
+    <!-- ========================================================================= -->
+    <div class="subject-pane active" id="pane-indo">
+      <!-- KELAS 4 INDO -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:#3B82F6;">Kelas 4</span>
+          <span class="grade-topic">Ide Pokok & Paragraf Argumentasi (Lintasan Skateboard)</span>
+        </div>
+        <div class="student-grid">
+          <a href="kelas4/acip.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#EFF6FF;">🔍</div>
+              <div class="name-title">Acip</div>
+              <div class="game-title">Detektif Ide Pokok & Argumen</div>
+              <div class="game-desc">Analisis kalimat utama, alasan logis, dan premis keselamatan bermain skateboard.</div>
+            </div>
+            <div class="start-arrow">Mulai Main →</div>
+          </a>
+
+          <a href="kelas4/kinanti.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#F0FDF4;">🧩</div>
+              <div class="name-title">Kinanti</div>
+              <div class="game-title">Penyusun Paragraf Runtut</div>
+              <div class="game-desc">Susun puzzle kalimat acak menjadi paragraf padu dengan kata penghubung tepat.</div>
+            </div>
+            <div class="start-arrow">Mulai Main →</div>
+          </a>
+
+          <a href="kelas4/alisya.html" class="student-card special-alisya">
+            <div>
+              <div class="student-avatar" style="background:#FEF3C7;">🌟</div>
+              <div class="name-title">Alisya</div>
+              <div class="game-title">Petualangan Gambar & Suara</div>
+              <div class="game-desc">Cocokkan kartu bergambar & dengarkan audio suara ramah tanpa batas waktu.</div>
+            </div>
+            <div class="start-arrow" style="color:#D97706;">Mulai Main 🔊 →</div>
+          </a>
+        </div>
       </div>
-      <div class="student-grid">
-        <a href="kelas4/acip.html" class="student-card">
-          <div>
-            <div class="student-avatar" style="background:#EFF6FF;">🔍</div>
-            <div class="name-title">Acip</div>
-            <div class="game-title">Detektif Ide Pokok & Argumen</div>
-            <div class="game-desc">Analisis kalimat utama, alasan logis, dan premis keselamatan bermain skateboard.</div>
-          </div>
-          <div class="start-arrow">Mulai Main →</div>
-        </a>
 
-        <a href="kelas4/kinanti.html" class="student-card">
-          <div>
-            <div class="student-avatar" style="background:#F0FDF4;">🧩</div>
-            <div class="name-title">Kinanti</div>
-            <div class="game-title">Penyusun Paragraf Runtut</div>
-            <div class="game-desc">Susun puzzle kalimat acak menjadi paragraf padu dengan kata penghubung tepat.</div>
-          </div>
-          <div class="start-arrow">Mulai Main →</div>
-        </a>
+      <!-- KELAS 5 INDO -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:#10B981;">Kelas 5</span>
+          <span class="grade-topic">Paragraf Deduktif & Induktif (Wirausaha Pembatas Buku)</span>
+        </div>
+        <div class="student-grid">
+          <a href="kelas5/ardiansyah.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#ECFDF5;">🎯</div>
+              <div class="name-title">Ardiansyah</div>
+              <div class="game-title">Pilah Paragraf: Deduktif vs Induktif</div>
+              <div class="game-desc">Temukan letak gagasan utama teks wirausaha Aditya di awal atau di akhir kalimat.</div>
+            </div>
+            <div class="start-arrow" style="color:#059669;">Mulai Main →</div>
+          </a>
+        </div>
+      </div>
 
-        <a href="kelas4/alisya.html" class="student-card special-alisya">
-          <div>
-            <div class="student-avatar" style="background:#FEF3C7;">🌟</div>
-            <div class="name-title">Alisya</div>
-            <div class="game-title">Petualangan Gambar & Suara</div>
-            <div class="game-desc">Cocokkan kartu bergambar & dengarkan audio suara ramah tanpa batas waktu.</div>
-          </div>
-          <div class="start-arrow" style="color:#D97706;">Mulai Main 🔊 →</div>
-        </a>
+      <!-- KELAS 6 INDO -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:#8B5CF6;">Kelas 6</span>
+          <span class="grade-topic">Fakta vs Opini & Laporan Pengamatan (TN Tanjung Puting)</span>
+        </div>
+        <div class="student-grid">
+          <a href="kelas6/selvi.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#FAF5FF;">✍️</div>
+              <div class="name-title">Selvi</div>
+              <div class="game-title">Editor Kritis Laporan Konservasi</div>
+              <div class="game-desc">Evaluasi bias subjektif dan rekonstruksi teks laporan menjadi fakta objektif.</div>
+            </div>
+            <div class="start-arrow" style="color:#7C3AED;">Mulai Main →</div>
+          </a>
+
+          <a href="kelas6/aulya.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#F5F3FF;">⚖️</div>
+              <div class="name-title">Aulya</div>
+              <div class="game-title">Sortir Fakta & Opini Tanjung Puting</div>
+              <div class="game-desc">Pilah kartu pernyataan orangutan dan perahu kelotok ke keranjang yang tepat.</div>
+            </div>
+            <div class="start-arrow" style="color:#7C3AED;">Mulai Main →</div>
+          </a>
+
+          <a href="kelas6/shan.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#FEF2F2;">🏆</div>
+              <div class="name-title">Shan</div>
+              <div class="game-title">Tantangan Kuis Kilat 5W+1H</div>
+              <div class="game-desc">Jawab cepat fakta ekspedisi Sungai Sekonyer dan raih skor bintang tertinggi!</div>
+            </div>
+            <div class="start-arrow" style="color:#DC2626;">Mulai Main →</div>
+          </a>
+
+          <a href="kelas6/hendra.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#F0FDF4;">🗺️</div>
+              <div class="name-title">Hendra</div>
+              <div class="game-title">Misi Pos Pengamatan 5W+1H</div>
+              <div class="game-desc">Kelompokkan fakta laporan ke elemen Apa, Siapa, Kapan, Di mana, dan Bagaimana.</div>
+            </div>
+            <div class="start-arrow" style="color:#16A34A;">Mulai Main →</div>
+          </a>
+        </div>
       </div>
     </div>
 
-    <!-- MEJA KELAS 5 -->
-    <div class="grade-section">
-      <div class="grade-header">
-        <span class="grade-badge" style="background:#10B981;">Kelas 5</span>
-        <span class="grade-topic">Paragraf Deduktif & Induktif (Wirausaha Pembatas Buku)</span>
+    <!-- ========================================================================= -->
+    <!-- 2. PANE ENGLISH CLASS -->
+    <!-- ========================================================================= -->
+    <div class="subject-pane" id="pane-eng">
+      <!-- GRADE 4 ENGLISH -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:#0284C7;">Grade 4</span>
+          <span class="grade-topic">Things in The Kitchen & Daily Actions (Present Continuous)</span>
+        </div>
+        <div class="student-grid">
+          <a href="english/acip.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#E0F2FE;">🍳</div>
+              <div class="name-title">Acip</div>
+              <div class="game-title">Kitchen Grammar & Safety Detective</div>
+              <div class="game-desc">Analyze Present Continuous (Verb-ing), kitchen prepositions, and safety logic.</div>
+            </div>
+            <div class="start-arrow" style="color:#0284C7;">Start Mission →</div>
+          </a>
+
+          <a href="english/kinanti.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#ECFDF5;">🥗</div>
+              <div class="name-title">Kinanti</div>
+              <div class="game-title">Kitchen Actions & Recipe Sequencer</div>
+              <div class="game-desc">Reorder morning kitchen steps and complete daily action sentences.</div>
+            </div>
+            <div class="start-arrow" style="color:#10B981;">Start Mission →</div>
+          </a>
+
+          <a href="english/alisya.html" class="student-card special-alisya">
+            <div>
+              <div class="student-avatar" style="background:#FEF3C7;">🌟</div>
+              <div class="name-title">Alisya</div>
+              <div class="game-title">Kitchen & Food Audio Explorer</div>
+              <div class="game-desc">Tap picture cards, listen to clear English pronunciation, and collect stars.</div>
+            </div>
+            <div class="start-arrow" style="color:#D97706;">Start Mission 🔊 →</div>
+          </a>
+        </div>
       </div>
-      <div class="student-grid">
-        <a href="kelas5/ardiansyah.html" class="student-card">
-          <div>
-            <div class="student-avatar" style="background:#ECFDF5;">🎯</div>
-            <div class="name-title">Ardiansyah</div>
-            <div class="game-title">Pilah Paragraf: Deduktif vs Induktif</div>
-            <div class="game-desc">Temukan letak gagasan utama teks wirausaha Aditya di awal atau di akhir kalimat.</div>
-          </div>
-          <div class="start-arrow" style="color:#059669;">Mulai Main →</div>
-        </a>
+
+      <!-- GRADE 5 ENGLISH -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:#059669;">Grade 5</span>
+          <span class="grade-topic">Tastes, Foods & Quantifying Nouns (Countable vs Uncountable)</span>
+        </div>
+        <div class="student-grid">
+          <a href="english/ardiansyah.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#ECFDF5;">🍜</div>
+              <div class="name-title">Ardiansyah</div>
+              <div class="game-title">Food & Quantifier Detective</div>
+              <div class="game-desc">Match food containers (a bowl of, a glass of, a bar of) and delicious tastes.</div>
+            </div>
+            <div class="start-arrow" style="color:#059669;">Start Mission →</div>
+          </a>
+        </div>
       </div>
-    </div>
 
-    <!-- MEJA KELAS 6 -->
-    <div class="grade-section">
-      <div class="grade-header">
-        <span class="grade-badge" style="background:#8B5CF6;">Kelas 6</span>
-        <span class="grade-topic">Fakta vs Opini & Laporan Pengamatan (TN Tanjung Puting)</span>
-      </div>
-      <div class="student-grid">
-        <a href="kelas6/selvi.html" class="student-card">
-          <div>
-            <div class="student-avatar" style="background:#FAF5FF;">✍️</div>
-            <div class="name-title">Selvi</div>
-            <div class="game-title">Editor Kritis Laporan Konservasi</div>
-            <div class="game-desc">Evaluasi bias subjektif dan rekonstruksi teks laporan menjadi fakta objektif.</div>
-          </div>
-          <div class="start-arrow" style="color:#7C3AED;">Mulai Main →</div>
-        </a>
+      <!-- GRADE 6 ENGLISH -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:#7C3AED;">Grade 6</span>
+          <span class="grade-topic">Simple Past Tense: Weekend Activities & Experiences</span>
+        </div>
+        <div class="student-grid">
+          <a href="english/selvi.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#FAF5FF;">🏛️</div>
+              <div class="name-title">Selvi</div>
+              <div class="game-title">Past Tense Diary & Travel Editor</div>
+              <div class="game-desc">Spot past verb errors, classify regular/irregular verbs, and edit past sentences.</div>
+            </div>
+            <div class="start-arrow" style="color:#7C3AED;">Start Mission →</div>
+          </a>
 
-        <a href="kelas6/aulya.html" class="student-card">
-          <div>
-            <div class="student-avatar" style="background:#F5F3FF;">⚖️</div>
-            <div class="name-title">Aulya</div>
-            <div class="game-title">Sortir Fakta & Opini Tanjung Puting</div>
-            <div class="game-desc">Pilah kartu pernyataan orangutan dan perahu kelotok ke keranjang yang tepat.</div>
-          </div>
-          <div class="start-arrow" style="color:#7C3AED;">Mulai Main →</div>
-        </a>
+          <a href="english/aulya.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#F5F3FF;">⚖️</div>
+              <div class="name-title">Aulya</div>
+              <div class="game-title">Regular vs Irregular Past Verb Sorter</div>
+              <div class="game-desc">Sort past verbs (visited, went, bought, cooked) into proper grammatical boxes.</div>
+            </div>
+            <div class="start-arrow" style="color:#7C3AED;">Start Mission →</div>
+          </a>
 
-        <a href="kelas6/shan.html" class="student-card">
-          <div>
-            <div class="student-avatar" style="background:#FEF2F2;">🏆</div>
-            <div class="name-title">Shan</div>
-            <div class="game-title">Tantangan Kuis Kilat 5W+1H</div>
-            <div class="game-desc">Jawab cepat fakta ekspedisi Sungai Sekonyer dan raih skor bintang tertinggi!</div>
-          </div>
-          <div class="start-arrow" style="color:#DC2626;">Mulai Main →</div>
-        </a>
+          <a href="english/shan.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#FEF2F2;">⚡</div>
+              <div class="name-title">Shan</div>
+              <div class="game-title">Rapid Past Tense Sprint Quiz</div>
+              <div class="game-desc">Fast-paced Verb 2 challenges with streak bonuses and gold medal badges!</div>
+            </div>
+            <div class="start-arrow" style="color:#DC2626;">Start Mission →</div>
+          </a>
 
-        <a href="kelas6/hendra.html" class="student-card">
-          <div>
-            <div class="student-avatar" style="background:#F0FDF4;">🗺️</div>
-            <div class="name-title">Hendra</div>
-            <div class="game-title">Misi Pos Pengamatan 5W+1H</div>
-            <div class="game-desc">Kelompokkan fakta laporan ke elemen Apa, Siapa, Kapan, Di mana, dan Bagaimana.</div>
-          </div>
-          <div class="start-arrow" style="color:#16A34A;">Mulai Main →</div>
-        </a>
+          <a href="english/hendra.html" class="student-card">
+            <div>
+              <div class="student-avatar" style="background:#F0FDF4;">📖</div>
+              <div class="name-title">Hendra</div>
+              <div class="game-title">5W+1H Past Diary Investigator</div>
+              <div class="game-desc">Investigate WHO, WHERE, WHEN, WHAT, and HOW from Shine, Zahra & Yusman's diary.</div>
+            </div>
+            <div class="start-arrow" style="color:#16A34A;">Start Mission →</div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
+
+  <script src="assets/game.js"></script>
+  <script>
+    function switchSubject(subj) {
+      playSfx('click');
+      const tabIndo = document.getElementById('tab-indo');
+      const tabEng = document.getElementById('tab-eng');
+      const paneIndo = document.getElementById('pane-indo');
+      const paneEng = document.getElementById('pane-eng');
+      const heroBanner = document.getElementById('hero-banner');
+      const bannerTitle = document.getElementById('banner-title');
+      const bannerSub = document.getElementById('banner-sub');
+
+      if (subj === 'eng') {
+        tabIndo.classList.remove('active');
+        tabEng.classList.add('active');
+        paneIndo.classList.remove('active');
+        paneEng.classList.add('active');
+        heroBanner.style.background = 'linear-gradient(135deg, #0284C7 0%, #10B981 100%)';
+        bannerTitle.innerText = "🇬🇧 English Adventure (My Next Words)";
+        bannerSub.innerText = "Select your name and complete your English learning missions today!";
+      } else {
+        tabEng.classList.remove('active');
+        tabIndo.classList.add('active');
+        paneEng.classList.remove('active');
+        paneIndo.classList.add('active');
+        heroBanner.style.background = 'linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%)';
+        bannerTitle.innerText = "🚀 Petualangan Bahasa Indonesia";
+        bannerSub.innerText = "Pilih namamu dan selesaikan misi petualangan kata hari ini!";
+      }
+    }
+  </script>
 </body>
 </html>
