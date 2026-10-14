@@ -36,7 +36,12 @@
     </div>
 
     <div class="challenge-card" id="quiz-card">
-      <div class="challenge-question" id="question-text">Loading question...</div>
+      <div class="card-header-flex">
+        <div class="challenge-question" id="question-text" style="margin-bottom:0;">Loading question...</div>
+        <button class="btn-card-lang" onclick="toggleShanQuestionLang(this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
+      </div>
       <div class="option-grid" id="options-container"></div>
       <div class="feedback-box" id="feedback-box"></div>
       <div style="text-align: right; margin-top: 16px;">
@@ -123,6 +128,14 @@
       document.getElementById('progress-fill').style.width = `${((qIdx + 1) / questions.length) * 100}%`;
     }
 
+    function toggleShanQuestionLang(btn) {
+      playSfx('click');
+      const isEn = window.currentLang !== 'id';
+      window.currentLang = isEn ? 'id' : 'en';
+      btn.innerHTML = isEn ? '🇬🇧 <span>English</span>' : '🌐 <span>Terjemahkan Soal</span>';
+      renderQuestion();
+    }
+
     function chooseAnswer(idx) {
       const q = questions[qIdx];
       const buttons = document.querySelectorAll('.btn-option');
@@ -164,15 +177,6 @@
         triggerGameOutcome(score, 5, "Shan", null, true);
       }
     }
-
-    // Re-render question text when language switched
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      originalSetLanguage(lang);
-      if (document.getElementById('question-text')) {
-        renderQuestion();
-      }
-    };
 
     initLanguageToggle('en');
     renderQuestion();
