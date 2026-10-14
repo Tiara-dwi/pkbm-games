@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Acip: Detektif Ide Pokok & Argumen</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon">🔍</div>
+      <div>Misi Detektif Acip</div>
+    </a>
+    <div class="student-tag">Kelas 4 • Acip</div>
+    <a href="../index.html" class="btn-back">← Menu Utama</a>
+  </div>
+
+  <div class="container">
+    <div class="tracker-bar">
+      <div class="star-count">⭐ Bintang: <span id="star-display">0</span>/3</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+      </div>
+    </div>
+
+    <!-- Teks Bacaan Sumber -->
+    <div class="reading-box">
+      <div class="reading-title">🛹 Kasus Lintasan Skateboard: Hasyif & Nanda</div>
+      <p class="reading-text" id="story-text">
+        (1) Bermain skateboard di lintasan umum menuntut kepatuhan terhadap standar keselamatan yang ketat. 
+        (2) Hasyif selalu memastikan mengenakan helm berstandar SNI dan pelindung lutut sebelum meluncur menuruni rampa curam. 
+        (3) Nanda juga memeriksa baut roda papan luncurnya secara berkala agar tidak terlepas saat bermanuver. 
+        (4) Tanpa perlengkapan pelindung, benturan keras akibat kehilangan keseimbangan dapat menyebabkan cedera fatal pada persendian dan kepala.
+      </p>
+    </div>
+
+    <!-- Area Tantangan Interaktif -->
+    <div class="challenge-card" id="stage-1">
+      <div class="challenge-question">
+        Misi 1: Berdasarkan teks di atas, manakah yang merupakan <u>Kalimat Utama</u> yang memuat Ide Pokok seluruh paragraf?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(1, 0)">
+          <span>A.</span> Kalimat (2): Hasyif selalu memastikan mengenakan helm berstandar SNI sebelum meluncur.
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)">
+          <span>B.</span> Kalimat (1): Bermain skateboard di lintasan umum menuntut kepatuhan terhadap standar keselamatan yang ketat.
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)">
+          <span>C.</span> Kalimat (3): Nanda memeriksa baut roda papan luncurnya secara berkala.
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 3)">
+          <span>D.</span> Kalimat (4): Benturan keras dapat menyebabkan cedera fatal pada persendian.
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-1"></div>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Lanjut ke Misi 2 →</button>
+    </div>
+
+    <div class="challenge-card" id="stage-2" style="display:none;">
+      <div class="challenge-question">
+        Misi 2: Analisis Argumen! Mengapa Kalimat (4) disebut sebagai <u>Argumen Pendukung yang Kuat</u> bagi Kalimat (1)?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(2, 0)">
+          <span>A.</span> Karena kalimat (4) menceritakan hobi dan warna helm kesukaan Hasyif dan Nanda.
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)">
+          <span>B.</span> Karena kalimat (4) memberikan bukti sebab-akibat yang logis: jika lalai keselamatan, risikonya cedera fatal.
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)">
+          <span>C.</span> Karena kalimat (4) berisi ajakan membeli papan luncurnya Nanda di toko olahraga.
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-2"></div>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Lanjut ke Misi 3 →</button>
+    </div>
+
+    <div class="challenge-card" id="stage-3" style="display:none;">
+      <div class="challenge-question">
+        Misi 3: Evaluasi Kritis! Jika seorang pengunjung lintasan berkata: <i>"Memakai helm itu hanya buang waktu dan membuat gerah"</i>, bagaimana argumen tandingan yang paling ilmiah dan tepat?
+      </div>
+      <div class="option-grid">
+        <button class="btn-option" onclick="checkAnswer(3, 0)">
+          <span>A.</span> "Rasa gerah bersifat sementara, tetapi perlindungan helm mencegah gegar otak permanen saat terjadi benturan mendadak."
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)">
+          <span>B.</span> "Tidak apa-apa melepas helm asalkan kamu meluncur dengan sangat pelan di pinggir rampa."
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)">
+          <span>C.</span> "Helm hanya dipakai jika ada petugas patroli yang sedang mengawasi lintasan."
+        </button>
+      </div>
+      <div class="feedback-box" id="feedback-3"></div>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="finishGame()">Selesaikan Misi! 🏆</button>
+    </div>
+  </div>
+
+  <!-- Modal Kemenangan -->
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🏆 ⭐ 🎯</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Luar Biasa, Detektif Acip!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Kamu berhasil menganalisis Ide Pokok dan Argumen Logis pada teks Hasyif & Nanda dengan sempurna! Semua bintang telah kamu kumpulkan.
+      </p>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto;">Kembali ke Menu Kelas</a>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let stars = 0;
+    const correctAnswers = { 1: 1, 2: 1, 3: 0 };
+
+    function checkAnswer(stage, chosenIndex) {
+      const card = document.getElementById(`stage-${stage}`);
+      const buttons = card.querySelectorAll('.btn-option');
+      const feedback = document.getElementById(`feedback-${stage}`);
+      const nextBtn = document.getElementById(`next-${stage}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIndex === correctAnswers[stage]) {
+        playSfx('correct');
+        buttons[chosenIndex].classList.add('selected-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = "✅ <b>Tepat sekali!</b> Analisis logismu sangat tajam!";
+        stars++;
+        document.getElementById('star-display').innerText = stars;
+        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
+        nextBtn.style.display = "inline-flex";
+      } else {
+        playSfx('wrong');
+        buttons[chosenIndex].classList.add('selected-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = "❌ <b>Belum tepat.</b> Periksa kembali hubungan kalimat utama dan penjelas ya! Coba klik tombol ulang.";
+        setTimeout(() => {
+          buttons.forEach(b => {
+            b.disabled = false;
+            b.classList.remove('selected-wrong');
+          });
+          feedback.className = "feedback-box";
+        }, 1800);
+      }
+    }
+
+    function goToStage(nextStage) {
+      playSfx('click');
+      document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
+      document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
+    }
+
+    function finishGame() {
+      playSfx('win');
+      launchConfetti();
+      document.getElementById('victory-modal').classList.add('active');
+    }
+  </script>
+</body>
+</html>
