@@ -34,8 +34,13 @@
 
     <!-- READING CASE -->
     <div class="reading-box">
-      <div class="reading-title" data-en="🏛️ Diary: Shine, Zahra, and Yusman's Weekend" data-id="🏛️ Catatan Harian: Akhir Pekan Shine, Zahra, dan Yusman">
-        🏛️ Diary: Shine, Zahra, and Yusman's Weekend
+      <div class="card-header-flex">
+        <div class="reading-title" style="margin-bottom:0;" data-en="🏛️ Diary: Shine, Zahra, and Yusman's Weekend" data-id="🏛️ Catatan Harian: Akhir Pekan Shine, Zahra, dan Yusman">
+          🏛️ Diary: Shine, Zahra, and Yusman's Weekend
+        </div>
+        <button class="btn-card-lang" onclick="toggleReadingLanguage(this)">
+          🌐 <span>Terjemahkan Cerita</span>
+        </button>
       </div>
       <p class="reading-text"
          data-en="Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they went to a traditional culinary market. Shine bought a kilo of fresh oranges, while Zahra and Yusman ordered delicious chicken satay. In the afternoon, they cooked fried rice together at home. Zahra said, 'Last week was wonderful! We studied hard for the test, but we enjoyed our weekend together.'"
@@ -46,10 +51,15 @@
 
     <!-- Q1 -->
     <div class="challenge-card" id="stage-1">
-      <div class="challenge-question"
-           data-en="Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?"
-           data-id="Tantangan 1: Deteksi Kesalahan! Kalimat draf manakah yang memuat kata kerja lampau <u>SALAH</u>?">
-        Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?"
+             data-id="Tantangan 1: Deteksi Kesalahan! Kalimat draf manakah yang memuat kata kerja lampau <u>SALAH</u>?">
+          Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-1', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(1, 0)">
@@ -68,10 +78,15 @@
 
     <!-- Q2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?"
-           data-id="Tantangan 2: Klasifikasi Kata Kerja! Pada kalimat: <i>'They cooked fried rice and studied together'</i>, termasuk jenis kata kerja lampau apakah 'cooked' dan 'studied'?">
-        Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?"
+             data-id="Tantangan 2: Klasifikasi Kata Kerja! Pada kalimat: <i>'They cooked fried rice and studied together'</i>, termasuk jenis kata kerja lampau apakah 'cooked' dan 'studied'?">
+          Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-2', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(2, 0)">
@@ -87,10 +102,15 @@
 
     <!-- Q3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?"
-           data-id="Tantangan 3: Mengedit Kalimat! Bagaimana mengubah: <i>'Yesterday, we (eat) satay and (go) home'</i> menjadi bentuk Simple Past Tense yang tepat?">
-        Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?"
+             data-id="Tantangan 3: Mengedit Kalimat! Bagaimana mengubah: <i>'Yesterday, we (eat) satay and (go) home'</i> menjadi bentuk Simple Past Tense yang tepat?">
+          Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-3', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Yesterday, we ate satay and went home.</button>
@@ -103,10 +123,15 @@
 
     <!-- Q4 -->
     <div class="challenge-card" id="stage-4" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?"
-           data-id="Tantangan 4: Penanda Waktu! Pasangan manakah yang merupakan penanda waktu yang sah untuk <u>Simple Past Tense</u>?">
-        Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?"
+             data-id="Tantangan 4: Penanda Waktu! Pasangan manakah yang merupakan penanda waktu yang sah untuk <u>Simple Past Tense</u>?">
+          Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-4', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(4, 0)">
@@ -125,10 +150,15 @@
 
     <!-- Q5 -->
     <div class="challenge-card" id="stage-5" style="display:none;">
-      <div class="challenge-question"
-           data-en="Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?"
-           data-id="Tantangan 5: Kalimat Negatif! Manakah kalimat negatif lampau yang tepat jika Zahra tidak memasak kemarin?">
-        Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?
+      <div class="card-header-flex">
+        <div class="challenge-question" style="margin-bottom:0;"
+             data-en="Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?"
+             data-id="Tantangan 5: Kalimat Negatif! Manakah kalimat negatif lampau yang tepat jika Zahra tidak memasak kemarin?">
+          Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?
+        </div>
+        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-5', this)">
+          🌐 <span>Terjemahkan Soal</span>
+        </button>
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(5, 0)">
