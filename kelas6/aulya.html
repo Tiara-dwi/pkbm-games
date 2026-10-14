@@ -36,10 +36,7 @@
       font-size: 1.2rem;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3);
-      transition: all 0.2s;
     }
-    .btn-fakta:hover { transform: scale(1.03); background: #059669; }
     .btn-opini {
       background: #F59E0B;
       color: white;
@@ -49,10 +46,7 @@
       font-size: 1.2rem;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 6px 12px rgba(245, 158, 11, 0.3);
-      transition: all 0.2s;
     }
-    .btn-opini:hover { transform: scale(1.03); background: #D97706; }
   </style>
 </head>
 <body>
@@ -91,7 +85,7 @@
       <div style="font-size: 3.5rem; margin-bottom: 12px;">⚖️ 🌟 👏</div>
       <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Luar Biasa, Aulya!</h2>
       <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
-        Kamu berhasil memilah semua kartu fakta dan opini ekspedisi Tanjung Puting dengan sangat tepat!
+        Semua kartu fakta dan opini ekspedisi Tanjung Puting berhasil kamu pilah dengan sempurna!
       </p>
       <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#8B5CF6;">Kembali ke Menu Kelas</a>
     </div>
@@ -102,7 +96,7 @@
     const deck = [
       { text: "Taman Nasional Tanjung Puting memiliki luas wilayah sekitar 415.040 hektare di Kalimantan Tengah.", type: "FAKTA", reason: "Memiliki data numerik resmi dan batas wilayah geografis konkret." },
       { text: "Melihat bekantan bertengger di pohon nipah adalah pemandangan paling menakjubkan bagi seluruh pengunjung.", type: "OPINI", reason: "Ada kata relatif 'paling menakjubkan' yang merupakan penilaian rasa subjektif." },
-      { text: "Perahu kelotok yang ditumpangi Shine, Zahra, dan Yusman membutuhkan waktu tempuh 4 jam menuju Camp Leakey.", type: "FAKTA", reason: "Fakta empiris durasi waktu yang dapat diukur dengan jam." },
+      { text: "Perahu kelotok yang ditumpangi Shine, Zahra, dan Yusman membutuhkan waktu tempuh 4 jam menuju Camp Leakey.", type: "FAKTA", reason: "Fakta empiris durasi waktu yang dapat diukur." },
       { text: "Suara deru mesin kelotok pasti membuat semua turis merasa pusing dan ingin segera pulang.", type: "OPINI", reason: "Klaim dugaan perasaan tanpa bukti ilmiah." },
       { text: "Pusat rehabilitasi orangutan Camp Leakey didirikan oleh Dr. Biruté Galdikas pada tahun 1971.", type: "FAKTA", reason: "Catatan sejarah dengan bukti nama tokoh dan tahun pendirian yang valid." }
     ];
@@ -142,9 +136,7 @@
         document.getElementById('next-btn').style.display = "none";
         document.querySelectorAll('.sort-buttons button').forEach(b => b.disabled = false);
       } else {
-        playSfx('win');
-        launchConfetti();
-        document.getElementById('victory-modal').classList.add('active');
+        triggerGameOutcome(score, 5, "Aulya");
       }
     }
   </script>
