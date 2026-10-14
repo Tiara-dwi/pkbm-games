@@ -10,20 +10,19 @@
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
       <div class="badge-icon" style="background:#8B5CF6;">🏛️</div>
-      <div>Selvi's Past Editor Mission</div>
+      <div data-en="Selvi's Past Editor Mission" data-id="Misi Editor Lampau Selvi">Selvi's Past Editor Mission</div>
     </a>
-    <div class="student-tag" style="background:#FAF5FF; color:#7C3AED;">Grade 6 • Selvi</div>
-    <div class="lang-toggle-container" style="margin-left: auto; margin-right: 12px;">
-      <button class="lang-toggle-btn" onclick="window.location.href='../kelas6/selvi.html'" title="Ganti ke Game Bahasa Indonesia">🇮🇩 ID</button>
-      <button class="lang-toggle-btn active lang-en" title="English Mode">🇬🇧 EN</button>
+    <div class="lang-switch-wrap">
+      <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
+      <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-
-    <a href="../index.html" class="btn-back">← Main Portal</a>
+    <div class="student-tag" style="background:#FAF5FF; color:#7C3AED;">Grade 6 • Selvi</div>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count" style="color:#7C3AED;">⭐ Stars: <span id="star-display">0</span>/5</div>
+      <div class="star-count" style="color:#7C3AED;"><span data-en="⭐ Stars: " data-id="⭐ Bintang: ">⭐ Stars: </span><span id="star-display">0</span>/5</div>
       <div class="progress-pills">
         <div class="pill-dot active" id="dot-1"></div>
         <div class="pill-dot" id="dot-2"></div>
@@ -35,46 +34,63 @@
 
     <!-- READING CASE -->
     <div class="reading-box">
-      <div class="reading-title">🏛️ Diary: Shine, Zahra, and Yusman's Weekend</div>
-      <p class="reading-text">
-        Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they went to a traditional 
-        culinary market. Shine bought a kilo of fresh oranges, while Zahra and Yusman ordered delicious chicken satay. In the 
-        afternoon, they cooked fried rice together at home.
-        Zahra said, "Last week was wonderful! We studied hard for the test, but we enjoyed our weekend together."
+      <div class="reading-title" data-en="🏛️ Diary: Shine, Zahra, and Yusman's Weekend" data-id="🏛️ Catatan Harian: Akhir Pekan Shine, Zahra, dan Yusman">
+        🏛️ Diary: Shine, Zahra, and Yusman's Weekend
+      </div>
+      <p class="reading-text"
+         data-en="Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they went to a traditional culinary market. Shine bought a kilo of fresh oranges, while Zahra and Yusman ordered delicious chicken satay. In the afternoon, they cooked fried rice together at home. Zahra said, 'Last week was wonderful! We studied hard for the test, but we enjoyed our weekend together.'"
+         data-id="Sabtu lalu, Shine, Zahra, dan Yusman mengunjungi museum kota di pagi hari. Setelah itu, mereka pergi ke pasar kuliner tradisional. Shine membeli sekilo jeruk segar, sementara Zahra dan Yusman memesan sate ayam yang lezat. Pada sore harinya, mereka memasak nasi goreng bersama di rumah. Zahra berkata, 'Minggu lalu sangat menyenangkan! Kami belajar giat untuk ujian, tetapi kami menikmati akhir pekan bersama.'">
+        Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they went to a traditional culinary market. Shine bought a kilo of fresh oranges, while Zahra and Yusman ordered delicious chicken satay. In the afternoon, they cooked fried rice together at home. Zahra said, 'Last week was wonderful! We studied hard for the test, but we enjoyed our weekend together.'
       </p>
     </div>
 
     <!-- Q1 -->
     <div class="challenge-card" id="stage-1">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?"
+           data-id="Tantangan 1: Deteksi Kesalahan! Kalimat draf manakah yang memuat kata kerja lampau <u>SALAH</u>?">
         Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(1, 0)"><span>A.</span> Last Saturday, they goed to the traditional culinary market.</button>
-        <button class="btn-option" onclick="checkAnswer(1, 1)"><span>B.</span> They visited the city museum in the morning.</button>
-        <button class="btn-option" onclick="checkAnswer(1, 2)"><span>C.</span> Zahra bought a kilo of fresh oranges.</button>
+        <button class="btn-option" onclick="checkAnswer(1, 0)">
+          <span>A.</span> <span data-en="Last Saturday, they goed to the traditional culinary market." data-id="Last Saturday, they goed to the traditional culinary market. (Salah: goed seharusnya went)">Last Saturday, they goed to the traditional culinary market.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 1)">
+          <span>B.</span> <span data-en="They visited the city museum in the morning." data-id="They visited the city museum in the morning.">They visited the city museum in the morning.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(1, 2)">
+          <span>C.</span> <span data-en="Zahra bought a kilo of fresh oranges." data-id="Zahra bought a kilo of fresh oranges.">Zahra bought a kilo of fresh oranges.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
-      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)">Next Challenge →</button>
+      <button class="btn-action" id="next-1" style="display:none;" onclick="goToStage(2)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q2 -->
     <div class="challenge-card" id="stage-2" style="display:none;">
-      <div class="challenge-question">
-        Challenge 2: Verb Classification! In the sentence: <i>"They cooked fried rice and studied together"</i>, what type of past verbs are 'cooked' and 'studied'?
+      <div class="challenge-question"
+           data-en="Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?"
+           data-id="Tantangan 2: Klasifikasi Kata Kerja! Pada kalimat: <i>'They cooked fried rice and studied together'</i>, termasuk jenis kata kerja lampau apakah 'cooked' dan 'studied'?">
+        Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(2, 0)"><span>A.</span> Regular past verbs (formed by adding -ed to the base verb).</button>
-        <button class="btn-option" onclick="checkAnswer(2, 1)"><span>B.</span> Irregular past verbs.</button>
+        <button class="btn-option" onclick="checkAnswer(2, 0)">
+          <span>A.</span> <span data-en="Regular past verbs (formed by adding -ed to the base verb)." data-id="Kata kerja lampau beraturan / Regular (+ed).">Regular past verbs (formed by adding -ed to the base verb).</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 1)">
+          <span>B.</span> <span data-en="Irregular past verbs." data-id="Kata kerja lampau tidak beraturan / Irregular.">Irregular past verbs.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
-      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)">Next Challenge →</button>
+      <button class="btn-action" id="next-2" style="display:none;" onclick="goToStage(3)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q3 -->
     <div class="challenge-card" id="stage-3" style="display:none;">
-      <div class="challenge-question">
-        Challenge 3: Sentence Editing! How do you rewrite: <i>"Yesterday, we (eat) satay and (go) home"</i> into proper Simple Past Tense?
+      <div class="challenge-question"
+           data-en="Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?"
+           data-id="Tantangan 3: Mengedit Kalimat! Bagaimana mengubah: <i>'Yesterday, we (eat) satay and (go) home'</i> menjadi bentuk Simple Past Tense yang tepat?">
+        Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Yesterday, we ate satay and went home.</button>
@@ -82,46 +98,64 @@
         <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> Yesterday, we eat satay and go home.</button>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
-      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)">Next Challenge →</button>
+      <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q4 -->
     <div class="challenge-card" id="stage-4" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?"
+           data-id="Tantangan 4: Penanda Waktu! Pasangan manakah yang merupakan penanda waktu yang sah untuk <u>Simple Past Tense</u>?">
         Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(4, 0)"><span>A.</span> Last weekend and two days ago.</button>
-        <button class="btn-option" onclick="checkAnswer(4, 1)"><span>B.</span> Right now and at the moment.</button>
-        <button class="btn-option" onclick="checkAnswer(4, 2)"><span>C.</span> Tomorrow and next year.</button>
+        <button class="btn-option" onclick="checkAnswer(4, 0)">
+          <span>A.</span> <span data-en="Last weekend and two days ago" data-id="Last weekend and two days ago (Akhir pekan lalu & dua hari lalu)">Last weekend and two days ago</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(4, 1)">
+          <span>B.</span> <span data-en="Right now and at the moment" data-id="Right now and at the moment (Sekarang)">Right now and at the moment</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(4, 2)">
+          <span>C.</span> <span data-en="Tomorrow and next year" data-id="Tomorrow and next year (Besok & tahun depan)">Tomorrow and next year</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
-      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)">Next Challenge →</button>
+      <button class="btn-action" id="next-4" style="display:none;" onclick="goToStage(5)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
     </div>
 
     <!-- Q5 -->
     <div class="challenge-card" id="stage-5" style="display:none;">
-      <div class="challenge-question">
+      <div class="challenge-question"
+           data-en="Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?"
+           data-id="Tantangan 5: Kalimat Negatif! Manakah kalimat negatif lampau yang tepat jika Zahra tidak memasak kemarin?">
         Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(5, 0)"><span>A.</span> Zahra didn't cook fried rice yesterday.</button>
-        <button class="btn-option" onclick="checkAnswer(5, 1)"><span>B.</span> Zahra didn't cooked fried rice yesterday.</button>
-        <button class="btn-option" onclick="checkAnswer(5, 2)"><span>C.</span> Zahra wasn't cook fried rice yesterday.</button>
+        <button class="btn-option" onclick="checkAnswer(5, 0)">
+          <span>A.</span> <span data-en="Zahra didn't cook fried rice yesterday." data-id="Zahra didn't cook fried rice yesterday. (Benar: didn't + V1)">Zahra didn't cook fried rice yesterday.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(5, 1)">
+          <span>B.</span> <span data-en="Zahra didn't cooked fried rice yesterday." data-id="Zahra didn't cooked fried rice yesterday. (Salah: setelah didn't tidak boleh V2)">Zahra didn't cooked fried rice yesterday.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(5, 2)">
+          <span>C.</span> <span data-en="Zahra wasn't cook fried rice yesterday." data-id="Zahra wasn't cook fried rice yesterday. (Salah rumus)">Zahra wasn't cook fried rice yesterday.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
-      <button class="btn-action" id="next-5" style="display:none;" onclick="completeSelvi()">Finish Mission! 🏁</button>
+      <button class="btn-action" id="next-5" style="display:none;" onclick="completeSelvi()" data-en="Finish Mission! 🏁" data-id="Selesaikan Misi! 🏁">Finish Mission! 🏁</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 🏛️ 🎓</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">Masterful Editor, Selvi!</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Masterful Editor, Selvi!" data-id="Editor Andal, Selvi!">Masterful Editor, Selvi!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
+         data-en="Your critical analysis of regular, irregular past verbs, and negative formulas was flawless!"
+         data-id="Analisis kritismu terhadap kata kerja lampau beraturan, tidak beraturan, dan rumus kalimat negatif sangat sempurna!">
         Your critical analysis of regular, irregular past verbs, and negative formulas was flawless!
       </p>
-      <a href="../index.html" class="btn-action" style="background:#7C3AED; margin: 0 auto;">Back to Main Portal</a>
+      <a href="../index.html" class="btn-action" style="background:#7C3AED; margin: 0 auto;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
   </div>
 
@@ -142,7 +176,9 @@
         playSfx('correct');
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = "✅ <b>Spot on!</b> Excellent grammar editing!";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "✅ <b>Tepat dan Kritis!</b> Penyuntingan tata bahasa lampaumu sangat akurat!"
+          : "✅ <b>Spot on!</b> Excellent grammar editing!";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
@@ -151,7 +187,9 @@
         playSfx('wrong');
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = "❌ Not quite right. Review the past verb rules!";
+        feedback.innerHTML = window.currentLang === 'id' 
+          ? "❌ Belum tepat. Tinjau kembali kaidah kata kerja lampaunya ya!"
+          : "❌ Not quite right. Review the past verb rules!";
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -166,6 +204,8 @@
     function completeSelvi() {
       triggerGameOutcome(stars, 5, "Selvi", null, true);
     }
+
+    initLanguageToggle('en');
   </script>
 </body>
 </html>
