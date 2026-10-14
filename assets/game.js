@@ -1,6 +1,5 @@
-// PKBM Penerus Bangsa - Shared Game Engine & Audio Synthesizer
+// PKBM Penerus Bangsa - Shared Game Engine, Web Audio Synthesizer, & Reactions
 
-// 1. Web Audio API Sound Synthesizer
 let audioCtx = null;
 
 function getAudioContext() {
@@ -38,7 +37,6 @@ function playSfx(type) {
         osc.stop(now + idx * 0.08 + 0.35);
       });
     } else if (type === 'wrong') {
-      // Gentle low soft boing (not harsh, encourages retrying)
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
@@ -76,18 +74,50 @@ function playSfx(type) {
         osc.stop(now + i * 0.05 + 0.3);
       });
     } else if (type === 'win') {
+      // Triumphant Happy Fanfare
       const notes = [
-        { f: 523.25, t: 0.0, d: 0.15 },
-        { f: 659.25, t: 0.15, d: 0.15 },
-        { f: 783.99, t: 0.30, d: 0.15 },
-        { f: 1046.50, t: 0.45, d: 0.50 }
+        { f: 523.25, t: 0.0, d: 0.12 },
+        { f: 659.25, t: 0.14, d: 0.12 },
+        { f: 783.99, t: 0.28, d: 0.14 },
+        { f: 1046.50, t: 0.44, d: 0.45 },
+        { f: 880.00, t: 0.90, d: 0.14 },
+        { f: 1046.50, t: 1.06, d: 0.60 }
       ];
       notes.forEach(n => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(n.f, now + n.t);
-        gain.gain.setValueAtTime(0.25, now + n.t);
+        gain.gain.setValueAtTime(0.24, now + n.t);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + n.t);
+        osc.stop(now + n.t + n.d);
+      });
+    } else if (type === 'letitgo') {
+      // Synthesize the famous "Let It Go" melody chorus!
+      // "Let (G4) it (A4) go (B4)... Let (G4) it (A4) gooo (D5)... Can't hold it back anymore..."
+      const letItGoNotes = [
+        { f: 392.00, t: 0.0, d: 0.25 },  // Let
+        { f: 440.00, t: 0.26, d: 0.25 }, // it
+        { f: 493.88, t: 0.52, d: 0.55 }, // go~
+        { f: 392.00, t: 1.15, d: 0.25 }, // Let
+        { f: 440.00, t: 1.41, d: 0.25 }, // it
+        { f: 587.33, t: 1.67, d: 0.70 }, // gooo~
+        { f: 587.33, t: 2.45, d: 0.22 }, // Can't
+        { f: 659.25, t: 2.68, d: 0.22 }, // hold
+        { f: 587.33, t: 2.91, d: 0.22 }, // it
+        { f: 493.88, t: 3.14, d: 0.22 }, // back
+        { f: 440.00, t: 3.37, d: 0.22 }, // a-
+        { f: 392.00, t: 3.60, d: 0.85 }  // ny-mooore!
+      ];
+      letItGoNotes.forEach(n => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine'; // flute/bell like tone
+        osc.frequency.setValueAtTime(n.f, now + n.t);
+        gain.gain.setValueAtTime(0.26, now + n.t);
         gain.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
         osc.connect(gain);
         gain.connect(ctx.destination);
@@ -100,9 +130,8 @@ function playSfx(type) {
   }
 }
 
-// 2. Text-to-Speech (Indonesian voice for Alisya & reading support)
+// 2. Text-to-Speech Engine
 let indonesianVoice = null;
-
 function initVoices() {
   if (!('speechSynthesis' in window)) return;
   const loadVoices = () => {
@@ -116,14 +145,13 @@ initVoices();
 
 function speak(text, btnElement = null) {
   if (!('speechSynthesis' in window)) {
-    alert("Fitur suara belum didukung di browser ini.");
     return;
   }
   window.speechSynthesis.cancel();
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'id-ID';
-  utterance.rate = 0.88; // Slightly slower, calm and very clear for dyslexia/children
+  utterance.rate = 0.88;
   utterance.pitch = 1.05;
   if (indonesianVoice) {
     utterance.voice = indonesianVoice;
@@ -175,7 +203,7 @@ function launchConfetti() {
     particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.35; // gravity
+      p.vy += 0.35;
       p.vx *= 0.98;
       p.alpha -= 0.01;
       p.rotation += p.vrot;
@@ -200,4 +228,61 @@ function launchConfetti() {
     }
   }
   render();
+}
+
+// 4. Outcome Decision: Happy Win Fanfare vs Elsa "Let It Go"
+function triggerGameOutcome(score, total, studentName, onRetry = null) {
+  const isHappy = score >= Math.ceil(total * 0.6); // Lebih banyak benar
+
+  if (isHappy) {
+    playSfx('win');
+    launchConfetti();
+    const modal = document.getElementById('victory-modal');
+    if (modal) {
+      modal.classList.add('active');
+    }
+  } else {
+    // Elsa Frozen: Let it go, let it gooo!
+    playSfx('letitgo');
+    let elsaModal = document.getElementById('elsa-modal');
+    if (!elsaModal) {
+      elsaModal = document.createElement('div');
+      elsaModal.id = 'elsa-modal';
+      elsaModal.className = 'modal-overlay active';
+      elsaModal.innerHTML = `
+        <div class="modal-card modal-elsa">
+          <div class="elsa-snowflakes">❄️ 🌨️ ❄️ 🌨️ ❄️</div>
+          <div class="elsa-avatar">👑 ❄️</div>
+          <h2 style="font-size: 1.8rem; color: #0369A1; margin-bottom: 8px;">Let It Go, Let It Gooo... ❄️</h2>
+          <p style="color: #0C4A6E; font-size: 1.05rem; line-height: 1.6; margin-bottom: 18px;">
+            Jangan bersedih, <b>${studentName}</b>! Kesalahan itu wajar dalam proses belajar.<br>
+            Lepaskan rasa ragumu, tarik napas dalam-dalam, dan yuk kita coba sekali lagi!
+          </p>
+          <div style="font-size: 0.95rem; color: #0284C7; font-weight: 700; margin-bottom: 14px;">
+            Skor Kamu: ${score}/${total}
+          </div>
+          <button class="btn-elsa-retry" onclick="retryFromElsa()">
+            ❄️ Cairkan Salju & Coba Lagi!
+          </button>
+        </div>
+      `;
+      document.body.appendChild(elsaModal);
+    } else {
+      elsaModal.classList.add('active');
+    }
+    
+    // Store retry callback on window
+    window._retryCallback = onRetry || (() => window.location.reload());
+  }
+}
+
+function retryFromElsa() {
+  playSfx('click');
+  const elsaModal = document.getElementById('elsa-modal');
+  if (elsaModal) elsaModal.classList.remove('active');
+  if (window._retryCallback) {
+    window._retryCallback();
+  } else {
+    window.location.reload();
+  }
 }
