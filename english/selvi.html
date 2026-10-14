@@ -63,7 +63,7 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(1, 0)">
-          <span>A.</span> <span data-en="Last Saturday, they goed to the traditional culinary market." data-id="Last Saturday, they goed to the traditional culinary market. (Salah: goed seharusnya went)">Last Saturday, they goed to the traditional culinary market.</span>
+          <span>A.</span> <span data-en="Last Saturday, they goed to the traditional culinary market." data-id="Last Saturday, they goed to the traditional culinary market.">Last Saturday, they goed to the traditional culinary market.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(1, 1)">
           <span>B.</span> <span data-en="They visited the city museum in the morning." data-id="They visited the city museum in the morning.">They visited the city museum in the morning.</span>
@@ -90,10 +90,10 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(2, 0)">
-          <span>A.</span> <span data-en="Regular past verbs (formed by adding -ed to the base verb)." data-id="Kata kerja lampau beraturan / Regular (+ed).">Regular past verbs (formed by adding -ed to the base verb).</span>
+          <span>A.</span> <span data-en="Regular past verbs (formed by adding -ed to the base verb)." data-id="Kata kerja lampau beraturan (Regular verbs).">Regular past verbs (formed by adding -ed to the base verb).</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(2, 1)">
-          <span>B.</span> <span data-en="Irregular past verbs." data-id="Kata kerja lampau tidak beraturan / Irregular.">Irregular past verbs.</span>
+          <span>B.</span> <span data-en="Irregular past verbs." data-id="Kata kerja lampau tidak beraturan (Irregular verbs).">Irregular past verbs.</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
@@ -135,13 +135,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(4, 0)">
-          <span>A.</span> <span data-en="Last weekend and two days ago" data-id="Last weekend and two days ago (Akhir pekan lalu & dua hari lalu)">Last weekend and two days ago</span>
+          <span>A.</span> <span data-en="Last weekend and two days ago" data-id="Akhir pekan lalu dan dua hari lalu">Last weekend and two days ago</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(4, 1)">
-          <span>B.</span> <span data-en="Right now and at the moment" data-id="Right now and at the moment (Sekarang)">Right now and at the moment</span>
+          <span>B.</span> <span data-en="Right now and at the moment" data-id="Saat ini dan sekarang">Right now and at the moment</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(4, 2)">
-          <span>C.</span> <span data-en="Tomorrow and next year" data-id="Tomorrow and next year (Besok & tahun depan)">Tomorrow and next year</span>
+          <span>C.</span> <span data-en="Tomorrow and next year" data-id="Besok dan tahun depan">Tomorrow and next year</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
@@ -162,13 +162,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(5, 0)">
-          <span>A.</span> <span data-en="Zahra didn't cook fried rice yesterday." data-id="Zahra didn't cook fried rice yesterday. (Benar: didn't + V1)">Zahra didn't cook fried rice yesterday.</span>
+          <span>A.</span> <span data-en="Zahra didn't cook fried rice yesterday." data-id="Zahra didn't cook fried rice yesterday.">Zahra didn't cook fried rice yesterday.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(5, 1)">
-          <span>B.</span> <span data-en="Zahra didn't cooked fried rice yesterday." data-id="Zahra didn't cooked fried rice yesterday. (Salah: setelah didn't tidak boleh V2)">Zahra didn't cooked fried rice yesterday.</span>
+          <span>B.</span> <span data-en="Zahra didn't cooked fried rice yesterday." data-id="Zahra didn't cooked fried rice yesterday.">Zahra didn't cooked fried rice yesterday.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(5, 2)">
-          <span>C.</span> <span data-en="Zahra wasn't cook fried rice yesterday." data-id="Zahra wasn't cook fried rice yesterday. (Salah rumus)">Zahra wasn't cook fried rice yesterday.</span>
+          <span>C.</span> <span data-en="Zahra wasn't cook fried rice yesterday." data-id="Zahra wasn't cook fried rice yesterday.">Zahra wasn't cook fried rice yesterday.</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
@@ -207,8 +207,8 @@
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
         feedback.innerHTML = window.currentLang === 'id' 
-          ? "✅ <b>Tepat dan Kritis!</b> Penyuntingan tata bahasa lampaumu sangat akurat!"
-          : "✅ <b>Spot on!</b> Excellent grammar editing!";
+          ? "✅ Tepat dan Kritis! Penyuntingan tata bahasa lampaumu sangat akurat!"
+          : "✅ Spot on! Excellent grammar editing!";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
