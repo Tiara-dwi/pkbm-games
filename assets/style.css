@@ -1,0 +1,387 @@
+/* PKBM Penerus Bangsa - Interactive Games Theme */
+:root {
+  --primary: #4F46E5;
+  --primary-light: #EEF2FF;
+  --secondary: #06B6D4;
+  --accent-gold: #F59E0B;
+  --success: #10B981;
+  --danger: #EF4444;
+  --bg-main: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --text-dark: #1E293B;
+  --text-muted: #64748B;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 20px 30px -10px rgba(79, 70, 229, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dyslexia Mode Styling */
+body.dyslexia-mode {
+  background: #FFFDF7 !important;
+  color: #1F2421 !important;
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.16em !important;
+  line-height: 1.85 !important;
+  font-size: 1.15rem !important;
+}
+
+body.dyslexia-mode .card,
+body.dyslexia-mode .reading-box {
+  background: #FFFFFF !important;
+  border: 3px solid #E2D9C8 !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.04) !important;
+}
+
+/* Header & Navigation */
+.header-bar {
+  background: #FFFFFF;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #E2E8F0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.logo-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.logo-badge .badge-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #4F46E5, #06B6D4);
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.student-tag {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-back {
+  background: #F1F5F9;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-back:hover {
+  background: #E2E8F0;
+  color: var(--text-dark);
+}
+
+/* Main Container */
+.container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px;
+  flex: 1;
+}
+
+/* Score & Progress Tracker */
+.tracker-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.star-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.progress-pills {
+  display: flex;
+  gap: 8px;
+}
+
+.pill-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #E2E8F0;
+  transition: all 0.3s ease;
+}
+
+.pill-dot.active {
+  background: var(--primary);
+  transform: scale(1.2);
+}
+
+.pill-dot.completed {
+  background: var(--success);
+}
+
+/* Reading Box & Cards */
+.reading-box {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 24px;
+  border-left: 6px solid var(--primary);
+}
+
+.reading-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reading-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+/* Challenge / Interactive Area */
+.challenge-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 24px;
+}
+
+.challenge-question {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: var(--text-dark);
+}
+
+/* Option Buttons & Interactive Elements */
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .option-grid.two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.btn-option {
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-option:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.btn-option.selected-correct {
+  background: #ECFDF5 !important;
+  border-color: var(--success) !important;
+  color: #065F46 !important;
+}
+
+.btn-option.selected-wrong {
+  background: #FEF2F2 !important;
+  border-color: var(--danger) !important;
+  color: #991B1B !important;
+}
+
+/* Audio Button for Dyslexia / Reading Support */
+.btn-speaker {
+  background: #FEF3C7;
+  border: 2px solid #FCD34D;
+  color: #92400E;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  transition: all 0.2s;
+}
+
+.btn-speaker:hover {
+  background: #FDE68A;
+  transform: scale(1.03);
+}
+
+.btn-speaker.speaking {
+  animation: pulse-speaker 1.2s infinite;
+  background: #FBBF24;
+}
+
+@keyframes pulse-speaker {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+/* Feedback Box */
+.feedback-box {
+  margin-top: 18px;
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  display: none;
+  animation: slideIn 0.3s ease;
+}
+
+.feedback-box.show {
+  display: block;
+}
+
+.feedback-box.correct {
+  background: #ECFDF5;
+  color: #065F46;
+  border: 2px solid #A7F3D0;
+}
+
+.feedback-box.wrong {
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 2px solid #FECACA;
+}
+
+/* Action Button */
+.btn-action {
+  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-action:hover {
+  box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-action:disabled {
+  background: #94A3B8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Victory / Completion Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-card {
+  background: white;
+  border-radius: 28px;
+  padding: 36px 30px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: popModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popModal {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Canvas Confetti */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+}
