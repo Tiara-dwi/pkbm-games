@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petualangan Detektif KPK & FPB - Aqlan (Kelas 4)</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    :root {
+      --primary: #10B981;
+      --primary-dark: #059669;
+      --accent: #F59E0B;
+    }
+    body {
+      background: #F0FDF4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .hero-box {
+      background: linear-gradient(135deg, #10B981 0%, #0284C7 100%);
+      color: white;
+      padding: 30px 20px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+    }
+    .tool-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-card);
+      border: 2px solid #E2E8F0;
+      transition: all 0.3s ease;
+    }
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #F1F5F9;
+      padding-bottom: 12px;
+    }
+    .tool-badge {
+      background: #10B981;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .tool-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin: 0;
+    }
+    /* Grid 1-50 Styling */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .grid-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F8FAFC;
+      border: 2px solid #CBD5E1;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #1E293B;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .grid-cell:hover {
+      transform: scale(1.08);
+      border-color: #10B981;
+    }
+    .grid-cell.marked-2 {
+      background: #D1FAE5;
+      border-color: #10B981;
+      color: #065F46;
+    }
+    .grid-cell.marked-2::after {
+      content: '🟢';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 0.75rem;
+    }
+    .grid-cell.marked-3 {
+      background: #FEE2E2;
+      border-color: #EF4444;
+      color: #991B1B;
+    }
+    .grid-cell.marked-3::before {
+      content: '❌';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      font-size: 0.75rem;
+    }
+    .grid-cell.marked-both {
+      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%);
+      border-color: #EAB308;
+      color: #713F12;
+      box-shadow: 0 0 12px rgba(234, 179, 8, 0.6);
+      transform: scale(1.1);
+      animation: pulseGold 1.5s infinite;
+    }
+    @keyframes pulseGold {
+      0%, 100% { box-shadow: 0 0 10px rgba(234, 179, 8, 0.6); }
+      50% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.9); }
+    }
+    /* Buttons */
+    .action-btn {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+    .action-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+    .btn-red {
+      background: #EF4444;
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+    }
+    .btn-red:hover { background: #DC2626; }
+    .btn-amber {
+      background: #F59E0B;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+    }
+    .btn-amber:hover { background: #D97706; }
+    .btn-gray {
+      background: #64748B;
+      box-shadow: 0 4px 10px rgba(100, 116, 139, 0.3);
+    }
+    .btn-gray:hover { background: #475569; }
+
+    /* Calendar Styling */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin: 16px 0;
+    }
+    .cal-header-day {
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 8px 4px;
+      background: #E2E8F0;
+      border-radius: 8px;
+      color: #475569;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      background: #FFFFFF;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .cal-day:hover {
+      border-color: #3B82F6;
+      background: #EFF6FF;
+    }
+    .cal-day.empty {
+      background: transparent;
+      border: none;
+      cursor: default;
+    }
+    .cal-day.aqlan-day {
+      background: #ECFDF5;
+      border-color: #10B981;
+    }
+    .cal-day.aqlan-day::after {
+      content: '🚴 Acip/Aqlan';
+      font-size: 0.55rem;
+      color: #059669;
+      font-weight: 800;
+    }
+    .cal-day.friend-day {
+      border-color: #F59E0B;
+    }
+    .cal-day.friend-day::before {
+      content: '⭐ Sahabat';
+      font-size: 0.55rem;
+      color: #D97706;
+      font-weight: 800;
+    }
+    .cal-day.match-day {
+      background: #FEF08A !important;
+      border-color: #EAB308 !important;
+      animation: pulseGold 1.5s infinite;
+      box-shadow: 0 0 15px rgba(234, 179, 8, 0.7);
+    }
+    .cal-day.match-day::after {
+      content: '🎉 BARENG!';
+      font-size: 0.65rem;
+      color: #854D0E;
+      font-weight: 900;
+    }
+
+    /* Virtual Cups Simulation */
+    .cups-area {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin: 20px 0;
+      min-height: 180px;
+      background: #F8FAFC;
+      border: 2px dashed #CBD5E1;
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .virtual-cup {
+      width: 130px;
+      background: white;
+      border: 3px solid #E11D48;
+      border-radius: 12px 12px 24px 24px;
+      padding: 12px 8px;
+      box-shadow: 0 6px 12px rgba(225, 29, 72, 0.15);
+      text-align: center;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .cup-title {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #BE123C;
+      margin-bottom: 8px;
+    }
+    .cup-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #334155;
+      min-height: 60px;
+      justify-content: center;
+    }
+    .feedback-banner {
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      margin: 12px 0;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .feedback-success {
+      background: #D1FAE5;
+      color: #065F46;
+      border: 2px solid #10B981;
+      display: block;
+    }
+    .feedback-fail {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 2px solid #EF4444;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER BAR -->
+  <div class="header-bar">
+    <div class="logo-badge">
+      <div class="badge-icon">🚀</div>
+      <div>PKBM Penerus Bangsa</div>
+    </div>
+    <a href="../index.html" class="nav-back-btn" style="color:white; text-decoration:none; font-weight:700;">← Kembali ke Portal</a>
+  </div>
+
+  <div class="container" style="max-width: 900px;">
+    <!-- HERO BOX -->
+    <div class="hero-box">
+      <div style="font-size: 2.2rem; margin-bottom: 6px;">🐸 Detektif Angka: KPK & FPB</div>
+      <h1 style="font-size: 1.8rem; margin: 0 0 6px 0;">Misi Pembelajaran Interaktif Aqlan (Kelas 4)</h1>
+      <p style="margin: 0; opacity: 0.95; font-size: 1.05rem;">Metode Visual Bu Ajeng: Loncatan Grid, Kalender Nyata, & Cangkir Pembagi</p>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ALAT 1: GRID ANGKA 1-50 INTERAKTIF -->
+    <!-- ========================================================================= -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-badge">ALAT 1</span>
+        <h2 class="tool-title">Tabel Angka 1–50: Loncatan Kodok & Kelinci</h2>
+      </div>
+      <p style="color:#475569; font-size:0.95rem; margin-top:0;">
+        <strong>Misi Aqlan:</strong> Kodok Hijau melompat tiap <strong>2 langkah</strong>. Kelinci Merah melompat tiap <strong>3 langkah</strong>. Klik tombol di bawah untuk melihat jejak langkah mereka dan temukan di mana mereka bertemu bersama!
+      </p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+        <button class="action-btn" onclick="hopMultiples(2, 'marked-2')">🐸 Kodok Lompat 2 (Hijau)</button>
+        <button class="action-btn btn-red" onclick="hopMultiples(3, 'marked-3')">🐰 Kelinci Lompat 3 (Merah)</button>
+        <button class="action-btn btn-amber" onclick="highlightBoth()">👑 Cari Titik Temu (KPK)</button>
+        <button class="action-btn btn-gray" onclick="resetGrid()">🔄 Reset Grid</button>
+      </div>
+
+      <!-- 5x10 GRID -->
+      <div class="grid-container" id="grid50"></div>
+
+      <div id="grid-result" class="feedback-banner"></div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ALAT 2: KALENDER BULAN OKTOBER 2026 -->
+    <!-- ========================================================================= -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-badge" style="background:#7C3AED;">ALAT 2</span>
+        <h2 class="tool-title">📅 Kalender Asli Oktober 2026: Jadwal Bersepeda Aqlan</h2>
+      </div>
+      <p style="color:#475569; font-size:0.95rem; margin-top:0;">
+        Aqlan bersepeda tiap <strong>2 hari sekali</strong>, teman Aqlan bersepeda tiap <strong>3 hari sekali</strong>. Pada tanggal <strong>1 Oktober 2026</strong> mereka bersepeda bareng. Kapan mereka akan bersepeda bareng lagi?
+      </p>
+
+      <div style="display:flex; gap:10px; margin-bottom:12px;">
+        <button class="action-btn" style="background:#7C3AED;" onclick="runCalendarSimulation()">✨ Tandai Jadwal Otomatis</button>
+        <button class="action-btn btn-gray" onclick="resetCalendar()">🔄 Reset Kalender</button>
+      </div>
+
+      <div class="cal-grid" id="calOct"></div>
+      <div id="cal-result" class="feedback-banner"></div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ALAT 3: SIMULATOR CANGKIR PEMBAGI FPB -->
+    <!-- ========================================================================= -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-badge" style="background:#E11D48;">ALAT 3</span>
+        <h2 class="tool-title">🍪 Laboratorium Cangkir: Membagikan Toples Biskuit</h2>
+      </div>
+      <p style="color:#475569; font-size:0.95rem; margin-top:0;">
+        Bu Tiara punya <strong>8 Biskuit Cokelat 🍪</strong> dan <strong>12 Biskuit Vanila 🧁</strong>. Bu Tiara ingin memasukkan biskuit ke dalam beberapa toples dengan jumlah yang sama rata tanpa ada biskuit yang tersisa di meja. Coba pilih jumlah toples di bawah:
+      </p>
+
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+        <label style="font-weight:800; color:#1E293B;">Pilih Jumlah Toples:</label>
+        <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(2)">2 Toples</button>
+        <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(3)">3 Toples</button>
+        <button class="action-btn btn-red" style="padding:6px 14px;" onclick="testCups(4)">4 Toples</button>
+        <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(5)">5 Toples</button>
+        <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(6)">6 Toples</button>
+      </div>
+
+      <div class="cups-area" id="cupsArea">
+        <div style="color:#94A3B8; font-weight:700; align-self:center;">Pilih salah satu jumlah toples di atas untuk melihat pembagiannya!</div>
+      </div>
+
+      <div id="cup-result" class="feedback-banner"></div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MISI KUIS INTERAKTIF AQLAN -->
+    <!-- ========================================================================= -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-badge" style="background:#F59E0B;">TANTANGAN KUIS</span>
+        <h2 class="tool-title">⭐ Misi Detektif: Buktikan Pemahamanmu</h2>
+      </div>
+
+      <!-- Soal 1 -->
+      <div style="margin-bottom:20px; padding:16px; background:#F8FAFC; border-radius:12px;">
+        <div style="font-weight:800; font-size:1.05rem; margin-bottom:8px;">1. Dari hasil melompat di grid angka tadi, di angka berapa Kodok (lompat 2) dan Kelinci (lompat 3) pertama kali mendarat bersama?</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(1, this, false)">A. Angka 4</button>
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(1, this, true)">B. Angka 6 (KPK dari 2 dan 3)</button>
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(1, this, false)">C. Angka 9</button>
+        </div>
+        <div id="quiz-fb-1" class="feedback-banner"></div>
+      </div>
+
+      <!-- Soal 2 -->
+      <div style="margin-bottom:20px; padding:16px; background:#F8FAFC; border-radius:12px;">
+        <div style="font-weight:800; font-size:1.05rem; margin-bottom:8px;">2. Pada pembagian toples kue, berapa toples terbanyak yang berhasil membagi rata 8 biskuit cokelat dan 12 biskuit vanila tanpa sisa?</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(2, this, false)">A. 3 toples</button>
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(2, this, true)">B. 4 toples (FPB dari 8 dan 12)</button>
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(2, this, false)">C. 6 toples</button>
+        </div>
+        <div id="quiz-fb-2" class="feedback-banner"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    // 1. Inisialisasi Grid 1-50
+    const grid50 = document.getElementById('grid50');
+    for (let i = 1; i <= 50; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      cell.innerText = i;
+      cell.id = `cell-${i}`;
+      cell.onclick = () => toggleManual(cell);
+      grid50.appendChild(cell);
+    }
+
+    let marked2 = false;
+    let marked3 = false;
+
+    function hopMultiples(step, className) {
+      playSfx('click');
+      let delay = 0;
+      for (let i = step; i <= 50; i += step) {
+        setTimeout(() => {
+          const el = document.getElementById(`cell-${i}`);
+          el.classList.add(className);
+          playSfx('star');
+        }, delay);
+        delay += 60;
+      }
+      if (step === 2) marked2 = true;
+      if (step === 3) marked3 = true;
+    }
+
+    function highlightBoth() {
+      playSfx('win');
+      triggerConfetti();
+      let matches = [];
+      for (let i = 1; i <= 50; i++) {
+        const el = document.getElementById(`cell-${i}`);
+        if (el.classList.contains('marked-2') && el.classList.contains('marked-3')) {
+          el.classList.add('marked-both');
+          matches.push(i);
+        }
+      }
+      const res = document.getElementById('grid-result');
+      res.className = 'feedback-banner feedback-success';
+      res.innerHTML = `🎉 <strong>HORE! KPK DITEMUKAN!</strong><br>Kodok dan Kelinci mendarat bersama di angka: <strong>${matches.join(', ')}</strong>.<br>Pertemuan pertama (TERKECIL) adalah di angka <strong>${matches[0]}</strong>! Maka KPK(2, 3) = <strong>${matches[0]}</strong>.`;
+    }
+
+    function resetGrid() {
+      playSfx('click');
+      for (let i = 1; i <= 50; i++) {
+        const el = document.getElementById(`cell-${i}`);
+        el.className = 'grid-cell';
+      }
+      marked2 = false;
+      marked3 = false;
+      const res = document.getElementById('grid-result');
+      res.style.display = 'none';
+    }
+
+    function toggleManual(cell) {
+      playSfx('click');
+      cell.classList.toggle('marked-both');
+    }
+
+    // 2. Inisialisasi Kalender Oktober 2026
+    const calOct = document.getElementById('calOct');
+    const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+    dayNames.forEach(d => {
+      const h = document.createElement('div');
+      h.className = 'cal-header-day';
+      h.innerText = d;
+      calOct.appendChild(h);
+    });
+
+    // 1 Okt 2026 adalah Kamis (index 4)
+    for (let i = 0; i < 4; i++) {
+      const empty = document.createElement('div');
+      empty.className = 'cal-day empty';
+      calOct.appendChild(empty);
+    }
+    for (let day = 1; day <= 31; day++) {
+      const d = document.createElement('div');
+      d.className = 'cal-day';
+      d.innerText = day;
+      d.id = `cal-${day}`;
+      calOct.appendChild(d);
+    }
+
+    function runCalendarSimulation() {
+      playSfx('correct');
+      // Aqlan: tiap 2 hari dari tgl 1: 1, 3, 5, 7, 9, 11, 13...
+      for (let d = 1; d <= 31; d += 2) {
+        document.getElementById(`cal-${d}`).classList.add('aqlan-day');
+      }
+      // Sahabat: tiap 3 hari dari tgl 1: 1, 4, 7, 10, 13, 16...
+      for (let d = 1; d <= 31; d += 3) {
+        document.getElementById(`cal-${d}`).classList.add('friend-day');
+      }
+      // Bersama di tgl 1 dan tgl 7 (1 + 6)
+      const meetDay = document.getElementById('cal-7');
+      meetDay.classList.add('match-day');
+      triggerConfetti();
+
+      const res = document.getElementById('cal-result');
+      res.className = 'feedback-banner feedback-success';
+      res.innerHTML = `🌟 <strong>HASIL DETEKTIF KALENDER:</strong><br>Aqlan dan Sahabat bersepeda bersama pada tanggal <strong>1 Oktober</strong>.<br>Karena KPK dari 2 dan 3 adalah <strong>6 hari</strong>, maka mereka bersepeda bareng lagi pada: 1 + 6 = <strong>7 Oktober 2026</strong>!`;
+    }
+
+    function resetCalendar() {
+      playSfx('click');
+      for (let day = 1; day <= 31; day++) {
+        const el = document.getElementById(`cal-${day}`);
+        el.className = 'cal-day';
+      }
+      document.getElementById('cal-result').style.display = 'none';
+    }
+
+    // 3. Simulator Cangkir Biskuit
+    function testCups(numCups) {
+      playSfx('click');
+      const container = document.getElementById('cupsArea');
+      container.innerHTML = '';
+
+      const totalCokelat = 8;
+      const totalVanila = 12;
+
+      const cokelatPerCup = Math.floor(totalCokelat / numCups);
+      const sisaCokelat = totalCokelat % numCups;
+
+      const vanilaPerCup = Math.floor(totalVanila / numCups);
+      const sisaVanila = totalVanila % numCups;
+
+      for (let i = 1; i <= numCups; i++) {
+        const cup = document.createElement('div');
+        cup.className = 'virtual-cup';
+        cup.innerHTML = `
+          <div class="cup-title">Toples #${i}</div>
+          <div class="cup-items">
+            <div>🍪 ${cokelatPerCup} Cokelat</div>
+            <div>🧁 ${vanilaPerCup} Vanila</div>
+          </div>
+        `;
+        container.appendChild(cup);
+      }
+
+      const res = document.getElementById('cup-result');
+      if (sisaCokelat === 0 && sisaVanila === 0) {
+        playSfx('win');
+        triggerConfetti();
+        res.className = 'feedback-banner feedback-success';
+        res.innerHTML = `🎉 <strong>SEMPURNA TANPA SISA!</strong><br>8 Cokelat dan 12 Vanila dibagi ke dalam <strong>${numCups} toples</strong>: tiap toples berisi <strong>${cokelatPerCup} cokelat</strong> dan <strong>${vanilaPerCup} vanila</strong>.<br>Karena ${numCups} adalah toples terbanyak yang pas, maka <strong>FPB dari 8 dan 12 adalah ${numCups}</strong>!`;
+      } else {
+        playSfx('wrong');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `⚠️ <strong>UPS, MASIH ADA SISA DI MEJA!</strong><br>Tersisa: ${sisaCokelat} biskuit cokelat dan ${sisaVanila} biskuit vanila yang tidak kebagian toples.<br>Jadi, angka <strong>${numCups} BUKAN FPB</strong> karena tidak membagi habis! Coba jumlah toples lain.`;
+      }
+    }
+
+    // 4. Kuis
+    function checkQuiz(qNum, btn, isCorrect) {
+      const fb = document.getElementById(`quiz-fb-${qNum}`);
+      if (isCorrect) {
+        playSfx('win');
+        btn.style.background = '#10B981';
+        btn.style.color = 'white';
+        fb.className = 'feedback-banner feedback-success';
+        fb.innerHTML = '🎉 <strong>HEBAT SEKALI AQLAN!</strong> Jawabanmu 100% tepat! ⭐⭐⭐';
+      } else {
+        playSfx('wrong');
+        btn.style.background = '#EF4444';
+        btn.style.color = 'white';
+        fb.className = 'feedback-banner feedback-fail';
+        fb.innerHTML = '❌ Belum pas, coba ingat lagi percobaan di alat visual di atas ya!';
+      }
+    }
+  </script>
+</body>
+</html>
