@@ -10,15 +10,124 @@
       --primary: #10B981;
       --primary-dark: #059669;
       --accent: #F59E0B;
+      --color-a1: #10B981;
+      --color-a2: #EF4444;
     }
     body {
       background: #F0FDF4;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
+    /* Modal "How are you today?" */
+    .mood-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.4s ease;
+      padding: 16px;
+    }
+    .mood-card {
+      background: linear-gradient(145deg, #FFFFFF 0%, #F0FDF4 100%);
+      border-radius: 28px;
+      max-width: 540px;
+      width: 100%;
+      padding: 32px 28px;
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.35);
+      border: 3px solid #A7F3D0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .mood-title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #065F46;
+      margin: 10px 0 6px 0;
+    }
+    .mood-sub {
+      font-size: 1rem;
+      color: #047857;
+      opacity: 0.9;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+    .mood-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 480px) {
+      .mood-options-grid { grid-template-columns: 1fr; }
+    }
+    .mood-btn {
+      background: white;
+      border: 2px solid #A7F3D0;
+      border-radius: 18px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #065F46;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+    }
+    .mood-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: #10B981;
+      background: #D1FAE5;
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+    }
+    .mood-btn-icon {
+      font-size: 2rem;
+    }
+    .warm-response-box {
+      background: white;
+      border-radius: 20px;
+      padding: 22px;
+      border: 2px solid #10B981;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+      margin-top: 10px;
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .warm-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #065F46;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .floating-heart {
+      position: absolute;
+      pointer-events: none;
+      font-size: 1.8rem;
+      animation: floatUp 1.8s ease forwards;
+    }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(0.6); }
+      100% { opacity: 0; transform: translateY(-120px) scale(1.4); }
+    }
+
+    /* Hero */
     .hero-box {
       background: linear-gradient(135deg, #10B981 0%, #0284C7 100%);
       color: white;
-      padding: 30px 20px;
+      padding: 28px 20px;
       border-radius: var(--radius-lg);
       margin-bottom: 24px;
       text-align: center;
@@ -36,10 +145,12 @@
     .tool-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       margin-bottom: 16px;
       border-bottom: 2px solid #F1F5F9;
       padding-bottom: 12px;
+      flex-wrap: wrap;
     }
     .tool-badge {
       background: #10B981;
@@ -50,110 +161,172 @@
       font-size: 0.9rem;
     }
     .tool-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: #0F172A;
       margin: 0;
     }
+
+    /* Brush panel */
+    .brush-control-panel {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .brush-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px 14px;
+      background: white;
+      border-radius: 12px;
+      border: 1.5px solid #CBD5E1;
+    }
+    .brush-group.active-group {
+      border-color: #10B981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+      background: #ECFDF5;
+    }
+    .brush-label {
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .color-swatch-list {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+    .color-swatch:hover { transform: scale(1.15); }
+    .color-swatch.selected {
+      border: 2px solid #0F172A;
+      transform: scale(1.2);
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    }
+    .active-brush-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ECFDF5;
+      border: 1.5px solid #A7F3D0;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #065F46;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     /* Grid 1-50 Styling */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 8px;
-      margin: 20px 0;
+      margin: 18px 0;
+      user-select: none;
     }
     .grid-cell {
       aspect-ratio: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #F8FAFC;
+      background: #FFFFFF;
       border: 2px solid #CBD5E1;
       border-radius: 10px;
       font-weight: 800;
       font-size: 1.25rem;
       color: #1E293B;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
     .grid-cell:hover {
-      transform: scale(1.08);
+      transform: scale(1.12);
       border-color: #10B981;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+      z-index: 10;
     }
-    .grid-cell.marked-2 {
-      background: #D1FAE5;
-      border-color: #10B981;
-      color: #065F46;
-    }
-    .grid-cell.marked-2::after {
-      content: '🟢';
+    .cell-badge-1 {
       position: absolute;
-      top: 2px;
-      left: 2px;
+      top: 3px;
+      left: 3px;
       font-size: 0.75rem;
+      line-height: 1;
     }
-    .grid-cell.marked-3 {
-      background: #FEE2E2;
-      border-color: #EF4444;
-      color: #991B1B;
-    }
-    .grid-cell.marked-3::before {
-      content: '❌';
+    .cell-badge-2 {
       position: absolute;
-      bottom: 2px;
-      right: 2px;
+      bottom: 3px;
+      right: 3px;
       font-size: 0.75rem;
+      line-height: 1;
     }
-    .grid-cell.marked-both {
-      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%);
-      border-color: #EAB308;
-      color: #713F12;
+    .grid-cell.cell-marked-both {
+      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%) !important;
+      border-color: #EAB308 !important;
+      color: #713F12 !important;
       box-shadow: 0 0 12px rgba(234, 179, 8, 0.6);
-      transform: scale(1.1);
+      transform: scale(1.15);
       animation: pulseGold 1.5s infinite;
+      z-index: 5;
     }
     @keyframes pulseGold {
       0%, 100% { box-shadow: 0 0 10px rgba(234, 179, 8, 0.6); }
-      50% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.9); }
+      50% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.95); }
     }
+
     /* Buttons */
     .action-btn {
       background: #10B981;
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 10px 18px;
       border-radius: 30px;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 0.92rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
     }
     .action-btn:hover {
       background: #059669;
       transform: translateY(-2px);
     }
-    .btn-red {
-      background: #EF4444;
-      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
-    }
+    .btn-red { background: #EF4444; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25); }
     .btn-red:hover { background: #DC2626; }
-    .btn-amber {
-      background: #F59E0B;
-      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-    }
+    .btn-amber { background: #F59E0B; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25); }
     .btn-amber:hover { background: #D97706; }
-    .btn-gray {
-      background: #64748B;
-      box-shadow: 0 4px 10px rgba(100, 116, 139, 0.3);
-    }
+    .btn-gray { background: #64748B; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.25); }
     .btn-gray:hover { background: #475569; }
 
-    /* Calendar Styling */
+    /* Calendar */
     .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -188,44 +361,20 @@
       border-color: #3B82F6;
       background: #EFF6FF;
     }
-    .cal-day.empty {
-      background: transparent;
-      border: none;
-      cursor: default;
-    }
-    .cal-day.aqlan-day {
-      background: #ECFDF5;
-      border-color: #10B981;
-    }
-    .cal-day.aqlan-day::after {
-      content: '🚴 Acip/Aqlan';
-      font-size: 0.55rem;
-      color: #059669;
-      font-weight: 800;
-    }
-    .cal-day.friend-day {
-      border-color: #F59E0B;
-    }
-    .cal-day.friend-day::before {
-      content: '⭐ Sahabat';
-      font-size: 0.55rem;
-      color: #D97706;
-      font-weight: 800;
-    }
+    .cal-day.empty { background: transparent; border: none; cursor: default; }
+    .cal-day.aqlan-day { background: #ECFDF5; border-color: #10B981; }
+    .cal-day.aqlan-day::after { content: '🚴 Aqlan'; font-size: 0.55rem; color: #059669; font-weight: 800; }
+    .cal-day.friend-day { border-color: #F59E0B; }
+    .cal-day.friend-day::before { content: '⭐ Sahabat'; font-size: 0.55rem; color: #D97706; font-weight: 800; }
     .cal-day.match-day {
       background: #FEF08A !important;
       border-color: #EAB308 !important;
       animation: pulseGold 1.5s infinite;
       box-shadow: 0 0 15px rgba(234, 179, 8, 0.7);
     }
-    .cal-day.match-day::after {
-      content: '🎉 BARENG!';
-      font-size: 0.65rem;
-      color: #854D0E;
-      font-weight: 900;
-    }
+    .cal-day.match-day::after { content: '🎉 BARENG!'; font-size: 0.65rem; color: #854D0E; font-weight: 900; }
 
-    /* Virtual Cups Simulation */
+    /* Cups */
     .cups-area {
       display: flex;
       flex-wrap: wrap;
@@ -249,12 +398,7 @@
       position: relative;
       transition: all 0.3s ease;
     }
-    .cup-title {
-      font-weight: 800;
-      font-size: 0.85rem;
-      color: #BE123C;
-      margin-bottom: 8px;
-    }
+    .cup-title { font-weight: 800; font-size: 0.85rem; color: #BE123C; margin-bottom: 8px; }
     .cup-items {
       display: flex;
       flex-direction: column;
@@ -273,31 +417,65 @@
       display: none;
       animation: fadeIn 0.3s ease;
     }
-    .feedback-success {
-      background: #D1FAE5;
-      color: #065F46;
-      border: 2px solid #10B981;
-      display: block;
-    }
-    .feedback-fail {
-      background: #FEE2E2;
-      color: #991B1B;
-      border: 2px solid #EF4444;
-      display: block;
-    }
+    .feedback-success { background: #D1FAE5; color: #065F46; border: 2px solid #10B981; display: block; }
+    .feedback-fail { background: #FEE2E2; color: #991B1B; border: 2px solid #EF4444; display: block; }
   </style>
 </head>
 <body>
+
+  <!-- MODAL CHECK-IN: HOW ARE YOU TODAY? -->
+  <div class="mood-modal-backdrop" id="moodModalAqlan">
+    <div class="mood-card">
+      <div style="font-size: 3rem;">🌈✨</div>
+      <h2 class="mood-title">Halo Aqlan Tersayang!</h2>
+      <p class="mood-sub">
+        <strong>"How are you today?"</strong><br>
+        Sebelum mulai bertualang memecahkan misteri angka, Bu Tiara mau tahu kabarmu...
+      </p>
+
+      <div class="mood-options-grid" id="moodButtonsAqlan">
+        <button class="mood-btn" onclick="selectMoodAqlan('happy')">
+          <span class="mood-btn-icon">🌟</span>
+          <span>Super Bahagia & Semangat!</span>
+        </button>
+        <button class="mood-btn" onclick="selectMoodAqlan('calm')">
+          <span class="mood-btn-icon">😊</span>
+          <span>Tenang, Senang & Siap Belajar</span>
+        </button>
+        <button class="mood-btn" onclick="selectMoodAqlan('tired')">
+          <span class="mood-btn-icon">🥱</span>
+          <span>Sedikit Mengantuk / Capek</span>
+        </button>
+        <button class="mood-btn" onclick="selectMoodAqlan('hug')">
+          <span class="mood-btn-icon">🥺</span>
+          <span>Butuh Semangat & Pelukan</span>
+        </button>
+      </div>
+
+      <div class="warm-response-box" id="warmResponseAqlan">
+        <div class="warm-text" id="warmTextAqlan"></div>
+        <button class="action-btn" style="background:#059669; padding:12px 28px; font-size:1.05rem;" onclick="closeMoodModalAqlan()">
+          Mulai Petualangan Seru Aqlan 🥰 →
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- HEADER BAR -->
   <div class="header-bar">
     <div class="logo-badge">
       <div class="badge-icon">🚀</div>
       <div>PKBM Penerus Bangsa</div>
     </div>
-    <a href="../index.html" class="nav-back-btn" style="color:white; text-decoration:none; font-weight:700;">← Kembali ke Portal</a>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button onclick="reopenMoodModalAqlan()" style="background:#ECFDF5; border:1px solid #10B981; color:#065F46; padding:6px 14px; border-radius:20px; font-weight:800; cursor:pointer; font-size:0.85rem;">
+        💬 Kabar Hati Hari Ini
+      </button>
+      <a href="../index.html" class="nav-back-btn" style="color:white; text-decoration:none; font-weight:700;">← Portal Utama</a>
+    </div>
   </div>
 
-  <div class="container" style="max-width: 900px;">
+  <div class="container" style="max-width: 920px;">
     <!-- HERO BOX -->
     <div class="hero-box">
       <div style="font-size: 2.2rem; margin-bottom: 6px;">🐸 Detektif Angka: KPK & FPB</div>
@@ -306,27 +484,72 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- ALAT 1: GRID ANGKA 1-50 INTERAKTIF -->
+    <!-- ALAT 1: GRID 1-50 INTERAKTIF BEBAS KLIK & KUSTOMISASI WARNA -->
     <!-- ========================================================================= -->
     <div class="tool-card">
       <div class="tool-header">
-        <span class="tool-badge">ALAT 1</span>
-        <h2 class="tool-title">Tabel Angka 1–50: Loncatan Kodok & Kelinci</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="tool-badge">ALAT 1</span>
+          <h2 class="tool-title">Tabel Angka 1–50: Loncatan Kodok & Kelinci</h2>
+        </div>
+        <span style="font-size:0.85rem; color:#64748B; font-weight:700;">✨ Sekarang Bebas Diklik!</span>
       </div>
+
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
-        <strong>Misi Aqlan:</strong> Kodok Hijau melompat tiap <strong>2 langkah</strong>. Kelinci Merah melompat tiap <strong>3 langkah</strong>. Klik tombol di bawah untuk melihat jejak langkah mereka dan temukan di mana mereka bertemu bersama!
+        Pilih kuas warna di bawah, lalu <strong>klik langsung kotak angka mana saja di tabel 1-50</strong>! Atau gunakan tombol animasi loncatan otomatis untuk melihat jejak langkah Kodok & Kelinci.
       </p>
 
+      <!-- Panel Kontrol Kuas & Warna -->
+      <div class="brush-control-panel">
+        <div class="brush-group" id="group-a1">
+          <div class="brush-label" style="color:var(--color-a1);">
+            <span>🐸 <strong>Kodok Aqlan (Lompat 2)</strong></span>
+            <button class="action-btn" id="btn-select-a1" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrushAqlan('a1')">
+              Gunakan Kuas Ini 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Ganti Warna:</span>
+            <div class="color-swatch selected" style="background:#10B981;" onclick="changeColorAqlan('a1', '#10B981', '#D1FAE5', '🟢')">🟢</div>
+            <div class="color-swatch" style="background:#2563EB;" onclick="changeColorAqlan('a1', '#2563EB', '#DBEAFE', '🔵')">🔵</div>
+            <div class="color-swatch" style="background:#7C3AED;" onclick="changeColorAqlan('a1', '#7C3AED', '#EDE9FE', '🟣')">🟣</div>
+          </div>
+        </div>
+
+        <div class="brush-group" id="group-a2">
+          <div class="brush-label" style="color:var(--color-a2);">
+            <span>🐰 <strong>Kelinci Sahabat (Lompat 3)</strong></span>
+            <button class="action-btn btn-red" id="btn-select-a2" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrushAqlan('a2')">
+              Gunakan Kuas Ini 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Ganti Warna:</span>
+            <div class="color-swatch selected" style="background:#EF4444;" onclick="changeColorAqlan('a2', '#EF4444', '#FEE2E2', '❌')">❌</div>
+            <div class="color-swatch" style="background:#F59E0B;" onclick="changeColorAqlan('a2', '#F59E0B', '#FEF3C7', '🟧')">🟧</div>
+            <div class="color-swatch" style="background:#EC4899;" onclick="changeColorAqlan('a2', '#EC4899', '#FCE7F3', '💖')">💖</div>
+          </div>
+        </div>
+
+        <div class="active-brush-status">
+          <div id="brush-status-aqlan">
+            🖌️ <strong>Kuas Aktif:</strong> Kodok Aqlan (Lompat 2) — <em>Klik kotak di grid untuk menandai!</em>
+          </div>
+          <button class="action-btn btn-gray" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrushAqlan('eraser')">
+            🧹 Kuas Penghapus
+          </button>
+        </div>
+      </div>
+
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-        <button class="action-btn" onclick="hopMultiples(2, 'marked-2')">🐸 Kodok Lompat 2 (Hijau)</button>
-        <button class="action-btn btn-red" onclick="hopMultiples(3, 'marked-3')">🐰 Kelinci Lompat 3 (Merah)</button>
-        <button class="action-btn btn-amber" onclick="highlightBoth()">👑 Cari Titik Temu (KPK)</button>
-        <button class="action-btn btn-gray" onclick="resetGrid()">🔄 Reset Grid</button>
+        <button class="action-btn" id="btn-auto-hop-2" onclick="autoHopAqlan(2, 'a1')">🐸 Otomatis Kodok Lompat 2</button>
+        <button class="action-btn btn-red" id="btn-auto-hop-3" onclick="autoHopAqlan(3, 'a2')">🐰 Otomatis Kelinci Lompat 3</button>
+        <button class="action-btn btn-amber" onclick="highlightBothAqlan()">👑 Cari Titik Temu (KPK)</button>
+        <button class="action-btn btn-gray" onclick="resetGridAqlan()">🔄 Bersihkan Grid</button>
       </div>
 
       <!-- 5x10 GRID -->
       <div class="grid-container" id="grid50"></div>
-
       <div id="grid-result" class="feedback-banner"></div>
     </div>
 
@@ -335,8 +558,10 @@
     <!-- ========================================================================= -->
     <div class="tool-card">
       <div class="tool-header">
-        <span class="tool-badge" style="background:#7C3AED;">ALAT 2</span>
-        <h2 class="tool-title">📅 Kalender Asli Oktober 2026: Jadwal Bersepeda Aqlan</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="tool-badge" style="background:#7C3AED;">ALAT 2</span>
+          <h2 class="tool-title">📅 Kalender Asli Oktober 2026: Jadwal Bersepeda Aqlan</h2>
+        </div>
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
         Aqlan bersepeda tiap <strong>2 hari sekali</strong>, teman Aqlan bersepeda tiap <strong>3 hari sekali</strong>. Pada tanggal <strong>1 Oktober 2026</strong> mereka bersepeda bareng. Kapan mereka akan bersepeda bareng lagi?
@@ -356,14 +581,16 @@
     <!-- ========================================================================= -->
     <div class="tool-card">
       <div class="tool-header">
-        <span class="tool-badge" style="background:#E11D48;">ALAT 3</span>
-        <h2 class="tool-title">🍪 Laboratorium Cangkir: Membagikan Toples Biskuit</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="tool-badge" style="background:#E11D48;">ALAT 3</span>
+          <h2 class="tool-title">🍪 Laboratorium Cangkir: Membagikan Toples Biskuit</h2>
+        </div>
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
         Bu Tiara punya <strong>8 Biskuit Cokelat 🍪</strong> dan <strong>12 Biskuit Vanila 🧁</strong>. Bu Tiara ingin memasukkan biskuit ke dalam beberapa toples dengan jumlah yang sama rata tanpa ada biskuit yang tersisa di meja. Coba pilih jumlah toples di bawah:
       </p>
 
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
         <label style="font-weight:800; color:#1E293B;">Pilih Jumlah Toples:</label>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(2)">2 Toples</button>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(3)">3 Toples</button>
@@ -388,7 +615,6 @@
         <h2 class="tool-title">⭐ Misi Detektif: Buktikan Pemahamanmu</h2>
       </div>
 
-      <!-- Soal 1 -->
       <div style="margin-bottom:20px; padding:16px; background:#F8FAFC; border-radius:12px;">
         <div style="font-weight:800; font-size:1.05rem; margin-bottom:8px;">1. Dari hasil melompat di grid angka tadi, di angka berapa Kodok (lompat 2) dan Kelinci (lompat 3) pertama kali mendarat bersama?</div>
         <div style="display:flex; flex-direction:column; gap:8px;">
@@ -399,7 +625,6 @@
         <div id="quiz-fb-1" class="feedback-banner"></div>
       </div>
 
-      <!-- Soal 2 -->
       <div style="margin-bottom:20px; padding:16px; background:#F8FAFC; border-radius:12px;">
         <div style="font-weight:800; font-size:1.05rem; margin-bottom:8px;">2. Pada pembagian toples kue, berapa toples terbanyak yang berhasil membagi rata 8 biskuit cokelat dan 12 biskuit vanila tanpa sisa?</div>
         <div style="display:flex; flex-direction:column; gap:8px;">
@@ -414,69 +639,218 @@
 
   <script src="../assets/game.js"></script>
   <script>
-    // 1. Inisialisasi Grid 1-50
+    // 1. Mood Check-in Aqlan
+    const moodMessagesAqlan = {
+      happy: {
+        text: `Wah, senyum ceria dan energimu luar biasa, Aqlan tersayang! 🌟 Keberanian dan rasa ingin tahumu adalah kekuatan super hari ini. Bu Tiara bangga sekali punya murid sehebat kamu. Yuk kita cari jejak Kodok dan Kelinci dengan gembira! 💖✨`
+      },
+      calm: {
+        text: `Alhamdulillah, hati yang tenang dan fokus akan membantumu melihat semua pola angka dengan mudah, sayang. 🌸 Bu Tiara selalu siap menemanimu. Nikmati petualangan hari ini dengan santai ya! 🤗`
+      },
+      tired: {
+        text: `Terima kasih banyak sudah hadir dengan setia ya, Aqlan. ☕🤍 Kamu anak yang tangguh dan rajin sekali! Hari ini kita belajar sambil main game santai saja, tidak usah terburu-buru. Semangatmu sudah bikin Bu Tiara bangga! 🥰💕`
+      },
+      hug: {
+        text: `Peluk hangat dari Bu Tiara secara virtual untuk Aqlan... 🤗💖 Ingat ya, kamu adalah anak yang istimewa, cerdas, dan sangat disayangi. Apapun perasaanmu hari ini, it's totally okay. Kita belajar pelan-pelan bersama ya! 💕🌸`
+      }
+    };
+
+    function selectMoodAqlan(moodKey) {
+      playSfx('win');
+      createFloatingHeartsAqlan();
+      document.getElementById('moodButtonsAqlan').style.display = 'none';
+      const warmBox = document.getElementById('warmResponseAqlan');
+      const warmText = document.getElementById('warmTextAqlan');
+      warmText.innerHTML = moodMessagesAqlan[moodKey].text;
+      warmBox.style.display = 'block';
+    }
+
+    function closeMoodModalAqlan() {
+      playSfx('click');
+      document.getElementById('moodModalAqlan').style.display = 'none';
+    }
+
+    function reopenMoodModalAqlan() {
+      playSfx('click');
+      document.getElementById('moodButtonsAqlan').style.display = 'grid';
+      document.getElementById('warmResponseAqlan').style.display = 'none';
+      document.getElementById('moodModalAqlan').style.display = 'flex';
+    }
+
+    function createFloatingHeartsAqlan() {
+      const container = document.querySelector('.mood-card');
+      const emojis = ['💖', '✨', '🐸', '🐰', '⭐', '🤗'];
+      for (let i = 0; i < 16; i++) {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'floating-heart';
+          el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+          el.style.left = `${10 + Math.random() * 80}%`;
+          el.style.bottom = `${20 + Math.random() * 40}%`;
+          container.appendChild(el);
+          setTimeout(() => el.remove(), 1800);
+        }, i * 90);
+      }
+    }
+
+    // 2. Grid 1-50: Clickable & Color switcher
+    let currentBrushAqlan = 'a1';
+    let configA1 = { color: '#10B981', bg: '#D1FAE5', icon: '🟢', name: 'Kodok (Lompat 2)' };
+    let configA2 = { color: '#EF4444', bg: '#FEE2E2', icon: '❌', name: 'Kelinci (Lompat 3)' };
+
+    const cellStateAqlan = {};
+    for (let i = 1; i <= 50; i++) {
+      cellStateAqlan[i] = { a1: false, a2: false };
+    }
+
     const grid50 = document.getElementById('grid50');
     for (let i = 1; i <= 50; i++) {
       const cell = document.createElement('div');
       cell.className = 'grid-cell';
       cell.innerText = i;
-      cell.id = `cell-${i}`;
-      cell.onclick = () => toggleManual(cell);
+      cell.id = `cell-50-${i}`;
+      cell.onclick = () => handleCellClickAqlan(i);
       grid50.appendChild(cell);
     }
 
-    let marked2 = false;
-    let marked3 = false;
-
-    function hopMultiples(step, className) {
+    function setActiveBrushAqlan(brushType) {
       playSfx('click');
+      currentBrushAqlan = brushType;
+      document.getElementById('group-a1').classList.toggle('active-group', brushType === 'a1');
+      document.getElementById('group-a2').classList.toggle('active-group', brushType === 'a2');
+      
+      const statusText = document.getElementById('brush-status-aqlan');
+      if (brushType === 'a1') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configA1.color}; font-weight:800;">${configA1.icon} ${configA1.name}</span> — <em>Klik kotak di grid untuk menandai!</em>`;
+      } else if (brushType === 'a2') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configA2.color}; font-weight:800;">${configA2.icon} ${configA2.name}</span> — <em>Klik kotak di grid untuk menandai!</em>`;
+      } else {
+        statusText.innerHTML = `🧹 <strong>Kuas Aktif:</strong> <span style="color:#64748B; font-weight:800;">Penghapus</span> — <em>Klik kotak mana saja untuk menghapus tanda!</em>`;
+      }
+    }
+
+    function changeColorAqlan(multipleType, colorHex, bgHex, iconSymbol) {
+      playSfx('click');
+      if (multipleType === 'a1') {
+        configA1.color = colorHex;
+        configA1.bg = bgHex;
+        configA1.icon = iconSymbol;
+        document.documentElement.style.setProperty('--color-a1', colorHex);
+        document.getElementById('btn-auto-hop-2').style.background = colorHex;
+        setActiveBrushAqlan('a1');
+      } else {
+        configA2.color = colorHex;
+        configA2.bg = bgHex;
+        configA2.icon = iconSymbol;
+        document.documentElement.style.setProperty('--color-a2', colorHex);
+        document.getElementById('btn-auto-hop-3').style.background = colorHex;
+        setActiveBrushAqlan('a2');
+      }
+      for (let i = 1; i <= 50; i++) {
+        renderCellAqlan(i);
+      }
+    }
+
+    function handleCellClickAqlan(num) {
+      playSfx('click');
+      const st = cellStateAqlan[num];
+      if (currentBrushAqlan === 'a1') {
+        st.a1 = !st.a1;
+        playSfx(st.a1 ? 'star' : 'click');
+      } else if (currentBrushAqlan === 'a2') {
+        st.a2 = !st.a2;
+        playSfx(st.a2 ? 'star' : 'click');
+      } else if (currentBrushAqlan === 'eraser') {
+        st.a1 = false;
+        st.a2 = false;
+      }
+      renderCellAqlan(num);
+    }
+
+    function renderCellAqlan(num) {
+      const el = document.getElementById(`cell-50-${num}`);
+      const st = cellStateAqlan[num];
+      el.innerHTML = num;
+
+      if (st.a1 && st.a2) {
+        el.className = 'grid-cell cell-marked-both';
+        el.innerHTML = `
+          <span class="cell-badge-1" style="color:${configA1.color}">${configA1.icon}</span>
+          <span>${num}</span>
+          <span class="cell-badge-2" style="color:${configA2.color}">${configA2.icon}</span>
+        `;
+      } else if (st.a1) {
+        el.className = 'grid-cell';
+        el.style.background = configA1.bg;
+        el.style.borderColor = configA1.color;
+        el.style.color = configA1.color;
+        el.innerHTML = `
+          <span class="cell-badge-1" style="color:${configA1.color}">${configA1.icon}</span>
+          <span>${num}</span>
+        `;
+      } else if (st.a2) {
+        el.className = 'grid-cell';
+        el.style.background = configA2.bg;
+        el.style.borderColor = configA2.color;
+        el.style.color = configA2.color;
+        el.innerHTML = `
+          <span>${num}</span>
+          <span class="cell-badge-2" style="color:${configA2.color}">${configA2.icon}</span>
+        `;
+      } else {
+        el.className = 'grid-cell';
+        el.style.background = '#FFFFFF';
+        el.style.borderColor = '#CBD5E1';
+        el.style.color = '#1E293B';
+      }
+    }
+
+    function autoHopAqlan(step, targetKey) {
+      playSfx('click');
+      setActiveBrushAqlan(targetKey);
       let delay = 0;
       for (let i = step; i <= 50; i += step) {
         setTimeout(() => {
-          const el = document.getElementById(`cell-${i}`);
-          el.classList.add(className);
+          cellStateAqlan[i][targetKey] = true;
+          renderCellAqlan(i);
           playSfx('star');
         }, delay);
-        delay += 60;
+        delay += 50;
       }
-      if (step === 2) marked2 = true;
-      if (step === 3) marked3 = true;
     }
 
-    function highlightBoth() {
+    function highlightBothAqlan() {
       playSfx('win');
       triggerConfetti();
       let matches = [];
       for (let i = 1; i <= 50; i++) {
-        const el = document.getElementById(`cell-${i}`);
-        if (el.classList.contains('marked-2') && el.classList.contains('marked-3')) {
-          el.classList.add('marked-both');
+        if (cellStateAqlan[i].a1 && cellStateAqlan[i].a2) {
           matches.push(i);
         }
       }
       const res = document.getElementById('grid-result');
-      res.className = 'feedback-banner feedback-success';
-      res.innerHTML = `🎉 <strong>HORE! KPK DITEMUKAN!</strong><br>Kodok dan Kelinci mendarat bersama di angka: <strong>${matches.join(', ')}</strong>.<br>Pertemuan pertama (TERKECIL) adalah di angka <strong>${matches[0]}</strong>! Maka KPK(2, 3) = <strong>${matches[0]}</strong>.`;
+      if (matches.length > 0) {
+        res.className = 'feedback-banner feedback-success';
+        res.innerHTML = `🎉 <strong>HORE! TITIK TEMU KPK DITEMUKAN!</strong><br>Kodok dan Kelinci mendarat bersama di angka: <strong>${matches.join(', ')}</strong>.<br>Pertemuan pertama (TERKECIL) adalah di angka <strong>${matches[0]}</strong>! Maka KPK(2, 3) = <strong>${matches[0]}</strong>! 👑✨`;
+      } else {
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `Belum ada angka yang memiliki kedua tanda warna. Coba tandai kelipatan 2 dan 3 dulu ya!`;
+      }
     }
 
-    function resetGrid() {
+    function resetGridAqlan() {
       playSfx('click');
       for (let i = 1; i <= 50; i++) {
-        const el = document.getElementById(`cell-${i}`);
-        el.className = 'grid-cell';
+        cellStateAqlan[i].a1 = false;
+        cellStateAqlan[i].a2 = false;
+        renderCellAqlan(i);
       }
-      marked2 = false;
-      marked3 = false;
-      const res = document.getElementById('grid-result');
-      res.style.display = 'none';
+      document.getElementById('grid-result').style.display = 'none';
     }
 
-    function toggleManual(cell) {
-      playSfx('click');
-      cell.classList.toggle('marked-both');
-    }
+    setActiveBrushAqlan('a1');
 
-    // 2. Inisialisasi Kalender Oktober 2026
+    // 3. Kalender Oktober 2026
     const calOct = document.getElementById('calOct');
     const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
     dayNames.forEach(d => {
@@ -486,7 +860,6 @@
       calOct.appendChild(h);
     });
 
-    // 1 Okt 2026 adalah Kamis (index 4)
     for (let i = 0; i < 4; i++) {
       const empty = document.createElement('div');
       empty.className = 'cal-day empty';
@@ -502,15 +875,12 @@
 
     function runCalendarSimulation() {
       playSfx('correct');
-      // Aqlan: tiap 2 hari dari tgl 1: 1, 3, 5, 7, 9, 11, 13...
       for (let d = 1; d <= 31; d += 2) {
         document.getElementById(`cal-${d}`).classList.add('aqlan-day');
       }
-      // Sahabat: tiap 3 hari dari tgl 1: 1, 4, 7, 10, 13, 16...
       for (let d = 1; d <= 31; d += 3) {
         document.getElementById(`cal-${d}`).classList.add('friend-day');
       }
-      // Bersama di tgl 1 dan tgl 7 (1 + 6)
       const meetDay = document.getElementById('cal-7');
       meetDay.classList.add('match-day');
       triggerConfetti();
@@ -529,7 +899,7 @@
       document.getElementById('cal-result').style.display = 'none';
     }
 
-    // 3. Simulator Cangkir Biskuit
+    // 4. Simulator Cangkir Biskuit
     function testCups(numCups) {
       playSfx('click');
       const container = document.getElementById('cupsArea');
@@ -570,7 +940,7 @@
       }
     }
 
-    // 4. Kuis
+    // 5. Kuis
     function checkQuiz(qNum, btn, isCorrect) {
       const fb = document.getElementById(`quiz-fb-${qNum}`);
       if (isCorrect) {
