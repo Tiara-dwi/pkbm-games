@@ -64,6 +64,9 @@
     .tab-btn.active.tab-english {
       color: #0284C7;
     }
+    .tab-btn.active.tab-math {
+      color: #059669;
+    }
     .grade-section {
       margin-bottom: 36px;
     }
@@ -188,12 +191,15 @@
     </div>
 
     <!-- TABS SWITCHER -->
-    <div class="subject-switcher">
+    <div class="subject-switcher" style="max-width: 620px;">
       <button class="tab-btn active" id="tab-indo" onclick="setLanguage('indo')">
         🇮🇩 B. Indonesia
       </button>
       <button class="tab-btn tab-english" id="tab-eng" onclick="setLanguage('eng')">
         🇬🇧 English Class
+      </button>
+      <button class="tab-btn tab-math" id="tab-math" onclick="setLanguage('math')">
+        🔢 Matematika
       </button>
     </div>
 
@@ -420,6 +426,40 @@
         </div>
       </div>
     </div>
+
+    <!-- ========================================================================= -->
+    <!-- 3. PANE MATEMATIKA (METODE BU AJENG - KPK & FPB) -->
+    <!-- ========================================================================= -->
+    <div class="subject-pane" id="pane-math">
+      <!-- KELAS ONLINE: AQLAN & MISHKA -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:#7C3AED;">Kelas Online (Zoom)</span>
+          <span class="grade-topic">Metode Visual Bu Ajeng: Loncatan Angka, Kalender & Cangkir</span>
+        </div>
+        <div class="student-grid">
+          <a href="math/aqlan.html" class="student-card" style="border-top: 4px solid #10B981;">
+            <div>
+              <div class="student-avatar" style="background:#ECFDF5;">🐸</div>
+              <div class="name-title">Aqlan (Kelas 4)</div>
+              <div class="game-title" style="color:#059669;">Detektif Loncatan & Cangkir Biskuit</div>
+              <div class="game-desc">Grid Angka 1-50, Kalender Sepeda Oktober 2026, dan Simulator Cangkir FPB.</div>
+            </div>
+            <div class="start-arrow" style="color:#059669;">Mulai Petualangan Aqlan →</div>
+          </a>
+
+          <a href="math/mishka.html" class="student-card" style="border-top: 4px solid #2563EB;">
+            <div>
+              <div class="student-avatar" style="background:#EFF6FF;">📐</div>
+              <div class="name-title">Mishka (Kelas 5)</div>
+              <div class="game-title" style="color:#2563EB;">Laboratorium Kalender & Pecahan</div>
+              <div class="game-desc">Grid 1-100 silang-lingkar, Kalender Renang & Biola, dan Menyamakan Penyebut Pecahan.</div>
+            </div>
+            <div class="start-arrow" style="color:#2563EB;">Mulai Petualangan Mishka →</div>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="assets/game.js"></script>
@@ -432,8 +472,10 @@
       const toggleEn = document.getElementById('toggle-en');
       const tabIndo = document.getElementById('tab-indo');
       const tabEng = document.getElementById('tab-eng');
+      const tabMath = document.getElementById('tab-math');
       const paneIndo = document.getElementById('pane-indo');
       const paneEng = document.getElementById('pane-eng');
+      const paneMath = document.getElementById('pane-math');
       const heroBanner = document.getElementById('hero-banner');
       const bannerTitle = document.getElementById('banner-title');
       const bannerSub = document.getElementById('banner-sub');
@@ -442,18 +484,34 @@
         toggleId.classList.remove('active');
         toggleEn.classList.add('active');
         tabIndo.classList.remove('active');
+        tabMath.classList.remove('active');
         tabEng.classList.add('active');
         paneIndo.classList.remove('active');
+        paneMath.classList.remove('active');
         paneEng.classList.add('active');
         heroBanner.style.background = 'linear-gradient(135deg, #0284C7 0%, #10B981 100%)';
         bannerTitle.innerText = "🇬🇧 English Adventure (My Next Words)";
         bannerSub.innerText = "Select your name and complete your English learning missions today!";
+      } else if (lang === 'math') {
+        toggleId.classList.remove('active');
+        toggleEn.classList.remove('active');
+        tabIndo.classList.remove('active');
+        tabEng.classList.remove('active');
+        tabMath.classList.add('active');
+        paneIndo.classList.remove('active');
+        paneEng.classList.remove('active');
+        paneMath.classList.add('active');
+        heroBanner.style.background = 'linear-gradient(135deg, #059669 0%, #2563EB 100%)';
+        bannerTitle.innerText = "🔢 Petualangan Matematika: KPK & FPB";
+        bannerSub.innerText = "Metode Bu Ajeng: Eksplorasi Grid Loncatan, Kalender Nyata, & Cangkir Pembagi!";
       } else {
         toggleEn.classList.remove('active');
         toggleId.classList.add('active');
         tabEng.classList.remove('active');
+        tabMath.classList.remove('active');
         tabIndo.classList.add('active');
         paneEng.classList.remove('active');
+        paneMath.classList.remove('active');
         paneIndo.classList.add('active');
         heroBanner.style.background = 'linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%)';
         bannerTitle.innerText = "🚀 Petualangan Bahasa Indonesia";
@@ -466,6 +524,8 @@
       const saved = localStorage.getItem('pkbm_selected_lang');
       if (saved === 'eng') {
         setLanguage('eng');
+      } else if (saved === 'math') {
+        setLanguage('math');
       }
     });
   </script>
