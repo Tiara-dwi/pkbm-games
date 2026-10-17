@@ -10,15 +10,126 @@
       --primary: #2563EB;
       --primary-dark: #1D4ED8;
       --accent: #E11D48;
+      --color-m1: #2563EB; /* Default kelipatan 1 */
+      --color-m2: #DC2626; /* Default kelipatan 2 */
     }
     body {
       background: #F8FAFC;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
+    /* Modal "How are you today?" */
+    .mood-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.4s ease;
+      padding: 16px;
+    }
+    .mood-card {
+      background: linear-gradient(145deg, #FFFFFF 0%, #FFFBEB 100%);
+      border-radius: 28px;
+      max-width: 540px;
+      width: 100%;
+      padding: 32px 28px;
+      box-shadow: 0 25px 50px -12px rgba(217, 119, 6, 0.35);
+      border: 3px solid #FDE68A;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .mood-title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #92400E;
+      margin: 10px 0 6px 0;
+    }
+    .mood-sub {
+      font-size: 1rem;
+      color: #78350F;
+      opacity: 0.9;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+    .mood-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 480px) {
+      .mood-options-grid { grid-template-columns: 1fr; }
+    }
+    .mood-btn {
+      background: white;
+      border: 2px solid #FDE68A;
+      border-radius: 18px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #78350F;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+    }
+    .mood-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: #F59E0B;
+      background: #FEF3C7;
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.2);
+    }
+    .mood-btn-icon {
+      font-size: 2rem;
+    }
+    .warm-response-box {
+      background: white;
+      border-radius: 20px;
+      padding: 22px;
+      border: 2px solid #F59E0B;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+      margin-top: 10px;
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .warm-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #854D0E;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    /* Floating Heart/Sparkle */
+    .floating-heart {
+      position: absolute;
+      pointer-events: none;
+      font-size: 1.8rem;
+      animation: floatUp 1.8s ease forwards;
+    }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(0.6); }
+      100% { opacity: 0; transform: translateY(-120px) scale(1.4); }
+    }
+
+    /* Hero Box */
     .hero-box {
       background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
       color: white;
-      padding: 30px 20px;
+      padding: 28px 20px;
       border-radius: var(--radius-lg);
       margin-bottom: 24px;
       text-align: center;
@@ -36,10 +147,12 @@
     .tool-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       margin-bottom: 16px;
       border-bottom: 2px solid #F1F5F9;
       padding-bottom: 12px;
+      flex-wrap: wrap;
     }
     .tool-badge {
       background: #2563EB;
@@ -50,101 +163,177 @@
       font-size: 0.9rem;
     }
     .tool-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: #0F172A;
       margin: 0;
     }
-    /* Grid 1-100 Styling */
+
+    /* Control Panel Kuas & Warna (Point 2) */
+    .brush-control-panel {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .brush-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px 14px;
+      background: white;
+      border-radius: 12px;
+      border: 1.5px solid #CBD5E1;
+    }
+    .brush-group.active-group {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+      background: #EFF6FF;
+    }
+    .brush-label {
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .color-swatch-list {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+    .color-swatch:hover {
+      transform: scale(1.15);
+    }
+    .color-swatch.selected {
+      border: 2px solid #0F172A;
+      transform: scale(1.2);
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    }
+
+    /* Status Bar Kuas Aktif */
+    .active-brush-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #EFF6FF;
+      border: 1.5px solid #BFDBFE;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #1E40AF;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Grid 1-100 Styling (Point 1 & 2) */
     .grid-container-100 {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 6px;
-      margin: 20px 0;
+      margin: 18px 0;
+      user-select: none;
     }
     .grid-cell-100 {
       aspect-ratio: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #F8FAFC;
-      border: 1.5px solid #CBD5E1;
+      background: #FFFFFF;
+      border: 2px solid #CBD5E1;
       border-radius: 8px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.95rem;
       color: #1E293B;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     .grid-cell-100:hover {
-      transform: scale(1.1);
+      transform: scale(1.12);
       border-color: #2563EB;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+      z-index: 10;
     }
-    .grid-cell-100.marked-4 {
-      background: #DBEAFE;
-      border-color: #3B82F6;
-      color: #1E40AF;
-    }
-    .grid-cell-100.marked-4::after {
-      content: '🔵';
+    .cell-badge-1 {
       position: absolute;
-      top: 1px;
-      left: 1px;
-      font-size: 0.6rem;
+      top: 2px;
+      left: 2px;
+      font-size: 0.65rem;
+      line-height: 1;
     }
-    .grid-cell-100.marked-6 {
-      background: #FEE2E2;
-      border-color: #EF4444;
-      color: #991B1B;
-    }
-    .grid-cell-100.marked-6::before {
-      content: '❌';
+    .cell-badge-2 {
       position: absolute;
-      bottom: 1px;
-      right: 1px;
-      font-size: 0.6rem;
+      bottom: 2px;
+      right: 2px;
+      font-size: 0.65rem;
+      line-height: 1;
     }
-    .grid-cell-100.marked-both {
-      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%);
-      border-color: #EAB308;
-      color: #713F12;
+    .grid-cell-100.cell-marked-both {
+      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%) !important;
+      border-color: #EAB308 !important;
+      color: #713F12 !important;
       font-weight: 900;
       transform: scale(1.15);
       animation: pulseGold 1.5s infinite;
-      z-index: 2;
+      z-index: 5;
+      box-shadow: 0 0 10px rgba(234, 179, 8, 0.7);
     }
     @keyframes pulseGold {
       0%, 100% { box-shadow: 0 0 8px rgba(234, 179, 8, 0.6); }
-      50% { box-shadow: 0 0 16px rgba(234, 179, 8, 0.9); }
+      50% { box-shadow: 0 0 18px rgba(234, 179, 8, 0.95); }
     }
+
     /* Action Buttons */
     .action-btn {
       background: #2563EB;
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 10px 18px;
       border-radius: 30px;
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
     }
     .action-btn:hover {
       background: #1D4ED8;
       transform: translateY(-2px);
     }
-    .btn-red { background: #EF4444; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
-    .btn-red:hover { background: #DC2626; }
-    .btn-amber { background: #F59E0B; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); }
-    .btn-amber:hover { background: #D97706; }
-    .btn-purple { background: #7C3AED; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3); }
+    .btn-red { background: #DC2626; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25); }
+    .btn-red:hover { background: #B91C1C; }
+    .btn-amber { background: #D97706; box-shadow: 0 4px 10px rgba(217, 119, 6, 0.25); }
+    .btn-amber:hover { background: #B45309; }
+    .btn-purple { background: #7C3AED; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.25); }
     .btn-purple:hover { background: #6D28D9; }
-    .btn-gray { background: #64748B; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.3); }
+    .btn-gray { background: #64748B; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.25); }
     .btn-gray:hover { background: #475569; }
 
     /* Calendar Styling */
@@ -201,7 +390,7 @@
       border-color: #EF4444;
     }
     .cal-day.music-day::before {
-      content: '🎻 Musik';
+      content: '🎻 Biola';
       font-size: 0.55rem;
       color: #B91C1C;
       font-weight: 800;
@@ -279,7 +468,6 @@
       border: 2px solid #EF4444;
       display: block;
     }
-    /* Fraction Box */
     .fraction-demo {
       display: flex;
       align-items: center;
@@ -290,6 +478,7 @@
       background: #EFF6FF;
       border-radius: 16px;
       border: 2px solid #BFDBFE;
+      flex-wrap: wrap;
     }
     .frac-item {
       display: inline-flex;
@@ -305,42 +494,140 @@
   </style>
 </head>
 <body>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL CHECK-IN: HOW ARE YOU TODAY? (Point 3) -->
+  <!-- ========================================================================= -->
+  <div class="mood-modal-backdrop" id="moodModal">
+    <div class="mood-card">
+      <div style="font-size: 3rem;">🌈✨</div>
+      <h2 class="mood-title">Halo Mishka Tersayang!</h2>
+      <p class="mood-sub">
+        <strong>"How are you today?"</strong><br>
+        Sebelum kita mulai bertualang, Bu Tiara mau tahu kabarmu hari ini...
+      </p>
+
+      <div class="mood-options-grid" id="moodButtons">
+        <button class="mood-btn" onclick="selectMood('happy')">
+          <span class="mood-btn-icon">🌟</span>
+          <span>Super Bahagia & Semangat!</span>
+        </button>
+        <button class="mood-btn" onclick="selectMood('calm')">
+          <span class="mood-btn-icon">😊</span>
+          <span>Tenang, Nyaman & Siap Belajar</span>
+        </button>
+        <button class="mood-btn" onclick="selectMood('tired')">
+          <span class="mood-btn-icon">🥱</span>
+          <span>Sedikit Lelah / Mengantuk</span>
+        </button>
+        <button class="mood-btn" onclick="selectMood('hug')">
+          <span class="mood-btn-icon">🥺</span>
+          <span>Butuh Semangat & Pelukan</span>
+        </button>
+      </div>
+
+      <!-- Warm Response Box -->
+      <div class="warm-response-box" id="warmResponse">
+        <div class="warm-text" id="warmText"></div>
+        <button class="action-btn" style="background:#D97706; padding:12px 28px; font-size:1.05rem;" onclick="closeMoodModal()">
+          Mulai Belajar Bersama Bu Tiara 🥰 →
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- HEADER BAR -->
   <div class="header-bar">
     <div class="logo-badge">
       <div class="badge-icon">🚀</div>
       <div>PKBM Penerus Bangsa</div>
     </div>
-    <a href="../index.html" class="nav-back-btn" style="color:white; text-decoration:none; font-weight:700;">← Kembali ke Portal</a>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button onclick="reopenMoodModal()" style="background:#FEF3C7; border:1px solid #F59E0B; color:#92400E; padding:6px 14px; border-radius:20px; font-weight:800; cursor:pointer; font-size:0.85rem;">
+        💬 Kabar Hati Hari Ini
+      </button>
+      <a href="../index.html" class="nav-back-btn" style="color:white; text-decoration:none; font-weight:700;">← Portal Utama</a>
+    </div>
   </div>
 
-  <div class="container" style="max-width: 900px;">
+  <div class="container" style="max-width: 920px;">
     <!-- HERO BOX -->
     <div class="hero-box">
       <div style="font-size: 2.2rem; margin-bottom: 6px;">📐 Laboratorium Logika: KPK & FPB</div>
       <h1 style="font-size: 1.8rem; margin: 0 0 6px 0;">Misi Pembelajaran Interaktif Mishka (Kelas 5)</h1>
-      <p style="margin: 0; opacity: 0.95; font-size: 1.05rem;">Menghubungkan Metode Bu Ajeng dengan Penjumlahan & Penyederhanaan Pecahan</p>
+      <p style="margin: 0; opacity: 0.95; font-size: 1.05rem;">Metode Visual Bu Ajeng: Grid Silang-Lingkar, Kalender Nyata, & Cangkir Pecahan</p>
     </div>
 
     <!-- ========================================================================= -->
-    <!-- ALAT 1: GRID 1-100 INTERAKTIF -->
+    <!-- ALAT 1: GRID 1-100 DENGAN KLIK BEBAS & KUSTOMISASI WARNA (Point 1 & 2) -->
     <!-- ========================================================================= -->
     <div class="tool-card">
       <div class="tool-header">
-        <span class="tool-badge">ALAT 1</span>
-        <h2 class="tool-title">Tabel Angka 1–100: Melingkari & Menyilang (KPK 4 dan 6)</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="tool-badge">ALAT 1</span>
+          <h2 class="tool-title">Tabel Angka 1–100: Bebas Klik & Kustomisasi Warna</h2>
+        </div>
+        <span style="font-size:0.85rem; color:#64748B; font-weight:700;">✨ Sekarang Bisa Diklik Sendiri!</span>
       </div>
+
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
-        <strong>Misi Mishka:</strong> Lingkari kelipatan 4 dengan warna <strong>BIRU</strong>, dan silang kelipatan 6 dengan warna <strong>MERAH</strong>. Cari angka pertama yang memiliki kedua tanda!
+        <strong>Cara Bermain:</strong> Pilih warna kuas di bawah, lalu <strong>klik langsung kotak angka mana saja di tabel 1-100</strong>! Kamu juga bisa menggunakan tombol otomatis untuk melihat pola loncatan kelipatan.
       </p>
 
-      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-        <button class="action-btn" onclick="hopMultiples100(4, 'marked-4')">🔵 Kelipatan 4 (Biru)</button>
-        <button class="action-btn btn-red" onclick="hopMultiples100(6, 'marked-6')">❌ Kelipatan 6 (Merah)</button>
-        <button class="action-btn btn-amber" onclick="highlightBoth100()">👑 Temukan KPK</button>
-        <button class="action-btn btn-gray" onclick="resetGrid100()">🔄 Reset Grid</button>
+      <!-- Panel Kontrol Kuas & Warna (Point 2) -->
+      <div class="brush-control-panel">
+        <!-- Kuas Kelipatan 1 -->
+        <div class="brush-group" id="group-m1">
+          <div class="brush-label" style="color:var(--color-m1);">
+            <span>🔵 <strong>Kelipatan 4</strong> (Simbol O)</span>
+            <button class="action-btn" id="btn-select-m1" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrush('m1')">
+              Gunakan Kuas Ini 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Ganti Warna:</span>
+            <div class="color-swatch selected" style="background:#2563EB;" onclick="changeColor('m1', '#2563EB', '#DBEAFE', '🔵')">O</div>
+            <div class="color-swatch" style="background:#059669;" onclick="changeColor('m1', '#059669', '#D1FAE5', '🟢')">O</div>
+            <div class="color-swatch" style="background:#7C3AED;" onclick="changeColor('m1', '#7C3AED', '#EDE9FE', '🟣')">O</div>
+          </div>
+        </div>
+
+        <!-- Kuas Kelipatan 2 -->
+        <div class="brush-group" id="group-m2">
+          <div class="brush-label" style="color:var(--color-m2);">
+            <span>❌ <strong>Kelipatan 6</strong> (Simbol X)</span>
+            <button class="action-btn btn-red" id="btn-select-m2" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrush('m2')">
+              Gunakan Kuas Ini 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Ganti Warna:</span>
+            <div class="color-swatch selected" style="background:#DC2626;" onclick="changeColor('m2', '#DC2626', '#FEE2E2', '❌')">X</div>
+            <div class="color-swatch" style="background:#EA580C;" onclick="changeColor('m2', '#EA580C', '#FFEDD5', '🟧')">X</div>
+            <div class="color-swatch" style="background:#DB2777;" onclick="changeColor('m2', '#DB2777', '#FCE7F3', '💖')">X</div>
+          </div>
+        </div>
+
+        <!-- Status Kuas Aktif & Tombol Bantu -->
+        <div class="active-brush-status">
+          <div id="brush-status-text">
+            🖌️ <strong>Kuas Aktif:</strong> Kelipatan 4 (Simbol O) — <em>Klik kotak di grid untuk menandai!</em>
+          </div>
+          <button class="action-btn btn-gray" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrush('eraser')">
+            🧹 Kuas Penghapus
+          </button>
+        </div>
       </div>
 
+      <!-- Tombol Aksi Cepat Otomatis -->
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <button class="action-btn" id="btn-auto-4" onclick="autoHop(4, 'm1')">⚡ Otomatis Tandai Kelipatan 4</button>
+        <button class="action-btn btn-red" id="btn-auto-6" onclick="autoHop(6, 'm2')">⚡ Otomatis Tandai Kelipatan 6</button>
+        <button class="action-btn btn-amber" onclick="highlightBoth100()">👑 Temukan Titik Temu KPK</button>
+        <button class="action-btn btn-gray" onclick="resetGrid100()">🔄 Bersihkan Grid</button>
+      </div>
+
+      <!-- 10x10 Grid (Clickable) -->
       <div class="grid-container-100" id="grid100"></div>
       <div id="grid-result-100" class="feedback-banner"></div>
     </div>
@@ -350,11 +637,13 @@
     <!-- ========================================================================= -->
     <div class="tool-card">
       <div class="tool-header">
-        <span class="tool-badge" style="background:#7C3AED;">ALAT 2</span>
-        <h2 class="tool-title">📅 Kalender Oktober 2026: Jadwal Renang & Biola</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="tool-badge" style="background:#7C3AED;">ALAT 2</span>
+          <h2 class="tool-title">📅 Kalender Oktober 2026: Jadwal Renang & Biola</h2>
+        </div>
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
-        Mishka les renang setiap <strong>4 hari sekali</strong>, teman Mishka les biola di tempat yang sama setiap <strong>6 hari sekali</strong>. Pada hari Jumat, <strong>2 Oktober 2026</strong>, mereka berpapasan. Tanggal berapa mereka akan berpapasan kembali?
+        Mishka les renang setiap <strong>4 hari sekali</strong>, sahabat Mishka les biola di tempat yang sama setiap <strong>6 hari sekali</strong>. Pada hari Jumat, <strong>2 Oktober 2026</strong>, mereka berpapasan. Tanggal berapa mereka akan berpapasan kembali?
       </p>
 
       <div style="display:flex; gap:10px; margin-bottom:12px;">
@@ -371,8 +660,10 @@
     <!-- ========================================================================= -->
     <div class="tool-card">
       <div class="tool-header">
-        <span class="tool-badge" style="background:#E11D48;">ALAT 3</span>
-        <h2 class="tool-title">🥤 Mengapa Harus Cari FPB? (Menyederhanakan Pecahan 12/20)</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="tool-badge" style="background:#E11D48;">ALAT 3</span>
+          <h2 class="tool-title">🥤 Mengapa Harus Cari FPB? (Menyederhanakan Pecahan 12/20)</h2>
+        </div>
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
         Bu Ajeng memiliki <strong>12 Spidol 🖊️</strong> dan <strong>20 Stik Es Krim 🍦</strong>. Kita ingin membagikannya sama rata ke beberapa cangkir. Coba pilih jumlah cangkir:
@@ -393,7 +684,7 @@
 
       <!-- KONEKSI KE PECAHAN -->
       <div class="fraction-demo" id="fractionDemo" style="display:none;">
-        <div style="font-weight:700; color:#1E3A8A;">Koneksi ke Pecahan:</div>
+        <div style="font-weight:700; color:#1E3A8A;">Koneksi Nyata ke Pecahan:</div>
         <div class="frac-item"><span class="frac-top">12</span><span class="frac-bot">20</span></div>
         <div style="font-size:1.5rem; font-weight:800; color:#2563EB;">÷ 4 (FPB) =</div>
         <div class="frac-item"><span class="frac-top" style="color:#059669;">3</span><span class="frac-bot" style="color:#059669;">5</span></div>
@@ -406,8 +697,10 @@
     <!-- ========================================================================= -->
     <div class="tool-card">
       <div class="tool-header">
-        <span class="tool-badge" style="background:#059669;">ALAT 4</span>
-        <h2 class="tool-title">🍕 Mengapa Harus Cari KPK? (Menyamakan Penyebut 1/4 + 1/6)</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="tool-badge" style="background:#059669;">ALAT 4</span>
+          <h2 class="tool-title">🍕 Mengapa Harus Cari KPK? (Menyamakan Penyebut 1/4 + 1/6)</h2>
+        </div>
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
         Mishka ingin menjumlahkan bagian kue cokelat <strong>1/4</strong> dan kue keju <strong>1/6</strong>. Karena penyebutnya berbeda, kita harus mencari KPK dari 4 dan 6 terlebih dahulu!
@@ -453,26 +746,211 @@
 
   <script src="../assets/game.js"></script>
   <script>
-    // 1. Grid 1-100
+    // =========================================================================
+    // 1. LOGIKA MOOD MODAL: "HOW ARE YOU TODAY?" (Point 3)
+    // =========================================================================
+    const moodMessages = {
+      happy: {
+        text: `Wah, senyum dan semangatmu menular sekali, Mishka tersayang! 🌟 Energi bahagiamu ini adalah kekuatan supermu hari ini. Bu Tiara bangga dan bersyukur sekali punya murid yang ceria dan cerdas seperti kamu. Yuk kita taklukkan petualangan angka hari ini dengan penuh kegembiraan! 💖✨`,
+        icon: '🌟'
+      },
+      calm: {
+        text: `Alhamdulillah, hati yang tenang dan damai adalah ruang terbaik untuk menyerap ilmu baru, sayang. 🌸 Bu Tiara akan selalu ada menemani setiap langkah eksplorasi logikamu hari ini. Belajar dengan nyaman dan santai ya, kamu selalu istimewa di mata Bu Tiara! ✨🤗`,
+        icon: '😊'
+      },
+      tired: {
+        text: `Terima kasih banyak ya sudah jujur dan tetap hadir meski tubuhmu terasa lelah. ☕🤍 Kamu anak yang luar biasa tangguh dan hebat! Hari ini kita belajar santai saja, nikmati permainannya, tidak ada tekanan sama sekali. Senyum dan usahamu hari ini sudah sangat membanggakan Bu Tiara! Peluk hangat ya sayang! 🤗💕`,
+        icon: '☕'
+      },
+      hug: {
+        text: `Sini Bu Tiara peluk erat-erat secara virtual... 🤗💖 Ingat ya Mishka, kamu tidak pernah sendirian. Kamu sangat berharga, sangat disayangi, dan memiliki kebaikan hati yang luar biasa. Apapun yang kamu rasakan, it's totally okay. Mari kita lewati hari ini pelan-pelan bersama-sama ya sayang! 💕🌸`,
+        icon: '🤗'
+      }
+    };
+
+    function selectMood(moodKey) {
+      playSfx('win');
+      createFloatingHearts();
+      document.getElementById('moodButtons').style.display = 'none';
+      const warmBox = document.getElementById('warmResponse');
+      const warmText = document.getElementById('warmText');
+      warmText.innerHTML = moodMessages[moodKey].text;
+      warmBox.style.display = 'block';
+    }
+
+    function closeMoodModal() {
+      playSfx('click');
+      document.getElementById('moodModal').style.display = 'none';
+    }
+
+    function reopenMoodModal() {
+      playSfx('click');
+      document.getElementById('moodButtons').style.display = 'grid';
+      document.getElementById('warmResponse').style.display = 'none';
+      document.getElementById('moodModal').style.display = 'flex';
+    }
+
+    function createFloatingHearts() {
+      const container = document.querySelector('.mood-card');
+      const emojis = ['💖', '✨', '🌸', '🥰', '⭐', '🤗'];
+      for (let i = 0; i < 16; i++) {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'floating-heart';
+          el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+          el.style.left = `${10 + Math.random() * 80}%`;
+          el.style.bottom = `${20 + Math.random() * 40}%`;
+          container.appendChild(el);
+          setTimeout(() => el.remove(), 1800);
+        }, i * 90);
+      }
+    }
+
+    // =========================================================================
+    // 2. LOGIKA GRID 1-100: KLIK BEBAS & KUSTOMISASI WARNA (Point 1 & 2)
+    // =========================================================================
+    let currentBrush = 'm1'; // 'm1', 'm2', or 'eraser'
+    
+    // Konfigurasi Kuas M1 (Kelipatan 4)
+    let configM1 = {
+      color: '#2563EB',
+      bg: '#DBEAFE',
+      icon: '🔵',
+      name: 'Kelipatan 4'
+    };
+
+    // Konfigurasi Kuas M2 (Kelipatan 6)
+    let configM2 = {
+      color: '#DC2626',
+      bg: '#FEE2E2',
+      icon: '❌',
+      name: 'Kelipatan 6'
+    };
+
+    // Data Status Tiap Kotak: { m1: bool, m2: bool }
+    const cellState = {};
+    for (let i = 1; i <= 100; i++) {
+      cellState[i] = { m1: false, m2: false };
+    }
+
     const grid100 = document.getElementById('grid100');
     for (let i = 1; i <= 100; i++) {
       const cell = document.createElement('div');
       cell.className = 'grid-cell-100';
       cell.innerText = i;
       cell.id = `cell-100-${i}`;
+      // ATTACH ONCLICK HANDLER! (Fixing Point 1)
+      cell.onclick = () => handleCellClick(i);
       grid100.appendChild(cell);
     }
 
-    function hopMultiples100(step, className) {
+    function setActiveBrush(brushType) {
       playSfx('click');
+      currentBrush = brushType;
+      document.getElementById('group-m1').classList.toggle('active-group', brushType === 'm1');
+      document.getElementById('group-m2').classList.toggle('active-group', brushType === 'm2');
+      
+      const statusText = document.getElementById('brush-status-text');
+      if (brushType === 'm1') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configM1.color}; font-weight:800;">${configM1.icon} ${configM1.name}</span> — <em>Klik kotak di grid untuk menandai!</em>`;
+      } else if (brushType === 'm2') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configM2.color}; font-weight:800;">${configM2.icon} ${configM2.name}</span> — <em>Klik kotak di grid untuk menandai!</em>`;
+      } else {
+        statusText.innerHTML = `🧹 <strong>Kuas Aktif:</strong> <span style="color:#64748B; font-weight:800;">Penghapus</span> — <em>Klik kotak mana saja untuk menghapus tanda!</em>`;
+      }
+    }
+
+    function changeColor(multipleType, colorHex, bgHex, iconSymbol) {
+      playSfx('click');
+      if (multipleType === 'm1') {
+        configM1.color = colorHex;
+        configM1.bg = bgHex;
+        configM1.icon = iconSymbol;
+        document.documentElement.style.setProperty('--color-m1', colorHex);
+        document.getElementById('btn-auto-4').style.background = colorHex;
+        setActiveBrush('m1');
+      } else {
+        configM2.color = colorHex;
+        configM2.bg = bgHex;
+        configM2.icon = iconSymbol;
+        document.documentElement.style.setProperty('--color-m2', colorHex);
+        document.getElementById('btn-auto-6').style.background = colorHex;
+        setActiveBrush('m2');
+      }
+      // Re-render semua kotak yang aktif
+      for (let i = 1; i <= 100; i++) {
+        renderCell(i);
+      }
+    }
+
+    function handleCellClick(num) {
+      playSfx('click');
+      const st = cellState[num];
+
+      if (currentBrush === 'm1') {
+        st.m1 = !st.m1;
+        playSfx(st.m1 ? 'star' : 'click');
+      } else if (currentBrush === 'm2') {
+        st.m2 = !st.m2;
+        playSfx(st.m2 ? 'star' : 'click');
+      } else if (currentBrush === 'eraser') {
+        st.m1 = false;
+        st.m2 = false;
+      }
+
+      renderCell(num);
+    }
+
+    function renderCell(num) {
+      const el = document.getElementById(`cell-100-${num}`);
+      const st = cellState[num];
+      el.innerHTML = num; // reset teks dasar
+
+      if (st.m1 && st.m2) {
+        // Kedua tanda aktif -> KPK match!
+        el.className = 'grid-cell-100 cell-marked-both';
+        el.innerHTML = `
+          <span class="cell-badge-1" style="color:${configM1.color}">${configM1.icon}</span>
+          <span>${num}</span>
+          <span class="cell-badge-2" style="color:${configM2.color}">${configM2.icon}</span>
+        `;
+      } else if (st.m1) {
+        el.className = 'grid-cell-100';
+        el.style.background = configM1.bg;
+        el.style.borderColor = configM1.color;
+        el.style.color = configM1.color;
+        el.innerHTML = `
+          <span class="cell-badge-1" style="color:${configM1.color}">${configM1.icon}</span>
+          <span>${num}</span>
+        `;
+      } else if (st.m2) {
+        el.className = 'grid-cell-100';
+        el.style.background = configM2.bg;
+        el.style.borderColor = configM2.color;
+        el.style.color = configM2.color;
+        el.innerHTML = `
+          <span>${num}</span>
+          <span class="cell-badge-2" style="color:${configM2.color}">${configM2.icon}</span>
+        `;
+      } else {
+        el.className = 'grid-cell-100';
+        el.style.background = '#FFFFFF';
+        el.style.borderColor = '#CBD5E1';
+        el.style.color = '#1E293B';
+      }
+    }
+
+    function autoHop(step, targetKey) {
+      playSfx('click');
+      setActiveBrush(targetKey);
       let delay = 0;
       for (let i = step; i <= 100; i += step) {
         setTimeout(() => {
-          const el = document.getElementById(`cell-100-${i}`);
-          el.classList.add(className);
+          cellState[i][targetKey] = true;
+          renderCell(i);
           playSfx('star');
         }, delay);
-        delay += 30;
+        delay += 35;
       }
     }
 
@@ -481,27 +959,36 @@
       triggerConfetti();
       let matches = [];
       for (let i = 1; i <= 100; i++) {
-        const el = document.getElementById(`cell-100-${i}`);
-        if (el.classList.contains('marked-4') && el.classList.contains('marked-6')) {
-          el.classList.add('marked-both');
+        if (cellState[i].m1 && cellState[i].m2) {
           matches.push(i);
         }
       }
       const res = document.getElementById('grid-result-100');
-      res.className = 'feedback-banner feedback-success';
-      res.innerHTML = `🎉 <strong>KPK(4, 6) BERHASIL DITEMUKAN!</strong><br>Titik temu di angka: <strong>${matches.join(', ')}</strong>.<br>Titik temu terkecil adalah <strong>${matches[0]}</strong>. Maka KPK dari 4 dan 6 adalah <strong>${matches[0]}</strong>!`;
+      if (matches.length > 0) {
+        res.className = 'feedback-banner feedback-success';
+        res.innerHTML = `🎉 <strong>KPK BERHASIL DITEMUKAN!</strong><br>Kotak yang memiliki kedua tanda warna: <strong>${matches.join(', ')}</strong>.<br>Titik temu paling pertama (TERKECIL) adalah <strong>${matches[0]}</strong>! Maka KPK = <strong>${matches[0]}</strong>! 👑✨`;
+      } else {
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `Belum ada angka yang memiliki kedua tanda warna bersamaan. Coba tandai kelipatan 4 dan kelipatan 6 dulu ya!`;
+      }
     }
 
     function resetGrid100() {
       playSfx('click');
       for (let i = 1; i <= 100; i++) {
-        const el = document.getElementById(`cell-100-${i}`);
-        el.className = 'grid-cell-100';
+        cellState[i].m1 = false;
+        cellState[i].m2 = false;
+        renderCell(i);
       }
       document.getElementById('grid-result-100').style.display = 'none';
     }
 
-    // 2. Kalender Oktober 2026
+    // Set brush default m1 saat mulai
+    setActiveBrush('m1');
+
+    // =========================================================================
+    // 3. KALENDER OKTOBER 2026
+    // =========================================================================
     const calOctMishka = document.getElementById('calOctMishka');
     const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
     dayNames.forEach(d => {
@@ -526,15 +1013,12 @@
 
     function runCalendarSimulationMishka() {
       playSfx('correct');
-      // Renang: tiap 4 hari dari tgl 2: 2, 6, 10, 14, 18, 22, 26, 30
       for (let d = 2; d <= 31; d += 4) {
         document.getElementById(`cal-mishka-${d}`).classList.add('mishka-day');
       }
-      // Biola: tiap 6 hari dari tgl 2: 2, 8, 14, 20, 26
       for (let d = 2; d <= 31; d += 6) {
         document.getElementById(`cal-mishka-${d}`).classList.add('music-day');
       }
-      // Titik temu: 2 Oktober dan 14 Oktober (2 + 12 = 14)
       document.getElementById('cal-mishka-14').classList.add('match-day');
       triggerConfetti();
 
@@ -552,7 +1036,9 @@
       document.getElementById('cal-result-mishka').style.display = 'none';
     }
 
-    // 3. Cangkir & Pecahan
+    // =========================================================================
+    // 4. CANGKIR SPIDOL & PECAHAN
+    // =========================================================================
     function testCupsMishka(numCups) {
       playSfx('click');
       const container = document.getElementById('cupsAreaMishka');
@@ -597,14 +1083,16 @@
       }
     }
 
-    // 4. Penjumlahan Pecahan via KPK
+    // =========================================================================
+    // 5. PECAHAN PENYEBUT KPK
+    // =========================================================================
     function solveFractionSum() {
       playSfx('win');
       triggerConfetti();
       const res = document.getElementById('fraction-sum-result');
       res.className = 'feedback-banner feedback-success';
       res.innerHTML = `
-        <div style="font-size:1.1rem; line-height:1.6;">
+        <div style="font-size:1.05rem; line-height:1.6;">
           <strong>Langkah Penjumlahan Pecahan:</strong><br>
           1. Cari KPK dari penyebut 4 dan 6 $\\to$ <strong>KPK = 12</strong>.<br>
           2. Ubah pecahan:<br>
@@ -616,7 +1104,9 @@
       `;
     }
 
-    // 5. Kuis
+    // =========================================================================
+    // 6. KUIS LOGIKA
+    // =========================================================================
     function checkQuizMishka(qNum, btn, isCorrect) {
       const fb = document.getElementById(`quiz-mishka-fb-${qNum}`);
       if (isCorrect) {
