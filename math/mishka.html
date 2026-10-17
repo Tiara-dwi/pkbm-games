@@ -336,6 +336,55 @@
     .btn-gray { background: #64748B; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.25); }
     .btn-gray:hover { background: #475569; }
 
+    /* Progress Tracker & Button Gating */
+    .table-progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .progress-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      border: 1px solid rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    .btn-locked {
+      background: #94A3B8 !important;
+      color: #F8FAFC !important;
+      box-shadow: none !important;
+      cursor: pointer;
+      opacity: 0.9;
+    }
+    .btn-locked:hover {
+      background: #64748B !important;
+      transform: none !important;
+    }
+    .btn-unlocked {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+      color: white !important;
+      animation: unlockPulse 1.2s infinite alternate !important;
+      cursor: pointer !important;
+    }
+    @keyframes unlockPulse {
+      0% { transform: scale(1); box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3); }
+      100% { transform: scale(1.04); box-shadow: 0 0 20px rgba(245, 158, 11, 0.85); }
+    }
+
     /* Calendar Styling */
     .cal-grid {
       display: grid;
@@ -602,7 +651,7 @@
       </div>
 
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
-        <strong>Cara Bermain:</strong> Pilih warna kuas di bawah, lalu <strong>klik langsung kotak angka mana saja di tabel 1-100</strong>! Kamu juga bisa menggunakan tombol otomatis untuk melihat pola loncatan kelipatan.
+        <strong>Cara Bermain:</strong> Pilih warna kuas di bawah, lalu <strong>klik langsung kotak angka pada tabel 1-100</strong> untuk menandai kelipatan 4 dan 6! Setelah seluruh kelipatan terisi penuh oleh Mishka, tombol <strong>Cari Titik Temu (KPK)</strong> akan terbuka! 🎯
       </p>
 
       <!-- Panel Kontrol Kuas & Warna (Point 2) -->
@@ -650,11 +699,16 @@
         </div>
       </div>
 
-      <!-- Tombol Aksi Cepat Otomatis -->
+      <!-- Indikator Progres Pengisian Tabel 1-100 -->
+      <div class="table-progress-bar" id="grid100-progress">
+        <span>📊 <strong>Progres Pengisian Tabel:</strong></span>
+        <span class="progress-pill" id="prog-pill-m1" style="background:#DBEAFE; color:#1E40AF;">🔵 Kelipatan 4: <b id="cnt-m1">0</b>/25</span>
+        <span class="progress-pill" id="prog-pill-m2" style="background:#FEE2E2; color:#991B1B;">❌ Kelipatan 6: <b id="cnt-m2">0</b>/16</span>
+        <span id="grid100-status-msg" style="font-size:0.85rem; color:#64748B;">(Isi penuh tabel agar tombol KPK terbuka)</span>
+      </div>
+
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
-        <button class="action-btn" id="btn-auto-4" onclick="autoHop(4, 'm1')">⚡ Otomatis Tandai Kelipatan 4</button>
-        <button class="action-btn btn-red" id="btn-auto-6" onclick="autoHop(6, 'm2')">⚡ Otomatis Tandai Kelipatan 6</button>
-        <button class="action-btn btn-amber" onclick="highlightBoth100()">👑 Temukan Titik Temu KPK</button>
+        <button class="action-btn btn-locked" id="btn-kpk-mishka" onclick="handleKpkClickMishka()">🔒 Temukan Titik Temu KPK</button>
         <button class="action-btn btn-gray" onclick="resetGrid100()">🔄 Bersihkan Grid</button>
       </div>
 
@@ -676,7 +730,7 @@
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
         Mishka les renang setiap <strong>4 hari sekali</strong>, sahabat Mishka les biola setiap <strong>6 hari sekali</strong>. Pada hari Jumat, <strong>2 Oktober 2026</strong>, mereka berpapasan. Tanggal berapa mereka akan berpapasan kembali?
-        <br><strong>Cara Bermain:</strong> Pilih <strong>Kuas Kalender</strong> di bawah, lalu <strong>klik langsung tanggal pada kalender</strong>! Kamu juga bisa mengganti warna kuas sesukamu.
+        <br><strong>Cara Bermain:</strong> Pilih <strong>Kuas Kalender</strong> di bawah, lalu <strong>klik langsung tanggal pada kalender</strong>! Tandai seluruh jadwal renang & biola untuk membuka kunci titik temu KPK.
       </p>
 
       <!-- Panel Kontrol Kuas Kalender -->
@@ -724,11 +778,16 @@
         </div>
       </div>
 
-      <!-- Tombol Bantu Otomatis -->
+      <!-- Indikator Progres Pengisian Kalender -->
+      <div class="table-progress-bar" id="cal-progress-mishka">
+        <span>📅 <strong>Progres Kalender:</strong></span>
+        <span class="progress-pill" id="cal-pill-renang" style="background:#EFF6FF; color:#1E40AF;">🏊 Renang Mishka: <b id="cnt-cal-renang">0</b>/8</span>
+        <span class="progress-pill" id="cal-pill-biola" style="background:#FEE2E2; color:#991B1B;">🎻 Biola Sahabat: <b id="cnt-cal-biola">0</b>/5</span>
+        <span id="cal-status-msg-mishka" style="font-size:0.85rem; color:#64748B;">(Tandai seluruh jadwal untuk membuka KPK)</span>
+      </div>
+
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
-        <button class="action-btn" id="btn-auto-renang" onclick="autoMarkRenangMishka()">⚡ Tandai Renang (Tiap 4 Hari)</button>
-        <button class="action-btn btn-red" id="btn-auto-biola" onclick="autoMarkBiolaMishka()">⚡ Tandai Biola (Tiap 6 Hari)</button>
-        <button class="action-btn btn-purple" onclick="runCalendarSimulationMishka()">✨ Cari Titik Temu (KPK)</button>
+        <button class="action-btn btn-locked" id="btn-cal-kpk-mishka" onclick="handleCalKpkClickMishka()">🔒 Cari Titik Temu Kalender (KPK)</button>
         <button class="action-btn btn-gray" onclick="resetCalendarMishka()">🔄 Reset Kalender</button>
       </div>
 
@@ -948,14 +1007,12 @@
         configM1.bg = bgHex;
         configM1.icon = iconSymbol;
         document.documentElement.style.setProperty('--color-m1', colorHex);
-        document.getElementById('btn-auto-4').style.background = colorHex;
         setActiveBrush('m1');
       } else {
         configM2.color = colorHex;
         configM2.bg = bgHex;
         configM2.icon = iconSymbol;
         document.documentElement.style.setProperty('--color-m2', colorHex);
-        document.getElementById('btn-auto-6').style.background = colorHex;
         setActiveBrush('m2');
       }
       // Re-render semua kotak yang aktif
@@ -980,6 +1037,7 @@
       }
 
       renderCell(num);
+      checkGrid100Completion();
     }
 
     function renderCell(num) {
@@ -1021,18 +1079,61 @@
       }
     }
 
-    function autoHop(step, targetKey) {
-      playSfx('click');
-      setActiveBrush(targetKey);
-      let delay = 0;
-      for (let i = step; i <= 100; i += step) {
-        setTimeout(() => {
-          cellState[i][targetKey] = true;
-          renderCell(i);
-          playSfx('star');
-        }, delay);
-        delay += 35;
+    let grid100WasUnlocked = false;
+
+    function checkGrid100Completion() {
+      let m1Count = 0;
+      for (let n = 4; n <= 100; n += 4) {
+        if (cellState[n].m1) m1Count++;
       }
+      let m2Count = 0;
+      for (let n = 6; n <= 100; n += 6) {
+        if (cellState[n].m2) m2Count++;
+      }
+
+      document.getElementById('cnt-m1').innerText = m1Count;
+      document.getElementById('cnt-m2').innerText = m2Count;
+
+      const isComplete = (m1Count === 25 && m2Count === 16);
+      const btn = document.getElementById('btn-kpk-mishka');
+      const msg = document.getElementById('grid100-status-msg');
+
+      if (isComplete) {
+        btn.className = 'action-btn btn-unlocked';
+        btn.innerHTML = '👑 Temukan Titik Temu KPK ✨ [TERBUKA!]';
+        msg.innerHTML = '🎉 <strong>Tabel Selesai Diisi Penuh!</strong> Akses KPK terbuka lebar! Klik tombol di samping!';
+        if (!grid100WasUnlocked) {
+          playSfx('star');
+          grid100WasUnlocked = true;
+        }
+      } else {
+        btn.className = 'action-btn btn-locked';
+        btn.innerHTML = '🔒 Temukan Titik Temu KPK';
+        msg.innerHTML = '(Isi penuh tabel agar tombol KPK terbuka)';
+        grid100WasUnlocked = false;
+      }
+    }
+
+    function handleKpkClickMishka() {
+      let m1Count = 0;
+      for (let n = 4; n <= 100; n += 4) {
+        if (cellState[n].m1) m1Count++;
+      }
+      let m2Count = 0;
+      for (let n = 6; n <= 100; n += 6) {
+        if (cellState[n].m2) m2Count++;
+      }
+
+      const isComplete = (m1Count === 25 && m2Count === 16);
+      if (!isComplete) {
+        playSfx('click');
+        const res = document.getElementById('grid-result-100');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `🔒 <strong>Akses Titik Temu KPK Masih Terkunci!</strong><br>Ayo Mishka, tandai dulu seluruh kelipatan di tabel 1-100 secara lengkap:<br>🔵 Kelipatan 4: <strong>${m1Count}/25</strong> angka<br>❌ Kelipatan 6: <strong>${m2Count}/16</strong> angka.<br>Setelah semua terisi, tombol emas KPK akan otomatis terbuka! 🎯✨`;
+        return;
+      }
+
+      highlightBoth100();
     }
 
     function highlightBoth100() {
@@ -1061,11 +1162,13 @@
         cellState[i].m2 = false;
         renderCell(i);
       }
+      checkGrid100Completion();
       document.getElementById('grid-result-100').style.display = 'none';
     }
 
     // Set brush default m1 saat mulai
     setActiveBrush('m1');
+    checkGrid100Completion();
 
     // =========================================================================
     // 3. KALENDER OKTOBER 2026 INTERAKTIF DENGAN KUAS
@@ -1185,6 +1288,7 @@
       }
 
       renderCalDayMishka(day);
+      checkCalMishkaCompletion();
 
       // Cek apakah tanggal ini menjadi titik temu
       if (state.renang && state.biola) {
@@ -1200,32 +1304,61 @@
       }
     }
 
-    function autoMarkRenangMishka() {
-      playSfx('click');
-      setCalBrushMishka('renang');
-      let delay = 0;
+    let calMishkaWasUnlocked = false;
+
+    function checkCalMishkaCompletion() {
+      let renangCount = 0;
       for (let d = 2; d <= 31; d += 4) {
-        setTimeout(() => {
-          calStateMishka[d].renang = true;
-          renderCalDayMishka(d);
+        if (calStateMishka[d].renang) renangCount++;
+      }
+      let biolaCount = 0;
+      for (let d = 2; d <= 31; d += 6) {
+        if (calStateMishka[d].biola) biolaCount++;
+      }
+
+      document.getElementById('cnt-cal-renang').innerText = renangCount;
+      document.getElementById('cnt-cal-biola').innerText = biolaCount;
+
+      const isComplete = (renangCount === 8 && biolaCount === 5);
+      const btn = document.getElementById('btn-cal-kpk-mishka');
+      const msg = document.getElementById('cal-status-msg-mishka');
+
+      if (isComplete) {
+        btn.className = 'action-btn btn-unlocked';
+        btn.innerHTML = '👑 Cari Titik Temu Kalender (KPK) ✨ [TERBUKA!]';
+        msg.innerHTML = '🎉 <strong>Jadwal Lengkap!</strong> Klik tombol di samping untuk buka titik temu!';
+        if (!calMishkaWasUnlocked) {
           playSfx('star');
-        }, delay);
-        delay += 50;
+          calMishkaWasUnlocked = true;
+        }
+      } else {
+        btn.className = 'action-btn btn-locked';
+        btn.innerHTML = '🔒 Cari Titik Temu Kalender (KPK)';
+        msg.innerHTML = '(Tandai seluruh jadwal untuk membuka KPK)';
+        calMishkaWasUnlocked = false;
       }
     }
 
-    function autoMarkBiolaMishka() {
-      playSfx('click');
-      setCalBrushMishka('biola');
-      let delay = 0;
-      for (let d = 2; d <= 31; d += 6) {
-        setTimeout(() => {
-          calStateMishka[d].biola = true;
-          renderCalDayMishka(d);
-          playSfx('star');
-        }, delay);
-        delay += 50;
+    function handleCalKpkClickMishka() {
+      let renangCount = 0;
+      for (let d = 2; d <= 31; d += 4) {
+        if (calStateMishka[d].renang) renangCount++;
       }
+      let biolaCount = 0;
+      for (let d = 2; d <= 31; d += 6) {
+        if (calStateMishka[d].biola) biolaCount++;
+      }
+
+      const isComplete = (renangCount === 8 && biolaCount === 5);
+      if (!isComplete) {
+        playSfx('click');
+        const res = document.getElementById('cal-result-mishka');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `🔒 <strong>Akses Titik Temu Kalender Masih Terkunci!</strong><br>Ayo Mishka, tandai dulu seluruh tanggal jadwal di kalender ya:<br>🏊 Renang Mishka (tiap 4 hari): <strong>${renangCount}/8</strong> tanggal<br>🎻 Biola Sahabat (tiap 6 hari): <strong>${biolaCount}/5</strong> tanggal.<br>Setelah jadwal selesai ditandai, tombol emas titik temu akan terbuka! 🎯✨`;
+        return;
+      }
+
+      runCalendarSimulationMishka();
     }
 
     function runCalendarSimulationMishka() {
@@ -1240,6 +1373,7 @@
       for (let day = 1; day <= 31; day++) {
         renderCalDayMishka(day);
       }
+      checkCalMishkaCompletion();
 
       const res = document.getElementById('cal-result-mishka');
       res.className = 'feedback-banner feedback-success';
@@ -1253,8 +1387,11 @@
         calStateMishka[day].biola = false;
         renderCalDayMishka(day);
       }
+      checkCalMishkaCompletion();
       document.getElementById('cal-result-mishka').style.display = 'none';
     }
+
+    checkCalMishkaCompletion();
 
     // =========================================================================
     // 4. CANGKIR SPIDOL & PECAHAN
