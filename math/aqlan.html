@@ -343,36 +343,91 @@
       color: #475569;
     }
     .cal-day {
-      aspect-ratio: 1;
+      min-height: 60px;
+      padding: 4px 2px;
       background: #FFFFFF;
       border: 2px solid #E2E8F0;
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.1rem;
+      justify-content: flex-start;
       cursor: pointer;
       position: relative;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
     .cal-day:hover {
-      border-color: #3B82F6;
-      background: #EFF6FF;
+      border-color: #10B981;
+      background: #ECFDF5;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);
+      z-index: 2;
     }
-    .cal-day.empty { background: transparent; border: none; cursor: default; }
-    .cal-day.aqlan-day { background: #ECFDF5; border-color: #10B981; }
-    .cal-day.aqlan-day::after { content: '🚴 Aqlan'; font-size: 0.55rem; color: #059669; font-weight: 800; }
-    .cal-day.friend-day { border-color: #F59E0B; }
-    .cal-day.friend-day::before { content: '⭐ Sahabat'; font-size: 0.55rem; color: #D97706; font-weight: 800; }
+    .cal-day.empty {
+      background: transparent;
+      border: none;
+      cursor: default;
+      min-height: 60px;
+      box-shadow: none;
+    }
+    .cal-day.empty:hover {
+      transform: none;
+      border: none;
+      background: transparent;
+    }
+    .cal-day-num {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #1E293B;
+      line-height: 1.2;
+    }
+    .cal-badges-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 100%;
+      align-items: center;
+      margin-top: 3px;
+    }
+    .cal-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 6px;
+      line-height: 1.15;
+      text-align: center;
+      max-width: 95%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      animation: popIn 0.2s ease;
+    }
     .cal-day.match-day {
-      background: #FEF08A !important;
+      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%) !important;
       border-color: #EAB308 !important;
       animation: pulseGold 1.5s infinite;
-      box-shadow: 0 0 15px rgba(234, 179, 8, 0.7);
+      box-shadow: 0 0 14px rgba(234, 179, 8, 0.7);
+      z-index: 5;
     }
-    .cal-day.match-day::after { content: '🎉 BARENG!'; font-size: 0.65rem; color: #854D0E; font-weight: 900; }
+    .cal-badge-match {
+      font-size: 0.68rem;
+      font-weight: 900;
+      color: #713F12;
+      background: #FEF08A;
+      border: 1.5px solid #CA8A04;
+      padding: 2px 5px;
+      border-radius: 6px;
+      line-height: 1.2;
+      box-shadow: 0 2px 4px rgba(202, 138, 4, 0.3);
+    }
+    @media (max-width: 480px) {
+      .cal-day { min-height: 50px; padding: 2px 1px; }
+      .cal-day-num { font-size: 0.85rem; }
+      .cal-badge { font-size: 0.52rem; padding: 1px 2px; }
+      .cal-badge-match { font-size: 0.55rem; padding: 1px 2px; }
+    }
 
     /* Cups */
     .cups-area {
@@ -562,13 +617,63 @@
           <span class="tool-badge" style="background:#7C3AED;">ALAT 2</span>
           <h2 class="tool-title">📅 Kalender Asli Oktober 2026: Jadwal Bersepeda Aqlan</h2>
         </div>
+        <span style="font-size:0.85rem; color:#64748B; font-weight:700;">✨ Kuas Kalender Interaktif</span>
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
         Aqlan bersepeda tiap <strong>2 hari sekali</strong>, teman Aqlan bersepeda tiap <strong>3 hari sekali</strong>. Pada tanggal <strong>1 Oktober 2026</strong> mereka bersepeda bareng. Kapan mereka akan bersepeda bareng lagi?
+        <br><strong>Cara Bermain:</strong> Pilih <strong>Kuas Kalender</strong> di bawah, lalu <strong>klik langsung tanggal pada kalender</strong>! Kamu juga bisa mengganti warna kuas sesukamu.
       </p>
 
-      <div style="display:flex; gap:10px; margin-bottom:12px;">
-        <button class="action-btn" style="background:#7C3AED;" onclick="runCalendarSimulation()">✨ Tandai Jadwal Otomatis</button>
+      <!-- Panel Kontrol Kuas Kalender Aqlan -->
+      <div class="brush-control-panel">
+        <!-- Kuas Sepeda (Aqlan) -->
+        <div class="brush-group active-group" id="cal-group-aqlan">
+          <div class="brush-label" style="color:#10B981;">
+            <span>🚴 <strong>Kuas Sepeda Aqlan</strong> (Mulai 1 Okt, Tiap 2 Hari)</span>
+            <button class="action-btn" id="btn-cal-aqlan" style="padding:6px 14px; font-size:0.85rem;" onclick="setCalBrushAqlan('aqlan')">
+              Gunakan Kuas Sepeda 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Pilih Warna:</span>
+            <div class="color-swatch selected" id="swatch-aqlan-1" style="background:#10B981;" onclick="changeCalColorAqlan('aqlan', '#10B981', '#ECFDF5', '🚴', this)">🚴</div>
+            <div class="color-swatch" id="swatch-aqlan-2" style="background:#2563EB;" onclick="changeCalColorAqlan('aqlan', '#2563EB', '#EFF6FF', '🚴', this)">🚴</div>
+            <div class="color-swatch" id="swatch-aqlan-3" style="background:#8B5CF6;" onclick="changeCalColorAqlan('aqlan', '#8B5CF6', '#F5F3FF', '🚴', this)">🚴</div>
+          </div>
+        </div>
+
+        <!-- Kuas Sahabat (Teman) -->
+        <div class="brush-group" id="cal-group-sahabat">
+          <div class="brush-label" style="color:#F59E0B;">
+            <span>⭐ <strong>Kuas Teman Sahabat</strong> (Mulai 1 Okt, Tiap 3 Hari)</span>
+            <button class="action-btn btn-amber" id="btn-cal-sahabat" style="padding:6px 14px; font-size:0.85rem;" onclick="setCalBrushAqlan('sahabat')">
+              Gunakan Kuas Sahabat 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Pilih Warna:</span>
+            <div class="color-swatch selected" id="swatch-sahabat-1" style="background:#F59E0B;" onclick="changeCalColorAqlan('sahabat', '#F59E0B', '#FFFBEB', '⭐', this)">⭐</div>
+            <div class="color-swatch" id="swatch-sahabat-2" style="background:#EF4444;" onclick="changeCalColorAqlan('sahabat', '#EF4444', '#FEF2F2', '⭐', this)">⭐</div>
+            <div class="color-swatch" id="swatch-sahabat-3" style="background:#EC4899;" onclick="changeCalColorAqlan('sahabat', '#EC4899', '#FDF2F8', '⭐', this)">⭐</div>
+          </div>
+        </div>
+
+        <!-- Status Kuas Aktif Kalender -->
+        <div class="active-brush-status">
+          <div id="cal-brush-status-text">
+            🖌️ <strong>Kuas Kalender Aktif:</strong> <span style="color:#10B981; font-weight:800;">🚴 Kuas Sepeda Aqlan</span> — <em>Klik tanggal pada kalender untuk menandai!</em>
+          </div>
+          <button class="action-btn btn-gray" style="padding:6px 14px; font-size:0.85rem;" onclick="setCalBrushAqlan('eraser')">
+            🧹 Kuas Penghapus Kalender
+          </button>
+        </div>
+      </div>
+
+      <!-- Tombol Bantu Otomatis -->
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <button class="action-btn" id="btn-auto-cal-aqlan" onclick="autoMarkSepedaAqlan()">⚡ Tandai Sepeda (Tiap 2 Hari)</button>
+        <button class="action-btn btn-amber" id="btn-auto-cal-sahabat" onclick="autoMarkSahabatAqlan()">⚡ Tandai Sahabat (Tiap 3 Hari)</button>
+        <button class="action-btn" style="background:#7C3AED;" onclick="runCalendarSimulation()">✨ Cari Titik Temu (KPK)</button>
         <button class="action-btn btn-gray" onclick="resetCalendar()">🔄 Reset Kalender</button>
       </div>
 
@@ -594,7 +699,7 @@
         <label style="font-weight:800; color:#1E293B;">Pilih Jumlah Toples:</label>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(2)">2 Toples</button>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(3)">3 Toples</button>
-        <button class="action-btn btn-red" style="padding:6px 14px;" onclick="testCups(4)">4 Toples</button>
+        <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(4)">4 Toples</button>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(5)">5 Toples</button>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCups(6)">6 Toples</button>
       </div>
@@ -619,7 +724,7 @@
         <div style="font-weight:800; font-size:1.05rem; margin-bottom:8px;">1. Dari hasil melompat di grid angka tadi, di angka berapa Kodok (lompat 2) dan Kelinci (lompat 3) pertama kali mendarat bersama?</div>
         <div style="display:flex; flex-direction:column; gap:8px;">
           <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(1, this, false)">A. Angka 4</button>
-          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(1, this, true)">B. Angka 6 (KPK dari 2 dan 3)</button>
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(1, this, true)">B. Angka 6</button>
           <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(1, this, false)">C. Angka 9</button>
         </div>
         <div id="quiz-fb-1" class="feedback-banner"></div>
@@ -629,7 +734,7 @@
         <div style="font-weight:800; font-size:1.05rem; margin-bottom:8px;">2. Pada pembagian toples kue, berapa toples terbanyak yang berhasil membagi rata 8 biskuit cokelat dan 12 biskuit vanila tanpa sisa?</div>
         <div style="display:flex; flex-direction:column; gap:8px;">
           <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(2, this, false)">A. 3 toples</button>
-          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(2, this, true)">B. 4 toples (FPB dari 8 dan 12)</button>
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(2, this, true)">B. 4 toples</button>
           <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuiz(2, this, false)">C. 6 toples</button>
         </div>
         <div id="quiz-fb-2" class="feedback-banner"></div>
@@ -850,7 +955,9 @@
 
     setActiveBrushAqlan('a1');
 
-    // 3. Kalender Oktober 2026
+    // =========================================================================
+    // 3. KALENDER OKTOBER 2026 INTERAKTIF DENGAN KUAS
+    // =========================================================================
     const calOct = document.getElementById('calOct');
     const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
     dayNames.forEach(d => {
@@ -865,36 +972,172 @@
       empty.className = 'cal-day empty';
       calOct.appendChild(empty);
     }
+
+    let currentCalBrushAqlan = 'aqlan'; // 'aqlan', 'sahabat', or 'eraser'
+    const calStateAqlan = {};
+    let configCalAqlan = { color: '#10B981', lightColor: '#ECFDF5', icon: '🚴', name: 'Sepeda Aqlan' };
+    let configCalSahabat = { color: '#F59E0B', lightColor: '#FFFBEB', icon: '⭐', name: 'Teman Sahabat' };
+
     for (let day = 1; day <= 31; day++) {
+      calStateAqlan[day] = { aqlan: false, sahabat: false };
       const d = document.createElement('div');
       d.className = 'cal-day';
-      d.innerText = day;
       d.id = `cal-${day}`;
+      d.title = `Klik untuk menandai tanggal ${day} Oktober`;
+      d.innerHTML = `
+        <span class="cal-day-num">${day}</span>
+        <div class="cal-badges-container" id="cal-badges-aqlan-${day}"></div>
+      `;
+      d.onclick = () => handleCalClickAqlan(day);
       calOct.appendChild(d);
     }
 
-    function runCalendarSimulation() {
-      playSfx('correct');
+    function setCalBrushAqlan(brushType) {
+      playSfx('click');
+      currentCalBrushAqlan = brushType;
+      document.getElementById('cal-group-aqlan').classList.toggle('active-group', brushType === 'aqlan');
+      document.getElementById('cal-group-sahabat').classList.toggle('active-group', brushType === 'sahabat');
+
+      const statusText = document.getElementById('cal-brush-status-text');
+      if (brushType === 'aqlan') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Kalender Aktif:</strong> <span style="color:${configCalAqlan.color}; font-weight:800;">${configCalAqlan.icon} ${configCalAqlan.name}</span> — <em>Klik tanggal pada kalender untuk menandai!</em>`;
+      } else if (brushType === 'sahabat') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Kalender Aktif:</strong> <span style="color:${configCalSahabat.color}; font-weight:800;">${configCalSahabat.icon} ${configCalSahabat.name}</span> — <em>Klik tanggal pada kalender untuk menandai!</em>`;
+      } else {
+        statusText.innerHTML = `🧹 <strong>Kuas Kalender Aktif:</strong> <span style="color:#64748B; font-weight:800;">Penghapus Kalender</span> — <em>Klik tanggal untuk menghapus tanda!</em>`;
+      }
+    }
+
+    function changeCalColorAqlan(brushType, colorHex, lightHex, icon, swatchEl) {
+      playSfx('star');
+      if (brushType === 'aqlan') {
+        configCalAqlan.color = colorHex;
+        configCalAqlan.lightColor = lightHex;
+        const swatches = document.querySelectorAll('#cal-group-aqlan .color-swatch');
+        swatches.forEach(s => s.classList.remove('selected'));
+        if (swatchEl) swatchEl.classList.add('selected');
+        document.getElementById('btn-cal-aqlan').style.background = colorHex;
+        setCalBrushAqlan('aqlan');
+      } else {
+        configCalSahabat.color = colorHex;
+        configCalSahabat.lightColor = lightHex;
+        const swatches = document.querySelectorAll('#cal-group-sahabat .color-swatch');
+        swatches.forEach(s => s.classList.remove('selected'));
+        if (swatchEl) swatchEl.classList.add('selected');
+        document.getElementById('btn-cal-sahabat').style.background = colorHex;
+        setCalBrushAqlan('sahabat');
+      }
+      for (let day = 1; day <= 31; day++) {
+        renderCalDayAqlan(day);
+      }
+    }
+
+    function renderCalDayAqlan(day) {
+      const cell = document.getElementById(`cal-${day}`);
+      const badgesContainer = document.getElementById(`cal-badges-aqlan-${day}`);
+      const state = calStateAqlan[day];
+
+      if (!cell || !badgesContainer) return;
+
+      badgesContainer.innerHTML = '';
+      cell.classList.remove('match-day');
+
+      if (state.aqlan && state.sahabat) {
+        cell.classList.add('match-day');
+        badgesContainer.innerHTML = `
+          <span class="cal-badge" style="background:${configCalAqlan.lightColor}; color:${configCalAqlan.color}; border:1px solid ${configCalAqlan.color};">${configCalAqlan.icon} Sepeda</span>
+          <span class="cal-badge" style="background:${configCalSahabat.lightColor}; color:${configCalSahabat.color}; border:1px solid ${configCalSahabat.color};">${configCalSahabat.icon} Teman</span>
+          <span class="cal-badge-match">🎉 BARENG!</span>
+        `;
+      } else if (state.aqlan) {
+        badgesContainer.innerHTML = `
+          <span class="cal-badge" style="background:${configCalAqlan.lightColor}; color:${configCalAqlan.color}; border:1px solid ${configCalAqlan.color};">${configCalAqlan.icon} Sepeda</span>
+        `;
+      } else if (state.sahabat) {
+        badgesContainer.innerHTML = `
+          <span class="cal-badge" style="background:${configCalSahabat.lightColor}; color:${configCalSahabat.color}; border:1px solid ${configCalSahabat.color};">${configCalSahabat.icon} Teman</span>
+        `;
+      }
+    }
+
+    function handleCalClickAqlan(day) {
+      const state = calStateAqlan[day];
+      if (currentCalBrushAqlan === 'aqlan') {
+        state.aqlan = !state.aqlan;
+      } else if (currentCalBrushAqlan === 'sahabat') {
+        state.sahabat = !state.sahabat;
+      } else if (currentCalBrushAqlan === 'eraser') {
+        state.aqlan = false;
+        state.sahabat = false;
+      }
+
+      renderCalDayAqlan(day);
+
+      if (state.aqlan && state.sahabat) {
+        playSfx('correct');
+        if (day === 7) {
+          triggerConfetti();
+          const res = document.getElementById('cal-result');
+          res.className = 'feedback-banner feedback-success';
+          res.innerHTML = `🌟 <strong>LUAR BIASA AQLAN!</strong><br>Kamu berhasil menemukan tanggal bersepeda bareng lagi pada <strong>7 Oktober 2026</strong>!<br>Mulai bareng: 1 Oktober. KPK dari 2 dan 3 adalah <strong>6 hari</strong>.<br>Maka: 1 + 6 = <strong>7 Oktober 2026</strong>! 🚴⭐🎉`;
+        }
+      } else {
+        playSfx('click');
+      }
+    }
+
+    function autoMarkSepedaAqlan() {
+      playSfx('click');
+      setCalBrushAqlan('aqlan');
+      let delay = 0;
       for (let d = 1; d <= 31; d += 2) {
-        document.getElementById(`cal-${d}`).classList.add('aqlan-day');
+        setTimeout(() => {
+          calStateAqlan[d].aqlan = true;
+          renderCalDayAqlan(d);
+          playSfx('star');
+        }, delay);
+        delay += 50;
+      }
+    }
+
+    function autoMarkSahabatAqlan() {
+      playSfx('click');
+      setCalBrushAqlan('sahabat');
+      let delay = 0;
+      for (let d = 1; d <= 31; d += 3) {
+        setTimeout(() => {
+          calStateAqlan[d].sahabat = true;
+          renderCalDayAqlan(d);
+          playSfx('star');
+        }, delay);
+        delay += 50;
+      }
+    }
+
+    function runCalendarSimulation() {
+      playSfx('win');
+      triggerConfetti();
+      for (let d = 1; d <= 31; d += 2) {
+        calStateAqlan[d].aqlan = true;
       }
       for (let d = 1; d <= 31; d += 3) {
-        document.getElementById(`cal-${d}`).classList.add('friend-day');
+        calStateAqlan[d].sahabat = true;
       }
-      const meetDay = document.getElementById('cal-7');
-      meetDay.classList.add('match-day');
-      triggerConfetti();
+      for (let day = 1; day <= 31; day++) {
+        renderCalDayAqlan(day);
+      }
 
       const res = document.getElementById('cal-result');
       res.className = 'feedback-banner feedback-success';
-      res.innerHTML = `🌟 <strong>HASIL DETEKTIF KALENDER:</strong><br>Aqlan dan Sahabat bersepeda bersama pada tanggal <strong>1 Oktober</strong>.<br>Karena KPK dari 2 dan 3 adalah <strong>6 hari</strong>, maka mereka bersepeda bareng lagi pada: 1 + 6 = <strong>7 Oktober 2026</strong>!`;
+      res.innerHTML = `🌟 <strong>HASIL DETEKTIF KALENDER:</strong><br>Aqlan dan Sahabat bersepeda bersama pada tanggal <strong>1 Oktober</strong>.<br>Karena KPK dari 2 dan 3 adalah <strong>6 hari</strong>, maka mereka bersepeda bareng lagi pada: 1 + 6 = <strong>7 Oktober 2026</strong>! (dan berikutnya lagi di tanggal 13, 19, 25, dan 31 Oktober).`;
     }
 
     function resetCalendar() {
       playSfx('click');
       for (let day = 1; day <= 31; day++) {
-        const el = document.getElementById(`cal-${day}`);
-        el.className = 'cal-day';
+        calStateAqlan[day].aqlan = false;
+        calStateAqlan[day].sahabat = false;
+        renderCalDayAqlan(day);
       }
       document.getElementById('cal-result').style.display = 'none';
     }
