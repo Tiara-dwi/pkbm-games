@@ -326,6 +326,55 @@
     .btn-gray { background: #64748B; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.25); }
     .btn-gray:hover { background: #475569; }
 
+    /* Progress Tracker & Button Gating */
+    .table-progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .progress-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      border: 1px solid rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    .btn-locked {
+      background: #94A3B8 !important;
+      color: #F8FAFC !important;
+      box-shadow: none !important;
+      cursor: pointer;
+      opacity: 0.9;
+    }
+    .btn-locked:hover {
+      background: #64748B !important;
+      transform: none !important;
+    }
+    .btn-unlocked {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+      color: white !important;
+      animation: unlockPulse 1.2s infinite alternate !important;
+      cursor: pointer !important;
+    }
+    @keyframes unlockPulse {
+      0% { transform: scale(1); box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3); }
+      100% { transform: scale(1.04); box-shadow: 0 0 20px rgba(245, 158, 11, 0.85); }
+    }
+
     /* Calendar */
     .cal-grid {
       display: grid;
@@ -551,7 +600,7 @@
       </div>
 
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
-        Pilih kuas warna di bawah, lalu <strong>klik langsung kotak angka mana saja di tabel 1-50</strong>! Atau gunakan tombol animasi loncatan otomatis untuk melihat jejak langkah Kodok & Kelinci.
+        Pilih kuas warna di bawah, lalu <strong>klik langsung kotak angka pada tabel 1-50</strong> untuk menandai semua loncatan Kodok & Kelinci. Setelah tabel selesai diisi penuh oleh Aqlan, tombol <strong>Cari Titik Temu (KPK)</strong> akan terbuka! 🎯
       </p>
 
       <!-- Panel Kontrol Kuas & Warna -->
@@ -596,10 +645,16 @@
         </div>
       </div>
 
+      <!-- Indikator Progres Pengisian Tabel 1-50 -->
+      <div class="table-progress-bar" id="grid50-progress">
+        <span>📊 <strong>Progres Pengisian Tabel:</strong></span>
+        <span class="progress-pill" id="prog-pill-kodok" style="background:#D1FAE5; color:#065F46;">🐸 Kodok (Lompat 2): <b id="cnt-kodok">0</b>/25</span>
+        <span class="progress-pill" id="prog-pill-kelinci" style="background:#FEE2E2; color:#991B1B;">🐰 Kelinci (Lompat 3): <b id="cnt-kelinci">0</b>/16</span>
+        <span id="grid50-status-msg" style="font-size:0.85rem; color:#64748B;">(Isi penuh tabel agar tombol KPK terbuka)</span>
+      </div>
+
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-        <button class="action-btn" id="btn-auto-hop-2" onclick="autoHopAqlan(2, 'a1')">🐸 Otomatis Kodok Lompat 2</button>
-        <button class="action-btn btn-red" id="btn-auto-hop-3" onclick="autoHopAqlan(3, 'a2')">🐰 Otomatis Kelinci Lompat 3</button>
-        <button class="action-btn btn-amber" onclick="highlightBothAqlan()">👑 Cari Titik Temu (KPK)</button>
+        <button class="action-btn btn-locked" id="btn-kpk-aqlan" onclick="handleKpkClickAqlan()">🔒 Cari Titik Temu (KPK)</button>
         <button class="action-btn btn-gray" onclick="resetGridAqlan()">🔄 Bersihkan Grid</button>
       </div>
 
@@ -621,7 +676,7 @@
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
         Aqlan bersepeda tiap <strong>2 hari sekali</strong>, teman Aqlan bersepeda tiap <strong>3 hari sekali</strong>. Pada tanggal <strong>1 Oktober 2026</strong> mereka bersepeda bareng. Kapan mereka akan bersepeda bareng lagi?
-        <br><strong>Cara Bermain:</strong> Pilih <strong>Kuas Kalender</strong> di bawah, lalu <strong>klik langsung tanggal pada kalender</strong>! Kamu juga bisa mengganti warna kuas sesukamu.
+        <br><strong>Cara Bermain:</strong> Pilih <strong>Kuas Kalender</strong> di bawah, lalu <strong>klik langsung tanggal pada kalender</strong>! Tandai seluruh jadwal bersepeda untuk membuka kunci titik temu KPK.
       </p>
 
       <!-- Panel Kontrol Kuas Kalender Aqlan -->
@@ -669,11 +724,16 @@
         </div>
       </div>
 
-      <!-- Tombol Bantu Otomatis -->
+      <!-- Indikator Progres Pengisian Kalender -->
+      <div class="table-progress-bar" id="cal-progress-aqlan">
+        <span>📅 <strong>Progres Kalender:</strong></span>
+        <span class="progress-pill" id="cal-pill-sepeda" style="background:#ECFDF5; color:#065F46;">🚴 Sepeda Aqlan: <b id="cnt-cal-sepeda">0</b>/16</span>
+        <span class="progress-pill" id="cal-pill-sahabat" style="background:#FFFBEB; color:#92400E;">⭐ Teman Sahabat: <b id="cnt-cal-sahabat">0</b>/11</span>
+        <span id="cal-status-msg-aqlan" style="font-size:0.85rem; color:#64748B;">(Tandai seluruh jadwal untuk membuka KPK)</span>
+      </div>
+
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
-        <button class="action-btn" id="btn-auto-cal-aqlan" onclick="autoMarkSepedaAqlan()">⚡ Tandai Sepeda (Tiap 2 Hari)</button>
-        <button class="action-btn btn-amber" id="btn-auto-cal-sahabat" onclick="autoMarkSahabatAqlan()">⚡ Tandai Sahabat (Tiap 3 Hari)</button>
-        <button class="action-btn" style="background:#7C3AED;" onclick="runCalendarSimulation()">✨ Cari Titik Temu (KPK)</button>
+        <button class="action-btn btn-locked" id="btn-cal-kpk-aqlan" onclick="handleCalKpkClickAqlan()">🔒 Cari Titik Temu Kalender (KPK)</button>
         <button class="action-btn btn-gray" onclick="resetCalendar()">🔄 Reset Kalender</button>
       </div>
 
@@ -841,14 +901,12 @@
         configA1.bg = bgHex;
         configA1.icon = iconSymbol;
         document.documentElement.style.setProperty('--color-a1', colorHex);
-        document.getElementById('btn-auto-hop-2').style.background = colorHex;
         setActiveBrushAqlan('a1');
       } else {
         configA2.color = colorHex;
         configA2.bg = bgHex;
         configA2.icon = iconSymbol;
         document.documentElement.style.setProperty('--color-a2', colorHex);
-        document.getElementById('btn-auto-hop-3').style.background = colorHex;
         setActiveBrushAqlan('a2');
       }
       for (let i = 1; i <= 50; i++) {
@@ -870,6 +928,7 @@
         st.a2 = false;
       }
       renderCellAqlan(num);
+      checkGrid50Completion();
     }
 
     function renderCellAqlan(num) {
@@ -910,18 +969,61 @@
       }
     }
 
-    function autoHopAqlan(step, targetKey) {
-      playSfx('click');
-      setActiveBrushAqlan(targetKey);
-      let delay = 0;
-      for (let i = step; i <= 50; i += step) {
-        setTimeout(() => {
-          cellStateAqlan[i][targetKey] = true;
-          renderCellAqlan(i);
-          playSfx('star');
-        }, delay);
-        delay += 50;
+    let grid50WasUnlocked = false;
+
+    function checkGrid50Completion() {
+      let kodokCount = 0;
+      for (let n = 2; n <= 50; n += 2) {
+        if (cellStateAqlan[n].a1) kodokCount++;
       }
+      let kelinciCount = 0;
+      for (let n = 3; n <= 50; n += 3) {
+        if (cellStateAqlan[n].a2) kelinciCount++;
+      }
+
+      document.getElementById('cnt-kodok').innerText = kodokCount;
+      document.getElementById('cnt-kelinci').innerText = kelinciCount;
+
+      const isComplete = (kodokCount === 25 && kelinciCount === 16);
+      const btn = document.getElementById('btn-kpk-aqlan');
+      const msg = document.getElementById('grid50-status-msg');
+
+      if (isComplete) {
+        btn.className = 'action-btn btn-unlocked';
+        btn.innerHTML = '👑 Cari Titik Temu (KPK) ✨ [TERBUKA!]';
+        msg.innerHTML = '🎉 <strong>Tabel Selesai Diisi Penuh!</strong> Akses KPK terbuka lebar! Klik tombol di samping!';
+        if (!grid50WasUnlocked) {
+          playSfx('star');
+          grid50WasUnlocked = true;
+        }
+      } else {
+        btn.className = 'action-btn btn-locked';
+        btn.innerHTML = '🔒 Cari Titik Temu (KPK)';
+        msg.innerHTML = '(Isi penuh tabel agar tombol KPK terbuka)';
+        grid50WasUnlocked = false;
+      }
+    }
+
+    function handleKpkClickAqlan() {
+      let kodokCount = 0;
+      for (let n = 2; n <= 50; n += 2) {
+        if (cellStateAqlan[n].a1) kodokCount++;
+      }
+      let kelinciCount = 0;
+      for (let n = 3; n <= 50; n += 3) {
+        if (cellStateAqlan[n].a2) kelinciCount++;
+      }
+
+      const isComplete = (kodokCount === 25 && kelinciCount === 16);
+      if (!isComplete) {
+        playSfx('click');
+        const res = document.getElementById('grid-result');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `🔒 <strong>Akses Cari Titik Temu KPK Masih Terkunci!</strong><br>Ayo Aqlan, tandai dulu seluruh loncatan di tabel 1-50 secara lengkap:<br>🐸 Kodok Lompat 2: <strong>${kodokCount}/25</strong> angka<br>🐰 Kelinci Lompat 3: <strong>${kelinciCount}/16</strong> angka.<br>Setelah semua terisi, tombol emas KPK akan otomatis terbuka! 🎯✨`;
+        return;
+      }
+
+      highlightBothAqlan();
     }
 
     function highlightBothAqlan() {
@@ -936,7 +1038,7 @@
       const res = document.getElementById('grid-result');
       if (matches.length > 0) {
         res.className = 'feedback-banner feedback-success';
-        res.innerHTML = `🎉 <strong>HORE! TITIK TEMU KPK DITEMUKAN!</strong><br>Kodok dan Kelinci mendarat bersama di angka: <strong>${matches.join(', ')}</strong>.<br>Pertemuan pertama (TERKECIL) adalah di angka <strong>${matches[0]}</strong>! Maka KPK(2, 3) = <strong>${matches[0]}</strong>! 👑✨`;
+        res.innerHTML = `🎉 <strong>HORE! TITIK TEMU KPK BERHASIL DITEMUKAN!</strong><br>Kodok dan Kelinci mendarat bersama di angka: <strong>${matches.join(', ')}</strong>.<br>Pertemuan pertama (TERKECIL) adalah di angka <strong>${matches[0]}</strong>! Maka KPK(2, 3) = <strong>${matches[0]}</strong>! 👑✨`;
       } else {
         res.className = 'feedback-banner feedback-fail';
         res.innerHTML = `Belum ada angka yang memiliki kedua tanda warna. Coba tandai kelipatan 2 dan 3 dulu ya!`;
@@ -950,10 +1052,12 @@
         cellStateAqlan[i].a2 = false;
         renderCellAqlan(i);
       }
+      checkGrid50Completion();
       document.getElementById('grid-result').style.display = 'none';
     }
 
     setActiveBrushAqlan('a1');
+    checkGrid50Completion();
 
     // =========================================================================
     // 3. KALENDER OKTOBER 2026 INTERAKTIF DENGAN KUAS
@@ -1072,6 +1176,7 @@
       }
 
       renderCalDayAqlan(day);
+      checkCalAqlanCompletion();
 
       if (state.aqlan && state.sahabat) {
         playSfx('correct');
@@ -1086,32 +1191,61 @@
       }
     }
 
-    function autoMarkSepedaAqlan() {
-      playSfx('click');
-      setCalBrushAqlan('aqlan');
-      let delay = 0;
+    let calAqlanWasUnlocked = false;
+
+    function checkCalAqlanCompletion() {
+      let sepedaCount = 0;
       for (let d = 1; d <= 31; d += 2) {
-        setTimeout(() => {
-          calStateAqlan[d].aqlan = true;
-          renderCalDayAqlan(d);
+        if (calStateAqlan[d].aqlan) sepedaCount++;
+      }
+      let sahabatCount = 0;
+      for (let d = 1; d <= 31; d += 3) {
+        if (calStateAqlan[d].sahabat) sahabatCount++;
+      }
+
+      document.getElementById('cnt-cal-sepeda').innerText = sepedaCount;
+      document.getElementById('cnt-cal-sahabat').innerText = sahabatCount;
+
+      const isComplete = (sepedaCount === 16 && sahabatCount === 11);
+      const btn = document.getElementById('btn-cal-kpk-aqlan');
+      const msg = document.getElementById('cal-status-msg-aqlan');
+
+      if (isComplete) {
+        btn.className = 'action-btn btn-unlocked';
+        btn.innerHTML = '👑 Cari Titik Temu Kalender (KPK) ✨ [TERBUKA!]';
+        msg.innerHTML = '🎉 <strong>Kalender Selesai Diisi!</strong> Klik tombol di samping untuk buka titik temu!';
+        if (!calAqlanWasUnlocked) {
           playSfx('star');
-        }, delay);
-        delay += 50;
+          calAqlanWasUnlocked = true;
+        }
+      } else {
+        btn.className = 'action-btn btn-locked';
+        btn.innerHTML = '🔒 Cari Titik Temu Kalender (KPK)';
+        msg.innerHTML = '(Tandai seluruh jadwal untuk membuka KPK)';
+        calAqlanWasUnlocked = false;
       }
     }
 
-    function autoMarkSahabatAqlan() {
-      playSfx('click');
-      setCalBrushAqlan('sahabat');
-      let delay = 0;
-      for (let d = 1; d <= 31; d += 3) {
-        setTimeout(() => {
-          calStateAqlan[d].sahabat = true;
-          renderCalDayAqlan(d);
-          playSfx('star');
-        }, delay);
-        delay += 50;
+    function handleCalKpkClickAqlan() {
+      let sepedaCount = 0;
+      for (let d = 1; d <= 31; d += 2) {
+        if (calStateAqlan[d].aqlan) sepedaCount++;
       }
+      let sahabatCount = 0;
+      for (let d = 1; d <= 31; d += 3) {
+        if (calStateAqlan[d].sahabat) sahabatCount++;
+      }
+
+      const isComplete = (sepedaCount === 16 && sahabatCount === 11);
+      if (!isComplete) {
+        playSfx('click');
+        const res = document.getElementById('cal-result');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `🔒 <strong>Akses Titik Temu Kalender Masih Terkunci!</strong><br>Ayo Aqlan, tandai dulu seluruh tanggal jadwal di kalender ya:<br>🚴 Sepeda Aqlan (tiap 2 hari): <strong>${sepedaCount}/16</strong> tanggal<br>⭐ Teman Sahabat (tiap 3 hari): <strong>${sahabatCount}/11</strong> tanggal.<br>Setelah semuanya ditandai, tombol emas titik temu akan terbuka! 🎯✨`;
+        return;
+      }
+
+      runCalendarSimulation();
     }
 
     function runCalendarSimulation() {
@@ -1126,6 +1260,7 @@
       for (let day = 1; day <= 31; day++) {
         renderCalDayAqlan(day);
       }
+      checkCalAqlanCompletion();
 
       const res = document.getElementById('cal-result');
       res.className = 'feedback-banner feedback-success';
@@ -1139,8 +1274,11 @@
         calStateAqlan[day].sahabat = false;
         renderCalDayAqlan(day);
       }
+      checkCalAqlanCompletion();
       document.getElementById('cal-result').style.display = 'none';
     }
+
+    checkCalAqlanCompletion();
 
     // 4. Simulator Cangkir Biskuit
     function testCups(numCups) {
