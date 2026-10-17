@@ -353,59 +353,90 @@
       color: #475569;
     }
     .cal-day {
-      aspect-ratio: 1;
+      min-height: 60px;
+      padding: 4px 2px;
       background: #FFFFFF;
       border: 2px solid #E2E8F0;
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.05rem;
+      justify-content: flex-start;
       cursor: pointer;
       position: relative;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
     .cal-day:hover {
       border-color: #2563EB;
       background: #EFF6FF;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+      z-index: 2;
     }
     .cal-day.empty {
       background: transparent;
       border: none;
       cursor: default;
+      min-height: 60px;
+      box-shadow: none;
     }
-    .cal-day.mishka-day {
-      background: #EFF6FF;
-      border-color: #2563EB;
+    .cal-day.empty:hover {
+      transform: none;
+      border: none;
+      background: transparent;
     }
-    .cal-day.mishka-day::after {
-      content: '🏊 Renang';
-      font-size: 0.55rem;
-      color: #1D4ED8;
+    .cal-day-num {
+      font-size: 1rem;
       font-weight: 800;
+      color: #1E293B;
+      line-height: 1.2;
     }
-    .cal-day.music-day {
-      border-color: #EF4444;
+    .cal-badges-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 100%;
+      align-items: center;
+      margin-top: 3px;
     }
-    .cal-day.music-day::before {
-      content: '🎻 Biola';
-      font-size: 0.55rem;
-      color: #B91C1C;
+    .cal-badge {
+      font-size: 0.65rem;
       font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 6px;
+      line-height: 1.15;
+      text-align: center;
+      max-width: 95%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      animation: popIn 0.2s ease;
     }
     .cal-day.match-day {
-      background: #FEF08A !important;
+      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%) !important;
       border-color: #EAB308 !important;
       animation: pulseGold 1.5s infinite;
-      box-shadow: 0 0 15px rgba(234, 179, 8, 0.7);
+      box-shadow: 0 0 14px rgba(234, 179, 8, 0.7);
+      z-index: 5;
     }
-    .cal-day.match-day::after {
-      content: '🎉 KETEMU!';
-      font-size: 0.65rem;
-      color: #854D0E;
+    .cal-badge-match {
+      font-size: 0.68rem;
       font-weight: 900;
+      color: #713F12;
+      background: #FEF08A;
+      border: 1.5px solid #CA8A04;
+      padding: 2px 5px;
+      border-radius: 6px;
+      line-height: 1.2;
+      box-shadow: 0 2px 4px rgba(202, 138, 4, 0.3);
+    }
+    @media (max-width: 480px) {
+      .cal-day { min-height: 50px; padding: 2px 1px; }
+      .cal-day-num { font-size: 0.85rem; }
+      .cal-badge { font-size: 0.52rem; padding: 1px 2px; }
+      .cal-badge-match { font-size: 0.55rem; padding: 1px 2px; }
     }
 
     /* Virtual Cups Simulation */
@@ -641,13 +672,63 @@
           <span class="tool-badge" style="background:#7C3AED;">ALAT 2</span>
           <h2 class="tool-title">📅 Kalender Oktober 2026: Jadwal Renang & Biola</h2>
         </div>
+        <span style="font-size:0.85rem; color:#64748B; font-weight:700;">✨ Kuas Kalender Interaktif</span>
       </div>
       <p style="color:#475569; font-size:0.95rem; margin-top:0;">
-        Mishka les renang setiap <strong>4 hari sekali</strong>, sahabat Mishka les biola di tempat yang sama setiap <strong>6 hari sekali</strong>. Pada hari Jumat, <strong>2 Oktober 2026</strong>, mereka berpapasan. Tanggal berapa mereka akan berpapasan kembali?
+        Mishka les renang setiap <strong>4 hari sekali</strong>, sahabat Mishka les biola setiap <strong>6 hari sekali</strong>. Pada hari Jumat, <strong>2 Oktober 2026</strong>, mereka berpapasan. Tanggal berapa mereka akan berpapasan kembali?
+        <br><strong>Cara Bermain:</strong> Pilih <strong>Kuas Kalender</strong> di bawah, lalu <strong>klik langsung tanggal pada kalender</strong>! Kamu juga bisa mengganti warna kuas sesukamu.
       </p>
 
-      <div style="display:flex; gap:10px; margin-bottom:12px;">
-        <button class="action-btn btn-purple" onclick="runCalendarSimulationMishka()">✨ Tandai Kalender Otomatis</button>
+      <!-- Panel Kontrol Kuas Kalender -->
+      <div class="brush-control-panel">
+        <!-- Kuas Renang (Mishka) -->
+        <div class="brush-group active-group" id="cal-group-renang">
+          <div class="brush-label" style="color:var(--primary);">
+            <span>🏊 <strong>Kuas Renang Mishka</strong> (Mulai 2 Okt, Tiap 4 Hari)</span>
+            <button class="action-btn" id="btn-cal-renang" style="padding:6px 14px; font-size:0.85rem;" onclick="setCalBrushMishka('renang')">
+              Gunakan Kuas Renang 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Pilih Warna:</span>
+            <div class="color-swatch selected" id="swatch-renang-1" style="background:#2563EB;" onclick="changeCalColorMishka('renang', '#2563EB', '#DBEAFE', '🏊', this)">🏊</div>
+            <div class="color-swatch" id="swatch-renang-2" style="background:#059669;" onclick="changeCalColorMishka('renang', '#059669', '#D1FAE5', '🏊', this)">🏊</div>
+            <div class="color-swatch" id="swatch-renang-3" style="background:#7C3AED;" onclick="changeCalColorMishka('renang', '#7C3AED', '#EDE9FE', '🏊', this)">🏊</div>
+          </div>
+        </div>
+
+        <!-- Kuas Biola (Sahabat) -->
+        <div class="brush-group" id="cal-group-biola">
+          <div class="brush-label" style="color:#DC2626;">
+            <span>🎻 <strong>Kuas Biola Sahabat</strong> (Mulai 2 Okt, Tiap 6 Hari)</span>
+            <button class="action-btn btn-red" id="btn-cal-biola" style="padding:6px 14px; font-size:0.85rem;" onclick="setCalBrushMishka('biola')">
+              Gunakan Kuas Biola 🖌️
+            </button>
+          </div>
+          <div class="color-swatch-list">
+            <span style="font-size:0.85rem; color:#64748B; font-weight:700;">Pilih Warna:</span>
+            <div class="color-swatch selected" id="swatch-biola-1" style="background:#DC2626;" onclick="changeCalColorMishka('biola', '#DC2626', '#FEE2E2', '🎻', this)">🎻</div>
+            <div class="color-swatch" id="swatch-biola-2" style="background:#EA580C;" onclick="changeCalColorMishka('biola', '#EA580C', '#FFEDD5', '🎻', this)">🎻</div>
+            <div class="color-swatch" id="swatch-biola-3" style="background:#DB2777;" onclick="changeCalColorMishka('biola', '#DB2777', '#FCE7F3', '🎻', this)">🎻</div>
+          </div>
+        </div>
+
+        <!-- Status Kuas Aktif Kalender -->
+        <div class="active-brush-status">
+          <div id="cal-brush-status-text">
+            🖌️ <strong>Kuas Kalender Aktif:</strong> <span style="color:#2563EB; font-weight:800;">🏊 Kuas Renang Mishka</span> — <em>Klik tanggal pada kalender untuk menandai!</em>
+          </div>
+          <button class="action-btn btn-gray" style="padding:6px 14px; font-size:0.85rem;" onclick="setCalBrushMishka('eraser')">
+            🧹 Kuas Penghapus Kalender
+          </button>
+        </div>
+      </div>
+
+      <!-- Tombol Bantu Otomatis -->
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <button class="action-btn" id="btn-auto-renang" onclick="autoMarkRenangMishka()">⚡ Tandai Renang (Tiap 4 Hari)</button>
+        <button class="action-btn btn-red" id="btn-auto-biola" onclick="autoMarkBiolaMishka()">⚡ Tandai Biola (Tiap 6 Hari)</button>
+        <button class="action-btn btn-purple" onclick="runCalendarSimulationMishka()">✨ Cari Titik Temu (KPK)</button>
         <button class="action-btn btn-gray" onclick="resetCalendarMishka()">🔄 Reset Kalender</button>
       </div>
 
@@ -672,7 +753,7 @@
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCupsMishka(2)">2 Cangkir</button>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCupsMishka(3)">3 Cangkir</button>
-        <button class="action-btn btn-red" style="padding:6px 14px;" onclick="testCupsMishka(4)">4 Cangkir</button>
+        <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCupsMishka(4)">4 Cangkir</button>
         <button class="action-btn btn-gray" style="padding:6px 14px;" onclick="testCupsMishka(5)">5 Cangkir</button>
       </div>
 
@@ -726,7 +807,7 @@
         <div style="font-weight:800; font-size:1.05rem; margin-bottom:8px;">1. Jika Mishka dan temannya berpapasan di GOR pada tanggal 2 Oktober, dan KPK hari latihan mereka adalah 12 hari, pada tanggal berapa mereka berpapasan lagi?</div>
         <div style="display:flex; flex-direction:column; gap:8px;">
           <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuizMishka(1, this, false)">A. 12 Oktober 2026</button>
-          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuizMishka(1, this, true)">B. 14 Oktober 2026 (2 + 12 hari)</button>
+          <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuizMishka(1, this, true)">B. 14 Oktober 2026</button>
           <button class="action-btn btn-gray" style="justify-content:flex-start; text-align:left;" onclick="checkQuizMishka(1, this, false)">C. 16 Oktober 2026</button>
         </div>
         <div id="quiz-mishka-fb-1" class="feedback-banner"></div>
@@ -987,7 +1068,7 @@
     setActiveBrush('m1');
 
     // =========================================================================
-    // 3. KALENDER OKTOBER 2026
+    // 3. KALENDER OKTOBER 2026 INTERAKTIF DENGAN KUAS
     // =========================================================================
     const calOctMishka = document.getElementById('calOctMishka');
     const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
@@ -1003,35 +1084,174 @@
       empty.className = 'cal-day empty';
       calOctMishka.appendChild(empty);
     }
+
+    let currentCalBrushMishka = 'renang'; // 'renang', 'biola', or 'eraser'
+    const calStateMishka = {};
+    let configCalRenang = { color: '#2563EB', lightColor: '#DBEAFE', icon: '🏊', name: 'Renang Mishka' };
+    let configCalBiola = { color: '#DC2626', lightColor: '#FEE2E2', icon: '🎻', name: 'Biola Sahabat' };
+
     for (let day = 1; day <= 31; day++) {
+      calStateMishka[day] = { renang: false, biola: false };
       const d = document.createElement('div');
       d.className = 'cal-day';
-      d.innerText = day;
       d.id = `cal-mishka-${day}`;
+      d.title = `Klik untuk menandai tanggal ${day} Oktober`;
+      d.innerHTML = `
+        <span class="cal-day-num">${day}</span>
+        <div class="cal-badges-container" id="cal-badges-mishka-${day}"></div>
+      `;
+      d.onclick = () => handleCalClickMishka(day);
       calOctMishka.appendChild(d);
     }
 
-    function runCalendarSimulationMishka() {
-      playSfx('correct');
+    function setCalBrushMishka(brushType) {
+      playSfx('click');
+      currentCalBrushMishka = brushType;
+      document.getElementById('cal-group-renang').classList.toggle('active-group', brushType === 'renang');
+      document.getElementById('cal-group-biola').classList.toggle('active-group', brushType === 'biola');
+
+      const statusText = document.getElementById('cal-brush-status-text');
+      if (brushType === 'renang') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Kalender Aktif:</strong> <span style="color:${configCalRenang.color}; font-weight:800;">${configCalRenang.icon} ${configCalRenang.name}</span> — <em>Klik tanggal pada kalender untuk menandai!</em>`;
+      } else if (brushType === 'biola') {
+        statusText.innerHTML = `🖌️ <strong>Kuas Kalender Aktif:</strong> <span style="color:${configCalBiola.color}; font-weight:800;">${configCalBiola.icon} ${configCalBiola.name}</span> — <em>Klik tanggal pada kalender untuk menandai!</em>`;
+      } else {
+        statusText.innerHTML = `🧹 <strong>Kuas Kalender Aktif:</strong> <span style="color:#64748B; font-weight:800;">Penghapus Kalender</span> — <em>Klik tanggal untuk menghapus tanda!</em>`;
+      }
+    }
+
+    function changeCalColorMishka(brushType, colorHex, lightHex, icon, swatchEl) {
+      playSfx('star');
+      if (brushType === 'renang') {
+        configCalRenang.color = colorHex;
+        configCalRenang.lightColor = lightHex;
+        const swatches = document.querySelectorAll('#cal-group-renang .color-swatch');
+        swatches.forEach(s => s.classList.remove('selected'));
+        if (swatchEl) swatchEl.classList.add('selected');
+        document.getElementById('btn-cal-renang').style.background = colorHex;
+        setCalBrushMishka('renang');
+      } else {
+        configCalBiola.color = colorHex;
+        configCalBiola.lightColor = lightHex;
+        const swatches = document.querySelectorAll('#cal-group-biola .color-swatch');
+        swatches.forEach(s => s.classList.remove('selected'));
+        if (swatchEl) swatchEl.classList.add('selected');
+        document.getElementById('btn-cal-biola').style.background = colorHex;
+        setCalBrushMishka('biola');
+      }
+      // Re-render semua tanggal agar warna terupdate
+      for (let day = 1; day <= 31; day++) {
+        renderCalDayMishka(day);
+      }
+    }
+
+    function renderCalDayMishka(day) {
+      const cell = document.getElementById(`cal-mishka-${day}`);
+      const badgesContainer = document.getElementById(`cal-badges-mishka-${day}`);
+      const state = calStateMishka[day];
+
+      if (!cell || !badgesContainer) return;
+
+      badgesContainer.innerHTML = '';
+      cell.classList.remove('match-day');
+
+      if (state.renang && state.biola) {
+        cell.classList.add('match-day');
+        badgesContainer.innerHTML = `
+          <span class="cal-badge" style="background:${configCalRenang.lightColor}; color:${configCalRenang.color}; border:1px solid ${configCalRenang.color};">${configCalRenang.icon} Renang</span>
+          <span class="cal-badge" style="background:${configCalBiola.lightColor}; color:${configCalBiola.color}; border:1px solid ${configCalBiola.color};">${configCalBiola.icon} Biola</span>
+          <span class="cal-badge-match">🎉 KETEMU!</span>
+        `;
+      } else if (state.renang) {
+        badgesContainer.innerHTML = `
+          <span class="cal-badge" style="background:${configCalRenang.lightColor}; color:${configCalRenang.color}; border:1px solid ${configCalRenang.color};">${configCalRenang.icon} Renang</span>
+        `;
+      } else if (state.biola) {
+        badgesContainer.innerHTML = `
+          <span class="cal-badge" style="background:${configCalBiola.lightColor}; color:${configCalBiola.color}; border:1px solid ${configCalBiola.color};">${configCalBiola.icon} Biola</span>
+        `;
+      }
+    }
+
+    function handleCalClickMishka(day) {
+      const state = calStateMishka[day];
+      if (currentCalBrushMishka === 'renang') {
+        state.renang = !state.renang;
+      } else if (currentCalBrushMishka === 'biola') {
+        state.biola = !state.biola;
+      } else if (currentCalBrushMishka === 'eraser') {
+        state.renang = false;
+        state.biola = false;
+      }
+
+      renderCalDayMishka(day);
+
+      // Cek apakah tanggal ini menjadi titik temu
+      if (state.renang && state.biola) {
+        playSfx('correct');
+        if (day === 14) {
+          triggerConfetti();
+          const res = document.getElementById('cal-result-mishka');
+          res.className = 'feedback-banner feedback-success';
+          res.innerHTML = `🌟 <strong>HEBAT BANGET MISHKA!</strong><br>Kamu berhasil menemukan titik temu berikutnya pada <strong>Rabu, 14 Oktober 2026</strong>!<br>Pertemuan pertama: 2 Oktober. KPK dari 4 dan 6 adalah <strong>12 hari</strong>.<br>Maka: 2 + 12 = <strong>14 Oktober 2026</strong>! 💖🎉`;
+        }
+      } else {
+        playSfx('click');
+      }
+    }
+
+    function autoMarkRenangMishka() {
+      playSfx('click');
+      setCalBrushMishka('renang');
+      let delay = 0;
       for (let d = 2; d <= 31; d += 4) {
-        document.getElementById(`cal-mishka-${d}`).classList.add('mishka-day');
+        setTimeout(() => {
+          calStateMishka[d].renang = true;
+          renderCalDayMishka(d);
+          playSfx('star');
+        }, delay);
+        delay += 50;
+      }
+    }
+
+    function autoMarkBiolaMishka() {
+      playSfx('click');
+      setCalBrushMishka('biola');
+      let delay = 0;
+      for (let d = 2; d <= 31; d += 6) {
+        setTimeout(() => {
+          calStateMishka[d].biola = true;
+          renderCalDayMishka(d);
+          playSfx('star');
+        }, delay);
+        delay += 50;
+      }
+    }
+
+    function runCalendarSimulationMishka() {
+      playSfx('win');
+      triggerConfetti();
+      for (let d = 2; d <= 31; d += 4) {
+        calStateMishka[d].renang = true;
       }
       for (let d = 2; d <= 31; d += 6) {
-        document.getElementById(`cal-mishka-${d}`).classList.add('music-day');
+        calStateMishka[d].biola = true;
       }
-      document.getElementById('cal-mishka-14').classList.add('match-day');
-      triggerConfetti();
+      for (let day = 1; day <= 31; day++) {
+        renderCalDayMishka(day);
+      }
 
       const res = document.getElementById('cal-result-mishka');
       res.className = 'feedback-banner feedback-success';
-      res.innerHTML = `🌟 <strong>HASIL PENELITIAN KALENDER:</strong><br>Pertemuan pertama: <strong>Jumat, 2 Oktober 2026</strong>.<br>KPK dari 4 dan 6 adalah <strong>12 hari</strong>.<br>Maka tanggal bertemu berikutnya: 2 + 12 = <strong>Rabu, 14 Oktober 2026</strong>!`;
+      res.innerHTML = `🌟 <strong>HASIL PENELITIAN KALENDER:</strong><br>Pertemuan pertama: <strong>Jumat, 2 Oktober 2026</strong>.<br>KPK dari 4 dan 6 adalah <strong>12 hari</strong>.<br>Maka tanggal bertemu berikutnya: 2 + 12 = <strong>Rabu, 14 Oktober 2026</strong>! (dan berikutnya lagi di tanggal 26 Oktober).`;
     }
 
     function resetCalendarMishka() {
       playSfx('click');
       for (let day = 1; day <= 31; day++) {
-        const el = document.getElementById(`cal-mishka-${day}`);
-        el.className = 'cal-day';
+        calStateMishka[day].renang = false;
+        calStateMishka[day].biola = false;
+        renderCalDayMishka(day);
       }
       document.getElementById('cal-result-mishka').style.display = 'none';
     }
