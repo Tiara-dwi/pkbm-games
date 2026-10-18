@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ilustrasi FPB: 12 Donat Cokelat & 18 Donat Keju</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #F8FAFC;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header-bar {
+      max-width: 1280px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0F172A;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: #6366F1;
+      box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
+    }
+    .btn-secondary:hover {
+      background: #4F46E5;
+    }
+    .svg-container {
+      max-width: 1280px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+      border: 2px solid #E2E8F0;
+    }
+    .svg-container svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .explanation-card {
+      max-width: 1280px;
+      width: 100%;
+      margin-top: 24px;
+      background: white;
+      border-radius: 20px;
+      padding: 24px 28px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      border: 1.5px solid #E2E8F0;
+      box-sizing: border-box;
+    }
+    .exp-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin-bottom: 12px;
+    }
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+    .exp-box {
+      background: #F8FAFC;
+      border-radius: 14px;
+      padding: 16px;
+      border-left: 4px solid #10B981;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div class="title">🍩 Visual Pembelajaran FPB: Donat & Kotak Parcel (Untuk Canva Slide)</div>
+    <div class="btn-group">
+      <button class="btn" onclick="downloadSVG()">⬇️ Download SVG (Siap Drag & Drop ke Canva)</button>
+      <button class="btn btn-secondary" onclick="exportPNG()">📸 Download Gambar PNG</button>
+    </div>
+  </div>
+
+  <div class="svg-container" id="svgHolder">
+    <!-- SVG Content Inlined for Instant Render & Export -->
+  </div>
+
+  <div class="explanation-card">
+    <div class="exp-title">💡 Bedah Logika Visual untuk Canva & Penjelasan ke Aqlan:</div>
+    <div class="exp-grid">
+      <div class="exp-box">
+        <strong>1. Nampan Donat Cokelat (12 Butir):</strong><br>
+        Faktor pembagi dari 12 adalah: 1, 2, 3, 4, <strong>6</strong>, dan 12 piring/kotak.
+      </div>
+      <div class="exp-box">
+        <strong>2. Nampan Donat Keju (18 Butir):</strong><br>
+        Faktor pembagi dari 18 adalah: 1, 2, 3, <strong>6</strong>, 9, dan 18 piring/kotak.
+      </div>
+      <div class="exp-box">
+        <strong>3. Titik Temu FPB (6 Kotak Parcel Terbanyak):</strong><br>
+        Angka pembagi yang sama dan PALING BESAR adalah <strong>6</strong>.<br>
+        Tiap kotak berisi: <strong>2 Cokelat</strong> (12 ÷ 6) + <strong>3 Keju</strong> (18 ÷ 6) = <strong>5 Donat</strong>. Habis rata tanpa sisa!
+      </div>
+    </div>
+  </div>
+
+  <canvas id="exportCanvas" style="display:none;"></canvas>
+
+  <script>
+    // Fetch SVG and inject
+    fetch('../assets/donat_fpb_parcel.svg')
+      .then(res => res.text())
+      .then(svgText => {
+        document.getElementById('svgHolder').innerHTML = svgText;
+      });
+
+    function downloadSVG() {
+      const a = document.createElement('a');
+      a.href = '../assets/donat_fpb_parcel.svg';
+      a.download = 'Ilustrasi_FPB_12_Donat_Cokelat_dan_18_Donat_Keju.svg';
+      a.click();
+    }
+
+    function exportPNG() {
+      const svgEl = document.querySelector('#svgHolder svg');
+      if (!svgEl) return;
+      const svgString = new XMLSerializer().serializeToString(svgEl);
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const URL = window.URL || window.webkitURL || window;
+      const blobURL = URL.createObjectURL(svgBlob);
+
+      const image = new Image();
+      image.onload = () => {
+        const canvas = document.getElementById('exportCanvas');
+        canvas.width = 1920;
+        canvas.height = 1230;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        const pngUrl = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = 'Ilustrasi_FPB_12_Donat_Cokelat_dan_18_Donat_Keju.png';
+        downloadLink.click();
+        URL.revokeObjectURL(blobURL);
+      };
+      image.src = blobURL;
+    }
+  </script>
+</body>
+</html>

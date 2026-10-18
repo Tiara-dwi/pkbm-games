@@ -1,0 +1,1154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF7"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+    <linearGradient id="chocoTray" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FDF2F8"/>
+    </linearGradient>
+    <linearGradient id="cheeseTray" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FEFCE8"/>
+    </linearGradient>
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F8FAFC"/>
+    </linearGradient>
+    <linearGradient id="chocoGlaze" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#854D0E"/>
+      <stop offset="100%" stop-color="#582900"/>
+    </linearGradient>
+    <linearGradient id="cheeseGlaze" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <linearGradient id="doughGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <linearGradient id="goldBanner" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="50%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#78350F" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="820" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle decorative polka dots -->
+  <g opacity="0.15" fill="#D97706">
+    <circle cx="60" cy="50" r="6"/>
+    <circle cx="180" cy="70" r="4"/>
+    <circle cx="1200" cy="60" r="7"/>
+    <circle cx="1120" cy="110" r="5"/>
+    <circle cx="90" cy="480" r="5"/>
+    <circle cx="1220" cy="520" r="6"/>
+  </g>
+
+  <!-- ================= TOP HEADER BANNER ================= -->
+  <g transform="translate(640, 52)" text-anchor="middle">
+    <rect x="-420" y="-32" width="840" height="64" rx="32" fill="url(#goldBanner)" filter="url(#cardShadow)"/>
+    <text y="8" fill="#FFFFFF" font-size="24" font-weight="900" letter-spacing="1">
+      🍩 MISI FPB: PEMBAGIAN PARCEL MAKSIMAL (TERBANYAK) 🎁
+    </text>
+  </g>
+  <text x="640" y="112" text-anchor="middle" fill="#78350F" font-size="16" font-weight="700">
+    12 Donat Cokelat &amp; 18 Donat Keju dibagi habis ke dalam 6 Kotak Parcel dengan isi persis sama!
+  </text>
+
+  <!-- ================= TRAY 1: 12 DONAT COKELAT ================= -->
+  <g transform="translate(70, 140)">
+    <!-- Tray Box -->
+    <rect width="540" height="230" rx="24" fill="url(#chocoTray)" stroke="#FBCFE8" stroke-width="3" filter="url(#cardShadow)"/>
+    
+    <!-- Tray Header -->
+    <rect x="20" y="16" width="500" height="42" rx="14" fill="#FDF2F8" stroke="#F472B6" stroke-width="1.5"/>
+    <text x="270" y="43" text-anchor="middle" fill="#9D174D" font-size="17" font-weight="800">
+      🍩 12 Donat Cokelat (Stok Awal)
+    </text>
+
+    <!-- 12 Donuts Grid (2 rows of 6) -->
+    <!-- Helper macro in Python for 12 donuts -->
+
+    <g transform="translate(75, 100)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(153, 100)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(231, 100)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(309, 100)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(387, 100)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(465, 100)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(75, 162)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(153, 162)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(231, 162)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(309, 162)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(387, 162)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <g transform="translate(465, 162)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="24" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="21" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="8.399999999999999" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-9.600000000000001" y="-12.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -9.600000000000001, -12.0)"/>
+      <rect x="6.0" y="-10.8" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 6.0, -10.8)"/>
+      <rect x="-12.0" y="4.800000000000001" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -12.0, 4.800000000000001)"/>
+      <rect x="4.800000000000001" y="7.199999999999999" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 4.800000000000001, 7.199999999999999)"/>
+    </g>
+    <!-- Tray Footer Info -->
+    <text x="270" y="214" text-anchor="middle" fill="#64748B" font-size="13" font-weight="700">
+      Faktor Pembagi 12: 1, 2, 3, 4, <tspan fill="#BE185D" font-weight="900">[6]</tspan>, 12
+    </text>
+  </g>
+
+  <!-- ================= TRAY 2: 18 DONAT KEJU ================= -->
+  <g transform="translate(670, 140)">
+    <!-- Tray Box -->
+    <rect width="540" height="230" rx="24" fill="url(#cheeseTray)" stroke="#FDE68A" stroke-width="3" filter="url(#cardShadow)"/>
+    
+    <!-- Tray Header -->
+    <rect x="20" y="16" width="500" height="42" rx="14" fill="#FEFCE8" stroke="#FBBF24" stroke-width="1.5"/>
+    <text x="270" y="43" text-anchor="middle" fill="#B45309" font-size="17" font-weight="800">
+      🧀 18 Donat Keju (Stok Awal)
+    </text>
+
+    <!-- 18 Donuts Grid (3 rows of 6) -->
+
+    <g transform="translate(75, 88)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(153, 88)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(231, 88)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(309, 88)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(387, 88)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(465, 88)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(75, 133)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(153, 133)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(231, 133)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(309, 133)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(387, 133)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(465, 133)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(75, 178)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(153, 178)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(231, 178)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(309, 178)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(387, 178)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(465, 178)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="15.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-7.2" y1="-7.2" x2="-1.8" y2="-9.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.6" y1="-5.3999999999999995" x2="9.0" y2="-3.6" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-7.2" y1="5.3999999999999995" x2="-1.8" y2="7.2" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.8" y1="7.2" x2="7.2" y2="4.5" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <!-- Tray Footer Info -->
+    <text x="270" y="214" text-anchor="middle" fill="#64748B" font-size="13" font-weight="700">
+      Faktor Pembagi 18: 1, 2, 3, <tspan fill="#D97706" font-weight="900">[6]</tspan>, 9, 18
+    </text>
+  </g>
+
+  <!-- ================= MIDDLE FPB CONNECTOR ================= -->
+  <g transform="translate(640, 400)">
+    <!-- Connecting Arrows -->
+    <path d="M -300 -15 Q -100 15 0 15 Q 100 15 300 -15" fill="none" stroke="#D97706" stroke-width="2.5" stroke-dasharray="6,6" opacity="0.7"/>
+    
+    <!-- Central Badge -->
+    <rect x="-240" y="-18" width="480" height="42" rx="21" fill="#10B981" filter="url(#softShadow)"/>
+    <text y="8" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="900" letter-spacing="0.5">
+      ⬇️ FPB(12, 18) = 6 KOTAK PARCEL TERBANYAK! ⬇️
+    </text>
+  </g>
+
+  <!-- ================= BOTTOM SECTION: 6 PARCEL BOXES ================= -->
+
+    <g transform="translate(55, 445)">
+      <!-- Outer Box Card -->
+      <rect width="180" height="320" rx="20" fill="url(#boxGrad)" stroke="#10B981" stroke-width="2.5" filter="url(#cardShadow)"/>
+      
+      <!-- Box Header / Ribbon -->
+      <path d="M 0 18 Q 90.0 28 180 18 L 180 0 L 0 0 Z" fill="#D1FAE5"/>
+      <rect x="20" y="10" width="140" height="32" rx="10" fill="#10B981"/>
+      <text x="90.0" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="900">
+        🎁 KOTAK #1
+      </text>
+
+      <!-- Section 1: 2 Chocolate Donuts -->
+      <g transform="translate(90.0, 85)">
+        <rect x="-80.0" y="-32" width="160" height="64" rx="14" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="1.5"/>
+        
+    <g transform="translate(-32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        
+    <g transform="translate(32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        <text x="0" y="24" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="800">
+          2 Donat Cokelat
+        </text>
+      </g>
+
+      <!-- Section 2: 3 Cheese Donuts -->
+      <g transform="translate(90.0, 180)">
+        <rect x="-80.0" y="-42" width="160" height="84" rx="14" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.5"/>
+        
+    <g transform="translate(-42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(0, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        <text x="0" y="32" text-anchor="middle" fill="#B45309" font-size="11" font-weight="800">
+          3 Donat Keju
+        </text>
+      </g>
+
+      <!-- Total summary pill at bottom of box -->
+      <rect x="15" y="245" width="150" height="36" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="90.0" y="268" text-anchor="middle" fill="#0F172A" font-size="12" font-weight="800">
+        ⭐ Total: <tspan fill="#059669" font-weight="900">5 Donat</tspan>
+      </text>
+      <text x="90.0" y="300" text-anchor="middle" fill="#64748B" font-size="10.5" font-weight="600">
+        Rata &amp; Habis Tanpa Sisa!
+      </text>
+    </g>
+    
+    <g transform="translate(253, 445)">
+      <!-- Outer Box Card -->
+      <rect width="180" height="320" rx="20" fill="url(#boxGrad)" stroke="#10B981" stroke-width="2.5" filter="url(#cardShadow)"/>
+      
+      <!-- Box Header / Ribbon -->
+      <path d="M 0 18 Q 90.0 28 180 18 L 180 0 L 0 0 Z" fill="#D1FAE5"/>
+      <rect x="20" y="10" width="140" height="32" rx="10" fill="#10B981"/>
+      <text x="90.0" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="900">
+        🎁 KOTAK #2
+      </text>
+
+      <!-- Section 1: 2 Chocolate Donuts -->
+      <g transform="translate(90.0, 85)">
+        <rect x="-80.0" y="-32" width="160" height="64" rx="14" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="1.5"/>
+        
+    <g transform="translate(-32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        
+    <g transform="translate(32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        <text x="0" y="24" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="800">
+          2 Donat Cokelat
+        </text>
+      </g>
+
+      <!-- Section 2: 3 Cheese Donuts -->
+      <g transform="translate(90.0, 180)">
+        <rect x="-80.0" y="-42" width="160" height="84" rx="14" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.5"/>
+        
+    <g transform="translate(-42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(0, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        <text x="0" y="32" text-anchor="middle" fill="#B45309" font-size="11" font-weight="800">
+          3 Donat Keju
+        </text>
+      </g>
+
+      <!-- Total summary pill at bottom of box -->
+      <rect x="15" y="245" width="150" height="36" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="90.0" y="268" text-anchor="middle" fill="#0F172A" font-size="12" font-weight="800">
+        ⭐ Total: <tspan fill="#059669" font-weight="900">5 Donat</tspan>
+      </text>
+      <text x="90.0" y="300" text-anchor="middle" fill="#64748B" font-size="10.5" font-weight="600">
+        Rata &amp; Habis Tanpa Sisa!
+      </text>
+    </g>
+    
+    <g transform="translate(451, 445)">
+      <!-- Outer Box Card -->
+      <rect width="180" height="320" rx="20" fill="url(#boxGrad)" stroke="#10B981" stroke-width="2.5" filter="url(#cardShadow)"/>
+      
+      <!-- Box Header / Ribbon -->
+      <path d="M 0 18 Q 90.0 28 180 18 L 180 0 L 0 0 Z" fill="#D1FAE5"/>
+      <rect x="20" y="10" width="140" height="32" rx="10" fill="#10B981"/>
+      <text x="90.0" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="900">
+        🎁 KOTAK #3
+      </text>
+
+      <!-- Section 1: 2 Chocolate Donuts -->
+      <g transform="translate(90.0, 85)">
+        <rect x="-80.0" y="-32" width="160" height="64" rx="14" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="1.5"/>
+        
+    <g transform="translate(-32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        
+    <g transform="translate(32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        <text x="0" y="24" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="800">
+          2 Donat Cokelat
+        </text>
+      </g>
+
+      <!-- Section 2: 3 Cheese Donuts -->
+      <g transform="translate(90.0, 180)">
+        <rect x="-80.0" y="-42" width="160" height="84" rx="14" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.5"/>
+        
+    <g transform="translate(-42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(0, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        <text x="0" y="32" text-anchor="middle" fill="#B45309" font-size="11" font-weight="800">
+          3 Donat Keju
+        </text>
+      </g>
+
+      <!-- Total summary pill at bottom of box -->
+      <rect x="15" y="245" width="150" height="36" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="90.0" y="268" text-anchor="middle" fill="#0F172A" font-size="12" font-weight="800">
+        ⭐ Total: <tspan fill="#059669" font-weight="900">5 Donat</tspan>
+      </text>
+      <text x="90.0" y="300" text-anchor="middle" fill="#64748B" font-size="10.5" font-weight="600">
+        Rata &amp; Habis Tanpa Sisa!
+      </text>
+    </g>
+    
+    <g transform="translate(649, 445)">
+      <!-- Outer Box Card -->
+      <rect width="180" height="320" rx="20" fill="url(#boxGrad)" stroke="#10B981" stroke-width="2.5" filter="url(#cardShadow)"/>
+      
+      <!-- Box Header / Ribbon -->
+      <path d="M 0 18 Q 90.0 28 180 18 L 180 0 L 0 0 Z" fill="#D1FAE5"/>
+      <rect x="20" y="10" width="140" height="32" rx="10" fill="#10B981"/>
+      <text x="90.0" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="900">
+        🎁 KOTAK #4
+      </text>
+
+      <!-- Section 1: 2 Chocolate Donuts -->
+      <g transform="translate(90.0, 85)">
+        <rect x="-80.0" y="-32" width="160" height="64" rx="14" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="1.5"/>
+        
+    <g transform="translate(-32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        
+    <g transform="translate(32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        <text x="0" y="24" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="800">
+          2 Donat Cokelat
+        </text>
+      </g>
+
+      <!-- Section 2: 3 Cheese Donuts -->
+      <g transform="translate(90.0, 180)">
+        <rect x="-80.0" y="-42" width="160" height="84" rx="14" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.5"/>
+        
+    <g transform="translate(-42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(0, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        <text x="0" y="32" text-anchor="middle" fill="#B45309" font-size="11" font-weight="800">
+          3 Donat Keju
+        </text>
+      </g>
+
+      <!-- Total summary pill at bottom of box -->
+      <rect x="15" y="245" width="150" height="36" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="90.0" y="268" text-anchor="middle" fill="#0F172A" font-size="12" font-weight="800">
+        ⭐ Total: <tspan fill="#059669" font-weight="900">5 Donat</tspan>
+      </text>
+      <text x="90.0" y="300" text-anchor="middle" fill="#64748B" font-size="10.5" font-weight="600">
+        Rata &amp; Habis Tanpa Sisa!
+      </text>
+    </g>
+    
+    <g transform="translate(847, 445)">
+      <!-- Outer Box Card -->
+      <rect width="180" height="320" rx="20" fill="url(#boxGrad)" stroke="#10B981" stroke-width="2.5" filter="url(#cardShadow)"/>
+      
+      <!-- Box Header / Ribbon -->
+      <path d="M 0 18 Q 90.0 28 180 18 L 180 0 L 0 0 Z" fill="#D1FAE5"/>
+      <rect x="20" y="10" width="140" height="32" rx="10" fill="#10B981"/>
+      <text x="90.0" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="900">
+        🎁 KOTAK #5
+      </text>
+
+      <!-- Section 1: 2 Chocolate Donuts -->
+      <g transform="translate(90.0, 85)">
+        <rect x="-80.0" y="-32" width="160" height="64" rx="14" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="1.5"/>
+        
+    <g transform="translate(-32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        
+    <g transform="translate(32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        <text x="0" y="24" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="800">
+          2 Donat Cokelat
+        </text>
+      </g>
+
+      <!-- Section 2: 3 Cheese Donuts -->
+      <g transform="translate(90.0, 180)">
+        <rect x="-80.0" y="-42" width="160" height="84" rx="14" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.5"/>
+        
+    <g transform="translate(-42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(0, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        <text x="0" y="32" text-anchor="middle" fill="#B45309" font-size="11" font-weight="800">
+          3 Donat Keju
+        </text>
+      </g>
+
+      <!-- Total summary pill at bottom of box -->
+      <rect x="15" y="245" width="150" height="36" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="90.0" y="268" text-anchor="middle" fill="#0F172A" font-size="12" font-weight="800">
+        ⭐ Total: <tspan fill="#059669" font-weight="900">5 Donat</tspan>
+      </text>
+      <text x="90.0" y="300" text-anchor="middle" fill="#64748B" font-size="10.5" font-weight="600">
+        Rata &amp; Habis Tanpa Sisa!
+      </text>
+    </g>
+    
+    <g transform="translate(1045, 445)">
+      <!-- Outer Box Card -->
+      <rect width="180" height="320" rx="20" fill="url(#boxGrad)" stroke="#10B981" stroke-width="2.5" filter="url(#cardShadow)"/>
+      
+      <!-- Box Header / Ribbon -->
+      <path d="M 0 18 Q 90.0 28 180 18 L 180 0 L 0 0 Z" fill="#D1FAE5"/>
+      <rect x="20" y="10" width="140" height="32" rx="10" fill="#10B981"/>
+      <text x="90.0" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="900">
+        🎁 KOTAK #6
+      </text>
+
+      <!-- Section 1: 2 Chocolate Donuts -->
+      <g transform="translate(90.0, 85)">
+        <rect x="-80.0" y="-32" width="160" height="64" rx="14" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="1.5"/>
+        
+    <g transform="translate(-32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        
+    <g transform="translate(32, 0)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="18" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Chocolate Glaze -->
+      <circle cx="0" cy="0" r="15" fill="url(#chocoGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="6.3" fill="url(#chocoTray)" stroke="#78350F" stroke-width="1"/>
+      <!-- Sprinkles -->
+      <rect x="-7.2" y="-9.0" width="6" height="2.5" rx="1.2" fill="#F43F5E" transform="rotate(25, -7.2, -9.0)"/>
+      <rect x="4.5" y="-8.1" width="6" height="2.5" rx="1.2" fill="#10B981" transform="rotate(-30, 4.5, -8.1)"/>
+      <rect x="-9.0" y="3.6" width="6" height="2.5" rx="1.2" fill="#FBBF24" transform="rotate(45, -9.0, 3.6)"/>
+      <rect x="3.6" y="5.3999999999999995" width="6" height="2.5" rx="1.2" fill="#38BDF8" transform="rotate(-15, 3.6, 5.3999999999999995)"/>
+    </g>
+        <text x="0" y="24" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="800">
+          2 Donat Cokelat
+        </text>
+      </g>
+
+      <!-- Section 2: 3 Cheese Donuts -->
+      <g transform="translate(90.0, 180)">
+        <rect x="-80.0" y="-42" width="160" height="84" rx="14" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.5"/>
+        
+    <g transform="translate(-42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(0, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        
+    <g transform="translate(42, -8)" filter="url(#softShadow)">
+      <!-- Dough Base -->
+      <circle cx="0" cy="0" r="16" fill="url(#doughGrad)" stroke="#B45309" stroke-width="1.5"/>
+      <!-- Cheese Glaze -->
+      <circle cx="0" cy="0" r="13.5" fill="url(#cheeseGlaze)"/>
+      <!-- Hole -->
+      <circle cx="0" cy="0" r="5.6" fill="url(#cheeseTray)" stroke="#D97706" stroke-width="1"/>
+      <!-- Cheese Shavings -->
+      <line x1="-6.4" y1="-6.4" x2="-1.6" y2="-8.0" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3.2" y1="-4.8" x2="8.0" y2="-3.2" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-6.4" y1="4.8" x2="-1.6" y2="6.4" stroke="#FFFBEB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1.6" y1="6.4" x2="6.4" y2="4.0" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+        <text x="0" y="32" text-anchor="middle" fill="#B45309" font-size="11" font-weight="800">
+          3 Donat Keju
+        </text>
+      </g>
+
+      <!-- Total summary pill at bottom of box -->
+      <rect x="15" y="245" width="150" height="36" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="90.0" y="268" text-anchor="middle" fill="#0F172A" font-size="12" font-weight="800">
+        ⭐ Total: <tspan fill="#059669" font-weight="900">5 Donat</tspan>
+      </text>
+      <text x="90.0" y="300" text-anchor="middle" fill="#64748B" font-size="10.5" font-weight="600">
+        Rata &amp; Habis Tanpa Sisa!
+      </text>
+    </g>
+    
+</svg>
