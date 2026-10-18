@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koleksi Visual Canva: Pecahan, KPK & FPB (Mishka Kelas 5)</title>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #4338CA;
+    }
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #F8FAFC;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #0F172A;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .header-box {
+      background: white;
+      border-radius: 24px;
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      border: 1.5px solid #E2E8F0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .header-title h1 {
+      font-size: 1.6rem;
+      margin: 0 0 6px 0;
+      color: #1E1B4B;
+    }
+    .header-title p {
+      margin: 0;
+      color: #64748B;
+      font-size: 0.95rem;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .nav-tab {
+      background: white;
+      border: 2px solid #E2E8F0;
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: #475569;
+      transition: all 0.2s ease;
+    }
+    .nav-tab:hover {
+      border-color: #818CF8;
+      color: #4F46E5;
+    }
+    .nav-tab.active {
+      background: #4F46E5;
+      color: white;
+      border-color: #4F46E5;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+    .slide-viewer-card {
+      background: white;
+      border-radius: 28px;
+      border: 2px solid #E2E8F0;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .slide-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: #F8FAFC;
+      border-bottom: 1.5px solid #E2E8F0;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .slide-label {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #1E1B4B;
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      background: #4F46E5;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+    }
+    .btn:hover {
+      background: #3730A3;
+      transform: translateY(-2px);
+    }
+    .btn-green {
+      background: #10B981;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+    }
+    .btn-green:hover { background: #059669; }
+    .btn-gray {
+      background: #FFFFFF;
+      color: #334155;
+      border: 1.5px solid #CBD5E1;
+      box-shadow: none;
+    }
+    .btn-gray:hover { background: #F1F5F9; }
+    
+    .svg-display-area {
+      width: 100%;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .svg-display-area svg {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+    .explanation-panel {
+      padding: 20px 28px;
+      background: white;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+    .exp-callout {
+      background: #EEF2FF;
+      border-left: 4px solid #6366F1;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-top: 10px;
+      color: #312E81;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div class="header-title">
+        <h1>🍕 5 Visual Canva Pecahan, KPK &amp; FPB (Mishka - Kelas 5)</h1>
+        <p>Aset Vektor HD Siap Drag &amp; Drop Langsung ke Slide Canva Anda</p>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-green" onclick="downloadAllSVGs()">📦 Download Semua 5 SVG (.zip)</button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchSlide(1)">Slide 1: Jebakan 1/4 + 1/6 ❌</button>
+      <button class="nav-tab" onclick="switchSlide(2)">Slide 2: Pizza 12 Irisan Adil 🍕</button>
+      <button class="nav-tab" onclick="switchSlide(3)">Slide 3: Operasi Penjumlahan Sah ➕</button>
+      <button class="nav-tab" onclick="switchSlide(4)">Slide 4: Pecahan Raksasa ke Ramping (FPB) 💎</button>
+      <button class="nav-tab" onclick="switchSlide(5)">Slide 5: Peta 2 Langkah Emas &amp; Game 🎮</button>
+    </div>
+
+    <!-- Slide Viewer Card -->
+    <div class="slide-viewer-card">
+      <div class="slide-toolbar">
+        <span class="slide-label" id="currentSlideLabel">Slide 1: Jebakan Penjumlahan Terlarang (1/4 + 1/6 = 2/10 ❌)</span>
+        <div class="btn-group">
+          <button class="btn" onclick="downloadCurrentSVG()">⬇️ Download SVG (Untuk Canva)</button>
+          <button class="btn btn-green" onclick="exportCurrentPNG()">📸 Download PNG HD</button>
+          <button class="btn btn-gray" onclick="copyCurrentSVGCode()">📋 Salin Kode Vektor</button>
+        </div>
+      </div>
+
+      <div class="svg-display-area" id="svgContainer">
+        <!-- SVG will be dynamically loaded here -->
+      </div>
+
+      <div class="explanation-panel" id="expContainer">
+        <!-- Explanations -->
+      </div>
+    </div>
+  </div>
+
+  <canvas id="exportCanvas" style="display:none;"></canvas>
+
+  <script>
+    const slidesData = [
+      {
+        num: 1,
+        title: "Slide 1: Jebakan Penjumlahan Terlarang (1/4 + 1/6 = 2/10 ❌)",
+        file: "../assets/mishka/mishka_slide1_forbidden.svg",
+        expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
+        exp: "Banyak siswa terjebak mengira 1+1=2 dan 4+6=10. Tekankan bahwa angka penyebut di bawah BUKAN sekadar angka, melainkan ukuran irisan. 1 irisan besar pizza (1/4) tidak boleh langsung digabung dengan 1 irisan kecil (1/6). Diperlukan 'Pemotong Adil' yaitu KPK!"
+      },
+      {
+        num: 2,
+        title: "Slide 2: KPK sebagai Pemotong Adil (Kedua Pizza Dipotong Jadi 12 Irisan)",
+        file: "../assets/mishka/mishka_slide2_pizza12.svg",
+        expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
+        exp: "Tunjukkan bahwa KPK dari 4 dan 6 adalah 12. Sekarang kedua pizza dipotong menjadi 12 irisan yang sama persis! Pizza 1/4 bernilai sama dengan 3 irisan per-12 (3/12), dan Pizza 1/6 bernilai sama dengan 2 irisan per-12 (2/12). Ukurannya kini 100% adil dan setara!"
+      },
+      {
+        num: 3,
+        title: "Slide 3: Operasi Penjumlahan Sah (1/4 + 1/6 = 3/12 + 2/12 = 5/12)",
+        file: "../assets/mishka/mishka_slide3_formula.svg",
+        expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
+        exp: "Setelah penyebutnya sama (12), penyebut TIDAK BOLEH dijumlahkan! Penyebut tetap 12, hanya pembilang atas yang dijumlahkan: 3 + 2 = 5. Hasil akhirnya adalah 5/12 (5 irisan dari total 12 irisan piring)!"
+      },
+      {
+        num: 4,
+        title: "Slide 4: FPB Sang Penyederhana (Pecahan Raksasa 18/24 ──► Ramping 3/4)",
+        file: "../assets/mishka/mishka_slide4_simplify.svg",
+        expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
+        exp: "Jika KPK bertugas di awal untuk menyamakan penyebut, maka FPB bertugas di akhir untuk merampingkan angka! Bagi pembilang dan penyebut dengan FPB(18, 24) = 6. Dalam 1 kali langkah, pecahan raksasa 18/24 langsung ramping menjadi 3/4!"
+      },
+      {
+        num: 5,
+        title: "Slide 5: Peta Strategi Emas Pecahan & Gerbang Web Game Mishka",
+        file: "../assets/mishka/mishka_slide5_checklist.svg",
+        expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
+        exp: "Kunci 2 Langkah Emas: (1) Beda penyebut di awal? Panggil KPK! (2) Hasil akhir masih besar? Panggil FPB! Setelah selesai, ajak Mishka membuka link website game Mishka (Grid 1-100) untuk eksplorasi interaktif!"
+      }
+    ];
+
+    let currentIdx = 0;
+
+    function switchSlide(slideNum) {
+      currentIdx = slideNum - 1;
+      const data = slidesData[currentIdx];
+
+      // Update Tab Styles
+      document.querySelectorAll('.nav-tab').forEach((t, i) => {
+        t.classList.toggle('active', i === currentIdx);
+      });
+
+      // Update Label
+      document.getElementById('currentSlideLabel').innerText = data.title;
+
+      // Fetch and display SVG
+      fetch(data.file)
+        .then(res => res.text())
+        .then(svgText => {
+          document.getElementById('svgContainer').innerHTML = svgText;
+        });
+
+      // Update Explanation
+      document.getElementById('expContainer').innerHTML = `
+        <strong>${data.expTitle}</strong>
+        <div class="exp-callout">${data.exp}</div>
+      `;
+    }
+
+    function downloadCurrentSVG() {
+      const data = slidesData[currentIdx];
+      const a = document.createElement('a');
+      a.href = data.file;
+      a.download = `Mishka_${data.title.replace(/[^a-zA-Z0-9]/g, '_')}.svg`;
+      a.click();
+    }
+
+    function exportCurrentPNG() {
+      const svgEl = document.querySelector('#svgContainer svg');
+      if (!svgEl) return;
+      const svgString = new XMLSerializer().serializeToString(svgEl);
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const URL = window.URL || window.webkitURL || window;
+      const blobURL = URL.createObjectURL(svgBlob);
+
+      const image = new Image();
+      image.onload = () => {
+        const canvas = document.getElementById('exportCanvas');
+        canvas.width = 1920;
+        canvas.height = 1080;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        const pngUrl = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = `Mishka_Slide_${currentIdx+1}_HD.png`;
+        downloadLink.click();
+        URL.revokeObjectURL(blobURL);
+      };
+      image.src = blobURL;
+    }
+
+    function copyCurrentSVGCode() {
+      const svgEl = document.querySelector('#svgContainer svg');
+      if (!svgEl) return;
+      const svgString = new XMLSerializer().serializeToString(svgEl);
+      navigator.clipboard.writeText(svgString).then(() => {
+        alert("Kode Vektor SVG berhasil disalin ke clipboard! Anda bisa langsung paste di software desain atau Canva.");
+      });
+    }
+
+    function downloadAllSVGs() {
+      slidesData.forEach((s, idx) => {
+        setTimeout(() => {
+          const a = document.createElement('a');
+          a.href = s.file;
+          a.download = `Mishka_Slide_${s.num}.svg`;
+          a.click();
+        }, idx * 300);
+      });
+    }
+
+    // Initialize first slide
+    switchSlide(1);
+  </script>
+</body>
+</html>

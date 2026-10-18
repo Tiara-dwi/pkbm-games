@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="glowGreen" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#10B981" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glowGold" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#F59E0B" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F0FDF4"/>
+
+  <!-- Top Header Banner -->
+  <g transform="translate(640, 52)" text-anchor="middle">
+    <rect x="-310" y="-26" width="620" height="52" rx="26" fill="#10B981" filter="url(#shadow)"/>
+    <text y="9" fill="#FFFFFF" font-size="22" font-weight="900" letter-spacing="1">
+      ✨ OPERASI PENJUMLAHAN PECAHAN RESMI &amp; SAH ✨
+    </text>
+  </g>
+
+  <!-- Center Master Formula Box -->
+  <rect x="80" y="115" width="1120" height="420" rx="32" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="3" filter="url(#shadow)"/>
+
+  <!-- 4 Step Flow -->
+  <!-- Step 1: 1/4 + 1/6 -->
+  <g transform="translate(200, 240)">
+    <rect x="-85" y="-70" width="170" height="140" rx="20" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+    <text x="0" y="-85" text-anchor="middle" font-size="14" font-weight="900" fill="#64748B">LANGKAH 1</text>
+    <!-- 1/4 -->
+    <text x="-40" y="-12" text-anchor="middle" font-size="34" font-weight="900" fill="#0F172A">1</text>
+    <line x1="-60" y1="0" x2="-20" y2="0" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+    <text x="-40" y="38" text-anchor="middle" font-size="34" font-weight="900" fill="#EF4444">4</text>
+    <!-- + -->
+    <text x="0" y="10" text-anchor="middle" font-size="28" font-weight="900" fill="#64748B">+</text>
+    <!-- 1/6 -->
+    <text x="40" y="-12" text-anchor="middle" font-size="34" font-weight="900" fill="#0F172A">1</text>
+    <line x1="20" y1="0" x2="60" y2="0" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+    <text x="40" y="38" text-anchor="middle" font-size="34" font-weight="900" fill="#EF4444">6</text>
+    <text x="0" y="95" text-anchor="middle" font-size="12.5" font-weight="700" fill="#64748B">Penyebut Beda (4 &amp; 6)</text>
+  </g>
+
+  <!-- Arrow 1 with KPK badge -->
+  <g transform="translate(355, 240)">
+    <line x1="-25" y1="0" x2="35" y2="0" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="35,0 22,-8 22,8" fill="#10B981"/>
+    <rect x="-35" y="-36" width="80" height="26" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="5" y="-19" text-anchor="middle" font-size="11" font-weight="900" fill="#B45309">KPK = 12</text>
+  </g>
+
+  <!-- Step 2: 3/12 + 2/12 -->
+  <g transform="translate(515, 240)">
+    <rect x="-95" y="-70" width="190" height="140" rx="20" fill="#EFF6FF" stroke="#93C5FD" stroke-width="2"/>
+    <text x="0" y="-85" text-anchor="middle" font-size="14" font-weight="900" fill="#2563EB">LANGKAH 2</text>
+    <!-- 3/12 -->
+    <text x="-44" y="-12" text-anchor="middle" font-size="34" font-weight="900" fill="#D97706">3</text>
+    <line x1="-70" y1="0" x2="-18" y2="0" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+    <text x="-44" y="38" text-anchor="middle" font-size="34" font-weight="900" fill="#10B981">12</text>
+    <!-- + -->
+    <text x="0" y="10" text-anchor="middle" font-size="28" font-weight="900" fill="#64748B">+</text>
+    <!-- 2/12 -->
+    <text x="44" y="-12" text-anchor="middle" font-size="34" font-weight="900" fill="#E11D48">2</text>
+    <line x1="18" y1="0" x2="70" y2="0" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+    <text x="44" y="38" text-anchor="middle" font-size="34" font-weight="900" fill="#10B981">12</text>
+    <text x="0" y="95" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2563EB">Penyebut Sama (12)</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g transform="translate(675, 240)">
+    <line x1="-25" y1="0" x2="35" y2="0" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="35,0 22,-8 22,8" fill="#10B981"/>
+    <text x="5" y="-12" text-anchor="middle" font-size="12" font-weight="800" fill="#059669">Satukan</text>
+  </g>
+
+  <!-- Step 3: (3 + 2)/12 -->
+  <g transform="translate(830, 240)">
+    <rect x="-85" y="-70" width="170" height="140" rx="20" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+    <text x="0" y="-85" text-anchor="middle" font-size="14" font-weight="900" fill="#64748B">LANGKAH 3</text>
+    <text x="0" y="-12" text-anchor="middle" font-size="32" font-weight="900" fill="#0F172A">3 + 2</text>
+    <line x1="-55" y1="0" x2="55" y2="0" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+    <text x="0" y="38" text-anchor="middle" font-size="34" font-weight="900" fill="#10B981">12</text>
+    <text x="0" y="95" text-anchor="middle" font-size="12.5" font-weight="700" fill="#64748B">Penyebut TETAP!</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <g transform="translate(980, 240)">
+    <line x1="-20" y1="0" x2="30" y2="0" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="30,0 18,-8 18,8" fill="#10B981"/>
+  </g>
+
+  <!-- Step 4: 5/12 (CHAMPION BOX) -->
+  <g transform="translate(1105, 240)">
+    <rect x="-70" y="-80" width="140" height="160" rx="24" fill="#ECFDF5" stroke="#10B981" stroke-width="4" filter="url(#glowGreen)"/>
+    <text x="0" y="-95" text-anchor="middle" font-size="15" font-weight="900" fill="#059669">HASIL AKHIR ⭐</text>
+    <text x="0" y="-12" text-anchor="middle" font-size="44" font-weight="900" fill="#065F46">5</text>
+    <line x1="-45" y1="0" x2="45" y2="0" stroke="#065F46" stroke-width="5" stroke-linecap="round"/>
+    <text x="0" y="44" text-anchor="middle" font-size="44" font-weight="900" fill="#059669">12</text>
+    <text x="0" y="102" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">5 dari 12 Irisan!</text>
+  </g>
+
+  <!-- Bottom Visual Verification Strip -->
+  <g transform="translate(640, 435)">
+    <rect x="-480" y="-40" width="960" height="80" rx="20" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+    <text x="-450" y="8" font-size="15" font-weight="800" fill="#334155">Verifikasi Piring 12 Irisan:</text>
+    
+    <!-- 12 slots bar -->
+    <g transform="translate(-180, -20)">
+      <rect x="0" y="0" width="40" height="40" rx="8" fill="#FCD34D" stroke="#B45309" stroke-width="2"/><rect x="46" y="0" width="40" height="40" rx="8" fill="#FCD34D" stroke="#B45309" stroke-width="2"/><rect x="92" y="0" width="40" height="40" rx="8" fill="#FCD34D" stroke="#B45309" stroke-width="2"/><rect x="138" y="0" width="40" height="40" rx="8" fill="#FDA4AF" stroke="#E11D48" stroke-width="2"/><rect x="184" y="0" width="40" height="40" rx="8" fill="#FDA4AF" stroke="#E11D48" stroke-width="2"/><rect x="230" y="0" width="40" height="40" rx="8" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/><rect x="276" y="0" width="40" height="40" rx="8" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/><rect x="322" y="0" width="40" height="40" rx="8" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/><rect x="368" y="0" width="40" height="40" rx="8" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/><rect x="414" y="0" width="40" height="40" rx="8" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/><rect x="460" y="0" width="40" height="40" rx="8" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/><rect x="506" y="0" width="40" height="40" rx="8" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/>
+      <text x="20" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#78350F">1</text><text x="66" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#78350F">2</text><text x="112" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#78350F">3</text><text x="158" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#9F1239">4</text><text x="204" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#9F1239">5</text><text x="250" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#94A3B8">6</text><text x="296" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#94A3B8">7</text><text x="342" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#94A3B8">8</text><text x="388" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#94A3B8">9</text><text x="434" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#94A3B8">10</text><text x="480" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#94A3B8">11</text><text x="526" y="25" text-anchor="middle" font-size="14" font-weight="900" fill="#94A3B8">12</text>
+    </g>
+
+    <text x="420" y="8" text-anchor="middle" font-size="15" font-weight="900" fill="#059669">
+      3 Kuning + 2 Merah = 5 Terisi!
+    </text>
+  </g>
+
+  <!-- Bottom Rule -->
+  <g transform="translate(640, 640)" text-anchor="middle">
+    <rect x="-420" y="-22" width="840" height="44" rx="22" fill="#0F172A"/>
+    <text y="7" fill="#FFFFFF" font-size="15" font-weight="800">
+      INGAT ATURAN EMAS: <tspan fill="#FBBF24">Penyebut (12) TIDAK BOLEH dijumlahkan!</tspan> Hanya pembilang atas yang ditambah!
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="glowGreen" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#10B981" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glowGold" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#F59E0B" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#FFFDF7"/>
+
+  <!-- Top Header Banner -->
+  <g transform="translate(640, 52)" text-anchor="middle">
+    <rect x="-340" y="-26" width="680" height="52" rx="26" fill="#F59E0B" filter="url(#shadow)"/>
+    <text y="9" fill="#FFFFFF" font-size="21" font-weight="900" letter-spacing="1">
+      🍕 KPK SEBAGAI PEMOTONG ADIL: 12 IRISAN SAMA RATA! 🍕
+    </text>
+  </g>
+  <text x="640" y="112" text-anchor="middle" font-size="16" font-weight="700" fill="#78350F">
+    KPK dari 4 dan 6 adalah 12 ── Kedua pizza dipotong menjadi 12 irisan yang persis sama besar!
+  </text>
+
+  <!-- Left Pizza Card (1/4 -> 3/12) -->
+  <g transform="translate(140, 140)">
+    <rect width="460" height="450" rx="28" fill="#FFFFFF" stroke="#FDE68A" stroke-width="3" filter="url(#shadow)"/>
+    
+    <!-- Title Pill -->
+    <rect x="25" y="20" width="410" height="42" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="230" y="47" text-anchor="middle" font-size="18" font-weight="900" fill="#B45309">
+      🍕 Pizza Awal: ¼ ──► Berubah Jadi 3/12
+    </text>
+
+    <!-- Pizza 12 Slices Graphic (3 Active Slices) -->
+    <g transform="translate(230, 210)"><circle cx="0" cy="0" r="120" fill="#FEF3C7" stroke="#D97706" stroke-width="4"/><circle cx="0" cy="0" r="114" fill="#FFFBEB"/>
+        <path d="M 0 0 L 0.00 -114.00 A 114 114 0 0 1 57.00 -98.73 Z" fill="#FCD34D" stroke="#B45309" stroke-width="2.5"/>
+        <circle cx="18.63" cy="-69.55" r="4" fill="#FFFFFF" opacity="0.8"/>
+        <path d="M 0 0 L 57.00 -98.73 A 114 114 0 0 1 98.73 -57.00 Z" fill="#FCD34D" stroke="#B45309" stroke-width="2.5"/>
+        <circle cx="50.91" cy="-50.91" r="4" fill="#FFFFFF" opacity="0.8"/>
+        <path d="M 0 0 L 98.73 -57.00 A 114 114 0 0 1 114.00 0.00 Z" fill="#FCD34D" stroke="#B45309" stroke-width="2.5"/>
+        <circle cx="69.55" cy="-18.63" r="4" fill="#FFFFFF" opacity="0.8"/>
+        <path d="M 0 0 L 114.00 0.00 A 114 114 0 0 1 98.73 57.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L 98.73 57.00 A 114 114 0 0 1 57.00 98.73 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L 57.00 98.73 A 114 114 0 0 1 0.00 114.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L 0.00 114.00 A 114 114 0 0 1 -57.00 98.73 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -57.00 98.73 A 114 114 0 0 1 -98.73 57.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -98.73 57.00 A 114 114 0 0 1 -114.00 0.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -114.00 0.00 A 114 114 0 0 1 -98.73 -57.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -98.73 -57.00 A 114 114 0 0 1 -57.00 -98.73 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -57.00 -98.73 A 114 114 0 0 1 -0.00 -114.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        </g>
+
+    <!-- Description -->
+    <rect x="35" y="350" width="390" height="72" rx="16" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+    <text x="230" y="378" text-anchor="middle" font-size="15" font-weight="800" fill="#92400E">
+      1 potong besar ¼ = 3 irisan dari 12 irisan
+    </text>
+    <text x="230" y="405" text-anchor="middle" font-size="16" font-weight="900" fill="#D97706">
+      ¼ = (1 × 3) / (4 × 3) = 3/12
+    </text>
+  </g>
+
+  <!-- Middle Connector & Plus -->
+  <g transform="translate(640, 365)" text-anchor="middle">
+    <circle cx="0" cy="0" r="32" fill="#10B981" filter="url(#shadow)"/>
+    <text y="14" fill="#FFFFFF" font-size="40" font-weight="900">+</text>
+    <text y="60" fill="#047857" font-size="14" font-weight="900">DIGABUNG SAH!</text>
+  </g>
+
+  <!-- Right Pizza Card (1/6 -> 2/12) -->
+  <g transform="translate(680, 140)">
+    <rect width="460" height="450" rx="28" fill="#FFFFFF" stroke="#FECDD3" stroke-width="3" filter="url(#shadow)"/>
+    
+    <!-- Title Pill -->
+    <rect x="25" y="20" width="410" height="42" rx="14" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="230" y="47" text-anchor="middle" font-size="18" font-weight="900" fill="#9F1239">
+      🍕 Pizza Awal: ⅙ ──► Berubah Jadi 2/12
+    </text>
+
+    <!-- Pizza 12 Slices Graphic (2 Active Slices) -->
+    <g transform="translate(230, 210)"><circle cx="0" cy="0" r="120" fill="#FEF3C7" stroke="#D97706" stroke-width="4"/><circle cx="0" cy="0" r="114" fill="#FFFBEB"/>
+        <path d="M 0 0 L 0.00 -114.00 A 114 114 0 0 1 57.00 -98.73 Z" fill="#FDA4AF" stroke="#B45309" stroke-width="2.5"/>
+        <circle cx="18.63" cy="-69.55" r="4" fill="#FFFFFF" opacity="0.8"/>
+        <path d="M 0 0 L 57.00 -98.73 A 114 114 0 0 1 98.73 -57.00 Z" fill="#FDA4AF" stroke="#B45309" stroke-width="2.5"/>
+        <circle cx="50.91" cy="-50.91" r="4" fill="#FFFFFF" opacity="0.8"/>
+        <path d="M 0 0 L 98.73 -57.00 A 114 114 0 0 1 114.00 0.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L 114.00 0.00 A 114 114 0 0 1 98.73 57.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L 98.73 57.00 A 114 114 0 0 1 57.00 98.73 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L 57.00 98.73 A 114 114 0 0 1 0.00 114.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L 0.00 114.00 A 114 114 0 0 1 -57.00 98.73 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -57.00 98.73 A 114 114 0 0 1 -98.73 57.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -98.73 57.00 A 114 114 0 0 1 -114.00 0.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -114.00 0.00 A 114 114 0 0 1 -98.73 -57.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -98.73 -57.00 A 114 114 0 0 1 -57.00 -98.73 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        
+        <path d="M 0 0 L -57.00 -98.73 A 114 114 0 0 1 -0.00 -114.00 Z" fill="#FFFBEB" stroke="#CBD5E1" stroke-width="1"/>
+        </g>
+
+    <!-- Description -->
+    <rect x="35" y="350" width="390" height="72" rx="16" fill="#FFF1F2" stroke="#FECDD3" stroke-width="1"/>
+    <text x="230" y="378" text-anchor="middle" font-size="15" font-weight="800" fill="#9F1239">
+      1 potong ⅙ = 2 irisan dari 12 irisan
+    </text>
+    <text x="230" y="405" text-anchor="middle" font-size="16" font-weight="900" fill="#E11D48">
+      ⅙ = (1 × 2) / (6 × 2) = 2/12
+    </text>
+  </g>
+
+  <!-- Bottom Golden Banner -->
+  <g transform="translate(640, 640)" text-anchor="middle">
+    <rect x="-420" y="-22" width="840" height="44" rx="22" fill="#10B981" filter="url(#glowGreen)"/>
+    <text y="7" fill="#FFFFFF" font-size="16" font-weight="900">
+      ⚖️ KARENA UKURAN IRISAN SUDAH SAMA PERSIS (PER-12), KEDUANYA KINI SAH DIJUMLAHKAN!
+    </text>
+  </g>
+</svg>
