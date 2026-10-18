@@ -298,6 +298,14 @@
       0%, 100% { box-shadow: 0 0 10px rgba(234, 179, 8, 0.6); }
       50% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.95); }
     }
+    @keyframes cellPop {
+      0% { transform: scale(0.92); }
+      50% { transform: scale(1.22); }
+      100% { transform: scale(1); }
+    }
+    .cell-pop {
+      animation: cellPop 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
     /* Buttons */
     .action-btn {
@@ -607,7 +615,7 @@
       <div class="brush-control-panel">
         <div class="brush-group" id="group-a1">
           <div class="brush-label" style="color:var(--color-a1);">
-            <span>🐸 <strong>Kodok Aqlan (Lompat 2)</strong></span>
+            <span style="cursor:pointer;" onclick="setActiveBrushAqlan('a1')" title="Klik untuk dengar suara Kodok!">🐸 <strong>Kodok Aqlan (Lompat 2)</strong> 🔊</span>
             <button class="action-btn" id="btn-select-a1" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrushAqlan('a1')">
               Gunakan Kuas Ini 🖌️
             </button>
@@ -622,7 +630,7 @@
 
         <div class="brush-group" id="group-a2">
           <div class="brush-label" style="color:var(--color-a2);">
-            <span>🐰 <strong>Kelinci Sahabat (Lompat 3)</strong></span>
+            <span style="cursor:pointer;" onclick="setActiveBrushAqlan('a2')" title="Klik untuk dengar suara Kelinci!">🐰 <strong>Kelinci Sahabat (Lompat 3)</strong> 🔊</span>
             <button class="action-btn btn-red" id="btn-select-a2" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrushAqlan('a2')">
               Gunakan Kuas Ini 🖌️
             </button>
@@ -637,7 +645,7 @@
 
         <div class="active-brush-status">
           <div id="brush-status-aqlan">
-            🖌️ <strong>Kuas Aktif:</strong> Kodok Aqlan (Lompat 2) — <em>Klik kotak di grid untuk menandai!</em>
+            🖌️ <strong>Kuas Aktif:</strong> Kodok Aqlan (Lompat 2) — <em>Klik kotak di grid untuk menandai! 🐸</em>
           </div>
           <button class="action-btn btn-gray" style="padding:6px 14px; font-size:0.85rem;" onclick="setActiveBrushAqlan('eraser')">
             🧹 Kuas Penghapus
@@ -648,8 +656,8 @@
       <!-- Indikator Progres Pengisian Tabel 1-50 -->
       <div class="table-progress-bar" id="grid50-progress">
         <span>📊 <strong>Progres Pengisian Tabel:</strong></span>
-        <span class="progress-pill" id="prog-pill-kodok" style="background:#D1FAE5; color:#065F46;">🐸 Kodok (Lompat 2): <b id="cnt-kodok">0</b>/25</span>
-        <span class="progress-pill" id="prog-pill-kelinci" style="background:#FEE2E2; color:#991B1B;">🐰 Kelinci (Lompat 3): <b id="cnt-kelinci">0</b>/16</span>
+        <span class="progress-pill" id="prog-pill-kodok" style="background:#D1FAE5; color:#065F46; cursor:pointer;" onclick="playSfx('frog')" title="Klik untuk dengar suara Kodok!">🐸 Kodok (Lompat 2): <b id="cnt-kodok">0</b>/25</span>
+        <span class="progress-pill" id="prog-pill-kelinci" style="background:#FEE2E2; color:#991B1B; cursor:pointer;" onclick="playSfx('rabbit')" title="Klik untuk dengar suara Kelinci!">🐰 Kelinci (Lompat 3): <b id="cnt-kelinci">0</b>/16</span>
         <span id="grid50-status-msg" style="font-size:0.85rem; color:#64748B;">(Isi penuh tabel agar tombol KPK terbuka)</span>
       </div>
 
@@ -890,36 +898,45 @@
       grid50.appendChild(cell);
     }
 
-    function setActiveBrushAqlan(brushType) {
-      playSfx('click');
+    function setActiveBrushAqlan(brushType, silent = false) {
+      if (!silent) {
+        if (brushType === 'a1') {
+          playSfx('frog');
+        } else if (brushType === 'a2') {
+          playSfx('rabbit');
+        } else {
+          playSfx('click');
+        }
+      }
       currentBrushAqlan = brushType;
       document.getElementById('group-a1').classList.toggle('active-group', brushType === 'a1');
       document.getElementById('group-a2').classList.toggle('active-group', brushType === 'a2');
       
       const statusText = document.getElementById('brush-status-aqlan');
       if (brushType === 'a1') {
-        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configA1.color}; font-weight:800;">${configA1.icon} ${configA1.name}</span> — <em>Klik kotak di grid untuk menandai!</em>`;
+        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configA1.color}; font-weight:800;">${configA1.icon} ${configA1.name}</span> — <em>Klik kotak di grid untuk menandai! 🐸</em>`;
       } else if (brushType === 'a2') {
-        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configA2.color}; font-weight:800;">${configA2.icon} ${configA2.name}</span> — <em>Klik kotak di grid untuk menandai!</em>`;
+        statusText.innerHTML = `🖌️ <strong>Kuas Aktif:</strong> <span style="color:${configA2.color}; font-weight:800;">${configA2.icon} ${configA2.name}</span> — <em>Klik kotak di grid untuk menandai! 🐰</em>`;
       } else {
         statusText.innerHTML = `🧹 <strong>Kuas Aktif:</strong> <span style="color:#64748B; font-weight:800;">Penghapus</span> — <em>Klik kotak mana saja untuk menghapus tanda!</em>`;
       }
     }
 
     function changeColorAqlan(multipleType, colorHex, bgHex, iconSymbol) {
-      playSfx('click');
       if (multipleType === 'a1') {
+        playSfx('frog');
         configA1.color = colorHex;
         configA1.bg = bgHex;
         configA1.icon = iconSymbol;
         document.documentElement.style.setProperty('--color-a1', colorHex);
-        setActiveBrushAqlan('a1');
+        setActiveBrushAqlan('a1', true);
       } else {
+        playSfx('rabbit');
         configA2.color = colorHex;
         configA2.bg = bgHex;
         configA2.icon = iconSymbol;
         document.documentElement.style.setProperty('--color-a2', colorHex);
-        setActiveBrushAqlan('a2');
+        setActiveBrushAqlan('a2', true);
       }
       for (let i = 1; i <= 50; i++) {
         renderCellAqlan(i);
@@ -927,18 +944,43 @@
     }
 
     function handleCellClickAqlan(num) {
-      playSfx('click');
       const st = cellStateAqlan[num];
+      const cellEl = document.getElementById(`cell-50-${num}`);
+
       if (currentBrushAqlan === 'a1') {
         st.a1 = !st.a1;
-        playSfx(st.a1 ? 'star' : 'click');
+        if (st.a1) {
+          if (st.a2) {
+            playSfx('kpk_meet');
+          } else {
+            playSfx('frog');
+          }
+        } else {
+          playSfx('click');
+        }
       } else if (currentBrushAqlan === 'a2') {
         st.a2 = !st.a2;
-        playSfx(st.a2 ? 'star' : 'click');
+        if (st.a2) {
+          if (st.a1) {
+            playSfx('kpk_meet');
+          } else {
+            playSfx('rabbit');
+          }
+        } else {
+          playSfx('click');
+        }
       } else if (currentBrushAqlan === 'eraser') {
         st.a1 = false;
         st.a2 = false;
+        playSfx('click');
       }
+
+      if (cellEl) {
+        cellEl.classList.remove('cell-pop');
+        void cellEl.offsetWidth; // Trigger reflow for re-animation
+        cellEl.classList.add('cell-pop');
+      }
+
       renderCellAqlan(num);
       checkGrid50Completion();
 
@@ -1079,7 +1121,7 @@
       document.getElementById('grid-result').style.display = 'none';
     }
 
-    setActiveBrushAqlan('a1');
+    setActiveBrushAqlan('a1', true);
     checkGrid50Completion();
 
     // =========================================================================

@@ -124,6 +124,121 @@ function playSfx(type) {
         osc.start(now + n.t);
         osc.stop(now + n.t + n.d);
       });
+    } else if (type === 'frog' || type === 'kodok') {
+      // Cartoon Frog "Rib-bit! / Kwoo-ok! 🐸"
+      // Pulse 1: "Rib-" (throaty quick formant burst)
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      const filter1 = ctx.createBiquadFilter();
+      filter1.type = 'bandpass';
+      filter1.frequency.setValueAtTime(460, now);
+      filter1.Q.setValueAtTime(3.2, now);
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(155, now);
+      osc1.frequency.linearRampToValueAtTime(225, now + 0.035);
+      osc1.frequency.linearRampToValueAtTime(145, now + 0.08);
+      gain1.gain.setValueAtTime(0.01, now);
+      gain1.gain.linearRampToValueAtTime(0.24, now + 0.02);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.085);
+      osc1.connect(filter1);
+      filter1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.09);
+
+      // Pulse 2: "-bit!" (punchy throat croak)
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      const filter2 = ctx.createBiquadFilter();
+      filter2.type = 'bandpass';
+      filter2.frequency.setValueAtTime(420, now + 0.10);
+      filter2.Q.setValueAtTime(3.8, now + 0.10);
+      osc2.type = 'sawtooth';
+      osc2.frequency.setValueAtTime(180, now + 0.10);
+      osc2.frequency.linearRampToValueAtTime(280, now + 0.16);
+      osc2.frequency.linearRampToValueAtTime(160, now + 0.25);
+      gain2.gain.setValueAtTime(0.01, now + 0.10);
+      gain2.gain.linearRampToValueAtTime(0.30, now + 0.13);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.27);
+      osc2.connect(filter2);
+      filter2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(now + 0.10);
+      osc2.stop(now + 0.28);
+
+      // Deep pouch undertone (gives body and warmth)
+      const subOsc = ctx.createOscillator();
+      const subGain = ctx.createGain();
+      subOsc.type = 'sine';
+      subOsc.frequency.setValueAtTime(110, now + 0.10);
+      subOsc.frequency.exponentialRampToValueAtTime(75, now + 0.26);
+      subGain.gain.setValueAtTime(0.18, now + 0.10);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+      subOsc.connect(subGain);
+      subGain.connect(ctx.destination);
+      subOsc.start(now + 0.10);
+      subOsc.stop(now + 0.27);
+
+    } else if (type === 'rabbit' || type === 'kelinci') {
+      // Cartoon Bunny Hop "Boing-boing! 🐰"
+      // Bounce 1: snappy upward pitch sweep
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(360, now);
+      osc1.frequency.exponentialRampToValueAtTime(820, now + 0.06);
+      osc1.frequency.exponentialRampToValueAtTime(460, now + 0.13);
+      gain1.gain.setValueAtTime(0.24, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.15);
+
+      // Bounce 1 harmonic (adds playful springy overtone)
+      const harm1 = ctx.createOscillator();
+      const harmGain1 = ctx.createGain();
+      harm1.type = 'triangle';
+      harm1.frequency.setValueAtTime(720, now);
+      harm1.frequency.exponentialRampToValueAtTime(1640, now + 0.06);
+      harmGain1.gain.setValueAtTime(0.08, now);
+      harmGain1.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      harm1.connect(harmGain1);
+      harmGain1.connect(ctx.destination);
+      harm1.start(now);
+      harm1.stop(now + 0.13);
+
+      // Bounce 2: secondary higher hop
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(480, now + 0.11);
+      osc2.frequency.exponentialRampToValueAtTime(980, now + 0.18);
+      osc2.frequency.exponentialRampToValueAtTime(600, now + 0.25);
+      gain2.gain.setValueAtTime(0.22, now + 0.11);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(now + 0.11);
+      osc2.stop(now + 0.27);
+
+    } else if (type === 'kpk_meet') {
+      // Golden Meeting Point (Both Kodok & Kelinci land on the same number!)
+      playSfx('frog');
+      setTimeout(() => playSfx('rabbit'), 80);
+      const chimeNotes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+      chimeNotes.forEach((f, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(f, now + 0.18 + idx * 0.04);
+        gain.gain.setValueAtTime(0.18, now + 0.18 + idx * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18 + idx * 0.04 + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + 0.18 + idx * 0.04);
+        osc.stop(now + 0.18 + idx * 0.04 + 0.40);
+      });
     }
   } catch (e) {
     console.warn("Audio error:", e);
