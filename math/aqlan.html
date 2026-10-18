@@ -803,6 +803,8 @@
   </div>
 
   <script src="../assets/game.js"></script>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="../assets/tracker.js"></script>
   <script>
     // 1. Mood Check-in Aqlan
     const moodMessagesAqlan = {
@@ -828,6 +830,16 @@
       const warmText = document.getElementById('warmTextAqlan');
       warmText.innerHTML = moodMessagesAqlan[moodKey].text;
       warmBox.style.display = 'block';
+
+      const moodLabels = {
+        happy: '😄 Super Bahagia & Semangat!',
+        calm: '😊 Tenang, Senang & Siap Belajar',
+        tired: '😴 Sedikit Mengantuk / Capek',
+        hug: '🤗 Butuh Semangat & Pelukan'
+      };
+      if (window.reportTrackerMood) {
+        window.reportTrackerMood(moodLabels[moodKey] || moodKey);
+      }
     }
 
     function closeMoodModalAqlan() {
@@ -929,6 +941,15 @@
       }
       renderCellAqlan(num);
       checkGrid50Completion();
+
+      let totalBoth = 0, totalMarked = 0;
+      for (let i = 1; i <= 50; i++) {
+        if (cellStateAqlan[i].a1 && cellStateAqlan[i].a2) totalBoth++;
+        if (cellStateAqlan[i].a1 || cellStateAqlan[i].a2) totalMarked++;
+      }
+      if (window.reportTrackerGrid) {
+        window.reportTrackerGrid(num, totalBoth, totalMarked);
+      }
     }
 
     function renderCellAqlan(num) {
@@ -995,6 +1016,7 @@
         if (!grid50WasUnlocked) {
           playSfx('star');
           grid50WasUnlocked = true;
+          if (window.reportTrackerKPKUnlocked) window.reportTrackerKPKUnlocked(true);
         }
       } else {
         btn.className = 'action-btn btn-locked';
@@ -1037,6 +1059,7 @@
       }
       const res = document.getElementById('grid-result');
       if (matches.length > 0) {
+        if (window.reportTrackerKPKFound) window.reportTrackerKPKFound(matches[0]);
         res.className = 'feedback-banner feedback-success';
         res.innerHTML = `🎉 <strong>HORE! TITIK TEMU KPK BERHASIL DITEMUKAN!</strong><br>Kodok dan Kelinci mendarat bersama di angka: <strong>${matches.join(', ')}</strong>.<br>Pertemuan pertama (TERKECIL) adalah di angka <strong>${matches[0]}</strong>! Maka KPK(2, 3) = <strong>${matches[0]}</strong>! 👑✨`;
       } else {
@@ -1309,20 +1332,41 @@
       }
 
       const res = document.getElementById('cup-result');
-      if (sisaCokelat === 0 && sisaVanila === 0) {
+      const isPerfectFPB = (numCups === 4);
+
+      if (window.reportTrackerCups) {
+        window.reportTrackerCups(numCups, isPerfectFPB);
+      }
+
+      if (isPerfectFPB) {
         playSfx('win');
         triggerConfetti();
         res.className = 'feedback-banner feedback-success';
-        res.innerHTML = `🎉 <strong>SEMPURNA TANPA SISA!</strong><br>8 Cokelat dan 12 Vanila dibagi ke dalam <strong>${numCups} toples</strong>: tiap toples berisi <strong>${cokelatPerCup} cokelat</strong> dan <strong>${vanilaPerCup} vanila</strong>.<br>Karena ${numCups} adalah toples terbanyak yang pas, maka <strong>FPB dari 8 dan 12 adalah ${numCups}</strong>!`;
+        res.innerHTML = `🎉 <strong>SEMPURNA & PALING BANYAK (FPB)!</strong><br>8 Cokelat dan 12 Vanila dibagi habis ke dalam <strong>4 toples</strong>: tiap toples berisi <strong>2 cokelat</strong> dan <strong>3 vanila</strong> tanpa ada sisa sedikit pun!<br>Karena 4 adalah toples TERBANYAK yang pas membagi habis keduanya, maka <strong>FPB(8, 12) = 4</strong>! 🏆✨`;
+      } else if (numCups === 2) {
+        playSfx('star');
+        res.className = 'feedback-banner feedback-warning';
+        res.innerHTML = `💡 <strong>BISA DIBAGI RATA, TAPI BUKAN FPB!</strong><br>8 cokelat dan 12 vanila memang bisa dibagi rata ke dalam <strong>2 toples</strong> (tiap toples isi 4 cokelat & 6 vanila tanpa sisa).<br>Tapi Aqlan mau bikin toples <strong>SEBANYAK-BANYAKNYA (FPB)</strong>! Angka 2 masih belum maksimal. Ada jumlah toples yang lebih banyak lagi! Coba cari yang lebih banyak! 🧐`;
+      } else if (numCups === 3) {
+        playSfx('wrong');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `⚠️ <strong>GAGAL (ADA SISA DI MEJA):</strong><br>12 vanila habis (tiap toples 4), tetapi dari 8 cokelat <strong>tersisa ${sisaCokelat} cokelat di meja</strong> yang tidak muat rata.<br>Karena ada sisa, maka <strong>angka 3 BUKAN faktor persekutuan</strong>!`;
+      } else if (numCups === 6) {
+        playSfx('wrong');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `⚠️ <strong>GAGAL (ADA SISA DI MEJA):</strong><br>12 vanila habis (tiap toples 2), tetapi dari 8 cokelat <strong>tersisa ${sisaCokelat} cokelat di meja</strong> yang tidak muat rata.<br>Karena ada sisa, maka <strong>angka 6 BUKAN faktor persekutuan</strong>!`;
       } else {
         playSfx('wrong');
         res.className = 'feedback-banner feedback-fail';
-        res.innerHTML = `⚠️ <strong>UPS, MASIH ADA SISA DI MEJA!</strong><br>Tersisa: ${sisaCokelat} biskuit cokelat dan ${sisaVanila} biskuit vanila yang tidak kebagian toples.<br>Jadi, angka <strong>${numCups} BUKAN FPB</strong> karena tidak membagi habis! Coba jumlah toples lain.`;
+        res.innerHTML = `⚠️ <strong>GAGAL (ADA SISA DI MEJA):</strong><br>Tersisa ${sisaCokelat} cokelat dan ${sisaVanila} vanila di meja yang tidak kebagian toples.<br>Jadi, angka <strong>${numCups} BUKAN FPB</strong>!`;
       }
     }
 
     // 5. Kuis
     function checkQuiz(qNum, btn, isCorrect) {
+      if (window.reportTrackerQuiz) {
+        window.reportTrackerQuiz(qNum, isCorrect);
+      }
       const fb = document.getElementById(`quiz-fb-${qNum}`);
       if (isCorrect) {
         playSfx('win');

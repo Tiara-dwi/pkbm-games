@@ -885,6 +885,8 @@
   </div>
 
   <script src="../assets/game.js"></script>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="../assets/tracker.js"></script>
   <script>
     // =========================================================================
     // 1. LOGIKA MOOD MODAL: "HOW ARE YOU TODAY?" (Point 3)
@@ -916,6 +918,16 @@
       const warmText = document.getElementById('warmText');
       warmText.innerHTML = moodMessages[moodKey].text;
       warmBox.style.display = 'block';
+
+      const moodLabels = {
+        happy: '😄 Super Bahagia & Semangat!',
+        calm: '😊 Tenang, Damai & Siap Belajar',
+        tired: '☕ Sedikit Lelah / Capek',
+        hug: '🤗 Butuh Semangat & Pelukan Hangat'
+      };
+      if (window.reportTrackerMood) {
+        window.reportTrackerMood(moodLabels[moodKey] || moodKey);
+      }
     }
 
     function closeMoodModal() {
@@ -1038,6 +1050,15 @@
 
       renderCell(num);
       checkGrid100Completion();
+
+      let totalBoth = 0, totalMarked = 0;
+      for (let i = 1; i <= 100; i++) {
+        if (cellState[i].m1 && cellState[i].m2) totalBoth++;
+        if (cellState[i].m1 || cellState[i].m2) totalMarked++;
+      }
+      if (window.reportTrackerGrid) {
+        window.reportTrackerGrid(num, totalBoth, totalMarked);
+      }
     }
 
     function renderCell(num) {
@@ -1290,11 +1311,16 @@
       renderCalDayMishka(day);
       checkCalMishkaCompletion();
 
+      if (window.reportTrackerCalendar) {
+        window.reportTrackerCalendar(currentCalBrushMishka, day);
+      }
+
       // Cek apakah tanggal ini menjadi titik temu
       if (state.renang && state.biola) {
         playSfx('correct');
         if (day === 14) {
           triggerConfetti();
+          if (window.reportTrackerCalKPK) window.reportTrackerCalKPK(14);
           const res = document.getElementById('cal-result-mishka');
           res.className = 'feedback-banner feedback-success';
           res.innerHTML = `🌟 <strong>HEBAT BANGET MISHKA!</strong><br>Kamu berhasil menemukan titik temu berikutnya pada <strong>Rabu, 14 Oktober 2026</strong>!<br>Pertemuan pertama: 2 Oktober. KPK dari 4 dan 6 adalah <strong>12 hari</strong>.<br>Maka: 2 + 12 = <strong>14 Oktober 2026</strong>! 💖🎉`;
@@ -1330,6 +1356,7 @@
         if (!calMishkaWasUnlocked) {
           playSfx('star');
           calMishkaWasUnlocked = true;
+          if (window.reportTrackerKPKUnlocked) window.reportTrackerKPKUnlocked(true);
         }
       } else {
         btn.className = 'action-btn btn-locked';
@@ -1425,17 +1452,38 @@
 
       const res = document.getElementById('cup-result-mishka');
       const fracDemo = document.getElementById('fractionDemo');
+      const isPerfectFPB = (numCups === 4);
+      const isZeroRemainder = (sisaSpidol === 0 && sisaStik === 0);
 
-      if (sisaSpidol === 0 && sisaStik === 0) {
+      if (window.reportTrackerCups) {
+        window.reportTrackerCups(numCups, isPerfectFPB);
+      }
+
+      if (isPerfectFPB) {
         playSfx('win');
         triggerConfetti();
         res.className = 'feedback-banner feedback-success';
-        res.innerHTML = `🎉 <strong>SEMPURNA TANPA SISA!</strong><br>12 Spidol dan 20 Stik dibagi habis ke dalam <strong>${numCups} cangkir</strong>: tiap cangkir berisi <strong>${spidolPerCup} spidol</strong> dan <strong>${stikPerCup} stik</strong>.<br>Maka <strong>FPB(12, 20) = ${numCups}</strong>!`;
+        res.innerHTML = `🎉 <strong>SEMPURNA & PALING BANYAK (FPB)!</strong><br>12 Spidol dan 20 Stik habis terbagi rata ke dalam <strong>4 cangkir</strong>: tiap cangkir berisi <strong>3 spidol</strong> dan <strong>5 stik</strong> tanpa ada sisa sama sekali!<br>Karena 4 adalah jumlah cangkir TERBANYAK yang pas membagi habis keduanya, maka <strong>FPB(12, 20) = 4</strong>! 🏆✨`;
         fracDemo.style.display = 'flex';
+      } else if (numCups === 2) {
+        playSfx('star');
+        res.className = 'feedback-banner feedback-warning';
+        res.innerHTML = `💡 <strong>BISA DIBAGI RATA, TAPI BUKAN FPB!</strong><br>12 spidol dan 20 stik memang bisa dibagi ke dalam <strong>2 cangkir</strong> (tiap cangkir isi 6 spidol & 10 stik tanpa sisa).<br>Tapi ingat, FPB mencari jumlah cangkir <strong>TERBESAR / TERBANYAK</strong>! Angka 2 masih belum maksimal. Ada jumlah cangkir yang lebih banyak lagi! Coba cari yang lebih banyak! 🧐`;
+        fracDemo.style.display = 'none';
+      } else if (numCups === 3) {
+        playSfx('wrong');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `⚠️ <strong>GAGAL (ADA SISA DI MEJA):</strong><br>12 spidol habis terbagi (tiap cangkir 4 spidol), tetapi dari 20 stik <strong>tersisa ${sisaStik} stik di meja</strong> yang tidak muat rata.<br>Karena tidak bisa membagi stik sampai habis, angka <strong>3 BUKAN faktor persekutuan</strong>!`;
+        fracDemo.style.display = 'none';
+      } else if (numCups === 5) {
+        playSfx('wrong');
+        res.className = 'feedback-banner feedback-fail';
+        res.innerHTML = `⚠️ <strong>GAGAL (ADA SISA DI MEJA):</strong><br>20 stik habis terbagi (tiap cangkir 4 stik), tetapi dari 12 spidol <strong>tersisa ${sisaSpidol} spidol di meja</strong> yang tidak muat rata.<br>Karena tidak bisa membagi spidol sampai habis, angka <strong>5 BUKAN faktor persekutuan</strong>!`;
+        fracDemo.style.display = 'none';
       } else {
         playSfx('wrong');
         res.className = 'feedback-banner feedback-fail';
-        res.innerHTML = `⚠️ <strong>GAGAL (ADA SISA):</strong><br>Tersisa: ${sisaSpidol} spidol dan ${sisaStik} stik yang tidak muat rata.<br>Angka ${numCups} bukan FPB!`;
+        res.innerHTML = `⚠️ <strong>GAGAL:</strong> Masih ada sisa spidol atau stik di meja yang tidak terbagi rata!`;
         fracDemo.style.display = 'none';
       }
     }
@@ -1465,6 +1513,9 @@
     // 6. KUIS LOGIKA
     // =========================================================================
     function checkQuizMishka(qNum, btn, isCorrect) {
+      if (window.reportTrackerQuiz) {
+        window.reportTrackerQuiz(qNum, isCorrect);
+      }
       const fb = document.getElementById(`quiz-mishka-fb-${qNum}`);
       if (isCorrect) {
         playSfx('win');
