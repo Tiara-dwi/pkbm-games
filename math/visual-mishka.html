@@ -182,6 +182,8 @@
       <button class="nav-tab" onclick="switchSlide(4)">Slide 3: Operasi Penjumlahan Sah ➕</button>
       <button class="nav-tab" onclick="switchSlide(5)">Slide 4: FPB Merampingkan (18/24 ➜ 3/4) 💎</button>
       <button class="nav-tab" onclick="switchSlide(6)">Slide 5: Peta 2 Langkah Emas &amp; Game 🎮</button>
+      <button class="nav-tab" onclick="switchSlide(7)">🖼️ Storybook 1: Dua Pizza Ultah</button>
+      <button class="nav-tab" onclick="switchSlide(8)">🤸‍♀️ Storybook 2: Pesenam Stick Landing</button>
     </div>
 
     <!-- Slide Viewer Card -->
@@ -189,14 +191,14 @@
       <div class="slide-toolbar">
         <span class="slide-label" id="currentSlideLabel">Slide 1: Jebakan Penjumlahan Terlarang (1/4 + 1/6 = 2/10 ❌)</span>
         <div class="btn-group">
-          <button class="btn" onclick="downloadCurrentSVG()">⬇️ Download SVG (Untuk Canva)</button>
-          <button class="btn btn-green" onclick="exportCurrentPNG()">📸 Download PNG HD</button>
-          <button class="btn btn-gray" onclick="copyCurrentSVGCode()">📋 Salin Kode Vektor</button>
+          <button class="btn" onclick="downloadCurrentSVG()">⬇️ Download Aset (Untuk Canva)</button>
+          <button class="btn btn-green" onclick="exportCurrentPNG()">📸 Download Gambar HD</button>
+          <button class="btn btn-gray" onclick="copyCurrentSVGCode()">📋 Salin Vektor / Teks</button>
         </div>
       </div>
 
       <div class="svg-display-area" id="svgContainer">
-        <!-- SVG will be dynamically loaded here -->
+        <!-- SVG or Image will be dynamically loaded here -->
       </div>
 
       <div class="explanation-panel" id="expContainer">
@@ -213,6 +215,7 @@
         num: 1,
         title: "Slide 1: Jebakan Penjumlahan Terlarang (1/4 + 1/6 = 2/10 ❌)",
         file: "../assets/mishka/mishka_slide1_forbidden.svg",
+        isImg: false,
         expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
         exp: "Banyak siswa terjebak mengira 1+1=2 dan 4+6=10. Tekankan bahwa angka penyebut di bawah BUKAN sekadar angka, melainkan ukuran irisan. 1 irisan besar pizza (1/4) tidak boleh langsung digabung dengan 1 irisan kecil (1/6). Diperlukan 'Pemotong Adil' yaitu KPK!"
       },
@@ -220,6 +223,7 @@
         num: 2,
         title: "Slide 2: KPK sebagai Pemotong Adil (Kedua Pizza Dipotong Jadi 12 Irisan)",
         file: "../assets/mishka/mishka_slide2_pizza12.svg",
+        isImg: false,
         expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
         exp: "Tunjukkan bahwa KPK dari 4 dan 6 adalah 12. Sekarang kedua pizza dipotong menjadi 12 irisan yang sama persis! Pizza 1/4 bernilai sama dengan 3 irisan per-12 (3/12), dan Pizza 1/6 bernilai sama dengan 2 irisan per-12 (2/12). Ukurannya kini 100% adil dan setara!"
       },
@@ -227,6 +231,7 @@
         num: 3,
         title: "Kapsul Rahasia: Pohon Faktor & Bilangan Prima (Alat Bantu Hitung KPK 12)",
         file: "../assets/mishka/mishka_slide_pohon_faktor.svg",
+        isImg: false,
         expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Kapsul Ini Muncul:",
         exp: "Jelaskan analogi batu bata LEGO: Bilangan prima (2, 3, 5, 7) adalah lego terkecil yang tidak bisa dipecah lagi. Tunjukkan pohon faktor 4 = 2² dan 6 = 2 × 3. Ajarkan aturan emas KPK: ambil semua faktor prima, jika kembar pilih pangkat terbesar: 2² × 3 = 4 × 3 = 12! Inilah bukti ilmiah mengapa pizza diiris jadi 12 potong!"
       },
@@ -234,6 +239,7 @@
         num: 4,
         title: "Slide 3: Operasi Penjumlahan Sah (1/4 + 1/6 = 3/12 + 2/12 = 5/12)",
         file: "../assets/mishka/mishka_slide3_formula.svg",
+        isImg: false,
         expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
         exp: "Setelah penyebutnya sama (12), penyebut TIDAK BOLEH dijumlahkan! Penyebut tetap 12, hanya pembilang atas yang dijumlahkan: 3 + 2 = 5. Hasil akhirnya adalah 5/12 (5 irisan dari total 12 irisan piring)!"
       },
@@ -241,6 +247,7 @@
         num: 5,
         title: "Slide 4: FPB Sang Penyederhana (Pecahan Raksasa 18/24 ──► Ramping 3/4)",
         file: "../assets/mishka/mishka_slide4_simplify.svg",
+        isImg: false,
         expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
         exp: "Jika KPK bertugas di awal untuk menyamakan penyebut, maka FPB bertugas di akhir untuk merampingkan angka! Bagi pembilang dan penyebut dengan FPB(18, 24) = 6. Dalam 1 kali langkah, pecahan raksasa 18/24 langsung ramping menjadi 3/4!"
       },
@@ -248,8 +255,25 @@
         num: 6,
         title: "Slide 5: Peta Strategi Emas Pecahan & Gerbang Web Game Mishka",
         file: "../assets/mishka/mishka_slide5_checklist.svg",
+        isImg: false,
         expTitle: "🎙️ Cara Menjelaskan ke Mishka saat Slide Ini Muncul:",
         exp: "Kunci 2 Langkah Emas: (1) Beda penyebut di awal? Panggil KPK! (2) Hasil akhir masih besar? Panggil FPB! Setelah selesai, ajak Mishka membuka link website game Mishka (Grid 1-100) untuk eksplorasi interaktif!"
+      },
+      {
+        num: 7,
+        title: "🖼️ Storybook Ilustrasi: Tragedi Dua Loyang Pizza Pesta Ulang Tahun",
+        file: "../assets/mishka/pizza_fraction_story_slide1.jpg",
+        isImg: true,
+        expTitle: "🎨 Visual Storybook Artistik (Canva 16:9):",
+        exp: "Ilustrasi meja prasmanan ulang tahun dengan Pizza Keju 4 irisan JUMBO (1/4), Pizza Sosis 6 irisan RAMPING (1/6), serta timbangan miring membuktikan bahwa 1/4 + 1/6 ≠ 2/10 karena ukuran irisannya tidak adil!"
+      },
+      {
+        num: 8,
+        title: "🤸‍♀️ Storybook Ilustrasi: Harmoni Senam Lantai & Perfect Stick Landing (KPK 12)",
+        file: "../assets/mishka/gymnast_kpk_12_slide3.jpg",
+        isImg: true,
+        expTitle: "🎨 Visual Storybook Artistik (Canva 16:9):",
+        exp: "Ilustrasi pesenam putri Indonesia melakukan salto berirama pecahan, lalu menjejakkan kedua kaki dengan stabil (perfect stick landing) di matras tanpa goyah di ketukan ke-12. Menghilangkan risiko cedera pendaratan berkat hitungan presisi KPK = 12!"
       }
     ];
 
@@ -267,12 +291,15 @@
       // Update Label
       document.getElementById('currentSlideLabel').innerText = data.title;
 
-      // Fetch and display SVG
-      fetch(data.file)
-        .then(res => res.text())
-        .then(svgText => {
-          document.getElementById('svgContainer').innerHTML = svgText;
-        });
+      if (data.isImg) {
+        document.getElementById('svgContainer').innerHTML = `<img src="${data.file}" alt="${data.title}" style="max-width:100%; height:auto; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.1);">`;
+      } else {
+        fetch(data.file)
+          .then(res => res.text())
+          .then(svgText => {
+            document.getElementById('svgContainer').innerHTML = svgText;
+          });
+      }
 
       // Update Explanation
       document.getElementById('expContainer').innerHTML = `
@@ -285,11 +312,21 @@
       const data = slidesData[currentIdx];
       const a = document.createElement('a');
       a.href = data.file;
-      a.download = `Mishka_${data.title.replace(/[^a-zA-Z0-9]/g, '_')}.svg`;
+      const ext = data.isImg ? 'jpg' : 'svg';
+      a.download = `Mishka_${data.title.replace(/[^a-zA-Z0-9]/g, '_')}.${ext}`;
       a.click();
     }
 
     function exportCurrentPNG() {
+      const data = slidesData[currentIdx];
+      if (data.isImg) {
+        const a = document.createElement('a');
+        a.href = data.file;
+        a.download = `Mishka_Slide_${currentIdx+1}_Storybook.jpg`;
+        a.click();
+        return;
+      }
+
       const svgEl = document.querySelector('#svgContainer svg');
       if (!svgEl) return;
       const svgString = new XMLSerializer().serializeToString(svgEl);
@@ -318,11 +355,18 @@
     }
 
     function copyCurrentSVGCode() {
+      const data = slidesData[currentIdx];
+      if (data.isImg) {
+        navigator.clipboard.writeText(data.file).then(() => {
+          alert("Link path file gambar berhasil disalin!");
+        });
+        return;
+      }
       const svgEl = document.querySelector('#svgContainer svg');
       if (!svgEl) return;
       const svgString = new XMLSerializer().serializeToString(svgEl);
       navigator.clipboard.writeText(svgString).then(() => {
-        alert("Kode Vektor SVG berhasil disalin ke clipboard! Anda bisa langsung paste di software desain atau Canva.");
+        alert("Kode Vektor SVG berhasil disalin ke clipboard! Anda bisa langsung paste di Canva.");
       });
     }
 
@@ -331,7 +375,8 @@
         setTimeout(() => {
           const a = document.createElement('a');
           a.href = s.file;
-          a.download = `Mishka_Slide_${s.num}.svg`;
+          const ext = s.isImg ? 'jpg' : 'svg';
+          a.download = `Mishka_Slide_${s.num}.${ext}`;
           a.click();
         }, idx * 300);
       });
