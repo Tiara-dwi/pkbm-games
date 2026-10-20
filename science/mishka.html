@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Insinyur Listrik & Magnet: Mishka (IPAS Kelas 5)</title>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --accent: #F59E0B;
+      --danger: #EF4444;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border: #E2E8F0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      padding: 16px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* Top Header */
+    .header-card {
+      background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+      border: 2px solid #C7D2FE;
+      border-radius: 20px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.08);
+    }
+    .header-info h1 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #312E81;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-info p {
+      font-size: 0.95rem;
+      color: #4338CA;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .btn-nav {
+      background: white;
+      border: 1.5px solid #C7D2FE;
+      padding: 8px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #312E81;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { background: #4F46E5; color: white; border-color: #4F46E5; }
+
+    /* Storytelling Banner: The STEM Context */
+    .story-banner {
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      border: 2px solid #BFDBFE;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .story-icon { font-size: 2.2rem; }
+    .story-text h3 { font-size: 0.98rem; font-weight: 900; color: #1E3A8A; }
+    .story-text p { font-size: 0.85rem; color: #1E40AF; margin-top: 2px; }
+
+    /* Tabs Navigation */
+    .tabs-nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+      background: white;
+      border: 2px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover { border-color: #4F46E5; color: #4F46E5; }
+    .tab-btn.active {
+      background: #4F46E5;
+      color: white;
+      border-color: #4F46E5;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .lab-card {
+      background: white;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      padding: 22px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+      margin-bottom: 20px;
+    }
+
+    /* CIRCUIT CANVAS */
+    .circuit-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .circuit-wrapper { grid-template-columns: 1fr; } }
+    .canvas-box {
+      background: #0F172A;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #334155;
+    }
+    canvas { display: block; width: 100%; height: auto; }
+
+    .sidebar-controls {
+      background: #F8FAFC;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .mode-pill-group { display: flex; gap: 6px; }
+    .mode-pill {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      background: white;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .mode-pill.active {
+      background: #4F46E5;
+      color: white;
+      border-color: #4F46E5;
+    }
+
+    .btn-toggle-switch {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-on { background: #10B981; color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
+    .btn-off { background: #EF4444; color: white; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
+
+    .bulb-status-box {
+      background: white;
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid var(--border);
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    /* Hospital Crisis Alert Box */
+    .crisis-alert {
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .crisis-warning {
+      background: #FEF2F2;
+      border: 1.5px solid #FCA5A5;
+      color: #991B1B;
+    }
+    .crisis-safe {
+      background: #ECFDF5;
+      border: 1.5px solid #6EE7B7;
+      color: #065F46;
+    }
+
+    /* TAB 2: ELEKTROMAGNET & RECYCLING CRANE */
+    .electro-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .electro-grid { grid-template-columns: 1fr; } }
+
+    /* TAB 3: MAGLEV WITHOUT SPOILERS */
+    .maglev-arena {
+      background: linear-gradient(180deg, #1E1B4B 0%, #0F172A 100%);
+      border-radius: 16px;
+      padding: 24px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #4338CA;
+    }
+    .train-track-view {
+      height: 180px;
+      position: relative;
+      margin: 20px 0;
+      border-bottom: 8px solid #6366F1;
+      display: flex;
+      align-items: flex-end;
+    }
+    .maglev-train {
+      width: 140px;
+      height: 60px;
+      background: linear-gradient(90deg, #E0E7FF 0%, #C7D2FE 80%, #6366F1 100%);
+      border-radius: 20px 8px 8px 8px;
+      position: absolute;
+      left: 30px;
+      bottom: 0px;
+      transition: bottom 0.4s ease, left 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #1E1B4B;
+      font-size: 0.85rem;
+    }
+    .maglev-train.levitating {
+      bottom: 40px;
+      box-shadow: 0 15px 30px rgba(99, 102, 241, 0.9);
+      border: 2px solid #38BDF8;
+    }
+    .maglev-train.stuck {
+      bottom: 0px;
+      background: #64748B;
+      box-shadow: none;
+      border: 2px solid #EF4444;
+    }
+
+    /* Inquiry Prompt Box (No Spoilers) */
+    .inquiry-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 18px;
+    }
+    .inquiry-title {
+      font-size: 0.92rem;
+      font-weight: 900;
+      color: #38BDF8;
+      margin-bottom: 8px;
+    }
+    .inquiry-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .inquiry-btn {
+      flex: 1;
+      min-width: 180px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .inquiry-btn:hover { background: #4F46E5; }
+    .inquiry-btn.selected { background: #10B981; border-color: #10B981; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header-card">
+      <div class="header-info">
+        <h1>💡 Studio Insinyur Listrik & Magnet Mishka</h1>
+        <p>Eksperimen Interaktif IPAS Kelas 5 • Bab 3: Magnet, Listrik, dan Teknologi</p>
+      </div>
+      <div class="nav-links">
+        <a href="../index.html" class="btn-nav">🏠 Portal PKBM</a>
+        <a href="../math/mishka.html" class="btn-nav">📐 Math Mishka</a>
+        <a href="aqlan.html" class="btn-nav">🛹 Lab Aqlan (Kelas 4)</a>
+      </div>
+    </div>
+
+    <!-- STEM Story Context -->
+    <div class="story-banner">
+      <div class="story-icon">⚙️</div>
+      <div class="story-text">
+        <h3>Misi Insinyur Cilik Mishka: Dari Partikel Elektron Hingga Kereta 600 km/jam</h3>
+        <p>
+          "Mishka, listrik dan magnet adalah dua bersaudara yang menggerakkan peradaban modern! Rancang sirkuit darurat rumah sakit, buat crane magnet untuk daur ulang logam, dan temukan rahasia kereta Maglev melayang tanpa roda!"
+        </p>
+      </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('circuit')">
+        <span>💡</span> 1. Sirkuit Listrik & Krisis RS Darurat
+      </button>
+      <button class="tab-btn" onclick="switchTab('electro')">
+        <span>🧲</span> 2. Crane Elektromagnetik Daur Ulang
+      </button>
+      <button class="tab-btn" onclick="switchTab('maglev')">
+        <span>🚄</span> 3. Laboratorium Inkuiri Maglev 600 km/jam
+      </button>
+    </div>
+
+    <!-- TAB 1: SIRKUIT LISTRIK DENGAN MISI KRISIS RS -->
+    <div id="tab-circuit" class="tab-content active">
+      <div class="lab-card">
+        <div class="circuit-wrapper">
+          
+          <!-- Circuit Canvas -->
+          <div>
+            <div class="canvas-box">
+              <canvas id="circuitCanvas" width="650" height="380"></canvas>
+            </div>
+            <div style="font-size:0.8rem; color:var(--muted); margin-top:8px; text-align:center;">
+              ⚡ Partikel biru pendar menunjukkan aliran elektron nyata yang mengalir dari kutub negatif baterai.
+            </div>
+          </div>
+
+          <!-- Controls Sidebar -->
+          <div class="sidebar-controls">
+            <h3 style="font-size:1rem; font-weight:900; color:#1E1B4B;">⚙️ Mode Rangkaian</h3>
+            
+            <div class="mode-pill-group">
+              <button class="mode-pill active" onclick="setCircuitMode('seri', this)">Rangkaian Seri (1 Jalur)</button>
+              <button class="mode-pill" onclick="setCircuitMode('paralel', this)">Rangkaian Paralel (Bercabang)</button>
+            </div>
+
+            <!-- Master Switch -->
+            <button class="btn-toggle-switch btn-on" id="masterSwitchBtn" onclick="toggleMasterSwitch()">
+              ⚡ Sakelar Pusat: ON (Menyala)
+            </button>
+
+            <!-- Bulb Status / Cut controls -->
+            <div class="bulb-status-box">
+              <div class="status-row">
+                <span>💡 Alat 1: Lampu Ruang Operasi</span>
+                <button class="btn-nav" style="padding:4px 8px; font-size:0.75rem;" onclick="toggleBulbBroken(1)" id="b1Btn">Cabut Bohlam 1</button>
+              </div>
+              <div class="status-row">
+                <span>🫁 Alat 2: Mesin Ventilator ICU</span>
+                <button class="btn-nav" style="padding:4px 8px; font-size:0.75rem;" onclick="toggleBulbBroken(2)" id="b2Btn">Cabut Bohlam 2</button>
+              </div>
+            </div>
+
+            <!-- Hospital Crisis Feedback -->
+            <div class="crisis-alert crisis-warning" id="crisisAlertBox">
+              <strong>🚨 Uji Kasus Nyata (Translating Uncertainty):</strong><br>
+              Dalam mode <em>Rangkaian Seri</em>, jika 1 lampu ruang operasi dicabut/mati, kawat tunggal putus dan <strong>Ventilator ICU IKUT MATI TOTAL!</strong> Ini sebabnya instalasi rumah & RS tidak boleh memakai sirkuit seri!
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: CRANE ELEKTROMAGNETIK DAUR ULANG LOGAM -->
+    <div id="tab-electro" class="tab-content">
+      <div class="lab-card">
+        <h2 style="font-size:1.2rem; font-weight:900; color:#312E81; margin-bottom:6px;">🧲 Misi Crane Magnet: Pemilah Logam Daur Ulang</h2>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:18px;">
+          Mishka menjadi kepala insinyur pabrik daur ulang. Rancang kekuatan elektromagnet paku agar mampu mengangkat target tumpukan besi tua!
+        </p>
+
+        <div class="electro-grid">
+          <!-- Canvas Magnet -->
+          <div class="canvas-box" style="background:#0F172A;">
+            <canvas id="electroCanvas" width="650" height="380"></canvas>
+          </div>
+
+          <!-- Controls -->
+          <div class="sidebar-controls">
+            <h3 style="font-size:1rem; font-weight:900; color:#1E1B4B;">⚙️ Variabel Rekayasa (Engineering)</h3>
+            
+            <div>
+              <label style="font-size:0.8rem; font-weight:800; color:var(--muted); display:block; margin-bottom:4px;">
+                Jumlah Lilitan Kawat Tembaga: <strong id="coilsText" style="color:#4F46E5;">20</strong> Lilitan
+              </label>
+              <input type="range" id="coilSlider" min="5" max="40" step="5" value="20" style="width:100%; accent-color:#4F46E5;" oninput="updateElectro()">
+            </div>
+
+            <div>
+              <label style="font-size:0.8rem; font-weight:800; color:var(--muted); display:block; margin-bottom:4px;">
+                Sumber Daya Baterai:
+              </label>
+              <div class="mode-pill-group">
+                <button class="mode-pill" onclick="setBatteries(1, this)">1 Baterai (1.5V)</button>
+                <button class="mode-pill active" onclick="setBatteries(2, this)">2 Baterai (3.0V)</button>
+              </div>
+            </div>
+
+            <button class="btn-toggle-switch btn-on" id="electroSwitchBtn" onclick="toggleElectroSwitch()">
+              ⚡ Aliran Arus: AKTIF
+            </button>
+
+            <!-- Results & Mission Targets -->
+            <div style="background:white; border-radius:12px; padding:14px; border:1px solid var(--border); text-align:center;">
+              <div style="font-size:0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase;">Beban Klip Terangkat</div>
+              <div style="font-size:2rem; font-weight:900; color:#4F46E5;" id="clipsCountText">
+                12 <span style="font-size:1rem; color:var(--muted);">Klip 📎</span>
+              </div>
+              <div style="font-size:0.75rem; color:#059669; font-weight:800; margin-top:4px;" id="craneMissionFeedback">
+                🎯 Target Tantangan: Angkat minimal 25 klip sekaligus!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: INKUIRI MAGLEV (NO SPOILERS) -->
+    <div id="tab-maglev" class="tab-content">
+      <div class="lab-card">
+        <h2 style="font-size:1.2rem; font-weight:900; color:#312E81; margin-bottom:6px;">🚄 Laboratorium Inkuiri: Rahasia Melayang Kereta Maglev</h2>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:18px;">
+          Uji coba dua konfigurasi magnet rel di bawah ini. Cari tahu konfigurasi mana yang membuat kereta melayang 10 cm tanpa menyentuh rel!
+        </p>
+
+        <div class="maglev-arena">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <span style="font-size:0.8rem; text-transform:uppercase; font-weight:800; color:#A5B4FC;">Status Levitasi Kereta</span>
+              <div style="font-size:1.3rem; font-weight:900;" id="maglevStatusText">Pilih Konfigurasi Magnet Rel... 🔍</div>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:0.8rem; text-transform:uppercase; font-weight:800; color:#A5B4FC;">Speedometer</span>
+              <div style="font-size:2rem; font-weight:900; color:#38BDF8;" id="maglevSpeedText">0 km/jam</div>
+            </div>
+          </div>
+
+          <!-- Train Track Track -->
+          <div class="train-track-view">
+            <div class="maglev-train" id="maglevTrain">
+              🚄 MAGLEV 01
+            </div>
+          </div>
+
+          <!-- Pure Inquiry Polarity Controls (No Spoilers!) -->
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+            <button class="btn-nav" id="btnConfigA" style="background:#4F46E5; color:white; border:none; padding:10px 16px;" onclick="testPolarity('same')">
+              🧲 Uji Konfigurasi A: Kutub Rel [Utara] bertemu Badan [Utara]
+            </button>
+            <button class="btn-nav" id="btnConfigB" style="background:#64748B; color:white; border:none; padding:10px 16px;" onclick="testPolarity('opposite')">
+              🧲 Uji Konfigurasi B: Kutub Rel [Selatan] bertemu Badan [Utara]
+            </button>
+            <button class="btn-nav" style="background:#10B981; color:white; border:none; padding:10px 20px; margin-left:auto;" onclick="launchMaglev()">
+              🚀 Luncurkan Kereta!
+            </button>
+          </div>
+
+          <!-- Scientific Inquiry Deduction Box -->
+          <div class="inquiry-box" id="maglevInquiryBox">
+            <div class="inquiry-title">🧠 Pertanyaan Inkuiri Sains Mishka:</div>
+            <p style="font-size:0.82rem; color:#CBD5E1; margin-bottom:10px;">
+              Berdasarkan hasil uji coba di atas, apa prinsip fisika yang menyebabkan badan kereta Maglev bisa melayang 10 cm di atas rel tanpa gaya gesek?
+            </p>
+            <div class="inquiry-options">
+              <button class="inquiry-btn" onclick="answerInquiry(1, this)">
+                A. Kutub magnet senama (U-U) saling tolak-menolak sekuat tenaga
+              </button>
+              <button class="inquiry-btn" onclick="answerInquiry(2, this)">
+                B. Kutub berbeda (U-S) saling menempel erat ke rel
+              </button>
+              <button class="inquiry-btn" onclick="answerInquiry(3, this)">
+                C. Kereta terbang karena ditiup angin kencang
+              </button>
+            </div>
+            <div id="inquiryFeedback" style="margin-top:10px; font-size:0.85rem; font-weight:800; display:none;"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // --- AUDIO HELPER (Web Audio API) ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playTone(freq, type = 'sine', duration = 0.1) {
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function playSuccessChime() {
+      playTone(523.25, 'sine', 0.12);
+      setTimeout(() => playTone(659.25, 'sine', 0.12), 120);
+      setTimeout(() => playTone(783.99, 'sine', 0.25), 240);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+      playTone(500, 'sine', 0.05);
+    }
+
+    // ==========================================
+    // --- MODULE 1: CIRCUIT SIMULATION & CRISIS ---
+    // ==========================================
+    let circuitMode = 'seri'; // 'seri' or 'paralel'
+    let isMasterOn = true;
+    let bulb1Broken = false;
+    let bulb2Broken = false;
+    let electronOffset = 0;
+
+    const circuitCanvas = document.getElementById('circuitCanvas');
+    const cCtx = circuitCanvas.getContext('2d');
+
+    function setCircuitMode(mode, btn) {
+      circuitMode = mode;
+      document.querySelectorAll('.mode-pill-group .mode-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateCircuitCrisisUI();
+      playTone(400, 'triangle', 0.08);
+    }
+
+    function toggleMasterSwitch() {
+      isMasterOn = !isMasterOn;
+      const btn = document.getElementById('masterSwitchBtn');
+      if (isMasterOn) {
+        btn.className = 'btn-toggle-switch btn-on';
+        btn.innerText = '⚡ Sakelar Pusat: ON (Menyala)';
+        playTone(600, 'sine', 0.1);
+      } else {
+        btn.className = 'btn-toggle-switch btn-off';
+        btn.innerText = '🛑 Sakelar Pusat: OFF (Padam)';
+        playTone(300, 'sawtooth', 0.1);
+      }
+      updateCircuitCrisisUI();
+    }
+
+    function toggleBulbBroken(bulbNum) {
+      if (bulbNum === 1) {
+        bulb1Broken = !bulb1Broken;
+        document.getElementById('b1Btn').innerText = bulb1Broken ? 'Pasang Bohlam 1' : 'Cabut Bohlam 1';
+      } else {
+        bulb2Broken = !bulb2Broken;
+        document.getElementById('b2Btn').innerText = bulb2Broken ? 'Pasang Bohlam 2' : 'Cabut Bohlam 2';
+      }
+      playTone(350, 'square', 0.08);
+      updateCircuitCrisisUI();
+    }
+
+    function updateCircuitCrisisUI() {
+      const alertBox = document.getElementById('crisisAlertBox');
+      
+      const b1Lit = isMasterOn && !bulb1Broken && (circuitMode === 'paralel' || !bulb2Broken);
+      const b2Lit = isMasterOn && !bulb2Broken && (circuitMode === 'paralel' || !bulb1Broken);
+
+      if (circuitMode === 'seri') {
+        if (bulb1Broken && !b2Lit) {
+          alertBox.className = 'crisis-alert crisis-warning';
+          alertBox.innerHTML = "🚨 <strong>BAHAYA DI RS DARURAT:</strong> Bohlam 1 dicabut, sirkuit seri putus total! <strong>Mesin Ventilator ICU IKUT MATI!</strong> Ini bukti kelemahan sirkuit seri!";
+        } else {
+          alertBox.className = 'crisis-alert crisis-warning';
+          alertBox.innerHTML = "⚠️ <strong>Mode Seri:</strong> Arus hanya punya 1 kawat tunggal. Cabut Bohlam 1 untuk melihat bagaimana ventilator ICU mati seketika!";
+        }
+      } else {
+        // Paralel
+        if (bulb1Broken && b2Lit) {
+          alertBox.className = 'crisis-alert crisis-safe';
+          alertBox.innerHTML = "🎉 <strong>LUAR BIASA! SISTEM RS AMAN:</strong> Bohlam 1 dicabut/rusak, tetapi <strong>Ventilator ICU TETAP MENYALA</strong> karena memiliki jalur kawat cabang sendiri! Inilah keunggulan sirkuit paralel!";
+        } else {
+          alertBox.className = 'crisis-alert crisis-safe';
+          alertBox.innerHTML = "💡 <strong>Mode Paralel:</strong> Setiap alat memiliki jalur kawat sendiri ke baterai. Cabut Bohlam 1 untuk membuktikan ventilator tetap menyala aman!";
+        }
+      }
+    }
+
+    function drawCircuit() {
+      cCtx.clearRect(0, 0, circuitCanvas.width, circuitCanvas.height);
+      const w = circuitCanvas.width;
+      const h = circuitCanvas.height;
+
+      const b1Lit = isMasterOn && !bulb1Broken && (circuitMode === 'paralel' || !bulb2Broken);
+      const b2Lit = isMasterOn && !bulb2Broken && (circuitMode === 'paralel' || !bulb1Broken);
+
+      // Battery at Left
+      cCtx.fillStyle = '#E2E8F0';
+      cCtx.fillRect(60, h/2 - 35, 40, 70);
+      cCtx.fillStyle = '#EF4444';
+      cCtx.fillRect(60, h/2 - 35, 40, 20); // Positive terminal
+      cCtx.fillStyle = '#FFFFFF';
+      cCtx.font = 'bold 12px sans-serif';
+      cCtx.fillText('+ 3V', 66, h/2 - 20);
+      cCtx.fillText('-', 75, h/2 + 25);
+
+      // Wires
+      cCtx.lineWidth = 4;
+      cCtx.strokeStyle = '#475569';
+
+      if (circuitMode === 'seri') {
+        // Single Loop: Battery -> Switch -> Bulb 1 -> Bulb 2 -> Battery
+        cCtx.beginPath();
+        cCtx.moveTo(80, h/2 - 35);
+        cCtx.lineTo(80, 70);
+        cCtx.lineTo(w - 100, 70);
+        cCtx.lineTo(w - 100, h - 70);
+        cCtx.lineTo(80, h - 70);
+        cCtx.lineTo(80, h/2 + 35);
+        cCtx.stroke();
+
+        // Switch on top wire
+        drawSwitch(240, 70, isMasterOn);
+
+        // Bulbs
+        drawBulb(380, 70, b1Lit, bulb1Broken, "Lampu RS 1");
+        drawBulb(520, 70, b2Lit, bulb2Broken, "Ventilator ICU");
+
+        // Electrons flowing if current flows
+        if (b1Lit && b2Lit) {
+          electronOffset = (electronOffset + 1.5) % 20;
+          drawElectronsSeri(electronOffset, w, h);
+        }
+      } else {
+        // Parallel Circuit with two branches
+        cCtx.beginPath();
+        cCtx.moveTo(80, h/2 - 35);
+        cCtx.lineTo(80, 70);
+        cCtx.lineTo(260, 70);
+        cCtx.stroke();
+
+        // Master Switch
+        drawSwitch(220, 70, isMasterOn);
+
+        // Branch 1 (Top)
+        cCtx.beginPath();
+        cCtx.moveTo(260, 70);
+        cCtx.lineTo(w - 120, 70);
+        cCtx.lineTo(w - 120, h - 70);
+        cCtx.lineTo(80, h - 70);
+        cCtx.lineTo(80, h/2 + 35);
+        cCtx.stroke();
+
+        // Branch 2 (Middle)
+        cCtx.beginPath();
+        cCtx.moveTo(340, 70);
+        cCtx.lineTo(340, 190);
+        cCtx.lineTo(w - 120, 190);
+        cCtx.stroke();
+
+        drawBulb(440, 70, b1Lit, bulb1Broken, "Lampu RS 1");
+        drawBulb(440, 190, b2Lit, bulb2Broken, "Ventilator ICU");
+
+        if (isMasterOn && (b1Lit || b2Lit)) {
+          electronOffset = (electronOffset + 1.5) % 20;
+          drawElectronsParalel(electronOffset, w, h, b1Lit, b2Lit);
+        }
+      }
+    }
+
+    function drawSwitch(x, y, closed) {
+      cCtx.fillStyle = '#F59E0B';
+      cCtx.beginPath();
+      cCtx.arc(x - 15, y, 5, 0, Math.PI * 2);
+      cCtx.arc(x + 15, y, 5, 0, Math.PI * 2);
+      cCtx.fill();
+
+      cCtx.lineWidth = 3;
+      cCtx.strokeStyle = '#F59E0B';
+      cCtx.beginPath();
+      cCtx.moveTo(x - 15, y);
+      if (closed) {
+        cCtx.lineTo(x + 15, y);
+      } else {
+        cCtx.lineTo(x + 10, y - 18);
+      }
+      cCtx.stroke();
+    }
+
+    function drawBulb(x, y, lit, broken, label) {
+      // Glow effect
+      if (lit) {
+        cCtx.fillStyle = 'rgba(250, 204, 21, 0.3)';
+        cCtx.beginPath();
+        cCtx.arc(x, y, 32, 0, Math.PI * 2);
+        cCtx.fill();
+      }
+
+      // Bulb base
+      cCtx.fillStyle = '#64748B';
+      cCtx.fillRect(x - 8, y + 10, 16, 8);
+
+      // Glass sphere
+      cCtx.fillStyle = lit ? '#FACC15' : (broken ? '#334155' : '#94A3B8');
+      cCtx.beginPath();
+      cCtx.arc(x, y, 14, 0, Math.PI * 2);
+      cCtx.fill();
+
+      // Label
+      cCtx.fillStyle = '#E2E8F0';
+      cCtx.font = 'bold 11px sans-serif';
+      cCtx.textAlign = 'center';
+      cCtx.fillText(label, x, y + 34);
+      if (broken) {
+        cCtx.fillStyle = '#EF4444';
+        cCtx.fillText('(Terputus / Lepas)', x, y + 48);
+      }
+    }
+
+    function drawElectronsSeri(offset, w, h) {
+      cCtx.fillStyle = '#38BDF8';
+      for (let x = 80 + offset; x < w - 100; x += 26) {
+        cCtx.beginPath();
+        cCtx.arc(x, 70, 3, 0, Math.PI * 2);
+        cCtx.fill();
+      }
+      for (let x = w - 100 - offset; x > 80; x -= 26) {
+        cCtx.beginPath();
+        cCtx.arc(x, h - 70, 3, 0, Math.PI * 2);
+        cCtx.fill();
+      }
+    }
+
+    function drawElectronsParalel(offset, w, h, b1, b2) {
+      cCtx.fillStyle = '#38BDF8';
+      if (b1) {
+        for (let x = 260 + offset; x < w - 120; x += 26) {
+          cCtx.beginPath();
+          cCtx.arc(x, 70, 3, 0, Math.PI * 2);
+          cCtx.fill();
+        }
+      }
+      if (b2) {
+        for (let x = 340 + offset; x < w - 120; x += 26) {
+          cCtx.beginPath();
+          cCtx.arc(x, 190, 3, 0, Math.PI * 2);
+          cCtx.fill();
+        }
+      }
+    }
+
+    // ==========================================
+    // --- MODULE 2: ELEKTROMAGNET & RECYCLING CRANE ---
+    // ==========================================
+    let coils = 20;
+    let batteryCount = 2;
+    let isElectroOn = true;
+
+    const electroCanvas = document.getElementById('electroCanvas');
+    const eCtx = electroCanvas.getContext('2d');
+
+    function updateElectro() {
+      coils = parseInt(document.getElementById('coilSlider').value);
+      document.getElementById('coilsText').innerText = coils;
+      calculateClips();
+    }
+
+    function setBatteries(count, btn) {
+      batteryCount = count;
+      document.querySelectorAll('#tab-electro .mode-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      calculateClips();
+      playTone(450, 'sine', 0.08);
+    }
+
+    function toggleElectroSwitch() {
+      isElectroOn = !isElectroOn;
+      const btn = document.getElementById('electroSwitchBtn');
+      if (isElectroOn) {
+        btn.className = 'btn-toggle-switch btn-on';
+        btn.innerText = '⚡ Aliran Arus: AKTIF';
+        playTone(550, 'sine', 0.1);
+      } else {
+        btn.className = 'btn-toggle-switch btn-off';
+        btn.innerText = '🛑 Aliran Arus: MATI';
+        playTone(250, 'sawtooth', 0.1);
+      }
+      calculateClips();
+    }
+
+    function calculateClips() {
+      let clips = 0;
+      if (isElectroOn) {
+        clips = Math.round((coils / 5) * (batteryCount * 3.5));
+      }
+      document.getElementById('clipsCountText').innerHTML = clips + ' <span style="font-size:1rem; color:var(--muted);">Klip 📎</span>';
+
+      const fb = document.getElementById('craneMissionFeedback');
+      if (clips >= 25) {
+        fb.innerHTML = '🎉 <strong>TARGET TERCAPAI!</strong> Crane magnet Mishka sangat kuat mengangkat beban kontainer!';
+        fb.style.color = '#10B981';
+      } else {
+        fb.innerHTML = '🎯 Target Tantangan: Angkat minimal 25 klip! (Saat ini: ' + clips + ' klip)';
+        fb.style.color = '#4F46E5';
+      }
+    }
+
+    function drawElectro() {
+      eCtx.clearRect(0, 0, electroCanvas.width, electroCanvas.height);
+      const w = electroCanvas.width;
+      const h = electroCanvas.height;
+
+      // Iron Nail (Center)
+      eCtx.fillStyle = '#94A3B8';
+      eCtx.beginPath();
+      eCtx.roundRect(160, h/2 - 16, 260, 32, 6);
+      eCtx.fill();
+      // Nail tip
+      eCtx.beginPath();
+      eCtx.moveTo(420, h/2 - 16);
+      eCtx.lineTo(460, h/2);
+      eCtx.lineTo(420, h/2 + 16);
+      eCtx.fill();
+
+      // Copper wire coils around nail
+      const coilSpacing = 220 / coils;
+      eCtx.strokeStyle = '#D97706';
+      eCtx.lineWidth = 5;
+      for (let i = 0; i < coils; i++) {
+        eCtx.beginPath();
+        eCtx.ellipse(180 + (i * coilSpacing), h/2, 6, 24, 0, 0, Math.PI * 2);
+        eCtx.stroke();
+      }
+
+      // Magnetic field glow when ON
+      if (isElectroOn) {
+        eCtx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+        eCtx.lineWidth = 2;
+        for (let r = 30; r < 90; r += 20) {
+          eCtx.beginPath();
+          eCtx.arc(440, h/2, r, -Math.PI / 2.5, Math.PI / 2.5);
+          eCtx.stroke();
+        }
+      }
+
+      // Attached paper clips
+      const clips = isElectroOn ? Math.round((coils / 5) * (batteryCount * 3.5)) : 0;
+      eCtx.fillStyle = '#CBD5E1';
+      eCtx.font = '20px sans-serif';
+      for (let c = 0; c < Math.min(clips, 12); c++) {
+        eCtx.fillText('📎', 450 + (c % 4) * 16, h/2 - 20 + Math.floor(c / 4) * 20);
+      }
+    }
+
+    // ==========================================
+    // --- MODULE 3: MAGLEV INQUIRY (NO SPOILERS) ---
+    // ==========================================
+    let chosenPolarity = null; // 'same' or 'opposite'
+
+    function testPolarity(type) {
+      chosenPolarity = type;
+      const btnA = document.getElementById('btnConfigA');
+      const btnB = document.getElementById('btnConfigB');
+      const train = document.getElementById('maglevTrain');
+      const statusText = document.getElementById('maglevStatusText');
+
+      if (type === 'same') {
+        btnA.style.background = '#4F46E5';
+        btnB.style.background = '#64748B';
+        train.className = 'maglev-train levitating';
+        statusText.innerHTML = '✨ Kereta Terangkat Mengambang 10 cm di Atas Rel!';
+        statusText.style.color = '#38BDF8';
+        playTone(600, 'sine', 0.15);
+      } else {
+        btnA.style.background = '#64748B';
+        btnB.style.background = '#EF4444';
+        train.className = 'maglev-train stuck';
+        statusText.innerHTML = '⚠️ Badan Kereta Menempel Keras & Terkunci di Rel!';
+        statusText.style.color = '#F87171';
+        playTone(200, 'sawtooth', 0.2);
+      }
+    }
+
+    function launchMaglev() {
+      const train = document.getElementById('maglevTrain');
+      const speedText = document.getElementById('maglevSpeedText');
+
+      if (!chosenPolarity) {
+        alert('Mishka, pilih salah satu Konfigurasi Magnet Rel terlebih dahulu!');
+        return;
+      }
+
+      if (chosenPolarity === 'same') {
+        // High speed levitation
+        train.style.left = '420px';
+        speedText.innerText = '600 km/jam';
+        speedText.style.color = '#38BDF8';
+        playSuccessChime();
+        setTimeout(() => { train.style.left = '30px'; }, 2200);
+      } else {
+        // Stuck with friction
+        train.style.left = '50px';
+        speedText.innerText = '0 km/jam (Macet)';
+        speedText.style.color = '#EF4444';
+        playTone(180, 'sawtooth', 0.3);
+        setTimeout(() => { train.style.left = '30px'; }, 1000);
+      }
+    }
+
+    function answerInquiry(opt, btn) {
+      document.querySelectorAll('.inquiry-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const fb = document.getElementById('inquiryFeedback');
+      fb.style.display = 'block';
+
+      if (opt === 1) {
+        playSuccessChime();
+        fb.innerHTML = '🎉 <strong>TEPAT SEKALI, INSINYUR MISHKA!</strong> Kutub senama (Utara-Utara) saling tolak-menolak. Gaya tolak ini melawan gravitasi bumi dan meniadakan gaya gesek, sehingga kereta bisa melesat 600 km/jam!';
+        fb.style.color = '#34D399';
+      } else {
+        playTone(250, 'sawtooth', 0.2);
+        fb.innerHTML = '💡 Belum pas! Amati lagi: jika kutub berbeda (U-S), mereka justru tarik-menarik dan menempel di rel hingga macet.';
+        fb.style.color = '#F87171';
+      }
+    }
+
+    // --- MAIN RENDER LOOP ---
+    function renderLoop() {
+      drawCircuit();
+      drawElectro();
+      requestAnimationFrame(renderLoop);
+    }
+    requestAnimationFrame(renderLoop);
+  </script>
+</body>
+</html>

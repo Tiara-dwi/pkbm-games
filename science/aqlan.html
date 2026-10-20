@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Petualangan Energi Aqlan (IPAS Kelas 4)</title>
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-light: #10B981;
+      --accent: #F59E0B;
+      --danger: #EF4444;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border: #E2E8F0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      padding: 16px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* Top Header */
+    .header-card {
+      background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+      border: 2px solid #A7F3D0;
+      border-radius: 20px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
+    }
+    .header-info h1 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #065F46;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-info p {
+      font-size: 0.95rem;
+      color: #047857;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .btn-nav {
+      background: white;
+      border: 1.5px solid #A7F3D0;
+      padding: 8px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #065F46;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { background: #10B981; color: white; border-color: #10B981; }
+
+    /* Storytelling Banner: The STEM Context */
+    .story-banner {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 2px solid #FDE68A;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .story-icon { font-size: 2.2rem; }
+    .story-text h3 { font-size: 0.98rem; font-weight: 900; color: #92400E; }
+    .story-text p { font-size: 0.85rem; color: #78350F; margin-top: 2px; }
+
+    /* Tabs Navigation */
+    .tabs-nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+      background: white;
+      border: 2px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover { border-color: #10B981; color: #10B981; }
+    .tab-btn.active {
+      background: #10B981;
+      color: white;
+      border-color: #10B981;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .lab-card {
+      background: white;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      padding: 22px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+      margin-bottom: 20px;
+    }
+
+    /* SIMULATOR GRID */
+    .ramp-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .ramp-grid { grid-template-columns: 1fr; } }
+
+    .canvas-container {
+      position: relative;
+      background: linear-gradient(180deg, #E0F2FE 0%, #BAE6FD 65%, #7DD3FC 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #7DD3FC;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+    }
+    canvas { display: block; width: 100%; height: auto; }
+
+    /* PREDICT (POE) POPUP OVERLAY */
+    .poe-card {
+      background: #ECFDF5;
+      border: 2px solid #10B981;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .poe-title {
+      font-size: 0.9rem;
+      font-weight: 900;
+      color: #065F46;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .poe-question { font-size: 0.85rem; color: #047857; margin-bottom: 10px; font-weight: 600; }
+    .poe-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .poe-btn {
+      flex: 1;
+      min-width: 140px;
+      background: white;
+      border: 1.5px solid #A7F3D0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .poe-btn:hover { background: #D1FAE5; border-color: #10B981; }
+    .poe-btn.selected { background: #10B981; color: white; border-color: #10B981; }
+
+    /* Controls */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1.5px solid var(--border);
+    }
+    .control-box {
+      background: #F8FAFC;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .control-box label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .control-box input[type="range"] {
+      width: 100%;
+      accent-color: #10B981;
+      cursor: pointer;
+    }
+    .surface-selector { display: flex; gap: 6px; }
+    .surface-btn {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .surface-btn.active {
+      background: #10B981;
+      color: white;
+      border-color: #10B981;
+    }
+
+    .action-btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn-action {
+      flex: 2;
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-action:hover { background: #059669; transform: translateY(-2px); }
+    .btn-action:disabled { background: #CBD5E1; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-secondary {
+      flex: 1;
+      background: white;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      box-shadow: none;
+    }
+    .btn-secondary:hover { background: #F1F5F9; }
+
+    /* Intuitive Battery Meters Panel */
+    .meters-panel {
+      background: #F8FAFC;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .meter-item { margin-bottom: 14px; }
+    .meter-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .battery-shell {
+      background: #E2E8F0;
+      height: 18px;
+      border-radius: 9px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #CBD5E1;
+    }
+    .battery-fill {
+      height: 100%;
+      border-radius: 8px;
+      width: 0%;
+      transition: width 0.08s linear;
+    }
+    .fill-potensial { background: linear-gradient(90deg, #10B981, #34D399); }
+    .fill-kinetik { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
+    .fill-panas { background: linear-gradient(90deg, #EF4444, #F87171); }
+    .fill-total { background: linear-gradient(90deg, #8B5CF6, #A78BFA); }
+
+    /* Kid-friendly Speedometer */
+    .speedo-card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      border: 1.5px solid var(--border);
+      margin-top: 14px;
+      text-align: center;
+    }
+    .speed-badge {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .speed-level {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 4px;
+    }
+
+    /* TAB 2: PUZZLE TOPENG ENERGI */
+    .puzzle-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 800px) { .puzzle-grid { grid-template-columns: 1fr; } }
+    .case-card {
+      background: #F8FAFC;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .case-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #065F46;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .target-box {
+      background: white;
+      border: 2px dashed #94A3B8;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      margin-bottom: 12px;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .options-pool {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chip-item {
+      background: white;
+      border: 1.5px solid #CBD5E1;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip-item:hover { border-color: #10B981; background: #ECFDF5; }
+    .chip-item.used { opacity: 0.4; cursor: not-allowed; background: #F1F5F9; }
+
+    /* TAB 3: MISI QUEST DETEKTIF */
+    .quest-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+    }
+    .quest-card.completed {
+      border-color: #10B981;
+      background: #F0FDF4;
+    }
+    .quest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .quest-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 14px;
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    .quest-badge.won { background: #D1FAE5; color: #065F46; }
+    .quest-body { font-size: 0.88rem; color: #334155; line-height: 1.5; }
+    .quest-action-box {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header Card -->
+    <div class="header-card">
+      <div class="header-info">
+        <h1>🛹 Petualangan Topeng Energi Aqlan</h1>
+        <p>Eksperimen Interaktif IPAS Kelas 4 • Bab 4: Mengubah Bentuk Energi</p>
+      </div>
+      <div class="nav-links">
+        <a href="../index.html" class="btn-nav">🏠 Portal PKBM</a>
+        <a href="../math/aqlan.html" class="btn-nav">📐 Math Aqlan</a>
+        <a href="mishka.html" class="btn-nav">⚡ Lab Mishka (Kelas 5)</a>
+      </div>
+    </div>
+
+    <!-- STEM Story Context -->
+    <div class="story-banner">
+      <div class="story-icon">🌟</div>
+      <div class="story-text">
+        <h3>Misi Arsitek Energi Aqlan: Energi Tak Pernah Musnah!</h3>
+        <p>
+          "Aqlan, energi itu seperti pemain teater yang memakai <strong>topeng berbeda</strong>: dari makanan (topeng kimia), berubah jadi luncuran lincah (topeng gerak), hingga rasa hangat di roda (topeng panas). Bantu Aqlan membuktikannya di laboratorium ini!"
+        </p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('ramp')">
+        <span>🛹</span> 1. Simulator Skater & Tebak Fisika (POE)
+      </button>
+      <button class="tab-btn" onclick="switchTab('puzzle')">
+        <span>🧩</span> 2. Lab Detektif: Tebak Topeng Energi
+      </button>
+      <button class="tab-btn" onclick="switchTab('missions')">
+        <span>🏆</span> 3. Tiga Misi Lapangan STEM
+      </button>
+    </div>
+
+    <!-- TAB 1: RAMP SIMULATOR WITH POE -->
+    <div id="tab-ramp" class="tab-content active">
+      <div class="lab-card">
+        
+        <!-- POE Prediction Box (Predict - Observe - Explain) -->
+        <div class="poe-card" id="poeBox">
+          <div class="poe-title">
+            <span>🤔</span> <span>Langkah 1: Tebak Dulu (Hipotesis Aqlan) Sebelum Meluncur!</span>
+          </div>
+          <div class="poe-question" id="poeQuestionText">
+            "Jika Aqlan menaikkan ketinggian ramp dari 2 meter menjadi 5 meter, apa yang akan terjadi pada kecepatan skateboard saat meluncur di dasar lembah?"
+          </div>
+          <div class="poe-options">
+            <button class="poe-btn" onclick="selectPrediction(1, this)">A. Kecepatannya melambat</button>
+            <button class="poe-btn" onclick="selectPrediction(2, this)">B. Meluncur JAUH LEBIH CEPAT! 🚀</button>
+            <button class="poe-btn" onclick="selectPrediction(3, this)">C. Kecepatannya persis sama saja</button>
+          </div>
+        </div>
+
+        <div class="ramp-grid">
+          <!-- Canvas Simulator -->
+          <div>
+            <div class="canvas-container">
+              <canvas id="skateCanvas" width="650" height="380"></canvas>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-grid">
+              <div class="control-box">
+                <label>Tinggi Ramp: <strong id="heightVal" style="color:#059669;">4.0</strong> Meter</label>
+                <input type="range" id="rampHeight" min="2" max="6" step="0.5" value="4.0" oninput="updateRampConfig()">
+              </div>
+              <div class="control-box">
+                <label>Berat Skater (Aqlan): <strong id="massVal" style="color:#059669;">35</strong> kg</label>
+                <input type="range" id="skaterMass" min="20" max="60" step="5" value="35" oninput="updateRampConfig()">
+              </div>
+              <div class="control-box">
+                <label>Permukaan Lintasan Trek:</label>
+                <div class="surface-selector">
+                  <button class="surface-btn active" onclick="setSurface('wood', this)">🛹 Kayu Halus</button>
+                  <button class="surface-btn" onclick="setSurface('ice', this)">🧊 Es Licin (0 Gesek)</button>
+                  <button class="surface-btn" onclick="setSurface('asphalt', this)">🛣️ Aspal Kasar</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-btn-row">
+              <button class="btn-action" id="dropBtn" onclick="dropInSkater()">
+                <span>🚀</span> <span>Luncurkan Skater! (Uji Hipotesis)</span>
+              </button>
+              <button class="btn-action btn-secondary" onclick="togglePause()" id="pauseBtn">⏸️ Jeda</button>
+              <button class="btn-action btn-secondary" onclick="toggleSlowMo()" id="slowMoBtn">🐢 Gerak Santai</button>
+              <button class="btn-action btn-secondary" onclick="resetSkater()">🔄 Reset</button>
+            </div>
+
+            <div id="feedbackBox" style="margin-top:12px; font-size:0.85rem; font-weight:700; color:#065F46; display:none; background:#ECFDF5; padding:10px 14px; border-radius:10px; border:1px solid #A7F3D0;">
+              <!-- Feedback dynamically inserted -->
+            </div>
+          </div>
+
+          <!-- Papan Laporan Hasil Akhir Eksperimen (Sangat Jelas, Statis & Tidak Pusing) -->
+          <div class="meters-panel" style="display:flex; flex-direction:column; justify-content:space-between; gap:14px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="font-size:0.95rem; font-weight:900; color:#0F172A; display:flex; align-items:center; gap:6px;">
+                  <span>📋</span> Laporan Hasil Akhir Uji Coba
+                </h3>
+                <span id="reportStamp" style="background:#D1FAE5; color:#065F46; font-size:0.7rem; font-weight:800; padding:3px 8px; border-radius:12px;">Hasil Terukur</span>
+              </div>
+
+              <!-- Main Result Card (Dynamic based on selected surface & speed) -->
+              <div id="finalResultCard" style="background:#ECFDF5; border:2px solid #10B981; border-radius:14px; padding:14px; transition: all 0.3s ease;">
+                
+                <!-- Track Surface Badge -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <span style="font-size:0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase;">Permukaan Terpilih:</span>
+                  <strong id="finalSurfaceLabel" style="font-size:0.85rem; color:#065F46;">🛹 Kayu Halus</strong>
+                </div>
+
+                <!-- Final Speed Result -->
+                <div style="background:white; border-radius:10px; padding:10px; border:1px solid var(--border); margin-bottom:12px; text-align:center;">
+                  <div style="font-size:0.72rem; font-weight:800; color:var(--muted); text-transform:uppercase;">Kecepatan Puncak Terukur</div>
+                  <div style="font-size:1.8rem; font-weight:900; color:#0F172A;" id="finalSpeedText">
+                    0 <span style="font-size:0.9rem; color:var(--muted);">km/jam</span>
+                  </div>
+                  <span id="finalSpeedBadge" style="display:inline-block; font-size:0.75rem; font-weight:800; padding:2px 10px; border-radius:14px; background:#D1FAE5; color:#065F46;">
+                    Meluncur Seimbang 🛹
+                  </span>
+                </div>
+
+                <!-- Final Energy Transformation Destination -->
+                <div style="margin-bottom:10px; background:white; border-radius:10px; padding:10px; border:1px solid var(--border);">
+                  <div style="font-size:0.72rem; font-weight:800; color:var(--muted); margin-bottom:4px; text-transform:uppercase;">Wujud Akhir Energi:</div>
+                  <div id="finalEnergyFate" style="font-size:0.85rem; font-weight:900; color:#059669; line-height:1.4;">
+                    ✨ Energi Gerak Kinetik Stabil
+                  </div>
+                  <div id="finalEnergyDetail" style="font-size:0.75rem; color:#475569; margin-top:2px;">
+                    Luncuran sangat stabil dan mulus, melambat perlahan secara alami.
+                  </div>
+                </div>
+
+                <!-- Scientist Conclusion Note -->
+                <div style="background:rgba(255,255,255,0.85); border-radius:8px; padding:8px 10px; border-left:3px solid #10B981; font-size:0.78rem; color:#065F46; line-height:1.4;">
+                  <strong>💡 Catatan Sains Aqlan:</strong><br>
+                  <span id="finalScienceNote">Kayu halus adalah bahan ideal arena skatepark: cukup licin untuk meluncur cepat, tapi tetap aman dikendalikan.</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Live Status Pill & Rule -->
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.8rem; font-weight:800; color:var(--muted);">Posisi Skater Saat Ini:</span>
+                <span id="liveSkaterStatus" style="font-weight:900; font-size:0.85rem; color:#059669;">Siap di Puncak 🏔️</span>
+              </div>
+
+              <div style="background:#F5F3FF; border:1.5px solid #DDD6FE; border-radius:10px; padding:8px 12px; text-align:center; font-size:0.75rem; font-weight:800; color:#7C3AED;">
+                ⚡ HUKUM KEKAL: Energi tidak musnah, hanya berganti bentuk!
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: DETEKTIF TOPENG ENERGI (PUZZLE) -->
+    <div id="tab-puzzle" class="tab-content">
+      <div class="lab-card">
+        <h2 style="font-size:1.2rem; font-weight:900; color:#065F46; margin-bottom:6px;">🧩 Lab Detektif: Susun Transformasi Energi!</h2>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:18px;">
+          Bantu Aqlan memecahkan misteri: alat di bawah ini mengubah energi apa menjadi apa? Pasangkan kartu energi yang tepat!
+        </p>
+
+        <div class="puzzle-grid">
+          
+          <!-- Puzzle Case 1 -->
+          <div class="case-card">
+            <div class="case-title">
+              <span>🛹 Kasus 1: Makan Siang Aqlan & Main Skateboard</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--muted); margin-bottom:10px;">
+              Aqlan makan sepiring nasi padang, lalu bertenaga bermain skateboard sampai berkeringat.
+            </p>
+            <div class="target-box" id="targetBox1">
+              <div style="font-size:0.85rem; font-weight:800; color:#475569;">
+                [ Energi Kimia Makanan ] ──► [ ??? ] + [ ??? ]
+              </div>
+              <div id="dropSlot1" style="margin-top:8px; font-weight:900; color:#065F46;">
+                (Klik pilihan di bawah untuk mengisi jawaban)
+              </div>
+            </div>
+            <div class="options-pool" id="pool1">
+              <button class="chip-item" onclick="answerPuzzle(1, 'Gerak Kinetik & Panas Keringat', true)">
+                A. Energi Gerak + Panas Keringat
+              </button>
+              <button class="chip-item" onclick="answerPuzzle(1, 'Cahaya Terang & Listrik', false)">
+                B. Energi Cahaya & Listrik
+              </button>
+              <button class="chip-item" onclick="answerPuzzle(1, 'Nuklir & Magnet', false)">
+                C. Energi Nuklir & Magnet
+              </button>
+            </div>
+            <div id="puzzleFeedback1" style="margin-top:10px; font-size:0.82rem; font-weight:700; display:none;"></div>
+          </div>
+
+          <!-- Puzzle Case 2 -->
+          <div class="case-card">
+            <div class="case-title">
+              <span>💡 Kasus 2: Perang Lampu Pijar Kuno vs Lampu LED Modern</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--muted); margin-bottom:10px;">
+              Keduanya dicolok ke listrik PLN. Mengapa lampu pijar kuno terasa sangat panas jika disentuh?
+            </p>
+            <div class="target-box" id="targetBox2">
+              <div style="font-size:0.85rem; font-weight:800; color:#475569;">
+                [ Energi Listrik ] ──► [ ??? ]
+              </div>
+              <div id="dropSlot2" style="margin-top:8px; font-weight:900; color:#065F46;">
+                (Klik pilihan di bawah untuk mengisi jawaban)
+              </div>
+            </div>
+            <div class="options-pool" id="pool2">
+              <button class="chip-item" onclick="answerPuzzle(2, 'Pijar buang 90% jadi Panas, LED ubah 85% jadi Cahaya', true)">
+                A. Pijar buang 90% jadi Panas, LED ubah 85% jadi Cahaya
+              </button>
+              <button class="chip-item" onclick="answerPuzzle(2, 'Pijar mengubah listrik jadi angin', false)">
+                B. Pijar mengubah listrik jadi angin
+              </button>
+              <button class="chip-item" onclick="answerPuzzle(2, 'Keduanya 100% sempurna tanpa panas', false)">
+                C. Keduanya 100% sempurna tanpa panas
+              </button>
+            </div>
+            <div id="puzzleFeedback2" style="margin-top:10px; font-size:0.82rem; font-weight:700; display:none;"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: TIGA MISI LAPANGAN STEM -->
+    <div id="tab-missions" class="tab-content">
+      <div class="lab-card">
+        <h2 style="font-size:1.2rem; font-weight:900; color:#92400E; margin-bottom:6px;">🏆 Tiga Misi Lapangan STEM Aqlan</h2>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:18px;">
+          Selesaikan misi nyata ini dengan memanfaatkan prinsip fisika dan Translating Uncertainty:
+        </p>
+
+        <!-- Quest 1 -->
+        <div class="quest-card" id="questCard1">
+          <div class="quest-header">
+            <h3 style="font-size:1rem; font-weight:900; color:#0F172A;">
+              🎯 Misi 1: Trik Drop-in Kecepatan 30 km/jam untuk Melompati Lembah
+            </h3>
+            <span class="quest-badge" id="qBadge1">Belum Selesai</span>
+          </div>
+          <p class="quest-body">
+            Aqlan harus meluncur dari ramp dengan kecepatan minimal <strong>30 km/jam</strong> di dasar lembah agar bisa melompati rintangan busa. Rancang tinggi ramp dan pilih permukaan yang paling licin di Tab 1, lalu uji coba!
+          </p>
+          <div class="quest-action-box">
+            <button class="btn-nav" style="background:#059669; color:white; border:none;" onclick="checkQuest1()">
+              🔍 Periksa Kecepatan Terakhir Aqlan
+            </button>
+            <span id="quest1Result" style="font-size:0.85rem; font-weight:800; color:#059669;"></span>
+          </div>
+        </div>
+
+        <!-- Quest 2 -->
+        <div class="quest-card" id="questCard2">
+          <div class="quest-header">
+            <h3 style="font-size:1rem; font-weight:900; color:#0F172A;">
+              🎯 Misi 2: Efek Gesekan Rem Aspal Kasar
+            </h3>
+            <span class="quest-badge" id="qBadge2">Belum Selesai</span>
+          </div>
+          <p class="quest-body">
+            Buktikan hukum fisika: Di atas aspal kasar, energi gerak Aqlan akan cepat habis berubah menjadi <strong>Energi Panas Gesekan</strong>. Ubah permukaan trek ke "Aspal Kasar", luncurkan, dan lihat baterai merah terisi penuh!
+          </p>
+          <div class="quest-action-box">
+            <button class="btn-nav" style="background:#059669; color:white; border:none;" onclick="checkQuest2()">
+              🔍 Periksa Apakah Aspal Kasar Teruji
+            </button>
+            <span id="quest2Result" style="font-size:0.85rem; font-weight:800; color:#059669;"></span>
+          </div>
+        </div>
+
+        <!-- Quest 3 -->
+        <div class="quest-card" id="questCard3">
+          <div class="quest-header">
+            <h3 style="font-size:1rem; font-weight:900; color:#0F172A;">
+              🎯 Misi 3: Prediksi Sempurna Inkuiri Sains (P-O-E)
+            </h3>
+            <span class="quest-badge" id="qBadge3">Belum Selesai</span>
+          </div>
+          <p class="quest-body">
+            Karakter ilmuwan sejati selalu membuat prediksi ilmiah sebelum menguji. Buat tebakan yang tepat di Tab 1 dan luncurkan skater untuk menyelesaikan misi ini!
+          </p>
+          <div class="quest-action-box">
+            <span id="quest3Result" style="font-size:0.85rem; font-weight:800; color:#059669;">Lakukan tebakan di Tab 1 untuk memicu bintang ini!</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // --- STATE VARIABLES ---
+    let rampHeight = 4.0;
+    let skaterMass = 35.0;
+    let surfaceType = 'wood'; // wood, ice, asphalt
+    let frictionCoeff = 0.003;
+    let isPaused = false;
+    let isSlowMo = false;
+    let userPrediction = null;
+
+    // Simulation Physics State
+    let skaterPos = -1.0; // -1 = top left, 0 = bottom, 1 = top right
+    let skaterVel = 0.0;
+    let thermalEnergy = 0.0;
+    let maxSpeedReached = 0.0;
+    let aspalTested = false;
+    let poeSuccess = false;
+
+    const g = 9.8;
+    const canvas = document.getElementById('skateCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Web Audio API for interactive audio feedback
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playTone(freq, type = 'sine', duration = 0.1) {
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function playSuccessChime() {
+      playTone(523.25, 'sine', 0.12);
+      setTimeout(() => playTone(659.25, 'sine', 0.12), 120);
+      setTimeout(() => playTone(783.99, 'sine', 0.25), 240);
+    }
+
+    // --- POE PREDICTION LOGIC ---
+    function selectPrediction(val, btn) {
+      document.querySelectorAll('.poe-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      userPrediction = val;
+      playTone(440, 'triangle', 0.1);
+      
+      const dropBtn = document.getElementById('dropBtn');
+      dropBtn.disabled = false;
+      dropBtn.innerHTML = "<span>🚀</span> <span>Luncurkan Skater & Buktikan!</span>";
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      event.currentTarget.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+      playTone(600, 'sine', 0.05);
+    }
+
+    function updateRampConfig() {
+      rampHeight = parseFloat(document.getElementById('rampHeight').value);
+      skaterMass = parseFloat(document.getElementById('skaterMass').value);
+      document.getElementById('heightVal').innerText = rampHeight.toFixed(1);
+      document.getElementById('massVal').innerText = skaterMass;
+      resetSkater();
+    }
+
+    function setSurface(type, btn) {
+      surfaceType = type;
+      document.querySelectorAll('.surface-selector .surface-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      if (type === 'ice') frictionCoeff = 0.000;
+      else if (type === 'wood') frictionCoeff = 0.003;
+      else if (type === 'asphalt') {
+        frictionCoeff = 0.012;
+        aspalTested = true;
+      }
+      playTone(480, 'sine', 0.08);
+      resetSkater();
+    }
+
+    function dropInSkater() {
+      skaterPos = -1.0;
+      skaterVel = 0.0;
+      thermalEnergy = 0.0;
+      maxSpeedReached = 0.0;
+      isPaused = false;
+      document.getElementById('pauseBtn').innerText = '⏸️ Jeda';
+      playTone(300, 'sawtooth', 0.2);
+
+      // Check user prediction
+      const fb = document.getElementById('feedbackBox');
+      fb.style.display = 'block';
+      if (userPrediction === 2) {
+        fb.innerHTML = "🎉 <strong>Prediksi Aqlan TEPAT SEKALI!</strong> Makin tinggi ramp, semakin besar baterai potensial diubah menjadi kecepatan luncur!";
+        fb.style.borderColor = '#10B981';
+        fb.style.background = '#ECFDF5';
+        fb.style.color = '#065F46';
+        poeSuccess = true;
+        document.getElementById('qBadge3').innerText = 'Selesai ⭐';
+        document.getElementById('qBadge3').classList.add('won');
+        document.getElementById('quest3Result').innerText = '⭐ Hebat! Aqlan berpikir layaknya ilmuwan sejati.';
+      } else if (userPrediction === 1 || userPrediction === 3) {
+        fb.innerHTML = "💡 <strong>Amati Laporan Hasil:</strong> Ternyata tebakanmu kurang pas. Justru semakin tinggi ramp, kecepatan luncur makin kencang kilat!";
+        fb.style.borderColor = '#F59E0B';
+        fb.style.background = '#FFFBEB';
+        fb.style.color = '#92400E';
+      }
+    }
+
+    function togglePause() {
+      isPaused = !isPaused;
+      document.getElementById('pauseBtn').innerText = isPaused ? '▶️ Lanjut' : '⏸️ Jeda';
+    }
+
+    function toggleSlowMo() {
+      isSlowMo = !isSlowMo;
+      const btn = document.getElementById('slowMoBtn');
+      if (isSlowMo) {
+        btn.innerHTML = '⚡ Gerak Normal';
+        btn.style.background = '#ECFDF5';
+        btn.style.color = '#065F46';
+        btn.style.borderColor = '#10B981';
+      } else {
+        btn.innerHTML = '🐢 Gerak Santai';
+        btn.style.background = 'white';
+        btn.style.color = 'var(--text)';
+        btn.style.borderColor = 'var(--border)';
+      }
+    }
+
+    function resetSkater() {
+      skaterPos = -1.0;
+      skaterVel = 0.0;
+      thermalEnergy = 0.0;
+      maxSpeedReached = 0.0;
+      updateFinalReport(0);
+    }
+
+    // --- PHYSICS LOOP ---
+    function updatePhysics() {
+      const stepFactor = isSlowMo ? 0.35 : 1.0;
+      if (!isPaused && (Math.abs(skaterVel) > 0.0005 || Math.abs(skaterPos) > 0.02 || surfaceType === 'ice')) {
+        const slopeForce = -skaterPos * 0.022 * (rampHeight / 4.0) * stepFactor;
+        skaterVel += slopeForce;
+        
+        // Friction
+        const normalForce = Math.cos(skaterPos * Math.PI / 2.5);
+        const friction = Math.sign(skaterVel) * frictionCoeff * (1 + normalForce * 0.5) * stepFactor;
+        
+        if (Math.abs(skaterVel) > Math.abs(friction)) {
+          skaterVel -= friction;
+          thermalEnergy += Math.abs(friction) * 35;
+        } else if (Math.abs(skaterPos) < 0.05) {
+          skaterVel = 0;
+        }
+
+        skaterPos += skaterVel * stepFactor;
+
+        if (skaterPos > 1.0) { skaterPos = 1.0; skaterVel = -skaterVel * 0.95; }
+        if (skaterPos < -1.0) { skaterPos = -1.0; skaterVel = -skaterVel * 0.95; }
+      }
+
+      // Speed in km/h
+      const speedKmH = Math.abs(skaterVel) * 75 * Math.sqrt(rampHeight / 4.0);
+      if (speedKmH > maxSpeedReached) maxSpeedReached = speedKmH;
+
+      updateFinalReport(speedKmH);
+    }
+
+    function updateFinalReport(speed) {
+      const card = document.getElementById('finalResultCard');
+      const surfLabel = document.getElementById('finalSurfaceLabel');
+      const speedText = document.getElementById('finalSpeedText');
+      const speedBadge = document.getElementById('finalSpeedBadge');
+      const energyFate = document.getElementById('finalEnergyFate');
+      const energyDetail = document.getElementById('finalEnergyDetail');
+      const scienceNote = document.getElementById('finalScienceNote');
+      const liveStatus = document.getElementById('liveSkaterStatus');
+
+      // Update measured peak speed (clean whole number)
+      const currentPeak = Math.max(speed, maxSpeedReached);
+      speedText.innerHTML = Math.round(currentPeak) + ' <span style="font-size:0.9rem; color:var(--muted);">km/jam</span>';
+
+      // Live Position of Skater
+      if (Math.abs(skaterPos) > 0.65) {
+        liveStatus.innerText = "Di Puncak Ramp 🏔️";
+        liveStatus.style.color = "#059669";
+      } else if (Math.abs(skaterPos) <= 0.35 && speed > 5) {
+        liveStatus.innerText = "Melesat di Dasar Lembah ⚡";
+        liveStatus.style.color = "#2563EB";
+      } else if (speed < 1 && surfaceType === 'asphalt' && thermalEnergy > 5) {
+        liveStatus.innerText = "Berhenti Total di Lembah 🛑";
+        liveStatus.style.color = "#DC2626";
+      }
+
+      // Final Outcomes per Selected Surface
+      if (surfaceType === 'asphalt') {
+        card.style.background = '#FEF2F2';
+        card.style.borderColor = '#FCA5A5';
+        surfLabel.innerText = '🛣️ Aspal Kasar';
+        surfLabel.style.color = '#991B1B';
+
+        speedBadge.innerText = 'Tertahan Gesekan Kasar 🐢';
+        speedBadge.style.background = '#FEE2E2';
+        speedBadge.style.color = '#991B1B';
+
+        energyFate.innerText = '🔥 100% Berubah Jadi Panas Gesekan!';
+        energyFate.style.color = '#DC2626';
+
+        energyDetail.innerText = 'Skateboard berhenti total di lembah karena gesekan aspal kasar mencuri seluruh kecepatan dan membuangnya jadi panas di roda.';
+        scienceNote.innerText = 'Aspal kasar bertindak seperti rem alami. Energi gerak tidak lenyap, tapi berubah total menjadi energi panas di roda!';
+      } else if (surfaceType === 'ice') {
+        card.style.background = '#F0F9FF';
+        card.style.borderColor = '#7DD3FC';
+        surfLabel.innerText = '🧊 Es Licin (0 Gesekan)';
+        surfLabel.style.color = '#0369A1';
+
+        speedBadge.innerText = 'KENCANG KILAT MAKSIMAL! 🚀';
+        speedBadge.style.background = '#E0F2FE';
+        speedBadge.style.color = '#0284C7';
+
+        energyFate.innerText = '❄️ 100% Energi Gerak Abadi (0% Panas)';
+        energyFate.style.color = '#0284C7';
+
+        energyDetail.innerText = 'Skater meluncur bolak-balik selamanya tanpa pernah berhenti karena gesekan es = nol!';
+        scienceNote.innerText = 'Tanpa gesekan, energi mekanik terjaga 100% utuh selamanya! Ini bukti murni Hukum Kekekalan Energi.';
+      } else if (surfaceType === 'wood') {
+        card.style.background = '#ECFDF5';
+        card.style.borderColor = '#A7F3D0';
+        surfLabel.innerText = '🛹 Kayu Halus';
+        surfLabel.style.color = '#065F46';
+
+        speedBadge.innerText = 'Meluncur Seimbang 🛹';
+        speedBadge.style.background = '#D1FAE5';
+        speedBadge.style.color = '#065F46';
+
+        energyFate.innerText = '✨ Energi Gerak Kinetik Stabil';
+        energyFate.style.color = '#059669';
+
+        energyDetail.innerText = 'Luncuran sangat stabil dan mulus, melambat perlahan secara alami.';
+        scienceNote.innerText = 'Kayu halus adalah bahan ideal arena skatepark: cukup licin untuk meluncur cepat, tapi tetap aman dikendalikan.';
+      }
+    }
+
+    // --- CANVAS RENDERING ---
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const w = canvas.width;
+      const h = canvas.height;
+      const groundY = h - 50;
+      const rampTopY = groundY - (rampHeight * 38);
+
+      // Draw Parabolic Track
+      ctx.beginPath();
+      ctx.lineWidth = 14;
+      if (surfaceType === 'wood') ctx.strokeStyle = '#D97706';
+      else if (surfaceType === 'ice') ctx.strokeStyle = '#38BDF8';
+      else if (surfaceType === 'asphalt') ctx.strokeStyle = '#334155';
+      ctx.lineCap = 'round';
+
+      ctx.moveTo(60, rampTopY);
+      ctx.quadraticCurveTo(w / 2, groundY + 45, w - 60, rampTopY);
+      ctx.stroke();
+
+      // Track support pillars
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#94A3B8';
+      ctx.beginPath();
+      ctx.moveTo(60, rampTopY); ctx.lineTo(60, groundY + 20);
+      ctx.moveTo(w - 60, rampTopY); ctx.lineTo(w - 60, groundY + 20);
+      ctx.stroke();
+
+      // Skater position calculation
+      const t = (skaterPos + 1.0) / 2.0; // 0 to 1
+      const p0 = { x: 60, y: rampTopY };
+      const p1 = { x: w / 2, y: groundY + 45 };
+      const p2 = { x: w - 60, y: rampTopY };
+
+      const skaterX = Math.pow(1 - t, 2) * p0.x + 2 * (1 - t) * t * p1.x + Math.pow(t, 2) * p2.x;
+      const skaterY = Math.pow(1 - t, 2) * p0.y + 2 * (1 - t) * t * p1.y + Math.pow(t, 2) * p2.y;
+
+      // Draw Skater Aqlan
+      ctx.save();
+      ctx.translate(skaterX, skaterY - 14);
+
+      // Skateboard deck
+      ctx.fillStyle = '#EF4444';
+      ctx.beginPath();
+      ctx.roundRect(-22, 6, 44, 8, 4);
+      ctx.fill();
+
+      // Wheels
+      ctx.fillStyle = '#0F172A';
+      ctx.beginPath();
+      ctx.arc(-14, 14, 4, 0, Math.PI * 2);
+      ctx.arc(14, 14, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Skater Kid Body (Aqlan with helmet)
+      ctx.fillStyle = '#10B981'; // Green jacket
+      ctx.beginPath();
+      ctx.roundRect(-10, -18, 20, 24, 6);
+      ctx.fill();
+
+      // Head / Helmet
+      ctx.fillStyle = '#F59E0B'; // Cool orange helmet
+      ctx.beginPath();
+      ctx.arc(0, -26, 11, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Face
+      ctx.fillStyle = '#FED7AA';
+      ctx.beginPath();
+      ctx.arc(2, -25, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Eye
+      ctx.fillStyle = '#0F172A';
+      ctx.beginPath();
+      ctx.arc(4, -26, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Smile
+      ctx.beginPath();
+      ctx.strokeStyle = '#0F172A';
+      ctx.lineWidth = 1.5;
+      ctx.arc(3, -24, 3, 0, Math.PI * 0.8);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function animate() {
+      updatePhysics();
+      render();
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    // --- PUZZLE DETEKTIF LOGIC ---
+    function answerPuzzle(caseId, ansText, isCorrect) {
+      const fb = document.getElementById('puzzleFeedback' + caseId);
+      const slot = document.getElementById('dropSlot' + caseId);
+      fb.style.display = 'block';
+
+      if (isCorrect) {
+        playSuccessChime();
+        slot.innerText = ansText;
+        slot.style.color = '#059669';
+        fb.innerText = '🎉 TEPAT SEKALI! Aqlan berhasil mengidentifikasi topeng energi!';
+        fb.style.color = '#059669';
+      } else {
+        playTone(220, 'sawtooth', 0.2);
+        slot.innerText = ansText;
+        slot.style.color = '#EF4444';
+        fb.innerText = '💡 Belum pas! Pikirkan lagi: apa hasil akhir gerak atau panasnya?';
+        fb.style.color = '#EF4444';
+      }
+    }
+
+    // --- QUEST VERIFICATION ---
+    function checkQuest1() {
+      const res = document.getElementById('quest1Result');
+      const badge = document.getElementById('qBadge1');
+      if (maxSpeedReached >= 30.0) {
+        playSuccessChime();
+        badge.innerText = 'Selesai ⭐';
+        badge.classList.add('won');
+        res.innerText = '⭐ Hebat! Kecepatan puncakmu mencapai ' + maxSpeedReached.toFixed(1) + ' km/jam!';
+      } else {
+        playTone(300, 'sine', 0.1);
+        res.innerText = '⚠️ Belum mencapai 30 km/jam (Baru ' + maxSpeedReached.toFixed(1) + ' km/jam). Coba naikkan tinggi ramp ke 5m atau 6m!';
+      }
+    }
+
+    function checkQuest2() {
+      const res = document.getElementById('quest2Result');
+      const badge = document.getElementById('qBadge2');
+      if (aspalTested && thermalEnergy > 10) {
+        playSuccessChime();
+        badge.innerText = 'Selesai ⭐';
+        badge.classList.add('won');
+        res.innerText = '⭐ Terbukti! Aspal kasar mengubah energi gerak jadi panas gesekan!';
+      } else {
+        playTone(300, 'sine', 0.1);
+        res.innerText = '⚠️ Pilih trek Aspal Kasar di Tab 1 lalu luncurkan skater untuk membuktikannya.';
+      }
+    }
+  </script>
+</body>
+</html>

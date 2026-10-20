@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorium Sains IPAS Interaktif - PKBM Penerus Bangsa</title>
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #065F46;
+      --accent: #4F46E5;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border: #E2E8F0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    /* Top Bar */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .nav-btn {
+      background: white;
+      border: 1.5px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-btn:hover { background: #F1F5F9; border-color: #CBD5E1; }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #065F46 0%, #047857 50%, #059669 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 36px 32px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(5, 150, 105, 0.2);
+    }
+    .hero-banner h1 {
+      font-size: 2.1rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .hero-banner p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Students Cards Grid */
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .student-card {
+      background: white;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .student-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    }
+    .card-aqlan { border-top: 6px solid #10B981; }
+    .card-mishka { border-top: 6px solid #4F46E5; }
+
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .badge-aqlan { background: #D1FAE5; color: #065F46; }
+    .badge-mishka { background: #EEF2FF; color: #312E81; }
+
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+    .card-subtitle {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .card-features {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .card-features li::before {
+      content: "✓ ";
+      font-weight: 900;
+    }
+    .features-aqlan li::before { color: #10B981; }
+    .features-mishka li::before { color: #4F46E5; }
+
+    .btn-enter {
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-enter-aqlan { background: #10B981; color: white; }
+    .btn-enter-aqlan:hover { background: #059669; }
+    .btn-enter-mishka { background: #4F46E5; color: white; }
+    .btn-enter-mishka:hover { background: #4338CA; }
+
+    /* Teacher Radar Section */
+    .radar-card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px 24px;
+      border: 2px dashed #CBD5E1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Nav -->
+    <div class="top-nav">
+      <a href="../index.html" class="nav-btn">← Kembali ke Portal Utama</a>
+      <div style="display:flex; gap:8px;">
+        <a href="../math/index.html" class="nav-btn">🔢 Portal Matematika</a>
+        <a href="../math/teacher.html?v=2" class="nav-btn">📡 Live Radar Guru</a>
+      </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div style="font-size:2.4rem; margin-bottom:8px;">🔬 Laboratorium Sains IPAS Interaktif</div>
+      <h1>Eksperimen Mandiri Digital Siswa</h1>
+      <p>
+        Membawa konsep sains ke dunia eksperimen nyata: Memanipulasi variabel energi kinetik, menguji sirkuit listrik seri vs paralel, hingga meluncurkan kereta cepat Maglev!
+      </p>
+    </div>
+
+    <!-- Student Cards -->
+    <div class="student-grid">
+      
+      <!-- Aqlan Card -->
+      <a href="aqlan.html" class="student-card card-aqlan">
+        <div>
+          <span class="card-badge badge-aqlan">Fase B • Kelas 4 SD</span>
+          <div class="card-title">Aqlan (Kelas 4)</div>
+          <div class="card-subtitle" style="color:#059669;">🛹 Lab Topeng Energi &amp; Skater Kinetik</div>
+          <ul class="card-features features-aqlan">
+            <li><strong>Siklus Inkuiri P-O-E:</strong> Tebak dulu (Predict) sebelum meluncur untuk melatih nalar ilmiah.</li>
+            <li><strong>Baterai Topeng Energi Intuitif:</strong> Visual ramah anak SD (Tinggi, Gerak, Panas, Kekal 100%).</li>
+            <li><strong>Puzzle Detektif Transformasi:</strong> Pecahkan teka-teki perubahan wujud energi.</li>
+            <li><strong>3 Misi Lapangan STEM:</strong> Lompati lembah, taklukkan aspal kasar, &amp; selesaikan quest.</li>
+          </ul>
+        </div>
+        <div class="btn-enter btn-enter-aqlan">
+          Buka Lab Aqlan →
+        </div>
+      </a>
+
+      <!-- Mishka Card -->
+      <a href="mishka.html" class="student-card card-mishka">
+        <div>
+          <span class="card-badge badge-mishka">Fase C • Kelas 5 SD</span>
+          <div class="card-title">Mishka (Kelas 5)</div>
+          <div class="card-subtitle" style="color:#4F46E5;">💡 Studio Rangkaian Listrik &amp; Kereta Maglev</div>
+          <ul class="card-features features-mishka">
+            <li><strong>Krisis RS Darurat (Translating Uncertainty):</strong> Cabut lampu &amp; uji keselamatan ventilator ICU!</li>
+            <li><strong>Aliran Partikel Elektron Real-time:</strong> Visualisasi kawat seri vs percabangan paralel.</li>
+            <li><strong>Misi Crane Daur Ulang Logam:</strong> Rekayasa lilitan kawat &amp; baterai untuk angkat 25+ klip besi.</li>
+            <li><strong>Inkuiri Murni Maglev 600 km/jam:</strong> Uji kutub magnet tanpa bocoran, temukan rahasia melayang!</li>
+          </ul>
+        </div>
+        <div class="btn-enter btn-enter-mishka">
+          Buka Lab Mishka →
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Teacher Radar Section -->
+    <div class="radar-card">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:44px; height:44px; background:#EEF2FF; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">📡</div>
+        <div>
+          <div style="font-weight:800; color:#1E1B4B; font-size:1.05rem;">Khusus Guru: Teacher Live Radar &amp; Progress</div>
+          <div style="font-size:0.85rem; color:#64748B;">Pantau status eksperimen, stopwatch durasi, mood, dan progres Aqlan &amp; Mishka secara real-time.</div>
+        </div>
+      </div>
+      <a href="../math/teacher.html?v=2" style="background:#4F46E5; color:white; padding:10px 20px; border-radius:12px; font-weight:800; text-decoration:none; font-size:0.95rem; box-shadow:0 4px 10px rgba(79,70,229,0.3);">
+        Buka Dasbor Guru 🔐
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>
