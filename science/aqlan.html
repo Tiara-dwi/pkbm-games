@@ -482,7 +482,7 @@
             <div class="controls-grid">
               <div class="control-box">
                 <label>Tinggi Ramp: <strong id="heightVal" style="color:#059669;">4.0</strong> Meter</label>
-                <input type="range" id="rampHeight" min="2" max="6" step="0.5" value="4.0" oninput="updateRampConfig()">
+                <input type="range" id="rampHeight" min="0" max="6" step="0.5" value="4.0" oninput="updateRampConfig()">
               </div>
               <div class="control-box">
                 <label>Berat Skater (Aqlan): <strong id="massVal" style="color:#059669;">35</strong> kg</label>
@@ -793,6 +793,39 @@
       document.getElementById('heightVal').innerText = rampHeight.toFixed(1);
       document.getElementById('massVal').innerText = skaterMass;
       resetSkater();
+      updateDynamicAlert();
+    }
+
+    function updateDynamicAlert() {
+      const alertBox = document.getElementById('skaterDynamicAlert');
+      if (!alertBox) return;
+      const curName = document.getElementById('studentSelect') ? document.getElementById('studentSelect').value : 'Aqlan';
+
+      if (rampHeight === 0) {
+        alertBox.style.background = '#FEF2F2';
+        alertBox.style.borderColor = '#EF4444';
+        alertBox.style.color = '#991B1B';
+        alertBox.innerHTML = `⚠️ <strong>KETINGGIAN 0 METER (ENERGI POTENSIAL 0):</strong><br>
+        <strong>${curName}</strong> berada di dasar lembah datar tanpa ketinggian! Karena tidak memiliki energi potensial, skater tidak bisa meluncur sama sekali (kecepatan 0 km/jam). Naikkan slider tinggi ramp ke 3m - 6m untuk memberi energi awal!`;
+      } else if (surfaceType === 'ice') {
+        alertBox.style.background = '#EFF6FF';
+        alertBox.style.borderColor = '#3B82F6';
+        alertBox.style.color = '#1E40AF';
+        alertBox.innerHTML = `🧊 <strong>PERMUKAAN ES LICIN (GAYA GESEK = 0):</strong><br>
+        Luar biasa! <strong>${curName}</strong> membuktikan Hukum Kekekalan Energi murni! Karena gesekan es nol, tidak ada energi gerak yang terbuang menjadi panas. Skater meluncur bolak-balik tanpa henti!`;
+      } else if (surfaceType === 'asphalt') {
+        alertBox.style.background = '#FFFBEB';
+        alertBox.style.borderColor = '#F59E0B';
+        alertBox.style.color = '#92400E';
+        alertBox.innerHTML = `🛑 <strong>ASPAL KASAR (GAYA GESEK TINGGI):</strong><br>
+        Permukaan berkerikil menimbulkan gaya gesek besar yang menahan ban. 100% energi gerak <strong>${curName}</strong> seketika berubah topeng menjadi energi panas (termal). Skater berhenti aman tepat waktu di depan kucing!`;
+      } else {
+        alertBox.style.background = '#F0FDF4';
+        alertBox.style.borderColor = '#86EFAC';
+        alertBox.style.color = '#065F46';
+        alertBox.innerHTML = `🛹 <strong>KAYU HALUS STANDAR:</strong><br>
+        <strong>${curName}</strong> meluncur seimbang. Energi potensial di puncak berubah menjadi energi gerak di dasar, lalu sedikit demi sedikit menjadi energi panas hingga skater berhenti perlahan.`;
+      }
     }
 
     function setSurface(type, btn) {
@@ -1080,7 +1113,8 @@
         playSuccessChime();
         slot.innerText = ansText;
         slot.style.color = '#059669';
-        fb.innerText = '🎉 TEPAT SEKALI! Aqlan berhasil mengidentifikasi topeng energi!';
+        const curName = document.getElementById('studentSelect') ? document.getElementById('studentSelect').value : 'Aqlan';
+        fb.innerText = '🎉 TEPAT SEKALI! ' + curName + ' berhasil mengidentifikasi topeng energi!';
         fb.style.color = '#059669';
       } else {
         playTone(220, 'sawtooth', 0.2);
@@ -1124,8 +1158,20 @@
       const sel = document.getElementById('studentSelect');
       if (!sel) return;
       const name = sel.value;
+      
       const title = document.getElementById('pageTitle');
       if (title) title.innerText = '🛹 Petualangan Topeng Energi ' + name;
+
+      const storyH3 = document.querySelector('.story-text h3');
+      if (storyH3) storyH3.innerText = 'Misi Arsitek Energi ' + name + ': Energi Tak Pernah Musnah!';
+
+      const storyP = document.querySelector('.story-text p');
+      if (storyP) storyP.innerHTML = `"${name}, energi itu seperti pemain teater yang memakai <strong>topeng berbeda</strong>: dari makanan (topeng kimia), berubah jadi luncuran lincah (topeng gerak), hingga rasa hangat di roda (topeng panas). Bantu ${name} membuktikannya di laboratorium ini!"`;
+
+      const massLbl = document.querySelector('label[for="skaterMass"]') || document.getElementById('massVal').parentElement;
+      if (massLbl) massLbl.innerHTML = `Berat Skater (${name}): <strong id="massVal" style="color:#059669;">${skaterMass}</strong> kg`;
+
+      updateDynamicAlert();
     }
 
 </script>

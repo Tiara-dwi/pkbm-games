@@ -294,6 +294,43 @@
       border: 3px solid #BAE6FD;
       text-align: center;
     }
+  
+    .renewable-alert {
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      transition: all 0.3s ease;
+    }
+    .alert-blackout {
+      background: #FEF2F2;
+      border: 2px solid #EF4444;
+      color: #991B1B;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.15);
+    }
+    .alert-sun-only {
+      background: #FFFBEB;
+      border: 2px solid #F59E0B;
+      color: #92400E;
+    }
+    .alert-wind-only {
+      background: #F0F9FF;
+      border: 2px solid #0284C7;
+      color: #075985;
+    }
+    .alert-optimal {
+      background: #ECFDF5;
+      border: 2px solid #10B981;
+      color: #065F46;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+    }
+    .alert-normal {
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      color: #334155;
+    }
+
   </style>
 </head>
 <body>
@@ -440,8 +477,13 @@
           </div>
         </div>
 
-        <div style="background:#EFF6FF; border:1.5px solid #BFDBFE; border-radius:14px; padding:14px; text-align:center; font-weight:800; color:#1E40AF;">
-          ⚡ Total Daya Bersih Dihasilkan: <span id="totalPowerKwh" style="font-size:1.3rem; color:#0284C7;">450</span> kWh (Cukup untuk 1 Rumah Sakit & 3 Sekolah)
+        <div style="background:#EFF6FF; border:1.5px solid #BFDBFE; border-radius:14px; padding:14px; text-align:center; font-weight:800; color:#1E40AF; margin-bottom:14px;">
+          ⚡ Total Daya Bersih Dihasilkan: <span id="totalPowerKwh" style="font-size:1.3rem; color:#0284C7;">450</span> kWh
+        </div>
+        
+        <!-- Dynamic Result Alert for Wind 0 & Sun 0 -->
+        <div id="renewableDynamicAlert" class="renewable-alert alert-normal">
+          ⚡ <strong>Status Pembangkit:</strong> Atur slider kecepatan angin dan intensitas surya di atas untuk melihat respon langsung pasokan listrik kota!
         </div>
 
         <div style="font-weight:800; margin-top:20px; color:#1E293B;">
@@ -610,6 +652,16 @@
     function changeStudent() {
       currentStudent = document.getElementById('studentSelect').value;
       document.getElementById('storyHeading').innerText = "Misi Insinyur Energi Smart City: " + currentStudent + "!";
+      
+      const pStory = document.querySelector('.story-text p');
+      if (pStory) {
+        pStory.innerHTML = `Selamat datang di Kota Mandiri 2030, Insinyur <strong>${currentStudent}</strong>! Seluruh kota membutuhkan pasokan listrik stabil untuk rumah sakit, sekolah, dan rumah warga. Uji pemborosan lampu kota, aktifkan pembangkit energi terbarukan matahari & angin, dan bangun Smart Grid yang anti-mati lampu!`;
+      }
+      
+      const repName = document.getElementById('repStudentName');
+      if (repName) repName.innerText = currentStudent;
+
+      updateRenewable();
     }
 
     function switchTab(tabId, btn) {
@@ -659,16 +711,43 @@
 
       ctx.clearRect(0, 0, w, h);
 
-      // Sky
       const sunVal = parseInt(document.getElementById('sunSlider').value);
-      ctx.fillStyle = `rgb(${210 + sunVal * 0.4}, ${230 + sunVal * 0.25}, 255)`;
-      ctx.fillRect(0, 0, w, h);
+      const windVal = parseInt(document.getElementById('windSlider').value);
 
-      // Sun
-      ctx.beginPath();
-      ctx.arc(w - 70, 50, 25 + sunVal * 0.15, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(245, 158, 11, ${0.4 + sunVal * 0.006})`;
-      ctx.fill();
+      // Sky: Day to Night dynamic
+      if (sunVal === 0) {
+        // Complete Night
+        ctx.fillStyle = "#0B132B";
+        ctx.fillRect(0, 0, w, h);
+
+        // Stars
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(60, 30, 2, 2);
+        ctx.fillRect(180, 45, 2, 2);
+        ctx.fillRect(320, 25, 2, 2);
+        ctx.fillRect(450, 50, 2, 2);
+        ctx.fillRect(580, 35, 2, 2);
+
+        // Crescent Moon
+        ctx.beginPath();
+        ctx.arc(w - 70, 45, 20, 0, Math.PI * 2);
+        ctx.fillStyle = "#FDE047";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(w - 62, 41, 17, 0, Math.PI * 2);
+        ctx.fillStyle = "#0B132B";
+        ctx.fill();
+      } else {
+        // Daytime gradient
+        ctx.fillStyle = `rgb(${160 + sunVal * 0.9}, ${200 + sunVal * 0.55}, 255)`;
+        ctx.fillRect(0, 0, w, h);
+
+        // Sun
+        ctx.beginPath();
+        ctx.arc(w - 70, 50, 22 + sunVal * 0.18, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245, 158, 11, ${0.4 + sunVal * 0.006})`;
+        ctx.fill();
+      }
 
       // Grass
       ctx.fillStyle = "#86EFAC";
@@ -725,6 +804,32 @@
       document.getElementById('sunLightVal').innerText = sun;
       const total = Math.round(wind * 5 + sun * 3);
       document.getElementById('totalPowerKwh').innerText = total;
+
+      const alertBox = document.getElementById('renewableDynamicAlert');
+      if (!alertBox) return;
+
+      if (wind === 0 && sun === 0) {
+        alertBox.className = 'renewable-alert alert-blackout';
+        alertBox.innerHTML = `🚨 <strong>KOTA PADAM TOTAL (BLACKOUT)!</strong><br>
+        Insinyur <strong>${currentStudent}</strong>, saat kecepatan angin 0 km/jam dan sinar matahari 0% (malam tenang tanpa angin), turbin berhenti berputar dan panel surya tidak menerima foton cahaya. <strong>Daya yang dihasilkan: 0 kWh!</strong> Seluruh lampu kota mati total! Kota membutuhkan baterai cadangan (Energy Storage) atau pembangkit hidro/biogas darurat!`;
+        playSfx('wrong');
+      } else if (wind === 0 && sun > 0) {
+        alertBox.className = 'renewable-alert alert-sun-only';
+        alertBox.innerHTML = `☀️ <strong>SIANG TERIK TANPA ANGIN:</strong><br>
+        Insinyur <strong>${currentStudent}</strong>, kincir angin diam (0 km/jam), namun radiasi foton surya (${sun}%) menghasilkan <strong>${total} kWh</strong>! Pasokan listrik siang hari cukup untuk menyalakan gedung sekolah dan perkantoran.`;
+      } else if (wind > 0 && sun === 0) {
+        alertBox.className = 'renewable-alert alert-wind-only';
+        alertBox.innerHTML = `🌙 <strong>MALAM HARI BERANGIN:</strong><br>
+        Insinyur <strong>${currentStudent}</strong>, di malam hari tanpa matahari (0%), kota mengandalkan 100% hembusan angin (${wind} km/jam) yang memutar turbin menghasilkan <strong>${total} kWh</strong>. Cukup untuk menerangi lampu jalan utama.`;
+      } else if (wind >= 30 && sun >= 60) {
+        alertBox.className = 'renewable-alert alert-optimal';
+        alertBox.innerHTML = `🌟 <strong>SURPLUS ENERGI BERSIH:</strong><br>
+        Luar biasa, Insinyur <strong>${currentStudent}</strong>! Kombinasi angin kencang (${wind} km/jam) dan matahari terik (${sun}%) menghasilkan <strong>${total} kWh</strong> listrik hijau melimpah! Cukup untuk Rumah Sakit, Sekolah, dan 500 Rumah Warga tanpa polusi!`;
+      } else {
+        alertBox.className = 'renewable-alert alert-normal';
+        alertBox.innerHTML = `⚡ <strong>PASOKAN HIBRIDA SEIMBANG:</strong><br>
+        Insinyur <strong>${currentStudent}</strong>, pembangkit angin dan surya bekerja sama menghasilkan <strong>${total} kWh</strong> listrik ramah lingkungan.`;
+      }
     }
 
     function checkRenewable(ans) {

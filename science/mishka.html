@@ -417,7 +417,7 @@
               <label style="font-size:0.8rem; font-weight:800; color:var(--muted); display:block; margin-bottom:4px;">
                 Jumlah Lilitan Kawat Tembaga: <strong id="coilsText" style="color:#4F46E5;">20</strong> Lilitan
               </label>
-              <input type="range" id="coilSlider" min="5" max="40" step="5" value="20" style="width:100%; accent-color:#4F46E5;" oninput="updateElectro()">
+              <input type="range" id="coilSlider" min="0" max="40" step="5" value="20" style="width:100%; accent-color:#4F46E5;" oninput="updateElectro()">
             </div>
 
             <div>
@@ -597,26 +597,33 @@
 
     function updateCircuitCrisisUI() {
       const alertBox = document.getElementById('crisisAlertBox');
+      const curName = document.getElementById('studentSelect') ? document.getElementById('studentSelect').value : 'Mishka';
       
       const b1Lit = isMasterOn && !bulb1Broken && (circuitMode === 'paralel' || !bulb2Broken);
       const b2Lit = isMasterOn && !bulb2Broken && (circuitMode === 'paralel' || !bulb1Broken);
 
+      if (!isMasterOn) {
+        alertBox.className = 'crisis-alert crisis-warning';
+        alertBox.innerHTML = `🛑 <strong>SAKELAR PUSAT OFF:</strong> Insinyur <strong>${curName}</strong>, seluruh sirkuit terputus dari sumber baterai. Tidak ada elektron mengalir.`;
+        return;
+      }
+
       if (circuitMode === 'seri') {
         if (bulb1Broken && !b2Lit) {
           alertBox.className = 'crisis-alert crisis-warning';
-          alertBox.innerHTML = "🚨 <strong>BAHAYA DI RS DARURAT:</strong> Bohlam 1 dicabut, sirkuit seri putus total! <strong>Mesin Ventilator ICU IKUT MATI!</strong> Ini bukti kelemahan sirkuit seri!";
+          alertBox.innerHTML = `🚨 <strong>KRISIS GAWAT DI RS DARURAT:</strong> Insinyur <strong>${curName}</strong>, bohlam 1 dicabut sehingga kawat tunggal seri putus total! Aliran elektron terhenti dan <strong>VENTILATOR ICU IKUT MATI TOTAL!</strong> Inilah bahaya besar sirkuit seri di rumah sakit!`;
         } else {
           alertBox.className = 'crisis-alert crisis-warning';
-          alertBox.innerHTML = "⚠️ <strong>Mode Seri:</strong> Arus hanya punya 1 kawat tunggal. Cabut Bohlam 1 untuk melihat bagaimana ventilator ICU mati seketika!";
+          alertBox.innerHTML = `⚠️ <strong>Mode Seri:</strong> Insinyur <strong>${curName}</strong>, arus hanya mengalir lewat 1 jalur kawat tunggal. Klik tombol "Cabut Bohlam 1" di bawah untuk melihat ventilator ICU mati mendadak!`;
         }
       } else {
         // Paralel
         if (bulb1Broken && b2Lit) {
           alertBox.className = 'crisis-alert crisis-safe';
-          alertBox.innerHTML = "🎉 <strong>LUAR BIASA! SISTEM RS AMAN:</strong> Bohlam 1 dicabut/rusak, tetapi <strong>Ventilator ICU TETAP MENYALA</strong> karena memiliki jalur kawat cabang sendiri! Inilah keunggulan sirkuit paralel!";
+          alertBox.innerHTML = `🎉 <strong>LUAR BIASA! SISTEM RS AMAN:</strong> Insinyur <strong>${curName}</strong> berhasil membuktikan sirkuit paralel! Walaupun Bohlam 1 dicabut, <strong>VENTILATOR ICU TETAP MENYALA</strong> karena kabel cabangnya mandiri langsung ke baterai! Pasien selamat!`;
         } else {
           alertBox.className = 'crisis-alert crisis-safe';
-          alertBox.innerHTML = "💡 <strong>Mode Paralel:</strong> Setiap alat memiliki jalur kawat sendiri ke baterai. Cabut Bohlam 1 untuk membuktikan ventilator tetap menyala aman!";
+          alertBox.innerHTML = `💡 <strong>Mode Paralel:</strong> Insinyur <strong>${curName}</strong>, setiap alat memiliki kawat cabang mandiri. Coba klik "Cabut Bohlam 1" untuk membuktikan ventilator tetap berdetak aman!`;
         }
       }
     }
@@ -921,7 +928,7 @@
       const speedText = document.getElementById('maglevSpeedText');
 
       if (!chosenPolarity) {
-        alert('Mishka, pilih salah satu Konfigurasi Magnet Rel terlebih dahulu!');
+        const curName = document.getElementById('studentSelect') ? document.getElementById('studentSelect').value : 'Mishka'; alert(curName + ', pilih salah satu Konfigurasi Magnet Rel terlebih dahulu!');
         return;
       }
 
@@ -950,7 +957,8 @@
 
       if (opt === 1) {
         playSuccessChime();
-        fb.innerHTML = '🎉 <strong>TEPAT SEKALI, INSINYUR MISHKA!</strong> Kutub senama (Utara-Utara) saling tolak-menolak. Gaya tolak ini melawan gravitasi bumi dan meniadakan gaya gesek, sehingga kereta bisa melesat 600 km/jam!';
+        const curName = document.getElementById('studentSelect') ? document.getElementById('studentSelect').value : 'Mishka';
+        fb.innerHTML = '🎉 <strong>TEPAT SEKALI, INSINYUR ' + curName.toUpperCase() + '!</strong> Kutub senama (Utara-Utara) saling tolak-menolak. Gaya tolak ini melawan gravitasi bumi dan meniadakan gaya gesek rel, sehingga kereta bisa melesat 600 km/jam!';
         fb.style.color = '#34D399';
       } else {
         playTone(250, 'sawtooth', 0.2);
@@ -973,6 +981,15 @@
       const name = sel.value;
       const title = document.getElementById('pageTitle');
       if (title) title.innerText = '💡 Studio Insinyur Listrik & Magnet ' + name;
+
+      const storyH3 = document.querySelector('.story-text h3');
+      if (storyH3) storyH3.innerText = 'Misi Insinyur Cilik ' + name + ': Dari Partikel Elektron Hingga Kereta 600 km/jam';
+
+      const storyP = document.querySelector('.story-text p');
+      if (storyP) storyP.innerHTML = `"${name}, listrik dan magnet adalah dua bersaudara yang menggerakkan peradaban modern! Rancang sirkuit darurat rumah sakit, buat crane magnet untuk daur ulang logam, dan temukan rahasia kereta Maglev melayang tanpa roda!"`;
+
+      updateCircuitCrisisUI();
+      calculateClips();
     }
 
 </script>
