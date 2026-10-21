@@ -410,13 +410,21 @@
     <!-- Header Card -->
     <div class="header-card">
       <div class="header-info">
-        <h1>🛹 Petualangan Topeng Energi Aqlan</h1>
+        <h1 id="pageTitle">🛹 Petualangan Topeng Energi Aqlan</h1>
         <p>Eksperimen Interaktif IPAS Kelas 4 • Bab 4: Mengubah Bentuk Energi</p>
       </div>
       <div class="nav-links">
+        <div style="background:#ECFDF5; border:1.5px solid #A7F3D0; padding:6px 14px; border-radius:12px; display:flex; align-items:center; gap:8px;">
+          <span style="font-size:0.85rem; font-weight:700; color:#065F46;">Nama Siswa:</span>
+          <select id="studentSelect" onchange="updateStudentName()" style="background:transparent; border:none; font-weight:800; color:#065F46; font-size:0.95rem; cursor:pointer; outline:none;">
+            <option value="Hasyif">Hasyif (On-site)</option>
+            <option value="Alisya">Alisya (On-site)</option>
+            <option value="Kinanti">Kinanti (On-site)</option>
+            <option value="Aqlan" selected>Aqlan (Online)</option>
+          </select>
+        </div>
+        <a href="index.html" class="btn-nav">🔬 Hub Sains</a>
         <a href="../index.html" class="btn-nav">🏠 Portal PKBM</a>
-        <a href="../math/aqlan.html" class="btn-nav">📐 Math Aqlan</a>
-        <a href="mishka.html" class="btn-nav">⚡ Lab Mishka (Kelas 5)</a>
       </div>
     </div>
 
@@ -1111,6 +1119,15 @@
         res.innerText = '⚠️ Pilih trek Aspal Kasar di Tab 1 lalu luncurkan skater untuk membuktikannya.';
       }
     }
-  </script>
+  
+    function updateStudentName() {
+      const sel = document.getElementById('studentSelect');
+      if (!sel) return;
+      const name = sel.value;
+      const title = document.getElementById('pageTitle');
+      if (title) title.innerText = '🛹 Petualangan Topeng Energi ' + name;
+    }
+
+</script>
 </body>
 </html>

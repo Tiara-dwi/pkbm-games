@@ -303,13 +303,19 @@
     <!-- Header -->
     <div class="header-card">
       <div class="header-info">
-        <h1>💡 Studio Insinyur Listrik & Magnet Mishka</h1>
+        <h1 id="pageTitle">💡 Studio Insinyur Listrik & Magnet Mishka</h1>
         <p>Eksperimen Interaktif IPAS Kelas 5 • Bab 3: Magnet, Listrik, dan Teknologi</p>
       </div>
       <div class="nav-links">
+        <div style="background:#EEF2FF; border:1.5px solid #C7D2FE; padding:6px 14px; border-radius:12px; display:flex; align-items:center; gap:8px;">
+          <span style="font-size:0.85rem; font-weight:700; color:#312E81;">Insinyur:</span>
+          <select id="studentSelect" onchange="updateStudentName()" style="background:transparent; border:none; font-weight:800; color:#312E81; font-size:0.95rem; cursor:pointer; outline:none;">
+            <option value="Ardiansyah">Ardiansyah (On-site)</option>
+            <option value="Mishka" selected>Mishka (Online)</option>
+          </select>
+        </div>
+        <a href="index.html" class="btn-nav">🔬 Hub Sains</a>
         <a href="../index.html" class="btn-nav">🏠 Portal PKBM</a>
-        <a href="../math/mishka.html" class="btn-nav">📐 Math Mishka</a>
-        <a href="aqlan.html" class="btn-nav">🛹 Lab Aqlan (Kelas 4)</a>
       </div>
     </div>
 
@@ -960,6 +966,15 @@
       requestAnimationFrame(renderLoop);
     }
     requestAnimationFrame(renderLoop);
-  </script>
+  
+    function updateStudentName() {
+      const sel = document.getElementById('studentSelect');
+      if (!sel) return;
+      const name = sel.value;
+      const title = document.getElementById('pageTitle');
+      if (title) title.innerText = '💡 Studio Insinyur Listrik & Magnet ' + name;
+    }
+
+</script>
 </body>
 </html>
