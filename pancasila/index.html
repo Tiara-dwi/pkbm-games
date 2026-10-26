@@ -717,18 +717,29 @@
 
 <script>
   // AUDIO SYNTHESIS ENGINE (Tanpa aset eksternal)
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // SAFE LAZY AUDIO SYNTHESIS ENGINE
+  let audioCtx = null;
+  function getAudioCtx() {
+    try {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    } catch(e) { return null; }
+  }
 
   function playTone(freq, type, duration) {
     try {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
+      const ctx = getAudioCtx(); if(!ctx) return; const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
       osc.type = type;
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(ctx.destination);
       osc.start();
       osc.stop(audioCtx.currentTime + duration);
     } catch(e) {}
