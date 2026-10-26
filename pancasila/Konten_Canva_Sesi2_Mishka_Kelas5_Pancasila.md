@@ -86,6 +86,9 @@
 ### Slide 8: Textbook - Warisan Pakaian Adat, Senjata & Alat Musik Tradisional
 * **Tipe:** Konsep Textbook Kemendikbud
 * **Visual Cue Canva:** Kolase 4 alat musik daerah: Angklung (Jawa Barat), Sasando (NTT), Gamelan (Jawa/Bali), dan Tifa (Papua/Maluku).
+* **🖼️ Aset Gambar Hasil Generate (16:9 Widescreen):** `alat_musik_dan_kain_adat_slide8.jpg`
+  * *File Path:* `d:\Tiara\pkbm-games\pancasila\alat_musik_dan_kain_adat_slide8.jpg`
+  * *Deskripsi Visual:* Format infografis edukatif 16:9 widescreen Canva style dengan latar pastel krem hangat, menampilkan 4 mahakarya instrumen tradisional berpadu kain adat khas: Sasando daun lontar (Rote NTT) & Tenun Ikat (kiri-atas), Angklung bambu & Batik Mega Mendung (kanan-atas), Tifa ukir Asmat & Noken rajut Papua (kiri-bawah), serta Gong Ageng perunggu, Kendang & Batik Parang (kanan-bawah).
 * **Teks Slide:**
   * **Buku Siswa Kemendikbud Hal 105-112: Warisan Mahakarya Takbenda:**
     * **Alat Musik Bernada:** Angklung dari bambu yang diakui UNESCO, Sasando dari daun lontar pulau Rote, Tifa gendang khas timur.
@@ -96,6 +99,9 @@
 ### Slide 9: Keseharian - Menghindari Etnosentrisme dalam Pergaulan
 * **Tipe:** Konteks Keseharian Nyata
 * **Visual Cue Canva:** Ilustrasi Mishka dan teman-temannya saling mencicipi makanan khas daerah saat festival kuliner kelas: papeda Papua, rendang Padang, dan gudeg Jogja.
+* **🖼️ Aset Gambar Hasil Generate (16:9 Widescreen):** `festival_kuliner_nusantara_slide9.jpg`
+  * *File Path:* `d:\Tiara\pkbm-games\pancasila\festival_kuliner_nusantara_slide9.jpg`
+  * *Deskripsi Visual:* Suasana hangat di ruang kelas bernuansa pastel berhiaskan bendera merah-putih dan batik, menampilkan Mishka dan sahabat-sahabatnya saling mencicipi makanan khas daerah: Papeda Papua berkuah kuning, Rendang Padang di atas daun pisang, dan Gudeg Yogyakarta di atas meja beralas tenun dengan senyum tulus tanpa etnosentrisme.
 * **Teks Slide:**
   * **Apa Itu Etnosentrisme?** Sikap memandang rendah budaya suku lain dan menganggap budaya sukunya sendiri yang paling hebat.
   * **Bahaya Etnosentrisme:** Menimbulkan perpecahan, saling mengejek di media sosial, dan merusak persatuan bangsa.
