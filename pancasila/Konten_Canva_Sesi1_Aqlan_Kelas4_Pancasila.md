@@ -70,6 +70,9 @@
 ### Slide 7: Keseharian - Filosofi Seikat Sapu Lidi di Lapangan Bermain
 * **Tipe:** Konteks Keseharian Nyata
 * **Visual Cue Canva:** Perbandingan kontras: Satu lidi kelapa patah terbelah dua saat menusuk tanah (kiri) vs Seikat sapu lidi diikat tali menyapu batu dan lumpur bersih seketika (kanan).
+* **🖼️ Aset Gambar Hasil Generate (16:9 Widescreen):** `filosofi_sapu_lidi_slide.jpg`
+  * *File Path:* `d:\Tiara\pkbm-games\pancasila\filosofi_sapu_lidi_slide.jpg`
+  * *Deskripsi Visual:* Format widescreen 16:9 Canva presentation style dengan latar krem lembut. Panel kiri menampilkan sebatang lidi patah berderak (*KREK!*) berserakan di atas bebatuan bertuliskan *"Sendirian: Rapuh ❌"*. Panel kanan menampilkan seikat sapu lidi kokoh berikat pita merah-putih menyapu bersih kerikil dan dedaunan berkilau emas bertuliskan *"Bersatu: Kuat ✅"*.
 * **Teks Slide:**
   * **Eksperimen Lapangan Basket:** Coba ambil satu batang lidi dan gunakan untuk menyapu kerikil di lapangan skate -> KREK! Lidi langsung patah.
   * **Rahasia Ikatan Persatuan:** Saat ratusan batang lidi—ada yang tebal, tipis, panjang, pendek—diikat kencang dalam satu ikatan tali, sapu lidi mampu menyingkirkan batu besar!
