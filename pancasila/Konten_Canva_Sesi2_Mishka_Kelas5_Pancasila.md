@@ -69,15 +69,19 @@
        * **Sains Tahan Gempa:** Saat gempa bumi dahsyat mengguncang Sumatera, sambungan pasak kayu bergoyang elastis meredam getaran sehingga bangunan tidak roboh!
 * **🎙️ Narasi Guru ke Siswa:** *"Mengapa Rumah Gadang tidak memakai paku besi semen modern, tetapi justru terbukti bertahan ratusan tahun menghadapi bencana gempa bumi di Sumatera?"*
 
-### Slide 7: Keseharian - Harmoni Koreografi Senam Dua Rumah Adat
+### Slide 7: Keseharian - Pentas Teater Harmoni Budaya & Rumah Adat Nusantara
 * **Tipe:** Konteks Keseharian Nyata
-* **Visual Cue Canva:** Ilustrasi panggung pentas seni: Mishka dan kawan-kawan memperagakan gerakan senam yang memadukan formasi lingkaran rapat Honai dan busur perahu Tongkonan yang megah.
+* **Visual Cue Canva:** Pentas teater seni sekolah: Mishka dan kawan-kawan tampil di atas panggung kayu berlatar 3 rumah adat (Rumah Tongkonan, Rumah Gadang, dan Rumah Honai) dengan masing-masing anak mengenakan pakaian adat lengkap sesuai rumah adat yang mereka gunakan.
+* **🖼️ Aset Gambar Hasil Generate (16:9 Widescreen):** `pentas_teater_harmoni_budaya.jpg`
+  * *File Path:* `d:\Tiara\pkbm-games\pancasila\pentas_teater_harmoni_budaya.jpg`
+  * *Deskripsi Visual:* Panggung teater sekolah dengan tirai beludru merah dan lampu sorot hangat (*spotlight*). Di latar panggung berdiri tiga rumah adat (Tongkonan perahu di kiri, Rumah Gadang gonjong tanduk kerbau di tengah, dan Rumah Honai bundar di kanan). Tiga pemeran anak tampil selaras: Mishka di tengah berbusana Toraja (Baju Pokko & manik-manik Kandaure), sahabat di kiri berbusana Minang dengan Tingkuluak Tanduak bersulam emas, dan sahabat di kanan berbusana Papua dengan mahkota bulu cendrawasih memegang alat musik Tifa.
 * **Teks Slide:**
-  * **Solusi Kreatif Koreografer Mishka:** Mengapa harus bertengkar memilih salah satu jika kita bisa memadukan keduanya dalam satu karya indah?
-  * **Babak 1 (Kehangatan Honai):** Pesenam membentuk lingkaran melengkung rapat berpegangan tangan, melambangkan kebersamaan dan perlindungan keluarga.
-  * **Babak 2 (Keagungan Tongkonan):** Pesenam melompat anggun dan membuka formasi menjadi busur haluan perahu megah yang berani mengarungi samudra.
-  * **Hasil Pentas:** Semua penonton bertepuk tangan kagum! Dua kubu teman Mishka berpelukan bangga karena kedua budaya leluhur berpadu harmonis!
-* **🎙️ Narasi Guru ke Siswa:** *"Mishka, bagaimana perasaanmu ketika melihat dua budaya yang sempat dipertengkarkan teman-teman justru melahirkan gerakan tarian senam yang sangat memukau?"*
+  * **Solusi Damai Pentas Teater:** Mengapa harus bertengkar memilih salah satu rumah adat jika ketiganya bisa tampil bersama di atas panggung megah?
+  * **Pemeran 1 (Kearifan Honai Papua):** Menampilkan busana adat Papua dan tabuhan Tifa, menyampaikan pesan kehangatan sains dan kekeluargaan.
+  * **Pemeran 2 (Ketangguhan Gadang Minang):** Menampilkan busana Minang bertingkuluak tanduak, menyampaikan pesan rekayasa tahan gempa dan keelokan budi pekerti.
+  * **Pemeran 3 (Keagungan Tongkonan Toraja):** Mishka berbusana Baju Pokko & Kandaure, menyampaikan pesan penghormatan leluhur pelaut nusantara.
+  * **Puncak Teater:** Ketiga sahabat bergandengan tangan di bawah sorotan lampu panggung! Seluruh penonton berdiri bertepuk tangan (*standing ovation*) melihat indahnya harmoni kebinekaan!
+* **🎙️ Narasi Guru ke Siswa:** *"Mishka, lihat panggung teater ini! Betapa memukaunya saat pakaian adat Toraja, Minang, dan Papua bersanding di bawah lampu panggung yang sama. Inilah bukti nyata bahwa keberagaman adalah mahakarya seni bangsa kita!"*
 
 ### Slide 8: Textbook - Warisan Pakaian Adat, Senjata & Alat Musik Tradisional
 * **Tipe:** Konsep Textbook Kemendikbud
