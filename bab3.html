@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiga Game Interaktif Bab 3: Pendidikan Pancasila & PAI - PKBM Penerus Bangsa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --secondary: #0D9488;
+      --accent: #F59E0B;
+      --danger: #EF4444;
+      --success: #10B981;
+      --bg-gradient: linear-gradient(135deg, #F8FAFC 0%, #EEF2F6 100%);
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --radius: 20px;
+      --shadow: 0 12px 30px -8px rgba(79, 70, 229, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3730A3 0%, #4F46E5 50%, #06B6D4 100%);
+      color: white;
+      padding: 32px 24px;
+      border-radius: var(--radius);
+      box-shadow: 0 15px 35px -10px rgba(79, 70, 229, 0.4);
+      margin-bottom: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "🇮🇩";
+      position: absolute;
+      right: 20px;
+      bottom: -15px;
+      font-size: 5.5rem;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.3rem;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* STUDENT CONTROL BAR */
+    .control-panel {
+      background: white;
+      padding: 20px 24px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .select-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 300px;
+    }
+
+    label {
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 2px solid #C7D2FE;
+      background: #EEF2FF;
+      color: #312E81;
+      font-size: 1rem;
+      font-weight: 700;
+      outline: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    }
+
+    .student-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      padding: 8px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    /* 3 GAMES TAB SWITCHER */
+    .game-switcher {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .game-tab-btn {
+      padding: 16px 12px;
+      border: none;
+      border-radius: 16px;
+      background: white;
+      color: #475569;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+      border: 2px solid transparent;
+    }
+
+    .game-tab-btn .tab-sub {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #64748B;
+    }
+
+    .game-tab-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .game-tab-btn.active {
+      background: white;
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .game-tab-btn.active .tab-sub {
+      color: var(--primary);
+    }
+
+    /* GAME SECTION CONTAINER */
+    .game-pane {
+      display: none;
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.35s ease;
+    }
+
+    .game-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .mission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 2px dashed #E2E8F0;
+      margin-bottom: 24px;
+    }
+
+    .mission-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.6rem;
+      color: var(--primary-dark);
+    }
+
+    .mission-sub {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .score-badge {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      border: 2px solid #F59E0B;
+      padding: 8px 18px;
+      border-radius: 14px;
+      font-family: 'Fredoka', cursive;
+      font-size: 1.15rem;
+      color: #92400E;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* SCENARIO & CASE STUDY CARD */
+    .scenario-card {
+      background: #F8FAFC;
+      border-left: 6px solid var(--primary);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 22px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .scenario-card strong {
+      color: var(--primary-dark);
+    }
+
+    /* INTERACTIVE CHOICES GRID */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .choice-card {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .choice-card:hover {
+      border-color: var(--primary);
+      background: #EEF2FF;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.1);
+    }
+
+    .choice-card.correct {
+      border-color: var(--success) !important;
+      background: #ECFDF5 !important;
+      color: #065F46;
+    }
+
+    .choice-card.wrong {
+      border-color: var(--danger) !important;
+      background: #FEF2F2 !important;
+      color: #991B1B;
+    }
+
+    .choice-icon {
+      font-size: 2.6rem;
+      text-align: center;
+    }
+
+    .choice-title {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #1E293B;
+    }
+
+    .choice-desc {
+      font-size: 0.92rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    /* REAL-TIME FEEDBACK CALLOUT */
+    .feedback-box {
+      display: none;
+      padding: 18px 22px;
+      border-radius: 16px;
+      font-size: 1rem;
+      line-height: 1.6;
+      font-weight: 600;
+      margin-top: 18px;
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .feedback-box.success {
+      background: #ECFDF5;
+      border: 2px solid #34D399;
+      color: #065F46;
+      display: block;
+    }
+
+    .feedback-box.error {
+      background: #FEF2F2;
+      border: 2px solid #F87171;
+      color: #991B1B;
+      display: block;
+    }
+
+    /* SENSORY TOGGLE FOR ALISYA */
+    .sensory-bar {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      padding: 12px 18px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+      color: #1E40AF;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #CBD5E1;
+      transition: .3s;
+      border-radius: 26px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider { background-color: var(--primary); }
+    input:checked + .slider:before { transform: translateX(22px); }
+
+    .alisya-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .alisya-box {
+      border: 4px solid #E2E8F0;
+      background: white;
+      border-radius: 20px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .alisya-box:hover {
+      border-color: #38BDF8;
+      transform: scale(1.02);
+    }
+
+    .alisya-box.correct {
+      border-color: #10B981;
+      background: #ECFDF5;
+    }
+
+    .alisya-icon { font-size: 4rem; margin-bottom: 12px; }
+    .alisya-title { font-size: 1.35rem; font-weight: 800; color: #1E293B; }
+    .alisya-tag { font-size: 1rem; font-weight: 700; margin-top: 8px; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      color: #94A3B8;
+      font-size: 0.88rem;
+      margin-top: 36px;
+      padding-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge-top">⭐ 3 Game Terpadu • Bab 3 Pendidikan Pancasila & PAI ⭐</div>
+    <h1>Petualangan 3 Ksatria Bab 3</h1>
+    <p class="subtitle">Pendalaman Terpadu: Kerja Sama & Toleransi (Kls 4), Budaya Nusantara & Khalifah (Kls 5), Integritas Kejujuran & Pemaaf (Kls 6)</p>
+  </header>
+
+  <!-- INSPIRASI GITA WIRJAWAN CALLOUT -->
+  <div style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #E0E7FF; border-radius: 16px; padding: 18px 22px; margin-bottom: 22px; box-shadow: 0 4px 18px rgba(30, 27, 75, 0.25); display: flex; align-items: center; gap: 16px;">
+    <div style="font-size: 2.2rem; flex-shrink: 0;">🎙️📖</div>
+    <div style="font-size: 0.92rem; line-height: 1.55;">
+      <strong style="color: #FDE047; font-size: 1rem;">Gagasan Pak Gita Wirjawan (Storytelling & Konteks Nyata):</strong><br>
+      <em>"Pendidikan karakter bukanlah deretan pasal hafalan yang kaku, melainkan kisah hidup nyata tempat anak-anak menemukan empati, keberanian moral, dan rasa ingin tahu dari masalah di sekitarnya."</em>
+    </div>
+  </div>
+
+  <!-- STUDENT SELECTOR -->
+  <div class="control-panel">
+    <div class="select-group">
+      <label for="studentSelect">👤 Pilih Murid:</label>
+      <select id="studentSelect" onchange="switchStudent()">
+        <optgroup label="Kelas 4 (On-site & Online)">
+          <option value="hasyif" data-grade="4">Hasyif (Kelas 4 - On-site)</option>
+          <option value="alisya" data-grade="4">Alisya (Kelas 4 - On-site / Visual Sensory)</option>
+          <option value="kinanti" data-grade="4">Kinanti (Kelas 4 - On-site)</option>
+          <option value="aqlan" data-grade="4">Aqlan (Kelas 4 - Zoom Online)</option>
+        </optgroup>
+        <optgroup label="Kelas 5 (On-site & Online)">
+          <option value="ardiansyah" data-grade="5">Ardiansyah (Kelas 5 - On-site)</option>
+          <option value="mishka" data-grade="5">Mishka (Kelas 5 - Zoom Online)</option>
+        </optgroup>
+        <optgroup label="Kelas 6 (On-site)">
+          <option value="shan" data-grade="6">Shan (Kelas 6 - On-site)</option>
+          <option value="aulya" data-grade="6">Aulya (Kelas 6 - On-site)</option>
+          <option value="hendra" data-grade="6">Hendra (Kelas 6 - On-site)</option>
+          <option value="selvi" data-grade="6">Selvi (Kelas 6 - On-site)</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="student-badge">
+      <div class="status-dot"></div>
+      <span id="activeStudentLabel">Halo, Hasyif! (Kelas 4)</span>
+    </div>
+  </div>
+
+  <!-- 3 GAME SWITCHER BUTTONS -->
+  <div class="game-switcher">
+    <button class="game-tab-btn active" id="btnGame1" onclick="openGame(1)">
+      <span>📘 Game 1: Kelas 4</span>
+      <span class="tab-sub">Gotong Royong & Toleransi</span>
+    </button>
+    <button class="game-tab-btn" id="btnGame2" onclick="openGame(2)">
+      <span>📙 Game 2: Kelas 5</span>
+      <span class="tab-sub">Budaya Nusantara & Khalifah</span>
+    </button>
+    <button class="game-tab-btn" id="btnGame3" onclick="openGame(3)">
+      <span>📕 Game 3: Kelas 6</span>
+      <span class="tab-sub">Integritas Jujur & Pemaaf</span>
+    </button>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- GAME 1: KELAS 4 (HASYIF, ALISYA, KINANTI, AQLAN) -->
+  <!-- ========================================================================= -->
+  <div class="game-pane active" id="paneGame1">
+    <div class="mission-header">
+      <div>
+        <h2 class="mission-title">Game 1: Detektif Gotong Royong & Taman Toleransi</h2>
+        <p class="mission-sub">Terapkan semangat persatuan kerja bakti dan hikmah Q.S. Al-Ḥujurāt: 13!</p>
+      </div>
+      <div class="score-badge">
+        <span>⭐ Skor:</span>
+        <span id="score1">0</span>
+      </div>
+    </div>
+
+    <!-- TOGGLE ALISYA -->
+    <div class="sensory-bar" id="alisyaBar">
+      <label class="switch">
+        <input type="checkbox" id="sensoryCheckbox" onchange="toggleSensory()">
+        <span class="slider"></span>
+      </label>
+      <span>Mode Visual Kartu Sensorik Khusus Alisya (Gambar Besar & Warna Kontras)</span>
+    </div>
+
+    <!-- STANDARD KELAS 4 -->
+    <div id="viewKls4Standard">
+      <div class="scenario-card" id="storyContextGame1">
+        <strong>Studi Kasus Nyata:</strong> Di desa tempat tinggal <span class="studentNameSpan">Hasyif</span>, saluran air tersumbat sampah menjelang musim hujan. Pak RT memperkirakan jika dikerjakan sendiri oleh petugas kebersihan desa, butuh waktu 10 hari. Jika dibiarkan, saat hujan deras air akan meluap membanjiri rumah warga. Apa tindakan terbaik yang harus diambil masyarakat?
+      </div>
+
+      <div class="choice-grid">
+        <div class="choice-card" onclick="evalGame1(false, this)">
+          <div class="choice-icon">🚪🛋️</div>
+          <div class="choice-title">Tutup Pintu & Tinggal di Rumah</div>
+          <div class="choice-desc">Menganggap banjir bukan urusan sendiri dan menunggu petugas pemerintah datang.</div>
+        </div>
+
+        <div class="choice-card" onclick="evalGame1(true, this)">
+          <div class="choice-icon">🤝🧹📦</div>
+          <div class="choice-title">Kerja Bakti Gotong Royong Bersama</div>
+          <div class="choice-desc">Seluruh warga berkumpul membawa cangkul, karung, dan bekerja sama membersihkan selokan secara sukarela.</div>
+        </div>
+
+        <div class="choice-card" onclick="evalGame1(false, this)">
+          <div class="choice-icon">📢😤</div>
+          <div class="choice-title">Menyalahkan Tetangga Lain</div>
+          <div class="choice-desc">Membuat kegaduhan dan saling menuduh siapa yang paling banyak membuang sampah.</div>
+        </div>
+      </div>
+
+      <!-- TANTANGAN PAI 4 -->
+      <div style="margin-top: 24px; padding-top: 18px; border-top: 2px dashed #E2E8F0;">
+        <h3 style="color: var(--primary-dark); font-size: 1.25rem; margin-bottom: 12px;">🕌 Tantangan PAI: Makna "Li-ta'ārafū" (Q.S. Al-Ḥujurāt/49: 13)</h3>
+        <div class="scenario-card" id="storyContextPai1">
+          Allah Swt. menciptakan manusia berbangsa-bangsa dan bersuku-suku agar <em>Li-ta'ārafū</em>. Bagaimana penerapan sikap ini jika ada teman baru yang berbeda suku dan agama di kelasmu?
+        </div>
+        <div class="choice-grid">
+          <div class="choice-card" onclick="evalGame1Pai(true, this)">
+            <div class="choice-icon">🌸🤝✨</div>
+            <div class="choice-title">Menyapa & Saling Belajar Kebaikan</div>
+            <div class="choice-desc">Menghargai tradisinya, berteman secara tulus, dan tolong-menolong dalam urusan kebaikan tanpa membeda-bedakan keyakinan.</div>
+          </div>
+          <div class="choice-card" onclick="evalGame1Pai(false, this)">
+            <div class="choice-icon">🙈🙅‍♂️</div>
+            <div class="choice-title">Menjauh & Menganggap Asing</div>
+            <div class="choice-desc">Hanya mau bermain dengan anak yang sukunya sama persis.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALISYA SENSORY VIEW -->
+    <div id="viewKls4Alisya" style="display: none;">
+      <p style="font-weight: 800; font-size: 1.25rem; margin-bottom: 16px; color: #1E293B;">
+        Sentuh gambar anak yang <strong>SUKA BEKERJA SAMA (RUKUN)</strong>:
+      </p>
+      <div class="alisya-grid">
+        <div class="alisya-box" onclick="evalAlisya(true, this)">
+          <div class="alisya-icon">🤝🧹🎁</div>
+          <div class="alisya-title">Merapikan Bersama Teman</div>
+          <div class="alisya-tag" style="color: #10B981;">(Alisya Senang & Rukun ✅)</div>
+        </div>
+        <div class="alisya-box" onclick="evalAlisya(false, this)">
+          <div class="alisya-icon">😠👊❌</div>
+          <div class="alisya-title">Rebutan Mainan Sendiri</div>
+          <div class="alisya-tag" style="color: #EF4444;">(Tidak Boleh Ditiru ❌)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feedback-box" id="fbGame1"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- GAME 2: KELAS 5 (ARDIANSYAH & MISHKA) -->
+  <!-- ========================================================================= -->
+  <div class="game-pane" id="paneGame2">
+    <div class="mission-header">
+      <div>
+        <h2 class="mission-title">Game 2: Penjelajah Budaya Nusantara & Misi Khalifah</h2>
+        <p class="mission-sub">Analisis kecerdasan arsitektur rumah adat & laksanakan amanah perawat bumi!</p>
+      </div>
+      <div class="score-badge">
+        <span>⭐ Skor:</span>
+        <span id="score2">0</span>
+      </div>
+    </div>
+
+    <div class="scenario-card" id="storyContextGame2">
+      <strong>Analisis Arsitektur Rumah Adat:</strong> Nenek moyang suku Dani di pegunungan Jayawijaya Papua merancang <strong>Rumah Honai</strong> berbentuk bundar dari kayu beralaskan jerami tebal dan <em>sengaja dibuat tanpa jendela</em>. Mengapa arsitektur tersebut sangat cerdas?
+    </div>
+
+    <div class="choice-grid">
+      <div class="choice-card" onclick="evalGame2(false, this)">
+        <div class="choice-icon">🏚️🪵</div>
+        <div class="choice-title">Kekurangan Bahan Bangunan</div>
+        <div class="choice-desc">Karena di pegunungan sulit menemukan kaca dan besi untuk membuat jendela.</div>
+      </div>
+
+      <div class="choice-card" onclick="evalGame2(true, this)">
+        <div class="choice-icon">🏔️🔥🛖</div>
+        <div class="choice-title">Adaptasi Menahan Dingin Ekstrem</div>
+        <div class="choice-desc">Bentuk bundar dan dinding tebal tanpa jendela menjaga panas api unggun di dalam ruangan agar warga tidak membeku di suhu dingin pegunungan Papua!</div>
+      </div>
+    </div>
+
+    <!-- TANTANGAN KHALIFAH & MUSYAWARAH -->
+    <div style="margin-top: 24px; padding-top: 18px; border-top: 2px dashed #E2E8F0;">
+      <h3 style="color: var(--primary-dark); font-size: 1.25rem; margin-bottom: 12px;">🌿 Tantangan PAI: Tugas Khalifah fil Ardh & Adab Diskusi</h3>
+      <div class="scenario-card" id="storyContextPai2">
+        Saat <span class="studentNameSpan">Ardiansyah</span> dan <span class="studentNameSpan">Mishka</span> bermusyawarah menata tanaman kelas, terjadi perbedaan ide antara menanam apotek hidup atau bunga hias. Suasana mulai panas. Bagaimana adab seorang anak saleh?
+      </div>
+      <div class="choice-grid">
+        <div class="choice-card" onclick="evalGame2Pai(true, this)">
+          <div class="choice-icon">👂🌟🕊️</div>
+          <div class="choice-title">Menyimak Santun & Bikin Solusi Gabungan</div>
+          <div class="choice-desc">Mendengarkan sampai selesai tanpa memotong, lalu membuat kesepakatan: membagi pot untuk apotek hidup di kiri dan bunga hias di kanan!</div>
+        </div>
+        <div class="choice-card" onclick="evalGame2Pai(false, this)">
+          <div class="choice-icon">😤🗣️💥</div>
+          <div class="choice-title">Memaksa & Menolak Usulan Teman</div>
+          <div class="choice-desc">Merasa gagasannya yang paling benar dan mengancam tidak mau ikut kerja kelompok.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feedback-box" id="fbGame2"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- GAME 3: KELAS 6 (SHAN, AULYA, HENDRA, SELVI) -->
+  <!-- ========================================================================= -->
+  <div class="game-pane" id="paneGame3">
+    <div class="mission-header">
+      <div>
+        <h2 class="mission-title">Game 3: Mahkamah Etika, Kewajiban Jujur & Benteng Pemaaf</h2>
+        <p class="mission-sub">Tuntaskan dilema moral kejujuran pelajar & terapkan sabda Nabi tentang memaafkan!</p>
+      </div>
+      <div class="score-badge">
+        <span>⭐ Skor:</span>
+        <span id="score3">0</span>
+      </div>
+    </div>
+
+    <div class="scenario-card" id="storyContextGame3">
+      <strong>Dilema Integritas Siswa:</strong> Saat jam istirahat, <span class="studentNameSpan">Hendra</span> dan <span class="studentNameSpan">Shan</span> bermain bola di koridor kelas dan tanpa sengaja memecahkan vas bunga kesayangan sekolah. Tidak ada saksi guru. Hendra mengajak Shan pura-pura tidak tahu dan berbohong agar tidak dimarahi. Apa tindakan kesatria yang wajib diambil Shan?
+    </div>
+
+    <div class="choice-grid">
+      <div class="choice-card" onclick="evalGame3(false, this)">
+        <div class="choice-icon">🤫🏃‍♂️❌</div>
+        <div class="choice-title">Ikut Berbohong & Tutup Mulut</div>
+        <div class="choice-desc">Menyembunyikan kebenaran demi rasa aman sesaat, padahal hati nurani gelisah dan melanggar norma kesusilaan.</div>
+      </div>
+
+      <div class="choice-card" onclick="evalGame3(true, this)">
+        <div class="choice-icon">🫡📜🌟</div>
+        <div class="choice-title">Berani Jujur & Menghadap Guru Bersama</div>
+        <div class="choice-desc">Menguatkan Hendra, menghadap guru bersama-sama secara ksatria, mengakui kekhilafan, meminta maaf secara tulus, dan siap bertanggung jawab membersihkan pecahan pot!</div>
+      </div>
+    </div>
+
+    <!-- TANTANGAN PAI 6: MEMAAFKAN -->
+    <div style="margin-top: 24px; padding-top: 18px; border-top: 2px dashed #E2E8F0;">
+      <h3 style="color: var(--primary-dark); font-size: 1.25rem; margin-bottom: 12px;">🕊️ Tantangan PAI: Sabda Rasulullah saw. Menghapus Api Dendam</h3>
+      <div class="scenario-card" id="storyContextPai3">
+        Teman sekelasmu pernah menumpahkan minuman ke bukumu hingga rusak dan kamu sangat marah. Rasulullah saw. melarang mendiamkan saudara lebih dari 3 hari. Bagaimana urutan langkah rekonsiliasi yang diajarkan Islam?
+      </div>
+      <div class="choice-grid">
+        <div class="choice-card" onclick="evalGame3Pai(true, this)">
+          <div class="choice-icon">💖🤝🌿</div>
+          <div class="choice-title">Membalas dengan Senyum & Salam Pertama</div>
+          <div class="choice-desc">Menjadi orang yang lebih dahulu mengulurkan tangan memberi maaf sebelum hari ke-3, karena orang yang pertama memaafkan adalah yang paling mulia di hadapan Allah Swt.!</div>
+        </div>
+        <div class="choice-card" onclick="evalGame3Pai(false, this)">
+          <div class="choice-icon">⏳😒🔥</div>
+          <div class="choice-title">Menunggu Musuh Datang Memohon</div>
+          <div class="choice-desc">Mempertahankan ego dan gengsi, serta membiarkan dendam mengendap berbulan-bulan.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feedback-box" id="fbGame3"></div>
+  </div>
+
+  <footer>
+    <p>3 Game Interaktif Bab 3 • Kurikulum Merdeka Terpadu • PKBM Penerus Bangsa</p>
+  </footer>
+</div>
+
+<script>
+  // AUDIO SYNTH ENGINE (SAFE LAZY INITIALIZATION - FIX AUTOPLAY POLICY)
+  let audioCtx = null;
+  function getAudioCtx() {
+    try {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    } catch(e) {
+      console.warn("AudioContext not supported or blocked", e);
+      return null;
+    }
+  }
+
+  function playTone(freq, type, duration) {
+    try {
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch(e) {}
+  }
+
+  function playSuccess() {
+    playTone(523.25, 'sine', 0.15); // C5
+    setTimeout(() => playTone(659.25, 'sine', 0.15), 100); // E5
+    setTimeout(() => playTone(783.99, 'sine', 0.3), 200); // G5
+  }
+
+  function playError() {
+    playTone(320, 'sawtooth', 0.2);
+    setTimeout(() => playTone(240, 'sawtooth', 0.3), 150);
+  }
+
+  // STATE
+  let score1 = 0, score2 = 0, score3 = 0;
+
+  const studentStories = {
+    aqlan: {
+      game: "🛹 <strong>Kisah Nyata Aqlan & Ranting Skateboard:</strong> Minggu pagi yang cerah, Aqlan bersiap meluncur dengan skateboard menuju skatepark. Namun badai semalam menumbangkan dahan beringin tua di pintu komplek dan menyumbat saluran air pemukiman. Di sana ada Pak RT dan tetangga baru dari Maluku yang kebingungan memotong kayu besar. Jika dibiarkan, selokan meluap dan jalur latihan tertutup total. Apa tindakan kesatria Aqlan?",
+      pai: "🌟 <strong>Misi Sahabat Skatepark (Li-Ta'ārafū):</strong> Di arena skatepark, Aqlan bertemu anak baru bernama Made dari Bali dan Denis dari Manado. Roda papan Made macet dan mereka belum saling kenal. Sebagian anak menjauh karena merasa asing. Bagaimana Aqlan menerapkan ajaran Q.S. Al-Ḥujurāt: 13 untuk saling mengenal dan menolong sesama?"
+    },
+    hasyif: {
+      game: "🌱 <strong>Kisah Hasyif & Saluran Air Desa:</strong> Menjelang musim penghujan, saluran air di depan desa Hasyif tersumbat daun dan sampah plastik. Pak RT memperkirakan butuh 10 hari jika dikerjakan sendiri oleh petugas kebersihan desa. Hasyif dan warga punya waktu akhir pekan ini sebelum hujan lebat turun. Apa tindakan terbaik yang harus diambil masyarakat?",
+      pai: "🕌 <strong>Saling Mengenal Kebaikan:</strong> Allah Swt. menciptakan manusia berbangsa-bangsa dan bersuku-suku agar <em>Li-ta'ārafū</em>. Bagaimana penerapan sikap Hasyif jika ada teman baru yang berbeda suku dan agama di kelas?"
+    },
+    alisya: {
+      game: "🌸 <strong>Kisah Alisya di Kelas PKBM:</strong> Alisya dan teman-teman sedang bermain balok dan buku di kelas. Saat bel berbunyi, karpet penuh mainan. Apa yang membuat hati senang dan kelas rapi?",
+      pai: "💖 <strong>Senyum & Kerukunan:</strong> Sentuh gambar anak yang rukun dan suka berbagi senyuman dengan semua teman!"
+    },
+    kinanti: {
+      game: "📚 <strong>Kisah Kinanti & Pojok Baca Sekolah:</strong> Kinanti dan teman-teman ingin merapikan perpustakaan mini yang berantakan terkena tempias air hujan. Buku-buku tebal sangat banyak dan butuh waktu lama jika dikerjakan sendiri. Apa tindakan terbaik?",
+      pai: "🤝 <strong>Merajut Persahabatan Sejati:</strong> Menghargai teman berbeda budaya dan bahasa daerah saat belajar kelompok bersama tanpa membeda-bedakan."
+    },
+    mishka: {
+      game: "🤸‍♀️ <strong>Kisah Mishka & Harmoni Arsitektur Nusantara:</strong> Mishka sedang merancang koreografi gerak indah untuk festival seni budaya Nusantara. Kelompok Mishka meneliti kehebatan <strong>Rumah Honai (Papua)</strong> yang bundar melingkar tanpa jendela. Mengapa arsitektur tradisional suku Dani Papua tersebut sangat cerdas beradaptasi dengan iklim dingin pegunungan?",
+      pai: "🌿 <strong>Misi Khalifah Cilik Mishka:</strong> Kelompok Mishka bermusyawarah menata panggung kreasi dan pot tanaman sekolah. Terjadi silang pendapat antara menanam apotek hidup atau bunga hias warna-warni. Sebagai seorang Khalifah di bumi, bagaimana Mishka memimpin musyawarah dengan adil dan damai?"
+    },
+    ardiansyah: {
+      game: "🛖 <strong>Kisah Ardiansyah & Rahasia Arsitek Nusantara:</strong> Nenek moyang suku Dani di pegunungan Jayawijaya Papua merancang <strong>Rumah Honai</strong> berbentuk bundar dari kayu beralaskan jerami tebal dan <em>sengaja dibuat tanpa jendela</em>. Mengapa arsitektur tersebut sangat cerdas?",
+      pai: "🌱 <strong>Amanah Merawat Lingkungan:</strong> Saat Ardiansyah dan teman-teman bermusyawarah menata tanaman kelas, terjadi perbedaan usulan. Bagaimana adab musyawarah anak saleh?"
+    },
+    shan: {
+      game: "🏀 <strong>Kisah Shan & Dilema Koridor Sekolah:</strong> Saat istirahat, Shan dan Hendra bermain lempar bola di koridor kelas dan tanpa sengaja memecahkan vas bunga kesayangan sekolah. Tidak ada saksi guru atau CCTV. Hendra mengajak Shan pura-pura tidak tahu dan lari agar tidak dihukum. Apa tindakan kesatria yang wajib diambil Shan?",
+      pai: "🕊️ <strong>Memadamkan Bara Dendam:</strong> Teman sekelasmu pernah menumpahkan minuman ke bukumu hingga rusak dan kamu sangat marah. Rasulullah saw. melarang mendiamkan saudara lebih dari 3 hari. Bagaimana urutan langkah rekonsiliasi yang diajarkan Islam?"
+    },
+    hendra: {
+      game: "⚽ <strong>Kisah Hendra & Ujian Keberanian Moral:</strong> Hendra dan Shan tak sengaja memecahkan vas bunga sekolah saat bermain bola di koridor. Muncul bisikan untuk berbohong dan kabur demi rasa aman sesaat. Apa tindakan kesatria yang wajib diambil Hendra?",
+      pai: "🤝 <strong>Kekuatan Jiwa Pemaaf:</strong> Menghilangkan rasa jengkel dan dendam serta menjadi orang yang pertama mengulurkan tangan memberi salam."
+    },
+    aulya: {
+      game: "🎨 <strong>Kisah Aulya & Tragedi Cat Air:</strong> Kuas lukis Aulya tanpa sengaja mengenai baju sahabat hingga kotor menjelang pameran. Sahabatnya marah dan suasana tegang. Apa tindakan jujur, ksatria, dan bertanggung jawab yang harus Aulya lakukan?",
+      pai: "💖 <strong>Kemuliaan yang Memaafkan:</strong> Menjadi yang pertama mengucap salam dan meminta maaf secara tulus tanpa menunggu gengsi demi menghapus api permusuhan."
+    },
+    selvi: {
+      game: "📖 <strong>Kisah Selvi & Mahkamah Kejujuran:</strong> Selvi dan teman-teman menghadapi situasi pelik saat sebuah peralatan sekolah rusak saat latihan bersama. Apa tindakan jujur dan amanah yang harus ditunjukkan?",
+      pai: "🌸 <strong>Menjaga Hati Lapang:</strong> Meneladani akhlak Rasulullah saw. yang selalu mengutamakan maaf dan menghapus dendam dalam waktu kurang dari 3 hari."
+    }
+  };
+
+  function switchStudent() {
+    const sel = document.getElementById('studentSelect');
+    const opt = sel.options[sel.selectedIndex];
+    const grade = parseInt(opt.getAttribute('data-grade'));
+    const studentKey = sel.value;
+    const studentName = opt.text.split(' ')[0];
+
+    document.getElementById('activeStudentLabel').textContent = `Halo, ${studentName}! (Kelas ${grade})`;
+    document.querySelectorAll('.studentNameSpan').forEach(el => el.textContent = studentName);
+
+    // Dynamic Storytelling Injection
+    const storyData = studentStories[studentKey];
+    if (storyData) {
+      if (grade === 4) {
+        const g1El = document.getElementById('storyContextGame1');
+        const p1El = document.getElementById('storyContextPai1');
+        if (g1El) g1El.innerHTML = storyData.game;
+        if (p1El) p1El.innerHTML = storyData.pai;
+      } else if (grade === 5) {
+        const g2El = document.getElementById('storyContextGame2');
+        const p2El = document.getElementById('storyContextPai2');
+        if (g2El) g2El.innerHTML = storyData.game;
+        if (p2El) p2El.innerHTML = storyData.pai;
+      } else if (grade === 6) {
+        const g3El = document.getElementById('storyContextGame3');
+        const p3El = document.getElementById('storyContextPai3');
+        if (g3El) g3El.innerHTML = storyData.game;
+        if (p3El) p3El.innerHTML = storyData.pai;
+      }
+    }
+
+    openGame(grade === 4 ? 1 : (grade === 5 ? 2 : 3));
+
+    const isAlisya = (studentKey === 'alisya');
+    const cb = document.getElementById('sensoryCheckbox');
+    cb.checked = isAlisya;
+    toggleSensory();
+  }
+
+  function openGame(gameNum) {
+    document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`btnGame${gameNum}`).classList.add('active');
+
+    document.querySelectorAll('.game-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById(`paneGame${gameNum}`).classList.add('active');
+  }
+
+  function toggleSensory() {
+    const isSensory = document.getElementById('sensoryCheckbox').checked;
+    document.getElementById('viewKls4Standard').style.display = isSensory ? 'none' : 'block';
+    document.getElementById('viewKls4Alisya').style.display = isSensory ? 'block' : 'none';
+  }
+
+  // EVAL GAME 1
+  function evalGame1(isCorrect, cardEl) {
+    const fb = document.getElementById('fbGame1');
+    cardEl.parentElement.querySelectorAll('.choice-card').forEach(c => c.classList.remove('correct', 'wrong'));
+    if (isCorrect) {
+      cardEl.classList.add('correct');
+      score1 += 50;
+      document.getElementById('score1').textContent = score1;
+      fb.className = 'feedback-box success';
+      fb.innerHTML = `🎉 <strong>Tepat Sekali!</strong> Gotong royong meringankan pekerjaan berat 10 hari menjadi hitungan jam karena semua warga rukun dan bersatu. Inilah pengamalan Sila ke-3 Pancasila dan budaya luhur bangsa!`;
+      playSuccess();
+    } else {
+      cardEl.classList.add('wrong');
+      fb.className = 'feedback-box error';
+      fb.innerHTML = `⚠️ <strong>Pilihan Kurang Tepat:</strong> Membiarkan masalah atau saling menyalahkan akan menyebabkan banjir meluap ke perumahan warga. Ingat, pekerjaan berat hanya bisa selesai dengan gotong royong!`;
+      playError();
+    }
+  }
+
+  function evalGame1Pai(isCorrect, cardEl) {
+    const fb = document.getElementById('fbGame1');
+    cardEl.parentElement.querySelectorAll('.choice-card').forEach(c => c.classList.remove('correct', 'wrong'));
+    if (isCorrect) {
+      cardEl.classList.add('correct');
+      score1 += 50;
+      document.getElementById('score1').textContent = score1;
+      fb.className = 'feedback-box success';
+      fb.innerHTML = `🌸 <strong>Masya Allah:</strong> Allah menegaskan dalam Q.S. Al-Ḥujurāt/49: 13 bahwa keragaman adalah Sunnatullah agar kita <em>Li-ta'ārafū</em> (saling mengenal dan berbuat baik tanpa membedakan agama/suku)!`;
+      playSuccess();
+    } else {
+      cardEl.classList.add('wrong');
+      fb.className = 'feedback-box error';
+      fb.innerHTML = `⚠️ Islam melarang sikap fanatisme suku (ashabiyah) dan melarang mengasingkan teman yang berbeda.`;
+      playError();
+    }
+  }
+
+  function evalAlisya(isCorrect, boxEl) {
+    const fb = document.getElementById('fbGame1');
+    boxEl.parentElement.querySelectorAll('.alisya-box').forEach(b => b.classList.remove('correct'));
+    if (isCorrect) {
+      boxEl.classList.add('correct');
+      score1 += 50;
+      document.getElementById('score1').textContent = score1;
+      fb.className = 'feedback-box success';
+      fb.innerHTML = `⭐ <strong>Pintar Sekali, Alisya!</strong> Merapikan mainan bersama teman membuat hati senang dan kelas jadi rapi! 💖`;
+      playSuccess();
+    } else {
+      fb.className = 'feedback-box error';
+      fb.innerHTML = `Ayo pilih gambar anak yang suka merapikan bersama teman ya! 😊`;
+      playError();
+    }
+  }
+
+  // EVAL GAME 2
+  function evalGame2(isCorrect, cardEl) {
+    const fb = document.getElementById('fbGame2');
+    cardEl.parentElement.querySelectorAll('.choice-card').forEach(c => c.classList.remove('correct', 'wrong'));
+    if (isCorrect) {
+      cardEl.classList.add('correct');
+      score2 += 50;
+      document.getElementById('score2').textContent = score2;
+      fb.className = 'feedback-box success';
+      fb.innerHTML = `🛖 <strong>Analisis Cerdas (C4):</strong> Benar sekali! Nenek moyang suku Dani sangat cerdas. Di suhu pegunungan Papua yang bisa mencapai di bawah 10°C, bentuk Honai yang bulat tanpa jendela mampu menahan panas api unggun agar tidak kabur ke luar!`;
+      playSuccess();
+    } else {
+      cardEl.classList.add('wrong');
+      fb.className = 'feedback-box error';
+      fb.innerHTML = `⚠️ Bukan karena kekurangan bahan! Bentuk Honai adalah rancangan arsitektur sadar iklim untuk menahan hawa dingin ekstrem pegunungan.`;
+      playError();
+    }
+  }
+
+  function evalGame2Pai(isCorrect, cardEl) {
+    const fb = document.getElementById('fbGame2');
+    cardEl.parentElement.querySelectorAll('.choice-card').forEach(c => c.classList.remove('correct', 'wrong'));
+    if (isCorrect) {
+      cardEl.classList.add('correct');
+      score2 += 50;
+      document.getElementById('score2').textContent = score2;
+      fb.className = 'feedback-box success';
+      fb.innerHTML = `🌿 <strong>Karakter Khalifah Sejati:</strong> Anak saleh yang menjadi khalifah di bumi selalu mengutamakan kedamaian dan solusi bijaksana saat musyawarah, serta tidak memaksakan kehendak!`;
+      playSuccess();
+    } else {
+      cardEl.classList.add('wrong');
+      fb.className = 'feedback-box error';
+      fb.innerHTML = `⚠️ Memaksakan kehendak dan marah-marah saat diskusi menciderai adab musyawarah dalam Islam.`;
+      playError();
+    }
+  }
+
+  // EVAL GAME 3
+  function evalGame3(isCorrect, cardEl) {
+    const fb = document.getElementById('fbGame3');
+    cardEl.parentElement.querySelectorAll('.choice-card').forEach(c => c.classList.remove('correct', 'wrong'));
+    if (isCorrect) {
+      cardEl.classList.add('correct');
+      score3 += 50;
+      document.getElementById('score3').textContent = score3;
+      fb.className = 'feedback-box success';
+      fb.innerHTML = `🏆 <strong>Integritas Tingkat Tinggi (C4):</strong> Mengakui kesalahan secara terbuka membutuhkan keberanian ksatria. Sikap ini menyelamatkan nama baik, menenangkan hati nurani, dan mencerminkan kewajiban berani jujur!`;
+      playSuccess();
+    } else {
+      cardEl.classList.add('wrong');
+      fb.className = 'feedback-box error';
+      fb.innerHTML = `⚠️ Berbohong mungkin menghindarkan dari teguran sesaat, tapi akan merusak norma kesusilaan, menghilangkan rasa saling percaya, dan menumbuhkan rasa bersalah yang berkepanjangan.`;
+      playError();
+    }
+  }
+
+  function evalGame3Pai(isCorrect, cardEl) {
+    const fb = document.getElementById('fbGame3');
+    cardEl.parentElement.querySelectorAll('.choice-card').forEach(c => c.classList.remove('correct', 'wrong'));
+    if (isCorrect) {
+      cardEl.classList.add('correct');
+      score3 += 50;
+      document.getElementById('score3').textContent = score3;
+      fb.className = 'feedback-box success';
+      fb.innerHTML = `🕊️ <strong>Kemuliaan Jiwa Pemaaf:</strong> Rasulullah saw. menegaskan bahwa yang terbaik dari dua orang yang berselisih adalah yang lebih dahulu mengucap salam dan memaafkan. Menghapus dendam membuka pintu ampunan Allah Swt.!`;
+      playSuccess();
+    } else {
+      cardEl.classList.add('wrong');
+      fb.className = 'feedback-box error';
+      fb.innerHTML = `⚠️ Menyimpan dendam lebih dari 3 hari melanggar tuntunan hadis Nabi dan hanya akan menjadi racun bagi ketenangan jiwa kita sendiri.`;
+      playError();
+    }
+  }
+</script>
+
+</body>
+</html>
