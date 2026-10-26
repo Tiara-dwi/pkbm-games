@@ -1,7 +1,7 @@
 # NASKAH GURU WORD-BY-WORD: PAI & BUDI PEKERTI BAB 4
 ## SESI ONLINE ZOOM: AQLAN (SESI 1 • 60 MENIT) & MISHKA (SESI 2 • 60 MENIT)
 **PKBM Penerus Bangsa • Pendekatan Storytelling Pak Gita Wirjawan**
-**Lengkap dengan Guided Imagination Awal Sesi (Pilihan A) & Jargon Emas**
+**Lengkap dengan Guided Imagination Awal Sesi & Analogi Objek Dunia Nyata**
 
 ---
 
@@ -16,7 +16,7 @@
 
 ---
 
-#### 🕒 [05:00 - 15:00] Pilihan A: Guided Imagination (Imajinasi Sensorik Melaju di Skatepark)
+#### 🕒 [05:00 - 15:00] Guided Imagination: Melaju di Puncak Lintasan Skatepark
 *[Mengatur intonasi suara menjadi tenang, dalam, ritmis, dan menenangkan]*  
 **Guru Tiara:** "Sebelum kita buka slide Canva, Bu Tiara mau ajak Aqlan melakukan satu perjalanan imajinasi ksatria. Sekarang, duduk yang tegak tapi rileks di kursimu... ya, pundaknya rileks... sekarang perlahan pejamkan kedua matamu, Aqlan."  
 *[Memberi jeda 3 detik]*  
@@ -27,68 +27,68 @@
 *[Tersenyum menatap antusias]*  
 **Guru Tiara:** "Gimana rasanya tadi Aqlan saat meluncur di lintasan?"  
 **Aqlan:** "Keren banget bu! Terasa kencang banget dan kakiku berasa makin kuat menahan papan!"  
-**Guru Tiara:** "Bagus sekali! Tahu nggak Aqlan, kekuatan otot dan lompatan tadi berhubungan erat dengan mukjizat yang sedang terjadi di tubuhmu sekarang. Mari kita buka Slide Canva 1 dan 2!"
+**Guru Tiara:** "Bagus sekali! Tahu nggak Aqlan, kekuatan otot dan lompatan tadi berhubungan erat dengan mukjizat kedewasaan yang sedang terjadi di tubuhmu sekarang. Mari kita buka Slide Canva 1 dan 2!"
 
 ---
 
-#### 🕒 [15:00 - 35:00] Eksplorasi Materi Slide Canva & Jargon Emas Aqlan
+#### 🕒 [15:00 - 35:00] Eksplorasi Materi Slide Canva & Analogi Dunia Nyata Aqlan
 *[Membagikan layar Canva Slide 1, 2, dan 3]*  
-**Guru Tiara:** "Aqlan, coba lihat Slide 2 ini. Waktu Aqlan umur 3 tahun, kalau mau makan atau pakai baju, siapa yang bantuin?"  
-**Aqlan:** "Bunda bu!"  
-**Guru Tiara:** "Betul, disuapi Bunda, disuruh salat diingatkan Ayah. Tapi saat seorang muslim memasuki usia baligh, statusnya berubah menjadi **MUKALLAF**. Artinya, Aqlan resmi memegang kemudi catatan amalnya sendiri di hadapan Allah! Nah, untuk mengingat tanda-tanda kedewasaan ini tanpa lupa, Bu Tiara punya satu jargon sakti: **'SEGITIGA EMAS BALIGH'**! Coba sebutkan bareng Bu Tiara, Aqlan!"  
-**Aqlan:** "Segitiga Emas Baligh!"  
+**Guru Tiara:** "Aqlan, coba lihat Slide 2 ini. Waktu Aqlan umur 3 tahun dulu, kalau mau makan atau naik sepeda, siapa yang bantuin dan pegang setirnya?"  
+**Aqlan:** "Bunda sama Ayah bu!"  
+**Guru Tiara:** "Betul, dulu Aqlan seperti duduk di boncengan sepeda orang tua, disetir dan diingatkan salat oleh Ayah Bunda. Tapi saat seorang muslim memasuki usia baligh, statusnya berubah menjadi **MUKALLAF**. Artinya, Aqlan resmi mendapatkan **'Lisensi Nahkoda Sendiri'** di hadapan Allah! Orang tua tidak lagi pegang setir catatan amal Aqlan; Aqlan yang memegang kemudi sendiri untuk mendirikan salat 5 waktu dan memilih perbuatan baik!"  
+**Aqlan:** "Wah, jadi kayak nahkoda beneran ya bu, harus bisa kontrol sendiri!"  
 
-*[Menunjukkan diagram segitiga di Slide 3 dan 4]*  
-**Guru Tiara:** "Pintar! Segitiga Emas Baligh punya 3 pilar:  
-1. **Pilar 1 (Biologi - Tubuh):** Tubuh laki-laki bertambah tegap, suaranya membesar berat seperti suara ksatria, jakun di leher mulai tumbuh, dan keringat bertambah aktif.  
-2. **Pilar 2 (Fikih - Tanda Sah):** Mengalami peristiwa alami yang disebut mimpi basah (*ihtilam*), atau jika belum, genap berusia 15 tahun.  
-3. **Pilar 3 (Syariat - Mukallaf):** Memegang kemudi sendiri untuk mendirikan salat 5 waktu tepat waktu!  
-Nah Aqlan, kalau seorang laki-laki sudah mengalami mimpi basah, tubuhnya sedang berada dalam kondisi 'Hadas Besar'. Bolehkah ia langsung salat?"  
+*[Menunjukkan tanda fisik di Slide 3 dan 4]*  
+**Guru Tiara:** "Tepat sekali! Dan kapal kedewasaan Aqlan punya dua tanda penting:  
+1. **Perubahan Fisik Tubuh (Sains Biologi):** Suara bertambah berat dan dalam, jakun di leher mulai tumbuh, pundak melebar bidang, dan kelenjar keringat bertambah aktif.  
+2. **Tanda Sah Kedewasaan (Ilmu Fikih):** Mengalami peristiwa alami mimpi basah (*ihtilam*) saat tidur, atau genap berusia 15 tahun.  
+Nah Aqlan, kalau seorang laki-laki sudah mengalami mimpi basah, tubuhnya sedang berada dalam kondisi 'Hadas Besar'. Boleh nggak dia langsung ambil sajadah terus salat?"  
 **Aqlan:** "Nggak boleh bu! Harus bersuci dulu!"  
 
-*[Pindah ke Slide 5 dan 6: Formula 2-R Mandi Wajib]*  
-**Guru Tiara:** "Tepat 100! Dan cara bersucinya bukan cuma wudu biasa, tapi **Mandi Wajib (*Ghusl*)**. Di buku fikih sering rumit ya? Bu Tiara bikin super gampang dengan jargon: **'FORMULA 2-R MANDI WAJIB'**!  
-* **R1 = R-asa Niat di Hati:** Aqlan berniat ikhlas: *'Nawaitul ghusla liraf'il hadatsil akbari fardhan lillaahi ta'aala'* (Aku niat mandi mengangkat hadas besar karena Allah).  
-* **R2 = R-atakan Air Menyeluruh:** Siramkan air suci merata dari ujung rambut kepala sampai ke sela-sela jari kaki! Tak boleh ada satu inci kulit pun yang kering!  
-Kalau dua R ini sudah terlaksana, mandinya sah dan Aqlan suci kembali untuk salat! Gampang diingat kan?"  
-**Aqlan:** "Gampang banget bu! R1 Niat di hati, R2 Ratakan air seluruh tubuh!"  
+*[Pindah ke Slide 5 dan 6: Analogi Cuci Bersih Total]*  
+**Guru Tiara:** "Tepat 100! Dan cara bersucinya lewat **Mandi Wajib (*Ghusl*)**. Bayangkan seperti papan skateboard Aqlan yang habis dipakai main di arena berlumpur tebal. Kalau cuma dilap rodanya pakai tisu, bersih nggak papannya?"  
+**Aqlan:** "Nggak bersih bu, lumpurnya masih nempel di mana-mana!"  
+**Guru Tiara:** "Betul! Makanya harus dicuci bersih total! Nah, kunci sah mandi wajib itu sangat sederhana, hanya ada dua:  
+1. **Niat Tulus di Hati:** Aqlan berniat ikhlas karena Allah: *'Nawaitul ghusla liraf'il hadatsil akbari fardhan lillaahi ta'aala'*.  
+2. **Siram dan Ratakan Air Menyeluruh:** Siramkan air suci merata dari ujung helai rambut kepala sampai ke sela-sela jari kaki! Tak boleh ada satu inci kulit pun yang kering!  
+Kalau dua kunci ini sudah dipenuhi, tubuh Aqlan suci total dan sah kembali untuk mendirikan salat!"  
+**Aqlan:** "Siap Bu Tiara! Kuncinya niat di hati sama ratakan air dari kepala sampai kaki!"  
 
-*[Pindah ke Slide 7 dan 8: Kemudi Dua Radar]*  
-**Guru Tiara:** "Keren! Dan di Slide 8, ada jargon ketiga: **'KEMUDI DUA RADAR MALAIKAT'**. Di pundak kanan Aqlan ada Radar Malaikat Raqib yang mencatat setiap Aqlan jujur, bantu orang tua, dan salat. Di pundak kiri ada Radar Malaikat Atid yang mencatat kalau kita berbuat salah. Mulai usia baligh, Aqlan adalah nahkoda ksatria yang memastikan radar kanan selalu penuh cahaya!"  
-**Aqlan:** "Siap Bu Tiara! Aku mau isi radar kanan yang banyak!"
+*[Pindah ke Slide 7 dan 8: Dua Buku Rekening Amal]*  
+**Guru Tiara:** "Keren! Dan di Slide 8, Aqlan punya **Dua Buku Rekening Amal**: Malaikat Raqib di pundak kanan mencatat kebaikan, dan Malaikat Atid di pundak kiri mencatat kekhilafan. Mulai baligh ini, Aqlan adalah nahkoda ksatria yang memastikan buku rekening kebaikannya selalu terisi penuh!"  
+**Aqlan:** "Siap Bu Tiara! Aku mau rajin salat tepat waktu biar rekening pahalaku banyak!"
 
 ---
 
 #### 🕒 [35:00 - 45:00] Game Web Interaktif PAI (Tantangan 400 Poin)
 *[Mengarahkan Aqlan membuka browser]*  
-**Guru Tiara:** "Sekarang, mari kita buktikan ketangkasan analisismu di game web! Buka link: `https://tiara-dwi.github.io/pkbm-games/pai/`. Pilih nama Aqlan di pojok atas dan klik tab 'Sesi 1: Aqlan'. Ada 4 Misi Ekspedisi Kedewasaan menuju skor 400 Poin!"  
-**Aqlan:** "Sudah bu, aku klik Misi 1 Sains Pubertas!"  
+**Guru Tiara:** "Sekarang, mari kita buktikan ketangkasan analisismu di game web! Buka browser di: `https://tiara-dwi.github.io/pkbm-games/pai/`. Pilih nama Aqlan di pojok atas dan klik tab 'Sesi 1: Aqlan'. Ada 4 Misi Ekspedisi Kedewasaan menuju skor 400 Poin!"  
+**Aqlan:** "Sudah bu! Aku buka Misi 1... Tanda pubertas jakun dan mimpi basah... Betul bu, dapat 100 poin!"  
 *[Mendampingi pengerjaan]*  
-**Aqlan:** "Soal 1 betul bu, jakun sama mimpi basah! Nambah 100 poin! Lanjut Misi 2 Formula 2-R... Wah kasus Rian tadi mandinya nggak sah bu karena lupa niat dan rambutnya kering! Betul lagi, skorku 200 poin!"  
-**Guru Tiara:** "Luar biasa! Selesaikan Misi 3 Status Mukallaf dan Mini Test Misi 4!"  
-**Aqlan:** "Horeee bu! Nilai 400 sempurna! Keluar lencana bintang emas ksatria!"
+**Aqlan:** "Lanjut Misi 2... Kasus Rian tadi mandinya nggak sah karena lupa niat dan rambutnya kering... Betul lagi, skorku 200 poin!"  
+**Guru Tiara:** "Luar biasa! Tuntaskan Misi 3 Status Mukallaf dan Mini Test Misi 4!"  
+**Aqlan:** "Horeee bu! Nilai 400 sempurna! Keluar bintang emas dan konfeti!"
 
 ---
 
 #### 🕒 [45:00 - 55:00] Dikte Terstruktur Catatan Buku Tulis Siswa
 *[Memastikan Aqlan menyiapkan buku tulis dan alat tulis]*  
-**Guru Tiara:** "Masya Allah, hebat sekali Aqlan! Sekarang ambil buku tulis PAI dan pulpenmu. Bu Tiara diktekan 3 jargon emas tadi untuk disalin rapi:  
+**Guru Tiara:** "Masya Allah, hebat sekali Aqlan! Sekarang ambil buku tulis PAI dan pulpenmu. Bu Tiara diktekan poin intinya untuk disalin rapi:  
 1. Tulis judul: **BAB 4: MENYAMBUT USIA BALIGH**.  
-2. Poin 1: **Segitiga Emas Baligh**:  
-   - Pilar 1 (Biologi): Tubuh tegap, suara berat, jakun, dan keringat aktif.  
-   - Pilar 2 (Fikih): Mimpi basah (*ihtilam*) atau usia 15 tahun.  
-   - Pilar 3 (Syariat): Status Mukallaf (salat 5 waktu mandiri).  
-3. Poin 2: **Formula 2-R Mandi Wajib**:  
-   - R1: Rasa niat di hati karena Allah.  
-   - R2: Ratakan air suci dari ujung rambut hingga telapak kaki.  
-4. Poin 3: **Kemudi Dua Radar**: Radar Malaikat Raqib catat kebaikan, Radar Malaikat Atid catat kesalahan. Ksatria memegang kemudi sendiri!"  
+2. Poin 1: **Makna Baligh & Lisensi Nahkoda**: Baligh artinya sampai (kedewasaan). Menjadi Mukallaf berarti memegang kemudi sendiri untuk salat 5 waktu mandiri.  
+3. Poin 2: **Tanda Baligh**:  
+   - Sains Biologi: Suara berat, jakun tumbuh, dada bidang, dan keringat aktif.  
+   - Fikih: Mimpi basah (*ihtilam*) atau usia 15 tahun.  
+4. Poin 3: **Cuci Bersih Total (Mandi Wajib)**:  
+   - Kunci 1: Niat ikhlas di hati karena Allah Ta'ala.  
+   - Kunci 2: Ratakan air suci dari ujung rambut kepala hingga sela-sela jari kaki!"  
 *[Menunggu Aqlan menulis dengan sabar dan rapi]*  
-**Aqlan:** "Selesai Bu Tiara! Tulisanku rapi banget!"
+**Aqlan:** "Selesai Bu Tiara! Catatanku rapi banget!"
 
 ---
 
 #### 🕒 [55:00 - 60:00] Refleksi & Penutup
-**Guru Tiara:** "Alhamdulillah! Hari ini Aqlan belajar menjadi ksatria muslim sejati. Mulai hari ini, setiap kali waktu salat tiba, ingat bahwa Aqlan sedang memegang kemudi radar kebaikan sendiri. Sampai jumpa di sesi berikutnya ya Aqlan! Wassalamu'alaikum warahmatullahi wabarakatuh!"  
+**Guru Tiara:** "Alhamdulillah! Hari ini Aqlan resmi memahami arti menjadi seorang ksatria muslim dewasa. Ingat selalu, Aqlan sedang memegang kemudi kapal hidup sendiri di hadapan Allah. Sampai jumpa di sesi berikutnya ya Aqlan! Wassalamu'alaikum warahmatullahi wabarakatuh!"  
 **Aqlan:** "Wa'alaikumsalam warahmatullahi wabarakatuh. Terima kasih banyak Bu Tiara!"
 
 ---
@@ -105,7 +105,7 @@ Kalau dua R ini sudah terlaksana, mandinya sah dan Aqlan suci kembali untuk sala
 
 ---
 
-#### 🕒 [05:00 - 15:00] Pilihan A: Guided Imagination (Imajinasi Sensorik Taman Kasih Sayang)
+#### 🕒 [05:00 - 15:00] Guided Imagination: Berjalan di Taman Kasih Sayang
 *[Mengatur suara menjadi sangat lembut, damai, dan ritmis]*  
 **Guru Tiara:** "Sebelum kita membedah konsepnya, Bu Tiara ingin mengajak Mishka masuk ke dalam sebuah ruang hening yang menyejukkan. Duduklah yang nyaman di kursimu, tegakkan punggung dengan rileks... sekarang perlahan-lahan pejamkan kedua matamu, Mishka."  
 *[Memberi jeda 3 detik]*  
@@ -120,39 +120,35 @@ Kalau dua R ini sudah terlaksana, mandinya sah dan Aqlan suci kembali untuk sala
 
 ---
 
-#### 🕒 [15:00 - 35:00] Eksplorasi Materi Slide Canva & Jargon Emas Mishka
+#### 🕒 [15:00 - 35:00] Eksplorasi Materi Slide Canva & Analogi "Empat Cabang Pohon Kebaikan"
 *[Membuka Slide Canva 1, 2, dan 3]*  
-**Guru Tiara:** "Nah Mishka, dalam Islam, amalan berbagi itu sangat kaya ragamnya. Seringkali orang tertukar antara Zakat, Infak, Sedekah, dan Hadiah. Supaya Mishka tidak pernah tertukar dan bisa membedakannya dengan presisi seorang pesenam, Bu Tiara punya jargon istimewa: **'KOMPAS 4-PINTU BERBAGI (Z-I-S-H)'**! Coba kita sebutkan sama-sama: Z-I-S-H!"  
-**Mishka:** "Kompas 4-Pintu Z-I-S-H!"  
+**Guru Tiara:** "Nah Mishka, dalam Islam, amalan berbagi itu sangat kaya ragamnya. Seringkali orang bingung membedakan antara Zakat, Infak, Sedekah, dan Hadiah. Supaya Mishka bisa membedakannya dengan presisi seorang pesenam, mari kita bayangkan sebuah **'Pohon Kebaikan'** yang rindang di taman tadi! Coba perhatikan 4 cabangnya:  
+1. 🌳 **Akar Kokoh = ZAKAT:** Menjadi fondasi wajib penopang pohon bagi yang mampu. Harus ada takarannya (*Nisab*) dan jangka waktunya (*Haul* 1 tahun), khusus untuk 8 golongan yang membutuhkan.  
+2. 🪵 **Batang Utama = INFAK:** Mengalirkan rezeki berupa uang sukarela untuk kebaikan bersama (kotak amal masjid, pembangunan sekolah) kapan saja tanpa batasan nisab.  
+3. 🍃 **Ranting & Daun Rimbun = SEDEKAH:** Kebaikan paling luas menaungi siapa saja! Tidak harus punya uang: senyuman manis Mishka, tutur kata santun, dan membuang sampah di jalan adalah sedekah berbobot emas!  
+4. 🌸 **Bunga Semerbak = HADIAH:** Kado manis penuh cinta kasih untuk sahabat, guru, atau keluarga (*Tahadu Tahabbu*), bukan karena mereka miskin, tapi untuk merekatkan kasih sayang!"  
+**Mishka:** "Wah jelas dan indah banget bu analogi pohonnya! Jadi kalau aku kasih kado ke temanku itu Bunga Hadiah, tapi kalau senyum ramah itu Daun Sedekah!"  
 
-*[Menunjukkan Slide 3, 4, 5, 6, dan 7]*  
-**Guru Tiara:** "Hebat! Coba perhatikan 4 pintunya:  
-1. 🔒 **ZAKAT = Pintu Gembok (Wajib & Ada Takaran):** Hukumnya wajib bagi yang mampu. Kenapa pintu gembok? Karena ada kuncinya: harus mencapai batas minimal (*Nisab*) dan genap 1 tahun (*Haul*). Dan hanya boleh diberikan ke 8 golongan (*mustahik*), seperti fakir dan miskin.  
-2. 🚿 **INFAK = Pintu Keran Harta (Uang Sukarela Kapan Saja):** Seperti membuka keran air! Berupa materi/uang untuk kebaikan (kotak amal masjid, korban bencana) kapan saja tanpa syarat nisab.  
-3. ☀️ **SEDEKAH = Pintu Senyum Semesta (Kebaikan Segala Hal Tanpa Batas):** Ini pintu paling luas di dunia! Tidak punya uang? Tidak masalah! Senyuman manis Mishka, membantu teman menyeberang jalan, buang sampah pada tempatnya, dan kata-kata santun adalah sedekah berbobot emas!  
-4. 🎁 **HADIAH = Pintu Kasih Sayang (Apresiasi Persahabatan):** Kado tanda cinta dan apresiasi untuk sahabat atau guru (*Tahadu Tahabbu*). Bukan karena mereka miskin, tapi untuk merekatkan kasih sayang!"  
-**Mishka:** "Wah jelas banget bu! Jadi kalau aku kasih kado ke sahabatku yang ulang tahun itu Hadiah, tapi kalau aku senyum ramah ke orang itu Sedekah!"  
+*[Pindah ke Slide 8: Bahaya Batu Licin Tersapu Badai]*  
+**Guru Tiara:** "Tepat sekali, cerdas! Tapi hati-hati Mishka, di Slide 8 Al-Qur'an Surah Al-Baqarah ayat 264 memberikan perumpamaan yang sangat tajam tentang **'Batu Licin Tersapu Badai'**:  
+Pahala berbagi kita yang tadinya bertumpuk indah bisa lenyap licin tak berbekas jika terkena dua sifat tercela:  
+* **Mengungkit-ungkit (*Al-Mann*):** Mengingat-ingat jasa sendiri (*'Dulu kan aku yang belikan barangmu!'*).  
+* **Menyakiti Hati (*Al-Adza*):** Meremehkan atau menyindir perasaan orang yang kita bantu."  
+**Mishka:** "Seram ya bu kalau pahalanya hilang begitu... berarti kita harus benar-benar ikhlas ya bu."  
 
-*[Pindah ke Slide 8: Waspada Dua Racun Pahala M-A]*  
-**Guru Tiara:** "Tepat sekali, cerdas! Tapi hati-hati Mishka, di Slide 8 ada peringatan keras dari Al-Qur'an Surah Al-Baqarah ayat 264 tentang **'DUA RACUN PAHALA: M-A'**!  
-* **M = Mengungkit-ungkit (*Al-Mann*):** Mengingat-ingat jasa sendiri (*'Dulu kan aku yang belikan bukumu!'*).  
-* **A = Amarah / Sakiti Hati (*Al-Adza*):** Merendahkan atau menyindir perasaan orang yang kita bantu.  
-Kalau terkena racun M-A, pahala sedekah kita yang tadinya setinggi gunung, langsung sirna seperti debu ditiup angin badai!"  
-**Mishka:** "Seram ya bu kalau pahalanya hangus... kita harus ikhlas dari hati ya bu!"  
-
-*[Pindah ke Slide 9: Segitiga Emas Tangan di Atas]*  
-**Guru Tiara:** "Bagus sekali! Makanya kita amalkan jargon ketiga: **'SEGITIGA EMAS TANGAN DI ATAS'**:  
-1. **Ikhlas Tanpa Kamera:** Memberi tanpa butuh pamer atau pujian di medsos.  
-2. **Rahasia Tangan Kanan:** *'Tangan kanan memberi, tangan kiri tidak tahu'*. Sangat rahasia dan elegan.  
-3. **Muliakan Sahabat:** Menjaga martabat orang yang menerima dengan tutur kata lembut."
+*[Pindah ke Slide 9: Keanggunan Tangan di Atas]*  
+**Guru Tiara:** "Betul sekali, Mishka! Persis seperti keanggunan gerakan senam lantai: pesenam yang hebat bergerak dengan tenang dan anggun dari dalam hati, bukan karena riuh ingin dipuji penonton. Begitu juga saat berbagi:  
+1. **Ikhlas Tanpa Kamera:** Memberi tanpa butuh likes atau pamer di media sosial.  
+2. **Kerahasiaan Tangan Kanan:** *'Tangan kanan memberi, tangan kiri tidak tahu'*. Sangat rahasia dan bersahaja.  
+3. **Menjaga Kehormatan Sahabat:** Memberi dengan senyum hangat dan menjaga martabat orang yang menerima."
 
 ---
 
 #### 🕒 [35:00 - 45:00] Game Web Interaktif PAI (Tantangan 400 Poin)
 *[Mengarahkan Mishka membuka game web]*  
-**Guru Tiara:** "Sekarang, mari kita uji ketajaman analisismu di game web PAI! Buka: `https://tiara-dwi.github.io/pkbm-games/pai/`. Pilih nama Mishka dan klik tab 'Sesi 2: Mishka'. Ada 4 Misi Ekspedisi Berbagi menuju target 400 Poin!"  
-**Mishka:** "Aku sudah buka bu! Misi 1 mengklasifikasikan 4 peristiwa Z-I-S-H... Zakat fitrah, infak mushola, sedekah senyum, dan hadiah buku cerita... Betul bu, dapat 100 poin!"  
-**Guru Tiara:** "Luar biasa! Lanjut ke Misi 2 Bahaya Racun M-A!"  
+**Guru Tiara:** "Sekarang, mari kita buktikan ketajaman analisismu di game web PAI! Buka: `https://tiara-dwi.github.io/pkbm-games/pai/`. Pilih nama Mishka dan klik tab 'Sesi 2: Mishka'. Ada 4 Misi Ekspedisi Berbagi menuju target 400 Poin!"  
+**Mishka:** "Aku sudah buka bu! Misi 1 mengklasifikasikan kado buku cerita ke sahabat... Ini Hadiah tanda kasih sayang... Betul bu, dapat 100 poin!"  
+**Guru Tiara:** "Luar biasa! Lanjut ke Misi 2 Bahaya Mengungkit Sedekah!"  
 **Mishka:** "Kasus Dinda yang mengungkit pensil warna bu, pahalanya gugur karena Al-Mann dan Al-Adza! Betul lagi, skorku 200 poin!"  
 *[Mishka menuntaskan Misi 3 dan Mini Test Misi 4]*  
 **Mishka:** "Alhamdulillah bu, nilaiku 400 sempurna! Keluar sertifikat Duta Kasih Sayang!"
@@ -163,17 +159,17 @@ Kalau terkena racun M-A, pahala sedekah kita yang tadinya setinggi gunung, langs
 *[Memastikan Mishka menyalin catatan dengan rapi]*  
 **Guru Tiara:** "Alhamdulillah, selamat Mishka! Sekarang ambil buku tulis PAI dan pulpenmu. Bu Tiara diktekan poin ringkasnya untuk dicatat:  
 1. Tulis judul: **BAB 4: HIDUP LAPANG DENGAN BERBAGI**.  
-2. Poin 1: **Kompas 4-Pintu Z-I-S-H**:  
-   - Zakat: Pintu Gembok (Wajib, ada nisab & haul).  
-   - Infak: Pintu Keran Harta (Sukarela uang/materi kapan saja).  
-   - Sedekah: Pintu Senyum Semesta (Segala kebaikan materi & non-materi).  
-   - Hadiah: Pintu Kasih Sayang (Apresiasi persahabatan).  
-3. Poin 2: **Dua Racun Pahala (M-A)**:  
-   - M: Mengungkit-ungkit (*Al-Mann*).  
-   - A: Amarah / Menyakiti hati (*Al-Adza*).  
-4. Poin 3: **Segitiga Emas Tangan di Atas**: Ikhlas tanpa kamera, rahasia tangan kanan, dan muliakan martabat sahabat!"  
+2. Poin 1: **Empat Cabang Pohon Kebaikan**:  
+   - Akar = Zakat (Wajib, ada nisab & haul).  
+   - Batang = Infak (Uang sukarela untuk sarana umum kapan saja).  
+   - Daun = Sedekah (Kebaikan materi & non-materi tanpa batas).  
+   - Bunga = Hadiah (Tanda cinta kasih persahabatan).  
+3. Poin 2: **Perusak Pahala (Batu Licin Tersapu Badai)**:  
+   - Mengungkit-ungkit (*Al-Mann*).  
+   - Menyakiti hati penerima (*Al-Adza*).  
+4. Poin 3: **Keanggunan Tangan di Atas**: Ikhlas tanpa kamera, rahasia tangan kanan, dan menjaga kehormatan sahabat!"  
 *[Menunggu Mishka menulis dengan tenang]*  
-**Mishka:** "Sudah selesai bu Tiara! Catatanku rapi dan ada kotaknya!"
+**Mishka:** "Sudah selesai bu Tiara! Catatanku rapi banget!"
 
 ---
 

@@ -1,25 +1,24 @@
 # KONTEN SLIDE CANVA & MINI TEST C3-C4: PAI & BUDI PEKERTI BAB 4
 ## KURIKULUM MERDEKA • DURASI: 60 MENIT PER SESI (ZOOM ONLINE)
 **PKBM Penerus Bangsa • Pendekatan Storytelling Pak Gita Wirjawan**
-**Lengkap dengan Jargon Emas, Visual Cues 16:9 & Evaluasi Studi Kasus C3-C4**
+**Analogi Objek Dunia Nyata, Visual Cues 16:9 & Evaluasi Studi Kasus C3-C4**
 
 ---
 
 # 👦 BAGIAN I: SESI 1 AQLAN (KELAS 4 SD • 60 MENIT)
 ## TOPIK: MENYAMBUT USIA BALIGH (SAINS, FIKIH & TANGGUNG JAWAB KSATRIA MUKALLAF)
 
-### 🌟 JARGON EMAS MATERI AQLAN:
-1. **"SEGITIGA EMAS BALIGH"** (3 Syarat Ksatria Baligh):
-   * 🔺 **Fisik Tumbuh (Biologi):** Tubuh tegap, suara membesar, jakun, keringat aktif.
-   * 🔺 **Fikih Berubah (Tanda):** Batas usia kedewasaan / mimpi basah (*ihtilam*).
-   * 🔺 **Fardhu Mandiri (Syariat):** Berstatus **Mukallaf** (salat 5 waktu mandiri atas tanggung jawab sendiri).
-2. **"FORMULA 2-R MANDI WAJIB"** (Rukun Sah Bersuci Hadas Besar):
-   * 💧 **R1 = R-asa Niat di Hati:** Niat ikhlas bersuci karena Allah Swt.
-   * 💧 **R2 = R-atakan Air Menyeluruh:** Basuh air suci merata dari ujung rambut sampai telapak kaki tanpa ada bagian kering yang terlewat.
-3. **"KEMUDI DUA RADAR MALAIKAT"** (Status Mukallaf):
-   * 📡 **Radar Raqib:** Menangkap sinyal amal kebaikan.
-   * 📡 **Radar Atid:** Menangkap sinyal kelalaian.
-   * *Ksatria Mukallaf memegang kemudi sendiri, tidak lagi tergantung rem orang tua!*
+### 💡 KONSEP & ANALOGI DUNIA NYATA AQLAN:
+1. **Status Mukallaf ➔ *"Lisensi Nahkoda Sendiri"***
+   * Dulu saat kecil, ibadah anak disetir orang tua. Setelah baligh, Aqlan resmi memegang kemudi catatan amalnya sendiri di hadapan Allah Swt.
+2. **Tanda Baligh ➔ *"Transformasi Fisik Biologi & Sinyal Fikih"***
+   * Sains Biologi: Otot bertambah kuat, suara membesar berat, jakun tumbuh, dan kelenjar keringat aktif.
+   * Fikih Syariat: Terjadinya mimpi basah (*ihtilam*) atau genap berusia 15 tahun.
+3. **Mandi Wajib ➔ *"Cuci Bersih Total (Niat & Siram Rata)"***
+   * Seperti mencuci papan skateboard yang terkena lumpur tebal: harus dibasuh menyeluruh.
+   * Dua syarat sah: **Niat di dalam hati** dan **siram air merata dari ujung rambut kepala sampai ke telapak kaki**.
+4. **Catatan Amal ➔ *"Dua Buku Rekening Amal Pribadi"***
+   * Malaikat Raqib mencatat kebaikan, Malaikat Atid mencatat kekhilafan. Aqlan menjadi nahkoda mandiri yang mengarahkan hidupnya menuju kebaikan.
 
 ---
 
@@ -27,41 +26,41 @@
 
 #### Slide 1: Cover - Transformasi Ksatria: Menyambut Usia Baligh
 * **Tipe:** Cover Presentation Slide
-* **Visual Cue Canva:** Format 16:9, palet warna biru laut tua (#0369A1) dipadu emas elegan dan aksen toska cerah. Ilustrasi anak laki-laki ksatria skater berdiri gagah di samping papan skateboard dengan siluet jam matahari dan bintang bercahaya.
+* **Visual Cue Canva:** Format 16:9 Widescreen, warna biru laut tua (#0369A1) dipadu emas elegan dan aksen toska cerah. Ilustrasi anak laki-laki ksatria skater berdiri gagah di samping papan skateboard dengan siluet jam matahari dan bintang bercahaya.
 * **Teks Slide:**
   * **Judul Utama:** TRANSFORMASI KSATRIA: MENYAMBUT USIA BALIGH
   * **Mata Pelajaran:** PAI & Budi Pekerti Bab 4 (Kelas 4 SD)
   * **Murid:** Aqlan • Sesi 1 (Durasi: 60 Menit)
-  * **Jargon Kunci:** *"Segitiga Emas Baligh: Tubuh Tegap, Fikih Bersih, Ibadah Mandiri!"*
+  * **Pesan Utama:** *"Dari Penumpang Menjadi Nahkoda Kemudi Sendiri di Hadapan Allah!"*
   * **Pengajar:** Guru Tiara • PKBM Penerus Bangsa
 
 #### Slide 2: Apersepsi - Dari Penumpang Menjadi Nahkoda Kemudi Sendiri
 * **Tipe:** Refleksi Keseharian Aqlan
-* **Visual Cue Canva:** Gambar perbandingan: anak kecil yang disuapi dan disuruh-suruh salat vs seorang ksatria mandiri yang memegang kemudi kapal megah di tengah lautan luas.
+* **Visual Cue Canva:** Gambar perbandingan: anak kecil yang disuapi dan disuruh-suruh salat vs seorang ksatria muda mandiri yang memegang kemudi kapal megah di tengah lautan luas.
 * **Teks Slide:**
   * **Pertanyaan Pemantik:** *"Aqlan, kapan seorang anak resmi memegang catatan amalnya sendiri di hadapan Allah?"*
-  * **Arti Baligh:** Secara bahasa berarti *sampai* (kedewasaan).
-  * **Status Mukallaf:** Orang yang sudah baligh dan berakal sehat, sehingga wajib menjalankan seluruh syariat Islam secara mandiri.
+  * **Makna Baligh:** Secara bahasa berarti *sampai* (kedewasaan).
+  * **Status Mukallaf (Lisensi Nahkoda):** Orang yang sudah baligh dan berakal sehat, sehingga wajib menjalankan seluruh syariat Islam secara mandiri.
 
-#### Slide 3: Textbook - Pilar 1: Tanda Baligh Menurut Sains Biologi
-* **Tipe:** Konsep Textbook Kemendikbud & Sains
-* **Visual Cue Canva:** Diagram sains tubuh laki-laki beranjak remaja: jakun leher, pita suara membesar, otot bahu melebar, dan kelenjar keringat.
+#### Slide 3: Textbook - Tanda Baligh Menurut Sains Biologi
+* **Tipe:** Konsep Textbook Kemendikbud & Sains Terpadu
+* **Visual Cue Canva:** Diagram sains tubuh laki-laki beranjak remaja: jakun leher, pita suara membesar, otot bahu melebar, dan kelenjar keringat aktif.
 * **Teks Slide:**
-  * **Buku Siswa Kemendikbud Hal 67-74: Pubertas Laki-Laki:**
+  * **Buku Siswa Kemendikbud Hal 67-74: Transformasi Fisik Laki-Laki:**
     1. Suara bertambah berat dan dalam (pembesaran laring).
     2. Tumbuhnya jakun pada leher.
-    3. Pundak dan dada bertambah bidang dan kuat.
+    3. Pundak dan dada bertambah bidang dan kekar.
     4. Kelenjar keringat bertambah aktif (wajib menjaga kebersihan badan).
     5. Pertumbuhan tinggi badan yang cepat.
 
-#### Slide 4: Textbook - Pilar 2: Tanda Baligh Menurut Pandangan Ilmu Fikih
+#### Slide 4: Textbook - Tanda Baligh Menurut Pandangan Ilmu Fikih
 * **Tipe:** Konsep Fikih Islam
 * **Visual Cue Canva:** Kaligrafi anggun *Al-Ihtilam* dengan latar waktu malam yang damai dan kalender usia 15 tahun.
 * **Teks Slide:**
   * **Dua Tanda Utama Baligh bagi Laki-Laki:**
-    1. Mengalami mimpi basah (*ihtilam*) saat tidur sebagai tanda biologis dan fikih organ reproduksi telah matang.
+    1. Mengalami mimpi basah (*ihtilam*) saat tidur sebagai tanda biologis dan fikih organ kedewasaan telah matang.
     2. Mencapai usia 15 tahun (penanggalan Hijriyah/Masehi) apabila belum mengalami mimpi basah.
-  * **Hadas Besar:** Peristiwa keluarnya cairan sperma melalui mimpi basah menyebabkan seseorang berada dalam keadaan hadas besar.
+  * **Status Hadas Besar:** Peristiwa mimpi basah menyebabkan seseorang berada dalam keadaan hadas besar (*junub*).
 
 #### Slide 5: Keseharian - Mengapa Perlu Mandi Wajib?
 * **Tipe:** Konsep Bersuci (Thaharah)
@@ -69,22 +68,22 @@
 * **Teks Slide:**
   * **Hadas Kecil vs Hadas Besar:**
     * Hadas Kecil (buang air, buang angin): Cukup berwudu.
-    * Hadas Besar (mimpi basah/junub): Wajib mandi besar (*ghusl*).
-  * **Larangan saat Berhadas Besar:** Tidak boleh salat, tidak boleh menyentuh mushaf Al-Qur'an, dan tidak boleh thawaf di Ka'bah sebelum bersuci.
+    * Hadas Besar (mimpi basah/junub): Wajib bersuci melalui mandi besar (*ghusl*).
+  * **Larangan saat Berhadas Besar:** Tidak boleh salat, tidak boleh menyentuh mushaf Al-Qur'an, dan tidak boleh thawaf di Ka'bah sebelum mandi wajib.
 
-#### Slide 6: Fikih Aksi - Formula 2-R Mandi Wajib
+#### Slide 6: Fikih Aksi - Dua Kunci Sah Mandi Wajib ("Cuci Bersih Total")
 * **Tipe:** Panduan Praktis Sah Bersuci
-* **Visual Cue Canva:** Bagan 2 langkah emas dengan lambang hati berniat (R1) dan tetesan air membasahi seluruh tubuh (R2).
+* **Visual Cue Canva:** Bagan 2 langkah dengan lambang hati berniat (Kunci 1) dan tetesan air membasahi seluruh tubuh (Kunci 2).
 * **Teks Slide:**
-  * **🌟 JARGON EMAS: FORMULA 2-R MANDI WAJIB:**
-    * **R1 = R-asa Niat di Hati:**
+  * **Analogi Cuci Bersih Total (Seperti Membersihkan Skateboard Berlumpur):**
+    * **Kunci 1: Niat Tulus di Dalam Hati:**
       *"Nawaitul ghusla liraf'il hadatsil akbari fardhan lillaahi ta'aala"*
       (Aku berniat mandi untuk menghilangkan hadas besar, fardhu karena Allah Ta'ala).
-    * **R2 = R-atakan Air Menyeluruh:**
-      Mengguyur dan meratakan air suci ke seluruh tubuh dari ujung rambut kepala hingga sela-sela jari telapak kaki!
+    * **Kunci 2: Siram dan Ratakan Air Menyeluruh:**
+      Mengguyur dan meratakan air suci ke seluruh tubuh dari ujung helai rambut kepala hingga sela-sela jari telapak kaki!
   * **Sunnah Pelengkap:** Mencuci tangan 3x, membersihkan kotoran, berwudu sebelum mandi, dan menyela-nyela pangkal rambut.
 
-#### Slide 7: Textbook - Pilar 3: Tugas Mulia Ksatria Mukallaf
+#### Slide 7: Textbook - Tugas Mulia Ksatria Mukallaf
 * **Tipe:** Kewajiban Syariat
 * **Visual Cue Canva:** Ilustrasi Aqlan meletakkan skateboard di samping sajadah, sujud salat tepat waktu di masjid.
 * **Teks Slide:**
@@ -93,30 +92,30 @@
     2. **Menutup Aurat Laki-Laki:** Wajib menutup aurat antara pusar hingga lutut, terutama saat salat dan di tempat umum.
     3. **Menjaga Akhlak & Pergaulan:** Menjaga lisan, pandangan mata, dan tidak berkata kotor.
 
-#### Slide 8: Keseharian - Kemudi Dua Radar Malaikat
+#### Slide 8: Keseharian - Dua Buku Rekening Amal Ksatria
 * **Tipe:** Pembentukan Karakter & Integritas
 * **Visual Cue Canva:** Dua sayap malaikat emas bercahaya: Malaikat Raqib di pundak kanan mencatat kebaikan, Malaikat Atid di pundak kiri mencatat kekhilafan.
 * **Teks Slide:**
-  * **🌟 JARGON EMAS: KEMUDI DUA RADAR MALAIKAT:**
-    * Saat belum baligh, pahala dicatat untuk anak dan orang tua yang mendidik.
-    * Begitu baligh, radar pencatat Raqib dan Atid mandiri mencatat buku rekening amal Aqlan sendiri!
-  * **Prinsip Ksatria:** Lebih banyak mengisi radar kanan dengan kejujuran, salat tepat waktu, dan menolong sesama!
+  * **Buku Rekening Amal Pribadi:**
+    * Saat belum baligh, kebaikan dicatat untuk anak dan orang tua yang mendidik.
+    * Begitu baligh, rekening amal dicatat langsung atas nama Aqlan sendiri!
+  * **Prinsip Ksatria:** Lebih banyak mengisi rekening kebaikan dengan kejujuran, salat tepat waktu, dan menolong sesama!
 
-#### Slide 9: Infografis Rangkuman - Segitiga Emas Baligh Aqlan
+#### Slide 9: Infografis Terpadu - Rangkuman Kedewasaan Muslim
 * **Tipe:** Rangkuman Visual Terpadu
-* **Visual Cue Canva:** Segitiga piramida emas bercahaya menghubungkan: Tubuh Tegap (Sains), Batas Fikih (Mimpi Basah/15 Thn), dan Tanggung Jawab Mukallaf (Salat Mandiri).
+* **Visual Cue Canva:** Diagram alur kedewasaan menghubungkan: Perubahan Fisik Tubuh (Biologi), Tanda Sah Kedewasaan (Fikih), dan Tanggung Jawab Ibadah Mandiri (Syariat).
 * **Teks Slide:**
-  * **Piramida Kedewasaan Muslim:**
-    * *Atas:* Iman & Taqwa kepada Allah Swt.
-    * *Kiri:* Kebersihan raga dengan Formula 2-R Mandi Wajib.
-    * *Kanan:* Disiplin salat 5 waktu dan keberanian membela kebaikan.
+  * **Tiga Pilar Kedewasaan Ksatria:**
+    * *Raga:* Tubuh bertambah kuat dan bersih terawat.
+    * *Hati:* Bersuci dengan mandi wajib yang benar.
+    * *Amal:* Disiplin salat 5 waktu dan memegang kendali hidup sendiri.
 
 #### Slide 10: Aksi Nyata & Evaluasi Mini Test C3-C4
 * **Tipe:** Evaluasi & Komitmen Siswa
 * **Visual Cue Canva:** Lencana emas ksatria mukallaf, ikon buku catatan dan layar game interaktif PAI.
 * **Teks Slide:**
   * **Tantangan Ksatria Hari Ini:**
-    1. Kuasai Formula 2-R Mandi Wajib dan hafal niatnya di luar kepala.
+    1. Kuasai dua kunci sah mandi wajib dan hafal niatnya di luar kepala.
     2. Tuntaskan 4 Soal Mini Test C3-C4 di game web PAI.
     3. Salin catatan ringkas ke buku tulis dengan tulisan rapi ksatria!
 
@@ -132,14 +131,14 @@ Saat berdiskusi di sekolah, Aqlan mengamati beberapa tanda perubahan pada diriny
 * D. Menginjak usia 10 tahun dan hafal juz 30 Al-Qur'an
 
 **Soal 2 (C4 - Analisis Sahnya Mandi Wajib):**
-Rian bangun di pagi hari dan menyadari dirinya mengalami mimpi basah (*ihtilam*). Karena terburu-buru takut terlambat salat subuh, Rian langsung mandi menyiram badannya dengan sabun wangi, namun ia lupa berniat mengangkat hadas besar di dalam hatinya dan bagian rambut belakangnya masih ada yang kering belum terkena air sama sekali. Berdasarkan **Formula 2-R Mandi Wajib**, status mandi Rian adalah...
+Rian bangun di pagi hari dan menyadari dirinya mengalami mimpi basah (*ihtilam*). Karena terburu-buru takut terlambat salat subuh, Rian langsung mandi menyiram badannya dengan sabun wangi, namun ia lupa berniat mengangkat hadas besar di dalam hatinya dan bagian rambut belakangnya masih ada yang kering belum terkena air sama sekali. Berdasarkan dua syarat sah mandi wajib, status bersuci Rian adalah...
 * A. Sah, karena sudah memakai sabun wangi dan badannya sudah bersih segar
 * B. Sah, karena yang terpenting adalah niat salat subuh di masjid
-* C. Tidak sah, karena melanggar kedua rukun wajib: tidak ada niat mengangkat hadas besar (R1) dan air belum merata ke seluruh tubuh termasuk rambut (R2) ✅
+* C. Tidak sah, karena melanggar kedua syarat wajib: tidak ada niat mengangkat hadas besar di hati dan air belum merata ke seluruh tubuh termasuk rambut ✅
 * D. Tidak sah, karena belum berolahraga pagi sebelum mandi
 
 **Soal 3 (C4 - Analisis Konsep Status Mukallaf):**
-Sejak memasuki usia baligh, seorang muslim resmi menyandang status sebagai seorang **Mukallaf**. Konsekuensi spiritual paling penting dari perubahan status menjadi mukallaf ini dalam kehidupan sehari-hari adalah...
+Sejak memasuki usia baligh, seorang muslim resmi menyandang status sebagai seorang **Mukallaf** (memegang lisensi kemudi amalnya sendiri). Konsekuensi spiritual paling penting dari perubahan status menjadi mukallaf ini dalam kehidupan sehari-hari adalah...
 * A. Segala perbuatan baik dan buruk kini mulai dicatat langsung atas nama dirinya sendiri dan wajib mendirikan salat fardhu secara mandiri ✅
 * B. Boleh menentukan sendiri apakah ingin salat atau tidak sesuai suasana hati
 * C. Orang tua tidak boleh lagi mengingatkan atau menasihati anaknya di rumah
@@ -158,32 +157,29 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
 # 👧 BAGIAN II: SESI 2 MISHKA (KELAS 5 SD • 60 MENIT)
 ## TOPIK: HIDUP LAPANG DENGAN BERBAGI (ZAKAT, INFAK, SEDEKAH, DAN HADIAH)
 
-### 🌟 JARGON EMAS MATERI MISHKA:
-1. **"KOMPAS 4-PINTU BERBAGI (Z-I-S-H)"** (Membedakan 4 Pilar Rezeki):
-   * 🔒 **ZAKAT = PINTU GEMBOK (Wajib & Terukur):** Hukumnya wajib, ada kuncinya (*Nisab* takaran minimal & *Haul* 1 tahun), khusus untuk 8 golongan penerima (*mustahik*).
-   * 🚿 **INFAK = PINTU KERAN HARTA (Uang Sukarela Kapan Saja):** Mengalirkan sebagian uang/harta untuk sarana umum (masjid, jembatan, bencana) tanpa batas nisab.
-   * ☀️ **SEDEKAH = PINTU SENYUM SEMESTA (Kebaikan Segala Hal):** Lingkup terluas! Tidak butuh uang—senyuman tulus, tenaga, menyingkirkan duri di jalan, dan ucapan santun adalah sedekah.
-   * 🎁 **HADIAH = PINTU KASIH SAYANG (Apresiasi Persahabatan):** Tanda cinta dan apresiasi untuk sahabat/guru/keluarga demi merekatkan kasih sayang, bukan karena penerima miskin.
-2. **"DUA RACUN PAHALA: M-A"** (Larangan Q.S. Al-Baqarah: 264):
-   * 🚫 **M = Mengungkit-ungkit (*Al-Mann*):** Mengungkit jasa pemberian hingga pahalanya hangus seperti abu tersapu badai.
-   * 🚫 **A = Amarah / Sakiti Hati (*Al-Adza*):** Menyinggung atau merendahkan martabat orang yang kita bantu.
-3. **"SEGITIGA EMAS TANGAN DI ATAS"** (3 Adab Luhur Berbagi):
-   * 🔺 **Ikhlas Tanpa Kamera (Anti-Riya'):** Berbagi semata-mata mencari ridha Allah Swt.
-   * 🔺 **Rahasia Tangan Kanan:** *"Tangan kanan memberi, tangan kiri tidak tahu"* (sangat rahasia dan elegan).
-   * 🔺 **Muliakan yang Menerima:** Menjaga martabat dan senyum sahabat yang dibantu.
+### 💡 KONSEP & ANALOGI DUNIA NYATA MISHKA:
+1. **Empat Bentuk Berbagi ➔ *"Empat Cabang Pohon Kebaikan"***
+   * **Akar Kokoh (Zakat):** Kewajiban tertakar penopang keimanan (*Nisab & Haul* untuk 8 golongan).
+   * **Batang Utama (Infak):** Mengalirkan uang sukarela untuk kepentingan sarana umum kapan saja.
+   * **Ranting & Daun Rimbun (Sedekah):** Kebaikan seluas semesta (senyuman, tenaga, kata santun, singkirkan duri).
+   * **Bunga Cantik Semerbak (Hadiah):** Kado manis untuk mempererat tali cinta kasih persahabatan (*Tahadu Tahabbu*).
+2. **Bahaya Mengungkit ➔ *"Batu Licin Tersapu Badai"* (Q.S. Al-Baqarah: 264)**
+   * Pahala sedekah bisa hilang licin tanpa bekas seperti debu di atas batu jika dirusak oleh sifat mengungkit-ungkit (*Al-Mann*) dan menyakiti hati (*Al-Adza*).
+3. **Adab Kemuliaan ➔ *"Keanggunan Tangan di Atas"***
+   * Memberi secara diam-diam (*tangan kanan memberi, tangan kiri tak tahu*), ikhlas tanpa kamera medsos, dan selalu menjaga martabat sahabat yang dibantu.
 
 ---
 
 ### 🎨 RANCANGAN 10 SLIDE CANVA MISHKA (16:9 WIDESCREEN):
 
-#### Slide 1: Cover - Seni Kemuliaan Hati: Hidup Lapang dengan Berbagi
+#### Slide 1: Cover - Seni Kasih Sayang Islam: Hidup Lapang dengan Berbagi
 * **Tipe:** Cover Presentation Slide
-* **Visual Cue Canva:** Format 16:9, palet warna zamrud lembut (#047857) berpadu emas muda dan krem hangat. Ilustrasi Mishka dalam busana muslimah anggun tersenyum memegang kotak hadiah berhias pita emas di samping ilustrasi taman bunga yang mekar.
+* **Visual Cue Canva:** Format 16:9 Widescreen, palet warna zamrud lembut (#047857) berpadu emas muda dan krem hangat. Ilustrasi Mishka dalam busana muslimah anggun tersenyum memegang kotak hadiah berhias pita emas di samping ilustrasi taman bunga yang mekar indah.
 * **Teks Slide:**
   * **Judul Utama:** HIDUP LAPANG DENGAN BERBAGI: SENI KASIH SAYANG ISLAM
   * **Mata Pelajaran:** PAI & Budi Pekerti Bab 4 (Kelas 5 SD)
   * **Murid:** Mishka • Sesi 2 (Durasi: 60 Menit)
-  * **Jargon Kunci:** *"Kompas 4-Pintu Z-I-S-H: Zakat, Infak, Sedekah, Hadiah!"*
+  * **Pesan Utama:** *"Empat Cabang Pohon Kebaikan: Zakat, Infak, Sedekah, dan Hadiah!"*
   * **Pengajar:** Guru Tiara • PKBM Penerus Bangsa
 
 #### Slide 2: Apersepsi - Mengapa Tangan di Atas Lebih Mulia?
@@ -192,22 +188,22 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
 * **Teks Slide:**
   * **Sabda Rasulullah saw. (H.R. Bukhari):**
     *"Tangan di atas (yang memberi) jauh lebih mulia daripada tangan di bawah (yang menerima)."*
-  * **Paradoks Rezeki:** Harta tidak pernah berkurang karena sedekah; sedekah justru membersihkan jiwa dan melipatgandakan ketenangan batin.
+  * **Kelebatan Berkah Rezeki:** Harta tidak pernah berkurang karena sedekah; sedekah justru membersihkan jiwa dan melipatgandakan ketenangan batin.
 
-#### Slide 3: Textbook - Pintu 1: Zakat (Pintu Gembok Wajib & Terukur)
+#### Slide 3: Textbook - Cabang 1: Zakat (Akar Kokoh yang Tertakar)
 * **Tipe:** Konsep Textbook Kemendikbud
-* **Visual Cue Canva:** Ikon brankas/gembok emas berukir kaligrafi *Az-Zakah*, timbangan emas dan karung beras zakat fitrah.
+* **Visual Cue Canva:** Ikon timbangan emas, karung beras zakat fitrah, dan kaligrafi anggun *Az-Zakah*.
 * **Teks Slide:**
   * **Pengertian Zakat:** Mengeluarkan sebagian harta tertentu yang wajib diberikan kepada 8 golongan (*asnaf*) yang berhak.
-  * **Karakter Kunci (Pintu Gembok):**
-    * **Wajib:** Berdosa jika mampu tetapi tidak membayar.
-    * **Ada Takaran (*Nisab*):** Jumlah minimal harta (misal: emas 85 gram, beras 2.5 kg).
-    * **Ada Waktu (*Haul*):** Kepemilikan genap 1 tahun (untuk zakat mal).
+  * **Karakter Kunci (Akar Penopang):**
+    * **Hukumnya Wajib:** Berdosa jika mampu tetapi tidak membayar.
+    * **Ada Takaran Minimal (*Nisab*):** Jumlah minimal harta (misal: beras 2.5 kg, emas 85 gram).
+    * **Ada Batas Waktu (*Haul*):** Kepemilikan genap 1 tahun (untuk zakat mal).
   * **Dua Macam:** Zakat Fitrah (jiwa di bulan Ramadan) dan Zakat Mal (harta kekayaan).
 
-#### Slide 4: Textbook - Pintu 2: Infak (Pintu Keran Harta Sukarela)
+#### Slide 4: Textbook - Cabang 2: Infak (Batang Utama Harta Sukarela)
 * **Tipe:** Konsep Textbook Kemendikbud
-* **Visual Cue Canva:** Ikon keran air berkilau mengalirkan koin emas ke kotak amal masjid dan pembangunan jembatan desa.
+* **Visual Cue Canva:** Ikon koin emas yang disalurkan ke kotak amal masjid dan pembangunan sarana sekolah.
 * **Teks Slide:**
   * **Pengertian Infak:** Mengeluarkan sebagian harta/uang di jalan Allah Swt. untuk kepentingan kebaikan.
   * **Perbedaan Nyata dengan Zakat:**
@@ -215,26 +211,26 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
     * **Tidak Ada Batas Nisab:** Boleh berinfak berapa pun jumlahnya (Rp 2.000, Rp 50.000, dst).
     * **Tidak Ada Batas Waktu:** Kapan saja bisa dilakukan, baik saat lapang maupun sempit.
 
-#### Slide 5: Textbook - Pintu 3: Sedekah (Pintu Senyum Semesta Tanpa Batas)
+#### Slide 5: Textbook - Cabang 3: Sedekah (Ranting & Daun Kebaikan Semesta)
 * **Tipe:** Konsep Kebaikan Universal
 * **Visual Cue Canva:** Kolase kebaikan: anak tersenyum ramah, tangan menyingkirkan paku di jalan, menolong nenek menyeberang jalan, dan berbagi makanan.
 * **Teks Slide:**
   * **Pengertian Sedekah:** Segala perbuatan baik sukarela yang tulus semata-mata mengharap ridha Allah Swt.
-  * **Keunikan Sedekah:** Pintu paling luas di alam semesta! Tidak harus punya uang!
+  * **Keunikan Sedekah:** Cabang paling rimbun dan luas! Tidak harus punya uang!
   * **Sabda Nabi saw. (H.R. Tirmidzi):**
     *"Senyummu di hadapan saudaramu adalah sedekah bagimu."*
     *"Menyingkirkan batu, duri, dan tulang dari tengah jalan adalah sedekah."*
 
-#### Slide 6: Textbook - Pintu 4: Hadiah (Pintu Kasih Sayang & Apresiasi)
+#### Slide 6: Textbook - Cabang 4: Hadiah (Bunga Semerbak Kasih Sayang)
 * **Tipe:** Hubungan Sosial & Silaturahmi
 * **Visual Cue Canva:** Kotak kado indah berpita warna pastel diberikan kepada sahabat saat pentas seni senam sekolah.
 * **Teks Slide:**
   * **Pengertian Hadiah:** Pemberian suatu barang secara sukarela kepada seseorang sebagai tanda penghormatan, ucapan selamat, atau ungkapan kasih sayang.
   * **Perbedaan Sakral Hadiah vs Sedekah:**
-    * Sedekah diberikan terutama untuk menolong orang yang kekurangan.
-    * Hadiah diberikan kepada siapa saja (sahabat, orang tua, guru, orang kaya) untuk mempererat persahabatan (*Tahadu Tahabbu* - saling memberi hadiahlah kalian, niscaya kalian saling mencintai).
+    * Sedekah diberikan terutama untuk membantu orang yang kekurangan.
+    * Hadiah diberikan kepada siapa saja (sahabat, orang tua, guru, orang mampu) untuk mempererat persahabatan (*Tahadu Tahabbu* - saling memberi hadiahlah kalian, niscaya kalian saling mencintai).
 
-#### Slide 7: Infografis Komparasi - Kompas 4-Pintu Berbagi (Z.I.S.H)
+#### Slide 7: Infografis Komparasi - Peta Empat Cabang Pohon Kebaikan
 * **Tipe:** Tabel Visual Komparatif Master
 * **Visual Cue Canva:** Tabel 4 kolom elegan membedakan Zakat, Infak, Sedekah, dan Hadiah dari aspek: Hukum, Bentuk, dan Syarat.
 * **Teks Slide:**
@@ -242,24 +238,24 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
     1. **Zakat:** Wajib | Berupa harta tertentu | Wajib ada Nisab & Haul.
     2. **Infak:** Sunnah | Khusus materi/uang | Bebas jumlah & waktu.
     3. **Sedekah:** Sunnah | Materi & Non-Materi (senyum/tenaga) | Sangat fleksibel.
-    4. **Hadiah:** Mubah/Sunnah | Berupa barang/cenderamata | Tanda cinta & apresiasi.
+    4. **Hadiah:** Mubah/Sunnah | Berupa barang/kado | Tanda cinta & apresiasi.
 
-#### Slide 8: Keseharian & Karakter - Waspada Dua Racun Pahala (M-A)
+#### Slide 8: Keseharian & Karakter - Bahaya "Batu Licin Tersapu Badai"
 * **Tipe:** Bahaya Penyakit Hati & Qur'ani
 * **Visual Cue Canva:** Ilustrasi awan gelap meneteskan air asam di atas batu licin bertanah tipis (analogi Q.S. Al-Baqarah: 264).
 * **Teks Slide:**
   * **Peringatan Q.S. Al-Baqarah Ayat 264:**
     *"Janganlah merusak sedekahmu dengan menyebut-nyebutnya (Al-Mann) dan menyakiti perasaan penerima (Al-Adza)."*
-  * **🌟 JARGON EMAS: DUA RACUN PAHALA (M-A):**
-    * **M = Mengungkit-ungkit (*Al-Mann*):** *"Kemarin kan aku yang bayarin jajanmu!"* (Pahala gugur seketika!).
-    * **A = Amarah / Menyakiti Hati (*Al-Adza*):** Meremehkan atau menghina martabat orang yang dibantu.
+  * **Dua Sifat Perusak Pahala:**
+    * **Mengungkit-ungkit (*Al-Mann*):** *"Kemarin kan aku yang bayarin jajanmu!"* (Pahala gugur seketika!).
+    * **Menyakiti Hati (*Al-Adza*):** Meremehkan, menyindir, atau menghina martabat orang yang dibantu.
 
-#### Slide 9: Karakter Luhur - Segitiga Emas Tangan di Atas
+#### Slide 9: Karakter Luhur - Keanggunan "Tangan di Atas"
 * **Tipe:** Pembentukan Adab Islami
-* **Visual Cue Canva:** Segitiga emas bersinar: Puncak (Ikhlas Tanpa Kamera), Sudut Kiri (Rahasia Tangan Kanan), Sudut Kanan (Muliakan Sahabat).
+* **Visual Cue Canva:** Tiga lingkaran mutiara: Keikhlasan Tanpa Kamera, Kerahasiaan Tangan Kanan, dan Menjaga Kehormatan Sahabat.
 * **Teks Slide:**
   * **Adab Tertinggi Berbagi dalam Islam:**
-    1. **Ikhlas Tanpa Kamera:** Memberi tanpa butuh likes, pujian, atau konten media sosial.
+    1. **Ikhlas Tanpa Kamera:** Memberi tanpa butuh likes, pujian, atau konten pamer media sosial.
     2. **Rahasia Tangan Kanan:** *"Hingga tangan kiri tidak mengetahui apa yang diinfakkan oleh tangan kanan"* (H.R. Bukhari).
     3. **Menjaga Martabat:** Memberi dengan senyum santun, bukan melemparkan sedekah dari atas kendaraan dengan sombong.
 
@@ -268,7 +264,7 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
 * **Visual Cue Canva:** Lencana emas Duta Kasih Sayang, kartu studi kasus analitis, dan logo game web PAI.
 * **Teks Slide:**
   * **Misi Ksatria Berbagi Hari Ini:**
-    1. Kuasai Kompas 4-Pintu (Z.I.S.H) dan jauhi Dua Racun (M-A).
+    1. Pahami Peta Empat Cabang Kebaikan dan hindari sifat mengungkit-ungkit.
     2. Selesaikan 4 Studi Kasus C4 pada game web PAI.
     3. Praktikkan 1 aksi sedekah senyuman tulus dan ucapan terima kasih kepada orang di sekitarmu hari ini!
 
@@ -276,20 +272,20 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
 
 ### 📝 MINI TEST 4 SOAL PILIHAN GANDA MISHKA (LEVEL C3-C4):
 
-**Soal 1 (C3 - Mengklasifikasikan 4 Pilar Berbagi):**
+**Soal 1 (C3 - Mengklasifikasikan 4 Bentuk Berbagi):**
 Amati empat peristiwa berikut:
 1. Pak Ahmad memberikan 2,5 kg beras kepada fakir miskin menjelang salat Idulfitri.
 2. Zahra memasukkan uang tabungannya Rp 20.000 ke dalam kotak amal pembangunan mushola sekolah.
 3. Mishka tersenyum tulus menyapa teman baru dan menyingkirkan ranting pohon yang menghalangi jalan.
 4. Nayla memberikan sebuah buku cerita bergambar kepada sahabatnya yang berulang tahun sebagai tanda kasih sayang.
-Urutan jenis amalan nomor 1, 2, 3, dan 4 secara berturut-turut yang paling tepat berdasarkan **Kompas 4-Pintu (Z-I-S-H)** adalah...
+Urutan jenis amalan nomor 1, 2, 3, dan 4 secara berturut-turut yang paling tepat berdasarkan **Peta Empat Cabang Kebaikan** adalah...
 * A. Infak, Zakat, Hadiah, Sedekah
 * B. Zakat, Infak, Sedekah, Hadiah ✅
 * C. Sedekah, Zakat, Infak, Hadiah
 * D. Hadiah, Sedekah, Infak, Zakat
 
 **Soal 2 (C4 - Analisis Pembatal Pahala Sedekah Q.S. Al-Baqarah: 264):**
-Dinda menyumbangkan seperangkat alat mewarnai kepada teman sekelasnya yang kurang mampu. Namun seminggu kemudian saat mereka berselisih paham saat kerja kelompok, Dinda berteriak: *"Kamu nggak tahu terima kasih banget ya! Ingat dong pensil warna yang kamu pakai itu kan aku yang belikan!"*. Berdasarkan **Jargon Dua Racun Pahala (M-A)** dan Q.S. Al-Baqarah ayat 264, amalan Dinda...
+Dinda menyumbangkan seperangkat alat mewarnai kepada teman sekelasnya yang kurang mampu. Namun seminggu kemudian saat mereka berselisih paham saat kerja kelompok, Dinda berteriak: *"Kamu nggak tahu terima kasih banget ya! Ingat dong pensil warna yang kamu pakai itu kan aku yang belikan!"*. Berdasarkan analogi **Batu Licin Tersapu Badai** dan Q.S. Al-Baqarah ayat 264, amalan Dinda...
 * A. Tetap berpahala penuh karena pensil warnanya sudah terlanjur diberikan dan dipakai
 * B. Pahalanya terhapus dan sirna karena telah melakukan *Al-Mann* (mengungkit pemberian) dan *Al-Adza* (menyakiti perasaan teman) ✅
 * C. Mendapat pahala setengah karena temannya memang pantas ditegur dengan keras
@@ -303,7 +299,7 @@ Faris sangat ingin mengamalkan sabda Nabi saw. tentang keutamaan orang yang bers
 * D. Tidak perlu beramal apa pun sampai kelak menjadi orang dewasa yang sukses
 
 **Soal 4 (C4 - Analisis Etika Berbagi 'Tangan di Atas'):**
-Seorang pembuat konten di media sosial membagikan amplop uang kepada tukang becak di pinggir jalan. Namun, ia menyuruh tukang becak tersebut menangis di depan sorot kamera dan memperlihatkan wajah memelas demi mendapatkan penonton (*views*) yang banyak. Mengapa tindakan tersebut melanggar **Segitiga Emas Tangan di Atas** dalam adab Islam?
+Seorang pembuat konten di media sosial membagikan amplop uang kepada tukang becak di pinggir jalan. Namun, ia menyuruh tukang becak tersebut menangis di depan sorot kamera dan memperlihatkan wajah memelas demi mendapatkan penonton (*views*) yang banyak. Mengapa tindakan tersebut melanggar adab luhur berbagi dalam Islam?
 * A. Karena uang yang diberikan jumlahnya masih terlalu sedikit untuk kebutuhan sehari-hari
 * B. Karena merusak kemurnian niat ikhlas karena Allah (*terjangkit riya'*) dan menginjak-injak martabat serta kehormatan orang yang dibantu ✅
 * C. Karena tukang becak tersebut seharusnya tidak boleh menerima uang di pinggir jalan

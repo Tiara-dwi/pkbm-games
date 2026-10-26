@@ -1,6 +1,7 @@
 # CATATAN BUKU TULIS SISWA • PAI & BUDI PEKERTI BAB 4
 ## KURIKULUM MERDEKA • PKBM PENERUS BANGSA
-**Khusus untuk Disalin Rapi ke Buku Tulis Siswa saat Sesi Zoom Online**
+**Panduan Ringkas Disalin ke Buku Tulis Siswa saat Sesi Zoom Online**
+**Pendekatan: Analogi Objek Dunia Nyata & Storytelling**
 
 ---
 
@@ -12,29 +13,41 @@
 
 ---
 
-#### 🌟 1. Jargon Emas: "SEGITIGA EMAS BALIGH"
-Baligh secara bahasa berarti **sampai** (telah mencapai usia kedewasaan). Tiga pilar kedewasaan seorang ksatria muslim:
-1. 🔺 **Pilar 1 (Biologi - Tubuh):** Tubuh bertambah kekar, suara membesar/berat, jakun di leher mulai tumbuh, dan kelenjar keringat bertambah aktif.
-2. 🔺 **Pilar 2 (Fikih - Tanda Sah):** Mengalami mimpi basah (*ihtilam*) saat tidur, atau telah genap berusia 15 tahun.
-3. 🔺 **Pilar 3 (Syariat - Mukallaf):** Memasuki status **Mukallaf**, yaitu orang yang wajib menjalankan seluruh syariat Islam (salat fardhu 5 waktu mandiri) atas tanggung jawab sendiri.
+#### 1. Makna Baligh & Analogi "Lisensi Nahkoda Sendiri"
+* **Pengertian Baligh:** Secara bahasa berarti **sampai** (telah sampai pada usia kedewasaan).
+* **Status Mukallaf (Lisensi Nahkoda Sendiri):**
+  * Dulu saat kecil, anak seperti duduk di boncengan sepeda orang tua (ibadahnya disetir dan diingatkan orang tua).
+  * Setelah baligh, Aqlan resmi memegang **kemudi sendiri** di hadapan Allah Swt.
+  * Salat fardhu 5 waktu menjadi kewajiban pribadi yang harus didirikan secara mandiri tepat waktu tanpa harus disuruh-suruh lagi.
+* **Buku Rekening Amal:** Malaikat Raqib (pundak kanan) mencatat kebaikan, dan Malaikat Atid (pundak kiri) mencatat kekhilafan. Aqlan bertanggung jawab penuh atas catatan amalnya sendiri.
 
 ---
 
-#### 🌟 2. Jargon Emas: "FORMULA 2-R MANDI WAJIB"
-Mimpi basah menyebabkan seseorang berhadas besar (*junub*). Sebelum mandi wajib, tidak sah mendirikan salat dan tidak boleh memegang Al-Qur'an.
-* Dua Rukun Sah Mandi Wajib (*Ghusl*):
-  * 💧 **R1 = R-asa Niat di Hati:**
-    > *"Nawaitul ghusla liraf'il hadatsil akbari fardhan lillaahi ta'aala"*  
-    > *(Aku berniat mandi untuk menghilangkan hadas besar, fardhu karena Allah Ta'ala).*
-  * 💧 **R2 = R-atakan Air Menyeluruh:**
-    Membasahi dan mengguyur air suci merata ke seluruh tubuh, dari ujung rambut kepala hingga sela-sela jari telapak kaki tanpa ada yang terlewat!
+#### 2. Tanda-Tanda Baligh: Fisik (Biologi) & Syariat (Fikih)
+Kedewasaan seorang anak laki-laki ditandai oleh dua hal penting:
+1. **Perubahan Fisik Tubuh (Sains Biologi):**
+   * Suara bertambah berat dan dalam.
+   * Jakun di leher mulai tumbuh dan terlihat.
+   * Otot dada dan pundak bertambah bidang dan kekar.
+   * Kelenjar keringat bertambah aktif (wajib rajin menjaga kebersihan badan).
+2. **Tanda Sah Kedewasaan (Ilmu Fikih):**
+   * Mengalami peristiwa alami **mimpi basah (*ihtilam*)** saat tidur.
+   * Atau telah genap berusia **15 tahun** (penanggalan Hijriyah/Masehi) jika belum mengalami mimpi basah.
 
 ---
 
-#### 🌟 3. Jargon Emas: "KEMUDI DUA RADAR MALAIKAT"
-* 📡 **Radar Kanan (Malaikat Raqib):** Menangkap dan mencatat setiap amal kebaikan, kejujuran, dan salat tepat waktu.
-* 📡 **Radar Kiri (Malaikat Atid):** Menangkap dan mencatat setiap perbuatan lalai atau salah.
-* 💡 **Catatan Ksatria:** *"Seorang ksatria sejati memegang kemudi hidupnya sendiri. Jadikan radar kebaikanmu selalu menyala terang di hadapan Allah!"*
+#### 3. Bersuci dari Hadas Besar: Analogi "Cuci Bersih Total"
+Mimpi basah berstatus **Hadas Besar (*Junub*)**. Larangan saat berhadas besar: tidak sah salat, tidak boleh menyentuh mushaf Al-Qur'an, dan tidak boleh thawaf.
+* **Cara Bersuci:** Wajib melakukan **Mandi Wajib (*Ghusl*)**.
+* Seperti mencuci papan skateboard yang terkena lumpur tebal: tidak bisa hanya dilap sedikit, melainkan harus dicuci bersih merata.
+* **Dua Syarat Sah Mandi Wajib (Wajib Dipenuhi):**
+  1. **Niat di Dalam Hati karena Allah Swt.:**
+     > *"Nawaitul ghusla liraf'il hadatsil akbari fardhan lillaahi ta'aala"*  
+     > *(Aku berniat mandi untuk menghilangkan hadas besar, fardhu karena Allah Ta'ala).*
+  2. **Siram dan Ratakan Air Menyeluruh:**
+     Mengguyur air suci hingga merata membasahi seluruh tubuh, mulai dari ujung helai rambut kepala sampai ke sela-sela jari telapak kaki tanpa ada satu bagian kulit pun yang terlewat!
+
+💡 **Catatan Ksatria:** *"Seorang ksatria muslim menjaga kebersihan raga dan keteguhan iman. Pegang kemudimu sendiri menuju rida Allah Swt.!"*
 
 ---
 ---
@@ -47,31 +60,34 @@ Mimpi basah menyebabkan seseorang berhadas besar (*junub*). Sebelum mandi wajib,
 
 ---
 
-#### 🌟 1. Jargon Emas: "KOMPAS 4-PINTU BERBAGI (Z-I-S-H)"
-Empat cara meluaskan rezeki dalam Islam yang tidak boleh tertukar:
-1. 🔒 **ZAKAT = Pintu Gembok (Wajib & Ada Takaran):**
-   * Hukumnya **Wajib** bagi yang mampu.
-   * Ada kuncinya: **Nisab** (takaran minimal harta) dan **Haul** (genap dimiliki 1 tahun). Khusus untuk 8 golongan penerima (*mustahik*).
-2. 🚿 **INFAK = Pintu Keran Harta (Uang Sukarela Kapan Saja):**
-   * Mengeluarkan materi/uang sukarela di jalan Allah (misal: kotak amal masjid, korban bencana alam) tanpa syarat nisab dan waktu.
-3. ☀️ **SEDEKAH = Pintu Senyum Semesta (Kebaikan Segala Hal Tanpa Batas):**
-   * Paling luas di alam semesta! Tidak harus berupa uang.
-   * Senyuman tulus, kata-kata santun, membuang duri di jalan, dan membantu tenaga adalah sedekah berbobot emas di sisi Allah!
-4. 🎁 **HADIAH = Pintu Kasih Sayang (Apresiasi Persahabatan):**
-   * Pemberian sukarela untuk memuliakan sahabat, guru, atau keluarga sebagai tanda cinta kasih (*Tahadu Tahabbu*), bukan karena orang tersebut miskin.
+#### 1. Membedakan Bentuk Berbagi: Analogi "Empat Cabang Pohon Kebaikan"
+Empat cara meluaskan rezeki dan kebahagiaan dalam Islam yang tidak boleh tertukar:
+1. 🌳 **Akar Kokoh = ZAKAT (Wajib & Terukur):**
+   * Menjadi fondasi wajib penopang pohon bagi yang mampu.
+   * Ada takaran minimalnya (**Nisab**) dan jangka waktu setahun (**Haul**). Khusus disalurkan untuk 8 golongan yang berhak (*mustahik*), seperti fakir dan miskin.
+2. 🪵 **Batang Utama = INFAK (Uang Sukarela di Jalan Kebaikan):**
+   * Mengalirkan harta/uang sukarela untuk kepentingan bersama (kotak amal masjid, pembangunan sekolah, bantuan bencana) kapan saja tanpa syarat batas nisab.
+3. 🍃 **Ranting & Daun Rimbun = SEDEKAH (Kebaikan Segala Hal Tanpa Batas):**
+   * Paling luas menaungi siapa saja! Tidak harus punya uang.
+   * Senyuman tulus, tutur kata santun yang menyejukkan hati, membantu tenaga, dan menyingkirkan duri/sampah di jalan adalah sedekah bernilai mulia di sisi Allah Swt.
+4. 🌸 **Bunga Semerbak = HADIAH (Tanda Kasih Persahabatan):**
+   * Kado manis sukarela untuk memuliakan sahabat, guru, atau keluarga demi mempererat tali cinta kasih (*Tahadu Tahabbu*), bukan karena orang tersebut miskin.
 
 ---
 
-#### 🌟 2. Jargon Emas: "DUA RACUN PAHALA: M-A" (Q.S. Al-Baqarah: 264)
-Amalan berbagi bisa gugur dan sia-sia jika terkena dua racun hati:
-* 🚫 **M = Mengungkit-ungkit (*Al-Mann*):** Mengingat-ingat jasa sendiri di hadapan orang lain (*"Kemarin kan aku yang belikan!"*).
-* 🚫 **A = Amarah / Sakiti Hati (*Al-Adza*):** Meremehkan, membentak, atau mempermalukan martabat orang yang dibantu.
+#### 2. Perusak Pahala Berbagi: Analogi "Batu Licin Tersapu Badai" (Q.S. Al-Baqarah: 264)
+Amalan berbagi yang begitu indah bisa hilang sia-sia seperti debu tipis di atas batu licin yang tersapu hujan badai jika terkena dua sifat tercela:
+* 🚫 **Mengungkit-ungkit (*Al-Mann*):** Mengingat-ingat dan menyebut jasa pemberian di depan orang lain (*"Kemarin kan aku yang belikan bukumu!"*).
+* 🚫 **Menyakiti Hati Penerima (*Al-Adza*):** Meremehkan, membentak, atau menyindir martabat orang yang kita bantu.
 
 ---
 
-#### 🌟 3. Jargon Emas: "SEGITIGA EMAS TANGAN DI ATAS"
-Tiga adab agung saat berbagi:
-1. 🔺 **Ikhlas Tanpa Kamera (Anti-Riya'):** Memberi semata-mata mencari ridha Allah, bukan demi likes/pujian di media sosial.
-2. 🔺 **Rahasia Tangan Kanan:** *"Tangan kanan memberi, tangan kiri tidak tahu"* (sangat rahasia dan bersahaja).
-3. 🔺 **Muliakan Sahabat:** Menjaga kehormatan orang yang menerima dengan senyum santun dan rasa hormat.
-* 💡 **Catatan Ksatria:** *"Tangan di atas jauh lebih mulia daripada tangan di bawah. Harta tidak pernah berkurang karena sedekah, justru melipatgandakan kedamaian jiwa!"*
+#### 3. Keanggunan "Tangan di Atas" (Adab Luhur Berbagi)
+* **Sabda Rasulullah saw. (H.R. Bukhari):**
+  > *"Tangan di atas (yang memberi) jauh lebih mulia daripada tangan di bawah (yang menerima)."*
+* **Tiga Adab Kemuliaan Hati:**
+  1. **Ikhlas Tanpa Kamera (Anti-Riya'):** Memberi semata-mata mencari ridha Allah, bukan demi pujian atau likes di media sosial.
+  2. **Kerahasiaan Tangan Kanan:** *"Tangan kanan memberi, tangan kiri tidak mengetahui"*. Sangat anggun, tenang, dan bersahaja.
+  3. **Menjaga Kehormatan Sahabat:** Memberi dengan senyum hangat dan memuliakan perasaan orang yang menerima.
+
+💡 **Catatan Ksatria:** *"Seperti keanggunan gerakan senam lantai yang tenang dan memukau, kemuliaan berbagi terpancar dari ketulusan hati yang tidak mencari tepuk tangan manusia!"*
