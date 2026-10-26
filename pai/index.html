@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Interaktif PAI & Budi Pekerti Bab 3 - PKBM Penerus Bangsa</title>
+  <title>Game Interaktif PAI & Budi Pekerti Bab 4 - PKBM Penerus Bangsa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
       --primary: #059669;
@@ -14,6 +15,7 @@
       --secondary: #0284C7;
       --accent: #F59E0B;
       --success: #10B981;
+      --danger: #EF4444;
       --bg: #F0FDF4;
       --card-bg: #FFFFFF;
       --text-main: #1E293B;
@@ -43,12 +45,12 @@
     }
 
     header {
-      background: linear-gradient(135deg, #047857 0%, #059669 60%, #34D399 100%);
+      background: linear-gradient(135deg, #047857 0%, #059669 60%, #10B981 100%);
       color: white;
-      padding: 28px 24px;
+      padding: 26px 22px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -71,7 +73,7 @@
       padding: 6px 16px;
       border-radius: 30px;
       font-size: 0.85rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.5px;
       text-transform: uppercase;
       margin-bottom: 8px;
@@ -79,25 +81,26 @@
 
     h1 {
       font-family: 'Fredoka', cursive;
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       line-height: 1.2;
     }
 
     .subtitle {
-      font-size: 1rem;
-      opacity: 0.92;
-      max-width: 650px;
+      font-size: 0.95rem;
+      opacity: 0.95;
+      max-width: 680px;
       margin: 0 auto;
     }
 
+    /* CONTROL PANEL */
     .control-panel {
       background: white;
-      padding: 20px;
+      padding: 18px 22px;
       border-radius: var(--radius);
       box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
@@ -114,7 +117,7 @@
     }
 
     label {
-      font-weight: 700;
+      font-weight: 800;
       color: var(--primary-dark);
       font-size: 0.95rem;
       white-space: nowrap;
@@ -159,10 +162,11 @@
       box-shadow: 0 0 8px var(--success);
     }
 
+    /* GRADE TABS */
     .grade-tabs {
       display: flex;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       background: #D1FAE5;
       padding: 6px;
       border-radius: 16px;
@@ -170,7 +174,7 @@
 
     .grade-btn {
       flex: 1;
-      padding: 12px;
+      padding: 14px;
       border: none;
       border-radius: 12px;
       background: transparent;
@@ -192,12 +196,13 @@
       transform: translateY(-2px);
     }
 
+    /* GAME CARDS */
     .game-card {
       background: white;
       border-radius: var(--radius);
-      padding: 28px;
+      padding: 26px;
       box-shadow: var(--shadow);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       display: none;
       animation: fadeIn 0.35s ease;
     }
@@ -214,7 +219,7 @@
     .mission-header {
       border-bottom: 2px dashed #A7F3D0;
       padding-bottom: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -224,7 +229,7 @@
 
     .mission-title {
       font-family: 'Fredoka', cursive;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       color: var(--primary-dark);
     }
 
@@ -247,70 +252,52 @@
       gap: 8px;
     }
 
-    .quran-box {
-      background: #F0FDF4;
-      border: 2px solid #86EFAC;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .arabic-text {
-      font-size: 1.6rem;
-      color: #064E3B;
-      font-family: serif;
-      margin-bottom: 10px;
-      line-height: 1.8;
-      direction: rtl;
-    }
-
-    .meaning-text {
-      font-size: 0.95rem;
-      color: #1E293B;
-      line-height: 1.5;
-      font-style: italic;
+    .jargon-pill {
+      display: inline-block;
+      background: #FEF3C7;
+      border: 1px solid #F59E0B;
+      color: #92400E;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
     }
 
     .scenario-box {
       background: #F8FAFC;
       border-left: 5px solid var(--secondary);
-      padding: 18px 20px;
+      padding: 16px 18px;
       border-radius: 12px;
-      margin-bottom: 20px;
-      font-size: 1.05rem;
+      margin-bottom: 18px;
+      font-size: 1rem;
       line-height: 1.6;
       color: #334155;
     }
 
-    .scenario-box strong {
-      color: #0369A1;
-    }
-
     .interactive-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
     .option-card {
       background: #F0FDF4;
       border: 2px solid #A7F3D0;
       border-radius: 16px;
-      padding: 18px;
+      padding: 16px;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .option-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       border-color: var(--primary);
-      box-shadow: 0 10px 20px rgba(5, 150, 105, 0.12);
+      box-shadow: 0 8px 18px rgba(5, 150, 105, 0.12);
       background: #DCFCE7;
     }
 
@@ -321,146 +308,126 @@
     }
 
     .option-card.selected-wrong {
-      border-color: #EF4444 !important;
+      border-color: var(--danger) !important;
       background: #FEF2F2 !important;
       color: #991B1B;
     }
 
     .card-icon {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       text-align: center;
     }
 
     .card-title {
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #064E3B;
     }
 
     .card-detail {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #475569;
       line-height: 1.4;
     }
 
     .feedback-banner {
-      padding: 16px 20px;
+      padding: 14px 18px;
       border-radius: 14px;
-      margin-top: 18px;
+      margin-top: 16px;
       display: none;
-      font-weight: 700;
+      font-size: 0.95rem;
       line-height: 1.5;
-      animation: popIn 0.3s ease;
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0.95); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
     }
 
     .feedback-banner.success {
-      background: #D1FAE5;
+      background: #ECFDF5;
       border: 2px solid #34D399;
       color: #065F46;
       display: block;
     }
 
     .feedback-banner.error {
-      background: #FEE2E2;
+      background: #FEF2F2;
       border: 2px solid #F87171;
       color: #991B1B;
       display: block;
     }
 
-    .sensory-toggle {
-      background: #EFF6FF;
-      border: 1px solid #BFDBFE;
-      padding: 10px 16px;
-      border-radius: 12px;
+    /* MINI TEST MCQ SECTION */
+    .test-box {
+      background: #FFFBEB;
+      border: 2px solid #FDE68A;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .test-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.3rem;
+      color: #B45309;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-      color: #1E40AF;
-      font-weight: 600;
+      gap: 8px;
     }
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 24px;
-    }
-
-    .switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #CBD5E1;
-      transition: .3s;
-      border-radius: 24px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: .3s;
-      border-radius: 50%;
-    }
-
-    input:checked + .slider {
-      background-color: #059669;
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(20px);
-    }
-
-    .alisya-card {
-      border: 4px solid #E2E8F0;
-      padding: 24px;
-      text-align: center;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+    .mcq-question {
       background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
 
-    .alisya-card:hover {
-      border-color: #10B981;
-      transform: scale(1.02);
-    }
-
-    .alisya-card.correct {
-      border-color: #10B981;
-      background: #ECFDF5;
-    }
-
-    .alisya-img-icon {
-      font-size: 4rem;
-      margin-bottom: 10px;
-    }
-
-    .alisya-label {
-      font-size: 1.3rem;
-      font-weight: 800;
+    .mcq-q-text {
+      font-weight: 700;
       color: #1E293B;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .mcq-answers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mcq-btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #CBD5E1;
+      background: #F8FAFC;
+      text-align: left;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mcq-btn:hover {
+      background: #EFF6FF;
+      border-color: #3B82F6;
+    }
+
+    .mcq-btn.correct {
+      background: #ECFDF5;
+      border-color: #10B981;
+      color: #065F46;
+      font-weight: 700;
+    }
+
+    .mcq-btn.wrong {
+      background: #FEF2F2;
+      border-color: #EF4444;
+      color: #991B1B;
     }
 
     footer {
       text-align: center;
-      color: #94A3B8;
-      font-size: 0.85rem;
       margin-top: 30px;
-      padding-bottom: 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
     }
   </style>
 </head>
@@ -468,240 +435,288 @@
 
 <div class="container">
   <header>
-    <div class="badge-top">⭐ Pendidikan Agama Islam • Bab 3 Kurikulum Merdeka ⭐</div>
-    <h1>Taman Toleransi & Duta Kedamaian</h1>
-    <p class="subtitle">Indahnya Saling Menghargai • Aku Anak Saleh (Khalifah di Bumi) • Hidup Damai dengan Memaafkan</p>
+    <div class="badge-top">PKBM Penerus Bangsa • PAI & Budi Pekerti Bab 4</div>
+    <h1>Ekspedisi Ksatria & Kasih Sayang Islam</h1>
+    <p class="subtitle">Platform Interaktif Belajar Mandiri: Menyambut Baligh & Seni Berbagi Bahagia</p>
   </header>
 
   <!-- CONTROL PANEL -->
   <div class="control-panel">
     <div class="select-group">
-      <label for="studentSelect">👤 Nama Peserta Didik:</label>
+      <label for="studentSelect">👤 Pilih Ksatria/Siswa:</label>
       <select id="studentSelect" onchange="switchStudent()">
-        <optgroup label="Kelas 4 (On-site & Online)">
-          <option value="aqlan" data-grade="4">Aqlan (Kelas 4 - Zoom Online)</option>
-          <option value="hasyif" data-grade="4">Hasyif (Kelas 4 - On-site)</option>
-          <option value="alisya" data-grade="4">Alisya (Kelas 4 - On-site / Visual Support)</option>
-          <option value="kinanti" data-grade="4">Kinanti (Kelas 4 - On-site)</option>
-        </optgroup>
-        <optgroup label="Kelas 5 (On-site & Online)">
-          <option value="mishka" data-grade="5">Mishka (Kelas 5 - Zoom Online)</option>
-          <option value="ardiansyah" data-grade="5">Ardiansyah (Kelas 5 - On-site)</option>
-        </optgroup>
-        <optgroup label="Kelas 6 (On-site)">
-          <option value="shan" data-grade="6">Shan (Kelas 6 - On-site)</option>
-          <option value="aulya" data-grade="6">Aulya (Kelas 6 - On-site)</option>
-          <option value="hendra" data-grade="6">Hendra (Kelas 6 - On-site)</option>
-          <option value="selvi" data-grade="6">Selvi (Kelas 6 - On-site)</option>
-        </optgroup>
+        <option value="aqlan">👦 Sesi 1: Aqlan (Kelas 4 SD • Bab 4 Baligh)</option>
+        <option value="mishka">👧 Sesi 2: Mishka (Kelas 5 SD • Bab 4 Berbagi)</option>
       </select>
     </div>
-
     <div class="student-badge">
-      <div class="status-dot"></div>
-      <span id="activeStudentLabel">Halo, Aqlan! (Kelas 4)</span>
+      <span class="status-dot"></span>
+      <span id="activeStudentLabel">Siswa: Aqlan • Kelas 4 SD</span>
     </div>
   </div>
 
-  <!-- TABS -->
+  <!-- GRADE TABS -->
   <div class="grade-tabs">
-    <button class="grade-btn active" id="tabGrade4" onclick="setGrade(4)">
-      <span>📘</span> Kelas 4 (Q.S. Al-Hujurat: 13)
+    <button class="grade-btn active" id="tabGrade4" onclick="switchGrade(4)">
+      <span>👦 Sesi 1: Aqlan (Kelas 4 • Baligh)</span>
     </button>
-    <button class="grade-btn" id="tabGrade5" onclick="setGrade(5)">
-      <span>📙</span> Kelas 5 (Khalifah Bumi)
-    </button>
-    <button class="grade-btn" id="tabGrade6" onclick="setGrade(6)">
-      <span>📕</span> Kelas 6 (Saling Memaafkan)
+    <button class="grade-btn" id="tabGrade5" onclick="switchGrade(5)">
+      <span>👧 Sesi 2: Mishka (Kelas 5 • Berbagi)</span>
     </button>
   </div>
 
-  <!-- ==================== KELAS 4 PAI ==================== -->
+  <!-- ==================== SESI 1 AQLAN (KELAS 4) ==================== -->
   <div class="game-card active" id="gameGrade4">
     <div class="mission-header">
       <div>
-        <h2 class="mission-title">Misi 1: Meneladani Q.S. Al-Ḥujurāt/49: 13</h2>
-        <p class="mission-desc">Pahami hikmah Allah menciptakan keragaman bangsa dan suku di dunia!</p>
+        <h2 class="mission-title">👦 Sesi 1: Ekspedisi Baligh & Ksatria Mukallaf</h2>
+        <p class="mission-desc">Kuasai Segitiga Emas Baligh, Formula 2-R Mandi Wajib & Tanggung Jawab Mukallaf!</p>
       </div>
       <div class="score-box">
         <span>⭐ Poin:</span>
-        <span id="scoreKls4">0</span>
+        <span id="scoreAqlan">0</span> / 400
       </div>
     </div>
 
-    <div class="quran-box">
-      <div class="arabic-text">يٰٓاَيُّهَا النَّاسُ اِنَّا خَلَقْنٰكُمْ مِّنْ ذَكَرٍ وَّاُنْثٰى وَجَعَلْنٰكُمْ شُعُوْبًا وَّقَبَاۤىِٕلَ لِتَعَارَفُوْا...</div>
-      <div class="meaning-text">"Wahai manusia! Sungguh, Kami telah menciptakan kamu dari seorang laki-laki dan seorang perempuan, kemudian Kami jadikan kamu berbangsa-bangsa dan bersuku-suku agar kamu saling mengenal (li-ta'arafu)..."</div>
+    <!-- MISI 1: SAINS PUBERTAS -->
+    <div class="jargon-pill">🔺 JARGON 1: SEGITIGA EMAS BALIGH</div>
+    <div class="scenario-box">
+      <strong>Analisis C3 Sains & Fikih:</strong> Baligh artinya sampai (kedewasaan). Saat anak laki-laki bertransformasi menjadi ksatria baligh, manakah di bawah ini perpaduan tanda biologis dan tanda fikih yang benar?
     </div>
-
-    <div class="sensory-toggle" id="alisyaToggleBox">
-      <label class="switch">
-        <input type="checkbox" id="sensoryModeCheckbox" onchange="toggleSensoryMode()">
-        <span class="slider"></span>
-      </label>
-      <span>Mode Visual Khusus Alisya (Kartu Gambar Kebaikan)</span>
+    <div class="interactive-grid">
+      <div class="option-card" onclick="checkAqlanMisi1(true, this)">
+        <div class="card-icon">💪🔊🌙</div>
+        <div class="card-title">Jakun, Suara Berat & Ihtilam</div>
+        <div class="card-detail">Jakun tumbuh di leher, dada bidang, suara membesar berat (biologi), dan mengalami mimpi basah / ihtilam (fikih).</div>
+      </div>
+      <div class="option-card" onclick="checkAqlanMisi1(false, this)">
+        <div class="card-icon">🛹🎮👶</div>
+        <div class="card-title">Hanya Suka Main Game & Skateboard</div>
+        <div class="card-detail">Bermain hingga sore hari tanpa ada perubahan fisik maupun perubahan catatan amal pribadi.</div>
+      </div>
     </div>
+    <div class="feedback-banner" id="fbAqlan1"></div>
 
-    <!-- STANDARD KELAS 4 -->
-    <div id="kls4StandardView">
+    <!-- MISI 2: FORMULA 2-R MANDI WAJIB -->
+    <div style="margin-top: 24px; padding-top: 20px; border-top: 2px dashed #A7F3D0;">
+      <div class="jargon-pill" style="background:#E0F2FE; border-color:#0284C7; color:#0369A1;">💧 JARGON 2: FORMULA 2-R MANDI WAJIB</div>
       <div class="scenario-box">
-        <strong>Tantangan Ayat:</strong> Berdasarkan potongan kata <em>"Li-ta'ārafū"</em> (لِتَعَارَفُوْا) dalam ayat di atas, apa tujuan utama Allah Swt. menciptakan manusia dengan beragam suku dan bahasa?
+        <strong>Analisis Kasus C4 Bersuci:</strong> Setelah bangun pagi dan mengalami mimpi basah (hadas besar), Rian mandi memakai sabun wangi tapi lupa berniat di hati dan rambut belakangnya masih kering belum tersiram air. Mengapa mandi Rian tidak sah?
       </div>
-
       <div class="interactive-grid">
-        <div class="option-card" onclick="checkPai4(true, this)">
-          <div class="card-icon">🤝🌸</div>
-          <div class="card-title">Agar Saling Mengenal & Menghargai</div>
-          <div class="card-detail">Saling belajar kebaikan, tolong-menolong, dan hidup rukun berdampingan.</div>
+        <div class="option-card" onclick="checkAqlanMisi2(true, this)">
+          <div class="card-icon">🚿🧼❌</div>
+          <div class="card-title">Melanggar Kedua Rukun Formula 2-R</div>
+          <div class="card-detail">Tidak ada R1 (Rasa Niat di Hati) dan melanggar R2 (Ratakan Air Menyeluruh dari ujung rambut ke telapak kaki).</div>
         </div>
+        <div class="option-card" onclick="checkAqlanMisi2(false, this)">
+          <div class="card-icon">🧴✨✅</div>
+          <div class="card-title">Tetap Sah Karena Wangi</div>
+          <div class="card-detail">Yang terpenting tubuh sudah diberi sabun mandi dan beraroma harum segar.</div>
+        </div>
+      </div>
+      <div class="feedback-banner" id="fbAqlan2"></div>
+    </div>
 
-        <div class="option-card" onclick="checkPai4(false, this)">
-          <div class="card-icon">⚔️😤</div>
-          <div class="card-title">Agar Bersaing & Saling Menjatuhkan</div>
-          <div class="card-detail">Merasa suku sendiri paling unggul dan mengejek suku lain.</div>
+    <!-- MISI 3: KEMUDI RADAR MUKALLAF -->
+    <div style="margin-top: 24px; padding-top: 20px; border-top: 2px dashed #A7F3D0;">
+      <div class="jargon-pill" style="background:#FEF3C7; border-color:#F59E0B; color:#92400E;">📡 JARGON 3: KEMUDI DUA RADAR MALAIKAT</div>
+      <div class="scenario-box">
+        <strong>Status Ksatria Mukallaf:</strong> Setelah resmi baligh, Aqlan kini memegang kemudi catatan amalnya sendiri. Manakah aksi nyata seorang ksatria mukallaf?
+      </div>
+      <div class="interactive-grid">
+        <div class="option-card" onclick="checkAqlanMisi3(true, this)">
+          <div class="card-icon">🕌🧭⭐</div>
+          <div class="card-title">Salat 5 Waktu Mandiri Tepat Waktu</div>
+          <div class="card-detail">Segera berwudu dan salat saat azan berkumandang tanpa perlu disuruh-suruh orang tua lagi.</div>
+        </div>
+        <div class="option-card" onclick="checkAqlanMisi3(false, this)">
+          <div class="card-icon">😴🛋️📱</div>
+          <div class="card-title">Menunggu Dimarahi Baru Salat</div>
+          <div class="card-detail">Bersikap manja dan menganggap ibadah masih menjadi tanggung jawab orang tua.</div>
+        </div>
+      </div>
+      <div class="feedback-banner" id="fbAqlan3"></div>
+    </div>
+
+    <!-- MISI 4: MINI TEST 4 MCQ AQLAN -->
+    <div class="test-box">
+      <div class="test-title">📝 Misi 4: Evaluasi Mini Test C3-C4 (4 Soal Pilihan Ganda)</div>
+      
+      <div class="mcq-question" id="aqlanQ1">
+        <div class="mcq-q-text">1. Di bawah ini yang merupakan tanda fisik pubertas laki-laki menurut sains biologi adalah...</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ1')">A. Mengalami menstruasi setiap bulan</button>
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'aqlanQ1', 25)">B. Jakun tumbuh di leher dan suara membesar berat ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ1')">C. Memiliki hobi baru bermain skateboard</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ1')">D. Sering lupa mengerjakan PR sekolah</button>
+        </div>
+      </div>
+
+      <div class="mcq-question" id="aqlanQ2">
+        <div class="mcq-q-text">2. Berdasarkan Formula 2-R Mandi Wajib, dua rukun yang wajib terpenuhi agar bersuci dari hadas besar sah adalah...</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ2')">A. Memakai shampo wangi dan berolahraga</button>
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'aqlanQ2', 25)">B. R1: Rasa niat di hati & R2: Ratakan air suci dari ujung rambut hingga telapak kaki ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ2')">C. Menyiram tangan kanan tiga kali saja</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ2')">D. Membaca doa keluar rumah dengan lantang</button>
+        </div>
+      </div>
+
+      <div class="mcq-question" id="aqlanQ3">
+        <div class="mcq-q-text">3. Apa konsekuensi spiritual paling penting ketika seorang muslim resmi menjadi Mukallaf?</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'aqlanQ3', 25)">A. Catatan amal kebaikan dan kesalahan dicatat mandiri & wajib mendirikan salat 5 waktu ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ3')">B. Boleh tidak salat jika merasa mengantuk</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ3')">C. Semua dosanya dihapus secara otomatis</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ3')">D. Tidak perlu lagi menghormati orang tua</button>
+        </div>
+      </div>
+
+      <div class="mcq-question" id="aqlanQ4">
+        <div class="mcq-q-text">4. Tindakan yang dilarang bagi seseorang yang sedang berhadas besar sebelum ia melakukan mandi wajib adalah...</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ4')">A. Makan dan minum bersama keluarga</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ4')">B. Belajar matematika di meja belajar</button>
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'aqlanQ4', 25)">C. Melaksanakan salat fardhu dan menyentuh mushaf Al-Qur'an ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'aqlanQ4')">D. Bersepeda di pagi hari</button>
         </div>
       </div>
     </div>
-
-    <!-- ALISYA SENSORY VIEW -->
-    <div id="kls4AlisyaView" style="display: none;">
-      <p style="font-weight: 800; color: #1E293B; margin-bottom: 12px; font-size: 1.15rem;">
-        Sentuh gambar anak yang <strong>BERBUAT BAIK & MENOLONG TEMAN</strong>:
-      </p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
-        <div class="alisya-card" onclick="checkAlisyaPai(true, this)">
-          <div class="alisya-img-icon">🤝❤️🎁</div>
-          <div class="alisya-label">Berbagi & Menolong Teman</div>
-          <div style="color: #10B981; font-weight: 700; margin-top: 6px;">(Perilaku Terpuji ✅)</div>
-        </div>
-        <div class="alisya-card" onclick="checkAlisyaPai(false, this)">
-          <div class="alisya-img-icon">😠👊❌</div>
-          <div class="alisya-label">Mendorong & Mengejek Teman</div>
-          <div style="color: #EF4444; font-weight: 700; margin-top: 6px;">(Perilaku Buruk ❌)</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="feedback-banner" id="feedbackKls4"></div>
   </div>
 
-  <!-- ==================== KELAS 5 PAI ==================== -->
+  <!-- ==================== SESI 2 MISHKA (KELAS 5) ==================== -->
   <div class="game-card" id="gameGrade5">
     <div class="mission-header">
       <div>
-        <h2 class="mission-title">Misi 2: Amanah Khalifah Cilik di Muka Bumi</h2>
-        <p class="mission-desc">Buktikan peranmu sebagai pemimpin bumi yang merawat alam & sesama!</p>
+        <h2 class="mission-title">👧 Sesi 2: Ekspedisi Kasih Sayang & Seni Berbagi</h2>
+        <p class="mission-desc">Kuasai Kompas 4-Pintu Z.I.S.H, Dua Racun M-A, dan Segitiga Emas Tangan di Atas!</p>
       </div>
       <div class="score-box">
         <span>⭐ Poin:</span>
-        <span id="scoreKls5">0</span>
+        <span id="scoreMishka">0</span> / 400
       </div>
     </div>
 
+    <!-- MISI 1: KOMPAS 4 PINTU ZISH -->
+    <div class="jargon-pill" style="background:#ECFDF5; border-color:#10B981; color:#047857;">🧭 JARGON 1: KOMPAS 4-PINTU BERBAGI (Z-I-S-H)</div>
     <div class="scenario-box">
-      <strong>Tugas Khalifah:</strong> Allah Swt. menciptakan manusia sebagai <em>Khalifah fil Ardh</em> (pemimpin dan pengelola bumi). Manakah di bawah ini tindakan yang mencerminkan tugas khalifah yang dicintai Allah?
+      <strong>Klasifikasi C3:</strong> Mishka memberikan sebuah kado buku cerita indah berpita emas kepada sahabatnya yang berprestasi saat pentas senam sekolah demi mempererat persahabatan (*Tahadu Tahabbu*). Masuk ke pintu manakah amalan ini?
     </div>
-
     <div class="interactive-grid">
-      <div class="option-card" onclick="checkPai5(true, this)">
-        <div class="card-icon">🌱💧🕊️</div>
-        <div class="card-title">Merawat Kelestarian Alam & Satwa</div>
-        <div class="card-detail">Menanam pepohonan, menghemat penggunaan air bersih, dan tidak menyiksa binatang di sekitar kita.</div>
+      <div class="option-card" onclick="checkMishkaMisi1(true, this)">
+        <div class="card-icon">🎁💖✨</div>
+        <div class="card-title">Pintu 4: Hadiah (Kasih Sayang)</div>
+        <div class="card-detail">Pemberian sukarela untuk memuliakan sahabat dan mempererat rasa cinta kasih, bukan karena penerima miskin.</div>
       </div>
-
-      <div class="option-card" onclick="checkPai5(false, this)">
-        <div class="card-icon">🚯🔥🗑️</div>
-        <div class="card-title">Mengeksploitasi & Merusak Lingkungan</div>
-        <div class="card-detail">Membuang sampah plastik ke aliran sungai dan mencoret-coret fasilitas umum.</div>
+      <div class="option-card" onclick="checkMishkaMisi1(false, this)">
+        <div class="card-icon">🔒🌾⚖️</div>
+        <div class="card-title">Pintu 1: Zakat Fitrah</div>
+        <div class="card-detail">Kewajiban beras 2.5 kg yang wajib dibayarkan menjelang salat Idulfitri untuk fakir miskin.</div>
       </div>
     </div>
+    <div class="feedback-banner" id="fbMishka1"></div>
 
-    <!-- TANTANGAN DISKUSI -->
+    <!-- MISI 2: DUA RACUN PAHALA -->
     <div style="margin-top: 24px; padding-top: 20px; border-top: 2px dashed #A7F3D0;">
-      <h3 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 10px;">💬 Adab Saling Menghargai Pendapat</h3>
+      <div class="jargon-pill" style="background:#FEF2F2; border-color:#EF4444; color:#991B1B;">🚫 JARGON 2: WASPADA DUA RACUN PAHALA (M-A)</div>
       <div class="scenario-box">
-        Saat <span class="studentNameSpan">Mishka</span> dan teman sekelompok bermusyawarah, ada teman yang mengusulkan ide yang berbeda dengan idemu. Bagaimanakah sikap anak saleh?
+        <strong>Analisis Kasus C4 Q.S. Al-Baqarah: 264:</strong> Dinda menyumbang pensil warna ke temannya, namun seminggu kemudian saat bertengkar ia berteriak: *"Ingat ya, pensil warna itu kan aku yang belikan!"*. Mengapa pahala Dinda gugur?
       </div>
       <div class="interactive-grid">
-        <div class="option-card" onclick="checkPai5Adab(true, this)">
-          <div class="card-icon">👂🌟</div>
-          <div class="card-title">Mendengarkan dengan Sabar & Adil</div>
-          <div class="card-detail">Menghargai pendapat teman hingga selesai berbicara, lalu mendiskusikan keputusan terbaik bersama.</div>
+        <div class="option-card" onclick="checkMishkaMisi2(true, this)">
+          <div class="card-icon">⚡💨🍂</div>
+          <div class="card-title">Terkena Racun Al-Mann & Al-Adza</div>
+          <div class="card-detail">Mengungkit pemberian (Al-Mann) dan menyakiti hati teman (Al-Adza) menghanguskan pahala seperti abu ditiup badai.</div>
         </div>
-        <div class="option-card" onclick="checkPai5Adab(false, this)">
-          <div class="card-icon">😤🗣️</div>
-          <div class="card-title">Memotong Pembicaraan & Memaksa</div>
-          <div class="card-detail">Marah dan memaksakan ide sendiri harus diterima oleh semua anggota kelompok.</div>
+        <div class="option-card" onclick="checkMishkaMisi2(false, this)">
+          <div class="card-icon">🛡️💯</div>
+          <div class="card-title">Pahala Tetap Utuh 100%</div>
+          <div class="card-detail">Karena barang yang disumbangkan sudah terlanjur dinikmati oleh temannya.</div>
         </div>
       </div>
+      <div class="feedback-banner" id="fbMishka2"></div>
     </div>
 
-    <div class="feedback-banner" id="feedbackKls5"></div>
-  </div>
-
-  <!-- ==================== KELAS 6 PAI ==================== -->
-  <div class="game-card" id="gameGrade6">
-    <div class="mission-header">
-      <div>
-        <h2 class="mission-title">Misi 3: Benteng Hati Damai Tanpa Dendam</h2>
-        <p class="mission-desc">Terapkan adab meminta maaf dan kelapangan hati memaafkan sesama!</p>
-      </div>
-      <div class="score-box">
-        <span>⭐ Poin:</span>
-        <span id="scoreKls6">0</span>
-      </div>
-    </div>
-
-    <div class="scenario-box">
-      <strong>Hadis Penuntun:</strong> Rasulullah saw. bersabda: <em>"Tidak halal bagi seorang muslim mendiamkan (memusuhi) saudaranya lebih dari tiga hari..."</em> (H.R. Bukhari & Muslim). Mengapa Islam sangat menganjurkan kita segera meminta maaf dan saling memaafkan?
-    </div>
-
-    <div class="interactive-grid">
-      <div class="option-card" onclick="checkPai6(true, this)">
-        <div class="card-icon">🕊️💖✨</div>
-        <div class="card-title">Membersihkan Hati & Menjaga Kerukunan</div>
-        <div class="card-detail">Hati menjadi lapang, terhindar dari penyakit hati (hasad & dendam), serta mendatangkan ampunan dari Allah Swt.</div>
-      </div>
-
-      <div class="option-card" onclick="checkPai6(false, this)">
-        <div class="card-icon">⏳😒</div>
-        <div class="card-title">Menunggu Musuh yang Meminta Maaf Dulu</div>
-        <div class="card-detail">Menjaga gengsi dan membiarkan permusuhan berlarut-larut berbulan-bulan.</div>
-      </div>
-    </div>
-
-    <!-- TIGA LANGKAH MEMINTA MAAF -->
+    <!-- MISI 3: SEGITIGA EMAS TANGAN DI ATAS -->
     <div style="margin-top: 24px; padding-top: 20px; border-top: 2px dashed #A7F3D0;">
-      <h3 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 10px;">⭐ 3 Langkah Ksatria Meminta Maaf yang Benar</h3>
+      <div class="jargon-pill" style="background:#FEF3C7; border-color:#F59E0B; color:#92400E;">🔺 JARGON 3: SEGITIGA EMAS TANGAN DI ATAS</div>
       <div class="scenario-box">
-        <span class="studentNameSpan">Shan</span> atau <span class="studentNameSpan">Aulya</span> tidak sengaja menghilangkan pulpen milik temannya. Bagaimana urutan adab meminta maaf yang sesuai tuntunan akhlak mulia?
+        <strong>Adab Tertinggi Berbagi:</strong> Sabda Nabi saw.: *"Tangan di atas jauh lebih mulia daripada tangan di bawah"*. Manakah adab memberi yang paling mulia dalam Islam?
+      </div>
+      <div class="interactive-grid">
+        <div class="option-card" onclick="checkMishkaMisi3(true, this)">
+          <div class="card-icon">🤲🌸🤫</div>
+          <div class="card-title">Rahasia Tangan Kanan & Ikhlas</div>
+          <div class="card-detail">Memberi secara tersembunyi tanpa butuh sorotan kamera, menjaga senyum dan martabat orang yang dibantu.</div>
+        </div>
+        <div class="option-card" onclick="checkMishkaMisi3(false, this)">
+          <div class="card-icon">📱🎥📢</div>
+          <div class="card-title">Pamer Medsos Demi Pujian (Riya')</div>
+          <div class="card-detail">Menyuruh penerima menangis di depan kamera demi mendapatkan likes dan tayangan banyak.</div>
+        </div>
+      </div>
+      <div class="feedback-banner" id="fbMishka3"></div>
+    </div>
+
+    <!-- MISI 4: MINI TEST 4 MCQ MISHKA -->
+    <div class="test-box">
+      <div class="test-title">📝 Misi 4: Evaluasi Mini Test C3-C4 (4 Soal Pilihan Ganda)</div>
+      
+      <div class="mcq-question" id="mishkaQ1">
+        <div class="mcq-q-text">1. Memasukkan uang tabungan Rp 10.000 ke dalam kotak amal masjid untuk renovasi tempat wudu secara sukarela termasuk jenis...</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ1')">A. Zakat Fitrah wajib</button>
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'mishkaQ1', 25)">B. Infak di jalan kebaikan (Pintu Keran Harta) ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ1')">C. Zakat Mal dengan nisab 85 gram emas</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ1')">D. Pajak bangunan pemerintah</button>
+        </div>
       </div>
 
-      <div class="interactive-grid">
-        <div class="option-card" onclick="checkPai6Langkah(true, this)">
-          <div class="card-icon">📜✅</div>
-          <div class="card-title">Jujur Mengakui, Minta Maaf & Mengganti</div>
-          <div class="card-detail">1. Mengakui kekhilafan tanpa mencari alasan.<br>2. Mengucap maaf tulus.<br>3. Bertanggung jawab mengganti pulpennya.</div>
+      <div class="mcq-question" id="mishkaQ2">
+        <div class="mcq-q-text">2. Senyuman tulus, tutur kata santun, dan menyingkirkan paku di tengah jalan termasuk amalan...</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'mishkaQ2', 25)">A. Sedekah non-materi yang berpahala besar di sisi Allah ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ2')">B. Hanya sekadar sopan santun tanpa ada nilai ibadah</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ2')">C. Zakat profesi bulanan</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ2')">D. Hadiah perlombaan</button>
         </div>
+      </div>
 
-        <div class="option-card" onclick="checkPai6Langkah(false, this)">
-          <div class="card-icon">🤷‍♂️❌</div>
-          <div class="card-title">Menyalahkan Orang Lain</div>
-          <div class="card-detail">Berkata bahwa pulpennya hilang sendiri dan tidak mau mengganti.</div>
+      <div class="mcq-question" id="mishkaQ3">
+        <div class="mcq-q-text">3. Apa yang dimaksud dengan 'Al-Mann' yang dapat merusak dan menghapus pahala sedekah menurut Q.S. Al-Baqarah: 264?</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ3')">A. Memberikan uang yang masih baru dan bersih</button>
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'mishkaQ3', 25)">B. Mengungkit-ungkit dan menyebut jasa pemberian di depan orang lain ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ3')">C. Mendoakan kebaikan bagi penerima bantuan</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ3')">D. Memasukkan uang ke kotak amal diam-diam</button>
+        </div>
+      </div>
+
+      <div class="mcq-question" id="mishkaQ4">
+        <div class="mcq-q-text">4. Mengapa pepatah Rasulullah saw. 'Tangan kanan memberi, tangan kiri tidak tahu' menjadi teladan utama dalam adab berbagi?</div>
+        <div class="mcq-answers">
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ4')">A. Agar tangan kiri kita tidak merasa iri</button>
+          <button class="mcq-btn" onclick="answerMcq(this, true, 'mishkaQ4', 25)">B. Mengajarkan keikhlasan mutlak, kerahasiaan tinggi, dan bebas dari penyakit pamer (riya') ✅</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ4')">C. Supaya orang lain penasaran siapa yang memberi</button>
+          <button class="mcq-btn" onclick="answerMcq(this, false, 'mishkaQ4')">D. Karena tangan kiri tidak boleh dipakai untuk beraktivitas</button>
         </div>
       </div>
     </div>
-
-    <div class="feedback-banner" id="feedbackKls6"></div>
   </div>
 
   <footer>
-    <p>Portal Game Pembelajaran PAI Bab 3 • PKBM Penerus Bangsa • Dikembangkan untuk Kelas Multigrade & Zoom</p>
+    <p>Portal Game Interaktif PAI & Budi Pekerti Bab 4 • PKBM Penerus Bangsa • Dikembangkan Khusus Sesi Zoom Aqlan & Mishka</p>
   </footer>
 </div>
 
 <script>
-    // SAFE LAZY AUDIO SYNTHESIS ENGINE
+  let scoreAqlan = 0;
+  let scoreMishka = 0;
+  let aqlanMisiDone = { m1: false, m2: false, m3: false };
+  let mishkaMisiDone = { m1: false, m2: false, m3: false };
+
+  // Audio tone engine
   let audioCtx = null;
   function getAudioCtx() {
     try {
@@ -716,7 +731,8 @@
 
   function playTone(freq, type, duration) {
     try {
-      const ctx = getAudioCtx(); if(!ctx) return; const osc = ctx.createOscillator();
+      const ctx = getAudioCtx(); if(!ctx) return;
+      const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = type;
       osc.frequency.setValueAtTime(freq, ctx.currentTime);
@@ -730,9 +746,9 @@
   }
 
   function playSuccess() {
-    playTone(523.25, 'sine', 0.15); // C5
-    setTimeout(() => playTone(659.25, 'sine', 0.15), 100); // E5
-    setTimeout(() => playTone(783.99, 'sine', 0.3), 200); // G5
+    playTone(523.25, 'sine', 0.15);
+    setTimeout(() => playTone(659.25, 'sine', 0.15), 100);
+    setTimeout(() => playTone(783.99, 'sine', 0.3), 200);
   }
 
   function playError() {
@@ -740,166 +756,192 @@
     setTimeout(() => playTone(220, 'sawtooth', 0.3), 150);
   }
 
-  let currentStudent = 'aqlan';
-  let currentGrade = 4;
-  let scoreKls4 = 0;
-  let scoreKls5 = 0;
-  let scoreKls6 = 0;
+  function triggerConfetti() {
+    try {
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      }
+    } catch(e) {}
+  }
+
+  function switchGrade(grade) {
+    document.getElementById('tabGrade4').classList.toggle('active', grade === 4);
+    document.getElementById('tabGrade5').classList.toggle('active', grade === 5);
+    document.getElementById('gameGrade4').classList.toggle('active', grade === 4);
+    document.getElementById('gameGrade5').classList.toggle('active', grade === 5);
+    
+    const sel = document.getElementById('studentSelect');
+    sel.value = grade === 4 ? 'aqlan' : 'mishka';
+    updateBadge();
+  }
 
   function switchStudent() {
     const sel = document.getElementById('studentSelect');
-    const opt = sel.options[sel.selectedIndex];
-    currentStudent = sel.value;
-    const grade = parseInt(opt.getAttribute('data-grade'));
+    if (sel.value === 'aqlan') {
+      switchGrade(4);
+    } else {
+      switchGrade(5);
+    }
+  }
+
+  function updateBadge() {
+    const sel = document.getElementById('studentSelect');
+    const badge = document.getElementById('activeStudentLabel');
+    if (sel.value === 'aqlan') {
+      badge.textContent = 'Siswa: Aqlan • Sesi 1 (Kelas 4 SD)';
+    } else {
+      badge.textContent = 'Siswi: Mishka • Sesi 2 (Kelas 5 SD)';
+    }
+  }
+
+  // AQLAN MISSIONS
+  function checkAqlanMisi1(isCorrect, elem) {
+    const fb = document.getElementById('fbAqlan1');
+    if (isCorrect) {
+      elem.classList.add('selected-correct');
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = '🌟 <strong>Tepat Sekali!</strong> Jakun dan suara berat adalah tanda biologi, sedangkan mimpi basah (ihtilam) adalah tanda fikih kedewasaan ksatria! (+100 Poin)';
+      if (!aqlanMisiDone.m1) {
+        scoreAqlan += 100;
+        aqlanMisiDone.m1 = true;
+        document.getElementById('scoreAqlan').textContent = scoreAqlan;
+        playSuccess();
+      }
+    } else {
+      elem.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Bermain game bukan tanda baligh. Tanda baligh meliputi perubahan fisik biologi dan tanda sah fikih!';
+      playError();
+    }
+  }
+
+  function checkAqlanMisi2(isCorrect, elem) {
+    const fb = document.getElementById('fbAqlan2');
+    if (isCorrect) {
+      elem.classList.add('selected-correct');
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = '💧 <strong>Analisis Fikih Cemerlang!</strong> Rian melanggar Formula 2-R: Tidak ada R1 (Niat di hati) dan R2 (Air belum merata ke seluruh rambut). Mandi wajibnya belum sah! (+100 Poin)';
+      if (!aqlanMisiDone.m2) {
+        scoreAqlan += 100;
+        aqlanMisiDone.m2 = true;
+        document.getElementById('scoreAqlan').textContent = scoreAqlan;
+        playSuccess();
+      }
+    } else {
+      elem.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Sabun wangi tidak bisa menggantikan niat dan perataan air suci!';
+      playError();
+    }
+  }
+
+  function checkAqlanMisi3(isCorrect, elem) {
+    const fb = document.getElementById('fbAqlan3');
+    if (isCorrect) {
+      elem.classList.add('selected-correct');
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = '📡 <strong>Integritas Ksatria Sejati!</strong> Sebagai seorang Mukallaf, Aqlan memegang kemudi sendiri untuk salat 5 waktu tepat waktu dan mengisi radar kebaikan! (+100 Poin)';
+      if (!aqlanMisiDone.m3) {
+        scoreAqlan += 100;
+        aqlanMisiDone.m3 = true;
+        document.getElementById('scoreAqlan').textContent = scoreAqlan;
+        playSuccess();
+      }
+    } else {
+      elem.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Ksatria mukallaf tidak menunggu dimarahi orang tua untuk salat!';
+      playError();
+    }
+  }
+
+  // MISHKA MISSIONS
+  function checkMishkaMisi1(isCorrect, elem) {
+    const fb = document.getElementById('fbMishka1');
+    if (isCorrect) {
+      elem.classList.add('selected-correct');
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = '🎁 <strong>Tepat & Elegan!</strong> Ini adalah Pintu 4: Hadiah (Kasih Sayang). Memberikan kado untuk memuliakan sahabat dan mempererat persahabatan (*Tahadu Tahabbu*)! (+100 Poin)';
+      if (!mishkaMisiDone.m1) {
+        scoreMishka += 100;
+        mishkaMisiDone.m1 = true;
+        document.getElementById('scoreMishka').textContent = scoreMishka;
+        playSuccess();
+      }
+    } else {
+      elem.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Kado buku cerita bukan zakat fitrah. Zakat fitrah adalah beras wajib 2.5 kg untuk fakir miskin menjelang Idulfitri.';
+      playError();
+    }
+  }
+
+  function checkMishkaMisi2(isCorrect, elem) {
+    const fb = document.getElementById('fbMishka2');
+    if (isCorrect) {
+      elem.classList.add('selected-correct');
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = '⚡ <strong>Analisis Qur'ani Cemerlang!</strong> Mengungkit pemberian (*Al-Mann*) dan menyakiti hati (*Al-Adza*) menghapus pahala seperti debu di atas batu licin yang tersapu hujan badai (Q.S. Al-Baqarah: 264)! (+100 Poin)';
+      if (!mishkaMisiDone.m2) {
+        scoreMishka += 100;
+        mishkaMisiDone.m2 = true;
+        document.getElementById('scoreMishka').textContent = scoreMishka;
+        playSuccess();
+      }
+    } else {
+      elem.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Pahala sedekah bisa hangus jika kita mengungkit-ungkit dan menyakiti perasaan orang lain!';
+      playError();
+    }
+  }
+
+  function checkMishkaMisi3(isCorrect, elem) {
+    const fb = document.getElementById('fbMishka3');
+    if (isCorrect) {
+      elem.classList.add('selected-correct');
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = '🌸 <strong>Adab Luhur Tangan di Atas!</strong> Memberi dengan rahasia tangan kanan, ikhlas tanpa kamera, dan menjaga kehormatan sahabat adalah derajat sedekah tertinggi! (+100 Poin)';
+      if (!mishkaMisiDone.m3) {
+        scoreMishka += 100;
+        mishkaMisiDone.m3 = true;
+        document.getElementById('scoreMishka').textContent = scoreMishka;
+        playSuccess();
+      }
+    } else {
+      elem.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Pamer demi konten merusak kemurnian niat dan merendahkan martabat orang yang dibantu.';
+      playError();
+    }
+  }
+
+  // MCQ HANDLER
+  function answerMcq(btn, isCorrect, qId, pts = 25) {
+    const parent = document.getElementById(qId);
+    const buttons = parent.querySelectorAll('.mcq-btn');
+    buttons.forEach(b => b.disabled = true);
     
-    const studentName = opt.text.split(' ')[0];
-    document.getElementById('activeStudentLabel').textContent = `Halo, ${studentName}! (Kelas ${grade})`;
-    
-    document.querySelectorAll('.studentNameSpan').forEach(el => el.textContent = studentName);
-
-    setGrade(grade);
-
-    const sensoryCheckbox = document.getElementById('sensoryModeCheckbox');
-    if (currentStudent === 'alisya') {
-      sensoryCheckbox.checked = true;
-      toggleSensoryMode();
-    } else {
-      sensoryCheckbox.checked = false;
-      toggleSensoryMode();
-    }
-  }
-
-  function setGrade(grade) {
-    currentGrade = grade;
-    document.querySelectorAll('.grade-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`tabGrade${grade}`).classList.add('active');
-
-    document.querySelectorAll('.game-card').forEach(card => card.classList.remove('active'));
-    document.getElementById(`gameGrade${grade}`).classList.add('active');
-  }
-
-  function toggleSensoryMode() {
-    const isSensory = document.getElementById('sensoryModeCheckbox').checked;
-    const standardView = document.getElementById('kls4StandardView');
-    const alisyaView = document.getElementById('kls4AlisyaView');
-
-    if (isSensory) {
-      standardView.style.display = 'none';
-      alisyaView.style.display = 'block';
-    } else {
-      standardView.style.display = 'block';
-      alisyaView.style.display = 'none';
-    }
-  }
-
-  // LOGIKA PAI 4
-  function checkPai4(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls4');
-    document.querySelectorAll('#kls4StandardView .option-card').forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
-
     if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls4 += 50;
-      document.getElementById('scoreKls4').textContent = scoreKls4;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🌟 <strong>Maha Benar Allah:</strong> Kata <em>Li-ta'ārafū</em> mengajarkan kita bahwa keragaman suku dan bangsa diciptakan agar kita saling mengenal, menghormati, dan berlomba-lomba dalam kebaikan!`;
+      btn.classList.add('correct');
       playSuccess();
+      if (qId.startsWith('aqlan')) {
+        scoreAqlan += pts;
+        document.getElementById('scoreAqlan').textContent = scoreAqlan;
+        if (scoreAqlan >= 400) triggerConfetti();
+      } else {
+        scoreMishka += pts;
+        document.getElementById('scoreMishka').textContent = scoreMishka;
+        if (scoreMishka >= 400) triggerConfetti();
+      }
     } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ <strong>Kurang Tepat:</strong> Islam melarang permusuhan antar suku (ashabiyah). Allah menciptakan perbedaan agar manusia saling mengenal dengan kasih sayang.`;
+      btn.classList.add('wrong');
       playError();
-    }
-  }
-
-  function checkAlisyaPai(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls4');
-    document.querySelectorAll('#kls4AlisyaView .alisya-card').forEach(c => c.classList.remove('correct'));
-
-    if (isCorrect) {
-      cardEl.classList.add('correct');
-      scoreKls4 += 50;
-      document.getElementById('scoreKls4').textContent = scoreKls4;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `⭐ <strong>Masya Allah, Pintar Sekali Alisya!</strong> Menolong teman yang kesulitan adalah tanda anak salehah yang disayang Allah Swt.! 💖`;
-      playSuccess();
-    } else {
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `Ayo sentuh gambar anak yang berbuat baik dan menolong teman ya! 😊`;
-      playError();
-    }
-  }
-
-  // LOGIKA PAI 5
-  function checkPai5(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls5');
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls5 += 50;
-      document.getElementById('scoreKls5').textContent = scoreKls5;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🌿 <strong>Amanah Khalifah Terwujud:</strong> Manusia dititipkan bumi bukan untuk dirusak, tetapi untuk dirawat agar generasi selanjutnya dapat hidup makmur dan berkah!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ Merusak alam adalah dosa besar dan mengkhianati amanah kekhalifahan manusia.`;
-      playError();
-    }
-  }
-
-  function checkPai5Adab(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls5');
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls5 += 50;
-      document.getElementById('scoreKls5').textContent = scoreKls5;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `👏 <strong>Akhlak Anak Saleh:</strong> Menghormati pendapat orang lain saat musyawarah mencerminkan sifat adil dan bijaksana sebagaimana dicontohkan Rasulullah saw.!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ Memaksakan kehendak dan memotong pembicaraan melanggar adab kesantunan muslim.`;
-      playError();
-    }
-  }
-
-  // LOGIKA PAI 6
-  function checkPai6(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls6');
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls6 += 50;
-      document.getElementById('scoreKls6').textContent = scoreKls6;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🕊️ <strong>Kemuliaan Jiwa Pemaaf:</strong> Orang yang lebih dulu memberi maaf atau menyapa saudaranya adalah orang yang paling utama di hadapan Allah Swt.!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ Menyimpan dendam hanya akan menyiksa diri sendiri dan menjauhkan rahmat Allah Swt.`;
-      playError();
-    }
-  }
-
-  function checkPai6Langkah(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls6');
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls6 += 50;
-      document.getElementById('scoreKls6').textContent = scoreKls6;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🏆 <strong>Adab Sempurna:</strong> Mengakui kekhilafan, meminta maaf, dan siap mengganti kerugian adalah wujud integritas muslim sejati!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ Melempar tanggung jawab kepada orang lain adalah perilaku tercela.`;
-      playError();
+      buttons.forEach(b => {
+        if (b.textContent.includes('✅')) b.classList.add('correct');
+      });
     }
   }
 </script>
-
 </body>
 </html>
