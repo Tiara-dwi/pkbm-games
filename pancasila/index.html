@@ -38,7 +38,7 @@
     }
 
     .container {
-      max-width: 960px;
+      max-width: 980px;
       margin: 0 auto;
     }
 
@@ -46,10 +46,10 @@
     header {
       background: linear-gradient(135deg, #BE123C 0%, #E11D48 60%, #FB7185 100%);
       color: white;
-      padding: 28px 24px;
+      padding: 26px 24px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -80,7 +80,7 @@
 
     h1 {
       font-family: 'Fredoka', cursive;
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 700;
       margin-bottom: 8px;
       line-height: 1.2;
@@ -89,17 +89,18 @@
     .subtitle {
       font-size: 1rem;
       opacity: 0.95;
-      max-width: 700px;
+      max-width: 720px;
       margin: 0 auto;
+      line-height: 1.5;
     }
 
-    /* CONTROL PANEL (STUDENT SELECTOR) */
+    /* STUDENT SELECTOR CONTROL PANEL */
     .control-panel {
       background: white;
-      padding: 20px;
+      padding: 18px 22px;
       border-radius: var(--radius);
       box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
@@ -112,11 +113,11 @@
       align-items: center;
       gap: 12px;
       flex: 1;
-      min-width: 280px;
+      min-width: 300px;
     }
 
     label {
-      font-weight: 700;
+      font-weight: 800;
       color: var(--primary-dark);
       font-size: 0.95rem;
       white-space: nowrap;
@@ -165,7 +166,7 @@
     .grade-tabs {
       display: flex;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       background: #FFE4E6;
       padding: 6px;
       border-radius: 16px;
@@ -195,11 +196,11 @@
       transform: translateY(-2px);
     }
 
-    /* GAME CARDS */
+    /* MAIN CONTAINER CARD */
     .game-card {
       background: white;
       border-radius: var(--radius);
-      padding: 28px;
+      padding: 26px 28px;
       box-shadow: var(--shadow);
       margin-bottom: 24px;
       display: none;
@@ -215,40 +216,216 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* SUB-MISSION NAV TABS (4 MISI TIAP SISWA) */
+    .mission-nav-bar {
+      display: flex;
+      gap: 8px;
+      background: #FFF1F2;
+      padding: 6px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      overflow-x: auto;
+      border: 1px solid #FECDD3;
+    }
+
+    .sub-mission-btn {
+      flex: 1;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: #9F1239;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .sub-mission-btn.active {
+      background: #BE123C;
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(190, 18, 60, 0.25);
+    }
+
+    .mission-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .mission-pane.active {
+      display: block;
+    }
+
     .mission-header {
       border-bottom: 2px dashed #FECDD3;
-      padding-bottom: 18px;
-      margin-bottom: 22px;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
     }
 
     .mission-title {
       font-family: 'Fredoka', cursive;
-      font-size: 1.65rem;
+      font-size: 1.6rem;
       color: var(--primary-dark);
     }
 
     .mission-desc {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       margin-top: 4px;
     }
 
     .score-box {
       background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
       border: 2px solid #FCD34D;
-      padding: 8px 20px;
+      padding: 8px 18px;
       border-radius: 14px;
       font-family: 'Fredoka', cursive;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: #B45309;
       display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
+    }
+
+    /* SCENARIO & STORY BOX */
+    .scenario-box {
+      background: #F8FAFC;
+      border-left: 5px solid var(--secondary);
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 1.02rem;
+      line-height: 1.65;
+      color: #334155;
+    }
+
+    .scenario-box strong {
+      color: #0369A1;
+    }
+
+    /* INTERACTIVE SIMULATION CARDS & GRIDS */
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .option-card {
+      background: #FFF1F2;
+      border: 2px solid #FECDD3;
+      border-radius: 16px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 20px rgba(225, 29, 72, 0.12);
+      background: #FFE4E6;
+    }
+
+    .option-card.selected-correct {
+      border-color: var(--success) !important;
+      background: #ECFDF5 !important;
+      color: #065F46;
+    }
+
+    .option-card.selected-wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+      color: #991B1B;
+    }
+
+    .card-icon {
+      font-size: 2.4rem;
+      text-align: center;
+    }
+
+    .card-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #881337;
+    }
+
+    .card-detail {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    /* SIMULATION PLAYGROUND BOX */
+    .sim-box {
+      background: #F1F5F9;
+      border: 2px solid #CBD5E1;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .sim-meter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 18px 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .sim-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .sim-badge.cold { background: #DBEAFE; color: #1D4ED8; }
+    .sim-badge.warm { background: #FEF3C7; color: #B45309; }
+    .sim-badge.good { background: #D1FAE5; color: #065F46; }
+    .sim-badge.danger { background: #FEE2E2; color: #991B1B; }
+
+    .btn-sim-action {
+      background: linear-gradient(135deg, #0284C7, #0369A1);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.98rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px;
+    }
+
+    .btn-sim-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
     }
 
     /* PROGRESS BAR */
@@ -290,22 +467,6 @@
       background: linear-gradient(90deg, #E11D48, #10B981);
       width: 25%;
       transition: width 0.35s ease;
-    }
-
-    /* SCENARIO BOX */
-    .scenario-box {
-      background: #F8FAFC;
-      border-left: 5px solid var(--secondary);
-      padding: 18px 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      font-size: 1.05rem;
-      line-height: 1.65;
-      color: #334155;
-    }
-
-    .scenario-box strong {
-      color: #0369A1;
     }
 
     /* MCQ OPTIONS */
@@ -414,20 +575,20 @@
       display: block;
     }
 
-    /* ACTION BUTTONS */
+    /* BUTTON ACTION */
     .btn-action-row {
       display: flex;
       justify-content: flex-end;
-      margin-top: 20px;
+      margin-top: 18px;
     }
 
     .btn-next-q {
       background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
       color: white;
       border: none;
-      padding: 14px 28px;
+      padding: 13px 26px;
       border-radius: 12px;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
@@ -442,10 +603,10 @@
       box-shadow: 0 8px 20px rgba(225, 29, 72, 0.35);
     }
 
-    /* RESULT CARD */
+    /* RESULT BOX */
     .quiz-result-box {
       text-align: center;
-      padding: 36px 24px;
+      padding: 34px 22px;
       background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
       border: 3px solid #FCD34D;
       border-radius: 20px;
@@ -454,22 +615,22 @@
     }
 
     .quiz-result-trophy {
-      font-size: 4.5rem;
-      margin-bottom: 12px;
+      font-size: 4.2rem;
+      margin-bottom: 10px;
     }
 
     .quiz-result-title {
       font-family: 'Fredoka', cursive;
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       color: #92400E;
       margin-bottom: 8px;
     }
 
     .quiz-result-score {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 800;
       color: #B45309;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .quiz-badge-cert {
@@ -489,7 +650,7 @@
       color: #475569;
       font-size: 1rem;
       max-width: 620px;
-      margin: 0 auto 24px;
+      margin: 0 auto 22px;
       line-height: 1.6;
     }
 
@@ -558,13 +719,8 @@
       border-radius: 50%;
     }
 
-    input:checked + .slider {
-      background-color: #2563EB;
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(20px);
-    }
+    input:checked + .slider { background-color: #2563EB; }
+    input:checked + .slider:before { transform: translateX(20px); }
 
     .alisya-card {
       border: 4px solid #E2E8F0;
@@ -576,83 +732,10 @@
       background: white;
     }
 
-    .alisya-card:hover {
-      border-color: #38BDF8;
-      transform: scale(1.02);
-    }
-
-    .alisya-card.correct {
-      border-color: #10B981;
-      background: #ECFDF5;
-    }
-
-    .alisya-img-icon {
-      font-size: 4rem;
-      margin-bottom: 10px;
-    }
-
-    .alisya-label {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #1E293B;
-    }
-
-    /* KELAS 6 CARDS */
-    .interactive-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .option-card {
-      background: #FFF1F2;
-      border: 2px solid #FECDD3;
-      border-radius: 16px;
-      padding: 18px;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .option-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-      box-shadow: 0 10px 20px rgba(225, 29, 72, 0.12);
-      background: #FFE4E6;
-    }
-
-    .option-card.selected-correct {
-      border-color: var(--success) !important;
-      background: #ECFDF5 !important;
-      color: #065F46;
-    }
-
-    .option-card.selected-wrong {
-      border-color: #EF4444 !important;
-      background: #FEF2F2 !important;
-      color: #991B1B;
-    }
-
-    .card-icon {
-      font-size: 2.5rem;
-      text-align: center;
-    }
-
-    .card-title {
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: #881337;
-    }
-
-    .card-detail {
-      font-size: 0.9rem;
-      color: #475569;
-      line-height: 1.4;
-    }
+    .alisya-card:hover { border-color: #38BDF8; transform: scale(1.02); }
+    .alisya-card.correct { border-color: #10B981; background: #ECFDF5; }
+    .alisya-img-icon { font-size: 4rem; margin-bottom: 10px; }
+    .alisya-label { font-size: 1.3rem; font-weight: 800; color: #1E293B; }
 
     /* FOOTER */
     footer {
@@ -669,81 +752,251 @@
 
 <div class="container">
   <header>
-    <div class="badge-top">⭐ Pendidikan Pancasila • Bab 3 Kurikulum Merdeka ⭐</div>
+    <div class="badge-top">⭐ Pendidikan Pancasila Bab 3 • Kurikulum Merdeka ⭐</div>
     <h1>Petualangan Bhinneka & Keadilan Anak</h1>
-    <p class="subtitle">Mini Test Interaktif Level C3–C4 Terintegrasi: Kerja Sama di Lingkunganku & Keragaman Budaya Indonesiaku</p>
+    <p class="subtitle">Pembelajaran Interaktif Berjenjang (3 Misi Cerita Nyata + 1 Mini Test Level C3–C4): Kerja Sama di Lingkunganku & Keragaman Budaya Indonesiaku</p>
   </header>
 
   <!-- CONTROL PANEL (STUDENT SELECTOR) -->
   <div class="control-panel">
     <div class="select-group">
-      <label for="studentSelect">👤 Pilih Nama Murid:</label>
+      <label for="studentSelect">👤 Profil Murid:</label>
       <select id="studentSelect" onchange="switchStudent()">
-        <optgroup label="Sesi Hari Ini (Senin Online)">
-          <option value="aqlan" data-grade="4" selected>Aqlan (Kelas 4 - Zoom Online • Sesi 1)</option>
-          <option value="mishka" data-grade="5">Mishka (Kelas 5 - Zoom Online • Sesi 2)</option>
+        <optgroup label="Sesi Hari Ini (Senin Online - 60 Menit Tiap Siswa)">
+          <option value="aqlan" data-grade="4" selected>Aqlan (Kelas 4 - Zoom Online • Sesi 1: 60 Menit)</option>
+          <option value="mishka" data-grade="5">Mishka (Kelas 5 - Zoom Online • Sesi 2: 60 Menit)</option>
         </optgroup>
         <optgroup label="Murid Kelas 4 Lainnya">
           <option value="hasyif" data-grade="4">Hasyif (Kelas 4 - On-site)</option>
-          <option value="alisya" data-grade="4">Alisya (Kelas 4 - On-site / Visual Support)</option>
+          <option value="alisya" data-grade="4">Alisya (Kelas 4 - On-site / Visual Sensory)</option>
           <option value="kinanti" data-grade="4">Kinanti (Kelas 4 - On-site)</option>
         </optgroup>
         <optgroup label="Murid Kelas 5 Lainnya">
           <option value="ardiansyah" data-grade="5">Ardiansyah (Kelas 5 - On-site)</option>
-        </optgroup>
-        <optgroup label="Murid Kelas 6 (On-site)">
-          <option value="shan" data-grade="6">Shan (Kelas 6 - On-site)</option>
-          <option value="aulya" data-grade="6">Aulya (Kelas 6 - On-site)</option>
-          <option value="hendra" data-grade="6">Hendra (Kelas 6 - On-site)</option>
-          <option value="selvi" data-grade="6">Selvi (Kelas 6 - On-site)</option>
         </optgroup>
       </select>
     </div>
 
     <div class="student-badge">
       <div class="status-dot"></div>
-      <span id="activeStudentLabel">Halo, Aqlan! (Kelas 4 • Sesi 1)</span>
+      <span id="activeStudentLabel">Halo, Aqlan! (Kelas 4 SD • Sesi 1)</span>
     </div>
   </div>
 
   <!-- GRADE SELECTOR TABS -->
   <div class="grade-tabs">
     <button class="grade-btn active" id="tabGrade4" onclick="setGrade(4)">
-      <span>📘</span> Kelas 4 (Aqlan • Kerja Sama)
+      <span>🛹</span> Sesi 1: Aqlan (Kelas 4 • 4 Misi Kerja Sama)
     </button>
     <button class="grade-btn" id="tabGrade5" onclick="setGrade(5)">
-      <span>📙</span> Kelas 5 (Mishka • Budaya Nusantara)
-    </button>
-    <button class="grade-btn" id="tabGrade6" onclick="setGrade(6)">
-      <span>📕</span> Kelas 6 (Norma & Hak)
+      <span>🏛️</span> Sesi 2: Mishka (Kelas 5 • 4 Misi Budaya Nusantara)
     </button>
   </div>
 
-  <!-- ==================== KELAS 4 GAME ==================== -->
+  <!-- ========================================================================= -->
+  <!-- KELAS 4: DASHBOARD 4 MISI AQLAN -->
+  <!-- ========================================================================= -->
   <div class="game-card active" id="gameGrade4">
-    <div class="mission-header">
-      <div>
-        <h2 class="mission-title">Misi 1: Ksatria Gotong Royong & Sumpah Pemuda</h2>
-        <p class="mission-desc">Mini Test Pilihan Ganda (C3–C4): 4 Soal Berbasis Skenario Nyata & Filosofi Sapu Lidi</p>
+    <!-- SUB-MISSION NAV BAR FOR AQLAN (4 MISI) -->
+    <div class="mission-nav-bar">
+      <button class="sub-mission-btn active" id="btnSub4_1" onclick="switchSubMission4(1)">
+        <span>🌲 Misi 1: Badai Beringin</span>
+      </button>
+      <button class="sub-mission-btn" id="btnSub4_2" onclick="switchSubMission4(2)">
+        <span>🧹 Misi 2: Sapu Lidi</span>
+      </button>
+      <button class="sub-mission-btn" id="btnSub4_3" onclick="switchSubMission4(3)">
+        <span>🗺️ Misi 3: Tradisi Nusantara</span>
+      </button>
+      <button class="sub-mission-btn" id="btnSub4_4" onclick="switchSubMission4(4)">
+        <span>📝 Misi 4: Mini Test C3–C4</span>
+      </button>
+    </div>
+
+    <!-- MISI 1 AQLAN: BADAI POHON BERINGIN & GOTONG ROYONG -->
+    <div class="mission-pane active" id="pane4_1">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">🌲 Misi 1: Badai Pohon Beringin & Alokasi Gotong Royong</h2>
+          <p class="mission-desc">Bantu Aqlan dan Pak RT membagi tugas kerja bakti agar jalan komplek bersih sebelum badai hujan!</p>
+        </div>
+        <div class="score-box">
+          <span>⭐ Skor Aqlan:</span>
+          <span id="scoreKls4">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
+        </div>
       </div>
-      <div class="score-box">
-        <span>⭐ Skor:</span>
-        <span id="scoreKls4">0</span>
-        <span style="font-size: 0.9rem; color: #92400E; font-weight: normal;">/ 100</span>
+
+      <!-- SENSORY TOGGLE FOR ALISYA -->
+      <div class="sensory-toggle" id="alisyaToggleBox">
+        <label class="switch">
+          <input type="checkbox" id="sensoryModeCheckbox" onchange="toggleSensoryMode()">
+          <span class="slider"></span>
+        </label>
+        <span>Mode Visual Khusus Alisya (Kartu Gambar Besar & Ikon Kontras)</span>
+      </div>
+
+      <div id="kls4StandardView">
+        <div class="scenario-box">
+          <strong>Kisah Keseharian Skater Aqlan:</strong> Minggu pagi, <span class="studentNameSpan">Aqlan</span> sudah siap meluncur dengan skateboard. Namun badai semalam menumbangkan dahan pohon beringin tua melintang di gerbang perumahan dan menyumbat selokan. Pak RT menghela napas: <em>"Kalau Bapak bersihkan sendirian, butuh 5 hari (120 jam) Aqlan! Nanti malam hujan lebat diprediksi BMKG turun membanjiri rumah warga."</em> Apa tindakan gotong royong terbaik?
+        </div>
+
+        <div class="interactive-grid">
+          <div class="option-card" onclick="evalAqlanM1(false, this)">
+            <div class="card-icon">🛹🚪</div>
+            <div class="card-title">Putar Balik & Main Sendiri</div>
+            <div class="card-detail">Mencari jalan lain untuk bermain skate dan membiarkan Pak RT bekerja sendirian 5 hari.</div>
+          </div>
+
+          <div class="option-card" onclick="evalAqlanM1(true, this)">
+            <div class="card-icon">🤝🪓🧹</div>
+            <div class="card-title">Bagi Tugas Gotong Royong 3 Regu</div>
+            <div class="card-detail">Aqlan mengajak warga membagi tugas: regu pemotong dahan, regu pembersih sampah selokan, dan regu konsumsi.</div>
+          </div>
+
+          <div class="option-card" onclick="evalAqlanM1(false, this)">
+            <div class="card-icon">📢😤</div>
+            <div class="card-title">Saling Menyalahkan di Medsos</div>
+            <div class="card-detail">Membuat postingan memprotes pohon beringin tanpa turun tangan membantu membersihkan.</div>
+          </div>
+        </div>
+
+        <div class="feedback-banner" id="fbAqlanM1"></div>
+
+        <div class="btn-action-row" id="rowNextM1" style="display: none;">
+          <button class="btn-next-q" onclick="switchSubMission4(2)">
+            <span>Lanjut ke Misi 2 (Filosofi Sapu Lidi)</span>
+            <span>➔</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ALISYA SENSORY VIEW -->
+      <div id="kls4AlisyaView" style="display: none;">
+        <p style="font-weight: 800; color: #1E293B; margin-bottom: 12px; font-size: 1.15rem;">
+          Sentuh gambar yang menunjukkan sikap <strong>KERJA SAMA (GOTONG ROYONG)</strong>:
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+          <div class="alisya-card" onclick="checkAlisya(true, this)">
+            <div class="alisya-img-icon">🧹🤝📦</div>
+            <div class="alisya-label">Membersihkan Bersama Teman</div>
+            <div style="color: #10B981; font-weight: 700; margin-top: 6px;">(Benar & Rukun ✅)</div>
+          </div>
+          <div class="alisya-card" onclick="checkAlisya(false, this)">
+            <div class="alisya-img-icon">🙅‍♂️📱🛋️</div>
+            <div class="alisya-label">Main Sendiri & Tidak Peduli</div>
+            <div style="color: #EF4444; font-weight: 700; margin-top: 6px;">(Kurang Tepat ❌)</div>
+          </div>
+        </div>
+        <div class="feedback-banner" id="feedbackAlisya"></div>
       </div>
     </div>
 
-    <!-- SENSORY TOGGLE FOR ALISYA -->
-    <div class="sensory-toggle" id="alisyaToggleBox">
-      <label class="switch">
-        <input type="checkbox" id="sensoryModeCheckbox" onchange="toggleSensoryMode()">
-        <span class="slider"></span>
-      </label>
-      <span>Mode Visual Khusus Alisya (Kartu Gambar Besar & Ikon Kontras)</span>
+    <!-- MISI 2 AQLAN: FILOSOFI SEIKAT SAPU LIDI -->
+    <div class="mission-pane" id="pane4_2">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">🧹 Misi 2: Misteri Kekuatan Seikat Sapu Lidi</h2>
+          <p class="mission-desc">Uji kekuatan sebatang lidi rapuh vs seikat sapu lidi yang mengikat perbedaan!</p>
+        </div>
+        <div class="score-box">
+          <span>⭐ Skor Aqlan:</span>
+          <span class="scoreDisplayAqlan">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
+        </div>
+      </div>
+
+      <div class="scenario-box">
+        <strong>Eksperimen Lapangan Skateboard:</strong> Guru Tiara menantang <span class="studentNameSpan">Aqlan</span> membersihkan kerikil tajam di lintasan skateboard. Coba lakukan simulasi di bawah ini:
+      </div>
+
+      <div class="sim-box" id="simSapuBox">
+        <div id="simSapuGraphic" style="font-size: 4rem; margin-bottom: 10px;">🌾</div>
+        <div id="simSapuStatus" style="font-size: 1.15rem; font-weight: 700; color: #334155; margin-bottom: 16px;">
+          Pilih metode pembersihan lapangan:
+        </div>
+        <div>
+          <button class="btn-sim-action" onclick="runSimSapu(1)">
+            <span>🪵 Uji 1 Batang Lidi Sendirian</span>
+          </button>
+          <button class="btn-sim-action" style="background: linear-gradient(135deg, #10B981, #059669);" onclick="runSimSapu(2)">
+            <span>🧹 Ikat 50 Lidi Jadi Satu Ikatan Kuat</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fbAqlanM2"></div>
+
+      <div class="btn-action-row" id="rowNextM2" style="display: none;">
+        <button class="btn-next-q" onclick="switchSubMission4(3)">
+          <span>Lanjut ke Misi 3 (Tradisi Nusantara)</span>
+          <span>➔</span>
+        </button>
+      </div>
     </div>
 
-    <!-- STANDARD MCQ QUIZ VIEW KELAS 4 -->
-    <div id="kls4StandardView">
+    <!-- MISI 3 AQLAN: TRADISI GOTONG ROYONG & BAHASA PERSATUAN -->
+    <div class="mission-pane" id="pane4_3">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">🗺️ Misi 3: Tradisi Gotong Royong Nusantara & Sumpah Pemuda</h2>
+          <p class="mission-desc">Kenali tradisi luhur berbagai suku dan buktikan peran Bahasa Indonesia sebagai perekat persatuan!</p>
+        </div>
+        <div class="score-box">
+          <span>⭐ Skor Aqlan:</span>
+          <span class="scoreDisplayAqlan">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
+        </div>
+      </div>
+
+      <div class="scenario-box">
+        <strong>Tantangan Keragaman Suku:</strong> Di komplek tempat tinggal <span class="studentNameSpan">Aqlan</span>, warga yang ikut kerja bakti berasal dari suku Sunda, Jawa, Minahasa, Batak, dan Maluku. Mereka saling memperkenalkan tradisi gotong royong daerah asalnya.
+      </div>
+
+      <div class="interactive-grid">
+        <div class="option-card" onclick="evalAqlanM3('jawa', this)">
+          <div class="card-icon">🌾🏔️</div>
+          <div class="card-title">Gugur Gunung</div>
+          <div class="card-detail">Tradisi kerja bakti sukarela bersama seluruh warga desa di daerah Jawa untuk membangun fasilitas umum.</div>
+        </div>
+
+        <div class="option-card" onclick="evalAqlanM3('minahasa', this)">
+          <div class="card-icon">🤝🥥</div>
+          <div class="card-title">Mapalus</div>
+          <div class="card-detail">Tradisi tolong-menolong bertani dan kerja bakti suku Minahasa di Sulawesi Utara secara bergantian.</div>
+        </div>
+
+        <div class="option-card" onclick="evalAqlanM3('palembang', this)">
+          <div class="card-icon">🛶🌊</div>
+          <div class="card-title">Sikaroban</div>
+          <div class="card-detail">Tradisi tolong-menolong dan gotong royong khas masyarakat Palembang, Sumatera Selatan.</div>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fbAqlanM3"></div>
+
+      <div class="btn-action-row" id="rowNextM3" style="display: none;">
+        <button class="btn-next-q" onclick="switchSubMission4(4)">
+          <span>Maju ke Misi 4 (Mini Test 4 Soal C3–C4)</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MISI 4 AQLAN: MINI TEST 4 SOAL PILIHAN GANDA (C3-C4) -->
+    <div class="mission-pane" id="pane4_4">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">📝 Misi 4: Evaluasi Mini Test Ksatria Gotong Royong</h2>
+          <p class="mission-desc">Tuntaskan 4 Soal Pilihan Ganda (Level C3–C4) Berbasis Skenario Nyata & Dapatkan Lencana Ksatria!</p>
+        </div>
+        <div class="score-box">
+          <span>⭐ Skor Aqlan:</span>
+          <span class="scoreDisplayAqlan">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
+        </div>
+      </div>
+
       <div class="quiz-progress-wrapper" id="quizMetaKls4">
         <div class="quiz-meta-row">
           <span id="qCountLabelKls4">Pertanyaan 1 dari 4</span>
@@ -773,57 +1026,185 @@
 
       <!-- RESULTS SUMMARY CARD KELAS 4 -->
       <div id="quizResultKls4" class="quiz-result-box" style="display: none;">
-        <div class="quiz-result-trophy">🏆🌟</div>
-        <h3 class="quiz-result-title">Misi Selesai dengan Gemilang!</h3>
-        <div class="quiz-result-score">Skor Akhir: <span id="finalScoreKls4">100</span> / 100</div>
+        <div class="quiz-result-trophy">🏆🌟🛹</div>
+        <h3 class="quiz-result-title">Selamat Aqlan! Seluruh 4 Misi Tuntas!</h3>
+        <div class="quiz-result-score">Total Skor Akhir: <span id="finalScoreKls4">400</span> / 400</div>
         <div class="quiz-badge-cert">🎖️ KSATRIA GOTONG ROYONG SD KELAS 4</div>
         <p class="quiz-result-desc" id="finalDescKls4">
-          Hebat sekali, <span class="studentNameSpan">Aqlan</span>! Kamu berhasil menuntaskan seluruh 4 tantangan mini test. Kamu paham betul bahwa sebatang lidi mudah patah, namun seikat lidi bersatu mampu membersihkan masalah seberat apa pun!
+          Luar biasa, <span class="studentNameSpan">Aqlan</span>! Kamu berhasil menuntaskan seluruh 4 misi pembelajaran: memangkas waktu kerja bakti dari 5 hari jadi 45 menit, membuktikan filosofi sapu lidi, mengenal tradisi Mapalus, dan meraih nilai sempurna pada Mini Test C3–C4!
         </p>
-        <button class="btn-restart" onclick="restartQuizKls4()">
+        <button class="btn-restart" onclick="restartAllKls4()">
           <span>🔄</span>
-          <span>Mainkan Lagi</span>
+          <span>Ulangi Semua Misi</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- KELAS 5: DASHBOARD 4 MISI MISHKA -->
+  <!-- ========================================================================= -->
+  <div class="game-card" id="gameGrade5">
+    <!-- SUB-MISSION NAV BAR FOR MISHKA (4 MISI) -->
+    <div class="mission-nav-bar">
+      <button class="sub-mission-btn active" id="btnSub5_1" onclick="switchSubMission5(1)">
+        <span>🛖 Misi 1: Sains Honai 5°C</span>
+      </button>
+      <button class="sub-mission-btn" id="btnSub5_2" onclick="switchSubMission5(2)">
+        <span>🏛️ Misi 2: Pasak Gempa Gadang</span>
+      </button>
+      <button class="sub-mission-btn" id="btnSub5_3" onclick="switchSubMission5(3)">
+        <span>⛵ Misi 3: Anti-Etnosentrisme</span>
+      </button>
+      <button class="sub-mission-btn" id="btnSub5_4" onclick="switchSubMission5(4)">
+        <span>📝 Misi 4: Mini Test C3–C4</span>
+      </button>
+    </div>
+
+    <!-- MISI 1 MISHKA: SAINS TERMODINAMIKA RUMAH HONAI -->
+    <div class="mission-pane active" id="pane5_1">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">🛖 Misi 1: Laboratorium Sains Termodinamika Rumah Honai</h2>
+          <p class="mission-desc">Uji rancangan arsitektur suku Dani Papua menahan hawa dingin ekstrem pegunungan 5°C!</p>
+        </div>
+        <div class="score-box">
+          <span>⭐ Skor Mishka:</span>
+          <span id="scoreKls5">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
+        </div>
+      </div>
+
+      <div class="scenario-box">
+        <strong>Analisis Sains Arsitektur (C4):</strong> Di Lembah Baliem Pegunungan Jayawijaya Papua, suhu malam hari bisa anjlok hingga <strong>5°C</strong>. Nenek moyang suku Dani merancang Rumah Honai berbentuk silinder melingkar beratap jerami tebal dan <em>sengaja dibuat tanpa jendela</em>. Mengapa arsitektur ini sangat jenius secara sains?
+      </div>
+
+      <div class="sim-box" id="simHonaiBox">
+        <div style="font-size: 4rem; margin-bottom: 8px;">🏔️❄️🛖</div>
+        <div class="sim-meter">
+          <span>Suhu Luar: <span class="sim-badge cold">5°C (Beku!)</span></span>
+          <span>➔</span>
+          <span id="labelHonaiTemp">Suhu Dalam: <span class="sim-badge warm">22°C (Hangat Nyaman!)</span></span>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 14px;">
+          <button class="btn-sim-action" style="background:#EF4444;" onclick="runSimHonai(false)">
+            <span>🪟 Coba Pasang Jendela Kaca Besar</span>
+          </button>
+          <button class="btn-sim-action" style="background:#10B981;" onclick="runSimHonai(true)">
+            <span>🛖 Desain Asli Tanpa Jendela (Heat Trap)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fbMishkaM1"></div>
+
+      <div class="btn-action-row" id="rowNext5_1" style="display: none;">
+        <button class="btn-next-q" onclick="switchSubMission5(2)">
+          <span>Lanjut ke Misi 2 (Sains Pasak Gempa Gadang)</span>
+          <span>➔</span>
         </button>
       </div>
     </div>
 
-    <!-- ALISYA SENSORY MODE (LARGE CARDS) -->
-    <div id="kls4AlisyaView" style="display: none;">
-      <p style="font-weight: 800; color: #1E293B; margin-bottom: 12px; font-size: 1.15rem;">
-        Sentuh gambar yang menunjukkan sikap <strong>KERJA SAMA (GOTONG ROYONG)</strong>:
-      </p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
-        <div class="alisya-card" onclick="checkAlisya(true, this)">
-          <div class="alisya-img-icon">🧹🤝📦</div>
-          <div class="alisya-label">Membersihkan Bersama Teman</div>
-          <div style="color: #10B981; font-weight: 700; margin-top: 6px;">(Benar & Rukun ✅)</div>
+    <!-- MISI 2 MISHKA: SAINS PASAK GEMPA RUMAH GADANG -->
+    <div class="mission-pane" id="pane5_2">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">🏛️ Misi 2: Simulasi Rekayasa Tahan Gempa Rumah Gadang</h2>
+          <p class="mission-desc">Buktikan keunggulan sains sambungan pasak kayu elastis tanpa paku menghadapi gempa bumi!</p>
         </div>
-        <div class="alisya-card" onclick="checkAlisya(false, this)">
-          <div class="alisya-img-icon">🙅‍♂️📱🛋️</div>
-          <div class="alisya-label">Main Sendiri & Tidak Peduli</div>
-          <div style="color: #EF4444; font-weight: 700; margin-top: 6px;">(Kurang Tepat ❌)</div>
+        <div class="score-box">
+          <span>⭐ Skor Mishka:</span>
+          <span class="scoreDisplayMishka">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
         </div>
       </div>
-      <div class="feedback-banner" id="feedbackAlisya"></div>
-    </div>
-  </div>
 
-  <!-- ==================== KELAS 5 GAME ==================== -->
-  <div class="game-card" id="gameGrade5">
-    <div class="mission-header">
-      <div>
-        <h2 class="mission-title">Misi 2: Ekspedisi Sains Arsitektur & Budaya Nusantara</h2>
-        <p class="mission-desc">Mini Test Pilihan Ganda (C3–C4): 4 Soal Berbasis Termodinamika Honai, Pasak Gempa Gadang & Kebinekaan</p>
+      <div class="scenario-box">
+        <strong>Uji Seismik Struktur Rumah Adat (C4):</strong> Kepulauan Indonesia berada di jalur Cincin Api Pasifik (*Ring of Fire*) yang sering diguncang gempa. Nenek moyang Minangkabau membangun Rumah Gadang dengan tiang panggung kayu dan <strong>sambungan pasak kayu elastis tanpa paku besi sama sekali</strong>. Ujilah ketahanannya saat gempa terjadi!
       </div>
-      <div class="score-box">
-        <span>⭐ Skor:</span>
-        <span id="scoreKls5">0</span>
-        <span style="font-size: 0.9rem; color: #92400E; font-weight: normal;">/ 100</span>
+
+      <div class="sim-box" id="simGadangBox">
+        <div id="simGadangGraphic" style="font-size: 4rem; margin-bottom: 8px;">🏛️🏡</div>
+        <div class="sim-meter">
+          <span>Status Struktur: <span class="sim-badge good" id="gadangStatusBadge">Stabil & Lentur</span></span>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 14px;">
+          <button class="btn-sim-action" style="background:#DC2626;" onclick="runSimGadang(false)">
+            <span>💥 Guncang Bangunan Semen Kaku + Paku</span>
+          </button>
+          <button class="btn-sim-action" style="background:#059669;" onclick="runSimGadang(true)">
+            <span>🌊 Guncang Rumah Gadang Pasak Elastis</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fbMishkaM2"></div>
+
+      <div class="btn-action-row" id="rowNext5_2" style="display: none;">
+        <button class="btn-next-q" onclick="switchSubMission5(3)">
+          <span>Lanjut ke Misi 3 (Kebinekaan & Anti-Etnosentrisme)</span>
+          <span>➔</span>
+        </button>
       </div>
     </div>
 
-    <!-- STANDARD MCQ QUIZ VIEW KELAS 5 -->
-    <div id="kls5StandardView">
+    <!-- MISI 3 MISHKA: PENJELAJAH KEBINEKAAN & ANTI-ETNOSENTRISME -->
+    <div class="mission-pane" id="pane5_3">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">⛵ Misi 3: Penjelajah Kebinekaan & Benteng Anti-Etnosentrisme</h2>
+          <p class="mission-desc">Tuntaskan faktor geografis kepulauan & tegakkan karakter Pelajar Pancasila yang anti-etnosentrisme!</p>
+        </div>
+        <div class="score-box">
+          <span>⭐ Skor Mishka:</span>
+          <span class="scoreDisplayMishka">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
+        </div>
+      </div>
+
+      <div class="scenario-box">
+        <strong>Studi Kasus Festival Budaya Sekolah:</strong> Saat kelompok <span class="studentNameSpan">Mishka</span> merancang dekorasi pentas seni, salah satu teman mengejek pakaian adat dan tarian daerah suku lain, sambil menyombongkan sukunya sendiri yang paling hebat. Tindakan apakah yang harus diambil sebagai Pelajar Pancasila?
+      </div>
+
+      <div class="interactive-grid">
+        <div class="option-card" onclick="evalMishkaM3(false, this)">
+          <div class="card-icon">🙈🗣️</div>
+          <div class="card-title">Mendukung Sikap Etnosentrisme</div>
+          <div class="card-detail">Ikut memandang rendah budaya lain dan hanya membanggakan suku sendiri secara berlebihan.</div>
+        </div>
+
+        <div class="option-card" onclick="evalMishkaM3(true, this)">
+          <div class="card-icon">🌟🤝💐</div>
+          <div class="card-title">Menghargai & Menjelaskan Kebinekaan</div>
+          <div class="card-detail">Mengingatkan teman secara santun bahwa tiap suku di >17.000 pulau punya keunikan dan kejeniusan tersendiri yang wajib kita hormati!</div>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fbMishkaM3"></div>
+
+      <div class="btn-action-row" id="rowNext5_3" style="display: none;">
+        <button class="btn-next-q" onclick="switchSubMission5(4)">
+          <span>Maju ke Misi 4 (Mini Test 4 Soal C3–C4)</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MISI 4 MISHKA: MINI TEST 4 SOAL PILIHAN GANDA (C3-C4) -->
+    <div class="mission-pane" id="pane5_4">
+      <div class="mission-header">
+        <div>
+          <h2 class="mission-title">📝 Misi 4: Evaluasi Mini Test Duta Budaya Nusantara</h2>
+          <p class="mission-desc">Tuntaskan 4 Soal Pilihan Ganda (Level C3–C4) Berbasis Sains Honai, Pasak Gadang & Kebinekaan!</p>
+        </div>
+        <div class="score-box">
+          <span>⭐ Skor Mishka:</span>
+          <span class="scoreDisplayMishka">0</span>
+          <span style="font-size: 0.9rem; color: #92400E;">/ 400</span>
+        </div>
+      </div>
+
       <div class="quiz-progress-wrapper" id="quizMetaKls5">
         <div class="quiz-meta-row">
           <span id="qCountLabelKls5">Pertanyaan 1 dari 4</span>
@@ -854,85 +1235,28 @@
       <!-- RESULTS SUMMARY CARD KELAS 5 -->
       <div id="quizResultKls5" class="quiz-result-box" style="display: none;">
         <div class="quiz-result-trophy">🏛️🏆✨</div>
-        <h3 class="quiz-result-title">Ekspedisi Tuntas dengan Cemerlang!</h3>
-        <div class="quiz-result-score">Skor Akhir: <span id="finalScoreKls5">100</span> / 100</div>
+        <h3 class="quiz-result-title">Selamat Mishka! Seluruh 4 Misi Tuntas!</h3>
+        <div class="quiz-result-score">Total Skor Akhir: <span id="finalScoreKls5">400</span> / 400</div>
         <div class="quiz-badge-cert">🎖️ DUTA PELESTARI BUDAYA NUSANTARA SD KELAS 5</div>
         <p class="quiz-result-desc" id="finalDescKls5">
-          Luar biasa, <span class="studentNameSpan">Mishka</span>! Kamu telah menguasai kejeniusan sains di balik arsitektur adat nusantara serta menunjukkan karakter luhur Pelajar Pancasila yang anti-etnosentrisme!
+          Sungguh luar biasa, <span class="studentNameSpan">Mishka</span>! Kamu berhasil menguasai sains termodinamika Rumah Honai Papua, membuktikan redaman elastis pasak gempa Rumah Gadang, menegakkan sikap anti-etnosentrisme, dan menyapu bersih nilai 100 pada Mini Test C3–C4!
         </p>
-        <button class="btn-restart" onclick="restartQuizKls5()">
+        <button class="btn-restart" onclick="restartAllKls5()">
           <span>🔄</span>
-          <span>Jelajahi Lagi</span>
+          <span>Ulangi Semua Misi</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== KELAS 6 GAME ==================== -->
-  <div class="game-card" id="gameGrade6">
-    <div class="mission-header">
-      <div>
-        <h2 class="mission-title">Misi 3: Ruang Sidang "Kewajiban & Berani Jujur"</h2>
-        <p class="mission-desc">Tentukan batas hak, kewajiban, dan integritas kejujuran seorang pelajar!</p>
-      </div>
-      <div class="score-box">
-        <span>⭐ Poin:</span>
-        <span id="scoreKls6">0</span>
-      </div>
-    </div>
-
-    <!-- TANTANGAN 1: MEMILAH HAK VS KEWAJIBAN -->
-    <div class="scenario-box">
-      <strong>Analisis Kasus 1:</strong> Sebagai anak dan pelajar di Indonesia, manakah di bawah ini yang merupakan <strong>KEWAJIBAN UTAMA</strong> yang harus kamu penuhi sebelum menuntut hak bermain?
-    </div>
-
-    <div class="interactive-grid">
-      <div class="option-card" onclick="checkKls6HakKewajiban('kewajiban', true, this)">
-        <div class="card-icon">📚</div>
-        <div class="card-title">Belajar Bersungguh-sungguh & Tertib</div>
-        <div class="card-detail">Menjaga kerapian kamar, mengerjakan tugas, dan mematuhi tata tertib sekolah.</div>
-      </div>
-
-      <div class="option-card" onclick="checkKls6HakKewajiban('hak', false, this)">
-        <div class="card-icon">🎮</div>
-        <div class="card-title">Mendapatkan Waktu Bermain & Kasih Sayang</div>
-        <div class="card-detail">Ini adalah HAK asasi anak yang harus dipenuhi orang tua dan lingkungan.</div>
-      </div>
-    </div>
-
-    <!-- TANTANGAN 2: DILEMA KEJUJURAN -->
-    <div style="margin-top: 24px; padding-top: 20px; border-top: 2px dashed #FECDD3;">
-      <h3 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 10px;">⚖️ Tantangan Integritas: "Kewajiban Berani Jujur"</h3>
-      <div class="scenario-box">
-        <strong>Studi Kasus Kelas:</strong> Saat jam istirahat, <span class="studentNameSpan">Hendra</span> dan <span class="studentNameSpan">Shan</span> sedang berlatih basket. Bola tidak sengaja memantul keras dan memecahkan pot tanaman bunga kesayangan sekolah. Tidak ada guru yang melihat saat itu. Tindakan ksatria apa yang harus diambil?
-      </div>
-
-      <div class="interactive-grid">
-        <div class="option-card" onclick="checkKls6Jujur(false, this)">
-          <div class="card-icon">🤫</div>
-          <div class="card-title">Diam Saja & Pura-Pura Tidak Tahu</div>
-          <div class="card-detail">Langsung lari ke kelas dan berharap guru tidak menanyakan siapa pelakunya.</div>
-        </div>
-
-        <div class="option-card" onclick="checkKls6Jujur(true, this)">
-          <div class="card-icon">🫡</div>
-          <div class="card-title">Menghadap Guru & Mengakui dengan Jujur</div>
-          <div class="card-detail">Meminta maaf secara gentle, menjelaskan kronologinya tanpa bohong, dan siap membantu membersihkan pecahan pot.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="feedback-banner" id="feedbackKls6"></div>
-  </div>
-
   <footer>
-    <p>Portal Game Pembelajaran Pendidikan Pancasila Bab 3 • PKBM Penerus Bangsa • Sesi 1: Aqlan (Kelas 4) | Sesi 2: Mishka (Kelas 5)</p>
+    <p>Portal Game Pembelajaran Pendidikan Pancasila Bab 3 • PKBM Penerus Bangsa • Sesi 1: Aqlan (4 Misi) | Sesi 2: Mishka (4 Misi)</p>
   </footer>
 </div>
 
 <script>
   // ==========================================
-  // SAFE LAZY AUDIO SYNTHESIS ENGINE
+  // AUDIO SYNTHESIS ENGINE (SAFE LAZY INIT)
   // ==========================================
   let audioCtx = null;
   function getAudioCtx() {
@@ -973,7 +1297,7 @@
   }
 
   // ==========================================
-  // DATA SOAL KELAS 4 (AQLAN) - 4 PILIHAN GANDA
+  // DATA MINI TEST KELAS 4 (AQLAN)
   // ==========================================
   const kls4Questions = [
     {
@@ -1027,7 +1351,7 @@
   ];
 
   // ==========================================
-  // DATA SOAL KELAS 5 (MISHKA) - 4 PILIHAN GANDA
+  // DATA MINI TEST KELAS 5 (MISHKA)
   // ==========================================
   const kls5Questions = [
     {
@@ -1087,18 +1411,16 @@
   let currentStudentName = 'Aqlan';
   let currentGrade = 4;
 
+  let scoreAqlan = 0;
   let currentQIdxKls4 = 0;
-  let scoreKls4 = 0;
   let isAnsweredKls4 = false;
 
+  let scoreMishka = 0;
   let currentQIdxKls5 = 0;
-  let scoreKls5 = 0;
   let isAnsweredKls5 = false;
 
-  let scoreKls6 = 0;
-
   // ==========================================
-  // INITIALIZATION & STUDENT SWITCHER
+  // INITIALIZATION & SWITCHERS
   // ==========================================
   window.addEventListener('DOMContentLoaded', () => {
     switchStudent();
@@ -1110,17 +1432,12 @@
     currentStudent = sel.value;
     const grade = parseInt(opt.getAttribute('data-grade'));
     
-    // Extract first name
     currentStudentName = opt.text.split(' ')[0];
-    document.getElementById('activeStudentLabel').textContent = `Halo, ${currentStudentName}! (Kelas ${grade})`;
+    document.getElementById('activeStudentLabel').textContent = `Halo, ${currentStudentName}! (Kelas ${grade} SD)`;
     
-    // Update all span labels
     updateStudentNames();
-
-    // Switch to respective grade
     setGrade(grade);
 
-    // If Alisya is selected, auto trigger sensory mode
     const sensoryCheckbox = document.getElementById('sensoryModeCheckbox');
     if (currentStudent === 'alisya') {
       sensoryCheckbox.checked = true;
@@ -1132,41 +1449,109 @@
   }
 
   function updateStudentNames() {
-    const nameSpans = document.querySelectorAll('.studentNameSpan');
-    nameSpans.forEach(el => el.textContent = currentStudentName);
+    document.querySelectorAll('.studentNameSpan').forEach(el => el.textContent = currentStudentName);
   }
 
   function setGrade(grade) {
     currentGrade = grade;
-    
-    // Toggle active tab button
     document.querySelectorAll('.grade-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`tabGrade${grade}`).classList.add('active');
 
-    // Toggle active game card
     document.querySelectorAll('.game-card').forEach(card => card.classList.remove('active'));
     document.getElementById(`gameGrade${grade}`).classList.add('active');
-
-    if (grade === 4 && currentQIdxKls4 === 0 && !isAnsweredKls4) {
-      renderQuestionKls4();
-    } else if (grade === 5 && currentQIdxKls5 === 0 && !isAnsweredKls5) {
-      renderQuestionKls5();
-    }
   }
 
   // ==========================================
-  // QUIZ ENGINE KELAS 4 (AQLAN)
+  // SUB-MISSION NAVIGATION (AQLAN KELAS 4)
   // ==========================================
+  function switchSubMission4(mNum) {
+    document.querySelectorAll('#gameGrade4 .sub-mission-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`btnSub4_${mNum}`).classList.add('active');
+
+    document.querySelectorAll('#gameGrade4 .mission-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById(`pane4_${mNum}`).classList.add('active');
+
+    if (mNum === 4 && currentQIdxKls4 === 0 && !isAnsweredKls4) {
+      renderQuestionKls4();
+    }
+  }
+
+  function updateScoreAqlan(pts) {
+    scoreAqlan = Math.min(400, scoreAqlan + pts);
+    document.getElementById('scoreKls4').textContent = scoreAqlan;
+    document.querySelectorAll('.scoreDisplayAqlan').forEach(el => el.textContent = scoreAqlan);
+  }
+
+  // Aqlan Misi 1
+  function evalAqlanM1(isCorrect, cardEl) {
+    const fb = document.getElementById('fbAqlanM1');
+    document.querySelectorAll('#pane4_1 .option-card').forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+    if (isCorrect) {
+      cardEl.classList.add('selected-correct');
+      updateScoreAqlan(100);
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = `🎉 <strong>Luar Biasa!</strong> Pekerjaan 5 hari (120 jam) berhasil dipangkas tuntas menjadi 45 menit berkat pembagian tugas 3 regu secara sukarela! Selokan bersih, jalanan terbuka, dan seluruh warga rukun. Pengamalan Sila ke-3 Pancasila sempurna! (+100 Poin ⭐)`;
+      playSuccess();
+      document.getElementById('rowNextM1').style.display = 'flex';
+    } else {
+      cardEl.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = `⚠️ Jika membiarkan atau saling menyalahkan, selokan tetap tersumbat dan rumah warga akan kebanjiran nanti malam. Ayo pilih gotong royong membagi tugas!`;
+      playError();
+    }
+  }
+
+  // Aqlan Misi 2 (Sapu Lidi)
+  function runSimSapu(type) {
+    const box = document.getElementById('simSapuGraphic');
+    const status = document.getElementById('simSapuStatus');
+    const fb = document.getElementById('fbAqlanM2');
+
+    if (type === 1) {
+      box.innerHTML = "🥀💥❌";
+      status.innerHTML = `<span style="color: #DC2626; font-weight: 800;">KREK! Sebatang lidi langsung patah terbelah dua saat menyentuh kerikil!</span>`;
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = `⚠️ <strong>Pelajaran Penting:</strong> Sebatang lidi rapuh dan tidak berdaya mengatasi masalah sendirian. Ayo coba ikat menjadi satu sapu!`;
+      playError();
+    } else {
+      box.innerHTML = "🧹✨🌟";
+      status.innerHTML = `<span style="color: #059669; font-weight: 800;">SWOOSH! Seikat 50 lidi kokoh menyapu kerikil bersih seketika tanpa ada yang patah!</span>`;
+      updateScoreAqlan(100);
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = `🌟 <strong>Hikmah Filosofi Sapu Lidi:</strong> Sendirian kita rapuh, namun saat kita bersatu mengikat perbedaan antartetangga, masalah berat apa pun langsung bersih tuntas! (+100 Poin ⭐)`;
+      playSuccess();
+      document.getElementById('rowNextM2').style.display = 'flex';
+    }
+  }
+
+  // Aqlan Misi 3 (Tradisi Nusantara)
+  function evalAqlanM3(type, cardEl) {
+    const fb = document.getElementById('fbAqlanM3');
+    document.querySelectorAll('#pane4_3 .option-card').forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+    cardEl.classList.add('selected-correct');
+    updateScoreAqlan(100);
+
+    let desc = "";
+    if (type === 'jawa') desc = "Gugur Gunung di Jawa membuktikan tradisi kerja bakti gotong royong yang telah mengakar ratusan tahun.";
+    if (type === 'minahasa') desc = "Mapalus di Minahasa (Sulawesi Utara) adalah tradisi gotong royong tolong-menolong bertani yang sangat tersohor.";
+    if (type === 'palembang') desc = "Sikaroban di Palembang merupakan kearifan lokal tolong-menolong khas Sumatera Selatan.";
+
+    fb.className = 'feedback-banner success';
+    fb.innerHTML = `👏 <strong>Hebat!</strong> ${desc} Saat warga dari berbagai suku berkumpul kerja bakti, mereka menggunakan <strong>Bahasa Indonesia</strong> sebagai jembatan persatuan Sumpah Pemuda 1928 sehingga koordinasi lancar tanpa salah paham! (+100 Poin ⭐)`;
+    playSuccess();
+    document.getElementById('rowNextM3').style.display = 'flex';
+  }
+
+  // Aqlan Misi 4: Mini Test MCQ Engine
   function renderQuestionKls4() {
     isAnsweredKls4 = false;
     const q = kls4Questions[currentQIdxKls4];
     
-    // Update Meta
     document.getElementById('qCountLabelKls4').textContent = `Pertanyaan ${currentQIdxKls4 + 1} dari ${kls4Questions.length}`;
     document.getElementById('qCLevelKls4').textContent = q.c_level;
     document.getElementById('qProgressFillKls4').style.width = `${((currentQIdxKls4 + 1) / kls4Questions.length) * 100}%`;
 
-    // Update Story & Options
     document.getElementById('qStoryKls4').innerHTML = q.story;
     updateStudentNames();
 
@@ -1182,7 +1567,6 @@
     });
     document.getElementById('qOptionsKls4').innerHTML = optionsHtml;
 
-    // Reset feedback and action button
     const fb = document.getElementById('feedbackKls4');
     fb.style.display = 'none';
     fb.className = 'feedback-banner';
@@ -1197,7 +1581,6 @@
     const q = kls4Questions[currentQIdxKls4];
     const isCorrect = (selectedIdx === q.answer);
 
-    // Disable all options
     document.querySelectorAll('#qOptionsKls4 .mcq-option').forEach(optEl => {
       optEl.classList.add('disabled');
     });
@@ -1206,8 +1589,7 @@
 
     if (isCorrect) {
       el.classList.add('correct');
-      scoreKls4 += 25;
-      document.getElementById('scoreKls4').textContent = scoreKls4;
+      updateScoreAqlan(25);
       fb.className = 'feedback-banner success';
       fb.innerHTML = q.explain;
       playSuccess();
@@ -1221,7 +1603,6 @@
     }
     fb.style.display = 'block';
 
-    // Show Next or Results button
     const btnRow = document.getElementById('btnActionRowKls4');
     const btnNext = document.getElementById('btnNextKls4');
     btnRow.style.display = 'flex';
@@ -1249,38 +1630,120 @@
     document.getElementById('btnActionRowKls4').style.display = 'none';
 
     const resultBox = document.getElementById('quizResultKls4');
-    document.getElementById('finalScoreKls4').textContent = scoreKls4;
+    document.getElementById('finalScoreKls4').textContent = scoreAqlan;
     resultBox.style.display = 'block';
     updateStudentNames();
     playSuccess();
   }
 
-  function restartQuizKls4() {
+  function restartAllKls4() {
+    scoreAqlan = 0;
     currentQIdxKls4 = 0;
-    scoreKls4 = 0;
-    document.getElementById('scoreKls4').textContent = scoreKls4;
+    updateScoreAqlan(0);
 
     document.getElementById('quizMetaKls4').style.display = 'block';
     document.getElementById('qStoryKls4').style.display = 'block';
     document.getElementById('qOptionsKls4').style.display = 'flex';
     document.getElementById('quizResultKls4').style.display = 'none';
 
-    renderQuestionKls4();
+    switchSubMission4(1);
   }
 
   // ==========================================
-  // QUIZ ENGINE KELAS 5 (MISHKA)
+  // SUB-MISSION NAVIGATION (MISHKA KELAS 5)
   // ==========================================
+  function switchSubMission5(mNum) {
+    document.querySelectorAll('#gameGrade5 .sub-mission-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`btnSub5_${mNum}`).classList.add('active');
+
+    document.querySelectorAll('#gameGrade5 .mission-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById(`pane5_${mNum}`).classList.add('active');
+
+    if (mNum === 4 && currentQIdxKls5 === 0 && !isAnsweredKls5) {
+      renderQuestionKls5();
+    }
+  }
+
+  function updateScoreMishka(pts) {
+    scoreMishka = Math.min(400, scoreMishka + pts);
+    document.getElementById('scoreKls5').textContent = scoreMishka;
+    document.querySelectorAll('.scoreDisplayMishka').forEach(el => el.textContent = scoreMishka);
+  }
+
+  // Mishka Misi 1 (Sains Honai)
+  function runSimHonai(isOriginal) {
+    const lbl = document.getElementById('labelHonaiTemp');
+    const fb = document.getElementById('fbMishkaM1');
+
+    if (!isOriginal) {
+      lbl.innerHTML = `Suhu Dalam: <span class="sim-badge danger">7°C (Dingin Ekstrem!)</span>`;
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = `⚠️ <strong>Hipotermia Terjadi!</strong> Jendela kaca menyebabkan kalor api unggun kabur keluar terbawa angin dingin pegunungan. Keluarga membeku kedinginan! Nenek moyang Papua tidak membuat jendela untuk alasan keselamatan sains.`;
+      playError();
+    } else {
+      lbl.innerHTML = `Suhu Dalam: <span class="sim-badge good">22°C (Hangat & Nyaman!)</span>`;
+      updateScoreMishka(100);
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = `🔥 <strong>Analisis Sains Termodinamika Cemerlang!</strong> Dinding silinder melingkar dan atap jerami alang-alang tebal tanpa bukaan jendela berfungsi sebagai <em>heat trap</em> (perangkap kalor) alami yang mempertahankan panas api unggun! (+100 Poin ⭐)`;
+      playSuccess();
+      document.getElementById('rowNext5_1').style.display = 'flex';
+    }
+  }
+
+  // Mishka Misi 2 (Sains Pasak Gempa Gadang)
+  function runSimGadang(isGadang) {
+    const grp = document.getElementById('simGadangGraphic');
+    const b = document.getElementById('gadangStatusBadge');
+    const fb = document.getElementById('fbMishkaM2');
+
+    if (!isGadang) {
+      grp.innerHTML = "🏢💥🧱❌";
+      b.className = "sim-badge danger";
+      b.textContent = "Retak & Roboh!";
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = `⚠️ <strong>Bangunan Kaku Runtuh!</strong> Semen dan paku besi kaku tidak dapat meredam getaran gelombang gempa bumi sehingga rangka langsung retak patah.`;
+      playError();
+    } else {
+      grp.innerHTML = "🏛️✨🌊✅";
+      b.className = "sim-badge good";
+      b.textContent = "Bergoyang Lentur & Kokoh!";
+      updateScoreMishka(100);
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = `🏛️ <strong>Rekayasa Sains Seismik Sempurna!</strong> Sambungan pasak kayu elastis tanpa paku membuat Rumah Gadang mampu bergoyang elastis meredam energi getaran gempa tanpa patah atau runtuh! (+100 Poin ⭐)`;
+      playSuccess();
+      document.getElementById('rowNext5_2').style.display = 'flex';
+    }
+  }
+
+  // Mishka Misi 3 (Kebinekaan & Anti-Etnosentrisme)
+  function evalMishkaM3(isCorrect, cardEl) {
+    const fb = document.getElementById('fbMishkaM3');
+    document.querySelectorAll('#pane5_3 .option-card').forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+    if (isCorrect) {
+      cardEl.classList.add('selected-correct');
+      updateScoreMishka(100);
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = `🌟 <strong>Karakter Pelajar Pancasila Teladan!</strong> Etnosentrisme (meremehkan budaya lain) dapat memecah belah bangsa. Keberagaman dari Sabang sampai Merauke adalah kekayaan mahakarya Indonesia yang patut kita banggakan bersama! (+100 Poin ⭐)`;
+      playSuccess();
+      document.getElementById('rowNext5_3').style.display = 'flex';
+    } else {
+      cardEl.classList.add('selected-wrong');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = `⚠️ Etnosentrisme adalah paham keliru yang memicu permusuhan. Pelajar Pancasila harus menghargai seluruh kebudayaan suku teman!`;
+      playError();
+    }
+  }
+
+  // Mishka Misi 4: Mini Test MCQ Engine
   function renderQuestionKls5() {
     isAnsweredKls5 = false;
     const q = kls5Questions[currentQIdxKls5];
     
-    // Update Meta
     document.getElementById('qCountLabelKls5').textContent = `Pertanyaan ${currentQIdxKls5 + 1} dari ${kls5Questions.length}`;
     document.getElementById('qCLevelKls5').textContent = q.c_level;
     document.getElementById('qProgressFillKls5').style.width = `${((currentQIdxKls5 + 1) / kls5Questions.length) * 100}%`;
 
-    // Update Story & Options
     document.getElementById('qStoryKls5').innerHTML = q.story;
     updateStudentNames();
 
@@ -1296,7 +1759,6 @@
     });
     document.getElementById('qOptionsKls5').innerHTML = optionsHtml;
 
-    // Reset feedback and action button
     const fb = document.getElementById('feedbackKls5');
     fb.style.display = 'none';
     fb.className = 'feedback-banner';
@@ -1311,7 +1773,6 @@
     const q = kls5Questions[currentQIdxKls5];
     const isCorrect = (selectedIdx === q.answer);
 
-    // Disable all options
     document.querySelectorAll('#qOptionsKls5 .mcq-option').forEach(optEl => {
       optEl.classList.add('disabled');
     });
@@ -1320,8 +1781,7 @@
 
     if (isCorrect) {
       el.classList.add('correct');
-      scoreKls5 += 25;
-      document.getElementById('scoreKls5').textContent = scoreKls5;
+      updateScoreMishka(25);
       fb.className = 'feedback-banner success';
       fb.innerHTML = q.explain;
       playSuccess();
@@ -1335,7 +1795,6 @@
     }
     fb.style.display = 'block';
 
-    // Show Next or Results button
     const btnRow = document.getElementById('btnActionRowKls5');
     const btnNext = document.getElementById('btnNextKls5');
     btnRow.style.display = 'flex';
@@ -1363,23 +1822,23 @@
     document.getElementById('btnActionRowKls5').style.display = 'none';
 
     const resultBox = document.getElementById('quizResultKls5');
-    document.getElementById('finalScoreKls5').textContent = scoreKls5;
+    document.getElementById('finalScoreKls5').textContent = scoreMishka;
     resultBox.style.display = 'block';
     updateStudentNames();
     playSuccess();
   }
 
-  function restartQuizKls5() {
+  function restartAllKls5() {
+    scoreMishka = 0;
     currentQIdxKls5 = 0;
-    scoreKls5 = 0;
-    document.getElementById('scoreKls5').textContent = scoreKls5;
+    updateScoreMishka(0);
 
     document.getElementById('quizMetaKls5').style.display = 'block';
     document.getElementById('qStoryKls5').style.display = 'block';
     document.getElementById('qOptionsKls5').style.display = 'flex';
     document.getElementById('quizResultKls5').style.display = 'none';
 
-    renderQuestionKls5();
+    switchSubMission5(1);
   }
 
   // ==========================================
@@ -1405,51 +1864,13 @@
 
     if (isCorrect) {
       cardEl.classList.add('correct');
-      scoreKls4 = Math.min(100, scoreKls4 + 25);
-      document.getElementById('scoreKls4').textContent = scoreKls4;
+      updateScoreAqlan(100);
       fb.className = 'feedback-banner success';
       fb.innerHTML = `⭐ <strong>Pintar Sekali, Alisya!</strong> Kerja sama membersihkan lingkungan membuat kelas rapi dan hati senang! 🌟`;
       playSuccess();
     } else {
       fb.className = 'feedback-banner error';
       fb.innerHTML = `Ayo sentuh gambar yang sedang bekerja sama membersihkan lingkungan ya! 😊`;
-      playError();
-    }
-  }
-
-  // ==========================================
-  // LOGIKA KELAS 6
-  // ==========================================
-  function checkKls6HakKewajiban(type, isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls6');
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls6 += 50;
-      document.getElementById('scoreKls6').textContent = scoreKls6;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `⚖️ <strong>Tepat Sekali!</strong> Belajar dengan tertib adalah KEWAJIBAN pokok pelajar. Setelah kewajiban dilaksanakan dengan baik, barulah hak-hak anak dapat dinikmati dengan seimbang.`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ Bermain dan mendapatkan kasih sayang adalah HAK, bukan kewajiban. Bab 3 menekankan pentingnya menuntaskan kewajiban terlebih dahulu!`;
-      playError();
-    }
-  }
-
-  function checkKls6Jujur(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls6');
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls6 += 50;
-      document.getElementById('scoreKls6').textContent = scoreKls6;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🏆 <strong>Karakter Berani Jujur!</strong> Mengakui kesalahan tanpa berbohong membutuhkan keberanian moral yang tinggi. Kejujuran adalah norma kesusilaan utama warga negara Pancasilais!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ Berbohong atau diam saja melanggar norma kesusilaan dan kejujuran. Kesalahan yang disembunyikan akan membuat hati tidak tenang dan merugikan orang lain.`;
       playError();
     }
   }
