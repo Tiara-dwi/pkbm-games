@@ -6,7 +6,7 @@
   <title>Game Interaktif Pendidikan Pancasila Bab 3 - PKBM Penerus Bangsa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #E11D48;
@@ -18,7 +18,7 @@
       --card-bg: #FFFFFF;
       --text-main: #1E293B;
       --text-muted: #64748B;
-      --radius: 18px;
+      --radius: 20px;
       --shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.15), 0 8px 10px -6px rgba(225, 29, 72, 0.1);
     }
 
@@ -88,12 +88,12 @@
 
     .subtitle {
       font-size: 1rem;
-      opacity: 0.92;
-      max-width: 650px;
+      opacity: 0.95;
+      max-width: 700px;
       margin: 0 auto;
     }
 
-    /* STUDENT SELECTOR BAR */
+    /* CONTROL PANEL (STUDENT SELECTOR) */
     .control-panel {
       background: white;
       padding: 20px;
@@ -147,7 +147,7 @@
       gap: 10px;
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
-      padding: 8px 16px;
+      padding: 10px 18px;
       border-radius: 14px;
       font-weight: 700;
       font-size: 0.95rem;
@@ -161,7 +161,7 @@
       box-shadow: 0 0 8px var(--success);
     }
 
-    /* TAB NAVIGATOR */
+    /* GRADE TABS */
     .grade-tabs {
       display: flex;
       gap: 10px;
@@ -173,7 +173,7 @@
 
     .grade-btn {
       flex: 1;
-      padding: 12px;
+      padding: 14px;
       border: none;
       border-radius: 12px;
       background: transparent;
@@ -195,7 +195,7 @@
       transform: translateY(-2px);
     }
 
-    /* GAME SECTION CARD */
+    /* GAME CARDS */
     .game-card {
       background: white;
       border-radius: var(--radius);
@@ -217,18 +217,18 @@
 
     .mission-header {
       border-bottom: 2px dashed #FECDD3;
-      padding-bottom: 16px;
-      margin-bottom: 24px;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
     }
 
     .mission-title {
       font-family: 'Fredoka', cursive;
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       color: var(--primary-dark);
     }
 
@@ -241,71 +241,55 @@
     .score-box {
       background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
       border: 2px solid #FCD34D;
-      padding: 8px 18px;
+      padding: 8px 20px;
       border-radius: 14px;
       font-family: 'Fredoka', cursive;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: #B45309;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    /* GAME INTERACTIVE COMPONENTS */
-    .interactive-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+    /* PROGRESS BAR */
+    .quiz-progress-wrapper {
+      margin-bottom: 20px;
     }
 
-    .option-card {
-      background: #FFF1F2;
-      border: 2px solid #FECDD3;
-      border-radius: 16px;
-      padding: 18px;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
+    .quiz-meta-row {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .option-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-      box-shadow: 0 10px 20px rgba(225, 29, 72, 0.12);
-      background: #FFE4E6;
-    }
-
-    .option-card.selected-correct {
-      border-color: var(--success) !important;
-      background: #ECFDF5 !important;
-      color: #065F46;
-    }
-
-    .option-card.selected-wrong {
-      border-color: #EF4444 !important;
-      background: #FEF2F2 !important;
-      color: #991B1B;
-    }
-
-    .card-icon {
-      font-size: 2.5rem;
-      text-align: center;
-    }
-
-    .card-title {
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: #881337;
-    }
-
-    .card-detail {
+      justify-content: space-between;
+      align-items: center;
       font-size: 0.9rem;
-      color: #475569;
-      line-height: 1.4;
+      font-weight: 700;
+      color: #9F1239;
+      margin-bottom: 8px;
+    }
+
+    .c-level-tag {
+      background: #FFE4E6;
+      color: #BE123C;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .quiz-progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #FEE2E2;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #E11D48, #10B981);
+      width: 25%;
+      transition: width 0.35s ease;
     }
 
     /* SCENARIO BOX */
@@ -316,7 +300,7 @@
       border-radius: 12px;
       margin-bottom: 20px;
       font-size: 1.05rem;
-      line-height: 1.6;
+      line-height: 1.65;
       color: #334155;
     }
 
@@ -324,19 +308,95 @@
       color: #0369A1;
     }
 
+    /* MCQ OPTIONS */
+    .mcq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .mcq-option {
+      background: #FFF1F2;
+      border: 2px solid #FECDD3;
+      border-radius: 14px;
+      padding: 14px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: all 0.2s ease;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      color: #1E293B;
+      text-align: left;
+    }
+
+    .mcq-option:hover:not(.disabled) {
+      border-color: var(--primary);
+      background: #FFE4E6;
+      transform: translateX(4px);
+    }
+
+    .mcq-option.correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+      color: #065F46 !important;
+      font-weight: 700;
+    }
+
+    .mcq-option.wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+      color: #991B1B !important;
+    }
+
+    .mcq-option.disabled {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .mcq-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: white;
+      border: 2px solid #FDA4AF;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #BE123C;
+      flex-shrink: 0;
+    }
+
+    .mcq-option.correct .mcq-badge {
+      background: #10B981;
+      border-color: #059669;
+      color: white;
+    }
+
+    .mcq-option.wrong .mcq-badge {
+      background: #EF4444;
+      border-color: #DC2626;
+      color: white;
+    }
+
     /* FEEDBACK BANNER */
     .feedback-banner {
-      padding: 16px 20px;
+      padding: 18px 22px;
       border-radius: 14px;
       margin-top: 18px;
       display: none;
-      font-weight: 700;
-      line-height: 1.5;
+      font-weight: 600;
+      line-height: 1.6;
       animation: popIn 0.3s ease;
+      font-size: 1rem;
     }
 
     @keyframes popIn {
-      0% { transform: scale(0.95); opacity: 0; }
+      0% { transform: scale(0.96); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
@@ -354,17 +414,116 @@
       display: block;
     }
 
+    /* ACTION BUTTONS */
+    .btn-action-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .btn-next-q {
+      background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-next-q:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(225, 29, 72, 0.35);
+    }
+
+    /* RESULT CARD */
+    .quiz-result-box {
+      text-align: center;
+      padding: 36px 24px;
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 3px solid #FCD34D;
+      border-radius: 20px;
+      animation: popIn 0.35s ease;
+      margin-top: 10px;
+    }
+
+    .quiz-result-trophy {
+      font-size: 4.5rem;
+      margin-bottom: 12px;
+    }
+
+    .quiz-result-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.2rem;
+      color: #92400E;
+      margin-bottom: 8px;
+    }
+
+    .quiz-result-score {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #B45309;
+      margin-bottom: 14px;
+    }
+
+    .quiz-badge-cert {
+      display: inline-block;
+      background: #BE123C;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 14px rgba(190, 18, 60, 0.35);
+    }
+
+    .quiz-result-desc {
+      color: #475569;
+      font-size: 1rem;
+      max-width: 620px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+
+    .btn-restart {
+      background: #0EA5E9;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-restart:hover {
+      background: #0284C7;
+      transform: translateY(-2px);
+    }
+
     /* SENSORY TOGGLE FOR ALISYA */
     .sensory-toggle {
       background: #EFF6FF;
       border: 1px solid #BFDBFE;
-      padding: 10px 16px;
+      padding: 12px 18px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       gap: 12px;
       margin-bottom: 20px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: #1E40AF;
       font-weight: 600;
     }
@@ -438,35 +597,71 @@
       color: #1E293B;
     }
 
-    .btn-next {
-      background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 16px;
-      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    /* KELAS 6 CARDS */
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
-    .btn-next:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(225, 29, 72, 0.35);
+    .option-card {
+      background: #FFF1F2;
+      border: 2px solid #FECDD3;
+      border-radius: 16px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 20px rgba(225, 29, 72, 0.12);
+      background: #FFE4E6;
+    }
+
+    .option-card.selected-correct {
+      border-color: var(--success) !important;
+      background: #ECFDF5 !important;
+      color: #065F46;
+    }
+
+    .option-card.selected-wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+      color: #991B1B;
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    .card-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #881337;
+    }
+
+    .card-detail {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.4;
     }
 
     /* FOOTER */
     footer {
       text-align: center;
       color: #94A3B8;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       margin-top: 30px;
       padding-bottom: 20px;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -476,7 +671,7 @@
   <header>
     <div class="badge-top">⭐ Pendidikan Pancasila • Bab 3 Kurikulum Merdeka ⭐</div>
     <h1>Petualangan Bhinneka & Keadilan Anak</h1>
-    <p class="subtitle">Kerja Sama di Lingkunganku • Keragaman Budaya Indonesiaku • Norma, Hak & Kewajiban</p>
+    <p class="subtitle">Mini Test Interaktif Level C3–C4 Terintegrasi: Kerja Sama di Lingkunganku & Keragaman Budaya Indonesiaku</p>
   </header>
 
   <!-- CONTROL PANEL (STUDENT SELECTOR) -->
@@ -484,17 +679,19 @@
     <div class="select-group">
       <label for="studentSelect">👤 Pilih Nama Murid:</label>
       <select id="studentSelect" onchange="switchStudent()">
-        <optgroup label="Kelas 4 (On-site & Online)">
+        <optgroup label="Sesi Hari Ini (Senin Online)">
+          <option value="aqlan" data-grade="4" selected>Aqlan (Kelas 4 - Zoom Online • Sesi 1)</option>
+          <option value="mishka" data-grade="5">Mishka (Kelas 5 - Zoom Online • Sesi 2)</option>
+        </optgroup>
+        <optgroup label="Murid Kelas 4 Lainnya">
           <option value="hasyif" data-grade="4">Hasyif (Kelas 4 - On-site)</option>
           <option value="alisya" data-grade="4">Alisya (Kelas 4 - On-site / Visual Support)</option>
           <option value="kinanti" data-grade="4">Kinanti (Kelas 4 - On-site)</option>
-          <option value="aqlan" data-grade="4">Aqlan (Kelas 4 - Zoom Online)</option>
         </optgroup>
-        <optgroup label="Kelas 5 (On-site & Online)">
+        <optgroup label="Murid Kelas 5 Lainnya">
           <option value="ardiansyah" data-grade="5">Ardiansyah (Kelas 5 - On-site)</option>
-          <option value="mishka" data-grade="5">Mishka (Kelas 5 - Zoom Online)</option>
         </optgroup>
-        <optgroup label="Kelas 6 (On-site)">
+        <optgroup label="Murid Kelas 6 (On-site)">
           <option value="shan" data-grade="6">Shan (Kelas 6 - On-site)</option>
           <option value="aulya" data-grade="6">Aulya (Kelas 6 - On-site)</option>
           <option value="hendra" data-grade="6">Hendra (Kelas 6 - On-site)</option>
@@ -505,20 +702,20 @@
 
     <div class="student-badge">
       <div class="status-dot"></div>
-      <span id="activeStudentLabel">Halo, Hasyif! (Kelas 4)</span>
+      <span id="activeStudentLabel">Halo, Aqlan! (Kelas 4 • Sesi 1)</span>
     </div>
   </div>
 
   <!-- GRADE SELECTOR TABS -->
   <div class="grade-tabs">
     <button class="grade-btn active" id="tabGrade4" onclick="setGrade(4)">
-      <span>📘</span> Kelas 4 (Kerja Sama)
+      <span>📘</span> Kelas 4 (Aqlan • Kerja Sama)
     </button>
     <button class="grade-btn" id="tabGrade5" onclick="setGrade(5)">
-      <span>📙</span> Kelas 5 (Budaya Nusantara)
+      <span>📙</span> Kelas 5 (Mishka • Budaya Nusantara)
     </button>
     <button class="grade-btn" id="tabGrade6" onclick="setGrade(6)">
-      <span>📕</span> Kelas 6 (Norma, Hak & Kewajiban)
+      <span>📕</span> Kelas 6 (Norma & Hak)
     </button>
   </div>
 
@@ -526,12 +723,13 @@
   <div class="game-card active" id="gameGrade4">
     <div class="mission-header">
       <div>
-        <h2 class="mission-title">Misi 1: Gotong Royong Desa Sukamaju</h2>
-        <p class="mission-desc">Bantu warga desa bekerja sama mengatasi masalah lingkungan!</p>
+        <h2 class="mission-title">Misi 1: Ksatria Gotong Royong & Sumpah Pemuda</h2>
+        <p class="mission-desc">Mini Test Pilihan Ganda (C3–C4): 4 Soal Berbasis Skenario Nyata & Filosofi Sapu Lidi</p>
       </div>
       <div class="score-box">
-        <span>⭐ Poin:</span>
+        <span>⭐ Skor:</span>
         <span id="scoreKls4">0</span>
+        <span style="font-size: 0.9rem; color: #92400E; font-weight: normal;">/ 100</span>
       </div>
     </div>
 
@@ -544,30 +742,48 @@
       <span>Mode Visual Khusus Alisya (Kartu Gambar Besar & Ikon Kontras)</span>
     </div>
 
-    <!-- STANDARD MODE KELAS 4 -->
+    <!-- STANDARD MCQ QUIZ VIEW KELAS 4 -->
     <div id="kls4StandardView">
-      <div class="scenario-box">
-        <strong>Situasi:</strong> Di Desa tempat tinggal <span class="studentNameSpan">Hasyif</span>, saluran air tersumbat sampah menjelang musim hujan. Jika dibiarkan sendiri oleh Pak RT, perlu waktu 10 hari untuk membersihkannya. Apa yang sebaiknya dilakukan warga?
+      <div class="quiz-progress-wrapper" id="quizMetaKls4">
+        <div class="quiz-meta-row">
+          <span id="qCountLabelKls4">Pertanyaan 1 dari 4</span>
+          <span class="c-level-tag" id="qCLevelKls4">C3 - Aplikasi Gotong Royong</span>
+        </div>
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="qProgressFillKls4" style="width: 25%;"></div>
+        </div>
       </div>
 
-      <div class="interactive-grid">
-        <div class="option-card" onclick="checkKls4(1, false, this)">
-          <div class="card-icon">🏠</div>
-          <div class="card-title">Tutup Pintu Rumah</div>
-          <div class="card-detail">Membiarkan saja karena itu tugas petugas kebersihan desa.</div>
-        </div>
+      <div class="scenario-box" id="qStoryKls4">
+        <!-- Story will be injected dynamically -->
+      </div>
 
-        <div class="option-card" onclick="checkKls4(1, true, this)">
-          <div class="card-icon">🤝</div>
-          <div class="card-title">Kerja Bakti / Gotong Royong</div>
-          <div class="card-detail">Seluruh warga berkumpul membawa cangkul, karung, dan membersihkan selokan bersama-sama.</div>
-        </div>
+      <div class="mcq-container" id="qOptionsKls4">
+        <!-- Options injected dynamically -->
+      </div>
 
-        <div class="option-card" onclick="checkKls4(1, false, this)">
-          <div class="card-icon">📢</div>
-          <div class="card-title">Saling Menyalahkan</div>
-          <div class="card-detail">Membuat postingan di media sosial tanpa ikut membersihkan sampah.</div>
-        </div>
+      <div class="feedback-banner" id="feedbackKls4"></div>
+
+      <div class="btn-action-row" id="btnActionRowKls4" style="display: none;">
+        <button class="btn-next-q" id="btnNextKls4" onclick="nextQuestionKls4()">
+          <span>Soal Berikutnya</span>
+          <span>➔</span>
+        </button>
+      </div>
+
+      <!-- RESULTS SUMMARY CARD KELAS 4 -->
+      <div id="quizResultKls4" class="quiz-result-box" style="display: none;">
+        <div class="quiz-result-trophy">🏆🌟</div>
+        <h3 class="quiz-result-title">Misi Selesai dengan Gemilang!</h3>
+        <div class="quiz-result-score">Skor Akhir: <span id="finalScoreKls4">100</span> / 100</div>
+        <div class="quiz-badge-cert">🎖️ KSATRIA GOTONG ROYONG SD KELAS 4</div>
+        <p class="quiz-result-desc" id="finalDescKls4">
+          Hebat sekali, <span class="studentNameSpan">Aqlan</span>! Kamu berhasil menuntaskan seluruh 4 tantangan mini test. Kamu paham betul bahwa sebatang lidi mudah patah, namun seikat lidi bersatu mampu membersihkan masalah seberat apa pun!
+        </p>
+        <button class="btn-restart" onclick="restartQuizKls4()">
+          <span>🔄</span>
+          <span>Mainkan Lagi</span>
+        </button>
       </div>
     </div>
 
@@ -588,69 +804,68 @@
           <div style="color: #EF4444; font-weight: 700; margin-top: 6px;">(Kurang Tepat ❌)</div>
         </div>
       </div>
+      <div class="feedback-banner" id="feedbackAlisya"></div>
     </div>
-
-    <div class="feedback-banner" id="feedbackKls4"></div>
   </div>
 
   <!-- ==================== KELAS 5 GAME ==================== -->
   <div class="game-card" id="gameGrade5">
     <div class="mission-header">
       <div>
-        <h2 class="mission-title">Misi 2: Ekspedisi Rumah Adat & Kearifan Nusantara</h2>
-        <p class="mission-desc">Pasangkan rumah adat dengan nama daerah dan sikap pelestariannya!</p>
+        <h2 class="mission-title">Misi 2: Ekspedisi Sains Arsitektur & Budaya Nusantara</h2>
+        <p class="mission-desc">Mini Test Pilihan Ganda (C3–C4): 4 Soal Berbasis Termodinamika Honai, Pasak Gempa Gadang & Kebinekaan</p>
       </div>
       <div class="score-box">
-        <span>⭐ Poin:</span>
+        <span>⭐ Skor:</span>
         <span id="scoreKls5">0</span>
+        <span style="font-size: 0.9rem; color: #92400E; font-weight: normal;">/ 100</span>
       </div>
     </div>
 
-    <div class="scenario-box">
-      <strong>Misi Penjelajah:</strong> Teman sekelas <span class="studentNameSpan">Ardiansyah</span> dan <span class="studentNameSpan">Mishka</span> berasal dari suku Toraja (Sulawesi Selatan). Mereka memiliki rumah adat berbentuk perahu yang megah. Rumah adat apakah itu?
-    </div>
-
-    <div class="interactive-grid">
-      <div class="option-card" onclick="checkKls5('tongkonan', true, this)">
-        <div class="card-icon">🏛️</div>
-        <div class="card-title">Rumah Tongkonan</div>
-        <div class="card-detail">Atap melengkung menyerupai perahu, khas suku Toraja, Sulawesi Selatan.</div>
-      </div>
-
-      <div class="option-card" onclick="checkKls5('gadang', false, this)">
-        <div class="card-icon">🏡</div>
-        <div class="card-title">Rumah Gadang</div>
-        <div class="card-detail">Atap bergonjong runcing menyerupai tanduk kerbau, khas Minangkabau (Sumatera Barat).</div>
-      </div>
-
-      <div class="option-card" onclick="checkKls5('honai', false, this)">
-        <div class="card-icon">🛖</div>
-        <div class="card-title">Rumah Honai</div>
-        <div class="card-detail">Bentuk bulat dengan atap jerami/alang-alang tebal, khas pegunungan Papua.</div>
-      </div>
-    </div>
-
-    <!-- TANTANGAN PELESTARIAN BUDAYA KELAS 5 -->
-    <div style="margin-top: 24px; padding-top: 20px; border-top: 2px dashed #FECDD3;">
-      <h3 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 10px;">🌟 Tantangan Sikap: Pelestari Budaya</h3>
-      <div class="scenario-box">
-        Saat festival budaya sekolah, teman membawakan tarian daerah tradisional yang belum pernah kamu lihat. Sikap terpuji apakah yang mencerminkan <strong>menghargai budaya</strong>?
-      </div>
-      <div class="interactive-grid">
-        <div class="option-card" onclick="checkKls5Sikap(true, this)">
-          <div class="card-icon">👏</div>
-          <div class="card-title">Menyimak dengan Kagum</div>
-          <div class="card-detail">Bertepuk tangan memberikan apresiasi dan antusias ingin mempelajari keragamannya.</div>
+    <!-- STANDARD MCQ QUIZ VIEW KELAS 5 -->
+    <div id="kls5StandardView">
+      <div class="quiz-progress-wrapper" id="quizMetaKls5">
+        <div class="quiz-meta-row">
+          <span id="qCountLabelKls5">Pertanyaan 1 dari 4</span>
+          <span class="c-level-tag" id="qCLevelKls5">C4 - Sains Termodinamika</span>
         </div>
-        <div class="option-card" onclick="checkKls5Sikap(false, this)">
-          <div class="card-icon">🙈</div>
-          <div class="card-title">Menertawakan Kostumnya</div>
-          <div class="card-detail">Menganggap tarian daerah sendiri yang paling hebat dan mencemooh tarian lain.</div>
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="qProgressFillKls5" style="width: 25%;"></div>
         </div>
       </div>
-    </div>
 
-    <div class="feedback-banner" id="feedbackKls5"></div>
+      <div class="scenario-box" id="qStoryKls5">
+        <!-- Story will be injected dynamically -->
+      </div>
+
+      <div class="mcq-container" id="qOptionsKls5">
+        <!-- Options injected dynamically -->
+      </div>
+
+      <div class="feedback-banner" id="feedbackKls5"></div>
+
+      <div class="btn-action-row" id="btnActionRowKls5" style="display: none;">
+        <button class="btn-next-q" id="btnNextKls5" onclick="nextQuestionKls5()">
+          <span>Soal Berikutnya</span>
+          <span>➔</span>
+        </button>
+      </div>
+
+      <!-- RESULTS SUMMARY CARD KELAS 5 -->
+      <div id="quizResultKls5" class="quiz-result-box" style="display: none;">
+        <div class="quiz-result-trophy">🏛️🏆✨</div>
+        <h3 class="quiz-result-title">Ekspedisi Tuntas dengan Cemerlang!</h3>
+        <div class="quiz-result-score">Skor Akhir: <span id="finalScoreKls5">100</span> / 100</div>
+        <div class="quiz-badge-cert">🎖️ DUTA PELESTARI BUDAYA NUSANTARA SD KELAS 5</div>
+        <p class="quiz-result-desc" id="finalDescKls5">
+          Luar biasa, <span class="studentNameSpan">Mishka</span>! Kamu telah menguasai kejeniusan sains di balik arsitektur adat nusantara serta menunjukkan karakter luhur Pelajar Pancasila yang anti-etnosentrisme!
+        </p>
+        <button class="btn-restart" onclick="restartQuizKls5()">
+          <span>🔄</span>
+          <span>Jelajahi Lagi</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- ==================== KELAS 6 GAME ==================== -->
@@ -711,13 +926,14 @@
   </div>
 
   <footer>
-    <p>Portal Game Pembelajaran Pendidikan Pancasila Bab 3 • PKBM Penerus Bangsa • Dikembangkan untuk Kelas Multigrade & Zoom</p>
+    <p>Portal Game Pembelajaran Pendidikan Pancasila Bab 3 • PKBM Penerus Bangsa • Sesi 1: Aqlan (Kelas 4) | Sesi 2: Mishka (Kelas 5)</p>
   </footer>
 </div>
 
 <script>
-  // AUDIO SYNTHESIS ENGINE (Tanpa aset eksternal)
-    // SAFE LAZY AUDIO SYNTHESIS ENGINE
+  // ==========================================
+  // SAFE LAZY AUDIO SYNTHESIS ENGINE
+  // ==========================================
   let audioCtx = null;
   function getAudioCtx() {
     try {
@@ -741,7 +957,7 @@
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start();
-      osc.stop(audioCtx.currentTime + duration);
+      osc.stop(ctx.currentTime + duration);
     } catch(e) {}
   }
 
@@ -756,12 +972,137 @@
     setTimeout(() => playTone(220, 'sawtooth', 0.3), 150);
   }
 
-  // ROSTER DATA & STATE
-  let currentStudent = 'hasyif';
+  // ==========================================
+  // DATA SOAL KELAS 4 (AQLAN) - 4 PILIHAN GANDA
+  // ==========================================
+  const kls4Questions = [
+    {
+      c_level: "C3 - Aplikasi Gotong Royong",
+      story: "<strong>Skenario Kasus 1:</strong> Di perumahan tempat tinggal <span class='studentNameSpan'>Aqlan</span>, sebuah dahan pohon beringin tua tumbang menutup jalan utama komplek dan menyumbat saluran air menjelang musim hujan. Pak RT memperkirakan butuh waktu 5 hari jika hanya dibersihkan sendiri oleh petugas kebersihan desa, padahal nanti malam hujan lebat diprediksi turun. Tindakan terbaik yang mencerminkan pengamalan gotong royong sesuai Sila ke-3 Pancasila adalah...",
+      options: [
+        "Menunggu dinas kebersihan kota datang membawa alat berat karena membersihkan jalan bukan kewajiban warga komplek.",
+        "Bersama warga sekitar membagi tugas: ada yang memotong ranting, menyeret dahan, dan membersihkan sampah selokan secara sukarela agar jalan bersih dalam 45 menit.",
+        "Mencari jalur jalan lain untuk bermain skateboard dan membiarkan Pak RT bekerja sendirian.",
+        "Memprotes Pak RT dan saling menyalahkan siapa yang membiarkan pohon beringin tumbuh terlalu rimbun."
+      ],
+      answer: 1,
+      explain: "🎉 <strong>Hebat Sekali!</strong> Gotong royong adalah tradisi bekerja bersama-sama secara sukarela demi kepentingan umum. Dengan gotong royong, pekerjaan berat 5 hari tuntas hanya dalam 45 menit dan lingkungan terbebas dari ancaman banjir! Inilah pengamalan nyata Sila ke-3 Pancasila!"
+    },
+    {
+      c_level: "C3 - Analisis Filosofi Sapu Lidi",
+      story: "<strong>Skenario Kasus 2:</strong> Guru Tiara memberikan perumpamaan sebatang lidi kelapa yang langsung patah ketika dipakai menyapu lapangan berkerikil. Namun ketika ratusan lidi diikat menjadi satu ikatan sapu lidi yang erat, lapangan yang kotor langsung bersih seketika. Hikmah utama dari perumpamaan sapu lidi tersebut dalam kehidupan bertetangga adalah...",
+      options: [
+        "Pekerjaan membersihkan lingkungan hanya boleh dilakukan menggunakan alat-alat tradisional.",
+        "Setiap orang harus bekerja sendiri-sendiri agar tidak terganggu oleh orang lain.",
+        "Sendirian kita lemah dan rentan menghadapi masalah, tetapi saat bersatu mengikat perbedaan, pekerjaan berat apa pun dapat diatasi bersama.",
+        "Lidi yang tebal lebih penting daripada lidi yang tipis dalam membersihkan lingkungan."
+      ],
+      answer: 2,
+      explain: "🌟 <strong>Tepat Sekali!</strong> Filosofi seikat sapu lidi mengajarkan bahwa sendirian kita rapuh dan mudah patah, tetapi jika seluruh warga yang berbeda latar belakang bersatu padu mengikat perbedaan, tidak ada masalah berat yang tidak dapat diselesaikan bersama!"
+    },
+    {
+      c_level: "C3 - Pengetahuan Tradisi Nusantara",
+      story: "<strong>Skenario Kasus 3:</strong> Di Indonesia, tradisi gotong royong memiliki nama-nama khas di berbagai daerah. Tradisi kerja bakti bersama seluruh warga desa di daerah Jawa dikenal dengan nama 'Gugur Gunung', sedangkan di daerah Minahasa (Sulawesi Utara) tradisi gotong royong dikenal dengan nama...",
+      options: [
+        "Subak",
+        "Mapalus",
+        "Nganggung",
+        "Rambu Solo"
+      ],
+      answer: 1,
+      explain: "👏 <strong>Pintar!</strong> Buku Siswa Kemendikbud hal. 75 menyebutkan bahwa tradisi tolong-menolong bertani dan kerja bakti di Minahasa (Sulawesi Utara) disebut <em>'Mapalus'</em>. Di Jawa disebut <em>'Gugur Gunung'</em>, di Palembang disebut <em>'Sikaroban'</em>, dan Subak di Bali adalah organisasi irigasi."
+    },
+    {
+      c_level: "C4 - Analisis Bahasa Persatuan",
+      story: "<strong>Skenario Kasus 4:</strong> Saat warga perumahan <span class='studentNameSpan'>Aqlan</span> melakukan kerja bakti membersihkan dahan pohon beringin, warga yang hadir berasal dari suku Batak, Sunda, Jawa, dan Maluku yang memiliki bahasa daerah berbeda-beda. Agar koordinasi pembagian tugas berjalan lancar tanpa salah paham, warga menggunakan Bahasa Indonesia. Hal ini membuktikan bahwa Bahasa Indonesia berfungsi sebagai...",
+      options: [
+        "Bahasa asing yang wajib dipelajari hanya saat ujian sekolah berlangsung.",
+        "Bahasa persatuan yang menjembatani komunikasi dan merekatkan kebinekaan antarsuku sesuai ikrar Sumpah Pemuda 1928.",
+        "Bahasa pengganti yang mengharuskan warga melupakan bahasa daerah asalnya masing-masing.",
+        "Bahasa pelengkap yang hanya digunakan oleh pejabat dan aparat pemerintah desa."
+      ],
+      answer: 1,
+      explain: "🏆 <strong>Luar Biasa!</strong> Sesuai butir ketiga ikrar bersejarah Sumpah Pemuda 28 Oktober 1928, Bahasa Indonesia menjadi jembatan pemersatu komunikasi yang merekatkan kebinekaan lebih dari 700 bahasa daerah di seluruh pelosok nusantara!"
+    }
+  ];
+
+  // ==========================================
+  // DATA SOAL KELAS 5 (MISHKA) - 4 PILIHAN GANDA
+  // ==========================================
+  const kls5Questions = [
+    {
+      c_level: "C4 - Sains Termodinamika Arsitektur",
+      story: "<strong>Skenario Kasus 1:</strong> Nenek moyang suku Dani di Lembah Baliem Pegunungan Jayawijaya Papua merancang Rumah Honai berbentuk silinder melingkar dari kayu beratap jerami tebal dan sengaja dibuat tanpa jendela sama sekali. Alasan ilmiah paling tepat mengapa arsitektur Honai dibuat tanpa jendela adalah...",
+      options: [
+        "Karena masyarakat pegunungan Papua pada zaman dahulu kekurangan bahan kayu dan kaca untuk membuat kusen jendela.",
+        "Untuk menahan hawa dingin ekstrem pegunungan (suhu malam 5°C) dengan mengunci panas perapian (heat trap) di dalam ruangan agar keluarga tidak mengalami hipotermia.",
+        "Agar cahaya matahari tidak bisa masuk ke dalam rumah sehingga ruangan selalu gelap gulita.",
+        "Supaya asap dari api unggun tidak keluar dan membuat ruangan menjadi sesak."
+      ],
+      answer: 1,
+      explain: "🔥 <strong>Analisis Sains yang Cemerlang!</strong> Arsitektur Honai Papua menerapkan hukum termodinamika alami: bentuk silinder bundar tanpa bukaan jendela berfungsi sebagai <em>heat trap</em> (perangkap panas) efektif untuk mempertahankan kalor api unggun di tengah suhu malam pegunungan 5°C agar keluarga terhindar dari hipotermia!"
+    },
+    {
+      c_level: "C4 - Rekayasa Sains Gempa Arsitektur",
+      story: "<strong>Skenario Kasus 2:</strong> Berbeda dengan bangunan modern berdinding semen kaku yang rentan retak saat gempa bumi, Rumah Gadang di Minangkabau (Sumatera Barat) dibangun menggunakan tiang panggung kayu dengan sistem sambungan pasak kayu elastis tanpa paku besi sama sekali. Keunggulan sains dari sistem pasak kayu elastis tersebut adalah...",
+      options: [
+        "Membuat rumah menjadi sangat berat sehingga tidak bisa bergeser dari posisinya saat tertiup angin kencang.",
+        "Mengurangi biaya pembangunan karena paku besi harganya mahal pada masa lampau.",
+        "Memberikan fleksibilitas pada struktur bangunan untuk bergoyang elastis meredam getaran gelombang gempa bumi sehingga rangka rumah tidak patah atau runtuh.",
+        "Mempermudah pembongkaran rumah jika warga ingin pindah ke desa lain sewaktu-waktu."
+      ],
+      answer: 2,
+      explain: "🏛️ <strong>Luar Biasa Jenius!</strong> Nenek moyang Minangkabau menguasai fisika peredam getaran seismik: sambungan pasak kayu tanpa paku memberikan fleksibilitas elastis sehingga Rumah Gadang bergoyang mengikuti irama gelombang gempa tanpa retak atau roboh!"
+    },
+    {
+      c_level: "C3 - Faktor Geografis Keragaman",
+      story: "<strong>Skenario Kasus 3:</strong> Wilayah Indonesia terdiri dari lebih dari 17.000 pulau dan terletak di antara dua samudra besar (Samudra Hindia dan Pasifik) serta dua benua (Asia dan Australia). Faktor geografis kepulauan ini menyebabkan keragaman budaya di Indonesia karena...",
+      options: [
+        "Setiap pulau terisolasi oleh lautan sehingga setiap suku bangsa mengembangkan adat istiadat, bahasa, dan bentuk rumah adat yang mandiri sesuai kondisi alamnya.",
+        "Pemerintah melarang penduduk suatu pulau berkunjung atau berkomunikasi dengan penduduk pulau lain.",
+        "Setiap pulau memiliki jenis hewan purba yang berbeda-beda yang harus disembah oleh penduduknya.",
+        "Lautan yang luas menghalangi pedagang luar negeri datang ke wilayah nusantara."
+      ],
+      answer: 0,
+      explain: "🗺️ <strong>Tepat Sekali!</strong> Bentangan laut antarpulau menciptakan isolasi geografis alami yang mendorong tiap suku menciptakan adaptasi budaya, bentuk rumah, bahasa, dan pakaian adat yang mandiri dan kaya sesuai lingkungan hidupnya."
+    },
+    {
+      c_level: "C4 - Karakter Anti-Etnosentrisme",
+      story: "<strong>Skenario Kasus 4:</strong> Saat kelompok <span class='studentNameSpan'>Mishka</span> merancang dekorasi festival budaya, terjadi perdebatan karena salah satu teman mengejek rumah adat daerah lain dan membanggakan rumah adat sukunya sendiri sebagai yang paling hebat dan paling modern. Sikap membanggakan budaya sendiri secara berlebihan sambil memandang rendah budaya suku lain disebut...",
+      options: [
+        "Chauvinisme",
+        "Etnosentrisme",
+        "Patriotisme",
+        "Toleransi"
+      ],
+      answer: 1,
+      explain: "🌟 <strong>Hebat! Pemahaman yang Sangat Kuat!</strong> Etnosentrisme adalah sikap keliru memandang budayanya sendiri paling hebat sambil meremehkan budaya lain. Sebagai Pelajar Pancasila, kita bangga pada adat sendiri sekaligus menghormati keagungan budaya seluruh nusantara!"
+    }
+  ];
+
+  // ==========================================
+  // STATE MANAGEMENT
+  // ==========================================
+  let currentStudent = 'aqlan';
+  let currentStudentName = 'Aqlan';
   let currentGrade = 4;
+
+  let currentQIdxKls4 = 0;
   let scoreKls4 = 0;
+  let isAnsweredKls4 = false;
+
+  let currentQIdxKls5 = 0;
   let scoreKls5 = 0;
+  let isAnsweredKls5 = false;
+
   let scoreKls6 = 0;
+
+  // ==========================================
+  // INITIALIZATION & STUDENT SWITCHER
+  // ==========================================
+  window.addEventListener('DOMContentLoaded', () => {
+    switchStudent();
+  });
 
   function switchStudent() {
     const sel = document.getElementById('studentSelect');
@@ -769,14 +1110,14 @@
     currentStudent = sel.value;
     const grade = parseInt(opt.getAttribute('data-grade'));
     
-    // Update student name in text
-    const studentName = opt.text.split(' ')[0];
-    document.getElementById('activeStudentLabel').textContent = `Halo, ${studentName}! (Kelas ${grade})`;
+    // Extract first name
+    currentStudentName = opt.text.split(' ')[0];
+    document.getElementById('activeStudentLabel').textContent = `Halo, ${currentStudentName}! (Kelas ${grade})`;
     
-    const nameSpans = document.querySelectorAll('.studentNameSpan');
-    nameSpans.forEach(el => el.textContent = studentName);
+    // Update all span labels
+    updateStudentNames();
 
-    // Auto set grade
+    // Switch to respective grade
     setGrade(grade);
 
     // If Alisya is selected, auto trigger sensory mode
@@ -790,6 +1131,11 @@
     }
   }
 
+  function updateStudentNames() {
+    const nameSpans = document.querySelectorAll('.studentNameSpan');
+    nameSpans.forEach(el => el.textContent = currentStudentName);
+  }
+
   function setGrade(grade) {
     currentGrade = grade;
     
@@ -800,8 +1146,245 @@
     // Toggle active game card
     document.querySelectorAll('.game-card').forEach(card => card.classList.remove('active'));
     document.getElementById(`gameGrade${grade}`).classList.add('active');
+
+    if (grade === 4 && currentQIdxKls4 === 0 && !isAnsweredKls4) {
+      renderQuestionKls4();
+    } else if (grade === 5 && currentQIdxKls5 === 0 && !isAnsweredKls5) {
+      renderQuestionKls5();
+    }
   }
 
+  // ==========================================
+  // QUIZ ENGINE KELAS 4 (AQLAN)
+  // ==========================================
+  function renderQuestionKls4() {
+    isAnsweredKls4 = false;
+    const q = kls4Questions[currentQIdxKls4];
+    
+    // Update Meta
+    document.getElementById('qCountLabelKls4').textContent = `Pertanyaan ${currentQIdxKls4 + 1} dari ${kls4Questions.length}`;
+    document.getElementById('qCLevelKls4').textContent = q.c_level;
+    document.getElementById('qProgressFillKls4').style.width = `${((currentQIdxKls4 + 1) / kls4Questions.length) * 100}%`;
+
+    // Update Story & Options
+    document.getElementById('qStoryKls4').innerHTML = q.story;
+    updateStudentNames();
+
+    const letters = ['A', 'B', 'C', 'D'];
+    let optionsHtml = '';
+    q.options.forEach((opt, idx) => {
+      optionsHtml += `
+        <div class="mcq-option" onclick="handleSelectKls4(${idx}, this)" id="optKls4_${idx}">
+          <span class="mcq-badge">${letters[idx]}</span>
+          <span class="mcq-text">${opt}</span>
+        </div>
+      `;
+    });
+    document.getElementById('qOptionsKls4').innerHTML = optionsHtml;
+
+    // Reset feedback and action button
+    const fb = document.getElementById('feedbackKls4');
+    fb.style.display = 'none';
+    fb.className = 'feedback-banner';
+    fb.innerHTML = '';
+    document.getElementById('btnActionRowKls4').style.display = 'none';
+  }
+
+  function handleSelectKls4(selectedIdx, el) {
+    if (isAnsweredKls4) return;
+    isAnsweredKls4 = true;
+
+    const q = kls4Questions[currentQIdxKls4];
+    const isCorrect = (selectedIdx === q.answer);
+
+    // Disable all options
+    document.querySelectorAll('#qOptionsKls4 .mcq-option').forEach(optEl => {
+      optEl.classList.add('disabled');
+    });
+
+    const fb = document.getElementById('feedbackKls4');
+
+    if (isCorrect) {
+      el.classList.add('correct');
+      scoreKls4 += 25;
+      document.getElementById('scoreKls4').textContent = scoreKls4;
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = q.explain;
+      playSuccess();
+    } else {
+      el.classList.add('wrong');
+      const correctEl = document.getElementById(`optKls4_${q.answer}`);
+      if (correctEl) correctEl.classList.add('correct');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = `⚠️ <strong>Pilihan Belum Tepat.</strong> Jawaban yang benar adalah <strong>Pilihan ${['A','B','C','D'][q.answer]}</strong>.<br>${q.explain}`;
+      playError();
+    }
+    fb.style.display = 'block';
+
+    // Show Next or Results button
+    const btnRow = document.getElementById('btnActionRowKls4');
+    const btnNext = document.getElementById('btnNextKls4');
+    btnRow.style.display = 'flex';
+    if (currentQIdxKls4 < kls4Questions.length - 1) {
+      btnNext.innerHTML = `<span>Soal Berikutnya</span> <span>➔</span>`;
+    } else {
+      btnNext.innerHTML = `<span>Lihat Hasil Akhir</span> <span>🏆</span>`;
+    }
+  }
+
+  function nextQuestionKls4() {
+    if (currentQIdxKls4 < kls4Questions.length - 1) {
+      currentQIdxKls4++;
+      renderQuestionKls4();
+    } else {
+      showResultKls4();
+    }
+  }
+
+  function showResultKls4() {
+    document.getElementById('quizMetaKls4').style.display = 'none';
+    document.getElementById('qStoryKls4').style.display = 'none';
+    document.getElementById('qOptionsKls4').style.display = 'none';
+    document.getElementById('feedbackKls4').style.display = 'none';
+    document.getElementById('btnActionRowKls4').style.display = 'none';
+
+    const resultBox = document.getElementById('quizResultKls4');
+    document.getElementById('finalScoreKls4').textContent = scoreKls4;
+    resultBox.style.display = 'block';
+    updateStudentNames();
+    playSuccess();
+  }
+
+  function restartQuizKls4() {
+    currentQIdxKls4 = 0;
+    scoreKls4 = 0;
+    document.getElementById('scoreKls4').textContent = scoreKls4;
+
+    document.getElementById('quizMetaKls4').style.display = 'block';
+    document.getElementById('qStoryKls4').style.display = 'block';
+    document.getElementById('qOptionsKls4').style.display = 'flex';
+    document.getElementById('quizResultKls4').style.display = 'none';
+
+    renderQuestionKls4();
+  }
+
+  // ==========================================
+  // QUIZ ENGINE KELAS 5 (MISHKA)
+  // ==========================================
+  function renderQuestionKls5() {
+    isAnsweredKls5 = false;
+    const q = kls5Questions[currentQIdxKls5];
+    
+    // Update Meta
+    document.getElementById('qCountLabelKls5').textContent = `Pertanyaan ${currentQIdxKls5 + 1} dari ${kls5Questions.length}`;
+    document.getElementById('qCLevelKls5').textContent = q.c_level;
+    document.getElementById('qProgressFillKls5').style.width = `${((currentQIdxKls5 + 1) / kls5Questions.length) * 100}%`;
+
+    // Update Story & Options
+    document.getElementById('qStoryKls5').innerHTML = q.story;
+    updateStudentNames();
+
+    const letters = ['A', 'B', 'C', 'D'];
+    let optionsHtml = '';
+    q.options.forEach((opt, idx) => {
+      optionsHtml += `
+        <div class="mcq-option" onclick="handleSelectKls5(${idx}, this)" id="optKls5_${idx}">
+          <span class="mcq-badge">${letters[idx]}</span>
+          <span class="mcq-text">${opt}</span>
+        </div>
+      `;
+    });
+    document.getElementById('qOptionsKls5').innerHTML = optionsHtml;
+
+    // Reset feedback and action button
+    const fb = document.getElementById('feedbackKls5');
+    fb.style.display = 'none';
+    fb.className = 'feedback-banner';
+    fb.innerHTML = '';
+    document.getElementById('btnActionRowKls5').style.display = 'none';
+  }
+
+  function handleSelectKls5(selectedIdx, el) {
+    if (isAnsweredKls5) return;
+    isAnsweredKls5 = true;
+
+    const q = kls5Questions[currentQIdxKls5];
+    const isCorrect = (selectedIdx === q.answer);
+
+    // Disable all options
+    document.querySelectorAll('#qOptionsKls5 .mcq-option').forEach(optEl => {
+      optEl.classList.add('disabled');
+    });
+
+    const fb = document.getElementById('feedbackKls5');
+
+    if (isCorrect) {
+      el.classList.add('correct');
+      scoreKls5 += 25;
+      document.getElementById('scoreKls5').textContent = scoreKls5;
+      fb.className = 'feedback-banner success';
+      fb.innerHTML = q.explain;
+      playSuccess();
+    } else {
+      el.classList.add('wrong');
+      const correctEl = document.getElementById(`optKls5_${q.answer}`);
+      if (correctEl) correctEl.classList.add('correct');
+      fb.className = 'feedback-banner error';
+      fb.innerHTML = `⚠️ <strong>Pilihan Belum Tepat.</strong> Jawaban yang benar adalah <strong>Pilihan ${['A','B','C','D'][q.answer]}</strong>.<br>${q.explain}`;
+      playError();
+    }
+    fb.style.display = 'block';
+
+    // Show Next or Results button
+    const btnRow = document.getElementById('btnActionRowKls5');
+    const btnNext = document.getElementById('btnNextKls5');
+    btnRow.style.display = 'flex';
+    if (currentQIdxKls5 < kls5Questions.length - 1) {
+      btnNext.innerHTML = `<span>Soal Berikutnya</span> <span>➔</span>`;
+    } else {
+      btnNext.innerHTML = `<span>Lihat Hasil Akhir</span> <span>🏆</span>`;
+    }
+  }
+
+  function nextQuestionKls5() {
+    if (currentQIdxKls5 < kls5Questions.length - 1) {
+      currentQIdxKls5++;
+      renderQuestionKls5();
+    } else {
+      showResultKls5();
+    }
+  }
+
+  function showResultKls5() {
+    document.getElementById('quizMetaKls5').style.display = 'none';
+    document.getElementById('qStoryKls5').style.display = 'none';
+    document.getElementById('qOptionsKls5').style.display = 'none';
+    document.getElementById('feedbackKls5').style.display = 'none';
+    document.getElementById('btnActionRowKls5').style.display = 'none';
+
+    const resultBox = document.getElementById('quizResultKls5');
+    document.getElementById('finalScoreKls5').textContent = scoreKls5;
+    resultBox.style.display = 'block';
+    updateStudentNames();
+    playSuccess();
+  }
+
+  function restartQuizKls5() {
+    currentQIdxKls5 = 0;
+    scoreKls5 = 0;
+    document.getElementById('scoreKls5').textContent = scoreKls5;
+
+    document.getElementById('quizMetaKls5').style.display = 'block';
+    document.getElementById('qStoryKls5').style.display = 'block';
+    document.getElementById('qOptionsKls5').style.display = 'flex';
+    document.getElementById('quizResultKls5').style.display = 'none';
+
+    renderQuestionKls5();
+  }
+
+  // ==========================================
+  // ALISYA SENSORY MODE
+  // ==========================================
   function toggleSensoryMode() {
     const isSensory = document.getElementById('sensoryModeCheckbox').checked;
     const standardView = document.getElementById('kls4StandardView');
@@ -816,86 +1399,27 @@
     }
   }
 
-  // LOGIKA KELAS 4
-  function checkKls4(id, isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls4');
-    document.querySelectorAll('#kls4StandardView .option-card').forEach(c => {
-      c.classList.remove('selected-correct', 'selected-wrong');
-    });
-
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls4 += 50;
-      document.getElementById('scoreKls4').textContent = scoreKls4;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🎉 <strong>Hebat Sekali!</strong> Dengan gotong royong, pekerjaan 10 hari bisa selesai hanya dalam setengah hari karena semua warga rukun dan saling membantu. Inilah pengamalan Pancasila Sila ke-3!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ <strong>Kurang Tepat:</strong> Jika warga tidak peduli, selokan akan tetap tersumbat dan bisa menyebabkan banjir bandang saat hujan deras. Ayo coba pilih sikap gotong royong!`;
-      playError();
-    }
-  }
-
   function checkAlisya(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls4');
+    const fb = document.getElementById('feedbackAlisya');
     document.querySelectorAll('#kls4AlisyaView .alisya-card').forEach(c => c.classList.remove('correct'));
 
     if (isCorrect) {
       cardEl.classList.add('correct');
-      scoreKls4 += 50;
+      scoreKls4 = Math.min(100, scoreKls4 + 25);
       document.getElementById('scoreKls4').textContent = scoreKls4;
       fb.className = 'feedback-banner success';
-      fb.innerHTML = `⭐ <strong>Pintar Sekali, Alisya!</strong> Kerja sama membersihkan lingkungan membuat desa bersih dan hati senang! 🌟`;
+      fb.innerHTML = `⭐ <strong>Pintar Sekali, Alisya!</strong> Kerja sama membersihkan lingkungan membuat kelas rapi dan hati senang! 🌟`;
       playSuccess();
     } else {
       fb.className = 'feedback-banner error';
-      fb.innerHTML = `Ayo pilih gambar yang sedang bekerja sama membersihkan lingkungan ya! 😊`;
+      fb.innerHTML = `Ayo sentuh gambar yang sedang bekerja sama membersihkan lingkungan ya! 😊`;
       playError();
     }
   }
 
-  // LOGIKA KELAS 5
-  function checkKls5(ans, isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls5');
-    document.querySelectorAll('#gameGrade5 .option-card').forEach(c => {
-      c.classList.remove('selected-correct', 'selected-wrong');
-    });
-
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls5 += 50;
-      document.getElementById('scoreKls5').textContent = scoreKls5;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🎉 <strong>Tepat Sekali!</strong> Rumah Tongkonan adalah rumah adat suku Toraja (Sulawesi Selatan) dengan atap menyerupai perahu atau tanduk kerbau yang melambangkan kebesaran nenek moyang pelaut!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ <strong>Hampir Benar:</strong> Perhatikan ciri khas atapnya yang melengkung seperti perahu di Sulawesi Selatan. Itu adalah Rumah Tongkonan!`;
-      playError();
-    }
-  }
-
-  function checkKls5Sikap(isCorrect, cardEl) {
-    const fb = document.getElementById('feedbackKls5');
-    if (isCorrect) {
-      cardEl.classList.add('selected-correct');
-      scoreKls5 += 50;
-      document.getElementById('scoreKls5').textContent = scoreKls5;
-      fb.className = 'feedback-banner success';
-      fb.innerHTML = `🌟 <strong>Luar Biasa!</strong> Menghargai dan menikmati tarian adat suku lain adalah wujud nyata melestarikan kebudayaan nasional sesuai amanat Bab 3!`;
-      playSuccess();
-    } else {
-      cardEl.classList.add('selected-wrong');
-      fb.className = 'feedback-banner error';
-      fb.innerHTML = `⚠️ Mencemooh tarian daerah lain dapat memecah belah persatuan. Mari saling menghargai keunikan tiap daerah di Indonesia!`;
-      playError();
-    }
-  }
-
+  // ==========================================
   // LOGIKA KELAS 6
+  // ==========================================
   function checkKls6HakKewajiban(type, isCorrect, cardEl) {
     const fb = document.getElementById('feedbackKls6');
     if (isCorrect) {
