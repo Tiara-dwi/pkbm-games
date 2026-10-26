@@ -79,15 +79,17 @@
   * **Hasil Pentas:** Semua penonton bertepuk tangan kagum! Dua kubu teman Mishka berpelukan bangga karena kedua budaya leluhur berpadu harmonis!
 * **🎙️ Narasi Guru ke Siswa:** *"Mishka, bagaimana perasaanmu ketika melihat dua budaya yang sempat dipertengkarkan teman-teman justru melahirkan gerakan tarian senam yang sangat memukau?"*
 
-### Slide 8: Textbook - Warisan Pakaian Adat, Senjata & Alat Musik Tradisional
+### Slide 8: Textbook - Warisan Busana Adat Kebaya, Wastra & Alat Musik Tradisional
 * **Tipe:** Konsep Textbook Kemendikbud
-* **Visual Cue Canva:** Kolase 4 alat musik daerah: Angklung (Jawa Barat), Sasando (NTT), Gamelan (Jawa/Bali), dan Tifa (Papua/Maluku).
+* **Visual Cue Canva:** Kolase 4 alat musik daerah (Sasando NTT, Angklung Jawa Barat, Tifa Papua, Gamelan Jawa) berpadu dengan wastra batik/tenun dan keanggunan busana Kebaya Indonesia (Kebaya Kartini, Kebaya Encim Betawi, dan Kebaya Bali).
 * **Teks Slide:**
-  * **Buku Siswa Kemendikbud Hal 105-112: Warisan Mahakarya Takbenda:**
-    * **Alat Musik Bernada:** Angklung dari bambu yang diakui UNESCO, Sasando dari daun lontar pulau Rote, Tifa gendang khas timur.
-    * **Pakaian Adat & Kain Tradisional:** Batik, Songket, Ulos, dan Tenun Ikat yang memiliki filosofi doa dan martabat luhur.
-    * **Senjata Tradisional:** Keris, Rencong, Mandau, dan Badik sebagai lambang kehormatan dan pertahanan diri ksatria masa lalu.
-* **🎙️ Narasi Guru ke Siswa:** *"Tahukah kamu alat musik Sasando terbuat dari daun apa? Mengapa petikan dawainya bisa menghasilkan melodi yang begitu syahdu?"*
+  * **Buku Siswa Kemendikbud Hal 105-112: Warisan Mahakarya Takbenda Nusantara:**
+    * **Pengertian & Filosofi Kebaya:** Busana atasan tradisional khas perempuan Indonesia berlengan panjang yang dipadukan kain jarik batik/songket. Melambangkan keanggunan, kelemahlembutan, kesopanan (*unggah-ungguh*), dan ketegasan martabat perempuan Indonesia. Langkah teratur berkebaya mencerminkan ketenangan dan kebijaksanaan budi pekerti.
+    * **Ragam Jenis Kebaya Populer:** Kebaya Kartini & Kutu Baru (Jawa - bersahaja), Kebaya Encim (Betawi - bordir bunga cerah akulturasi Nusantara-Tionghoa), dan Kebaya Bali (selendang pinggang lambang pengendalian diri). Diajukan bersama ke UNESCO sebagai Warisan Budaya Takbenda Dunia.
+    * **Alat Musik Bernada:** Angklung dari bambu (UNESCO), Sasando dari daun lontar pulau Rote, Tifa gendang kayu kulit biawak khas timur, dan Gamelan ageng Jawa/Bali.
+    * **Wastra & Kain Tradisional:** Batik, Songket Minangkabau/Palembang, Ulos Batak, dan Tenun Ikat NTT yang sarat filosofi doa leluhur.
+    * **Senjata Tradisional:** Keris (Jawa), Rencong (Aceh), Mandau (Kalimantan), dan Badik (Sulawesi) sebagai lambang kehormatan dan pertahanan diri ksatria masa lalu.
+* **🎙️ Narasi Guru ke Siswa:** *"Mishka, tahukah kamu mengapa potongan kebaya dan lilitan kain batik di bawahnya membuat langkah perempuan Indonesia begitu tenang dan anggun? Bagaimana kebaya kini diakui sebagai warisan dunia oleh UNESCO?"*
 
 ### Slide 9: Keseharian - Menghindari Etnosentrisme dalam Pergaulan
 * **Tipe:** Konteks Keseharian Nyata
