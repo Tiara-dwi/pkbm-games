@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Game PAI Kelas 5: Petualangan Pohon Kebaikan Sakura (Mishka)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #065F46;
+      --secondary: #EC4899;
+      --secondary-light: #FCE7F3;
+      --accent: #F59E0B;
+      --bg: #F0FDF4;
+      --card-bg: #FFFFFF;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --radius: 20px;
+      --shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.1), 0 8px 10px -6px rgba(5, 150, 105, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #ECFDF5 0%, #FDF2F8 50%, #F0FDF4 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 16px 60px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Floating Sakura Petals */
+    @keyframes floatSakura {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.8; }
+      100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
+    }
+    .sakura-petal {
+      position: fixed;
+      pointer-events: none;
+      background: radial-gradient(circle, #fbcfe8 0%, #f472b6 100%);
+      border-radius: 100% 0 100% 0;
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #047857 0%, #065F46 100%);
+      padding: 24px 20px;
+      border-radius: var(--radius);
+      color: white;
+      box-shadow: 0 12px 28px rgba(4, 120, 87, 0.25);
+      border: 3px solid #6EE7B7;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: #FCE7F3;
+      color: #9D174D;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.1rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #D1FAE5;
+      font-weight: 600;
+    }
+
+    /* STUDENT HERO CARD */
+    .hero-student {
+      background: white;
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      border: 2px solid #FBCFE8;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-icon {
+      width: 48px;
+      height: 48px;
+      background: #FCE7F3;
+      border: 2px solid #F472B6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+
+    .student-title {
+      font-size: 0.8rem;
+      color: #BE185D;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .student-name {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.3rem;
+      color: #065F46;
+    }
+
+    .score-badge {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 2px solid #FCD34D;
+      padding: 8px 18px;
+      border-radius: 14px;
+      font-family: 'Fredoka', cursive;
+      font-size: 1.25rem;
+      color: #B45309;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* MISSION SECTIONS */
+    .mission-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .mission-tag {
+      display: inline-block;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .scenario-box {
+      background: #F8FAFC;
+      border-left: 5px solid #10B981;
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .option-btn {
+      background: #F0FDF4;
+      border: 2px solid #A7F3D0;
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-btn:hover {
+      transform: translateY(-3px);
+      border-color: #059669;
+      box-shadow: 0 8px 18px rgba(5, 150, 105, 0.12);
+    }
+
+    .option-btn.correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.3) !important;
+    }
+
+    .option-btn.wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+    }
+
+    .btn-icon {
+      font-size: 2rem;
+    }
+
+    .btn-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.1rem;
+      color: #065F46;
+    }
+
+    .btn-desc {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .feedback-banner {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-top: 14px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .feedback-banner.success {
+      display: block;
+      background: #ECFDF5;
+      border: 2px solid #10B981;
+      color: #065F46;
+    }
+
+    .feedback-banner.error {
+      display: block;
+      background: #FEF2F2;
+      border: 2px solid #EF4444;
+      color: #991B1B;
+    }
+
+    /* MCQ QUESTION */
+    .mcq-question {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed #E2E8F0;
+    }
+
+    .mcq-q-text {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      color: #1E293B;
+      line-height: 1.5;
+    }
+
+    .mcq-answers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mcq-choice {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid #E2E8F0;
+      background: #FAFAFA;
+      text-align: left;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #334155;
+      transition: all 0.2s ease;
+    }
+
+    .mcq-choice:hover {
+      border-color: #10B981;
+      background: #F0FDF4;
+    }
+
+    .mcq-choice.correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+      color: #065F46 !important;
+    }
+
+    .mcq-choice.wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+      color: #991B1B !important;
+    }
+
+    /* VICTORY MODAL */
+    #victoryCard {
+      display: none;
+      background: linear-gradient(135deg, #065F46 0%, #047857 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 36px 24px;
+      text-align: center;
+      margin-top: 24px;
+      box-shadow: 0 16px 36px rgba(4, 120, 87, 0.35);
+      border: 4px solid #FCD34D;
+    }
+
+    #victoryCard h2 {
+      font-family: 'Fredoka', cursive;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    #victoryCard p {
+      color: #D1FAE5;
+      font-size: 1.05rem;
+      max-width: 580px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+
+    .cert-box {
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px dashed #FCD34D;
+      border-radius: 16px;
+      padding: 16px;
+      max-width: 420px;
+      margin: 0 auto 22px;
+      text-align: left;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 36px;
+      color: #64748B;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <header>
+      <div class="badge-top">🌸 PAI & Budi Pekerti Bab 4 • Kelas 5 SD</div>
+      <h1>Petualangan Pohon Kebaikan Sakura</h1>
+      <p class="subtitle">Seni Berbagi Bahagia: Zakat, Infak, Sedekah, dan Hadiah</p>
+    </header>
+
+    <!-- HERO STUDENT INFO -->
+    <div class="hero-student">
+      <div class="student-info">
+        <div class="avatar-icon">👧</div>
+        <div>
+          <div class="student-title">Duta Kasih Sayang</div>
+          <div class="student-name">Mishka • Sesi 2 (Kelas 5 SD)</div>
+        </div>
+      </div>
+      <div class="score-badge">
+        <span>⭐ Poin:</span>
+        <span id="scoreMishka">0</span> / 400
+      </div>
+    </div>
+
+    <!-- ==================== MISI 1 ==================== -->
+    <div class="mission-card">
+      <div class="mission-tag" style="background:#ECFDF5; border:1px solid #10B981; color:#047857;">
+        🌳 MISI 1: EMPAT CABANG POHON KEBAIKAN
+      </div>
+      <div class="scenario-box">
+        <strong>Studi Kasus 1:</strong> Mishka memberikan <strong>sebuah kado buku cerita indah berhias pita pastel</strong> kepada sahabat baiknya saat pentas senam sekolah untuk merekatkan kasih sayang persahabatan (*Tahadu Tahabbu*). Masuk ke cabang manakah amalan ini?
+      </div>
+      <div class="interactive-grid">
+        <button class="option-btn" onclick="checkMisi1(true, this)">
+          <div class="btn-icon">🌸🎁💖</div>
+          <div class="btn-title">Cabang 4: Bunga Sakura (Hadiah)</div>
+          <div class="btn-desc">Pemberian sukarela untuk memuliakan sahabat dan mempererat rasa cinta kasih, bukan karena penerima miskin.</div>
+        </button>
+        <button class="option-btn" onclick="checkMisi1(false, this)">
+          <div class="btn-icon">🌾⚖️🔒</div>
+          <div class="btn-title">Cabang 1: Akar Zakat Fitrah</div>
+          <div class="btn-desc">Kewajiban beras 2.5 kg yang wajib dibayarkan menjelang salat Idulfitri untuk fakir miskin.</div>
+        </button>
+      </div>
+      <div class="feedback-banner" id="fb1"></div>
+    </div>
+
+    <!-- ==================== MISI 2 ==================== -->
+    <div class="mission-card">
+      <div class="mission-tag" style="background:#FEF2F2; border:1px solid #EF4444; color:#991B1B;">
+        🚫 MISI 2: BAHAYA BATU LICIN TERSAPU BADAI (Q.S. AL-BAQARAH: 264)
+      </div>
+      <div class="scenario-box">
+        <strong>Studi Kasus 2:</strong> Dinda menyumbang pensil warna ke temannya, namun seminggu kemudian saat berselisih ia berteriak: <em>"Ingat ya, pensil warna itu kan aku yang belikan!"</em> Mengapa pahala kebaikan Dinda bisa terhapus?
+      </div>
+      <div class="interactive-grid">
+        <button class="option-btn" onclick="checkMisi2(true, this)">
+          <div class="btn-icon">⚡💨🍂</div>
+          <div class="btn-title">Terkena Racun Al-Mann & Al-Adza</div>
+          <div class="btn-desc">Mengungkit pemberian (Al-Mann) dan menyakiti hati teman (Al-Adza) menghanguskan pahala seperti debu di atas batu licin tersapu badai.</div>
+        </button>
+        <button class="option-btn" onclick="checkMisi2(false, this)">
+          <div class="btn-icon">🛡️💯✨</div>
+          <div class="btn-title">Pahala Tetap Utuh 100%</div>
+          <div class="btn-desc">Karena barang yang disumbangkan sudah terlanjur dinikmati oleh temannya.</div>
+        </button>
+      </div>
+      <div class="feedback-banner" id="fb2"></div>
+    </div>
+
+    <!-- ==================== MISI 3 ==================== -->
+    <div class="mission-card">
+      <div class="mission-tag" style="background:#FEF3C7; border:1px solid #F59E0B; color:#92400E;">
+        🤲 MISI 3: KEANGGUNAN TANGAN DI ATAS
+      </div>
+      <div class="scenario-box">
+        <strong>Studi Kasus 3:</strong> Sabda Rasulullah saw. (H.R. Bukhari): <em>"Tangan di atas jauh lebih mulia daripada tangan di bawah."</em> Manakah adab berbagi yang paling mulia dalam Islam?
+      </div>
+      <div class="interactive-grid">
+        <button class="option-btn" onclick="checkMisi3(true, this)">
+          <div class="btn-icon">🌸🤫✨</div>
+          <div class="btn-title">Rahasia Tangan Kanan & Ikhlas</div>
+          <div class="btn-desc">Memberi secara tersembunyi tanpa butuh sorotan kamera, menjaga senyum dan martabat orang yang dibantu.</div>
+        </button>
+        <button class="option-btn" onclick="checkMisi3(false, this)">
+          <div class="btn-icon">📱🎥📢</div>
+          <div class="btn-title">Pamer Medsos Demi Pujian (Riya')</div>
+          <div class="btn-desc">Menyuruh penerima menangis di depan kamera HP demi mendapatkan likes dan tayangan banyak.</div>
+        </button>
+      </div>
+      <div class="feedback-banner" id="fb3"></div>
+    </div>
+
+    <!-- ==================== MISI 4: MINI TEST ==================== -->
+    <div class="mission-card">
+      <div class="mission-tag" style="background:#EEF2FF; border:1px solid #6366F1; color:#3730A3;">
+        📝 MISI 4: EVALUASI KUIS KASIH SAYANG (4 SOAL C3-C4)
+      </div>
+
+      <div class="mcq-question" id="mQ1">
+        <div class="mcq-q-text">1. Memasukkan uang tabungan Rp 10.000 ke dalam kotak amal masjid untuk renovasi tempat wudu secara sukarela (Basis: Q.S. Ali 'Imran: 92) termasuk amalan...</div>
+        <div class="mcq-answers">
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ1')">A. Zakat Fitrah wajib beras 2,5 kg</button>
+          <button class="mcq-choice" onclick="ansMcq(this, true, 'mQ1', 25)">B. Batang Utama: Infak sukarela untuk fasilitas umum ✅</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ1')">C. Zakat Mal dengan nisab 85 gram emas</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ1')">D. Pajak bangunan pemerintah</button>
+        </div>
+      </div>
+
+      <div class="mcq-question" id="mQ2">
+        <div class="mcq-q-text">2. Senyuman tulus, tutur kata santun, dan menyingkirkan paku di tengah jalan (Basis: Q.S. Al-Baqarah: 177) termasuk...</div>
+        <div class="mcq-answers">
+          <button class="mcq-choice" onclick="ansMcq(this, true, 'mQ2', 25)">A. Ranting Daun: Sedekah non-materi yang berpahala besar ✅</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ2')">B. Hanya sekadar sopan santun tanpa ada nilai ibadah</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ2')">C. Zakat profesi bulanan</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ2')">D. Hadiah perlombaan</button>
+        </div>
+      </div>
+
+      <div class="mcq-question" id="mQ3">
+        <div class="mcq-q-text">3. Apa yang dimaksud dengan 'Al-Mann' yang dapat merusak pahala sedekah menurut Q.S. Al-Baqarah: 264?</div>
+        <div class="mcq-answers">
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ3')">A. Memberikan uang yang masih baru dan bersih</button>
+          <button class="mcq-choice" onclick="ansMcq(this, true, 'mQ3', 25)">B. Mengungkit-ungkit dan menyebut jasa pemberian di depan orang lain ✅</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ3')">C. Mendoakan kebaikan bagi penerima bantuan</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ3')">D. Memasukkan uang ke kotak amal diam-diam</button>
+        </div>
+      </div>
+
+      <div class="mcq-question" id="mQ4">
+        <div class="mcq-q-text">4. Mengapa pepatah Rasulullah saw. 'Tangan kanan memberi, tangan kiri tidak tahu' menjadi teladan utama dalam adab berbagi?</div>
+        <div class="mcq-answers">
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ4')">A. Agar tangan kiri kita tidak merasa iri</button>
+          <button class="mcq-choice" onclick="ansMcq(this, true, 'mQ4', 25)">B. Mengajarkan keikhlasan mutlak, kerahasiaan tinggi, dan bebas dari penyakit pamer (riya') ✅</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ4')">C. Supaya orang lain penasaran siapa yang memberi</button>
+          <button class="mcq-choice" onclick="ansMcq(this, false, 'mQ4')">D. Karena tangan kiri tidak boleh dipakai untuk beraktivitas</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VICTORY SCREEN -->
+    <div id="victoryCard">
+      <div style="font-size: 3.5rem; margin-bottom: 8px;">🌸🏆✨</div>
+      <div style="display:inline-block; background:#FCD34D; color:#78350F; font-weight:900; font-size:0.85rem; padding:4px 14px; border-radius:20px; text-transform:uppercase; margin-bottom:12px;">Skor Sempurna 400 Poin</div>
+      <h2>SELAMAT MISHKA!</h2>
+      <p>Mishka resmi dinobatkan sebagai <strong>DUTA KASIH SAYANG ISLAM 2026</strong>! Memahami hakikat berbagi yang anggun dan meluaskan rezeki sesama.</p>
+
+      <div class="cert-box">
+        <div style="font-size:0.85rem; color:#D1FAE5; margin-bottom:4px;">Nama Siswi: <strong style="color:white;">Mishka (Kelas 5 SD)</strong></div>
+        <div style="font-size:0.85rem; color:#D1FAE5; margin-bottom:4px;">Materi: <strong style="color:white;">PAI Bab 4 (Zakat, Infak, Sedekah, Hadiah)</strong></div>
+        <div style="font-size:0.85rem; color:#D1FAE5;">Pengajar: <strong style="color:white;">Guru Tiara • PKBM Penerus Bangsa</strong></div>
+      </div>
+
+      <button onclick="window.location.reload()" style="background:#FCD34D; color:#78350F; font-weight:900; padding:12px 28px; border-radius:14px; border:none; cursor:pointer; font-size:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+        🔄 Mainkan Lagi
+      </button>
+    </div>
+
+    <footer>
+      <p>Game Khusus Sesi 2 Mishka • PKBM Penerus Bangsa • PAI & Budi Pekerti Bab 4 Kurikulum Merdeka</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Audio Context Sound Synthesis
+    let audioCtx = null;
+    function getAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
+    }
+    function playJoy() {
+      try {
+        const ctx = getAudio();
+        const now = ctx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((f, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(f, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.4);
+        });
+      } catch(e) {}
+    }
+    function playOops() {
+      try {
+        const ctx = getAudio();
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.25);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.28);
+      } catch(e) {}
+    }
+
+    let score = 0;
+    let done = { m1: false, m2: false, m3: false };
+
+    function addScore(pts) {
+      score += pts;
+      document.getElementById('scoreMishka').textContent = score;
+      if (score >= 400) {
+        document.getElementById('victoryCard').style.display = 'block';
+        document.getElementById('victoryCard').scrollIntoView({ behavior: 'smooth' });
+        try {
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+          }
+        } catch(e) {}
+      }
+    }
+
+    function checkMisi1(correct, elem) {
+      const fb = document.getElementById('fb1');
+      if (correct) {
+        elem.classList.add('correct');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = '✨ <strong>Luar Biasa Mishka!</strong> Kado buku cerita ke sahabat adalah <strong>Bunga Sakura Hadiah</strong> (*Tahadu Tahabbu*), saling memberi hadiah agar saling mencintai! (+100 Poin)';
+        if (!done.m1) {
+          done.m1 = true;
+          addScore(100);
+          playJoy();
+        }
+      } else {
+        elem.classList.add('wrong');
+        fb.className = 'feedback-banner error';
+        fb.innerHTML = '🌸 <em>Hampir tepat.</em> Kado manis untuk sahabat adalah <strong>Bunga Hadiah</strong> (bukan beras zakat). Coba pilih cabang Bunga Sakura Hadiah!';
+        playOops();
+      }
+    }
+
+    function checkMisi2(correct, elem) {
+      const fb = document.getElementById('fb2');
+      if (correct) {
+        elem.classList.add('correct');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = '⚡ <strong>Analisis Cemerlang!</strong> Mengungkit pemberian (*Al-Mann*) dan menyakiti hati (*Al-Adza*) menghapus pahala seperti debu di atas batu licin tersapu badai (Q.S. Al-Baqarah: 264)! (+100 Poin)';
+        if (!done.m2) {
+          done.m2 = true;
+          addScore(100);
+          playJoy();
+        }
+      } else {
+        elem.classList.add('wrong');
+        fb.className = 'feedback-banner error';
+        fb.innerHTML = '⚠️ <em>Hati-hati!</em> Di Al-Qur\'an Q.S. Al-Baqarah: 264, mengungkit-ungkit pemberian bisa menghapus pahala sedekah!';
+        playOops();
+      }
+    }
+
+    function checkMisi3(correct, elem) {
+      const fb = document.getElementById('fb3');
+      if (correct) {
+        elem.classList.add('correct');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = '🤲 <strong>Masya Allah Indah Sekali!</strong> Inilah <em>Keanggunan Tangan di Atas</em>: rahasia tangan kanan, tulus tanpa kamera medsos, dan memuliakan sahabat! (+100 Poin)';
+        if (!done.m3) {
+          done.m3 = true;
+          addScore(100);
+          playJoy();
+        }
+      } else {
+        elem.classList.add('wrong');
+        fb.className = 'feedback-banner error';
+        fb.innerHTML = '📵 Membawa kamera demi konten medsos merusak keikhlasan (riya\'). Yuk pilih yang rahasia tangan kanan!';
+        playOops();
+      }
+    }
+
+    let mcqDone = {};
+    function ansMcq(btn, isCorrect, qId, pts) {
+      const qElem = document.getElementById(qId);
+      const btns = qElem.querySelectorAll('.mcq-choice');
+      btns.forEach(b => b.disabled = true);
+      if (isCorrect) {
+        btn.classList.add('correct');
+        if (!mcqDone[qId]) {
+          mcqDone[qId] = true;
+          addScore(pts);
+          playJoy();
+        }
+      } else {
+        btn.classList.add('wrong');
+        playOops();
+      }
+    }
+
+    // Sakura Falling Animation
+    function makeSakura() {
+      for (let i = 0; i < 18; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'sakura-petal';
+        const w = Math.random() * 12 + 8;
+        petal.style.width = w + 'px';
+        petal.style.height = (w * 1.35) + 'px';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.top = '-20px';
+        petal.style.animation = `floatSakura ${Math.random() * 6 + 5}s linear infinite`;
+        petal.style.animationDelay = (Math.random() * 6) + 's';
+        document.body.appendChild(petal);
+      }
+    }
+    window.addEventListener('load', makeSakura);
+  </script>
+</body>
+</html>
