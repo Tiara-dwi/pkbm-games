@@ -794,6 +794,21 @@
     }
   }
 
+  // Auto-detect URL parameter ?student=mishka or ?sesi=2
+  window.addEventListener('DOMContentLoaded', () => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const student = (urlParams.get('student') || urlParams.get('sesi') || '').toLowerCase();
+      if (student === 'mishka' || student === '2' || student === '5') {
+        switchGrade(5);
+      } else {
+        switchGrade(4);
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  });
+
   // AQLAN MISSIONS
   function checkAqlanMisi1(isCorrect, elem) {
     const fb = document.getElementById('fbAqlan1');
@@ -881,7 +896,7 @@
     if (isCorrect) {
       elem.classList.add('selected-correct');
       fb.className = 'feedback-banner success';
-      fb.innerHTML = '⚡ <strong>Analisis Qur'ani Cemerlang!</strong> Mengungkit pemberian (*Al-Mann*) dan menyakiti hati (*Al-Adza*) menghapus pahala seperti debu di atas batu licin yang tersapu hujan badai (Q.S. Al-Baqarah: 264)! (+100 Poin)';
+      fb.innerHTML = '⚡ <strong>Analisis Qur\'ani Cemerlang!</strong> Mengungkit pemberian (*Al-Mann*) dan menyakiti hati (*Al-Adza*) menghapus pahala seperti debu di atas batu licin yang tersapu hujan badai (Q.S. Al-Baqarah: 264)! (+100 Poin)';
       if (!mishkaMisiDone.m2) {
         scoreMishka += 100;
         mishkaMisiDone.m2 = true;
