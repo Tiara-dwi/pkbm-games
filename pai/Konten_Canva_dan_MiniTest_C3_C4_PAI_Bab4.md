@@ -26,7 +26,7 @@
 
 #### Slide 1: Cover - Transformasi Ksatria: Menyambut Usia Baligh
 * **Tipe:** Cover Presentation Slide
-* **Visual Cue Canva:** Format 16:9 Widescreen, warna biru laut tua (#0369A1) dipadu emas elegan dan aksen toska cerah. Ilustrasi anak laki-laki ksatria skater berdiri gagah di samping papan skateboard dengan siluet jam matahari dan bintang bercahaya.
+* **Visual / Video Cue Canva:** 🎬 File: `video_visual_aqlan_skatepark.mp4` / `video_visual_aqlan_skatepark.jpg`. Format 16:9 Widescreen sinematik anime/Ghibli: Aqlan berdiri di puncak ramp tertinggi skatepark saat senja keemasan memegang kemudi emas ksatria mandiri.
 * **Teks Slide:**
   * **Judul Utama:** TRANSFORMASI KSATRIA: MENYAMBUT USIA BALIGH
   * **Mata Pelajaran:** PAI & Budi Pekerti Bab 4 (Kelas 4 SD)
@@ -174,7 +174,7 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
 
 #### Slide 1: Cover - Seni Kasih Sayang Islam: Hidup Lapang dengan Berbagi
 * **Tipe:** Cover Presentation Slide
-* **Visual Cue Canva:** Format 16:9 Widescreen, palet warna zamrud lembut (#047857) berpadu emas muda dan krem hangat. Ilustrasi Mishka dalam busana muslimah anggun tersenyum memegang kotak hadiah berhias pita emas di samping ilustrasi taman bunga yang mekar indah.
+* **Visual / Video Cue Canva:** 🎬 File: `video_visual_mishka_taman.mp4` / `video_visual_mishka_taman.jpg`. Format 16:9 Widescreen sinematik Ghibli: Mishka tersenyum anggun di taman botani pagi yang sejuk, menyerahkan kado berpita emas kepada seorang anak di samping air mancur jernih.
 * **Teks Slide:**
   * **Judul Utama:** HIDUP LAPANG DENGAN BERBAGI: SENI KASIH SAYANG ISLAM
   * **Mata Pelajaran:** PAI & Budi Pekerti Bab 4 (Kelas 5 SD)
@@ -221,9 +221,9 @@ Faris mengalami mimpi basah di hari Minggu pagi. Sesaat setelah bangun tidur, Fa
     *"Senyummu di hadapan saudaramu adalah sedekah bagimu."*
     *"Menyingkirkan batu, duri, dan tulang dari tengah jalan adalah sedekah."*
 
-#### Slide 6: Textbook - Cabang 4: Hadiah (Bunga Semerbak Kasih Sayang)
+#### Slide 6: Textbook - Cabang 4: Hadiah (Bunga Sakura Semerbak Kasih Sayang)
 * **Tipe:** Hubungan Sosial & Silaturahmi
-* **Visual Cue Canva:** Kotak kado indah berpita warna pastel diberikan kepada sahabat saat pentas seni senam sekolah.
+* **Visual / Video Cue Canva:** 🌸 File: `visual_pohon_kebaikan_sakura.jpg` / `video_visual_pohon_kebaikan_sakura.mp4`. Pohon Kebaikan megah dengan kanopi Bunga Sakura (*Cherry Blossom*) merah muda bermekaran indah, dihiasi kotak kado pastel berpita manis di antara bunganya.
 * **Teks Slide:**
   * **Pengertian Hadiah:** Pemberian suatu barang secara sukarela kepada seseorang sebagai tanda penghormatan, ucapan selamat, atau ungkapan kasih sayang.
   * **Perbedaan Sakral Hadiah vs Sedekah:**
