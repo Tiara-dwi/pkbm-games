@@ -164,11 +164,11 @@ Pahala berbagi kita yang tadinya bertumpuk indah bisa lenyap licin tak berbekas 
 **Guru Tiara:** "Alhamdulillah, selamat Mishka! Sekarang ambil buku tulis PAI dan pulpenmu. Bu Tiara diktekan poin ringkasnya untuk dicatat:  
 1. Tulis judul: **BAB 4: HIDUP LAPANG DENGAN BERBAGI**.  
 2. Poin 1: **Empat Cabang Pohon Kebaikan**:  
-   - Akar = Zakat (Wajib, ada nisab & haul).  
-   - Batang = Infak (Uang sukarela untuk sarana umum kapan saja).  
-   - Daun = Sedekah (Kebaikan materi & non-materi tanpa batas).  
+   - Akar = Zakat (Wajib, ada nisab & haul • Basis: Q.S. At-Taubah: 60).  
+   - Batang = Infak (Uang sukarela untuk sarana umum • Basis: Q.S. Ali 'Imran: 92).  
+   - Daun = Sedekah (Kebaikan materi & non-materi • Basis: Q.S. Al-Baqarah: 177).  
    - Bunga = Hadiah (Tanda cinta kasih persahabatan).  
-3. Poin 2: **Perusak Pahala (Batu Licin Tersapu Badai)**:  
+3. Poin 2: **Perusak Pahala [Basis: Q.S. Al-Baqarah: 264]**:  
    - Mengungkit-ungkit (*Al-Mann*).  
    - Menyakiti hati penerima (*Al-Adza*).  
 4. Poin 3: **Keanggunan Tangan di Atas**: Ikhlas tanpa kamera, rahasia tangan kanan, dan menjaga kehormatan sahabat!"  
