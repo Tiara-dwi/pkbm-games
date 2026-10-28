@@ -634,6 +634,223 @@
       background: #F1F5F9;
       color: #334155;
     }
+  
+    /* ========================================================================= */
+    /* VIRTUAL MUSEUM EXHIBITION CORRIDOR (RUANG INSPIRASI TOKOH BANGSA)        */
+    /* ========================================================================= */
+    .museum-hall {
+      background: radial-gradient(circle at 50% 20%, #1E1B4B 0%, #0F172A 70%, #020617 100%);
+      color: #F8FAFC;
+      border-radius: 28px;
+      padding: 32px 24px;
+      margin-bottom: 24px;
+      border: 3px solid #D97706;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .museum-hall::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, #F59E0B, #DC2626, #F59E0B, #D97706);
+    }
+
+    .museum-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 28px;
+    }
+
+    .museum-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #F59E0B;
+      color: #FDE68A;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .museum-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #FEF08A;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 12px rgba(245, 158, 11, 0.35);
+    }
+
+    .museum-desc {
+      font-size: 0.92rem;
+      color: #CBD5E1;
+      line-height: 1.6;
+    }
+
+    .museum-corridor {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 900px) {
+      .museum-corridor {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .museum-corridor {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .museum-pedestal {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1.5px solid rgba(245, 158, 11, 0.25);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .museum-pedestal:hover, .museum-pedestal.active {
+      transform: translateY(-6px);
+      border-color: #F59E0B;
+      background: rgba(30, 41, 59, 0.95);
+      box-shadow: 0 12px 25px rgba(245, 158, 11, 0.25);
+    }
+
+    .gold-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #020617;
+      border: 4px solid #F59E0B;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(245, 158, 11, 0.4);
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .gold-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.4s ease;
+      filter: contrast(1.05) brightness(1.02);
+    }
+
+    .museum-pedestal:hover .gold-frame img {
+      transform: scale(1.06);
+    }
+
+    .spotlight {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 20%, rgba(254, 240, 138, 0.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .brass-plaque {
+      background: linear-gradient(135deg, #FDE68A 0%, #D97706 60%, #92400E 100%);
+      color: #1E1B4B;
+      border-radius: 8px;
+      padding: 8px 10px;
+      width: 100%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+      border: 1px solid #78350F;
+      margin-bottom: 8px;
+    }
+
+    .plaque-name {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .plaque-role {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.95;
+      margin-top: 2px;
+    }
+
+    .hero-quote {
+      font-size: 0.75rem;
+      color: #E2E8F0;
+      font-style: italic;
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    .museum-cta-wrap {
+      text-align: center;
+      border-top: 1px dashed rgba(245, 158, 11, 0.3);
+      padding-top: 24px;
+    }
+
+    .btn-start-game-arena {
+      background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%);
+      color: white;
+      border: 2px solid #F59E0B;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4), 0 0 15px rgba(245, 158, 11, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.25s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-start-game-arena:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(220, 38, 38, 0.5), 0 0 25px rgba(245, 158, 11, 0.5);
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #B91C1C 100%);
+    }
+
+    .btn-museum-toggle {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1.5px solid #F59E0B;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-museum-toggle:hover {
+      background: #FDE68A;
+      transform: translateY(-1px);
+    }
+
   </style>
 </head>
 <body>
@@ -664,11 +881,113 @@
           <span>👁️</span> Mode Ramah Disleksia
         </button>
 
-        <a href="index.html" class="btn-portal">← Menu Pancasila</a>
+        <button class="btn-museum-toggle" onclick="toggleMuseumView()">🏛️ Museum Tokoh</button>
+      <a href="index.html" class="btn-portal">← Menu Pancasila</a>
       </div>
     </header>
 
     <!-- Hero Card -->
+    
+    <!-- ========================================================================= -->
+    <!-- 🏛️ GALERI MUSEUM TOKOH & PAHLAWAN BANGSA (SEBELUM PERMAINAN MULAI)        -->
+    <!-- ========================================================================= -->
+    <section class="museum-hall" id="museumHall">
+      <div class="museum-header">
+        <div class="museum-badge">🏛️ RUANG INSPIRASI SEJARAH NUSANTARA</div>
+        <h2 class="museum-title">Galeri Museum Tokoh & Pahlawan Bangsa</h2>
+        <p class="museum-desc">
+          Sebelum memulai misi permainan, mari masuki lorong kehormatan pahlawan bangsa.
+          Klik setiap pigura foto emas di bawah ini untuk merenungkan mutiara hikmah kepemimpinan, keberanian, dan integritas yang mereka wariskan!
+        </p>
+      </div>
+
+      <div class="museum-corridor">
+        <!-- 1. SOEKARNO -->
+        <div class="museum-pedestal" onclick="inspectHero('soekarno', this)">
+          <div class="gold-frame">
+            <img src="../assets/museum/soekarno.jpg" alt="Ir. Soekarno" loading="lazy">
+            <div class="spotlight"></div>
+          </div>
+          <div class="brass-plaque">
+            <div class="plaque-name">Ir. Soekarno</div>
+            <div class="plaque-role">Proklamator & Penggali Pancasila (Presiden RI ke-1)</div>
+          </div>
+          <p class="hero-quote">"Gotong royong adalah pembantingan tulang bersama, pemerasan keringat bersama. Bangsa yang besar adalah bangsa yang menghargai jasa para pahlawannya!"</p>
+        </div>
+
+        <!-- 2. B.J. HABIBIE -->
+        <div class="museum-pedestal" onclick="inspectHero('habibie', this)">
+          <div class="gold-frame">
+            <img src="../assets/museum/habibie.jpg" alt="B.J. Habibie" loading="lazy">
+            <div class="spotlight"></div>
+          </div>
+          <div class="brass-plaque">
+            <div class="plaque-name">Prof. B.J. Habibie</div>
+            <div class="plaque-role">Bapak Dirgantara & Demokrasi (Presiden RI ke-3)</div>
+          </div>
+          <p class="hero-quote">"Keberhasilan bukan milik orang pintar semata, melainkan milik mereka yang memegang teguh integritas ilmu dan cinta tulus pada tanah air."</p>
+        </div>
+
+        <!-- 3. GUS DUR -->
+        <div class="museum-pedestal" onclick="inspectHero('gusdur', this)">
+          <div class="gold-frame">
+            <img src="../assets/museum/gusdur.jpg" alt="Gus Dur" loading="lazy">
+            <div class="spotlight"></div>
+          </div>
+          <div class="brass-plaque">
+            <div class="plaque-name">K.H. Abdurrahman Wahid</div>
+            <div class="plaque-role">Bapak Pluralisme & Keberagaman (Presiden RI ke-4)</div>
+          </div>
+          <p class="hero-quote">"Tidak penting apa agama atau sukumu. Kalau kamu bisa berbuat baik untuk sesama manusia, orang tidak akan pernah tanya apa agamamu."</p>
+        </div>
+
+        <!-- 4. SBY -->
+        <div class="museum-pedestal" onclick="inspectHero('sby', this)">
+          <div class="gold-frame">
+            <img src="../assets/museum/sby.jpg" alt="Susilo Bambang Yudhoyono" loading="lazy">
+            <div class="spotlight"></div>
+          </div>
+          <div class="brass-plaque">
+            <div class="plaque-name">Dr. H. Susilo Bambang Y.</div>
+            <div class="plaque-role">Bapak Perdamaian & Demokrasi (Presiden RI ke-6)</div>
+          </div>
+          <p class="hero-quote">"Perdamaian dan keutuhan NKRI hanya bisa dijaga jika kita selalu mengedepankan dialog, musyawarah, dan menempatkan persatuan di atas segalanya."</p>
+        </div>
+
+        <!-- 5. MUNIR -->
+        <div class="museum-pedestal" onclick="inspectHero('munir', this)">
+          <div class="gold-frame">
+            <img src="../assets/museum/munir.jpg" alt="Munir Said Thalib" loading="lazy">
+            <div class="spotlight"></div>
+          </div>
+          <div class="brass-plaque">
+            <div class="plaque-name">Munir Said Thalib</div>
+            <div class="plaque-role">Pahlawan Kemanusiaan & Penegak HAM</div>
+          </div>
+          <p class="hero-quote">"Kita harus bersikap tenang walau takut, membela kebenaran walau diancam. Keberanian sejati adalah melawan ketidakadilan tanpa kekerasan."</p>
+        </div>
+      </div>
+
+      <!-- Spotlight Detail Box -->
+      <div id="museumSpotlightCard" style="display:none; background:rgba(15,23,42,0.95); border:2px solid #F59E0B; border-radius:18px; padding:18px 24px; margin-bottom:24px; text-align:left; animation:fadeIn 0.3s; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+          <h4 id="spotlightHeroName" style="color:#FEF08A; font-size:1.15rem; font-weight:800;"></h4>
+          <span id="spotlightHeroPlaque" style="font-size:0.75rem; background:#D97706; color:white; padding:4px 12px; border-radius:20px; font-weight:700;"></span>
+        </div>
+        <p id="spotlightHeroText" style="color:#E2E8F0; font-size:0.9rem; line-height:1.6; margin-bottom:8px;"></p>
+        <div id="spotlightHeroLesson" style="color:#86EFAC; font-size:0.85rem; font-weight:700;"></div>
+      </div>
+
+      <!-- Tombol Masuk Arena Game -->
+      <div class="museum-cta-wrap">
+        <button class="btn-start-game-arena" onclick="enterGameArena()">
+          <span>🚀</span>
+          <span>Masuk & Mulai Misi Permainan Pancasila</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </section>
+
     <div class="hero-card">
       <div class="hero-info">
         <h2>Detektif Kebinekaan & Semangat Gotong Royong</h2>
@@ -1199,6 +1518,75 @@
       }
       updateStudentProfile();
     });
+  
+    // ==========================================
+    // MUSEUM INTERACTIVE LOGIC
+    // ==========================================
+    const heroDatabase = {
+      soekarno: {
+        name: "Ir. Soekarno (Bung Karno)",
+        role: "Proklamator Kemerdekaan & Penggali Falsafah Pancasila (1901 – 1970)",
+        text: "Pada 1 Juni 1945, Bung Karno menyampaikan pidato bersejarah tentang lima dasar negara: PANCASILA. Beliau menegaskan bahwa intisari dari kelima sila tersebut adalah satu kata sakti: GOTONG ROYONG. Bung Karno membakar semangat pemuda agar bersatu menjaga kedaulatan tanah air dari perpecahan.",
+        lesson: "💡 Nilai Teladan: Nasionalisme luhur, persatuan kebinekaan, dan keyakinan teguh pada jati diri bangsa Indonesia."
+      },
+      habibie: {
+        name: "Prof. Dr. Ing. H. Bacharuddin Jusuf Habibie",
+        role: "Bapak Teknologi Dirgantara & Pelopor Kebebasan Pers (1936 – 2019)",
+        text: "Ilmuwan jenius perancang pesawat terbang N-250 Gatotkaca buatan anak bangsa. Sebagai Presiden ke-3, beliau meletakkan tonggak kebebasan pers, demokrasi modern, dan undang-undang perlindungan hak asasi manusia di masa transisi reformasi Indonesia.",
+        lesson: "💡 Nilai Teladan: Keunggulan ilmu pengetahuan, kerja keras tanpa henti, cinta tanah air, dan kejujuran nurani."
+      },
+      gusdur: {
+        name: "K.H. Abdurrahman Wahid (Gus Dur)",
+        role: "Bapak Pluralisme & Pelindung Hak Kaum Minoritas (1940 – 2009)",
+        text: "Presiden RI ke-4 yang mengabdikan hidupnya untuk merawat kerukunan antarumat beragama dan antarsuku. Gus Dur menetapkan Tahun Baru Imlek sebagai hari libur resmi dan senantiasa membela kaum yang tertindas dengan penuh humor, kelembutan, dan kebijaksanaan.",
+        lesson: "💡 Nilai Teladan: Toleransi sejati, perlindungan kemanusiaan di atas perbedaan golongan, dan kesederhanaan hidup."
+      },
+      sby: {
+        name: "Jenderal TNI (Purn.) Prof. Dr. Susilo Bambang Yudhoyono",
+        role: "Bapak Perdamaian & Pemimpin Pemilu Langsung Pertama (Presiden RI ke-6)",
+        text: "Presiden pertama yang dipilih langsung oleh rakyat secara demokratis. Beliau berhasil mewujudkan Perjanjian Damai Helsinki (perdamaian Aceh setelah 30 tahun konflik), memimpin pemulihan pasca tsunami dahsyat 2004, dan menjaga stabilitas ekonomi serta perdamaian dunia.",
+        lesson: "💡 Nilai Teladan: Kepemimpinan yang mengutamakan musyawarah, ketenangan berpikir, dan diplomasi damai."
+      },
+      munir: {
+        name: "Munir Said Thalib",
+        role: "Pejuang Hak Asasi Manusia & Keadilan Kemanusiaan (1965 – 2004)",
+        text: "Aktivis pembela hak asasi manusia yang mendirikan KontraS dan Imparsial. Munir tanpa rasa takut mendampingi keluarga korban ketidakadilan, memperjuangkan buruh dan masyarakat kecil, serta mengingatkan penguasa agar selalu mematuhi hukum dan menghormati hak hidup manusia.",
+        lesson: "💡 Nilai Teladan: Keberanian moral membela yang lemah, kejujuran tak tergoyahkan, dan dedikasi kemanusiaan tanpa kekerasan."
+      }
+    };
+
+    function inspectHero(heroKey, pedestalEl) {
+      triggerSfx('click');
+      document.querySelectorAll('.museum-pedestal').forEach(p => p.classList.remove('active'));
+      if (pedestalEl) pedestalEl.classList.add('active');
+
+      const hero = heroDatabase[heroKey];
+      if (!hero) return;
+
+      const card = document.getElementById('museumSpotlightCard');
+      document.getElementById('spotlightHeroName').textContent = hero.name;
+      document.getElementById('spotlightHeroPlaque').textContent = hero.role;
+      document.getElementById('spotlightHeroText').textContent = hero.text;
+      document.getElementById('spotlightHeroLesson').textContent = hero.lesson;
+      card.style.display = 'block';
+    }
+
+    function enterGameArena() {
+      triggerSfx('win');
+      const gameArena = document.querySelector('.hero-card') || document.querySelector('.container > .grade-tabs') || document.getElementById('gameGrade4');
+      if (gameArena) {
+        gameArena.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function toggleMuseumView() {
+      triggerSfx('click');
+      const museum = document.getElementById('museumHall');
+      if (museum) {
+        museum.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
   </script>
 </body>
 </html>
