@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ksatria Gotong Royong & Detektif Kebinekaan Kelas 4 - PKBM Penerus Bangsa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E11D48;
+      --primary-dark: #BE123C;
+      --secondary: #2563EB;
+      --accent: #F59E0B;
+      --success: #10B981;
+      --bg: #FFF1F2;
+      --card-bg: #FFFFFF;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --radius: 20px;
+      --shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.15), 0 8px 10px -6px rgba(225, 29, 72, 0.1);
+    }
+
+    /* Mode Ramah Disleksia Alisya */
+    body.dyslexia-mode {
+      letter-spacing: 0.08em;
+      word-spacing: 0.16em;
+      line-height: 1.85;
+      font-size: 1.05rem;
+      background: #FEF9C3 !important; /* Soft yellow contrast */
+    }
+
+    body.dyslexia-mode .story-box,
+    body.dyslexia-mode .choice-card,
+    body.dyslexia-mode .pool-card {
+      font-size: 1.05rem !important;
+      line-height: 1.8 !important;
+      border-width: 3px !important;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 50%, #FEF2F2 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 16px;
+      line-height: 1.5;
+      transition: background 0.3s;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Header Bar */
+    .header-bar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(225, 29, 72, 0.15);
+      margin-bottom: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #E11D48, #F43F5E);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 10px rgba(225, 29, 72, 0.3);
+    }
+
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #BE123C;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .control-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .student-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFF1F2;
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid #FECDD3;
+    }
+
+    .student-select {
+      border: none;
+      background: transparent;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #BE123C;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .btn-toggle-dyslexia {
+      background: #FEF3C7;
+      border: 1.5px solid #F59E0B;
+      color: #92400E;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle-dyslexia.active {
+      background: #F59E0B;
+      color: white;
+    }
+
+    .btn-portal {
+      text-decoration: none;
+      background: #F1F5F9;
+      color: #475569;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    /* Hero Card */
+    .hero-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 2px solid #FFE4E6;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-info h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin-bottom: 4px;
+    }
+
+    .hero-info p {
+      font-size: 0.85rem;
+      color: #64748B;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .meta-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #FFF1F2;
+      color: #E11D48;
+    }
+
+    .meta-pill.sumpah {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .score-board {
+      background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
+      border: 2px solid #F43F5E;
+      padding: 14px 22px;
+      border-radius: 20px;
+      text-align: center;
+      min-width: 160px;
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #9F1239;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .score-num {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #E11D48;
+      line-height: 1.1;
+    }
+
+    /* Navigation Tabs */
+    .mission-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .mission-nav {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .tab-btn {
+      background: white;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 12px 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #64748B;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tab-btn.active {
+      background: #E11D48;
+      color: white;
+      border-color: #E11D48;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    }
+
+    .tab-btn span.tab-icon {
+      font-size: 1.25rem;
+    }
+
+    /* Mission Cards */
+    .mission-card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid #F1F5F9;
+      margin-bottom: 24px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      border-bottom: 2px solid #F1F5F9;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-header h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1E293B;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mission-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: #FFE4E6;
+      color: #BE123C;
+    }
+
+    .story-box {
+      background: #F8FAFC;
+      border-left: 5px solid #E11D48;
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .choice-card {
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #FFFFFF;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .choice-card:hover {
+      border-color: #E11D48;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .choice-card.selected-correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+    }
+
+    .choice-card.selected-wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+    }
+
+    .choice-bullet {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .choice-card.selected-correct .choice-bullet {
+      background: #10B981;
+      color: white;
+    }
+
+    .choice-card.selected-wrong .choice-bullet {
+      background: #EF4444;
+      color: white;
+    }
+
+    .choice-content h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 3px;
+    }
+
+    .choice-content p {
+      font-size: 0.85rem;
+      color: #64748B;
+    }
+
+    .feedback-banner {
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-top: 16px;
+      display: none;
+      font-size: 0.9rem;
+      animation: fadeIn 0.3s;
+    }
+
+    .feedback-banner.success {
+      background: #ECFDF5;
+      border: 1.5px solid #10B981;
+      color: #065F46;
+      display: block;
+    }
+
+    .feedback-banner.error {
+      background: #FEF2F2;
+      border: 1.5px solid #EF4444;
+      color: #991B1B;
+      display: block;
+    }
+
+    /* Sapu Lidi Simulator (Misi 2) */
+    .lidi-sim-box {
+      background: #FFFBEB;
+      border: 2px solid #FDE68A;
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .lidi-arena {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 16px 0;
+    }
+
+    .lidi-graphic {
+      font-size: 5rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .sim-btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-sim {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-sim.single {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+
+    .btn-sim.bundle {
+      background: #DC2626;
+      color: white;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+    }
+
+    /* Matching Grid (Misi 3) */
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .match-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .match-card {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      padding: 14px 18px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .match-card:hover {
+      border-color: #E11D48;
+      background: #FFF1F2;
+    }
+
+    .match-card.matched {
+      background: #ECFDF5;
+      border-color: #10B981;
+      pointer-events: none;
+    }
+
+    /* Next Button */
+    .btn-next-mission {
+      background: linear-gradient(135deg, #E11D48, #F43F5E);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-next-mission:hover {
+      background: #BE123C;
+      transform: translateY(-2px);
+    }
+
+    /* Modal Certificate */
+    .cert-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+      backdrop-filter: blur(4px);
+    }
+
+    .cert-box {
+      background: white;
+      border-radius: 28px;
+      max-width: 680px;
+      width: 100%;
+      padding: 36px 30px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 6px double #E11D48;
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .trophy-emoji {
+      font-size: 4rem;
+      margin-bottom: 8px;
+    }
+
+    .cert-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.8rem;
+      color: #BE123C;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .cert-student-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #E11D48;
+      text-decoration: underline;
+      margin: 12px 0 8px;
+    }
+
+    .cert-body {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .cert-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-cert {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-cert.print {
+      background: #E11D48;
+      color: white;
+    }
+
+    .btn-cert.close {
+      background: #F1F5F9;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header-bar">
+      <div class="brand-group">
+        <div class="brand-icon">🌾</div>
+        <div class="brand-text">
+          <h1>Ksatria Gotong Royong Kelas 4</h1>
+          <p>PKBM Penerus Bangsa • Edisi Hari Sumpah Pemuda 28 Oktober</p>
+        </div>
+      </div>
+
+      <div class="control-badges">
+        <div class="student-badge-wrap">
+          <span>👤 Ksatria:</span>
+          <select class="student-select" id="studentSelect" onchange="updateStudentProfile()">
+            <option value="Hasyif" selected>Hasyif (Lead Explorer C4-C5)</option>
+            <option value="Kinanti">Kinanti (Field Observer C3)</option>
+            <option value="Alisya">Alisya (Visual Sensory Detective)</option>
+            <option value="Aqlan">Aqlan (Skater Gotong Royong)</option>
+          </select>
+        </div>
+
+        <button class="btn-toggle-dyslexia" id="btnDyslexia" onclick="toggleDyslexiaMode()">
+          <span>👁️</span> Mode Ramah Disleksia
+        </button>
+
+        <a href="index.html" class="btn-portal">← Menu Pancasila</a>
+      </div>
+    </header>
+
+    <!-- Hero Card -->
+    <div class="hero-card">
+      <div class="hero-info">
+        <h2>Detektif Kebinekaan & Semangat Gotong Royong</h2>
+        <p>Bantu <strong id="studentNameDisplay" style="color:#E11D48;">Hasyif</strong> menyelesaikan 4 Misi Kehormatan membuktikan sakti-nya seikat sapu lidi!</p>
+        <div class="hero-badge-row">
+          <span class="meta-pill">🛡️ Sila ke-3: Persatuan Indonesia</span>
+          <span class="meta-pill sumpah">🇮🇩 Sumpah Pemuda 28 Oktober</span>
+          <span class="meta-pill">🌾 Filosofi Sapu Lidi</span>
+        </div>
+      </div>
+
+      <div class="score-board">
+        <div class="score-label">Skor Ksatria</div>
+        <div class="score-num" id="scoreDisplay">0</div>
+        <div style="font-size:0.75rem; color:#9F1239; font-weight:700;">Target: 400 Poin</div>
+      </div>
+    </div>
+
+    <!-- Mission Navigation Tabs -->
+    <nav class="mission-nav">
+      <button class="tab-btn active" id="tab-1" onclick="switchMission(1)">
+        <span class="tab-icon">🌲</span>
+        <span>Misi 1: Badai Beringin</span>
+      </button>
+      <button class="tab-btn" id="tab-2" onclick="switchMission(2)">
+        <span class="tab-icon">🧹</span>
+        <span>Misi 2: Sapu Lidi Sakti</span>
+      </button>
+      <button class="tab-btn" id="tab-3" onclick="switchMission(3)">
+        <span class="tab-icon">🗺️</span>
+        <span>Misi 3: Peta Kebinekaan</span>
+      </button>
+      <button class="tab-btn" id="tab-4" onclick="switchMission(4)">
+        <span class="tab-icon">📝</span>
+        <span>Misi 4: Uji Detektif C3-C4</span>
+      </button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- MISI 1: BADAI POHON BERINGIN -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-1">
+      <div class="card-header">
+        <h3><span>🌲</span> Misi 1: Pembagian Tugas Kerja Bakti Badai Beringin</h3>
+        <span class="mission-tag">Logika Efisiensi Gotong Royong</span>
+      </div>
+
+      <div class="story-box">
+        <strong>Tantangan Lingkungan:</strong> Badai semalam menumbangkan dahan pohon beringin raksasa melintang di jalan komplek dan menyumbat selokan. Pak RT menghela napas panjang:
+        <em>"Kalau Bapak bersihkan sendirian pakai gergaji kecil, butuh waktu 5 hari (120 jam)! Nanti malam diprediksi badai hujan lebat turun lagi dan air selokan pasti membanjiri rumah warga!"</em>
+        <br><br>
+        Sebagai ksatria Pancasila, pembagian tugas gotong royong manakah yang paling cepat dan adil?
+      </div>
+
+      <div class="choice-grid">
+        <div class="choice-card" onclick="evalMisi1(1, this)">
+          <div class="choice-bullet">A</div>
+          <div class="choice-content">
+            <h4>Sikap Acuh / Egois:</h4>
+            <p>"Pulang ke rumah dan tidur, karena pohon itu tumbang di jalan umum, bukan di pekarangan rumah saya."</p>
+          </div>
+        </div>
+
+        <div class="choice-card" onclick="evalMisi1(2, this)">
+          <div class="choice-bullet">B</div>
+          <div class="choice-content">
+            <h4>Gotong Royong Pembagian 3 Regu:</h4>
+            <p>"Mengajak warga membagi tugas: Regu A memotong dahan dengan gergaji mesin, Regu B membersihkan sampah selokan, dan Regu C menyiapkan air minum dan makanan. Waktu 120 jam terpangkas jadi 45 menit tuntas!"</p>
+          </div>
+        </div>
+
+        <div class="choice-card" onclick="evalMisi1(3, this)">
+          <div class="choice-bullet">C</div>
+          <div class="choice-content">
+            <h4>Bekerja Tanpa Rencana:</h4>
+            <p>"Semua 50 warga berebut memegang satu gergaji kecil yang sama secara bergantian."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fb-1"></div>
+      <button class="btn-next-mission" id="btn-next-1" style="display:none;" onclick="switchMission(2)">Lanjut ke Misi 2: Sapu Lidi Sakti →</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MISI 2: SAPU LIDI SIMULATOR -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-2" style="display:none;">
+      <div class="card-header">
+        <h3><span>🧹</span> Misi 2: Simulator Fisika Filosofi Seikat Sapu Lidi</h3>
+        <span class="mission-tag">Kekuatan Persatuan Sila ke-3</span>
+      </div>
+
+      <div class="story-box">
+        Ujilah hukum fisika persatuan bangsa! Coba tekan tombol <strong>"Uji Sebatang Lidi"</strong> dan bandingkan dengan tombol <strong>"Ikat 100 Lidi Jadi Sapu"</strong>!
+      </div>
+
+      <div class="lidi-sim-box">
+        <div class="lidi-arena">
+          <div class="lidi-graphic" id="lidiGraphic">🥢</div>
+        </div>
+        <div id="lidiStatusText" style="font-weight:800; font-size:1.1rem; color:#BE123C; margin-bottom:14px;">Status: Siap Diuji</div>
+
+        <div class="sim-btn-row">
+          <button class="btn-sim single" onclick="simLidi('single')">❌ Tekan Sebatang Lidi</button>
+          <button class="btn-sim bundle" onclick="simLidi('bundle')">✅ Ikat 100 Lidi (Pita Merah Putih)</button>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fb-2"></div>
+      <button class="btn-next-mission" id="btn-next-2" style="display:none;" onclick="switchMission(3)">Lanjut ke Misi 3: Peta Kebinekaan →</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MISI 3: PETA KEBINEKAAN BUDAYA NUSANTARA -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-3" style="display:none;">
+      <div class="card-header">
+        <h3><span>🗺️</span> Misi 3: Mencocokkan Rumah Adat & Alat Musik Nusantara</h3>
+        <span class="mission-tag">Klasifikasi Budaya Daerah</span>
+      </div>
+
+      <div class="story-box">
+        Klik kartu pasangan budaya berikut untuk menghubungkan rumah adat dan alat musik ke pulau asalnya!
+      </div>
+
+      <div class="match-grid" id="matchGrid">
+        <div class="match-card" onclick="matchCard(1, this)">
+          <div>
+            <strong>Rumah Gadang & Saluang</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Atap lancip tanduk kerbau</div>
+          </div>
+          <span style="font-size:1.5rem;">🏠</span>
+        </div>
+
+        <div class="match-card" onclick="matchCard(1, this)">
+          <div>
+            <strong>Sumatera Barat (Minangkabau)</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Pesisir barat pulau Sumatera</div>
+          </div>
+          <span style="font-size:1.5rem;">📍</span>
+        </div>
+
+        <div class="match-card" onclick="matchCard(2, this)">
+          <div>
+            <strong>Angklung Bambu Getar</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Warisan alat musik bambu dunia</div>
+          </div>
+          <span style="font-size:1.5rem;">🎋</span>
+        </div>
+
+        <div class="match-card" onclick="matchCard(2, this)">
+          <div>
+            <strong>Jawa Barat (Sunda)</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Tanah Parahyangan</div>
+          </div>
+          <span style="font-size:1.5rem;">📍</span>
+        </div>
+
+        <div class="match-card" onclick="matchCard(3, this)">
+          <div>
+            <strong>Sasando Daun Lontar</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Alat musik petik dawai indah</div>
+          </div>
+          <span style="font-size:1.5rem;">🎵</span>
+        </div>
+
+        <div class="match-card" onclick="matchCard(3, this)">
+          <div>
+            <strong>Nusa Tenggara Timur (Pulau Rote)</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Kepulauan Flobamora</div>
+          </div>
+          <span style="font-size:1.5rem;">📍</span>
+        </div>
+
+        <div class="match-card" onclick="matchCard(4, this)">
+          <div>
+            <strong>Rumah Honai & Tifa</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Rumah bulat jerami & alat tabuh</div>
+          </div>
+          <span style="font-size:1.5rem;">🛖</span>
+        </div>
+
+        <div class="match-card" onclick="matchCard(4, this)">
+          <div>
+            <strong>Papua (Suku Dani)</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Pegunungan Jayawijaya</div>
+          </div>
+          <span style="font-size:1.5rem;">📍</span>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fb-3"></div>
+      <button class="btn-next-mission" id="btn-next-3" style="display:none;" onclick="switchMission(4)">Lanjut ke Misi 4: Uji Detektif C3-C4 →</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MISI 4: UJI DETEKTIF KOGNITIF C3-C4 -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-4" style="display:none;">
+      <div class="card-header">
+        <h3><span>📝</span> Misi 4: Uji Formatif Ksatria Gotong Royong (C3–C4)</h3>
+        <span class="mission-tag">Mini Test Kelas 4</span>
+      </div>
+
+      <!-- Soal 1 -->
+      <div class="story-box" style="margin-bottom:12px;">
+        <strong>Soal 1 dari 4 (C3):</strong> Tradisi tolong-menolong membersihkan jalan desa dan memangkas dahan pohon secara sukarela merupakan cerminan Pancasila, yaitu Sila...
+      </div>
+      <div class="choice-grid" id="qgrid-1" style="margin-bottom:18px;">
+        <div class="choice-card" onclick="evalQuiz(1, 0, this)">
+          <div class="choice-bullet">A</div>
+          <div class="choice-content"><p>Sila Pertama: Ketuhanan Yang Maha Esa</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(1, 1, this)">
+          <div class="choice-bullet">B</div>
+          <div class="choice-content"><p>Sila Ketiga: Persatuan Indonesia</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(1, 2, this)">
+          <div class="choice-bullet">C</div>
+          <div class="choice-content"><p>Sila Kelima: Keadilan Sosial</p></div>
+        </div>
+      </div>
+
+      <!-- Soal 2 -->
+      <div class="story-box" style="margin-bottom:12px;">
+        <strong>Soal 2 dari 4 (C4):</strong> Pada simulasi sapu lidi, mengapa 100 batang lidi yang diikat tali merah putih jauh lebih sakti dibanding sebatang lidi sendirian?
+      </div>
+      <div class="choice-grid" id="qgrid-2" style="margin-bottom:18px;">
+        <div class="choice-card" onclick="evalQuiz(2, 0, this)">
+          <div class="choice-bullet">A</div>
+          <div class="choice-content"><p>Karena sendirian kita rapuh dan mudah patah, tetapi jika bersatu mengikat perbedaan menjadi kokoh tak terkalahkan.</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(2, 1, this)">
+          <div class="choice-bullet">B</div>
+          <div class="choice-content"><p>Karena sapu lidi yang banyak harganya lebih mahal di pasar.</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(2, 2, this)">
+          <div class="choice-bullet">C</div>
+          <div class="choice-content"><p>Karena pohon kelapa menghasilkan daun yang sangat panjang.</p></div>
+        </div>
+      </div>
+
+      <!-- Soal 3 -->
+      <div class="story-box" style="margin-bottom:12px;">
+        <strong>Soal 3 dari 4 (C3):</strong> Setiap tanggal 28 Oktober, bangsa Indonesia memperingati Hari Sumpah Pemuda. Bahasa apa yang diikrarkan pada tahun 1928 sebagai bahasa persatuan penjembatan kebinekaan suku?
+      </div>
+      <div class="choice-grid" id="qgrid-3" style="margin-bottom:18px;">
+        <div class="choice-card" onclick="evalQuiz(3, 0, this)">
+          <div class="choice-bullet">A</div>
+          <div class="choice-content"><p>Bahasa Indonesia</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(3, 1, this)">
+          <div class="choice-bullet">B</div>
+          <div class="choice-content"><p>Bahasa Asing Internasional</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(3, 2, this)">
+          <div class="choice-bullet">C</div>
+          <div class="choice-content"><p>Hanya bahasa daerah pulau Jawa</p></div>
+        </div>
+      </div>
+
+      <!-- Soal 4 -->
+      <div class="story-box" style="margin-bottom:12px;">
+        <strong>Soal 4 dari 4 (C4):</strong> Semboyan negara kita pada pita cengkeraman Burung Garuda adalah "Bhinneka Tunggal Ika", yang memiliki arti luhur...
+      </div>
+      <div class="choice-grid" id="qgrid-4" style="margin-bottom:18px;">
+        <div class="choice-card" onclick="evalQuiz(4, 0, this)">
+          <div class="choice-bullet">A</div>
+          <div class="choice-content"><p>Berbeda-beda tetapi tetap satu jua</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(4, 1, this)">
+          <div class="choice-bullet">B</div>
+          <div class="choice-content"><p>Semua suku harus memiliki adat yang seragam sama persis</p></div>
+        </div>
+        <div class="choice-card" onclick="evalQuiz(4, 2, this)">
+          <div class="choice-bullet">C</div>
+          <div class="choice-content"><p>Masing-masing pulau hidup sendiri tanpa mempedulikan pulau lain</p></div>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fb-4"></div>
+      <button class="btn-next-mission" id="btn-finish" style="display:none;" onclick="showFinalCertificate()">🏆 Buka Sertifikat Ksatria Kebinekaan Kelas 4</button>
+    </div>
+
+  </div>
+
+  <!-- Final Certificate Modal -->
+  <div class="cert-overlay" id="certModal">
+    <div class="cert-box">
+      <div class="trophy-emoji">🏆</div>
+      <div class="cert-title">SERTIFIKAT PENGHARGAAN</div>
+      <div style="font-size:0.85rem; font-weight:700; color:#64748B; letter-spacing:1px;">KSATRIA GOTONG ROYONG & KEBINEKAAN KELAS 4</div>
+      
+      <div class="cert-student-name" id="certName">Hasyif</div>
+      <div style="font-size:1rem; font-weight:800; color:#BE123C; margin-bottom:14px;">GELAR: KSATRIA PERSATUAN PANCASILA (SKOR 400 POIN)</div>
+
+      <p class="cert-body">
+        Dianugerahkan atas prestasi membanggakan menyelesaikan 4 Misi: Menyelamatkan Komplek dari Badai Beringin, Membuktikan Kekuatan Sapu Lidi Sila ke-3, Menguasai Peta Budaya Nusantara, dan Menjunjung Tinggi Ikrar Sumpah Pemuda pada <strong>28 Oktober 2026</strong>.
+      </p>
+
+      <div style="display:flex; justify-content:space-around; margin-bottom:24px; font-size:0.85rem; color:#475569; border-top:1px solid #E2E8F0; padding-top:16px;">
+        <div>
+          <div>📍 Tempat: PKBM Penerus Bangsa</div>
+          <div>📅 Tanggal: Rabu, 28 Oktober 2026</div>
+        </div>
+        <div>
+          <div>Guru Fasilitator:</div>
+          <div style="font-weight:700; color:#E11D48;">Ibu Tiara, S.Pd.</div>
+        </div>
+      </div>
+
+      <div class="cert-actions">
+        <button class="btn-cert print" onclick="window.print()">🖨️ Cetak Sertifikat Emas</button>
+        <button class="btn-cert close" onclick="closeCert()">Tutup Layar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/game.js"></script>
+  <script>
+    let currentScore = 0;
+    let completedMissions = [false, false, false, false];
+    let selectedStudent = "Hasyif";
+
+    function triggerSfx(type) {
+      if (typeof playSfx === 'function') {
+        playSfx(type);
+      }
+    }
+
+    function updateStudentProfile() {
+      const select = document.getElementById('studentSelect');
+      selectedStudent = select.value;
+      document.getElementById('studentNameDisplay').textContent = selectedStudent;
+      document.getElementById('certName').textContent = selectedStudent;
+      triggerSfx('click');
+
+      if (selectedStudent.toLowerCase() === 'alisya') {
+        enableDyslexiaMode();
+      }
+    }
+
+    function toggleDyslexiaMode() {
+      document.body.classList.toggle('dyslexia-mode');
+      const btn = document.getElementById('btnDyslexia');
+      btn.classList.toggle('active');
+      triggerSfx('click');
+    }
+
+    function enableDyslexiaMode() {
+      document.body.classList.add('dyslexia-mode');
+      document.getElementById('btnDyslexia').classList.add('active');
+    }
+
+    function addScore(points) {
+      currentScore += points;
+      const el = document.getElementById('scoreDisplay');
+      el.textContent = currentScore;
+      el.style.transform = 'scale(1.2)';
+      setTimeout(() => { el.style.transform = 'scale(1)'; }, 200);
+    }
+
+    function switchMission(num) {
+      triggerSfx('click');
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`mission-${i}`).style.display = (i === num) ? 'block' : 'none';
+        const tab = document.getElementById(`tab-${i}`);
+        if (i === num) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      }
+    }
+
+    // Misi 1
+    function evalMisi1(choice, cardEl) {
+      const fb = document.getElementById('fb-1');
+      const cards = document.querySelectorAll('#mission-1 .choice-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (choice === 2) {
+        cardEl.classList.add('selected-correct');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = `<strong>HEBAT SEKALI! Bekerja Sama Membagi 3 Regu!</strong><br>
+        Inilah kekuatan sakti gotong royong Sila ke-3 Pancasila! Beban 120 jam dipangkas tuntas menjadi 45 menit saat warga saling tolong-menolong! (+100 Poin)`;
+        
+        if (!completedMissions[0]) {
+          completedMissions[0] = true;
+          addScore(100);
+          triggerSfx('correct');
+        }
+        document.getElementById('btn-next-1').style.display = 'inline-flex';
+      } else {
+        cardEl.classList.add('selected-wrong');
+        fb.className = 'feedback-banner error';
+        fb.innerHTML = `<strong>Pilihan Belum Tepat!</strong><br>Sikap egois atau bekerja tanpa rencana membuat masalah dahan pohon tidak pernah selesai dan warga kebanjiran. Coba pilih gotong royong pembagian regu!`;
+        triggerSfx('wrong');
+      }
+    }
+
+    // Misi 2
+    function simLidi(mode) {
+      const g = document.getElementById('lidiGraphic');
+      const t = document.getElementById('lidiStatusText');
+      const fb = document.getElementById('fb-2');
+
+      if (mode === 'single') {
+        triggerSfx('wrong');
+        g.textContent = '💔';
+        t.innerHTML = '<span style="color:#DC2626;">KREK! Sebatang Lidi Patah Terbelah Dua ❌</span>';
+        fb.className = 'feedback-banner error';
+        fb.innerHTML = `<strong>Sendirian Rapuh & Mudah Patah!</strong><br>Satu batang lidi kelapa tipis tidak mampu menahan tekanan dan tidak bisa menyapu batu kerikil di jalanan!`;
+      } else {
+        triggerSfx('correct');
+        g.textContent = '🧹✨';
+        t.innerHTML = '<span style="color:#10B981;">SWOOSH! Bersatu Kokoh & Bersih Tuntas ✅</span>';
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = `<strong>BINGO! Filosofi Sapu Lidi Sempurna 100%!</strong><br>
+        Saat 100 lidi diikat pita merah putih, lidi menjadi kokoh tak terkalahkan dan mampu membersihkan tumpukan kerikil seketika! Itulah lambang Persatuan Indonesia Sila ke-3! (+100 Poin)`;
+        
+        if (!completedMissions[1]) {
+          completedMissions[1] = true;
+          addScore(100);
+        }
+        document.getElementById('btn-next-2').style.display = 'inline-flex';
+      }
+    }
+
+    // Misi 3
+    let selectedFirstCard = null;
+    let matchedCount = 0;
+
+    function matchCard(id, cardEl) {
+      triggerSfx('click');
+      if (cardEl.classList.contains('matched')) return;
+
+      if (!selectedFirstCard) {
+        selectedFirstCard = { id: id, el: cardEl };
+        cardEl.style.borderColor = '#E11D48';
+        cardEl.style.background = '#FFE4E6';
+      } else {
+        if (selectedFirstCard.el === cardEl) return;
+
+        if (selectedFirstCard.id === id) {
+          triggerSfx('correct');
+          selectedFirstCard.el.classList.add('matched');
+          cardEl.classList.add('matched');
+          matchedCount++;
+
+          if (matchedCount === 4) {
+            const fb = document.getElementById('fb-3');
+            fb.className = 'feedback-banner success';
+            fb.innerHTML = `<strong>LUAR BIASA! Seluruh Warisan Budaya Nusantara Berhasil Dipasangkan!</strong><br>
+            Kamu berhasil mengenal Rumah Gadang (Sumbar), Angklung (Jabar), Sasando (NTT), dan Rumah Honai (Papua)! (+100 Poin)`;
+            
+            if (!completedMissions[2]) {
+              completedMissions[2] = true;
+              addScore(100);
+            }
+            document.getElementById('btn-next-3').style.display = 'inline-flex';
+          }
+        } else {
+          triggerSfx('wrong');
+          selectedFirstCard.el.style.borderColor = '#E2E8F0';
+          selectedFirstCard.el.style.background = '#F8FAFC';
+          alert('Pasangan belum tepat! Coba pasangkan rumah adat/alat musik dengan daerah asalnya.');
+        }
+        selectedFirstCard = null;
+      }
+    }
+
+    // Misi 4
+    const quizAnswers = [1, 0, 0, 0];
+    let answeredQuiz = [false, false, false, false];
+
+    function evalQuiz(qNum, selectedIdx, cardEl) {
+      const grid = document.getElementById(`qgrid-${qNum}`);
+      const cards = grid.querySelectorAll('.choice-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (selectedIdx === quizAnswers[qNum - 1]) {
+        triggerSfx('correct');
+        cardEl.classList.add('selected-correct');
+        answeredQuiz[qNum - 1] = true;
+      } else {
+        triggerSfx('wrong');
+        cardEl.classList.add('selected-wrong');
+        answeredQuiz[qNum - 1] = false;
+      }
+
+      if (answeredQuiz[0] && answeredQuiz[1] && answeredQuiz[2] && answeredQuiz[3]) {
+        const fb = document.getElementById('fb-4');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = `<strong>SEMPURNA! 4 Soal Kognitif Kelas 4 Tuntas Terjawab 100%!</strong><br>
+        Kamu resmi dinobatkan sebagai Ksatria Persatuan Pancasila Kelas 4! (+100 Poin)`;
+        
+        if (!completedMissions[3]) {
+          completedMissions[3] = true;
+          addScore(100);
+        }
+        document.getElementById('btn-finish').style.display = 'inline-flex';
+      }
+    }
+
+    function showFinalCertificate() {
+      triggerSfx('win');
+      document.getElementById('certName').textContent = selectedStudent;
+      document.getElementById('certModal').style.display = 'flex';
+    }
+
+    function closeCert() {
+      document.getElementById('certModal').style.display = 'none';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const studentParam = params.get('student');
+      if (studentParam) {
+        const select = document.getElementById('studentSelect');
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.toLowerCase() === studentParam.toLowerCase()) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      updateStudentProfile();
+    });
+  </script>
+</body>
+</html>

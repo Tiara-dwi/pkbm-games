@@ -790,15 +790,15 @@
   </div>
 
   <!-- GRADE SELECTOR TABS -->
-  <div class="grade-tabs">
-    <button class="grade-btn active" id="tabGrade4" onclick="setGrade(4)">
-      <span>🛹</span> Sesi 1: Aqlan (Kelas 4 • 4 Misi Kerja Sama)
+  <div class="grade-tabs" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;">
+    <button class="grade-btn active" id="tabGrade4" onclick="window.location.href='kelas4.html'" style="background: linear-gradient(135deg, #FFF1F2, #FFE4E6); border-color:#E11D48; color:#BE123C;">
+      <span>🌾</span> Kelas 4: Hasyif, Kinanti, Alisya (Ksatria Sapu Lidi)
     </button>
-    <button class="grade-btn" id="tabGrade5" onclick="setGrade(5)">
-      <span>🏛️</span> Sesi 2: Mishka (Kelas 5 • 4 Misi Budaya Nusantara)
+    <button class="grade-btn" id="tabGrade5" onclick="window.location.href='kelas5.html'" style="background: linear-gradient(135deg, #FFFBEB, #FEF3C7); border-color:#B45309; color:#B45309;">
+      <span>🏛️</span> Kelas 5: Ardiansyah & Mishka (Sains Arsitektur)
     </button>
-    <button class="grade-btn" id="tabGrade6" onclick="window.location.href='kelas6.html'" style="background: linear-gradient(135deg, #FFFBEB, #FEF2F2); border-color:#991B1B; color:#991B1B;">
-      <span>⚖️</span> Sesi 3: Kelas 6 (Shan, Selvi, Aulya, Hendra • Majelis Musyawarah)
+    <button class="grade-btn" id="tabGrade6" onclick="window.location.href='kelas6.html'" style="background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-color:#15803D; color:#15803D;">
+      <span>⚖️</span> Kelas 6: Shan, Selvi, Aulya, Hendra (Musyawarah)
     </button>
   </div>
 
@@ -1446,6 +1446,14 @@
     
     if (grade === 6) {
       window.location.href = `kelas6.html?student=${encodeURIComponent(currentStudentName)}`;
+      return;
+    }
+    if (['hasyif', 'kinanti', 'alisya'].includes(currentStudent)) {
+      window.location.href = `kelas4.html?student=${encodeURIComponent(currentStudentName)}`;
+      return;
+    }
+    if (currentStudent === 'ardiansyah') {
+      window.location.href = `kelas5.html?student=${encodeURIComponent(currentStudentName)}`;
       return;
     }
 
