@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Majelis Musyawarah Pancasila Kelas 6 - PKBM Penerus Bangsa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #991B1B;
+      --primary-dark: #7F1D1D;
+      --secondary: #1E3A8A;
+      --accent: #D97706;
+      --success: #15803D;
+      --danger: #DC2626;
+      --bg: #FEF2F2;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --radius: 18px;
+      --shadow: 0 10px 25px -5px rgba(153, 27, 27, 0.12), 0 8px 10px -6px rgba(153, 27, 27, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #FEF2F2 0%, #FFFBEB 50%, #F0FDF4 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Top Navigation Bar */
+    .header-bar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(220, 38, 38, 0.15);
+      margin-bottom: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #991B1B, #DC2626);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 10px rgba(153, 27, 27, 0.3);
+    }
+
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #991B1B;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .student-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFBEB;
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid #FDE68A;
+    }
+
+    .student-select {
+      border: none;
+      background: transparent;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #B45309;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .btn-portal {
+      text-decoration: none;
+      background: #F1F5F9;
+      color: #475569;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-portal:hover {
+      background: #E2E8F0;
+      color: #1E293B;
+    }
+
+    /* Score & Mission Header Card */
+    .hero-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 2px solid #FEE2E2;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-info h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1E293B;
+      margin-bottom: 4px;
+    }
+
+    .hero-info p {
+      font-size: 0.85rem;
+      color: #64748B;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .meta-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #EFF6FF;
+      color: #1D4ED8;
+    }
+
+    .meta-pill.pancasila {
+      background: #FEF2F2;
+      color: #B91C1C;
+    }
+
+    .score-board {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 2px solid #F59E0B;
+      padding: 14px 22px;
+      border-radius: 20px;
+      text-align: center;
+      min-width: 160px;
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #92400E;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .score-num {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #B45309;
+      line-height: 1.1;
+    }
+
+    /* Mission Tabs */
+    .mission-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .mission-nav {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .tab-btn {
+      background: white;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 12px 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #64748B;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tab-btn.active {
+      background: #991B1B;
+      color: white;
+      border-color: #991B1B;
+      box-shadow: 0 4px 12px rgba(153, 27, 27, 0.25);
+    }
+
+    .tab-btn span.tab-icon {
+      font-size: 1.25rem;
+    }
+
+    /* Main Mission Card */
+    .mission-card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid #F1F5F9;
+      margin-bottom: 24px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      border-bottom: 2px solid #F1F5F9;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-header h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1E293B;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mission-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    /* Story Box */
+    .story-box {
+      background: #F8FAFC;
+      border-left: 5px solid #2563EB;
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+
+    .story-box strong {
+      color: #1E293B;
+    }
+
+    /* Interactive Options */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .choice-card {
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #FFFFFF;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .choice-card:hover {
+      border-color: #991B1B;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .choice-card.selected-correct {
+      border-color: #15803D !important;
+      background: #F0FDF4 !important;
+    }
+
+    .choice-card.selected-wrong {
+      border-color: #DC2626 !important;
+      background: #FEF2F2 !important;
+    }
+
+    .choice-bullet {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .choice-card.selected-correct .choice-bullet {
+      background: #15803D;
+      color: white;
+    }
+
+    .choice-card.selected-wrong .choice-bullet {
+      background: #DC2626;
+      color: white;
+    }
+
+    .choice-content h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 3px;
+    }
+
+    .choice-content p {
+      font-size: 0.85rem;
+      color: #64748B;
+    }
+
+    /* Feedback Box */
+    .feedback-banner {
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-top: 16px;
+      display: none;
+      font-size: 0.9rem;
+      animation: fadeIn 0.3s;
+    }
+
+    .feedback-banner.success {
+      background: #ECFDF5;
+      border: 1.5px solid #10B981;
+      color: #065F46;
+      display: block;
+    }
+
+    .feedback-banner.error {
+      background: #FEF2F2;
+      border: 1.5px solid #EF4444;
+      color: #991B1B;
+      display: block;
+    }
+
+    /* Interactive Hierarchy Pyramid (Misi 2) */
+    .pyramid-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .pyramid-tier {
+      border: 2px dashed #CBD5E1;
+      border-radius: 12px;
+      padding: 12px 18px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: white;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .pyramid-tier.tier-1 { width: 45%; border-color: #DC2626; background: #FEF2F2; color: #991B1B; }
+    .pyramid-tier.tier-2 { width: 62%; border-color: #D97706; background: #FFFBEB; color: #B45309; }
+    .pyramid-tier.tier-3 { width: 80%; border-color: #2563EB; background: #EFF6FF; color: #1D4ED8; }
+    .pyramid-tier.tier-4 { width: 98%; border-color: #64748B; background: #F8FAFC; color: #475569; }
+
+    /* Drag / Click Cards */
+    .tier-cards-pool {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .tier-cards-pool {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pool-card {
+      background: #F8FAFC;
+      border: 1.5px solid #E2E8F0;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1E293B;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pool-card:hover {
+      background: #F1F5F9;
+      border-color: #94A3B8;
+    }
+
+    .pool-card.used {
+      opacity: 0.4;
+      pointer-events: none;
+      text-decoration: line-through;
+    }
+
+    /* Etika Sidang Detector (Misi 3) */
+    .debate-card {
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .debate-quote {
+      font-style: italic;
+      color: #1E293B;
+      font-size: 0.92rem;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .debate-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-judge {
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .btn-judge.pancasila {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border: 1px solid #BFDBFE;
+    }
+
+    .btn-judge.pancasila:hover { background: #DBEAFE; }
+
+    .btn-judge.pelanggaran {
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid #FECACA;
+    }
+
+    .btn-judge.pelanggaran:hover { background: #FEE2E2; }
+
+    /* Next / Action Buttons */
+    .btn-next-mission {
+      background: linear-gradient(135deg, #991B1B, #DC2626);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-next-mission:hover {
+      background: #7F1D1D;
+      transform: translateY(-2px);
+    }
+
+    /* Certificate Modal */
+    .cert-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+      backdrop-filter: blur(4px);
+    }
+
+    .cert-box {
+      background: white;
+      border-radius: 28px;
+      max-width: 680px;
+      width: 100%;
+      padding: 36px 30px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 6px double #F59E0B;
+      position: relative;
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .trophy-emoji {
+      font-size: 4rem;
+      margin-bottom: 8px;
+      animation: bounce 1.2s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+
+    .cert-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.8rem;
+      color: #991B1B;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .cert-student-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #B45309;
+      text-decoration: underline;
+      margin: 12px 0 8px;
+    }
+
+    .cert-body {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .cert-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-cert {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-cert.print {
+      background: #991B1B;
+      color: white;
+    }
+
+    .btn-cert.close {
+      background: #F1F5F9;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header Bar -->
+    <header class="header-bar">
+      <div class="brand-group">
+        <div class="brand-icon">🦅</div>
+        <div class="brand-text">
+          <h1>Majelis Musyawarah Pancasila Kelas 6</h1>
+          <p>PKBM Penerus Bangsa • Edisi Hari Sumpah Pemuda 28 Oktober</p>
+        </div>
+      </div>
+
+      <div class="student-badge-wrap">
+        <span>👤 Pilih Pemimpin:</span>
+        <select class="student-select" id="studentSelect" onchange="updateStudentProfile()">
+          <option value="Shan" selected>Shan (Kapten Musyawarah)</option>
+          <option value="Selvi">Selvi (Chief Justice / Perumus C5-C6)</option>
+          <option value="Aulya">Aulya (Senior Diplomat C4)</option>
+          <option value="Hendra">Hendra (Koordinator Data & Lapangan)</option>
+        </select>
+      </div>
+
+      <a href="index.html" class="btn-portal">← Kembali ke Menu Pancasila</a>
+    </header>
+
+    <!-- Hero Score Board -->
+    <div class="hero-card">
+      <div class="hero-info">
+        <h2>Simulasi Kepemimpinan & Negosiasi Mufakat</h2>
+        <p>Bantu <strong id="studentNameDisplay" style="color:#991B1B;">Shan</strong> menuntaskan 4 Misi Kehormatan untuk memenangkan Piala Negosiator Ulung Pancasila!</p>
+        <div class="hero-badge-row">
+          <span class="meta-pill pancasila">🏛️ Sila ke-4 & Sila ke-3</span>
+          <span class="meta-pill">⚖️ Bab 3: Musyawarah Mufakat</span>
+          <span class="meta-pill">🇮🇩 28 Oktober: Sumpah Pemuda</span>
+        </div>
+      </div>
+
+      <div class="score-board">
+        <div class="score-label">Skor Pancasila</div>
+        <div class="score-num" id="scoreDisplay">0</div>
+        <div style="font-size:0.75rem; color:#92400E; font-weight:700;">Target: 400 Poin Emas</div>
+      </div>
+    </div>
+
+    <!-- Mission Tabs Navigation -->
+    <nav class="mission-nav">
+      <button class="tab-btn active" id="tab-1" onclick="switchMission(1)">
+        <span class="tab-icon">⚖️</span>
+        <span>Misi 1: Sengketa Lapangan</span>
+      </button>
+      <button class="tab-btn" id="tab-2" onclick="switchMission(2)">
+        <span class="tab-icon">🔺</span>
+        <span>Misi 2: Hierarki Kepentingan</span>
+      </button>
+      <button class="tab-btn" id="tab-3" onclick="switchMission(3)">
+        <span class="tab-icon">🛡️</span>
+        <span>Misi 3: Detektor Etika Sidang</span>
+      </button>
+      <button class="tab-btn" id="tab-4" onclick="switchMission(4)">
+        <span class="tab-icon">📝</span>
+        <span>Misi 4: Uji Kompetensi C4-C6</span>
+      </button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- MISI 1: SIMULATOR SENGKETA LAPANGAN RW 05 -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-1">
+      <div class="card-header">
+        <h3><span>⚖️</span> Misi 1: Simulator Resolusi Sengketa Warga</h3>
+        <span class="mission-tag">Tantangan Negosiasi</span>
+      </div>
+
+      <div class="story-box">
+        <strong>Kasus Sengketa Nyata RW 05:</strong> Lapangan serbaguna RW diperebutkan di hari Minggu yang sama!
+        <br>• <strong>Tim Futsal Pemuda (diwakili Aulya):</strong> Ingin menggelar Babak Final Turnamen Piala Lingkungan karena seluruh pemain hanya libur di hari Minggu.
+        <br>• <strong>Sanggar Tari Tradisional (diwakili Hendra):</strong> Wajib Gladi Resik Pentas Budaya Nusantara karena hari Senin besok harus tampil mewakili kelurahan di Balai Kota.
+        <br>Kedua pihak bersitegang merasa paling berhak. Sebagai pemimpin sidang, keputusan apa yang mencerminkan <strong>Sila ke-4 Pancasila</strong>?
+      </div>
+
+      <div class="choice-grid">
+        <div class="choice-card" onclick="evalMisi1(1, this)">
+          <div class="choice-bullet">A</div>
+          <div class="choice-content">
+            <h4>Pemberian Sepihak (Otokrasi):</h4>
+            <p>"Berikan lapangan seharian penuh kepada Tim Futsal karena jumlah pemainnya lebih banyak dibanding anak-anak sanggar tari."</p>
+          </div>
+        </div>
+
+        <div class="choice-card" onclick="evalMisi1(2, this)">
+          <div class="choice-bullet">B</div>
+          <div class="choice-content">
+            <h4>Pemungutan Suara Mentah (Voting Tanpa Kompromi):</h4>
+            <p>"Langsung voting siapa yang suaranya paling keras. Kelompok yang kalah dilarang menggunakan lapangan sama sekali."</p>
+          </div>
+        </div>
+
+        <div class="choice-card" onclick="evalMisi1(3, this)">
+          <div class="choice-bullet">C</div>
+          <div class="choice-content">
+            <h4>Musyawarah Mufakat Berkeadilan (Win-Win Solution):</h4>
+            <p>"Bagi waktu secara adil: Pukul 07.30–11.30 WIB untuk Gladi Resik Sanggar Tari (udara sejuk, formasi tenang), lalu pukul 14.30–17.30 WIB untuk Final Futsal (cuaca bersahabat, penonton ramai). Kedua acara sukses bersama!"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fb-1"></div>
+      <button class="btn-next-mission" id="btn-next-1" style="display:none;" onclick="switchMission(2)">Lanjut ke Misi 2: Hierarki Kepentingan →</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MISI 2: PIRAMIDA HIERARKI KEPENTINGAN -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-2" style="display:none;">
+      <div class="card-header">
+        <h3><span>🔺</span> Misi 2: Piramida Hierarki Kepentingan Pancasila</h3>
+        <span class="mission-tag">Struktur Prioritas Kebangsaan</span>
+      </div>
+
+      <div class="story-box">
+        Dalam Sila ke-4 Pancasila, seorang pemimpin sejati tahu bagaimana menempatkan kepentingan secara adil.
+        Klik pilihan kartu di bawah ini secara berurutan untuk menyusun <strong>Piramida Prioritas dari Tingkat 1 (Puncak Tertinggi) ke Tingkat 4 (Dasar)</strong>!
+      </div>
+
+      <div class="pyramid-wrap">
+        <div class="pyramid-tier tier-1" id="slot-1">🥇 Tingkat 1 (Puncak Tertinggi): [ Belum Terisi ]</div>
+        <div class="pyramid-tier tier-2" id="slot-2">🥈 Tingkat 2: [ Belum Terisi ]</div>
+        <div class="pyramid-tier tier-3" id="slot-3">🥉 Tingkat 3: [ Belum Terisi ]</div>
+        <div class="pyramid-tier tier-4" id="slot-4">🏅 Tingkat 4: [ Belum Terisi ]</div>
+      </div>
+
+      <div class="tier-cards-pool" id="poolCards">
+        <div class="pool-card" onclick="pickTier('Kepentingan Bangsa & Keutuhan NKRI', 1, this)">🇮🇩 Kepentingan Bangsa & Keutuhan NKRI</div>
+        <div class="pool-card" onclick="pickTier('Kepentingan Masyarakat Lingkungan (RW/Desa)', 2, this)">🏘️ Kepentingan Masyarakat Lingkungan (RW/Desa)</div>
+        <div class="pool-card" onclick="pickTier('Kepentingan Pribadi / Individu', 4, this)">👤 Kepentingan Pribadi / Individu</div>
+        <div class="pool-card" onclick="pickTier('Kepentingan Kelompok / Klub Hobi', 3, this)">⚽ Kepentingan Kelompok / Klub Hobi</div>
+      </div>
+
+      <div class="feedback-banner" id="fb-2"></div>
+      <button class="btn-next-mission" id="btn-next-2" style="display:none;" onclick="switchMission(3)">Lanjut ke Misi 3: Detektor Etika Sidang →</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MISI 3: DETEKTOR ETIKA SIDANG MUSYAWARAH -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-3" style="display:none;">
+      <div class="card-header">
+        <h3><span>🛡️</span> Misi 3: Detektor Etika Sidang & Ujaran Warga</h3>
+        <span class="mission-tag">Uji Kejujuran & Nilai Moral</span>
+      </div>
+
+      <div class="story-box">
+        Ujilah 3 pernyataan warga di ruang sidang rapat RT berikut! Tentukan apakah kalimat tersebut mencerminkan <strong>Etika Luhur Pancasila (✅)</strong> atau <strong>Pelanggaran Musyawarah (❌)</strong>!
+      </div>
+
+      <!-- Kasus Debat 1 -->
+      <div class="debate-card" id="dc-1">
+        <div class="debate-quote">
+          <span>🗣️</span>
+          <div><strong>Warga A:</strong> "Saya tidak sependapat dengan usulan Bapak Budi, tetapi silakan Bapak sampaikan alasannya sampai selesai tanpa saya potong."</div>
+        </div>
+        <div class="debate-btns">
+          <button class="btn-judge pancasila" onclick="judgeDebate(1, true, this)">✅ Etika Luhur Pancasila</button>
+          <button class="btn-judge pelanggaran" onclick="judgeDebate(1, false, this)">❌ Pelanggaran Musyawarah</button>
+        </div>
+      </div>
+
+      <!-- Kasus Debat 2 -->
+      <div class="debate-card" id="dc-2">
+        <div class="debate-quote">
+          <span>🗣️</span>
+          <div><strong>Warga B:</strong> "Kalau usulan perbaikan lapangan saya tidak diterima, saya dan kelompok saya akan keluar dan mogok bayar iuran selamanya!"</div>
+        </div>
+        <div class="debate-btns">
+          <button class="btn-judge pancasila" onclick="judgeDebate(2, false, this)">✅ Etika Luhur Pancasila</button>
+          <button class="btn-judge pelanggaran" onclick="judgeDebate(2, true, this)">❌ Pelanggaran Musyawarah</button>
+        </div>
+      </div>
+
+      <!-- Kasus Debat 3 -->
+      <div class="debate-card" id="dc-3">
+        <div class="debate-quote">
+          <span>🗣️</span>
+          <div><strong>Warga C:</strong> "Meskipun ide awal kelompok saya berbeda dengan keputusan mufakat malam ini, demi kerukunan warga, kami siap mendukung dan melaksanakan hasil keputusan bersama!"</div>
+        </div>
+        <div class="debate-btns">
+          <button class="btn-judge pancasila" onclick="judgeDebate(3, true, this)">✅ Etika Luhur Pancasila</button>
+          <button class="btn-judge pelanggaran" onclick="judgeDebate(3, false, this)">❌ Pelanggaran Musyawarah</button>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fb-3"></div>
+      <button class="btn-next-mission" id="btn-next-3" style="display:none;" onclick="switchMission(4)">Lanjut ke Misi 4: Uji Kompetensi C4-C6 →</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MISI 4: UJI KOMPETENSI MAJELIS PANCASILA -->
+    <!-- ========================================== -->
+    <div class="mission-card" id="mission-4" style="display:none;">
+      <div class="card-header">
+        <h3><span>📝</span> Misi 4: Uji Kompetensi Kognitif (Level C4–C6)</h3>
+        <span class="mission-tag">Mini Test Formatif Kelas 6</span>
+      </div>
+
+      <div id="quizContainer">
+        <!-- Soal 1 -->
+        <div class="story-box" style="margin-bottom:12px;">
+          <strong>Soal 1 dari 4 (C4 - Analisis Lambang):</strong> Mengapa lambang Sila ke-4 Pancasila menggunakan KEPALA BANTENG, bukan hewan pemangsa lainnya?
+        </div>
+        <div class="choice-grid" id="qgrid-1" style="margin-bottom:20px;">
+          <div class="choice-card" onclick="evalQuiz(1, 0, this)">
+            <div class="choice-bullet">A</div>
+            <div class="choice-content"><p>Karena banteng adalah hewan yang paling ditakuti oleh bangsa penjajah.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(1, 1, this)">
+            <div class="choice-bullet">B</div>
+            <div class="choice-content"><p>Karena banteng adalah hewan sosial nusantara yang gemar berkumpul, hidup berkelompok dalam kawanan, dan menyelesaikan masalah secara bersama.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(1, 2, this)">
+            <div class="choice-bullet">C</div>
+            <div class="choice-content"><p>Karena banteng selalu menanduk siapa pun yang berbeda pendapat dengannya.</p></div>
+          </div>
+        </div>
+
+        <!-- Soal 2 -->
+        <div class="story-box" style="margin-bottom:12px;">
+          <strong>Soal 2 dari 4 (C5 - Evaluasi Keputusan):</strong> Jika dalam sebuah musyawarah hasil mufakat akhir ternyata berbeda dengan usulan awal yang diajukan oleh kelompok Selvi, tindakan yang paling mencerminkan nilai moral Pancasila adalah...
+        </div>
+        <div class="choice-grid" id="qgrid-2" style="margin-bottom:20px;">
+          <div class="choice-card" onclick="evalQuiz(2, 0, this)">
+            <div class="choice-bullet">A</div>
+            <div class="choice-content"><p>Menerima dan melaksanakan hasil keputusan mufakat dengan ikhlas dan penuh tanggung jawab demi kepentingan bersama.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(2, 1, this)">
+            <div class="choice-bullet">B</div>
+            <div class="choice-content"><p>Menolak hasil keputusan dan meminta voting diulang terus-menerus sampai usulannya menang.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(2, 2, this)">
+            <div class="choice-bullet">C</div>
+            <div class="choice-content"><p>Mencela keputusan rapat di media sosial dan mengajak warga lain memboikot acara.</p></div>
+          </div>
+        </div>
+
+        <!-- Soal 3 -->
+        <div class="story-box" style="margin-bottom:12px;">
+          <strong>Soal 3 dari 4 (C4 - Logika Demokrasi):</strong> Mengapa dalam Demokrasi Pancasila, jalan MUSYAWARAH MUFAKAT selalu diutamakan dibanding jalan VOTING (pemungutan suara terbanyak)?
+        </div>
+        <div class="choice-grid" id="qgrid-3" style="margin-bottom:20px;">
+          <div class="choice-card" onclick="evalQuiz(3, 0, this)">
+            <div class="choice-bullet">A</div>
+            <div class="choice-content"><p>Karena musyawarah menghasilkan kesepakatan bulat yang merangkul semua pihak tanpa ada yang merasa kalah atau tersingkirkan.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(3, 1, this)">
+            <div class="choice-bullet">B</div>
+            <div class="choice-content"><p>Karena menghitung kertas suara dalam voting membutuhkan biaya yang sangat mahal.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(3, 2, this)">
+            <div class="choice-bullet">C</div>
+            <div class="choice-content"><p>Karena suara kelompok yang banyak selalu pasti benar dalam segala hal.</p></div>
+          </div>
+        </div>
+
+        <!-- Soal 4 -->
+        <div class="story-box" style="margin-bottom:12px;">
+          <strong>Soal 4 dari 4 (C6 - Kaitan Sumpah Pemuda & Persatuan):</strong> Hari ini kita memperingati 98 Tahun Hari Sumpah Pemuda (28 Oktober 1928). Bagaimana hubungan antara musyawarah mufakat (Sila 4) dengan Persatuan Indonesia (Sila 3)?
+        </div>
+        <div class="choice-grid" id="qgrid-4" style="margin-bottom:20px;">
+          <div class="choice-card" onclick="evalQuiz(4, 0, this)">
+            <div class="choice-bullet">A</div>
+            <div class="choice-content"><p>Musyawarah mufakat adalah sarana dialog yang mengikat keragaman suku bangsa menjadi satu ikatan persatuan yang kokoh seperti seikat sapu lidi.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(4, 1, this)">
+            <div class="choice-bullet">B</div>
+            <div class="choice-content"><p>Kedua sila tersebut tidak saling berhubungan karena satu tentang politik dan satu tentang daerah.</p></div>
+          </div>
+          <div class="choice-card" onclick="evalQuiz(4, 2, this)">
+            <div class="choice-bullet">C</div>
+            <div class="choice-content"><p>Musyawarah hanya berlaku untuk suku yang tinggal di pulau Jawa saja.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-banner" id="fb-4"></div>
+      <button class="btn-next-mission" id="btn-finish" style="display:none;" onclick="showFinalCertificate()">🏆 Buka Sertifikat Negosiator Ulung Pancasila</button>
+    </div>
+
+  </div>
+
+  <!-- Final Certificate Modal -->
+  <div class="cert-overlay" id="certModal">
+    <div class="cert-box">
+      <div class="trophy-emoji">🏆</div>
+      <div class="cert-title">SERTIFIKAT PENGHARGAAN</div>
+      <div style="font-size:0.85rem; font-weight:700; color:#64748B; letter-spacing:1px;">MAJELIS MUSYAWARAH PANCASILA KELAS 6</div>
+      
+      <div class="cert-student-name" id="certName">Shan</div>
+      <div style="font-size:1rem; font-weight:800; color:#1E3A8A; margin-bottom:14px;">GELAR: NEGOSIATOR ULUNG PANCASILA (SKOR SEMPURNA 400 POIN)</div>
+
+      <p class="cert-body">
+        Dianugerahkan atas keberhasilan gemilang menuntaskan 4 Misi Kehormatan: Memecahkan Sengketa Lapangan RW 05 dengan Win-Win Solution, Menegakkan Hierarki Kepentingan Bangsa, Memilah Etika Luhur Berdiskusi, dan Menguasai Hakikat Sila ke-4 Pancasila pada momentum bersejarah <strong>Hari Sumpah Pemuda (28 Oktober 2026)</strong>.
+      </p>
+
+      <div style="display:flex; justify-content:space-around; margin-bottom:24px; font-size:0.85rem; color:#475569; border-top:1px solid #E2E8F0; padding-top:16px;">
+        <div>
+          <div>📍 Tempat: PKBM Penerus Bangsa</div>
+          <div>📅 Tanggal: Rabu, 28 Oktober 2026</div>
+        </div>
+        <div>
+          <div>Guru Fasilitator:</div>
+          <div style="font-weight:700; color:#991B1B;">Ibu Tiara, S.Pd.</div>
+        </div>
+      </div>
+
+      <div class="cert-actions">
+        <button class="btn-cert print" onclick="window.print()">🖨️ Cetak Sertifikat Emas</button>
+        <button class="btn-cert close" onclick="closeCert()">Tutup Layar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Audio Engine Script -->
+  <script src="../assets/game.js"></script>
+  <script>
+    // State variables
+    let currentScore = 0;
+    let completedMissions = [false, false, false, false];
+    let selectedStudent = "Shan";
+
+    // Audio SFX fallbacks using Web Audio API if game.js not loaded
+    function triggerSfx(type) {
+      if (typeof playSfx === 'function') {
+        playSfx(type);
+      }
+    }
+
+    function updateStudentProfile() {
+      const select = document.getElementById('studentSelect');
+      selectedStudent = select.value;
+      document.getElementById('studentNameDisplay').textContent = selectedStudent;
+      document.getElementById('certName').textContent = selectedStudent;
+      triggerSfx('click');
+    }
+
+    // Auto-detect URL parameter ?student=Shan/Selvi/Aulya/Hendra
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const studentParam = params.get('student');
+      if (studentParam) {
+        const select = document.getElementById('studentSelect');
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.toLowerCase() === studentParam.toLowerCase()) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+        updateStudentProfile();
+      }
+    });
+
+    function addScore(points) {
+      currentScore += points;
+      const el = document.getElementById('scoreDisplay');
+      el.textContent = currentScore;
+      el.style.transform = 'scale(1.2)';
+      setTimeout(() => { el.style.transform = 'scale(1)'; }, 200);
+    }
+
+    function switchMission(num) {
+      triggerSfx('click');
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`mission-${i}`).style.display = (i === num) ? 'block' : 'none';
+        const tab = document.getElementById(`tab-${i}`);
+        if (i === num) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      }
+    }
+
+    // ==========================================
+    // LOGIKA MISI 1: SENGKETA LAPANGAN
+    // ==========================================
+    function evalMisi1(choice, cardEl) {
+      const fb = document.getElementById('fb-1');
+      const cards = document.querySelectorAll('#mission-1 .choice-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (choice === 3) {
+        cardEl.classList.add('selected-correct');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = `<strong>BINGO! Solusi Mufakat Sempurna 100%!</strong><br>
+        Inilah jalan Sila ke-4 Pancasila! Sanggar Tari mendapat ketenangan pagi untuk gladi Balai Kota, dan Tim Futsal mendapat cuaca sore yang meriah dengan penonton ramai. Kedua belah pihak berbahagia tanpa ada yang dirugikan! (+100 Poin)`;
+        
+        if (!completedMissions[0]) {
+          completedMissions[0] = true;
+          addScore(100);
+          triggerSfx('correct');
+        }
+        document.getElementById('btn-next-1').style.display = 'inline-flex';
+      } else if (choice === 1) {
+        cardEl.classList.add('selected-wrong');
+        fb.className = 'feedback-banner error';
+        fb.innerHTML = `<strong>Keliru (Otokrasi & Egoisme)!</strong><br>
+        Memberikan lapangan sepihak hanya karena jumlah orang lebih banyak mengorbankan Sanggar Tari yang besok harus pentas membawa nama kelurahan. Ini melanggar asas keadilan Sila ke-4!`;
+        triggerSfx('wrong');
+      } else {
+        cardEl.classList.add('selected-wrong');
+        fb.className = 'feedback-banner error';
+        fb.innerHTML = `<strong>Keliru (Tirani Mayoritas)!</strong><br>
+        Voting mentah tanpa dialog membuat pihak yang kalah merasa disingkirkan dan memicu permusuhan antarwarga. Musyawarah mufakat harus selalu diupayakan terlebih dahulu!`;
+        triggerSfx('wrong');
+      }
+    }
+
+    // ==========================================
+    // LOGIKA MISI 2: PIRAMIDA HIERARKI KEPENTINGAN
+    // ==========================================
+    let currentTierStep = 1;
+    const correctTiers = [
+      "Kepentingan Bangsa & Keutuhan NKRI",
+      "Kepentingan Masyarakat Lingkungan (RW/Desa)",
+      "Kepentingan Kelompok / Klub Hobi",
+      "Kepentingan Pribadi / Individu"
+    ];
+
+    function pickTier(name, tierLevel, cardEl) {
+      triggerSfx('click');
+      if (tierLevel === currentTierStep) {
+        document.getElementById(`slot-${currentTierStep}`).innerHTML = `✅ <strong>Tingkat ${currentTierStep}:</strong> ${name}`;
+        document.getElementById(`slot-${currentTierStep}`).style.borderColor = '#15803D';
+        document.getElementById(`slot-${currentTierStep}`).style.background = '#F0FDF4';
+        cardEl.classList.add('used');
+        currentTierStep++;
+
+        if (currentTierStep > 4) {
+          const fb = document.getElementById('fb-2');
+          fb.className = 'feedback-banner success';
+          fb.innerHTML = `<strong>HEBAT! Susunan Piramida Hierarki Pancasila 100% Tepat!</strong><br>
+          Kepentingan Bangsa & Keutuhan NKRI selalu berada di puncak tertinggi, disusul kepentingan masyarakat warga, kepentingan kelompok/klub, dan terakhir kepentingan pribadi. Kestabilan negara terjamin saat warga mendahulukan kepentingan bersama! (+100 Poin)`;
+          
+          if (!completedMissions[1]) {
+            completedMissions[1] = true;
+            addScore(100);
+            triggerSfx('correct');
+          }
+          document.getElementById('btn-next-2').style.display = 'inline-flex';
+        }
+      } else {
+        triggerSfx('wrong');
+        alert(`Urutan belum pas! Kamu sedang mencari posisi untuk Tingkat ${currentTierStep}. Pilihlah kepentingan yang sesuai dengan hierarki tingkat ${currentTierStep}!`);
+      }
+    }
+
+    // ==========================================
+    // LOGIKA MISI 3: DETEKTOR ETIKA SIDANG
+    // ==========================================
+    let debateJudged = [false, false, false];
+
+    function judgeDebate(num, isCorrect, btnEl) {
+      const card = document.getElementById(`dc-${num}`);
+      const btns = card.querySelectorAll('.btn-judge');
+      btns.forEach(b => b.style.opacity = '0.5');
+      btnEl.style.opacity = '1';
+
+      if (isCorrect) {
+        triggerSfx('correct');
+        card.style.borderColor = '#15803D';
+        card.style.background = '#F0FDF4';
+        debateJudged[num - 1] = true;
+      } else {
+        triggerSfx('wrong');
+        card.style.borderColor = '#DC2626';
+        card.style.background = '#FEF2F2';
+        alert("Penilaian belum tepat! Cermati kembali asas musyawarah Sila ke-4: menghargai bicara, tidak memaksakan kehendak, dan menerima mufakat.");
+        btns.forEach(b => b.style.opacity = '1');
+        return;
+      }
+
+      if (debateJudged[0] && debateJudged[1] && debateJudged[2]) {
+        const fb = document.getElementById('fb-3');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = `<strong>LUAR BIASA! Seluruh Kasus Etika Berhasil Diidentifikasi!</strong><br>
+        Menghargai hak bicara dan berjiwa besar menerima hasil mufakat adalah ciri ksatria Pancasila. Sebaliknya, ancaman boikot adalah bentuk egoisme yang merusak persatuan! (+100 Poin)`;
+        
+        if (!completedMissions[2]) {
+          completedMissions[2] = true;
+          addScore(100);
+        }
+        document.getElementById('btn-next-3').style.display = 'inline-flex';
+      }
+    }
+
+    // ==========================================
+    // LOGIKA MISI 4: UJI KOMPETENSI C4-C6
+    // ==========================================
+    const quizAnswers = [1, 0, 0, 0]; // Index of correct option
+    let answeredQuiz = [false, false, false, false];
+
+    function evalQuiz(qNum, selectedIdx, cardEl) {
+      const grid = document.getElementById(`qgrid-${qNum}`);
+      const cards = grid.querySelectorAll('.choice-card');
+      cards.forEach(c => c.classList.remove('selected-correct', 'selected-wrong'));
+
+      if (selectedIdx === quizAnswers[qNum - 1]) {
+        triggerSfx('correct');
+        cardEl.classList.add('selected-correct');
+        answeredQuiz[qNum - 1] = true;
+      } else {
+        triggerSfx('wrong');
+        cardEl.classList.add('selected-wrong');
+        answeredQuiz[qNum - 1] = false;
+      }
+
+      if (answeredQuiz[0] && answeredQuiz[1] && answeredQuiz[2] && answeredQuiz[3]) {
+        const fb = document.getElementById('fb-4');
+        fb.className = 'feedback-banner success';
+        fb.innerHTML = `<strong>SEMPURNA! 4 Soal Analisis C4–C6 Tuntas Terjawab 100%!</strong><br>
+        Kamu telah membuktikan kematangan berpikir sebagai calon pemimpin bangsa yang berintegritas dan berjiwa Pancasila! (+100 Poin)`;
+        
+        if (!completedMissions[3]) {
+          completedMissions[3] = true;
+          addScore(100);
+        }
+        document.getElementById('btn-finish').style.display = 'inline-flex';
+      }
+    }
+
+    // ==========================================
+    // SERTIFIKAT MODAL
+    // ==========================================
+    function showFinalCertificate() {
+      triggerSfx('win');
+      document.getElementById('certName').textContent = selectedStudent;
+      document.getElementById('certModal').style.display = 'flex';
+    }
+
+    function closeCert() {
+      document.getElementById('certModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

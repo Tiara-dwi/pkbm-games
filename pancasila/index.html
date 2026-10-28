@@ -774,6 +774,12 @@
         <optgroup label="Murid Kelas 5 Lainnya">
           <option value="ardiansyah" data-grade="5">Ardiansyah (Kelas 5 - On-site)</option>
         </optgroup>
+        <optgroup label="Murid Kelas 6 (On-site)">
+          <option value="shan" data-grade="6">Shan (Kelas 6 - On-site • Kapten Sidang)</option>
+          <option value="selvi" data-grade="6">Selvi (Kelas 6 - On-site • Perumus Mufakat)</option>
+          <option value="aulya" data-grade="6">Aulya (Kelas 6 - On-site • Diplomat)</option>
+          <option value="hendra" data-grade="6">Hendra (Kelas 6 - On-site • Koordinator Data)</option>
+        </optgroup>
       </select>
     </div>
 
@@ -790,6 +796,9 @@
     </button>
     <button class="grade-btn" id="tabGrade5" onclick="setGrade(5)">
       <span>🏛️</span> Sesi 2: Mishka (Kelas 5 • 4 Misi Budaya Nusantara)
+    </button>
+    <button class="grade-btn" id="tabGrade6" onclick="window.location.href='kelas6.html'" style="background: linear-gradient(135deg, #FFFBEB, #FEF2F2); border-color:#991B1B; color:#991B1B;">
+      <span>⚖️</span> Sesi 3: Kelas 6 (Shan, Selvi, Aulya, Hendra • Majelis Musyawarah)
     </button>
   </div>
 
@@ -1435,6 +1444,11 @@
     currentStudentName = opt.text.split(' ')[0];
     document.getElementById('activeStudentLabel').textContent = `Halo, ${currentStudentName}! (Kelas ${grade} SD)`;
     
+    if (grade === 6) {
+      window.location.href = `kelas6.html?student=${encodeURIComponent(currentStudentName)}`;
+      return;
+    }
+
     updateStudentNames();
     setGrade(grade);
 
