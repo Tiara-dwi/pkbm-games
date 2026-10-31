@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skater Action Academy: Workshop & Arena — Aqlan</title>
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: #151d30;
+      --card-border: #233152;
+      --neon-cyan: #00f2fe;
+      --neon-gold: #f59e0b;
+      --neon-red: #ef4444;
+      --neon-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #1a2542 0%, var(--bg-dark) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    header {
+      width: 100%;
+      max-width: 820px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: rgba(21, 29, 48, 0.9);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+      margin-bottom: 20px;
+    }
+    .badge {
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .container {
+      width: 100%;
+      max-width: 820px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    /* ===================================================
+       1. PHASE: GREETING SCREEN
+       =================================================== */
+    #greeting-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .avatar-stage {
+      width: 180px;
+      height: 180px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    .skater-boy-svg {
+      width: 100%;
+      height: 100%;
+      animation: gentle-bob 2.5s ease-in-out infinite;
+    }
+    @keyframes gentle-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .wave-arm {
+      transform-origin: 40px 95px;
+      animation: wave-hand 1.6s ease-in-out infinite;
+    }
+    @keyframes wave-hand {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-25deg); }
+    }
+    .speech-bubble {
+      background: #1e293b;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 16px;
+      padding: 18px 24px;
+      max-width: 600px;
+      font-size: 17px;
+      line-height: 1.5;
+      color: #f1f5f9;
+      position: relative;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.15);
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 12px 12px 12px;
+      border-style: solid;
+      border-color: transparent transparent #1e293b transparent;
+    }
+    .btn-action {
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      border: none;
+      border-radius: 12px;
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 14px 28px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    }
+    .btn-action:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 25px rgba(0, 242, 254, 0.5);
+    }
+
+    /* ===================================================
+       2. PHASE: CRAFTING WORKSHOP
+       =================================================== */
+    #crafting-screen {
+      display: none;
+    }
+    .workshop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .workshop-header h2 { font-size: 20px; color: var(--neon-cyan); }
+    .workshop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 20px;
+      align-items: center;
+    }
+    @media(max-width: 700px) {
+      .workshop-grid { grid-template-columns: 1fr; }
+    }
+    .board-preview-box {
+      background: #0f172a;
+      border: 2px dashed #334155;
+      border-radius: 16px;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+    }
+    .preview-label {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .craft-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .station-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--neon-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .pill-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .craft-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .craft-btn:hover {
+      background: #334155;
+      color: #ffffff;
+      border-color: var(--neon-cyan);
+    }
+    .craft-btn.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+    }
+
+    /* Skateboard SVG styling */
+    #skateboard-svg {
+      width: 220px;
+      height: 90px;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+      transition: transform 0.3s ease;
+    }
+
+    /* ===================================================
+       3. PHASE: GAME ARENA
+       =================================================== */
+    #game-screen {
+      display: none;
+    }
+    .equipped-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    .equipped-badge {
+      background: var(--neon-cyan);
+      color: #0b0f19;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .question-box {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .tag-tense {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #0284c7;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .question-text {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #ffffff;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    button.opt-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f1f5f9;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    button.opt-btn:hover {
+      background: #334155;
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px);
+    }
+    button.opt-btn.correct {
+      background: #064e3b !important;
+      border-color: var(--neon-green) !important;
+      color: #a7f3d0 !important;
+    }
+    button.opt-btn.wrong {
+      background: #7f1d1d !important;
+      border-color: var(--neon-red) !important;
+      color: #fecaca !important;
+    }
+    .feedback-banner {
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .feedback-banner.show-correct {
+      display: block;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--neon-green);
+      color: #34d399;
+    }
+    .feedback-banner.show-wrong {
+      display: block;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--neon-red);
+      color: #f87171;
+    }
+    #victory-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    #victory-screen h1 { font-size: 32px; color: var(--neon-cyan); margin-bottom: 10px; }
+    .badge-award {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      color: #0b0f19;
+      font-weight: 900;
+      border-radius: 50px;
+      font-size: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <span class="badge">Aqlan • Grade 4</span>
+      <span style="margin-left: 10px; font-weight: 600; font-size: 14px;">Skater Action Academy</span>
+    </div>
+    <div style="font-size: 14px; font-weight: bold;">
+      Score: <span id="score" style="color:var(--neon-cyan);">0</span> | 
+      Streak: <span id="streak" style="color:var(--neon-gold);">0</span>🔥
+    </div>
+  </header>
+
+  <!-- ============================================================
+       PHASE 1: GREETING SCREEN (A BOY GREETS AQLAN)
+       ============================================================ -->
+  <div class="container" id="greeting-screen">
+    <div class="avatar-stage">
+      <svg class="skater-boy-svg" viewBox="0 0 160 160">
+        <!-- Background Glow -->
+        <circle cx="80" cy="80" r="70" fill="rgba(0, 242, 254, 0.1)"/>
+        
+        <!-- Skater Boy Body / Hoodie -->
+        <path d="M 50 140 C 50 105, 110 105, 110 140 Z" fill="#0284c7" />
+        <path d="M 70 110 L 80 135 L 90 110 Z" fill="#38bdf8" />
+        
+        <!-- Head & Face -->
+        <circle cx="80" cy="72" r="32" fill="#fed7aa" />
+        <!-- Hair -->
+        <path d="M 50 68 C 50 42, 110 42, 110 68 C 100 52, 60 52, 50 68 Z" fill="#475569" />
+        
+        <!-- Skater Cap (Backwards) -->
+        <path d="M 48 64 C 48 45, 112 45, 112 64 Z" fill="#ef4444" />
+        <rect x="90" y="60" width="30" height="8" rx="4" fill="#dc2626" transform="rotate(-10 90 60)" />
+
+        <!-- Eyes (Blinking animation) -->
+        <ellipse cx="68" cy="72" rx="3.5" ry="4.5" fill="#0f172a" />
+        <ellipse cx="92" cy="72" rx="3.5" ry="4.5" fill="#0f172a" />
+        <circle cx="70" cy="70" r="1.5" fill="#ffffff" />
+        <circle cx="94" cy="70" r="1.5" fill="#ffffff" />
+
+        <!-- Cheerful Smile -->
+        <path d="M 72 84 Q 80 92, 88 84" stroke="#c2410c" stroke-width="2.5" fill="none" stroke-linecap="round" />
+
+        <!-- Waving Arm -->
+        <g class="wave-arm">
+          <!-- Shoulder joint at (40, 95) -->
+          <path d="M 45 105 Q 25 85, 30 65" stroke="#0284c7" stroke-width="12" fill="none" stroke-linecap="round" />
+          <!-- Hand / Glove -->
+          <circle cx="30" cy="62" r="8" fill="#fed7aa" />
+          <!-- Thumb -->
+          <circle cx="35" cy="62" r="4" fill="#fed7aa" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="speech-bubble" id="speech-text">
+      "Yo, <strong>Captain Aqlan!</strong> Selamat datang di arena skatepark! Gue <strong>Leo</strong>, kru pemandumu hari ini. Sebelum kita meluncur ke rintangan kota, kita wajib rakit papan skate andalanmu dulu. Siap rakit papanmu?"
+    </div>
+
+    <button class="btn-action" onclick="goToWorkshop()">
+      <span>MASUK KE BENGKEL RAKIT</span> 🛠️ ❯
+    </button>
+  </div>
+
+  <!-- ============================================================
+       PHASE 2: MICRO-CRAFTING WORKSHOP (30 DETIK)
+       ============================================================ -->
+  <div class="container" id="crafting-screen">
+    <div class="workshop-header">
+      <h2>🛠️ SKATER FORGE: RAKIT PAPAN SKATE AQLAN</h2>
+      <span style="font-size: 12px; color: var(--neon-gold); font-weight: bold;">30-SEC QUICK CRAFT</span>
+    </div>
+
+    <div class="workshop-grid">
+      <!-- Live Skateboard SVG Preview -->
+      <div class="board-preview-box">
+        <span class="preview-label">LIVE PREVIEW</span>
+        <svg id="skateboard-svg" viewBox="0 0 240 100">
+          <defs>
+            <linearGradient id="grad-cyber" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#0284c7"/>
+              <stop offset="100%" stop-color="#00f2fe"/>
+            </linearGradient>
+            <linearGradient id="grad-flame" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#dc2626"/>
+              <stop offset="100%" stop-color="#f59e0b"/>
+            </linearGradient>
+            <linearGradient id="grad-cosmic" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#7c3aed"/>
+              <stop offset="100%" stop-color="#fbbf24"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Wheels -->
+          <circle id="wheel-left" cx="50" cy="72" r="14" fill="#00f2fe" stroke="#0f172a" stroke-width="4"/>
+          <circle id="wheel-right" cx="190" cy="72" r="14" fill="#00f2fe" stroke="#0f172a" stroke-width="4"/>
+          <circle cx="50" cy="72" r="4" fill="#ffffff"/>
+          <circle cx="190" cy="72" r="4" fill="#ffffff"/>
+
+          <!-- Trucks / Axles -->
+          <rect x="42" y="54" width="16" height="8" fill="#94a3b8" rx="2"/>
+          <rect x="182" y="54" width="16" height="8" fill="#94a3b8" rx="2"/>
+
+          <!-- Deck Body -->
+          <path id="deck-shape" d="M 20 48 Q 2 45, 12 36 Q 40 40, 120 40 Q 200 40, 228 36 Q 238 45, 220 48 Q 180 54, 120 54 Q 60 54, 20 48 Z" fill="url(#grad-cyber)" stroke="#0f172a" stroke-width="3"/>
+
+          <!-- Grip Tape Graphic / Sticker -->
+          <text id="board-sticker" x="120" y="50" font-size="11" font-weight="900" fill="#0f172a" text-anchor="middle" letter-spacing="1">AQLAN • PRO</text>
+        </svg>
+
+        <div style="margin-top: 15px; font-size: 13px; color: #cbd5e1;" id="board-summary">
+          Board: <strong>Cyber Cyan</strong> • Wheels: <strong>Nitro Cyan</strong>
+        </div>
+      </div>
+
+      <!-- Customization Options -->
+      <div class="craft-options">
+        <!-- 1. DECK SKIN -->
+        <div>
+          <div class="station-title">1. Pilih Motif Papan (Deck Skin)</div>
+          <div class="pill-group">
+            <button class="craft-btn active" onclick="setDeck('cyber', this)">⚡ Cyber Cyan</button>
+            <button class="craft-btn" onclick="setDeck('flame', this)">🔥 Flame Dragon</button>
+            <button class="craft-btn" onclick="setDeck('cosmic', this)">🌌 Cosmic Violet</button>
+          </div>
+        </div>
+
+        <!-- 2. WHEELS -->
+        <div>
+          <div class="station-title">2. Tipe Roda Kecepatan (Wheels)</div>
+          <div class="pill-group">
+            <button class="craft-btn active" onclick="setWheels('#00f2fe', 'Nitro Cyan', this)">🟢 Cyan Speed</button>
+            <button class="craft-btn" onclick="setWheels('#f59e0b', 'Solar Gold', this)">🟡 Solar Gold</button>
+            <button class="craft-btn" onclick="setWheels('#ef4444', 'Lava Red', this)">🔴 Lava Red</button>
+          </div>
+        </div>
+
+        <!-- 3. ACTION STICKER -->
+        <div>
+          <div class="station-title">3. Stiker Mantra Aksi (Action Rune)</div>
+          <div class="pill-group">
+            <button class="craft-btn active" onclick="setSticker('AQLAN • PRO', this)">🛹 AQLAN • PRO</button>
+            <button class="craft-btn" onclick="setSticker('WEAR HELMET', this)">🪖 WEAR HELMET</button>
+            <button class="craft-btn" onclick="setSticker('SPEED BOOST', this)">⚡ SPEED BOOST</button>
+          </div>
+        </div>
+
+        <button class="btn-action" style="margin-top: 10px; width: 100%; justify-content: center;" onclick="launchToArena()">
+          <span>KUNCI PAPAN &amp; MELUNCUR!</span> 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PHASE 3: GAME ARENA
+       ============================================================ -->
+  <div class="container" id="game-screen">
+    <div class="equipped-banner">
+      <span class="equipped-badge">EQUIPPED</span>
+      <span id="equipped-text">Aqlan's Custom Board: Cyber Cyan with Nitro Cyan wheels</span>
+    </div>
+
+    <div class="question-box">
+      <div class="tag-tense" id="q-tag">GERBONG TUNGGAL (IS)</div>
+      <div class="question-text" id="q-text">Aqlan ... riding his newly crafted skateboard down the ramp!</div>
+    </div>
+
+    <div class="feedback-banner" id="feedback"></div>
+
+    <div class="options-grid" id="options"></div>
+
+    <button class="btn-action" id="btn-next" style="display:none; width:100%; justify-content:center;" onclick="nextQuestion()">
+      TRICK BERIKUTNYA ❯
+    </button>
+  </div>
+
+  <!-- VICTORY SCREEN -->
+  <div class="container" id="victory-screen">
+    <div style="font-size: 55px; margin-bottom: 10px;">🛹🔥🏆</div>
+    <h1>MISSION ACCOMPLISHED!</h1>
+    <p>Aqlan rode his custom skateboard with perfect English mastery!</p>
+    <div class="badge-award">MASTER ENGLISH SKATER PRO 2026</div>
+    <p>Skor Akhir: <strong id="final-score" style="color:var(--neon-cyan); font-size: 26px;">0</strong> / 600</p>
+    <button class="btn-action" style="margin-top: 15px;" onclick="location.reload()">
+      RAKIT LAGI ↺
+    </button>
+  </div>
+
+  <script>
+    // Web Audio Synthesizer
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playTone(freq, type, duration, ramp=true) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      if (ramp) osc.frequency.exponentialRampToValueAtTime(freq*1.8, now + duration);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.linearRampToValueAtTime(0, now + duration);
+      osc.start(now);
+      osc.stop(now + duration);
+    }
+
+    function soundCraftClick() {
+      playTone(520, 'sine', 0.1, false);
+    }
+    function soundLaunch() {
+      playTone(330, 'triangle', 0.35, true);
+    }
+    function soundCorrect() {
+      playTone(440, 'triangle', 0.2, true);
+    }
+    function soundWrong() {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(160, now);
+      osc.frequency.linearRampToValueAtTime(100, now + 0.25);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.25);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    }
+
+    // Skateboard Customizer State
+    let currentDeck = "url(#grad-cyber)";
+    let currentDeckName = "Cyber Cyan";
+    let currentWheelColor = "#00f2fe";
+    let currentWheelName = "Nitro Cyan";
+    let currentSticker = "AQLAN • PRO";
+
+    function setDeck(style, btn) {
+      soundCraftClick();
+      btn.parentElement.querySelectorAll('.craft-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const deck = document.getElementById('deck-shape');
+      if (style === 'cyber') {
+        currentDeck = "url(#grad-cyber)";
+        currentDeckName = "Cyber Cyan";
+      } else if (style === 'flame') {
+        currentDeck = "url(#grad-flame)";
+        currentDeckName = "Flame Dragon";
+      } else {
+        currentDeck = "url(#grad-cosmic)";
+        currentDeckName = "Cosmic Violet";
+      }
+      deck.setAttribute('fill', currentDeck);
+      updateSummary();
+    }
+
+    function setWheels(color, name, btn) {
+      soundCraftClick();
+      btn.parentElement.querySelectorAll('.craft-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      currentWheelColor = color;
+      currentWheelName = name;
+      document.getElementById('wheel-left').setAttribute('fill', color);
+      document.getElementById('wheel-right').setAttribute('fill', color);
+      updateSummary();
+    }
+
+    function setSticker(text, btn) {
+      soundCraftClick();
+      btn.parentElement.querySelectorAll('.craft-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      currentSticker = text;
+      document.getElementById('board-sticker').textContent = text;
+      updateSummary();
+    }
+
+    function updateSummary() {
+      document.getElementById('board-summary').innerHTML = 
+        `Board: <strong>${currentDeckName}</strong> • Wheels: <strong>${currentWheelName}</strong> • Rune: <strong>${currentSticker}</strong>`;
+    }
+
+    function goToWorkshop() {
+      soundCraftClick();
+      document.getElementById('greeting-screen').style.display = 'none';
+      document.getElementById('crafting-screen').style.display = 'block';
+    }
+
+    function launchToArena() {
+      soundLaunch();
+      document.getElementById('crafting-screen').style.display = 'none';
+      document.getElementById('game-screen').style.display = 'block';
+      document.getElementById('equipped-text').innerHTML = 
+        `Papan Custom Aqlan: <strong>${currentDeckName}</strong> (${currentSticker}) dengan roda <strong>${currentWheelName}</strong>`;
+      loadQuestion();
+    }
+
+    // Questions Data
+    const quizData = [
+      {
+        tag: "GERBONG TUNGGAL (IS)",
+        q: "Look! Aqlan ... riding his newly crafted skateboard down the ramp!",
+        options: ["is", "am", "are", "be"],
+        correct: 0,
+        exp: "Tepat! Aqlan adalah 1 orang (He), pasangannya adalah IS!"
+      },
+      {
+        tag: "MANTRA SULAP 'E'",
+        q: "Aqlan is customizing his board. Kata 'RIDE' jika ditambah -ing menjadi...?",
+        options: ["rideing", "riding", "ridding", "rideying"],
+        correct: 1,
+        exp: "Mantra Sulap E: Huruf 'e' di ujung dihilangkan menjadi RIDING!"
+      },
+      {
+        tag: "GERBONG BANYAK (ARE)",
+        q: "The skater friends ... cheering for Aqlan's kickflip!",
+        options: ["is", "am", "are", "was"],
+        correct: 2,
+        exp: "Tepat! 'Friends' itu jamak (They), pasangannya adalah ARE!"
+      },
+      {
+        tag: "TABRAKAN KONSINAN DOBEL",
+        q: "He is ... (RUN) fast to jump onto the board.",
+        options: ["runing", "running", "runned", "runnings"],
+        correct: 1,
+        exp: "Keren! Huruf pendek konsonan didobel menjadi RUNNING!"
+      },
+      {
+        tag: "RADAR PREPOSISI LOKASI",
+        q: "Where is the safety helmet? It is ... Aqlan's head.",
+        options: ["under", "on", "in", "behind"],
+        correct: 1,
+        exp: "Sempurna! Helm dipakai menempel di atas kepala (ON your head)!"
+      },
+      {
+        tag: "ORAL COMBO ANSWER",
+        q: "Leo: 'What are you doing on the track right now, Aqlan?'",
+        options: [
+          "I am skating with my custom board!",
+          "I is skate with my board.",
+          "I are skating now.",
+          "I skating right now."
+        ],
+        correct: 0,
+        exp: "JUARA SEJATI! 'I am skating with my custom board!' tepat 100%!"
+      }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let streak = 0;
+    let answered = false;
+
+    function loadQuestion() {
+      answered = false;
+      const data = quizData[currentIdx];
+      document.getElementById('q-tag').innerText = data.tag;
+      document.getElementById('q-text').innerText = data.q;
+      
+      const fb = document.getElementById('feedback');
+      fb.className = 'feedback-banner';
+      fb.style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+
+      const optContainer = document.getElementById('options');
+      optContainer.innerHTML = '';
+      data.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerHTML = `<span style="color:var(--neon-cyan)">[${String.fromCharCode(65+i)}]</span> ${opt}`;
+        btn.onclick = () => selectOption(i);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(index) {
+      if (answered) return;
+      answered = true;
+      const data = quizData[currentIdx];
+      const buttons = document.querySelectorAll('.opt-btn');
+      const fb = document.getElementById('feedback');
+
+      if (index === data.correct) {
+        soundCorrect();
+        buttons[index].classList.add('correct');
+        score += 100;
+        streak += 1;
+        fb.innerText = "⚡ COMBO STRIKE! " + data.exp;
+        fb.className = "feedback-banner show-correct";
+      } else {
+        soundWrong();
+        buttons[index].classList.add('wrong');
+        buttons[data.correct].classList.add('correct');
+        streak = 0;
+        fb.innerText = "❌ HATI-HATI! " + data.exp;
+        fb.className = "feedback-banner show-wrong";
+      }
+
+      document.getElementById('score').innerText = score;
+      document.getElementById('streak').innerText = streak;
+      document.getElementById('btn-next').style.display = 'flex';
+    }
+
+    function nextQuestion() {
+      currentIdx++;
+      if (currentIdx < quizData.length) {
+        loadQuestion();
+      } else {
+        showVictory();
+      }
+    }
+
+    function showVictory() {
+      playTone(523, 'sine', 0.5, true);
+      document.getElementById('game-screen').style.display = 'none';
+      document.getElementById('victory-screen').style.display = 'block';
+      document.getElementById('final-score').innerText = score;
+    }
+  </script>
+</body>
+</html>
