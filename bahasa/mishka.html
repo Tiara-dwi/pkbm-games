@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Procedural Lab: Arsitek Langkah & Surat Sahabat — Mishka</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #064e3b 0%, #062f25 100%);
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: #a7f3d0;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --primary-green: #047857;
+      --primary-emerald: #10b981;
+      --accent-cyan: #0284c7;
+      --accent-gold: #d97706;
+      --accent-rose: #e11d48;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', 'Segoe UI', serif; }
+    body {
+      background: var(--bg-gradient);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+    header {
+      width: 100%;
+      max-width: 820px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 22px;
+      background: rgba(6, 78, 59, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid #34d399;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      margin-bottom: 24px;
+    }
+    .badge {
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: sans-serif;
+    }
+    .score-badge {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fef08a;
+      font-family: sans-serif;
+    }
+    #game-container {
+      width: 100%;
+      max-width: 820px;
+      background: var(--card-bg);
+      color: var(--text-dark);
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #0284c7);
+      transition: width 0.3s ease;
+    }
+    .stage-label {
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--primary-green);
+      margin-bottom: 6px;
+    }
+    .prompt-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: #064e3b;
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+    .scenario-box {
+      background: #f0fdf4;
+      border-left: 4px solid var(--primary-emerald);
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 22px;
+      font-size: 15px;
+      color: #1e293b;
+      line-height: 1.5;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .btn-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      color: #1e293b;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-card:hover {
+      background: #f8fafc;
+      border-color: var(--primary-green);
+      box-shadow: 0 4px 12px rgba(4, 120, 87, 0.1);
+      transform: translateY(-2px);
+    }
+    .btn-card.correct {
+      background: #ecfdf5 !important;
+      border-color: #10b981 !important;
+      color: #064e3b !important;
+      font-weight: 600;
+    }
+    .btn-card.wrong {
+      background: #fff1f2 !important;
+      border-color: #f43f5e !important;
+      color: #881337 !important;
+    }
+    .explanation-panel {
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: sans-serif;
+      line-height: 1.5;
+      margin-bottom: 18px;
+      display: none;
+    }
+    .exp-correct { background: #d1fae5; border: 1px solid #34d399; color: #065f46; display: block; }
+    .exp-wrong   { background: #ffe4e6; border: 1px solid #fb7185; color: #9f1239; display: block; }
+    
+    .btn-action {
+      background: linear-gradient(135deg, var(--primary-green), #0284c7);
+      color: white;
+      font-family: sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      float: right;
+      display: none;
+      box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
+    }
+    .btn-action:hover { opacity: 0.95; transform: scale(1.02); }
+    
+    #certificate-screen {
+      display: none;
+      text-align: center;
+      padding: 24px 12px;
+    }
+    .cert-seal {
+      width: 72px;
+      height: 72px;
+      background: #fef3c7;
+      border: 3px solid #d97706;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <span class="badge">Ghibli Botanical Lab</span>
+      <span style="font-weight: bold; margin-left: 10px;">The Procedural Lab</span>
+    </div>
+    <div class="score-badge">
+      Skor: <span id="score-counter">0</span> Poin
+    </div>
+  </header>
+
+  <main id="game-container">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-bar"></div>
+    </div>
+
+    <div id="quiz-panel">
+      <div class="stage-label" id="stage-badge">Tahap 1 • Arsitek Urutan Prosedur</div>
+      <div class="prompt-text" id="prompt-heading">Memuat tantangan bahasa...</div>
+      
+      <div class="scenario-box" id="scenario-content">
+        Analisis skema di bawah ini.
+      </div>
+
+      <div class="options-grid" id="options-box">
+        <!-- Interactive options injected here -->
+      </div>
+
+      <div class="explanation-panel" id="explanation-box"></div>
+      <button class="btn-action" id="next-btn" onclick="goToNextStep()">Langkah Selanjutnya 🌿</button>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div id="certificate-screen">
+      <div class="cert-seal">🏅</div>
+      <h2 style="font-size: 26px; color: #064e3b; margin-bottom: 8px;">MAHAKARYA ARSITEK LITERASI</h2>
+      <p style="font-size: 16px; color: #475569; margin-bottom: 20px;">
+        Selamat Mishka! Kamu sukses menyelesaikan seluruh analisis Teks Prosedur & Kaidah Surat Pribadi dengan sangat cermat!
+      </p>
+      <div style="font-size: 22px; font-weight: bold; color: #047857; margin-bottom: 24px;" id="final-points">
+        Skor Sempurna: 100 Poin
+      </div>
+      <button class="btn-action" style="display: inline-block; float: none;" onclick="restartLab()">Ulangi Laboratorium 🔄</button>
+    </div>
+  </main>
+
+  <script>
+    // Audio Synthesizer (Natural Soft Tones)
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    function playChime(freq, duration = 0.25) {
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+    function playRight() { playChime(523.25, 0.15); setTimeout(() => playChime(659.25, 0.3), 100); }
+    function playWrong() { playChime(311.13, 0.25); setTimeout(() => playChime(277.18, 0.35), 120); }
+    function playFanfare() {
+      [440, 554.37, 659.25, 880].forEach((f, idx) => {
+        setTimeout(() => playChime(f, 0.4), idx * 140);
+      });
+    }
+
+    const labChallenges = [
+      // TAHAP 1: URUTAN TEKS PROSEDUR
+      {
+        stage: "Tahap 1 • Arsitek Urutan Prosedur",
+        title: "Menata Kronologi Prosedur Peregangan Sendi Balok Titian",
+        scenario: "Seorang pesenam mempersiapkan 4 langkah sebelum melompat di balok titian:\n(1) Lakukan rotasi memutar pergelangan kaki 8 hitungan.\n(2) Luruskan kedua kaki di atas matras.\n(3) Lakukan peregangan statis otot betis.\n(4) Tarik ujung jari kaki ke arah tubuh perlahan.\nUrutan manakah yang paling runtut dan aman secara biomekanika?",
+        options: [
+          { text: "Langkah (2) ➔ (4) ➔ (1) ➔ (3)", correct: true },
+          { text: "Langkah (1) ➔ (3) ➔ (4) ➔ (2)", correct: false },
+          { text: "Langkah (3) ➔ (2) ➔ (1) ➔ (4)", correct: false },
+          { text: "Langkah (4) ➔ (1) ➔ (2) ➔ (3)", correct: false }
+        ],
+        explanation: "Tepat sekali, Mishka! Dimulai dari meluruskan kaki (posisi dasar), menarik ujung jari (peregangan awal), memutar pergelangan kaki (mobilitas sendi), lalu peregangan betis menyeluruh."
+      },
+      // TAHAP 2: AKHIRAN IMPERATIF -KAN DAN -LAH
+      {
+        stage: "Tahap 2 • Kaidah Bahasa Imperatif (-kan & -lah)",
+        title: "Laboratorium Imbuhan Perintah",
+        scenario: "Perhatikan kalimat panduan merawat tanaman pakis ini:\n\"... (Tuang) 200 ml air nutrisi ke wadah tanaman, lalu ... (amat) perubahan warna daunnya setelah seminggu!\"\nImbuhan manakah yang paling baku dan santun melengkapi teks tersebut?",
+        options: [
+          { text: "Menuang dan mengamati", correct: false },
+          { text: "Tuangkanlah dan mengamatilah", correct: false },
+          { text: "Tuangkan dan amatilah", correct: true },
+          { text: "Dituang dan diamati", correct: false }
+        ],
+        explanation: "Sempurna! Kata kerja imperatif pada teks prosedur menggunakan akhiran '-kan' untuk aksi pada objek (Tuangkan 200 ml) dan '-lah' untuk penegasan instruksi santun (amatilah)."
+      },
+      // TAHAP 3: EVALUASI LOGIKA PROSEDUR
+      {
+        stage: "Tahap 3 • Evaluasi Kritis Dampak Ilmiah (C4–C5)",
+        title: "Dampak Logis Urutan yang Dibalik",
+        scenario: "Dalam prosedur pertolongan pertama luka memar atlet:\nLangkah A: Mengompres bagian yang memar dengan kantung es selama 15 menit.\nLangkah B: Mengoleskan salep panas pereda nyeri otot.\nMengapa Langkah A (kompres es) wajib dilakukan sebelum salep panas, bukan sebaliknya?",
+        options: [
+          { text: "Karena kompres dingin mengecilkan pembuluh darah yang pecah agar bengkak reda; sedangkan panas di awal justru memperparah perdarahan dalam.", correct: true },
+          { text: "Karena kantung es lebih murah harganya dibanding salep.", correct: false },
+          { text: "Karena es membuat kulit basah sehingga salep lebih harum.", correct: false },
+          { text: "Tidak ada alasan medis, hanya kebiasaan saja.", correct: false }
+        ],
+        explanation: "Analisis brilian, Mishka! Suhu dingin es menyempitkan pembuluh darah (*vasokonstriksi*) untuk menghentikan pendarahan memar. Ini bukti mengapa teks prosedur wajib ditaati urutannya!"
+      },
+      // TAHAP 4: STRUKTUR SURAT PRIBADI
+      {
+        stage: "Tahap 4 • Detektif Anatomi Surat Pribadi",
+        title: "Menemukan Unsur Surat Sahabat",
+        scenario: "Mishka membaca petikan surat ini:\n\"Halo Kayla sahabatku yang baik di Bandung, apa kabarmu? Aku ingin bercerita tentang serunya merawat tanaman terrarium baruku di rumah...\"\nUnsur apakah petikan di atas dalam anatomi surat pribadi?",
+        options: [
+          { text: "Tempat dan Tanggal Surat", correct: false },
+          { text: "Salam Pembuka & Paragraf Pembuka Curahan Hati", correct: true },
+          { text: "Kalimat Penutup & Tanda Tangan", correct: false },
+          { text: "Alamat Kantor Dinas", correct: false }
+        ],
+        explanation: "Tepat 100%! Bagian ini memuat salam pembuka akrab dan kalimat pembuka hangat yang mengawali cerita hobi kepada sahabat."
+      }
+    ];
+
+    let currentStep = 0;
+    let score = 0;
+
+    function renderStep() {
+      const item = labChallenges[currentStep];
+      document.getElementById('stage-badge').innerText = item.stage;
+      document.getElementById('prompt-heading').innerText = item.title;
+      document.getElementById('scenario-content').innerText = item.scenario;
+
+      const optsContainer = document.getElementById('options-box');
+      optsContainer.innerHTML = '';
+
+      item.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-card';
+        btn.innerText = opt.text;
+        btn.onclick = () => chooseOption(btn, opt.correct, item.explanation);
+        optsContainer.appendChild(btn);
+      });
+
+      document.getElementById('explanation-box').style.display = 'none';
+      document.getElementById('next-btn').style.display = 'none';
+
+      const progress = (currentStep / labChallenges.length) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+    }
+
+    function chooseOption(button, isCorrect, explanation) {
+      const allButtons = document.querySelectorAll('.btn-card');
+      allButtons.forEach(b => b.disabled = true);
+
+      const exp = document.getElementById('explanation-box');
+      if (isCorrect) {
+        button.classList.add('correct');
+        playRight();
+        score += 25;
+        exp.className = 'explanation-panel exp-correct';
+        exp.innerHTML = '<strong>🌿 ANALISIS TEPAT:</strong> ' + explanation;
+      } else {
+        button.classList.add('wrong');
+        playWrong();
+        exp.className = 'explanation-panel exp-wrong';
+        exp.innerHTML = '<strong>⚠️ PERLU KECERMATAN:</strong> ' + explanation;
+      }
+
+      document.getElementById('score-counter').innerText = score;
+      document.getElementById('next-btn').style.display = 'block';
+    }
+
+    function goToNextStep() {
+      currentStep++;
+      if (currentStep < labChallenges.length) {
+        renderStep();
+      } else {
+        displayCertificate();
+      }
+    }
+
+    function displayCertificate() {
+      document.getElementById('quiz-panel').style.display = 'none';
+      document.getElementById('certificate-screen').style.display = 'block';
+      document.getElementById('final-points').innerText = 'Total Skor Analisis Mishka: ' + score + ' / 100';
+      document.getElementById('progress-bar').style.width = '100%';
+      playFanfare();
+    }
+
+    function restartLab() {
+      currentStep = 0;
+      score = 0;
+      document.getElementById('score-counter').innerText = '0';
+      document.getElementById('quiz-panel').style.display = 'block';
+      document.getElementById('certificate-screen').style.display = 'none';
+      renderStep();
+    }
+
+    renderStep();
+  </script>
+</body>
+</html>

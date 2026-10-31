@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skater City Rush: Radar Rambu & Kombo Argumen — Aqlan</title>
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: #151d30;
+      --card-border: #233152;
+      --neon-cyan: #00f2fe;
+      --neon-gold: #f59e0b;
+      --neon-red: #ef4444;
+      --neon-green: #10b981;
+      --neon-blue: #3b82f6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #1a2542 0%, var(--bg-dark) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    header {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: rgba(21, 29, 48, 0.85);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+      margin-bottom: 20px;
+    }
+    .badge {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .score-box {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--neon-gold);
+    }
+    .combo-badge {
+      color: var(--neon-cyan);
+      font-size: 14px;
+      margin-left: 10px;
+    }
+    #game-container {
+      width: 100%;
+      max-width: 800px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar-wrap {
+      width: 100%;
+      height: 8px;
+      background: #233152;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+      transition: width 0.3s ease;
+    }
+    .stage-title {
+      color: var(--neon-cyan);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+    .question-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .visual-sign-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #0f1627;
+      border: 2px dashed #2d3e66;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .sign-icon {
+      width: 90px;
+      height: 90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      font-weight: bold;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+    .sign-yellow { background: #f59e0b; color: #000; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); border-radius: 0; }
+    .sign-red    { background: #ef4444; color: #fff; border-radius: 50%; border: 4px solid #fff; }
+    .sign-blue   { background: #3b82f6; color: #fff; border-radius: 50%; border: 4px solid #fff; }
+    .sign-green  { background: #10b981; color: #fff; border-radius: 8px; border: 3px solid #fff; font-size: 16px; padding: 6px; text-align: center; }
+    
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media(max-width: 600px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+    .btn-opt {
+      background: #1c2742;
+      border: 1px solid #2d3e66;
+      color: var(--text-main);
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-opt:hover {
+      background: #253457;
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px);
+    }
+    .btn-opt.correct {
+      background: #064e3b !important;
+      border-color: var(--neon-green) !important;
+      color: #a7f3d0 !important;
+    }
+    .btn-opt.wrong {
+      background: #7f1d1d !important;
+      border-color: var(--neon-red) !important;
+      color: #fecaca !important;
+    }
+    .feedback-box {
+      min-height: 50px;
+      font-size: 14px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .feedback-correct { background: rgba(16, 185, 129, 0.2); border: 1px solid var(--neon-green); color: #6ee7b7; display: block; }
+    .feedback-wrong { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--neon-red); color: #fca5a5; display: block; }
+    
+    .btn-next {
+      background: linear-gradient(135deg, var(--neon-cyan), #0099ff);
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      float: right;
+      display: none;
+    }
+    .btn-next:hover { opacity: 0.9; transform: scale(1.02); }
+    
+    /* Victory Screen */
+    #victory-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    .trophy-icon { font-size: 64px; margin-bottom: 10px; animation: bounce 1s infinite alternate; }
+    @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <span class="badge">E-Sport Edition</span>
+      <span style="font-weight: bold; margin-left: 8px;">Skater City Rush</span>
+    </div>
+    <div class="score-box">
+      Skor: <span id="score-val">0</span>
+      <span class="combo-badge" id="combo-val">Combo x1</span>
+    </div>
+  </header>
+
+  <main id="game-container">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="p-bar"></div>
+    </div>
+
+    <div id="quiz-screen">
+      <div class="stage-title" id="stage-label">Tahap 1 • Radar Rambu Lalu Lintas</div>
+      <div class="question-title" id="q-text">Memuat pertanyaan...</div>
+
+      <div class="visual-sign-card" id="visual-card">
+        <div id="sign-target" class="sign-icon sign-yellow">⚠️</div>
+      </div>
+
+      <div class="options-grid" id="opts-container">
+        <!-- Buttons generated dynamically -->
+      </div>
+
+      <div class="feedback-box" id="feedback"></div>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">Lanjut Meluncur 🛹</button>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div id="victory-screen">
+      <div class="trophy-icon">🏆</div>
+      <h2 style="font-size: 28px; color: var(--neon-gold); margin-bottom: 10px;">MISSION ACCOMPLISHED!</h2>
+      <p style="font-size: 18px; color: #e2e8f0; margin-bottom: 20px;">
+        Selamat Kapten Aqlan! Kamu sukses meraih gelar <strong style="color: var(--neon-cyan);">Master Skater Navigator</strong>!
+      </p>
+      <div style="font-size: 24px; font-weight: bold; color: var(--neon-green); margin-bottom: 24px;" id="final-score">
+        Skor Akhir: 100 / 100
+      </div>
+      <button class="btn-next" style="display: inline-block; float: none;" onclick="restartGame()">Ulangi Misi 🔄</button>
+    </div>
+  </main>
+
+  <script>
+    // Audio Synthesizer (Zero External Audio File Dependencies)
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    function playBeep(freq, type, duration) {
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+    function playSuccess() { playBeep(587.33, 'triangle', 0.1); setTimeout(() => playBeep(880, 'triangle', 0.25), 100); }
+    function playError() { playBeep(220, 'sawtooth', 0.2); setTimeout(() => playBeep(180, 'sawtooth', 0.3), 150); }
+    function playFanfare() {
+      [523.25, 659.25, 783.99, 1046.50].forEach((f, idx) => {
+        setTimeout(() => playBeep(f, 'sine', 0.3), idx * 120);
+      });
+    }
+
+    const questions = [
+      // TAHAP 1: RAMBU LALU LINTAS
+      {
+        stage: "Tahap 1 • Radar Rambu Lalu Lintas",
+        text: "Papan skateboard-mu meluncur kencang di turunan. Di pinggir jalan ada rambu belah ketupat KUNING bergambar tikungan tajam. Apa artinya?",
+        signType: "sign-yellow",
+        signContent: "⚠️",
+        options: [
+          { text: "Rambu Peringatan: Waspada, kurangi kecepatan!", correct: true },
+          { text: "Rambu Larangan: Dilarang lewat sama sekali!", correct: false },
+          { text: "Rambu Petunjuk: Arah menuju rumah sakit.", correct: false },
+          { text: "Rambu Perintah: Wajib melompat tinggi.", correct: false }
+        ],
+        explain: "Tepat! Warna KUNING selalu berarti PERINGATAN agar pengguna jalan waspada dan mengurangi kecepatan."
+      },
+      {
+        stage: "Tahap 1 • Radar Rambu Lalu Lintas",
+        text: "Di depan gerbang skatepark ada rambu lingkaran MERAH dengan setrip putih melintang. Apa tindakan ksatria Aqlan?",
+        signType: "sign-red",
+        signContent: "⛔",
+        options: [
+          { text: "Terus meluncur tanpa peduli.", correct: false },
+          { text: "Stop! Itu Rambu Larangan: Dilarang Masuk!", correct: true },
+          { text: "Belok kanan karena itu rambu petunjuk jalan.", correct: false },
+          { text: "Menambah nos pendorong hoverboard.", correct: false }
+        ],
+        explain: "Benar sekali! Warna MERAH adalah rambu LARANGAN. Menerobos rambu ini sangat berbahaya."
+      },
+      {
+        stage: "Tahap 1 • Radar Rambu Lalu Lintas",
+        text: "Di persimpangan jalan, ada rambu lingkaran BIRU bergambar tanda panah putih mengarah ke kanan. Apa perintahnya?",
+        signType: "sign-blue",
+        signContent: "➡️",
+        options: [
+          { text: "Boleh pilih belok kiri atau kanan sesuka hati.", correct: false },
+          { text: "Peringatan ada jurang di sebelah kanan.", correct: false },
+          { text: "Rambu Perintah: Wajib mengikuti arah ke kanan!", correct: true },
+          { text: "Rambu Larangan belok kanan.", correct: false }
+        ],
+        explain: "Hebat! Warna BIRU adalah rambu PERINTAH yang wajib ditaati arah jalurnya."
+      },
+      // TAHAP 2: DESKRIPSI VS ARGUMENTASI
+      {
+        stage: "Tahap 2 • Duel Deskripsi vs Argumentasi",
+        text: "\"Papan skateboard Aqlan terbuat dari kayu maple 7 lapis berwarna hitam doff dengan stiker naga emas dan roda merah berdesing nyaring.\" Manakah jenis teks yang tepat?",
+        signType: "sign-green",
+        signContent: "🛹",
+        options: [
+          { text: "Paragraf Deskripsi (Melukiskan bentuk panca indra).", correct: true },
+          { text: "Paragraf Argumentasi (Menyampaikan pendapat & alasan).", correct: false },
+          { text: "Paragraf Dongeng Khayalan.", correct: false },
+          { text: "Teks Prosedur membuat papan.", correct: false }
+        ],
+        explain: "Tepat! Teks ini menggambarkan apa yang bisa dilihat dan didengar (pancaindra), jadi ini PARAGRAF DESKRIPSI."
+      },
+      {
+        stage: "Tahap 2 • Duel Deskripsi vs Argumentasi",
+        text: "\"Pemain skateboard wajib memakai helm dan pelindung lutut KARENA benturan pada aspal keras dapat membahayakan tempurung kepala.\" Mengapa teks ini disebut Argumentasi?",
+        signType: "sign-green",
+        signContent: "🧠",
+        options: [
+          { text: "Karena menceritakan warna helm dan lutut.", correct: false },
+          { text: "Karena memuat pendapat logis yang disertai alasan kuat & kata hubung 'karena'.", correct: true },
+          { text: "Karena isinya adalah puisi berima.", correct: false },
+          { text: "Karena tokohnya sedang bermain game.", correct: false }
+        ],
+        explain: "Brilian! Kalimat ARGUMENTASI selalu memuat pendapat yang diperkuat oleh alasan logis dan bukti nyata."
+      },
+      // TAHAP 3: KONJUNGSI SEBAB-AKIBAT
+      {
+        stage: "Tahap 3 • Kombo Kata Hubung Sebab-Akibat",
+        text: "Lengkapi kalimat kombo skater ini: \"Aqlan rutin membersihkan bearing roda skateboard-nya ... debu yang menempel tidak menghambat laju putaran.\"",
+        signType: "sign-blue",
+        signContent: "⚡",
+        options: [
+          { text: "meskipun", correct: false },
+          { text: "sehingga / agar", correct: true },
+          { text: "tetapi", correct: false },
+          { text: "atau", correct: false }
+        ],
+        explain: "Combo strike! Kata 'sehingga' atau 'agar' menghubungkan tindakan pembersihan dengan akibat/tujuan putaran roda."
+      }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let combo = 1;
+
+    function renderQuestion() {
+      const q = questions[currentIdx];
+      document.getElementById('stage-label').innerText = q.stage;
+      document.getElementById('q-text').innerText = q.text;
+      
+      const card = document.getElementById('sign-target');
+      card.className = "sign-icon " + q.signType;
+      card.innerText = q.signContent;
+
+      const optsBox = document.getElementById('opts-container');
+      optsBox.innerHTML = '';
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-opt';
+        btn.innerText = opt.text;
+        btn.onclick = () => selectOption(btn, opt.correct, q.explain);
+        optsBox.appendChild(btn);
+      });
+
+      document.getElementById('feedback').style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+      
+      // Update progress bar
+      const prog = (currentIdx / questions.length) * 100;
+      document.getElementById('p-bar').style.width = prog + '%';
+    }
+
+    function selectOption(btn, isCorrect, explain) {
+      const allBtns = document.querySelectorAll('.btn-opt');
+      allBtns.forEach(b => b.disabled = true);
+
+      const fb = document.getElementById('feedback');
+      if (isCorrect) {
+        btn.classList.add('correct');
+        playSuccess();
+        score += 15 * combo;
+        combo++;
+        fb.className = 'feedback-box feedback-correct';
+        fb.innerHTML = '<strong>⚡ COMBO TEPAT!</strong> ' + explain;
+      } else {
+        btn.classList.add('wrong');
+        playError();
+        combo = 1;
+        fb.className = 'feedback-box feedback-wrong';
+        fb.innerHTML = '<strong>⚠️ KURANG TEPAT!</strong> ' + explain;
+      }
+
+      document.getElementById('score-val').innerText = score;
+      document.getElementById('combo-val').innerText = 'Combo x' + combo;
+      document.getElementById('btn-next').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentIdx++;
+      if (currentIdx < questions.length) {
+        renderQuestion();
+      } else {
+        showVictory();
+      }
+    }
+
+    function showVictory() {
+      document.getElementById('quiz-screen').style.display = 'none';
+      document.getElementById('victory-screen').style.display = 'block';
+      document.getElementById('final-score').innerText = 'Total Skor Aqlan: ' + score + ' Poin!';
+      document.getElementById('p-bar').style.width = '100%';
+      playFanfare();
+    }
+
+    function restartGame() {
+      currentIdx = 0;
+      score = 0;
+      combo = 1;
+      document.getElementById('score-val').innerText = '0';
+      document.getElementById('combo-val').innerText = 'Combo x1';
+      document.getElementById('quiz-screen').style.display = 'block';
+      document.getElementById('victory-screen').style.display = 'none';
+      renderQuestion();
+    }
+
+    // Start on load
+    renderQuestion();
+  </script>
+</body>
+</html>
