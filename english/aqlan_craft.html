@@ -416,11 +416,11 @@
     </div>
 
     <div class="speech-bubble" id="speech-text">
-      "Yo, <strong>Captain Aqlan!</strong> Selamat datang di arena skatepark! Gue <strong>Leo</strong>, kru pemandumu hari ini. Sebelum kita meluncur ke rintangan kota, kita wajib rakit papan skate andalanmu dulu. Siap rakit papanmu?"
+      "Halo, <strong>Kapten Aqlan!</strong> Selamat datang di arena skatepark! Aku <strong>Leo</strong>, teman pemandumu hari ini. Sebelum kita meluncur menaklukkan rintangan kota, ayo kita rakit papan skate terkeren andalanmu terlebih dahulu. Apakah kamu sudah siap merakit papanmu bersama-sama?"
     </div>
 
     <button class="btn-action" onclick="goToWorkshop()">
-      <span>MASUK KE BENGKEL RAKIT</span> 🛠️ ❯
+      <span>AYO MASUK KE BENGKEL RAKIT</span> 🛠️ ❯
     </button>
   </div>
 
@@ -508,7 +508,7 @@
         </div>
 
         <button class="btn-action" style="margin-top: 10px; width: 100%; justify-content: center;" onclick="launchToArena()">
-          <span>KUNCI PAPAN &amp; MELUNCUR!</span> 🚀
+          <span>KUNCI PAPAN &amp; AYO MELUNCUR!</span> 🚀
         </button>
       </div>
     </div>
@@ -545,7 +545,7 @@
     <div class="badge-award">MASTER ENGLISH SKATER PRO 2026</div>
     <p>Skor Akhir: <strong id="final-score" style="color:var(--neon-cyan); font-size: 26px;">0</strong> / 600</p>
     <button class="btn-action" style="margin-top: 15px;" onclick="location.reload()">
-      RAKIT LAGI ↺
+      MAIN LAGI BERSAMA LEO ↺
     </button>
   </div>
 
@@ -752,14 +752,14 @@
         buttons[index].classList.add('correct');
         score += 100;
         streak += 1;
-        fb.innerText = "⚡ COMBO STRIKE! " + data.exp;
+        fb.innerText = "🌟 HEBAT SEKALI! " + data.exp;
         fb.className = "feedback-banner show-correct";
       } else {
         soundWrong();
         buttons[index].classList.add('wrong');
         buttons[data.correct].classList.add('correct');
         streak = 0;
-        fb.innerText = "❌ HATI-HATI! " + data.exp;
+        fb.innerText = "💡 AYO COBA LAGI BERSAMA LEO: " + data.exp;
         fb.className = "feedback-banner show-wrong";
       }
 
