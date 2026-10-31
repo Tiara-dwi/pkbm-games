@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skater Treasure Hunt: Prepositions Radar — Aqlan</title>
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: #151d30;
+      --card-border: #233152;
+      --neon-cyan: #00f2fe;
+      --neon-gold: #f59e0b;
+      --neon-red: #ef4444;
+      --neon-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #1a2542 0%, var(--bg-dark) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    header {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: rgba(21, 29, 48, 0.85);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+      margin-bottom: 20px;
+    }
+    .badge {
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .stat-box { display: flex; gap: 15px; font-size: 14px; font-weight: bold; }
+    .stat-val { color: var(--neon-cyan); }
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .mission-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+    }
+    .mission-title h2 { font-size: 20px; color: var(--neon-cyan); }
+    .mission-title p { font-size: 13px; color: var(--text-muted); }
+    .question-box {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .tag-prep {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #0284c7;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .question-text {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    button.opt-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f1f5f9;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    button.opt-btn:hover {
+      background: #334155;
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+    }
+    button.opt-btn.correct {
+      background: #064e3b !important;
+      border-color: var(--neon-green) !important;
+      color: #a7f3d0 !important;
+    }
+    button.opt-btn.wrong {
+      background: #7f1d1d !important;
+      border-color: var(--neon-red) !important;
+      color: #fecaca !important;
+    }
+    .feedback-banner {
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .feedback-banner.show-correct {
+      display: block;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--neon-green);
+      color: #34d399;
+    }
+    .feedback-banner.show-wrong {
+      display: block;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--neon-red);
+      color: #f87171;
+    }
+    .btn-next {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      border: none;
+      border-radius: 10px;
+      color: #0b0f19;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+      transition: 0.2s;
+    }
+    .btn-next:hover { opacity: 0.9; transform: scale(1.01); }
+    .nav-bar {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-link:hover { color: var(--neon-cyan); }
+    #victory-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    #victory-screen h1 { font-size: 32px; color: var(--neon-cyan); margin-bottom: 10px; }
+    #victory-screen p { color: var(--text-muted); margin-bottom: 20px; font-size: 16px; }
+    .badge-award {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      color: #0b0f19;
+      font-weight: 900;
+      border-radius: 50px;
+      font-size: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <span class="badge">Aqlan • Grade 4</span>
+      <span style="margin-left: 10px; font-weight: 600; font-size: 14px;">Skater Treasure Hunt: Prepositions Radar</span>
+    </div>
+    <div class="stat-box">
+      <span>Score: <span id="score" class="stat-val">0</span></span>
+      <span>Streak: <span id="streak" class="stat-val">0</span>🔥</span>
+      <span>Radar: <span id="current-q" class="stat-val">1</span>/6</span>
+    </div>
+  </header>
+
+  <div class="container" id="game-container">
+    <div class="mission-header">
+      <div style="font-size: 30px;">🔍🛹</div>
+      <div class="mission-title">
+        <h2 id="phase-title">Misi 1: Radar Lokasi Skater</h2>
+        <p id="phase-desc">Lacak posisi perlengkapan skate yang tersembunyi!</p>
+      </div>
+    </div>
+
+    <div class="question-box">
+      <div class="tag-prep" id="q-tag">PREPOSITION OF PLACE</div>
+      <div class="question-text" id="q-text">Where is Aqlan's skateboard? Look at the picture: It is ... the bed!</div>
+    </div>
+
+    <div class="feedback-banner" id="feedback"></div>
+
+    <div class="options-grid" id="options">
+      <!-- Options injected by JS -->
+    </div>
+
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">NEXT TREASURE RADAR ❯</button>
+  </div>
+
+  <div class="container" id="victory-screen">
+    <div style="font-size: 60px; margin-bottom: 15px;">🛹🗺️🏆</div>
+    <h1>ALL LOST GEAR FOUND!</h1>
+    <p>Aqlan has mastered Prepositions of Place with 100% spatial accuracy!</p>
+    <div class="badge-award">MASTER SPATIAL NAVIGATOR 2026</div>
+    <p>Skor Akhir: <strong id="final-score" style="color: var(--neon-cyan); font-size: 24px;">0</strong> / 600</p>
+    <button class="btn-next" style="display:inline-block; width: auto; padding: 12px 30px;" onclick="restartGame()">PLAY AGAIN ↺</button>
+  </div>
+
+  <div class="nav-bar">
+    <a href="../index.html" class="nav-link">❮ Back to Game Hub</a>
+    <a href="aqlan.html" class="nav-link">Unit 4: Action Runner ❯</a>
+  </div>
+
+  <script>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+
+      if (type === 'correct') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.linearRampToValueAtTime(110, now + 0.2);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'victory') {
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.type = 'sine';
+          o.frequency.value = freq;
+          g.gain.setValueAtTime(0.2, now + idx * 0.12);
+          g.gain.linearRampToValueAtTime(0, now + idx * 0.12 + 0.3);
+          o.start(now + idx * 0.12);
+          o.stop(now + idx * 0.12 + 0.3);
+        });
+      }
+    }
+
+    const quizData = [
+      {
+        tag: "DI BAWAH",
+        phase: "Misi 1: Radar Lokasi Skater",
+        desc: "Papan skateboard berada di kolong tempat tidur!",
+        q: "Where is Aqlan's skateboard? It is ... the bed.",
+        options: ["under", "on", "in", "behind"],
+        correct: 0,
+        exp: "Tepat! 'Under' artinya di bawah / di kolong tempat tidur!"
+      },
+      {
+        tag: "DI ATAS PERMUKAAN",
+        phase: "Misi 1: Radar Lokasi Skater",
+        desc: "Helm pelindung ditaruh menempel di atas meja belajar!",
+        q: "Where is the safety helmet? It is ... the study desk.",
+        options: ["in", "on", "under", "in front of"],
+        correct: 1,
+        exp: "Benar! 'On' digunakan untuk benda yang berada di atas permukaan menempel!"
+      },
+      {
+        tag: "DI DALAM",
+        phase: "Misi 2: Tempat Penyimpanan Gear",
+        desc: "Kunci L skateboard disimpan di dalam saku celana!",
+        q: "The skate tool is ... my jacket pocket.",
+        options: ["behind", "beside", "in", "on"],
+        correct: 2,
+        exp: "Sempurna! 'In' artinya di dalam saku!"
+      },
+      {
+        tag: "DI SAMPING",
+        phase: "Misi 2: Posisi Rintangan",
+        desc: "Aqlan berdiri tepat di sebelah / samping tangga ramp!",
+        q: "Aqlan is standing ... the steep ramp.",
+        options: ["under", "beside", "in", "on top"],
+        correct: 1,
+        exp: "Hebat! 'Beside' (atau next to) artinya di samping!"
+      },
+      {
+        tag: "DI BELAKANG",
+        phase: "Misi 3: Persembunyian Rintangan",
+        desc: "Botol minum Aqlan tertutup di balik pohon rindang!",
+        q: "The water bottle is ... the big tree.",
+        options: ["in front of", "behind", "on", "under"],
+        correct: 1,
+        exp: "Genius! 'Behind' artinya di belakang / tertutupi objek di depannya!"
+      },
+      {
+        tag: "BENDA JAMAK (WHERE ARE)",
+        phase: "Misi 3: Sepatu Roda & Pelindung",
+        desc: "Tanya jawab posisi benda jamak (sepasang)!",
+        q: "'Where ... the knee pads?' -> 'They are on the floor.'",
+        options: ["is", "are", "am", "was"],
+        correct: 1,
+        exp: "Juara Skater! Karena 'knee pads' jamak (ada 's'), kita bertanya dengan 'Where ARE'!"
+      }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let streak = 0;
+    let answered = false;
+
+    function loadQuestion() {
+      answered = false;
+      const data = quizData[currentIdx];
+      document.getElementById('current-q').innerText = currentIdx + 1;
+      document.getElementById('phase-title').innerText = data.phase;
+      document.getElementById('phase-desc').innerText = data.desc;
+      document.getElementById('q-tag').innerText = data.tag;
+      document.getElementById('q-text').innerText = data.q;
+      
+      const fb = document.getElementById('feedback');
+      fb.className = 'feedback-banner';
+      fb.style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+
+      const optContainer = document.getElementById('options');
+      optContainer.innerHTML = '';
+      data.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerHTML = `<span style="color:var(--neon-cyan)">[${String.fromCharCode(65+i)}]</span> ${opt}`;
+        btn.onclick = () => selectOption(i);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(index) {
+      if (answered) return;
+      answered = true;
+      const data = quizData[currentIdx];
+      const buttons = document.querySelectorAll('.opt-btn');
+      const fb = document.getElementById('feedback');
+
+      if (index === data.correct) {
+        playSound('correct');
+        buttons[index].classList.add('correct');
+        score += 100;
+        streak += 1;
+        fb.innerText = "⚡ RADAR TEPAT! " + data.exp;
+        fb.className = "feedback-banner show-correct";
+      } else {
+        playSound('wrong');
+        buttons[index].classList.add('wrong');
+        buttons[data.correct].classList.add('correct');
+        streak = 0;
+        fb.innerText = "❌ RADAR MELESET! " + data.exp;
+        fb.className = "feedback-banner show-wrong";
+      }
+
+      document.getElementById('score').innerText = score;
+      document.getElementById('streak').innerText = streak;
+      document.getElementById('btn-next').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentIdx++;
+      if (currentIdx < quizData.length) {
+        loadQuestion();
+      } else {
+        showVictory();
+      }
+    }
+
+    function showVictory() {
+      playSound('victory');
+      document.getElementById('game-container').style.display = 'none';
+      document.getElementById('victory-screen').style.display = 'block';
+      document.getElementById('final-score').innerText = score;
+    }
+
+    function restartGame() {
+      currentIdx = 0;
+      score = 0;
+      streak = 0;
+      document.getElementById('score').innerText = 0;
+      document.getElementById('streak').innerText = 0;
+      document.getElementById('victory-screen').style.display = 'none';
+      document.getElementById('game-container').style.display = 'block';
+      loadQuestion();
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
