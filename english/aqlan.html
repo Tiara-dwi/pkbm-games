@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skater Action Runner: Present Continuous Blast — Aqlan</title>
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: #151d30;
+      --card-border: #233152;
+      --neon-cyan: #00f2fe;
+      --neon-gold: #f59e0b;
+      --neon-red: #ef4444;
+      --neon-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #1a2542 0%, var(--bg-dark) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    header {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: rgba(21, 29, 48, 0.85);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+      margin-bottom: 20px;
+    }
+    .badge {
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .stat-box {
+      display: flex;
+      gap: 15px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .stat-val { color: var(--neon-cyan); }
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .mission-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+    }
+    .mission-title h2 { font-size: 20px; color: var(--neon-cyan); }
+    .mission-title p { font-size: 13px; color: var(--text-muted); }
+    .question-box {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .tag-tense {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #0284c7;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .question-text {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    button.opt-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f1f5f9;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    button.opt-btn:hover {
+      background: #334155;
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+    }
+    button.opt-btn.correct {
+      background: #064e3b !important;
+      border-color: var(--neon-green) !important;
+      color: #a7f3d0 !important;
+    }
+    button.opt-btn.wrong {
+      background: #7f1d1d !important;
+      border-color: var(--neon-red) !important;
+      color: #fecaca !important;
+    }
+    .feedback-banner {
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .feedback-banner.show-correct {
+      display: block;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--neon-green);
+      color: #34d399;
+    }
+    .feedback-banner.show-wrong {
+      display: block;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--neon-red);
+      color: #f87171;
+    }
+    .btn-next {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      border: none;
+      border-radius: 10px;
+      color: #0b0f19;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+      transition: 0.2s;
+    }
+    .btn-next:hover { opacity: 0.9; transform: scale(1.01); }
+    .nav-bar {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-link:hover { color: var(--neon-cyan); }
+    #victory-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    #victory-screen h1 { font-size: 32px; color: var(--neon-cyan); margin-bottom: 10px; }
+    #victory-screen p { color: var(--text-muted); margin-bottom: 20px; font-size: 16px; }
+    .badge-award {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #0284c7, #00f2fe);
+      color: #0b0f19;
+      font-weight: 900;
+      border-radius: 50px;
+      font-size: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <span class="badge">Aqlan • Grade 4</span>
+      <span style="margin-left: 10px; font-weight: 600; font-size: 14px;">Skater Action Runner: Present Continuous</span>
+    </div>
+    <div class="stat-box">
+      <span>Score: <span id="score" class="stat-val">0</span></span>
+      <span>Streak: <span id="streak" class="stat-val">0</span>🔥</span>
+      <span>Mission: <span id="current-q" class="stat-val">1</span>/6</span>
+    </div>
+  </header>
+
+  <div class="container" id="game-container">
+    <div class="mission-header">
+      <div style="font-size: 30px;">🛹</div>
+      <div class="mission-title">
+        <h2 id="phase-title">Misi 1: Pasangan Gerbong To Be</h2>
+        <p id="phase-desc">Lengkapi kereta gandeng subjek dan to be dengan tepat!</p>
+      </div>
+    </div>
+
+    <div class="question-box">
+      <div class="tag-tense" id="q-tag">GERBONG TUNGGAL</div>
+      <div class="question-text" id="q-text">Aqlan ... riding his skateboard down the ramp right now.</div>
+    </div>
+
+    <div class="feedback-banner" id="feedback"></div>
+
+    <div class="options-grid" id="options">
+      <!-- Options injected by JS -->
+    </div>
+
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">NEXT ACTION TRICK ❯</button>
+  </div>
+
+  <div class="container" id="victory-screen">
+    <div style="font-size: 60px; margin-bottom: 15px;">🛹🏆⚡</div>
+    <h1>MISSION ACCOMPLISHED!</h1>
+    <p>Aqlan has mastered the Present Continuous Tense & Skater Action Verbs!</p>
+    <div class="badge-award">MASTER ENGLISH SKATER PRO 2026</div>
+    <p>Skor Akhir: <strong id="final-score" style="color: var(--neon-cyan); font-size: 24px;">0</strong> / 600</p>
+    <button class="btn-next" style="display:inline-block; width: auto; padding: 12px 30px;" onclick="restartGame()">PLAY AGAIN ↺</button>
+  </div>
+
+  <div class="nav-bar">
+    <a href="../index.html" class="nav-link">❮ Back to Game Hub</a>
+    <a href="../bahasa/aqlan.html" class="nav-link">B. Indonesia Bab 3: Skater City Rush ❯</a>
+  </div>
+
+  <script>
+    // Web Audio Synthesizer
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+
+      if (type === 'correct') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.linearRampToValueAtTime(110, now + 0.2);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'victory') {
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.type = 'sine';
+          o.frequency.value = freq;
+          g.gain.setValueAtTime(0.2, now + idx * 0.12);
+          g.gain.linearRampToValueAtTime(0, now + idx * 0.12 + 0.3);
+          o.start(now + idx * 0.12);
+          o.stop(now + idx * 0.12 + 0.3);
+        });
+      }
+    }
+
+    const quizData = [
+      {
+        tag: "GERBONG TUNGGAL",
+        phase: "Misi 1: Pasangan Gerbong To Be",
+        desc: "Lengkapi to-be untuk subjek orang tunggal!",
+        q: "Aqlan ... riding his skateboard down the ramp right now.",
+        options: ["is", "am", "are", "be"],
+        correct: 0,
+        exp: "Benar! Aqlan adalah orang tunggal (He), pasangannya adalah IS!"
+      },
+      {
+        tag: "GERBONG BANYAK",
+        phase: "Misi 1: Pasangan Gerbong To Be",
+        desc: "Lengkapi to-be untuk subjek jamak (banyak orang)!",
+        q: "Look! The skaters ... practicing new tricks at the bowl.",
+        options: ["is", "am", "are", "was"],
+        correct: 2,
+        exp: "Tepat! 'The skaters' bermakna mereka (They), jadi pasangannya adalah ARE!"
+      },
+      {
+        tag: "MANTRA SULAP E",
+        phase: "Misi 2: 3 Mantra Ejaan Sakti",
+        desc: "Ubah kata kerja dasar ke bentuk -ing!",
+        q: "Bagaimanakah ejaan yang benar untuk kata: SKATE + ING?",
+        options: ["skateing", "skating", "skatting", "skateying"],
+        correct: 1,
+        exp: "Sempurna! Mantra Sulap E: Huruf 'e' di ujung dihilangkan sebelum ditambah -ing!"
+      },
+      {
+        tag: "TABRAKAN DOBEL",
+        phase: "Misi 2: 3 Mantra Ejaan Sakti",
+        desc: "Ubah kata kerja bervokal pendek ke bentuk -ing!",
+        q: "He is ... (RUN) to catch his skateboard.",
+        options: ["runing", "running", "runed", "runnings"],
+        correct: 1,
+        exp: "Hebat! Mantra Tabrakan Dobel: Kata pendek RUN didobelkan konsonannya menjadi RUNNING!"
+      },
+      {
+        tag: "DETEKTIF KALIMAT C4",
+        phase: "Misi 3: Spot The Glitch",
+        desc: "Temukan kalimat yang tata bahasanya 100% tepat!",
+        q: "Manakah kalimat Present Continuous yang benar?",
+        options: [
+          "I are skating at the park.",
+          "She is wear her safety helmet.",
+          "We are watching Aqlan doing a kickflip.",
+          "They is jumping over the rail."
+        ],
+        correct: 2,
+        exp: "Genius! 'We are watching' tepat 100% (Subjek We + are + Verb-ing)!"
+      },
+      {
+        tag: "ORAL EXPRESSION",
+        phase: "Misi 3: Tanya Jawab Aksi Spontan",
+        desc: "Jawab pertanyaan komentator X-Games!",
+        q: "Reporter: 'What are you doing right now, Aqlan?'",
+        options: [
+          "I am study English and having fun!",
+          "I am studying English with Kak Tiara!",
+          "I studying English now.",
+          "I is study English."
+        ],
+        correct: 1,
+        exp: "Juara Skater! 'I am studying English with Kak Tiara!' berstruktur sempurna!"
+      }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let streak = 0;
+    let answered = false;
+
+    function loadQuestion() {
+      answered = false;
+      const data = quizData[currentIdx];
+      document.getElementById('current-q').innerText = currentIdx + 1;
+      document.getElementById('phase-title').innerText = data.phase;
+      document.getElementById('phase-desc').innerText = data.desc;
+      document.getElementById('q-tag').innerText = data.tag;
+      document.getElementById('q-text').innerText = data.q;
+      
+      const fb = document.getElementById('feedback');
+      fb.className = 'feedback-banner';
+      fb.style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+
+      const optContainer = document.getElementById('options');
+      optContainer.innerHTML = '';
+      data.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerHTML = `<span style="color:var(--neon-cyan)">[${String.fromCharCode(65+i)}]</span> ${opt}`;
+        btn.onclick = () => selectOption(i);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(index) {
+      if (answered) return;
+      answered = true;
+      const data = quizData[currentIdx];
+      const buttons = document.querySelectorAll('.opt-btn');
+      const fb = document.getElementById('feedback');
+
+      if (index === data.correct) {
+        playSound('correct');
+        buttons[index].classList.add('correct');
+        score += 100;
+        streak += 1;
+        fb.innerText = "⚡ BENAR! " + data.exp;
+        fb.className = "feedback-banner show-correct";
+      } else {
+        playSound('wrong');
+        buttons[index].classList.add('wrong');
+        buttons[data.correct].classList.add('correct');
+        streak = 0;
+        fb.innerText = "❌ KURANG TEPAT! " + data.exp;
+        fb.className = "feedback-banner show-wrong";
+      }
+
+      document.getElementById('score').innerText = score;
+      document.getElementById('streak').innerText = streak;
+      document.getElementById('btn-next').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentIdx++;
+      if (currentIdx < quizData.length) {
+        loadQuestion();
+      } else {
+        showVictory();
+      }
+    }
+
+    function showVictory() {
+      playSound('victory');
+      document.getElementById('game-container').style.display = 'none';
+      document.getElementById('victory-screen').style.display = 'block';
+      document.getElementById('final-score').innerText = score;
+    }
+
+    function restartGame() {
+      currentIdx = 0;
+      score = 0;
+      streak = 0;
+      document.getElementById('score').innerText = 0;
+      document.getElementById('streak').innerText = 0;
+      document.getElementById('victory-screen').style.display = 'none';
+      document.getElementById('game-container').style.display = 'block';
+      loadQuestion();
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
