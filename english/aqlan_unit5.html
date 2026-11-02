@@ -298,57 +298,57 @@
 
     const quizData = [
       {
-        tag: "DI BAWAH",
+        tag: "PREPOSITION RADAR 1",
         phase: "Misi 1: Radar Lokasi Skater",
-        desc: "Papan skateboard berada di kolong tempat tidur!",
-        q: "Where is Aqlan's skateboard? It is ... the bed.",
+        desc: "Lacak posisi perlengkapan skate di kamar!",
+        q: "Where is Aqlan's skateboard? Look at the picture: It is ... the bed.",
         options: ["under", "on", "in", "behind"],
-        correct: 0,
+        correctAnswer: "under",
         exp: "Tepat! 'Under' artinya di bawah / di kolong tempat tidur!"
       },
       {
-        tag: "DI ATAS PERMUKAAN",
+        tag: "PREPOSITION RADAR 2",
         phase: "Misi 1: Radar Lokasi Skater",
-        desc: "Helm pelindung ditaruh menempel di atas meja belajar!",
+        desc: "Lacak posisi helm pelindung di meja belajar!",
         q: "Where is the safety helmet? It is ... the study desk.",
         options: ["in", "on", "under", "in front of"],
-        correct: 1,
+        correctAnswer: "on",
         exp: "Benar! 'On' digunakan untuk benda yang berada di atas permukaan menempel!"
       },
       {
-        tag: "DI DALAM",
+        tag: "PREPOSITION RADAR 3",
         phase: "Misi 2: Tempat Penyimpanan Gear",
-        desc: "Kunci L skateboard disimpan di dalam saku celana!",
+        desc: "Lacak posisi kunci L skateboard di saku!",
         q: "The skate tool is ... my jacket pocket.",
         options: ["behind", "beside", "in", "on"],
-        correct: 2,
+        correctAnswer: "in",
         exp: "Sempurna! 'In' artinya di dalam saku!"
       },
       {
-        tag: "DI SAMPING",
+        tag: "PREPOSITION RADAR 4",
         phase: "Misi 2: Posisi Rintangan",
-        desc: "Aqlan berdiri tepat di sebelah / samping tangga ramp!",
+        desc: "Lacak posisi Aqlan di area ramp skate!",
         q: "Aqlan is standing ... the steep ramp.",
         options: ["under", "beside", "in", "on top"],
-        correct: 1,
+        correctAnswer: "beside",
         exp: "Hebat! 'Beside' (atau next to) artinya di samping!"
       },
       {
-        tag: "DI BELAKANG",
+        tag: "PREPOSITION RADAR 5",
         phase: "Misi 3: Persembunyian Rintangan",
-        desc: "Botol minum Aqlan tertutup di balik pohon rindang!",
+        desc: "Lacak posisi botol minum di dekat pohon rindang!",
         q: "The water bottle is ... the big tree.",
         options: ["in front of", "behind", "on", "under"],
-        correct: 1,
+        correctAnswer: "behind",
         exp: "Genius! 'Behind' artinya di belakang / tertutupi objek di depannya!"
       },
       {
-        tag: "BENDA JAMAK (WHERE ARE)",
+        tag: "SPECIAL RADAR 6",
         phase: "Misi 3: Sepatu Roda & Pelindung",
-        desc: "Tanya jawab posisi benda jamak (sepasang)!",
+        desc: "Lengkapi kalimat tanya untuk benda jamak!",
         q: "'Where ... the knee pads?' -> 'They are on the floor.'",
         options: ["is", "are", "am", "was"],
-        correct: 1,
+        correctAnswer: "are",
         exp: "Juara Skater! Karena 'knee pads' jamak (ada 's'), kita bertanya dengan 'Where ARE'!"
       }
     ];
@@ -357,6 +357,17 @@
     let score = 0;
     let streak = 0;
     let answered = false;
+    let currentShuffledOptions = [];
+    let currentCorrectIdx = 0;
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
 
     function loadQuestion() {
       answered = false;
@@ -372,9 +383,13 @@
       fb.style.display = 'none';
       document.getElementById('btn-next').style.display = 'none';
 
+      // Randomize / shuffle options so the correct answer is not always B
+      currentShuffledOptions = shuffleArray(data.options);
+      currentCorrectIdx = currentShuffledOptions.indexOf(data.correctAnswer);
+
       const optContainer = document.getElementById('options');
       optContainer.innerHTML = '';
-      data.options.forEach((opt, i) => {
+      currentShuffledOptions.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'opt-btn';
         btn.innerHTML = `<span style="color:var(--neon-cyan)">[${String.fromCharCode(65+i)}]</span> ${opt}`;
@@ -390,7 +405,7 @@
       const buttons = document.querySelectorAll('.opt-btn');
       const fb = document.getElementById('feedback');
 
-      if (index === data.correct) {
+      if (index === currentCorrectIdx) {
         playSound('correct');
         buttons[index].classList.add('correct');
         score += 100;
@@ -400,7 +415,7 @@
       } else {
         playSound('wrong');
         buttons[index].classList.add('wrong');
-        buttons[data.correct].classList.add('correct');
+        buttons[currentCorrectIdx].classList.add('correct');
         streak = 0;
         fb.innerText = "❌ RADAR MELESET! " + data.exp;
         fb.className = "feedback-banner show-wrong";
