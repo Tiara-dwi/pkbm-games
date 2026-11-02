@@ -43,7 +43,7 @@
       position: relative;
       overflow: hidden;
       transition: all 0.35s ease;
-      background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0a0f1d 100%);
+      background: #70b5ff;
     }
 
     #canvas-container {
@@ -186,9 +186,37 @@
       100% { opacity: 1; transform: scale(1.04); }
     }
 
+    /* Floating Sign Distance Callout */
+    .sign-distance-hud {
+      position: absolute;
+      top: 68px;
+      left: 18px;
+      z-index: 25;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #38bdf8;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #e0f2fe;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .sign-distance-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+      animation: pulseDot 1s infinite;
+    }
+    @keyframes pulseDot { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; transform: scale(1.2); } }
+
     .action-badge {
       position: absolute;
-      top: 65px;
+      top: 108px;
       left: 18px;
       z-index: 25;
       background: rgba(15, 23, 42, 0.94);
@@ -342,8 +370,8 @@
       align-items: center;
     }
     .sign-preview-thumb {
-      width: 60px;
-      height: 60px;
+      width: 62px;
+      height: 62px;
       background: #1e293b;
       border: 1px solid #38bdf8;
       border-radius: 10px;
@@ -352,7 +380,7 @@
       justify-content: center;
       padding: 4px;
       flex-shrink: 0;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
     }
     .sign-preview-thumb img {
       max-width: 100%;
@@ -585,8 +613,15 @@
         <button class="tool-btn active" id="btn-cam-chase" onclick="setCameraMode('chase')">🚗 Kamera Kejar</button>
         <button class="tool-btn" id="btn-cam-cockpit" onclick="setCameraMode('cockpit')">💺 Kokpit Kemudi</button>
         <button class="tool-btn" id="btn-cam-cinematic" onclick="setCameraMode('cinematic')">🎥 Sinematik 3D</button>
+        <button class="tool-btn" id="btn-tod-toggle" onclick="toggleTimeOfDay()">☀️ Siang Cerah</button>
         <button class="tool-btn" id="btn-sound-toggle" onclick="toggleAudio()">🔊 Suara: AKTIF</button>
         <button class="tool-btn" id="btn-toggle-console" onclick="toggleConsole()">👁️ Layar Penuh</button>
+      </div>
+
+      <!-- Real-Time Sign Distance Indicator -->
+      <div class="sign-distance-hud" id="sign-hud-callout">
+        <span class="sign-distance-dot"></span>
+        <span id="sign-distance-label">🛑 Rambu Aktif: 25 Meter di Depan</span>
       </div>
 
       <!-- Speedometer & Action Telemetry HUD -->
@@ -643,7 +678,7 @@
             <span class="dialogue-role">📻 Radio Polisi</span>
           </div>
           <div class="dialogue-bubble" id="officer-speech">
-            "Halo Kapten Aqlan! Di lintasan jalan raya depan kita, perhatikan rambu-rambu lalu lintas dengan saksama. Setiap pilihan tindakanmu akan langsung mengubah manuver mobil secara nyata!"
+            "Halo Kapten Aqlan! Di lintasan jalan raya depan kita, perhatikan rambu-rambu lalu lintas nyata di sepanjang bahu jalan. Setiap pilihan tindakanmu akan langsung mengubah manuver mobil secara nyata!"
           </div>
         </div>
       </div>
@@ -684,7 +719,7 @@
     <h2>SELAMAT, KAPTEN AQLAN!</h2>
     <div class="badge-seal">SURAT IZIN MENGEMUDI CILIK (SIM A CILIK) RESMI</div>
     <p>
-      Hebat sekali! Aqlan telah sukses membuktikan kecakapan mengemudi dan disiplin mematuhi rambu peringatan, larangan, perintah, serta petunjuk di jalan raya dengan sempurna!
+      Hebat sekali! Aqlan telah sukses membuktikan kecakapan mengemudi dan disiplin mematuhi rambu peringatan, larangan, perintah, serta petunjuk di jalan raya nyata dengan sempurna!
     </p>
     <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #38bdf8; border-radius: 12px; padding: 12px; margin-bottom: 14px; text-align: left; font-size: 11.5px; line-height: 1.5;">
       <div>🏆 <b>Total Skor Disiplin:</b> <span id="final-score" style="color: var(--neon-gold); font-weight: 900;">500 Poin</span></div>
@@ -710,7 +745,7 @@
         signKey: "sign_sharp_turn",
         signLabel: "Tikungan Tajam ke Kanan",
         officerBriefing: "Kapten Aqlan, perhatikan rambu kuning belah ketupat di bahu jalan sebelah kanan! Ada peringatan tikungan tajam ke kanan di depan kita. Bagaimana tindakan mengemudi yang benar?",
-        situation: "Mobil melaju di jalan antar-kota. Di depan tampak rambu kuning belah ketupat bergambar panah berbelok tajam ke kanan.",
+        situation: "Mobil melaju di jalan antar-kota. Di bahu jalan terpasang rambu kuning belah ketupat bergambar panah berbelok tajam ke kanan pada tiang baja galvanis.",
         options: [
           {
             key: "A",
@@ -748,7 +783,7 @@
         signKey: "sign_speed_limit",
         signLabel: "Batas Kecepatan Maksimum 40 km/jam",
         officerBriefing: "Kita memasuki kawasan pemukiman dekat sekolah! Terpasang rambu lingkaran berbingkai merah dengan angka '40'. Apa yang wajib Aqlan lakukan pada pedal gas dan rem?",
-        situation: "Mobil mendekati area zona selamat sekolah. Jarum speedometer saat ini berada di angka 70 km/jam.",
+        situation: "Mobil mendekati area zona selamat sekolah. Terpasang rambu batas kecepatan 40 km/jam pada tiang baja jalanan.",
         options: [
           {
             key: "A",
@@ -786,7 +821,7 @@
         signKey: "sign_pedestrian",
         signLabel: "Peringatan Penyeberang Jalan & Zebra Cross",
         officerBriefing: "Di depan tampak marka garis putih 'zebra cross' dan rambu kuning penyeberang jalan. Ada anak sekolah yang bersiap melangkah menyeberang. Apa tindakan prioritasmu?",
-        situation: "Ada fasilitas penyeberangan jalan (Zebra Cross) di depan mobil, dan pejalan kaki hendak melintas.",
+        situation: "Ada fasilitas penyeberangan jalan (Zebra Cross) di depan mobil, didukung rambu penyeberangan jalan pada tiang baja.",
         options: [
           {
             key: "A",
@@ -823,8 +858,8 @@
         signType: "RAMBU PERINTAH BERHENTI / LARANGAN (Merah Octagon)",
         signKey: "sign_stop",
         signLabel: "Rambu Wajib Berhenti (STOP)",
-        officerBriefing: "Kita tiba di persimpangan jalan tanpa lampu pengatur lalu lintas. Di sudut kiri terpasang rambu STOP segi delapan warna merah menyala. Bagaimana aturan wajibnya?",
-        situation: "Persimpangan jalan dengan rambu STOP merah segi delapan dan garis marka putih melintang.",
+        officerBriefing: "Kita tiba di persimpangan jalan tanpa lampu pengatur lalu lintas. Di sudut jalan terpasang rambu STOP segi delapan warna merah menyala. Bagaimana aturan wajibnya?",
+        situation: "Persimpangan jalan dengan rambu STOP merah bersegi delapan pada tiang baja galvanis dan garis marka putih melintang.",
         options: [
           {
             key: "A",
@@ -862,7 +897,7 @@
         signKey: "sign_no_entry",
         signLabel: "Dilarang Masuk (Verboden)",
         officerBriefing: "Di cabang jalan sebelah kiri terpasang rambu lingkaran merah dengan garis putih melintang di tengahnya (Rambu Dilarang Masuk). Apa keputusan kemudi Kapten Aqlan?",
-        situation: "Jalur cabang sebelah kiri memiliki rambu lingkaran merah bergaris putih mendatar (Dilarang Masuk / Satu Arah).",
+        situation: "Jalur cabang sebelah kiri memiliki rambu lingkaran merah bergaris putih mendatar (Dilarang Masuk / Satu Arah) pada tiang baja.",
         options: [
           {
             key: "A",
@@ -936,7 +971,7 @@
         const filter = audioCtx.createBiquadFilter();
 
         engineOsc.type = 'sawtooth';
-        engineOsc.frequency.setValueAtTime(55, audioCtx.currentTime); // low rumble
+        engineOsc.frequency.setValueAtTime(55, audioCtx.currentTime);
 
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(260, audioCtx.currentTime);
@@ -978,7 +1013,6 @@
     function playTireSkidSound() {
       if (!audioCtx || isAudioMuted) return;
       try {
-        // Synthesize skid screech with modulated noise/sine
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sawtooth';
@@ -1012,7 +1046,7 @@
 
     function playSuccessChime() {
       if (!audioCtx || isAudioMuted) return;
-      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      const notes = [523.25, 659.25, 783.99, 1046.50];
       notes.forEach((freq, idx) => {
         setTimeout(() => {
           if (!audioCtx || isAudioMuted) return;
@@ -1054,22 +1088,26 @@
     }
 
     /* ============================================================
-       3. THREE.JS 3D SCENE & ASSETS
+       3. THREE.JS 3D SCENE & CONTINUOUS REALISTIC HIGHWAY SIGNS
        ============================================================ */
     let scene, camera, renderer, controls;
+    let dirLight, ambientLight, hemiLight;
+    let isDaytime = true;
+
     let carGroup, wheels = [];
     let carBrakeLights = [];
     let carBlinkers = { left: [], right: [] };
-    let carHeadlights = [];
     let driverFigure, aqlanHeadMesh;
     let roadPlanes = [];
     let laneDashes = [];
-    let steelGuardrails = [];
     let roadsideTrees = [];
-    let signpostGroup = null;
-    let pedestrianGroup = null;
     let tireSmokeParticles = [];
     let victoryParticles = [];
+
+    // Continuous Signs along the entire road
+    let highwaySignposts = [];
+    let activeMissionSign = null;
+    let pedestrianGroup = null;
 
     // State Variables
     let currentScenarioIdx = 0;
@@ -1084,10 +1122,10 @@
     let carPitch = 0;
     let blinkerTimer = null;
     let isBrakingActive = false;
-    let cameraMode = 'chase'; // 'chase', 'cockpit', 'cinematic'
+    let cameraMode = 'chase';
     let cameraShake = 0;
-    let isReplaying = false;
     let lastActionPayload = null;
+    const texLoader = new THREE.TextureLoader();
 
     function init3DScene() {
       const container = document.getElementById('canvas-container');
@@ -1096,8 +1134,8 @@
 
       // Scene
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x0a1128);
-      scene.fog = new THREE.FogExp2(0x0a1128, 0.008);
+      scene.background = new THREE.Color(0x70b5ff); // Daytime bright sky
+      scene.fog = new THREE.FogExp2(0xb6dcfe, 0.006);
 
       // Camera
       camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
@@ -1111,40 +1149,43 @@
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       container.appendChild(renderer.domElement);
 
-      // OrbitControls for manual exploration
+      // OrbitControls
       controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.05;
       controls.maxPolarAngle = Math.PI / 2 - 0.02;
       controls.minDistance = 3;
-      controls.maxDistance = 25;
+      controls.maxDistance = 35;
       controls.target.set(0, 1.2, 0);
 
-      // Lighting
-      const ambientLight = new THREE.AmbientLight(0xd0e8ff, 0.7);
+      // Daylight Lighting
+      ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
       scene.add(ambientLight);
 
-      const dirLight = new THREE.DirectionalLight(0xfffaed, 1.2);
-      dirLight.position.set(20, 40, 20);
+      dirLight = new THREE.DirectionalLight(0xfffaed, 1.5);
+      dirLight.position.set(25, 45, 20);
       dirLight.castShadow = true;
       dirLight.shadow.mapSize.width = 1024;
       dirLight.shadow.mapSize.height = 1024;
       dirLight.shadow.camera.near = 0.5;
-      dirLight.shadow.camera.far = 100;
-      dirLight.shadow.camera.left = -20;
-      dirLight.shadow.camera.right = 20;
-      dirLight.shadow.camera.top = 20;
-      dirLight.shadow.camera.bottom = -20;
+      dirLight.shadow.camera.far = 120;
+      dirLight.shadow.camera.left = -25;
+      dirLight.shadow.camera.right = 25;
+      dirLight.shadow.camera.top = 25;
+      dirLight.shadow.camera.bottom = -25;
       scene.add(dirLight);
 
-      const hemiLight = new THREE.HemisphereLight(0x38bdf8, 0x1e293b, 0.4);
+      hemiLight = new THREE.HemisphereLight(0x70b5ff, 0x334155, 0.5);
       scene.add(hemiLight);
 
       // Build 3D World Components
       buildHighwayEnvironment();
       buildAqlansSportsCar();
       buildParticleEngines();
-      setupScenarioSignpost(DRIVING_SCENARIOS[currentScenarioIdx]);
+
+      // BUILD CONTINUOUS REALISTIC SIGNS ALONG ENTIRE HIGHWAY
+      buildContinuousHighwaySigns();
+      setupActiveMissionSign(DRIVING_SCENARIOS[currentScenarioIdx]);
 
       // Event Listeners
       window.addEventListener('resize', onWindowResize);
@@ -1153,25 +1194,42 @@
       animate();
     }
 
+    function toggleTimeOfDay() {
+      isDaytime = !isDaytime;
+      const btn = document.getElementById('btn-tod-toggle');
+      if (isDaytime) {
+        btn.textContent = "☀️ Siang Cerah";
+        scene.background.setHex(0x70b5ff);
+        scene.fog.color.setHex(0xb6dcfe);
+        scene.fog.density = 0.006;
+        dirLight.intensity = 1.5;
+        ambientLight.intensity = 0.85;
+      } else {
+        btn.textContent = "🌙 Malam Lampu";
+        scene.background.setHex(0x0a1128);
+        scene.fog.color.setHex(0x0a1128);
+        scene.fog.density = 0.009;
+        dirLight.intensity = 0.35;
+        ambientLight.intensity = 0.4;
+      }
+    }
+
     /* --- Build Highway Roadway --- */
     function buildHighwayEnvironment() {
       // Asphalt Road Texture
-      let asphaltTex;
+      let asphaltTex = null;
       if (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.road_asphalt) {
-        const img = new Image();
-        img.src = window.GHIBLI_TEXTURES.road_asphalt;
-        asphaltTex = new THREE.Texture(img);
-        img.onload = () => { asphaltTex.needsUpdate = true; };
+        asphaltTex = texLoader.load(window.GHIBLI_TEXTURES.road_asphalt);
         asphaltTex.wrapS = THREE.RepeatWrapping;
         asphaltTex.wrapT = THREE.RepeatWrapping;
         asphaltTex.repeat.set(3, 20);
       }
 
       const roadMat = new THREE.MeshStandardMaterial({
-        color: asphaltTex ? 0xffffff : 0x22262c,
-        map: asphaltTex || null,
+        color: asphaltTex ? 0xffffff : 0x2b313a,
+        map: asphaltTex,
         roughness: 0.85,
-        metalness: 0.1
+        metalness: 0.05
       });
 
       // 3 Continuous Scrolling Road segments
@@ -1185,16 +1243,16 @@
         roadPlanes.push(road);
       }
 
-      // Ground Landscape (Verge / Grass outside highway)
-      const grassMat = new THREE.MeshStandardMaterial({ color: 0x143622, roughness: 0.95 });
-      const leftGrass = new THREE.Mesh(new THREE.PlaneGeometry(80, 240), grassMat);
+      // Ground Landscape (Verge / Grass)
+      const grassMat = new THREE.MeshStandardMaterial({ color: 0x2e6f40, roughness: 0.95 });
+      const leftGrass = new THREE.Mesh(new THREE.PlaneGeometry(90, 240), grassMat);
       leftGrass.rotation.x = -Math.PI / 2;
-      leftGrass.position.set(-48, -0.05, 0);
+      leftGrass.position.set(-53, -0.05, 0);
       scene.add(leftGrass);
 
-      const rightGrass = new THREE.Mesh(new THREE.PlaneGeometry(80, 240), grassMat);
+      const rightGrass = new THREE.Mesh(new THREE.PlaneGeometry(90, 240), grassMat);
       rightGrass.rotation.x = -Math.PI / 2;
-      rightGrass.position.set(48, -0.05, 0);
+      rightGrass.position.set(53, -0.05, 0);
       scene.add(rightGrass);
 
       // White Lane Divider Dashes
@@ -1253,7 +1311,7 @@
       rightRail.castShadow = true;
       scene.add(rightRail);
 
-      // Roadside Trees for speed parallax
+      // Roadside Trees
       const treeTrunkMat = new THREE.MeshStandardMaterial({ color: 0x452a1a, roughness: 0.9 });
       const treeLeafMat = new THREE.MeshStandardMaterial({ color: 0x166534, roughness: 0.8 });
       for (let z = -120; z <= 120; z += 18) {
@@ -1276,15 +1334,305 @@
       }
     }
 
+    /* ============================================================
+       REALISTIC HIGHWAY TRAFFIC SIGNPOST GENERATOR ("DI SETIAP JALANAN")
+       ============================================================ */
+    function createRealisticSignpostMesh(texKey, shapeType = 'circle', signSize = 2.4) {
+      const group = new THREE.Group();
+
+      // 1. Galvanized Steel Pole (realistic tubular steel with base bolts)
+      const steelMat = new THREE.MeshStandardMaterial({
+        color: 0xa0aec0,
+        metalness: 0.85,
+        roughness: 0.25
+      });
+      const poleHeight = 4.8;
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, poleHeight, 16), steelMat);
+      pole.position.y = poleHeight / 2;
+      pole.castShadow = true;
+      group.add(pole);
+
+      // Base Plate & Bolts
+      const basePlate = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.14, 0.7), steelMat);
+      basePlate.position.y = 0.07;
+      basePlate.castShadow = true;
+      group.add(basePlate);
+
+      // Concrete Foundation Collar
+      const concreteMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.95 });
+      const foundation = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.55, 0.25, 12), concreteMat);
+      foundation.position.y = 0.12;
+      group.add(foundation);
+
+      // Mounting Brackets connecting pole to sign backing
+      const bracket1 = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.25), steelMat);
+      bracket1.position.set(0, 3.8, 0.05);
+      group.add(bracket1);
+
+      const bracket2 = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.25), steelMat);
+      bracket2.position.set(0, 4.4, 0.05);
+      group.add(bracket2);
+
+      // 2. Realistic Sign Plate Face
+      let signTex = null;
+      if (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES[texKey]) {
+        signTex = texLoader.load(window.GHIBLI_TEXTURES[texKey]);
+      }
+
+      const signFrontMat = new THREE.MeshStandardMaterial({
+        map: signTex,
+        roughness: 0.3,
+        metalness: 0.1,
+        side: THREE.DoubleSide
+      });
+      const backPlateMat = new THREE.MeshStandardMaterial({
+        color: 0x718096,
+        metalness: 0.85,
+        roughness: 0.3
+      });
+
+      let frontMesh, backMesh;
+      if (shapeType === 'diamond') {
+        // Yellow Diamond shape
+        const diamondGeo = new THREE.PlaneGeometry(signSize, signSize);
+        frontMesh = new THREE.Mesh(diamondGeo, signFrontMat);
+        frontMesh.rotation.z = Math.PI / 4;
+
+        const backGeo = new THREE.BoxGeometry(signSize, signSize, 0.04);
+        backMesh = new THREE.Mesh(backGeo, backPlateMat);
+        backMesh.rotation.z = Math.PI / 4;
+      } else if (shapeType === 'octagon') {
+        // STOP octagon
+        const octGeo = new THREE.CircleGeometry(signSize / 2, 8);
+        frontMesh = new THREE.Mesh(octGeo, signFrontMat);
+
+        const backGeo = new THREE.CylinderGeometry(signSize / 2, signSize / 2, 0.04, 8);
+        backMesh = new THREE.Mesh(backGeo, backPlateMat);
+        backMesh.rotation.x = Math.PI / 2;
+      } else {
+        // Standard circle
+        const circleGeo = new THREE.CircleGeometry(signSize / 2, 32);
+        frontMesh = new THREE.Mesh(circleGeo, signFrontMat);
+
+        const backGeo = new THREE.CylinderGeometry(signSize / 2, signSize / 2, 0.04, 32);
+        backMesh = new THREE.Mesh(backGeo, backPlateMat);
+        backMesh.rotation.x = Math.PI / 2;
+      }
+
+      const signY = 4.1;
+      // Front face points towards oncoming car (+Z normal)
+      frontMesh.position.set(0, signY, 0.18);
+      frontMesh.castShadow = true;
+      group.add(frontMesh);
+
+      backMesh.position.set(0, signY, 0.14);
+      backMesh.castShadow = true;
+      group.add(backMesh);
+
+      return { group, frontMesh };
+    }
+
+    /* --- Overhead Highway Gantry Truss ("JALAN TOL JAGORAWI 10 Km") --- */
+    function createOverheadHighwayGantry(zPos) {
+      const gantryGroup = new THREE.Group();
+      gantryGroup.position.set(0, 0, zPos);
+
+      const steelMat = new THREE.MeshStandardMaterial({
+        color: 0x94a3b8,
+        metalness: 0.85,
+        roughness: 0.25
+      });
+
+      // Left Pillar (x = -8.6)
+      const pL = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 7.5, 12), steelMat);
+      pL.position.set(-8.6, 3.75, 0);
+      pL.castShadow = true;
+      gantryGroup.add(pL);
+
+      // Right Pillar (x = 8.6)
+      const pR = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 7.5, 12), steelMat);
+      pR.position.set(8.6, 3.75, 0);
+      pR.castShadow = true;
+      gantryGroup.add(pR);
+
+      // Overhead Crossbar Truss spanning road
+      const crossbar = new THREE.Mesh(new THREE.BoxGeometry(18, 0.6, 0.6), steelMat);
+      crossbar.position.set(0, 6.8, 0);
+      crossbar.castShadow = true;
+      gantryGroup.add(crossbar);
+
+      // Large Highway Green Signboard
+      let guideTex = null;
+      if (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.sign_guide) {
+        guideTex = texLoader.load(window.GHIBLI_TEXTURES.sign_guide);
+      }
+      const boardMat = new THREE.MeshStandardMaterial({
+        map: guideTex,
+        roughness: 0.35,
+        metalness: 0.1,
+        side: THREE.DoubleSide
+      });
+      const board = new THREE.Mesh(new THREE.PlaneGeometry(6.2, 2.7), boardMat);
+      board.position.set(0, 5.3, 0.35); // Faces oncoming car
+      board.castShadow = true;
+      gantryGroup.add(board);
+
+      // Backing metal frame
+      const backBoard = new THREE.Mesh(new THREE.BoxGeometry(6.3, 2.8, 0.08), steelMat);
+      backBoard.position.set(0, 5.3, 0.3);
+      gantryGroup.add(backBoard);
+
+      return gantryGroup;
+    }
+
+    /* --- Populate Continuous Signs along Highway --- */
+    function buildContinuousHighwaySigns() {
+      // Highway Signs layout spaced regularly along the road
+      const signLayout = [
+        { key: 'sign_speed_limit', shape: 'circle', x: 7.2, z: -35, label: "Batas Kecepatan 40 km/jam" },
+        { isGantry: true, z: -70 }, // Overhead Highway Gantry!
+        { key: 'sign_sharp_turn', shape: 'diamond', x: -7.2, z: -105, label: "Tikungan Tajam ke Kanan" },
+        { key: 'sign_uturn', shape: 'circle', x: 7.2, z: -140, label: "Perintah Putar Balik" },
+        { key: 'sign_stop', shape: 'octagon', x: -7.2, z: -175, label: "Rambu STOP Persimpangan" },
+        { key: 'sign_pedestrian', shape: 'diamond', x: 7.2, z: -210, label: "Peringatan Penyeberang Jalan" },
+        { key: 'sign_no_entry', shape: 'circle', x: -7.2, z: -245, label: "Dilarang Masuk (Verboden)" }
+      ];
+
+      signLayout.forEach(item => {
+        if (item.isGantry) {
+          const gantry = createOverheadHighwayGantry(item.z);
+          scene.add(gantry);
+          highwaySignposts.push({ group: gantry, originalZ: item.z });
+        } else {
+          const signObj = createRealisticSignpostMesh(item.key, item.shape, 2.4);
+          signObj.group.position.set(item.x, 0, item.z);
+          scene.add(signObj.group);
+          highwaySignposts.push({ group: signObj.group, originalZ: item.z, key: item.key });
+        }
+      });
+    }
+
+    /* --- Setup Active Scenario Sign (Large, Prominent, Approaching Car) --- */
+    function setupActiveMissionSign(scenario) {
+      if (activeMissionSign) {
+        scene.remove(activeMissionSign.group);
+        activeMissionSign = null;
+      }
+      if (pedestrianGroup) {
+        scene.remove(pedestrianGroup);
+        pedestrianGroup = null;
+      }
+
+      // Determine shape
+      let shape = 'circle';
+      if (scenario.signKey === 'sign_sharp_turn' || scenario.signKey === 'sign_pedestrian') {
+        shape = 'diamond';
+      } else if (scenario.signKey === 'sign_stop') {
+        shape = 'octagon';
+      }
+
+      // Create primary mission sign positioned clearly ahead at z = -25 on roadside
+      const primarySign = createRealisticSignpostMesh(scenario.signKey, shape, 2.6);
+      primarySign.group.position.set(6.8, 0, -25);
+
+      // Add a warm spotlight highlighting this sign on the roadside
+      const signSpot = new THREE.SpotLight(0xfffaed, 2.0, 30, Math.PI / 4, 0.3);
+      signSpot.position.set(6.8, 0.5, -20);
+      signSpot.target = primarySign.frontMesh;
+      primarySign.group.add(signSpot);
+      primarySign.group.add(signSpot.target);
+
+      // Floating Glow Ring / Marker above sign
+      const haloGeo = new THREE.TorusGeometry(1.5, 0.06, 8, 24);
+      const haloMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.75 });
+      const halo = new THREE.Mesh(haloGeo, haloMat);
+      halo.rotation.x = Math.PI / 2;
+      halo.position.set(0, 5.8, 0.18);
+      primarySign.group.add(halo);
+      primarySign.halo = halo;
+
+      scene.add(primarySign.group);
+      activeMissionSign = primarySign;
+
+      // Distance HUD Callout
+      document.getElementById('sign-distance-label').textContent = `🛑 ${scenario.signLabel}: Terpasang Nyata di Depan!`;
+
+      // Special environment for Scenario 3 (Pedestrian Crosswalk)
+      if (scenario.id === 3) {
+        setupPedestrianCrosswalk();
+      }
+    }
+
+    function setupPedestrianCrosswalk() {
+      pedestrianGroup = new THREE.Group();
+      pedestrianGroup.position.set(0, 0, -22);
+
+      // Zebra White Stripes across road
+      const stripeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      for (let x = -7; x <= 7; x += 1.8) {
+        const stripe = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 4.2), stripeMat);
+        stripe.rotation.x = -Math.PI / 2;
+        stripe.position.set(x, 0.03, 0);
+        pedestrianGroup.add(stripe);
+      }
+
+      // Stop Line across road
+      const stopLineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const stopLine = new THREE.Mesh(new THREE.PlaneGeometry(15, 0.6), stopLineMat);
+      stopLine.rotation.x = -Math.PI / 2;
+      stopLine.position.set(0, 0.03, 4.5);
+      pedestrianGroup.add(stopLine);
+
+      // 3D Pedestrian Figure (Student in uniform holding schoolbag)
+      const pedBody = new THREE.Group();
+      pedBody.position.set(7.2, 0, 0); // Waiting at curb
+
+      // Shoes & Legs
+      const legMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a });
+      const legL = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.8), legMat);
+      legL.position.set(-0.2, 0.4, 0);
+      pedBody.add(legL);
+      const legR = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.8), legMat);
+      legR.position.set(0.2, 0.4, 0);
+      pedBody.add(legR);
+
+      // Shirt (White SD uniform)
+      const shirtMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc });
+      const shirt = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.7, 0.35), shirtMat);
+      shirt.position.y = 1.15;
+      shirt.castShadow = true;
+      pedBody.add(shirt);
+
+      // Backpack
+      const packMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
+      const pack = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.5, 0.25), packMat);
+      pack.position.set(0, 1.15, 0.28);
+      pedBody.add(pack);
+
+      // Head & Cap
+      const headMat = new THREE.MeshStandardMaterial({ color: 0xffdfba });
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.25, 16, 16), headMat);
+      head.position.y = 1.7;
+      pedBody.add(head);
+
+      const capMat = new THREE.MeshStandardMaterial({ color: 0xdc2626 });
+      const cap = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.2, 16), capMat);
+      cap.position.set(0, 1.88, 0);
+      pedBody.add(cap);
+
+      pedestrianGroup.add(pedBody);
+      pedestrianGroup.userData.pedBody = pedBody;
+      scene.add(pedestrianGroup);
+    }
+
     /* --- Build Aqlan's 3D High-Tech Sports Car --- */
     function buildAqlansSportsCar() {
       carGroup = new THREE.Group();
       carGroup.position.set(0, 0, 0);
 
-      // Materials
       const carPaintMat = new THREE.MeshStandardMaterial({
         color: 0x0284c7, // Electric cyan
-        metalness: 0.6,
+        metalness: 0.65,
         roughness: 0.25,
         clearcoat: 0.8,
         clearcoatRoughness: 0.2
@@ -1345,23 +1693,21 @@
 
       // 2. Wheels (4x Cylinders with Rims)
       const wheelPositions = [
-        { x: -1.15, y: 0.38, z: -1.35, isFront: true },  // Front Left
-        { x:  1.15, y: 0.38, z: -1.35, isFront: true },  // Front Right
-        { x: -1.15, y: 0.38, z:  1.35, isFront: false }, // Rear Left
-        { x:  1.15, y: 0.38, z:  1.35, isFront: false }  // Rear Right
+        { x: -1.15, y: 0.38, z: -1.35, isFront: true },
+        { x:  1.15, y: 0.38, z: -1.35, isFront: true },
+        { x: -1.15, y: 0.38, z:  1.35, isFront: false },
+        { x:  1.15, y: 0.38, z:  1.35, isFront: false }
       ];
 
-      wheelPositions.forEach((pos, idx) => {
+      wheelPositions.forEach((pos) => {
         const wheelGroup = new THREE.Group();
         wheelGroup.position.set(pos.x, pos.y, pos.z);
 
-        // Tire
         const tire = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.32, 16), tireRubberMat);
         tire.rotation.z = Math.PI / 2;
         tire.castShadow = true;
         wheelGroup.add(tire);
 
-        // Rim
         const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.33, 12), rimChromeMat);
         rim.rotation.z = Math.PI / 2;
         wheelGroup.add(rim);
@@ -1386,7 +1732,6 @@
       hlR.position.set(0.75, 0.65, -2.2);
       carGroup.add(hlR);
 
-      // Forward Spotlight beams onto road
       const spotL = new THREE.SpotLight(0xdbeafe, 1.2, 35, Math.PI / 7, 0.4);
       spotL.position.set(-0.75, 0.7, -2.2);
       spotL.target.position.set(-0.75, 0, -18);
@@ -1427,13 +1772,11 @@
       const blinkerMatR = new THREE.MeshStandardMaterial({ color: 0x442a00, emissive: 0x000000 });
       const blinkGeo = new THREE.BoxGeometry(0.18, 0.12, 0.1);
 
-      // Left mirror & tail blinker
       const bMirrorL = new THREE.Mesh(blinkGeo, blinkerMatL);
       bMirrorL.position.set(-1.18, 0.95, -0.4);
       carGroup.add(bMirrorL);
       carBlinkers.left.push(blinkerMatL);
 
-      // Right mirror & tail blinker
       const bMirrorR = new THREE.Mesh(blinkGeo, blinkerMatR);
       bMirrorR.position.set(1.18, 0.95, -0.4);
       carGroup.add(bMirrorR);
@@ -1441,15 +1784,13 @@
 
       // 6. 3D Driver Figure: Kapten Aqlan
       driverFigure = new THREE.Group();
-      driverFigure.position.set(-0.35, 0.8, -0.05); // Driver seat on left side
+      driverFigure.position.set(-0.35, 0.8, -0.05);
 
-      // Torso / Jacket
       const torsoMat = new THREE.MeshStandardMaterial({ color: 0x0284c7 });
       const torso = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.55, 0.3), torsoMat);
       torso.position.y = 0.28;
       driverFigure.add(torso);
 
-      // Arms holding steering wheel
       const armMat = new THREE.MeshStandardMaterial({ color: 0x0369a1 });
       const armL = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.4), armMat);
       armL.position.set(-0.24, 0.28, -0.2);
@@ -1461,7 +1802,6 @@
       armR.rotation.x = Math.PI / 3;
       driverFigure.add(armR);
 
-      // Steering Wheel
       const wheelMesh = new THREE.Mesh(
         new THREE.TorusGeometry(0.18, 0.035, 8, 16),
         new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.4 })
@@ -1470,7 +1810,6 @@
       wheelMesh.rotation.x = 0.45;
       driverFigure.add(wheelMesh);
 
-      // Red Skater Helmet with White Stripe
       const helmetMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3 });
       const helmet = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 16), helmetMat);
       helmet.position.set(0, 0.72, 0);
@@ -1481,16 +1820,12 @@
       stripe.position.set(0, 0.72, 0);
       driverFigure.add(stripe);
 
-      // Aqlan Face Texture
       let aqlanTex = null;
       if (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.aqlan_3d_face) {
-        const img = new Image();
-        img.src = window.GHIBLI_TEXTURES.aqlan_3d_face;
-        aqlanTex = new THREE.Texture(img);
-        img.onload = () => { aqlanTex.needsUpdate = true; };
+        aqlanTex = texLoader.load(window.GHIBLI_TEXTURES.aqlan_3d_face);
       }
       const faceMat = new THREE.MeshBasicMaterial({
-        map: aqlanTex || null,
+        map: aqlanTex,
         color: aqlanTex ? 0xffffff : 0xffdfba,
         transparent: true
       });
@@ -1503,160 +1838,8 @@
       scene.add(carGroup);
     }
 
-    /* --- Build Roadside Realistic Signpost --- */
-    function setupScenarioSignpost(scenario) {
-      if (signpostGroup) {
-        scene.remove(signpostGroup);
-        signpostGroup = null;
-      }
-      if (pedestrianGroup) {
-        scene.remove(pedestrianGroup);
-        pedestrianGroup = null;
-      }
-
-      signpostGroup = new THREE.Group();
-      signpostGroup.position.set(6.8, 0, -32); // Positioned ahead on roadside
-
-      // 1. Galvanized Steel Pole
-      const steelMat = new THREE.MeshStandardMaterial({
-        color: 0x94a3b8,
-        metalness: 0.9,
-        roughness: 0.25
-      });
-      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 5.5, 16), steelMat);
-      pole.position.y = 2.75;
-      pole.castShadow = true;
-      signpostGroup.add(pole);
-
-      // Base plate with bolts
-      const basePlate = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 0.7), steelMat);
-      basePlate.position.y = 0.06;
-      basePlate.castShadow = true;
-      signpostGroup.add(basePlate);
-
-      // 2. Traffic Sign Face using HD Texture
-      let signTex = null;
-      const texKey = scenario.signKey;
-      if (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES[texKey]) {
-        const img = new Image();
-        img.src = window.GHIBLI_TEXTURES[texKey];
-        signTex = new THREE.Texture(img);
-        img.onload = () => { signTex.needsUpdate = true; };
-      }
-
-      const signFrontMat = new THREE.MeshStandardMaterial({
-        map: signTex || null,
-        color: signTex ? 0xffffff : 0xfbbf24,
-        roughness: 0.35,
-        metalness: 0.1
-      });
-      const signBackMat = new THREE.MeshStandardMaterial({
-        color: 0x64748b,
-        metalness: 0.8,
-        roughness: 0.3
-      });
-
-      // Sign Shape depending on scenario
-      let signMesh;
-      if (scenario.signKey === 'sign_sharp_turn' || scenario.signKey === 'sign_pedestrian') {
-        // Yellow Diamond shape
-        const diamondGeo = new THREE.PlaneGeometry(2.2, 2.2);
-        signMesh = new THREE.Mesh(diamondGeo, signFrontMat);
-        signMesh.rotation.z = Math.PI / 4; // Rotated into diamond!
-      } else if (scenario.signKey === 'sign_speed_limit' || scenario.signKey === 'sign_no_entry') {
-        // Circle shape
-        const circleGeo = new THREE.CircleGeometry(1.2, 32);
-        signMesh = new THREE.Mesh(circleGeo, signFrontMat);
-      } else {
-        // STOP octagon or standard plate
-        const octGeo = new THREE.CircleGeometry(1.25, 8);
-        signMesh = new THREE.Mesh(octGeo, signFrontMat);
-      }
-
-      signMesh.position.set(0, 4.4, 0.15);
-      signMesh.rotation.y = Math.PI; // Face towards oncoming car
-      signMesh.castShadow = true;
-      signpostGroup.add(signMesh);
-
-      // Backing Plate
-      const backPlate = new THREE.Mesh(new THREE.BoxGeometry(2.3, 2.3, 0.05), signBackMat);
-      backPlate.position.set(0, 4.4, 0.12);
-      backPlate.rotation.z = (scenario.signKey === 'sign_sharp_turn' || scenario.signKey === 'sign_pedestrian') ? Math.PI / 4 : 0;
-      signpostGroup.add(backPlate);
-
-      scene.add(signpostGroup);
-
-      // If Scenario 3 (Pedestrian Cross), spawn zebra markings & pedestrian figure!
-      if (scenario.id === 3) {
-        setupPedestrianCrosswalk();
-      }
-    }
-
-    function setupPedestrianCrosswalk() {
-      pedestrianGroup = new THREE.Group();
-      pedestrianGroup.position.set(0, 0, -22);
-
-      // Zebra White Stripes across road
-      const stripeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      for (let x = -7; x <= 7; x += 1.8) {
-        const stripe = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 4.2), stripeMat);
-        stripe.rotation.x = -Math.PI / 2;
-        stripe.position.set(x, 0.03, 0);
-        pedestrianGroup.add(stripe);
-      }
-
-      // Stop Line across road
-      const stopLineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      const stopLine = new THREE.Mesh(new THREE.PlaneGeometry(15, 0.6), stopLineMat);
-      stopLine.rotation.x = -Math.PI / 2;
-      stopLine.position.set(0, 0.03, 4.5);
-      pedestrianGroup.add(stopLine);
-
-      // 3D Pedestrian Figure (Student in uniform holding schoolbag)
-      const pedBody = new THREE.Group();
-      pedBody.position.set(7.2, 0, 0); // Waiting at curb
-
-      // Shoes & Legs
-      const legMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a }); // Navy shorts
-      const legL = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.8), legMat);
-      legL.position.set(-0.2, 0.4, 0);
-      pedBody.add(legL);
-      const legR = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.8), legMat);
-      legR.position.set(0.2, 0.4, 0);
-      pedBody.add(legR);
-
-      // Shirt (White SD uniform)
-      const shirtMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc });
-      const shirt = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.7, 0.35), shirtMat);
-      shirt.position.y = 1.15;
-      shirt.castShadow = true;
-      pedBody.add(shirt);
-
-      // Backpack
-      const packMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
-      const pack = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.5, 0.25), packMat);
-      pack.position.set(0, 1.15, 0.28);
-      pedBody.add(pack);
-
-      // Head & Cap
-      const headMat = new THREE.MeshStandardMaterial({ color: 0xffdfba });
-      const head = new THREE.Mesh(new THREE.SphereGeometry(0.25, 16, 16), headMat);
-      head.position.y = 1.7;
-      pedBody.add(head);
-
-      const capMat = new THREE.MeshStandardMaterial({ color: 0xdc2626 });
-      const cap = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.2, 16), capMat);
-      cap.position.set(0, 1.88, 0);
-      pedBody.add(cap);
-
-      pedestrianGroup.add(pedBody);
-      pedestrianGroup.userData.pedBody = pedBody;
-      scene.add(pedestrianGroup);
-    }
-
     /* --- Particle Engines: Tire Smoke & Victory Confetti --- */
     function buildParticleEngines() {
-      // Tire Smoke
       const smokeMat = new THREE.MeshBasicMaterial({
         color: 0xe2e8f0,
         transparent: true,
@@ -1671,7 +1854,6 @@
         tireSmokeParticles.push(p);
       }
 
-      // Victory Sparkles
       const sparkMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
       const sparkGeo = new THREE.BoxGeometry(0.18, 0.18, 0.18);
       for (let i = 0; i < 40; i++) {
@@ -1684,7 +1866,7 @@
     }
 
     function emitTireSmoke(intensity = 1.0) {
-      tireSmokeParticles.forEach((p, idx) => {
+      tireSmokeParticles.forEach((p) => {
         if (!p.visible && Math.random() < 0.4 * intensity) {
           p.visible = true;
           const isLeft = Math.random() > 0.5;
@@ -1717,14 +1899,13 @@
         p.userData.vy = 0.12 + Math.random() * 0.2;
         p.userData.vz = (Math.random() - 0.5) * 0.18;
         p.userData.rotSpeed = (Math.random() - 0.5) * 0.3;
-        // Festive colors
         const colors = [0xfbbf24, 0x34d399, 0x38bdf8, 0xf472b6, 0xa78bfa];
         p.material.color.setHex(colors[idx % colors.length]);
       });
     }
 
     /* ============================================================
-       4. GRAPHIC & VISUAL RESPONSES (CORE PROMPT REQUIREMENT)
+       4. GRAPHIC & VISUAL RESPONSES
        ============================================================ */
     function setBrakeLights(isOn) {
       isBrakingActive = isOn;
@@ -1740,7 +1921,7 @@
       }
     }
 
-    function startTurnBlinkers(direction) { // 'left' or 'right'
+    function startTurnBlinkers(direction) {
       stopTurnBlinkers();
       let on = false;
       const hudBlinker = document.getElementById(direction === 'left' ? 'hud-blinker-left' : 'hud-blinker-right');
@@ -1804,10 +1985,8 @@
         playWarningBeep();
       }
 
-      // Specific Visual Action Choreography
       switch(choice.actionType) {
         case "smooth_turn":
-          // Action: Brake tap, Right turn blinker on, car tilts & glides gracefully to the right
           showActionBadge(true, "TIKUNGAN MULUS & AMAN!", "Rem deselerasi + lampu sein kanan aktif");
           setBrakeLights(true);
           playBrakeSqueal();
@@ -1833,7 +2012,6 @@
           break;
 
         case "skid_turn":
-          // Action: Extreme skid, tire smoke plumes, camera shake, fishtail
           showActionBadge(false, "TERGELINCIR! (SKID SEVERE)", "Mobil oleng akibat menikung terlalu kencang!");
           playTireSkidSound();
           cameraShake = 0.35;
@@ -1858,7 +2036,6 @@
           break;
 
         case "speed_down_safe":
-          // Action: Glowing brake lights, speedometer drops smoothly from 75 to 38 km/h, road calms
           showActionBadge(true, "ZONA SEKOLAH AMAN!", "Kecepatan stabil di bawah 40 km/jam");
           setBrakeLights(true);
           playBrakeSqueal();
@@ -1869,7 +2046,6 @@
           break;
 
         case "overspeed_warning":
-          // Action: Red radar warning, engine pitch screams, camera shake
           showActionBadge(false, "MELEBIHI BATAS KECEPATAN!", "Radar kecepatan mendeteksi pelanggaran rambu!");
           playWarningBeep();
           cameraShake = 0.2;
@@ -1884,14 +2060,12 @@
           break;
 
         case "yield_pedestrian_stop":
-          // Action: Progressive braking, nose dips, complete halt before zebra cross, pedestrian crosses!
           showActionBadge(true, "MENGUTAMAKAN PEJALAN KAKI!", "Mobil berhenti tertib di belakang garis stop");
           setBrakeLights(true);
           playBrakeSqueal();
-          targetSpeedKmh = 0; // Complete stop!
+          targetSpeedKmh = 0;
           carPitch = -0.06;
 
-          // Pedestrian walking across zebra cross animation
           if (pedestrianGroup && pedestrianGroup.userData.pedBody) {
             const ped = pedestrianGroup.userData.pedBody;
             ped.position.x = 7.2;
@@ -1899,11 +2073,9 @@
             const pedAnim = setInterval(() => {
               pedWalk += 0.12;
               ped.position.x -= 0.14;
-              // Little walking bob
               ped.position.y = Math.abs(Math.sin(pedWalk * 3)) * 0.15;
               if (ped.position.x <= -7.2) {
                 clearInterval(pedAnim);
-                // Once crossed, car resumes smoothly!
                 setTimeout(() => {
                   setBrakeLights(false);
                   carPitch = 0;
@@ -1915,7 +2087,6 @@
           break;
 
         case "overspeed_pedestrian_hazard":
-          // Action: Emergency hazard braking, tire smoke
           showActionBadge(false, "PELANGGARAN ZEBRA CROSS!", "Wajib memberi jalan bagi penyeberang!");
           playTireSkidSound();
           cameraShake = 0.3;
@@ -1930,13 +2101,11 @@
           break;
 
         case "full_stop_and_look":
-          // Action: Complete stop, driver head looks left & right, green go indicator
           showActionBadge(true, "BERHENTI TOTAL DI RAMBU STOP!", "Roda diam penuh & tengok kanan-kiri");
           setBrakeLights(true);
           playBrakeSqueal();
-          targetSpeedKmh = 0; // Complete stop
+          targetSpeedKmh = 0;
 
-          // Aqlan head turning left and right
           if (aqlanHeadMesh) {
             let tHead = 0;
             const headAnim = setInterval(() => {
@@ -1961,7 +2130,6 @@
           break;
 
         case "safe_bypass_continue":
-          // Action: Left blinker, gentle lane steer past forbidden branch, continuous safe drive
           showActionBadge(true, "MENGHINDARI JALUR TERLARANG!", "Disiplin rambu Dilarang Masuk (Verboden)");
           startTurnBlinkers('left');
           let tBypass = 0;
@@ -2027,14 +2195,13 @@
       // Hide Feedback Panel
       document.getElementById('feedback-panel').style.display = 'none';
 
-      // Re-setup 3D Signpost in Scene
-      setupScenarioSignpost(s);
+      // Update Active 3D Mission Signpost in Scene
+      setupActiveMissionSign(s);
     }
 
     function selectOption(selectedOpt, scenario) {
-      initAudio(); // Activate Web Audio on first user gesture
+      initAudio();
 
-      // Disable all option buttons
       const buttons = document.querySelectorAll('.opt-btn');
       buttons.forEach(b => {
         b.disabled = true;
@@ -2042,7 +2209,6 @@
           if (selectedOpt.isCorrect) b.classList.add('correct-choice');
           else b.classList.add('wrong-choice');
         } else if (scenario.options.find(o => o.isCorrect && b.innerText.includes(`[${o.key}]`))) {
-          // Highlight correct answer in green for clarity
           b.classList.add('correct-choice');
         }
       });
@@ -2063,7 +2229,6 @@
       text.textContent = selectedOpt.feedback;
       panel.style.display = 'block';
 
-      // Auto-scroll console to feedback
       panel.scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -2135,7 +2300,7 @@
       document.getElementById('hud-speed').textContent = Math.round(carSpeedKmh);
       updateEngineSound(carSpeedKmh);
 
-      // Road Scroll Velocity based on current speed
+      // Road Scroll Velocity
       const scrollSpeed = (carSpeedKmh / 60) * 18 * dt;
       roadScrollZ += scrollSpeed;
 
@@ -2159,11 +2324,23 @@
         if (tree.position.z > 60) tree.position.z -= 240;
       });
 
-      // Signpost approaching movement
-      if (signpostGroup) {
-        signpostGroup.position.z += scrollSpeed;
-        if (signpostGroup.position.z > 40) {
-          signpostGroup.position.z = -50; // loop back for continuous context
+      // Continuous Highway Signs Scrolling & Seamless Recycling ("Di Setiap Jalanan")
+      highwaySignposts.forEach(signItem => {
+        signItem.group.position.z += scrollSpeed;
+        if (signItem.group.position.z > 40) {
+          signItem.group.position.z -= 250; // loop back seamlessly along the highway
+        }
+      });
+
+      // Active Mission Signpost movement
+      if (activeMissionSign) {
+        activeMissionSign.group.position.z += scrollSpeed;
+        if (activeMissionSign.halo) {
+          activeMissionSign.halo.rotation.z += dt * 1.5;
+        }
+        // Continuous loop if not answered yet so sign stays clearly approaching
+        if (activeMissionSign.group.position.z > 35) {
+          activeMissionSign.group.position.z = -45;
         }
       }
 
@@ -2207,7 +2384,7 @@
           p.position.x += p.userData.vx;
           p.position.y += p.userData.vy;
           p.position.z += p.userData.vz;
-          p.userData.vy -= 0.008; // gravity
+          p.userData.vy -= 0.008;
           p.rotation.x += p.userData.rotSpeed;
           p.rotation.y += p.userData.rotSpeed;
           p.userData.life -= dt * 0.9;
@@ -2226,7 +2403,6 @@
         const lookTarget = new THREE.Vector3(carGroup.position.x * 0.3, 1.2, carGroup.position.z - 10);
         camera.lookAt(lookTarget);
       } else if (cameraMode === 'cockpit') {
-        // Positioned right inside the cabin looking through windshield
         camera.position.set(
           carGroup.position.x - 0.35,
           carGroup.position.y + 1.25,
@@ -2234,7 +2410,6 @@
         );
         camera.lookAt(carGroup.position.x - 0.35, 1.2, carGroup.position.z - 25);
       } else if (cameraMode === 'cinematic') {
-        // Dramatic low side angle
         const t = clock.getElapsedTime() * 0.3;
         camera.position.set(
           Math.sin(t) * 8,
@@ -2256,7 +2431,6 @@
 
     /* --- Window Load Bootstrap --- */
     window.addEventListener('DOMContentLoaded', () => {
-      // Set Pak Arya Avatar
       const officerImg = document.getElementById('officer-avatar');
       if (window.GHIBLI_TEXTURES && (window.GHIBLI_TEXTURES.arya_avatar || window.GHIBLI_TEXTURES.arya_3d_face)) {
         officerImg.src = window.GHIBLI_TEXTURES.arya_avatar || window.GHIBLI_TEXTURES.arya_3d_face;
