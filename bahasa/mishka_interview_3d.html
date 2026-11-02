@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulasi Wawancara 3D: Jurnalis Cilik — Mishka</title>
+  <title>Simulasi Wawancara 3D Studio Ghibli: Jurnalis Cilik — Mishka</title>
   <style>
     :root {
       --bg-dark: #042f2e;
-      --card-bg: rgba(6, 78, 59, 0.92);
+      --card-bg: rgba(6, 78, 59, 0.94);
       --card-border: #34d399;
       --neon-emerald: #34d399;
       --neon-gold: #fbbf24;
@@ -15,6 +15,7 @@
       --neon-red: #f87171;
       --text-main: #f0fdf4;
       --text-muted: #a7f3d0;
+      --ghibli-warm: #fef3c7;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
     body {
@@ -47,7 +48,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 16px 20px;
+      padding: 14px 20px;
     }
 
     /* Header Bar */
@@ -60,9 +61,9 @@
       border: 1px solid var(--card-border);
       border-radius: 14px;
       padding: 10px 18px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      max-width: 900px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.55);
+      max-width: 960px;
       margin: 0 auto;
       width: 100%;
     }
@@ -75,27 +76,66 @@
       border-radius: 20px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
+      display: inline-block;
     }
     .stats {
       display: flex;
       gap: 16px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: bold;
     }
-    .stat-val { color: var(--neon-gold); }
+    .stat-val { color: var(--neon-gold); font-size: 15px; }
+
+    /* Top Control Bar (Camera presets + Character Style Switcher) */
+    .toolbar-row {
+      pointer-events: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 960px;
+      margin: 6px auto 0;
+      width: 100%;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cam-btn-group, .style-btn-group {
+      display: flex;
+      gap: 6px;
+      background: rgba(4, 47, 46, 0.88);
+      border: 1px solid #059669;
+      padding: 4px 8px;
+      border-radius: 24px;
+      backdrop-filter: blur(6px);
+    }
+    .tool-btn {
+      background: transparent;
+      border: none;
+      color: #d1fae5;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tool-btn:hover {
+      background: rgba(52, 211, 153, 0.25);
+      color: #ffffff;
+    }
+    .tool-btn.active {
+      background: linear-gradient(135deg, #059669, #34d399);
+      color: #022c22;
+    }
 
     /* Hint Pill */
     .hint-pill {
-      pointer-events: auto;
-      align-self: center;
-      background: rgba(4, 47, 46, 0.85);
-      border: 1px solid #059669;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       color: #a7f3d0;
-      backdrop-filter: blur(4px);
-      margin-top: 6px;
+      opacity: 0.9;
     }
 
     /* Interview Dialogue & Question Panel */
@@ -104,71 +144,113 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 18px;
-      padding: 18px 24px;
-      max-width: 920px;
+      padding: 16px 22px;
+      max-width: 960px;
       margin: 0 auto;
       width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
       transition: all 0.3s ease;
     }
 
     /* Dialogue bubble for Interviewee's Answer */
     .dialogue-box {
-      background: #022c22;
+      background: rgba(2, 44, 34, 0.92);
       border: 1px solid #047857;
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 14px;
+      border-radius: 14px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
       display: flex;
       gap: 14px;
-      align-items: flex-start;
+      align-items: center;
+      position: relative;
+      box-shadow: inset 0 0 15px rgba(52, 211, 153, 0.1);
     }
-    .speaker-avatar {
-      font-size: 28px;
-      background: #064e3b;
+    .avatar-wrapper {
+      position: relative;
+      width: 62px;
+      height: 62px;
+      flex-shrink: 0;
+    }
+    .speaker-avatar-img {
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
-      width: 48px;
-      height: 48px;
+      object-fit: cover;
+      border: 2px solid var(--neon-gold);
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+      transition: transform 0.3s ease;
+    }
+    .pulse-ring {
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-emerald);
+      animation: pulse 1.8s infinite;
+      pointer-events: none;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.08); opacity: 0.2; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .speaker-content {
+      flex: 1;
+    }
+    .speaker-meta {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      border: 1px solid var(--neon-emerald);
-    }
-    .speaker-content h4 {
-      font-size: 13px;
-      color: var(--neon-gold);
+      gap: 8px;
       margin-bottom: 4px;
+    }
+    .speaker-name {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--neon-gold);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .speaker-content p {
+    .speaker-badge {
+      font-size: 11px;
+      background: rgba(16, 185, 129, 0.25);
+      color: #6ee7b7;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid #059669;
+    }
+    .speaker-text {
       font-size: 14.5px;
-      line-height: 1.5;
+      line-height: 1.45;
       color: #ffffff;
+      font-weight: 500;
     }
 
+    /* Prompt text */
     .question-prompt {
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--neon-emerald);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
+    /* Multiple choice options */
     .options-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 8px;
+      gap: 7px;
     }
     button.opt-btn {
       background: #044e3f;
       border: 1px solid #059669;
       color: #f0fdf4;
-      padding: 11px 15px;
+      padding: 10px 14px;
       font-size: 13.5px;
       font-weight: 600;
       border-radius: 10px;
@@ -189,6 +271,7 @@
       background: #065f46 !important;
       border-color: var(--neon-emerald) !important;
       color: #6ee7b7 !important;
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
     }
     button.opt-btn.wrong {
       background: #7f1d1d !important;
@@ -197,10 +280,10 @@
     }
 
     .feedback-banner {
-      margin-top: 10px;
-      padding: 10px 14px;
+      margin-top: 8px;
+      padding: 9px 12px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       display: none;
       line-height: 1.4;
@@ -219,15 +302,15 @@
     }
 
     .btn-next {
-      margin-top: 12px;
+      margin-top: 10px;
       width: 100%;
-      padding: 12px;
+      padding: 11px;
       background: linear-gradient(135deg, #059669, #34d399);
       border: none;
       border-radius: 10px;
       color: #022c22;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 13.5px;
       cursor: pointer;
       display: none;
       transition: 0.2s;
@@ -244,31 +327,32 @@
       background: var(--card-bg);
       border: 2px solid var(--neon-gold);
       border-radius: 20px;
-      padding: 30px;
+      padding: 28px;
       text-align: center;
       max-width: 520px;
       width: 90%;
-      box-shadow: 0 0 40px rgba(0,0,0,0.85);
-      backdrop-filter: blur(12px);
+      box-shadow: 0 0 45px rgba(0,0,0,0.88);
+      backdrop-filter: blur(14px);
       z-index: 100;
       pointer-events: auto;
     }
-    #victory-modal h2 { font-size: 26px; color: var(--neon-gold); margin-bottom: 8px; }
-    #victory-modal p { color: var(--text-muted); font-size: 14px; margin-bottom: 18px; line-height: 1.5; }
+    #victory-modal h2 { font-size: 24px; color: var(--neon-gold); margin-bottom: 8px; }
+    #victory-modal p { color: var(--text-muted); font-size: 13.5px; margin-bottom: 16px; line-height: 1.5; }
     .badge-seal {
       display: inline-block;
-      padding: 10px 22px;
+      padding: 9px 20px;
       background: linear-gradient(135deg, #f59e0b, #10b981);
       color: #022c22;
       font-weight: 900;
       border-radius: 30px;
-      font-size: 15px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+      font-size: 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
     }
   </style>
   <script src="../assets/js/three.min.js"></script>
   <script src="../assets/js/OrbitControls.js"></script>
+  <script src="../assets/interview/textures.js"></script>
 </head>
 <body>
 
@@ -277,8 +361,8 @@
   <div class="ui-layer">
     <header>
       <div>
-        <span class="badge">Mishka • Kelas 5</span>
-        <span style="margin-left: 10px; font-weight: 700; font-size: 14px;">Simulasi Wawancara 3D: "Investigasi Wirausaha"</span>
+        <span class="badge">Mishka • Kelas 5 SD</span>
+        <span style="margin-left: 10px; font-weight: 700; font-size: 13.5px;">Wawancara 3D Studio Ghibli: "Investigasi Pengusaha Susu"</span>
       </div>
       <div class="stats">
         <span>Kredibilitas: <span id="score" class="stat-val">0</span></span>
@@ -287,23 +371,47 @@
       </div>
     </header>
 
-    <div class="hint-pill">
-      <span>🖱️ Putar studio 3D: Klik &amp; geser mouse | Zoom: Scroll roda mouse</span>
+    <!-- Toolbar: Camera presets + Outfit Switcher -->
+    <div class="toolbar-row">
+      <div class="cam-btn-group">
+        <button class="tool-btn active" id="btn-cam-all" onclick="setCameraView('all')">🎥 Studio Penuh</button>
+        <button class="tool-btn" id="btn-cam-mishka" onclick="setCameraView('mishka')">👧 Sorot Mishka</button>
+        <button class="tool-btn" id="btn-cam-nadya" onclick="setCameraView('nadya')">👩‍💼 Sorot Ibu Nadya</button>
+      </div>
+
+      <div class="style-btn-group">
+        <button class="tool-btn active" id="btn-style-reporter" onclick="switchMishkaStyle('reporter')">👔 Mishka Reporter</button>
+        <button class="tool-btn" id="btn-style-user" onclick="switchMishkaStyle('user')">📖 Mishka Membaca (Foto Kamu)</button>
+      </div>
+
+      <div class="hint-pill">
+        <span>🖱️ Putar studio 3D: Klik &amp; geser | Zoom: Scroll mouse</span>
+      </div>
     </div>
 
+    <!-- Dialogue and Interview Panel -->
     <div class="interview-panel">
       <!-- Interviewee Speech Box -->
       <div class="dialogue-box">
-        <div class="speaker-avatar" id="speaker-icon">👩‍💼</div>
+        <div class="avatar-wrapper">
+          <img id="speaker-avatar" class="speaker-avatar-img" src="../assets/interview/nadya_circle.png" alt="Avatar">
+          <div class="pulse-ring" id="avatar-pulse"></div>
+        </div>
         <div class="speaker-content">
-          <h4 id="speaker-name">Ibu Nadya (Pengusaha Susu Kemasan KS Group)</h4>
-          <p id="speaker-text">"Halo, selamat pagi! Selamat datang di kantor kami. Senang sekali bisa bertemu dengan jurnalis cilik berprestasi seperti Mishka."</p>
+          <div class="speaker-meta">
+            <span class="speaker-name" id="speaker-name">Ibu Nadya</span>
+            <span class="speaker-badge" id="speaker-badge">🎙️ Narasumber Menjawab</span>
+          </div>
+          <p class="speaker-text" id="speaker-text">"Halo, selamat pagi! Selamat datang di kantor KS Group. Senang sekali bisa bertemu dengan jurnalis cilik berprestasi seperti Mishka. Ada yang bisa saya bantu?"</p>
         </div>
       </div>
 
-      <div class="question-prompt">
-        <span>🎙️</span>
-        <span id="prompt-text">Sebagai pewawancara, apa kalimat pembuka santun yang akan Mishka tanyakan?</span>
+      <div class="question-prompt" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <img id="mishka-ui-avatar" src="../assets/interview/mishka_circle.png" alt="Mishka" style="width:42px; height:42px; border-radius:50%; border:2px solid var(--neon-emerald); object-fit:cover; flex-shrink:0; box-shadow:0 0 10px rgba(52,211,153,0.35);">
+        <div>
+          <div style="font-size:11px; text-transform:uppercase; color:var(--neon-emerald); font-weight:800; letter-spacing:0.5px;">Pertanyaan Mishka (Jurnalis Cilik):</div>
+          <span id="prompt-text">Sebagai pewawancara, apa kalimat pembuka santun yang akan Mishka tanyakan?</span>
+        </div>
       </div>
 
       <div class="feedback-banner" id="feedback"></div>
@@ -318,19 +426,19 @@
 
   <!-- VICTORY MODAL -->
   <div id="victory-modal">
-    <div style="font-size: 55px; margin-bottom: 10px;">🎙️📰🏆</div>
+    <div style="font-size: 52px; margin-bottom: 8px;">🎙️📰🏆</div>
     <h2>WAWANCARA BERJALAN GEMILANG!</h2>
-    <p>Selamat Mishka! Kamu telah mempraktikkan etika jurnalisme santun, menguasai kata tanya ADiKSiMBa, dan membedah idiom wirausaha dengan analisis yang sangat tajam!</p>
+    <p>Selamat Mishka! Kamu telah mempraktikkan etika jurnalisme santun, menguasai kata tanya ADiKSiMBa, dan membedah idiom wirausaha (gulung tikar &amp; banting tulang) dengan analisis tajam dan penuh rasa hormat!</p>
     <div class="badge-seal">MASTER BUSINESS JOURNALIST 2026</div>
-    <div>Skor Kredibilitas: <strong id="final-score" style="color:var(--neon-gold); font-size:22px;">0</strong> / 500</div>
-    <button class="btn-next" style="display:inline-block; margin-top:20px; width:auto; padding:12px 28px;" onclick="location.reload()">
+    <div style="font-size: 15px;">Skor Kredibilitas Jurnalis: <strong id="final-score" style="color:var(--neon-gold); font-size:22px;">0</strong> / 500</div>
+    <button class="btn-next" style="display:inline-block; margin-top:18px; width:auto; padding:11px 26px;" onclick="location.reload()">
       SIMULASI WAWANCARA BARU ↺
     </button>
   </div>
 
   <script>
     // =========================================================================
-    // 1. WEB AUDIO SYNTHESIZERS (WARM MELODIC CHIMES)
+    // 1. WEB AUDIO SYNTHESIZERS (WARM MELODIC CRYSTAL CHIMES)
     // =========================================================================
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -351,7 +459,7 @@
     }
 
     function playResponseChime() {
-      // Gentle warm crystal chord
+      // Gentle warm Ghibli chord
       [523.25, 659.25, 783.99].forEach((f, i) => {
         setTimeout(() => playTone(f, 'sine', 0.25, false), i * 70);
       });
@@ -380,15 +488,15 @@
     }
 
     // =========================================================================
-    // 2. THREE.JS 3D INTERVIEW STUDIO
+    // 2. THREE.JS 3D GHIBLI INTERVIEW STUDIO
     // =========================================================================
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x042f2e);
-    scene.fog = new THREE.FogExp2(0x042f2e, 0.03);
+    scene.fog = new THREE.FogExp2(0x042f2e, 0.035);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 4.2, 8.2);
+    camera.position.set(0, 4.0, 7.8);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -399,246 +507,325 @@
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.maxPolarAngle = Math.PI / 2 - 0.05;
-    controls.minDistance = 4.0;
-    controls.maxDistance = 14;
+    controls.dampingFactor = 0.06;
+    controls.maxPolarAngle = Math.PI / 2 - 0.04;
+    controls.minDistance = 3.5;
+    controls.maxDistance = 12;
     controls.target.set(0, 1.4, 0);
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xfffbeb, 0.7);
+    const ambientLight = new THREE.AmbientLight(0xfffbeb, 0.8);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfef3c7, 1.1);
-    keyLight.position.set(5, 8, 6);
+    const keyLight = new THREE.DirectionalLight(0xfef3c7, 1.2);
+    keyLight.position.set(4, 7, 5);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
     keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    const rimLight = new THREE.PointLight(0x34d399, 0.9, 12);
-    rimLight.position.set(-4, 3, -2);
+    const rimLight = new THREE.PointLight(0x34d399, 1.0, 12);
+    rimLight.position.set(-3.5, 3, -2);
     scene.add(rimLight);
 
+    const fillLight = new THREE.PointLight(0xfbbf24, 0.6, 10);
+    fillLight.position.set(3.5, 2.5, 2);
+    scene.add(fillLight);
+
     // --- 3D Studio Architecture ---
-    // Wooden Floor
+    // Warm Wooden Floor
     const floorGeo = new THREE.PlaneGeometry(16, 16);
-    const floorMat = new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.6 });
+    const floorMat = new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.65 });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
     floor.receiveShadow = true;
     scene.add(floor);
 
     // Studio Back Wall
-    const backWall = new THREE.Mesh(new THREE.BoxGeometry(16, 8, 0.4), new THREE.MeshStandardMaterial({ color: 0x022c22, roughness: 0.8 }));
+    const backWall = new THREE.Mesh(new THREE.BoxGeometry(16, 8, 0.4), new THREE.MeshStandardMaterial({ color: 0x022c22, roughness: 0.85 }));
     backWall.position.set(0, 4, -4.5);
     backWall.receiveShadow = true;
     scene.add(backWall);
 
-    // Wooden Acoustic Panels on Back Wall
-    for (let x = -6; x <= 6; x += 1.2) {
-      const slat = new THREE.Mesh(new THREE.BoxGeometry(0.12, 6, 0.08), new THREE.MeshStandardMaterial({ color: 0xb45309 }));
+    // Acoustic Wooden Slats on Wall
+    for (let x = -6.5; x <= 6.5; x += 1.0) {
+      const slat = new THREE.Mesh(new THREE.BoxGeometry(0.12, 6, 0.08), new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.5 }));
       slat.position.set(x, 4, -4.26);
       scene.add(slat);
     }
 
     // Modern Interview Desk
     const deskGroup = new THREE.Group();
-    const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.14, 2.0), new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.35 }));
+    const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.4, 0.14, 2.1), new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.38 }));
     deskTop.position.set(0, 1.4, 0);
     deskTop.castShadow = true; deskTop.receiveShadow = true;
     deskGroup.add(deskTop);
 
     // Desk Legs
     const legMat = new THREE.MeshStandardMaterial({ color: 0x1e293b });
-    [[-1.8, 0.7, -0.8], [1.8, 0.7, -0.8], [-1.8, 0.7, 0.8], [1.8, 0.7, 0.8]].forEach(p => {
+    [[-1.9, 0.7, -0.85], [1.9, 0.7, -0.85], [-1.9, 0.7, 0.85], [1.9, 0.7, 0.85]].forEach(p => {
       const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 1.4), legMat);
       leg.position.set(...p);
       leg.castShadow = true;
       deskGroup.add(leg);
     });
 
-    // Desk Items: Microphones, Notebook, & Milk Bottles
-    const micMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8 });
-    // Interviewer Mic
+    // Desk Items: Broadcast Microphones, Notepad & KS Group Milk Bottle
+    const micMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.85, roughness: 0.2 });
+    // Mishka's Mic
     const mic1 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), micMat);
-    mic1.position.set(-0.8, 1.7, 0.3);
-    const micStand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.3), legMat);
-    micStand1.position.set(-0.8, 1.55, 0.3);
+    mic1.position.set(-0.9, 1.75, 0.35);
+    const micStand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35), legMat);
+    micStand1.position.set(-0.9, 1.58, 0.35);
     deskGroup.add(mic1, micStand1);
 
-    // Interviewee Mic
+    // Ibu Nadya's Mic
     const mic2 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), micMat);
-    mic2.position.set(0.8, 1.7, -0.3);
-    const micStand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.3), legMat);
-    micStand2.position.set(0.8, 1.55, -0.3);
+    mic2.position.set(0.9, 1.75, -0.35);
+    const micStand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35), legMat);
+    micStand2.position.set(0.9, 1.58, -0.35);
     deskGroup.add(mic2, micStand2);
 
-    // Mishka's Notepad on desk
-    const notepad = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.03, 0.6), new THREE.MeshStandardMaterial({ color: 0xf8fafc }));
-    notepad.position.set(-1.1, 1.48, 0.4);
-    notepad.rotation.y = 0.2;
+    // Mishka's Reporter Notepad & Pen
+    const notepad = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.03, 0.65), new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.5 }));
+    notepad.position.set(-1.15, 1.49, 0.45);
+    notepad.rotation.y = 0.25;
     deskGroup.add(notepad);
 
-    // Bottle of Fresh Milk (KS Group product prop!)
-    const bottleMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
-    const bottle = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.5, 16), bottleMat);
-    bottle.position.set(1.2, 1.65, -0.2);
-    deskGroup.add(bottle);
+    // Pen
+    const pen = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.4), new THREE.MeshStandardMaterial({ color: 0x059669 }));
+    pen.position.set(-0.85, 1.49, 0.55);
+    pen.rotation.z = Math.PI / 2;
+    pen.rotation.y = 0.4;
+    deskGroup.add(pen);
+
+    // Fresh Artisanal Milk Bottle (KS Group Prop)
+    const bottleMat = new THREE.MeshStandardMaterial({ color: 0xfef9c3, roughness: 0.15, transparent: true, opacity: 0.92 });
+    const bottle = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.52, 16), bottleMat);
+    bottle.position.set(1.3, 1.68, -0.2);
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.08), new THREE.MeshStandardMaterial({ color: 0x059669 }));
+    cap.position.set(1.3, 1.96, -0.2);
+    deskGroup.add(bottle, cap);
 
     scene.add(deskGroup);
 
     // =========================================================================
-    // 3. 3D PROCEDURAL CHARACTERS (MISHKA & IBU NADYA)
+    // 3. STUDIO GHIBLI CHARACTERS (2.5D ANIMATED ACRYLIC STANDEES)
     // =========================================================================
-    // Materials
-    const skinMat = new THREE.MeshStandardMaterial({ color: 0xfed7aa });
-    const hairDarkMat = new THREE.MeshStandardMaterial({ color: 0x1f2937 });
-    const hairHijabMat = new THREE.MeshStandardMaterial({ color: 0x047857 }); // Elegant green hijab/hair
-    const blazerMishkaMat = new THREE.MeshStandardMaterial({ color: 0x10b981 }); // Emerald blazer
-    const blazerNadyaMat = new THREE.MeshStandardMaterial({ color: 0xb45309 });  // Warm Gold/Orange blazer
+    const texLoader = new THREE.TextureLoader();
 
-    // --- CHARACTER 1: MISHKA (THE INTERVIEWER - LEFT SIDE) ---
+    // Use pre-bundled offline Base64 textures from textures.js, fallback to direct paths
+    const mishkaReporterTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_standee) || '../assets/interview/standee_mishka_ghibli.png');
+    const mishkaUserTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_user_standee) || '../assets/interview/standee_mishka_user.png');
+    const nadyaTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_standee) || '../assets/interview/standee_nadya_ghibli.png');
+
+    // Standee Dimensions: 1.6 width, 2.15 height
+    const standeeGeo = new THREE.PlaneGeometry(1.6, 2.15);
+
+    // --- CHARACTER 1: MISHKA (LEFT SIDE / INTERVIEWER) ---
     const mishkaGroup = new THREE.Group();
-    mishkaGroup.position.set(-1.4, 0, 0.7);
-    mishkaGroup.rotation.y = Math.PI / 4; // Angled toward table & interviewee
+    mishkaGroup.position.set(-1.45, 0, 0.75);
+    mishkaGroup.rotation.y = Math.PI / 4.2; // Angled toward table & interviewee
 
-    // Chair
-    const chairM = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.8, 1.0), new THREE.MeshStandardMaterial({ color: 0x065f46 }));
+    // Armchair
+    const chairM = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 1.1), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
     chairM.position.set(0, 0.4, 0);
-    mishkaGroup.add(chairM);
+    chairM.castShadow = true; chairM.receiveShadow = true;
+    const chairMBack = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 0.15), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
+    chairMBack.position.set(0, 1.3, -0.5);
+    mishkaGroup.add(chairM, chairMBack);
 
-    // Body/Torso
-    const torsoM = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.85, 0.45), blazerMishkaMat);
-    torsoM.position.set(0, 1.25, 0);
-    torsoM.castShadow = true;
-    mishkaGroup.add(torsoM);
+    // Wooden Standee Base Pedestal
+    const baseM = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.5, 0.08, 24), new THREE.MeshStandardMaterial({ color: 0xb45309 }));
+    baseM.position.set(0, 0.84, 0);
+    mishkaGroup.add(baseM);
 
-    // Head
-    const headM = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), skinMat);
-    headM.position.set(0, 1.85, 0.05);
-    headM.castShadow = true;
-    mishkaGroup.add(headM);
-
-    // Ponytail / Hair
-    const hairM = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), hairDarkMat);
-    hairM.position.set(0, 1.95, -0.05);
-    const ponytail = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.4, 8), hairDarkMat);
-    ponytail.position.set(0, 1.85, -0.32);
-    ponytail.rotation.x = -Math.PI / 3;
-    mishkaGroup.add(hairM, ponytail);
+    // Mishka Ghibli Standee Mesh
+    const mishkaMat = new THREE.MeshStandardMaterial({
+      map: mishkaReporterTex,
+      transparent: true,
+      alphaTest: 0.05,
+      side: THREE.DoubleSide,
+      roughness: 0.3
+    });
+    const mishkaStandee = new THREE.Mesh(standeeGeo, mishkaMat);
+    mishkaStandee.position.set(0, 1.9, 0);
+    mishkaStandee.castShadow = true;
+    mishkaGroup.add(mishkaStandee);
 
     scene.add(mishkaGroup);
 
-    // --- CHARACTER 2: IBU NADYA (THE INTERVIEWEE - RIGHT SIDE) ---
+    // --- CHARACTER 2: IBU NADYA (RIGHT SIDE / INTERVIEWEE) ---
     const nadyaGroup = new THREE.Group();
-    nadyaGroup.position.set(1.4, 0, -0.7);
-    nadyaGroup.rotation.y = -3 * Math.PI / 4; // Angled toward Mishka
+    nadyaGroup.position.set(1.45, 0, -0.75);
+    nadyaGroup.rotation.y = -3 * Math.PI / 4.2; // Angled toward Mishka & camera
 
-    // Chair
-    const chairN = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.8, 1.0), new THREE.MeshStandardMaterial({ color: 0x065f46 }));
+    // Armchair
+    const chairN = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 1.1), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
     chairN.position.set(0, 0.4, 0);
-    nadyaGroup.add(chairN);
+    chairN.castShadow = true; chairN.receiveShadow = true;
+    const chairNBack = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 0.15), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
+    chairNBack.position.set(0, 1.3, -0.5);
+    nadyaGroup.add(chairN, chairNBack);
 
-    // Body/Torso
-    const torsoN = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.9, 0.5), blazerNadyaMat);
-    torsoN.position.set(0, 1.3, 0);
-    torsoN.castShadow = true;
-    nadyaGroup.add(torsoN);
+    // Wooden Standee Base Pedestal
+    const baseN = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.5, 0.08, 24), new THREE.MeshStandardMaterial({ color: 0xb45309 }));
+    baseN.position.set(0, 0.84, 0);
+    nadyaGroup.add(baseN);
 
-    // Head
-    const headN = new THREE.Mesh(new THREE.SphereGeometry(0.3, 20, 20), skinMat);
-    headN.position.set(0, 1.9, 0.05);
-    headN.castShadow = true;
-    nadyaGroup.add(headN);
-
-    // Hijab / Hair Styling
-    const hijab = new THREE.Mesh(new THREE.SphereGeometry(0.34, 18, 18), hairHijabMat);
-    hijab.position.set(0, 1.92, -0.02);
-    nadyaGroup.add(hijab);
-
-    // Right Arm (Gesturing during speech)
-    const armNGeo = new THREE.BoxGeometry(0.18, 0.6, 0.18);
-    const armN = new THREE.Mesh(armNGeo, blazerNadyaMat);
-    armN.position.set(0.42, 1.25, 0.2);
-    armN.rotation.x = Math.PI / 4;
-    nadyaGroup.add(armN);
+    // Nadya Ghibli Standee Mesh
+    const nadyaMat = new THREE.MeshStandardMaterial({
+      map: nadyaTex,
+      transparent: true,
+      alphaTest: 0.05,
+      side: THREE.DoubleSide,
+      roughness: 0.3
+    });
+    const nadyaStandee = new THREE.Mesh(standeeGeo, nadyaMat);
+    nadyaStandee.position.set(0, 1.9, 0);
+    nadyaStandee.castShadow = true;
+    nadyaGroup.add(nadyaStandee);
 
     scene.add(nadyaGroup);
 
     // =========================================================================
-    // 4. INTERVIEW SCENARIOS (5 SITUASI BERTAHAP)
+    // 4. MISHKA OUTFIT / STYLE SWITCHER
+    // =========================================================================
+    let currentMishkaStyle = 'reporter';
+
+    function switchMishkaStyle(style) {
+      currentMishkaStyle = style;
+      const btnRep = document.getElementById('btn-style-reporter');
+      const btnUser = document.getElementById('btn-style-user');
+
+      if (style === 'reporter') {
+        btnRep.classList.add('active');
+        btnUser.classList.remove('active');
+        mishkaMat.map = mishkaReporterTex;
+        mishkaMat.needsUpdate = true;
+        document.getElementById('mishka-ui-avatar').src = (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_avatar) || '../assets/interview/mishka_circle.png';
+      } else {
+        btnUser.classList.add('active');
+        btnRep.classList.remove('active');
+        mishkaMat.map = mishkaUserTex;
+        mishkaMat.needsUpdate = true;
+        document.getElementById('mishka-ui-avatar').src = (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_user_avatar) || '../assets/interview/mishka_reading_circle.png';
+      }
+      playResponseChime();
+    }
+
+    // =========================================================================
+    // 5. CAMERA PRESETS
+    // =========================================================================
+    let targetCamPos = { x: 0, y: 4.0, z: 7.8 };
+    let targetCamLook = { x: 0, y: 1.4, z: 0 };
+    let isTransitioningCam = false;
+
+    function setCameraView(view) {
+      document.getElementById('btn-cam-all').classList.remove('active');
+      document.getElementById('btn-cam-mishka').classList.remove('active');
+      document.getElementById('btn-cam-nadya').classList.remove('active');
+
+      if (view === 'all') {
+        document.getElementById('btn-cam-all').classList.add('active');
+        targetCamPos = { x: 0, y: 4.0, z: 7.8 };
+        targetCamLook = { x: 0, y: 1.4, z: 0 };
+      } else if (view === 'mishka') {
+        document.getElementById('btn-cam-mishka').classList.add('active');
+        targetCamPos = { x: -2.3, y: 2.2, z: 3.2 };
+        targetCamLook = { x: -1.45, y: 1.8, z: 0.75 };
+      } else if (view === 'nadya') {
+        document.getElementById('btn-cam-nadya').classList.add('active');
+        targetCamPos = { x: 2.3, y: 2.2, z: 2.8 };
+        targetCamLook = { x: 1.45, y: 1.8, z: -0.75 };
+      }
+      isTransitioningCam = true;
+      playTone(587.33, 'sine', 0.15, false);
+    }
+
+    // =========================================================================
+    // 6. INTERVIEW SCENARIOS (5 SITUASI BERTAHAP BAB 4 BAHASA INDONESIA)
     // =========================================================================
     const interviewScenarios = [
       {
         situation: "SITUASI 1: ETIKA PEMBUKA & SALAM SANTUN",
-        speakerName: "Ibu Nadya (Pemilik KS Group)",
-        speakerText: "\"Halo, selamat pagi! Selamat datang di kantor kami. Senang sekali bisa bertemu dengan jurnalis cilik berprestasi seperti Mishka.\"",
+        speakerName: "Ibu Nadya",
+        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
+        speakerText: "\"Halo, selamat pagi! Selamat datang di kantor KS Group. Senang sekali bisa bertemu dengan jurnalis cilik berprestasi seperti Mishka. Ada yang bisa saya bantu?\"",
         prompt: "Sebagai pewawancara profesional, bagaimana kalimat pembuka santun yang akan Mishka sampaikan?",
         options: [
-          "A. \"Halo Bu, langsung saja ya, berapa miliar keuntungan usaha Ibu per bulan?\"",
-          "B. \"Selamat pagi Ibu Nadya. Terima kasih atas kesediaan waktu Ibu. Saya Mishka, izin mewawancarai Ibu tentang perjalanan merintis usaha susu kemasan ini.\"",
-          "C. \"Saya mau tanya-tanya, tolong jawab yang cepat ya Bu soalnya saya ada les senam.\"",
-          "D. \"Halo Bu, tolong ceritakan dari awal sampai akhir tanpa berhenti ya.\""
+          "A. \"Halo Bu, langsung saja ya, berapa miliar keuntungan usaha susu Ibu per bulan?\"",
+          "B. \"Selamat pagi Ibu Nadya. Terima kasih banyak atas kesediaan waktu Ibu. Saya Mishka, izin mewawancarai Ibu tentang perjalanan merintis usaha susu kemasan KS Group ini.\"",
+          "C. \"Saya mau tanya-tanya sebentar, tolong jawab yang cepat ya Bu soalnya nanti saya ada jadwal les senam.\"",
+          "D. \"Halo Bu, tolong ceritakan semuanya dari nol sampai sukses tanpa berhenti ya.\""
         ],
         correct: 1,
-        exp: "Etika Sempurna! Pilihan B mengucapkan salam hormat, berterima kasih atas waktu narasumber, dan memperkenalkan diri serta tujuan wawancara secara terstruktur!"
+        exp: "Etika Sempurna! Pilihan B mengucapkan salam hormat, berterima kasih atas waktu narasumber, dan memperkenalkan diri serta tujuan wawancara secara terstruktur dan santun!"
       },
       {
         situation: "SITUASI 2: MENGGALI IDE POKOK USAHA AWAL (KATA TANYA APA & KAPAN)",
-        speakerName: "Ibu Nadya (Pemilik KS Group)",
-        speakerText: "\"Sama-sama Mishka, dengan senang hati. Tentu, silakan tanyakan apa saja yang ingin kamu ketahui tentang usaha kami.\"",
-        prompt: "Mishka ingin mengetahui ide pokok produk yang dijual dan kapan usaha ini dimulai. Pertanyaan mana yang paling tepat?",
+        speakerName: "Ibu Nadya",
+        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
+        speakerText: "\"Sama-sama Mishka, dengan senang hati. Tentu, silakan tanyakan apa saja yang ingin kamu ketahui tentang sejarah dan produk usaha kami.\"",
+        prompt: "Mishka ingin mengetahui ide pokok produk yang dibuat dan kapan usaha ini dimulai. Pertanyaan mana yang paling tepat?",
         options: [
-          "A. \"Ibu suka minum susu rasa stroberi atau cokelat saat santai di rumah?\"",
-          "B. \"Kapan Ibu pertama kali memasarkan produk susu kemasan ini, dan apa yang menginspirasi Ibu memilih produk susu?\"",
-          "C. \"Kenapa Ibu tidak jualan baju saja daripada jualan susu yang cepat basi?\"",
-          "D. \"Apakah Ibu tahu siapa presiden Indonesia saat usaha ini berdiri?\""
+          "A. \"Ibu kalau lagi santai di rumah paling suka minum susu rasa stroberi atau cokelat?\"",
+          "B. \"Kapan Ibu pertama kali memasarkan produk susu kemasan ini, dan apa yang menginspirasi Ibu memilih produk susu murni segar?\"",
+          "C. \"Kenapa Ibu tidak jualan baju muslim saja daripada jualan susu yang cepat basi?\"",
+          "D. \"Apakah Ibu tahu siapa presiden Indonesia saat usaha susu KS Group ini pertama kali berdiri?\""
         ],
         correct: 1,
-        exp: "Tepat Sekali! Pertanyaan B menggunakan kata tanya KAPAN (waktu peristiwa) dan APA (menggali inspirasi ide pokok produk) secara relevan dan tajam!"
+        exp: "Tepat Sekali! Pertanyaan B menggunakan kata tanya KAPAN (waktu perintisan) dan APA (menggali inspirasi ide pokok produk) secara relevan, tajam, dan terarah!"
       },
       {
         situation: "SITUASI 3: MERESPONS IDIOM 'GULUNG TIKAR' & BANTING TULANG",
-        speakerName: "Ibu Nadya (Pemilik KS Group)",
-        speakerText: "\"Dulu di awal tahun 2019, usaha saya sempat gulung tikar karena modal habis dan mesin pendingin rusak. Tapi saya dan tim banting tulang siang malam untuk bangkit kembali.\"",
-        prompt: "Ibu Nadya menyebutkan idiom 'gulung tikar' dan 'banting tulang'. Bagaimana tanggapan dan pertanyaan lanjutan Mishka yang menunjukkan empati jurnalis?",
+        speakerName: "Ibu Nadya",
+        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
+        speakerText: "\"Dulu di awal tahun 2019, usaha saya sempat gulung tikar karena mesin pendingin rusak dan modal habis. Tapi saya dan tim banting tulang siang malam untuk bangkit kembali.\"",
+        prompt: "Ibu Nadya menyebut idiom 'gulung tikar' dan 'banting tulang'. Bagaimana tanggapan Mishka yang menunjukkan pemahaman makna kiasan serta empati jurnalis?",
         options: [
-          "A. \"Wah, kalau gulung tikar begitu kenapa tikarnya digulung Bu? Memangnya mau piknik?\"",
-          "B. \"Perjuangan yang luar biasa, Bu. Meskipun sempat bangkrut (gulung tikar), bagaimana cara Ibu dan tim mempertahankan mental baja saat harus bekerja sangat keras (banting tulang)?\"",
-          "C. \"Pasti Ibu sedih sekali ya, sudah lah Bu jangan diingat-ingat lagi masa lalu itu.\"",
-          "D. \"Kalau sudah bangkrut, kenapa Ibu tidak menyerah saja dan mencari pekerjaan lain?\""
+          "A. \"Wah, kalau gulung tikar begitu kenapa tikarnya digulung Bu? Memangnya mau piknik ke taman?\"",
+          "B. \"Perjuangan yang luar biasa, Bu. Meskipun sempat bangkrut (gulung tikar), bagaimana cara Ibu dan tim mempertahankan semangat saat harus bekerja sangat keras (banting tulang)?\"",
+          "C. \"Pasti Ibu sedih sekali ya, sudah lah Bu jangan diingat-ingat lagi masa lalu yang pahit itu.\"",
+          "D. \"Kalau sudah bangkrut, kenapa Ibu tidak menyerah saja dan mencari pekerjaan lain yang lebih mudah?\""
         ],
         correct: 1,
-        exp: "Luar Biasa Analitis! Mishka memahami makna kiasan gulung tikar (bangkrut) dan banting tulang (kerja keras), lalu menanyakan rahasia 'mental baja' narasumber secara suportif!"
+        exp: "Luar Biasa Analitis! Mishka memahami makna kiasan gulung tikar (bangkrut) dan banting tulang (bekerja keras), lalu menggali rahasia ketangguhan mental narasumber secara suportif!"
       },
       {
         situation: "SITUASI 4: MENGGALI RAHASIA MUTU & PRODUK NAIK DAUN (BAGAIMANA)",
-        speakerName: "Ibu Nadya (Pemilik KS Group)",
+        speakerName: "Ibu Nadya",
+        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
         speakerText: "\"Alhamdulillah, berkat kejujuran dan kerja keras, produk susu kemasan kami sekarang sedang naik daun dan menjadi buah bibir di kalangan anak sekolah serta atlet muda.\"",
-        prompt: "Mishka ingin menggali proses menjaga kualitas produk yang sedang 'naik daun' ini. Pertanyaan mana yang menggunakan kata tanya BAGAIMANA dengan tepat?",
+        prompt: "Mishka ingin menggali proses menjaga kualitas produk yang sedang 'naik daun' (terkenal). Pertanyaan mana yang menggunakan kata tanya BAGAIMANA dengan tepat?",
         options: [
-          "A. \"Siapa artis yang membuat susu Ibu menjadi terkenal di televisi?\"",
-          "B. \"Bagaimana langkah-langkah Ibu menjaga kemurnian dan kesegaran susu agar konsumen selalu percaya dengan produk KS Group?\"",
-          "C. \"Berapa botol susu yang sudah Ibu minum sendiri sejak kecil sampai sekarang?\"",
-          "D. \"Di mana saya bisa mendapatkan susu ini secara gratis untuk teman-teman saya?\""
+          "A. \"Siapa artis terkenal yang membuat susu Ibu menjadi viral di televisi?\"",
+          "B. \"Bagaimana langkah-langkah Ibu menjaga kemurnian dan kesegaran susu agar para konsumen selalu percaya dengan produk KS Group?\"",
+          "C. \"Berapa banyak botol susu yang sudah Ibu minum sendiri sejak kecil sampai sekarang?\"",
+          "D. \"Di mana saya dan teman-teman sekolah bisa mendapatkan susu ini secara gratis setiap hari?\""
         ],
         correct: 1,
-        exp: "Pertanyaan Investigatif Cerdas! Kata tanya BAGAIMANA menggali proses teknis menjaga higienitas dan mutu produk yang sedang populer (naik daun)!"
+        exp: "Pertanyaan Investigatif Cerdas! Kata tanya BAGAIMANA secara akurat menggali proses teknis menjaga higienitas dan mutu susu kemasan yang sedang populer (naik daun)!"
       },
       {
         situation: "SITUASI 5: PENUTUPAN ELEGAN & PESAN INSPIRATIF",
-        speakerName: "Ibu Nadya (Pemilik KS Group)",
-        speakerText: "\"Kami selalu menjaga suhu susu di bawah 4 derajat Celsius dan bekerja sama langsung dengan peternak sapi lokal yang jujur dan higienis.\"",
-        prompt: "Waktu wawancara sudah hampir habis. Bagaimana kalimat penutup dan permintaan pesan inspirasi yang paling profesional dari Mishka?",
+        speakerName: "Ibu Nadya",
+        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
+        speakerText: "\"Kami selalu menjaga suhu susu murni di bawah 4 derajat Celsius dan bermitra langsung dengan peternak sapi lokal yang jujur dan higienis. Itu rahasianya.\"",
+        prompt: "Waktu wawancara sudah hampir habis. Bagaimana kalimat penutup dan permintaan pesan inspirasi yang paling elegan dari Mishka?",
         options: [
-          "A. \"Ya sudah Bu, saya rasa sudah cukup, saya mau pamit pulang sekarang.\"",
-          "B. \"Terima kasih banyak atas inspirasinya, Ibu Nadya. Terakhir, apa pesan Ibu untuk anak-anak seperti kami agar bisa memiliki mental baja dalam meraih cita-cita?\"",
-          "C. \"Jangan lupa kirim contoh susunya ke rumah saya ya Bu, terima kasih banyak.\"",
-          "D. \"Bu, wawancaranya sudah selesai, boleh minta tanda tangan di kertas kosong?\""
+          "A. \"Ya sudah Bu, saya rasa sudah cukup, saya mau langsung pamit pulang sekarang ya.\"",
+          "B. \"Terima kasih banyak atas inspirasi dan ilmunya, Ibu Nadya. Terakhir, apa pesan Ibu untuk anak-anak seperti kami agar bisa memiliki mental pantang menyerah dalam meraih cita-cita?\"",
+          "C. \"Jangan lupa kirim sampel susu gratis sekotak ke rumah saya ya Bu, terima kasih banyak.\"",
+          "D. \"Bu, wawancaranya sudah beres, boleh minta tanda tangan di kertas kosong ini buat kenang-kenangan?\""
         ],
         correct: 1,
-        exp: "Penutupan Sempurna! Menunjukkan rasa terima kasih yang tulus, meminta pesan moral untuk generasi muda, dan mengakhiri sesi dengan penuh kehormatan!"
+        exp: "Penutupan Sempurna! Menunjukkan rasa terima kasih yang tulus atas ilmu narasumber, meminta pesan moral untuk generasi muda, dan mengakhiri sesi dengan penuh kehormatan!"
       }
     ];
 
@@ -652,7 +839,9 @@
       const data = interviewScenarios[idx];
       document.getElementById('level').innerText = idx + 1;
       document.getElementById('speaker-name').innerText = data.speakerName;
+      document.getElementById('speaker-badge').innerText = data.speakerBadge;
       document.getElementById('speaker-text').innerText = data.speakerText;
+      document.getElementById('speaker-avatar').src = data.speakerAvatar;
       document.getElementById('prompt-text').innerText = data.prompt;
 
       const fb = document.getElementById('feedback');
@@ -660,11 +849,11 @@
       fb.style.display = 'none';
       document.getElementById('btn-next').style.display = 'none';
 
-      // Play chime for speaker voice
+      // Play soft chime
       playResponseChime();
 
-      // Animate Interviewee Head & Arm (Speaking animation)
-      animateIntervieweeResponse();
+      // Trigger Ghibli character speaking animation
+      triggerSpeakingAnimation();
 
       const optContainer = document.getElementById('options');
       optContainer.innerHTML = '';
@@ -691,8 +880,8 @@
         fb.innerText = "🌟 " + data.exp;
         fb.className = "feedback-banner show-correct";
 
-        // Positive Nodding Animation
-        animateCharacterNod();
+        // Mishka happy nodding animation
+        triggerMishkaNod();
       } else {
         playWrong();
         buttons[choiceIdx].classList.add('wrong');
@@ -716,36 +905,30 @@
       }
     }
 
-    function animateIntervieweeResponse() {
-      const startTime = performance.now();
-      const dur = 1200;
-      function step(now) {
-        const p = (now - startTime) / dur;
-        if (p < 1.0) {
-          armN.rotation.x = Math.PI / 4 + Math.sin(p * Math.PI * 4) * 0.15;
-          headN.rotation.y = Math.sin(p * Math.PI * 2) * 0.1;
-          requestAnimationFrame(step);
-        } else {
-          armN.rotation.x = Math.PI / 4;
-          headN.rotation.y = 0;
-        }
-      }
-      requestAnimationFrame(step);
+    // Animation: Ibu Nadya gentle speaking motion
+    let isSpeaking = false;
+    let speakStartTime = 0;
+
+    function triggerSpeakingAnimation() {
+      isSpeaking = true;
+      speakStartTime = performance.now();
+      const pulse = document.getElementById('avatar-pulse');
+      if (pulse) pulse.style.display = 'block';
+
+      setTimeout(() => {
+        isSpeaking = false;
+        if (pulse) pulse.style.display = 'none';
+      }, 2500);
     }
 
-    function animateCharacterNod() {
-      const startTime = performance.now();
-      const dur = 800;
-      function nod(now) {
-        const p = (now - startTime) / dur;
-        if (p < 1.0) {
-          headM.rotation.x = Math.sin(p * Math.PI * 4) * 0.12;
-          requestAnimationFrame(nod);
-        } else {
-          headM.rotation.x = 0;
-        }
-      }
-      requestAnimationFrame(nod);
+    // Animation: Mishka nodding when successful
+    let isNodding = false;
+    let nodStartTime = 0;
+
+    function triggerMishkaNod() {
+      isNodding = true;
+      nodStartTime = performance.now();
+      setTimeout(() => { isNodding = false; }, 1200);
     }
 
     function showVictoryModal() {
@@ -755,7 +938,7 @@
     }
 
     // =========================================================================
-    // 5. RENDER LOOP
+    // 7. RENDER LOOP & SMOOTH INTERPOLATIONS
     // =========================================================================
     let clock = new THREE.Clock();
 
@@ -763,9 +946,45 @@
       requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // Gentle breathing idle animations
-      torsoM.position.y = 1.25 + Math.sin(time * 2) * 0.015;
-      torsoN.position.y = 1.3 + Math.sin(time * 2 + 1) * 0.015;
+      // Gentle Ghibli character breathing idle animations
+      mishkaStandee.position.y = 1.9 + Math.sin(time * 2.2) * 0.02;
+      nadyaStandee.position.y = 1.9 + Math.sin(time * 2.0 + 1.2) * 0.02;
+
+      // Speaking animation on Nadya (gentle tilt & head motion)
+      if (isSpeaking) {
+        const elapsed = (performance.now() - speakStartTime) / 1000;
+        nadyaStandee.rotation.z = Math.sin(elapsed * 6) * 0.035;
+        nadyaStandee.rotation.y = Math.sin(elapsed * 4) * 0.04;
+      } else {
+        nadyaStandee.rotation.z = 0;
+        nadyaStandee.rotation.y = 0;
+      }
+
+      // Nodding animation on Mishka
+      if (isNodding) {
+        const elapsed = (performance.now() - nodStartTime) / 1000;
+        mishkaStandee.rotation.x = Math.sin(elapsed * 10) * 0.06;
+      } else {
+        mishkaStandee.rotation.x = 0;
+      }
+
+      // Smooth Camera Transition toward preset targets
+      if (isTransitioningCam) {
+        camera.position.x += (targetCamPos.x - camera.position.x) * 0.05;
+        camera.position.y += (targetCamPos.y - camera.position.y) * 0.05;
+        camera.position.z += (targetCamPos.z - camera.position.z) * 0.05;
+
+        controls.target.x += (targetCamLook.x - controls.target.x) * 0.05;
+        controls.target.y += (targetCamLook.y - controls.target.y) * 0.05;
+        controls.target.z += (targetCamLook.z - controls.target.z) * 0.05;
+
+        const dist = Math.hypot(
+          targetCamPos.x - camera.position.x,
+          targetCamPos.y - camera.position.y,
+          targetCamPos.z - camera.position.z
+        );
+        if (dist < 0.05) isTransitioningCam = false;
+      }
 
       controls.update();
       renderer.render(scene, camera);
