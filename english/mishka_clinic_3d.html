@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Mishka's 3D Virtual Clinic: Symptoms & Rx — Grade 5 English</title>
+  <style>
+    :root {
+      --bg-dark: #042f2e;
+      --card-bg: rgba(6, 78, 59, 0.96);
+      --card-border: #34d399;
+      --neon-emerald: #34d399;
+      --neon-gold: #fbbf24;
+      --neon-cyan: #38bdf8;
+      --neon-red: #f87171;
+      --text-main: #f0fdf4;
+      --text-muted: #a7f3d0;
+      --ghibli-cream: #fef3c7;
+      --pill-bg: rgba(6, 95, 70, 0.85);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+    
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-dark);
+      color: var(--text-main);
+    }
+
+    #app-layout {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 3D Stage Viewport (Left Side) */
+    #clinic-viewport {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s ease;
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Floating Toolbar */
+    .clinic-toolbar {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      pointer-events: auto;
+    }
+    .tool-btn {
+      background: rgba(6, 78, 59, 0.88);
+      border: 1px solid #059669;
+      color: #d1fae5;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .tool-btn:hover {
+      background: #047857;
+      border-color: #34d399;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .tool-btn.active {
+      background: linear-gradient(135deg, #059669, #34d399);
+      color: #022c22;
+      border-color: #6ee7b7;
+      font-weight: 800;
+      box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+    }
+
+    /* 3D Camera Controls Hint */
+    .viewport-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      z-index: 10;
+      background: rgba(6, 78, 59, 0.82);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 11.5px;
+      color: #a7f3d0;
+      backdrop-filter: blur(4px);
+      pointer-events: none;
+    }
+
+    /* Right Side Consultation Console */
+    #clinic-console {
+      width: 480px;
+      height: 100%;
+      background: var(--card-bg);
+      border-left: 2px solid rgba(52, 211, 153, 0.35);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      z-index: 30;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s ease;
+      position: relative;
+    }
+    #clinic-console.collapsed {
+      transform: translateX(100%);
+      position: absolute;
+      right: 0;
+    }
+
+    /* Console Header */
+    .console-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(52, 211, 153, 0.25);
+      background: rgba(4, 47, 46, 0.95);
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .clinic-badge {
+      background: linear-gradient(135deg, #059669, #34d399);
+      color: #022c22;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .case-indicator {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--neon-gold);
+    }
+    .meters-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .meter-box {
+      background: rgba(2, 44, 34, 0.7);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      border-radius: 10px;
+      padding: 6px 10px;
+    }
+    .meter-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .progress-bar {
+      height: 6px;
+      background: #134e4a;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #34d399);
+      width: 25%;
+      transition: width 0.4s ease;
+    }
+    .fill-gold {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    /* Console Body (Scrollable) */
+    .console-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Patient Card */
+    .patient-vitals-card {
+      background: rgba(2, 44, 34, 0.8);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .patient-avatar-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-emerald);
+      overflow: hidden;
+      background: #064e3b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .patient-info h3 {
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: 800;
+    }
+    .patient-info p {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Dialogue Bubble */
+    .dialogue-card {
+      background: rgba(2, 44, 34, 0.7);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .bubble-speaker {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--neon-gold);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bubble-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #f0fdf4;
+      font-style: italic;
+    }
+
+    /* Interactive Challenge Box */
+    .challenge-box {
+      background: rgba(4, 47, 46, 0.9);
+      border: 2px solid rgba(52, 211, 153, 0.5);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .challenge-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--neon-emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .challenge-question {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    /* Multiple Choices */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .option-btn {
+      background: rgba(2, 44, 34, 0.85);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #f0fdf4;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 12.5px;
+      line-height: 1.4;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .option-btn:hover {
+      background: rgba(5, 150, 105, 0.3);
+      border-color: var(--neon-emerald);
+      transform: translateX(4px);
+    }
+    .option-key {
+      background: #047857;
+      color: white;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.35) !important;
+      border-color: #34d399 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+    }
+    .option-btn.wrong {
+      background: rgba(239, 68, 68, 0.3) !important;
+      border-color: #f87171 !important;
+      color: #fecaca !important;
+    }
+
+    /* Feedback Banner */
+    .feedback-banner {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      line-height: 1.4;
+      margin-top: 10px;
+      animation: popIn 0.3s ease;
+    }
+    .feedback-banner.correct {
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid #34d399;
+      color: #a7f3d0;
+    }
+    .feedback-banner.wrong {
+      background: rgba(239, 68, 68, 0.25);
+      border: 1px solid #f87171;
+      color: #fca5a5;
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .btn-next-step {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #059669, #34d399);
+      color: #022c22;
+      border: none;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+      transition: transform 0.2s;
+    }
+    .btn-next-step:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Final Victory Modal */
+    #victory-modal {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 44, 34, 0.92);
+      backdrop-filter: blur(10px);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .victory-card {
+      background: linear-gradient(135deg, #064e3b, #042f2e);
+      border: 2px solid #34d399;
+      box-shadow: 0 0 40px rgba(52, 211, 153, 0.5);
+      border-radius: 24px;
+      max-width: 520px;
+      width: 100%;
+      padding: 32px 28px;
+      text-align: center;
+      animation: popIn 0.4s ease;
+    }
+    .badge-icon {
+      font-size: 56px;
+      margin-bottom: 12px;
+      animation: float 2s infinite ease-in-out;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .victory-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .victory-subtitle {
+      font-size: 13px;
+      color: var(--neon-emerald);
+      margin-bottom: 16px;
+    }
+    .score-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: rgba(2, 44, 34, 0.6);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+    .summary-item {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .summary-val {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--neon-gold);
+      margin-top: 2px;
+    }
+    .btn-restart {
+      background: linear-gradient(135deg, #059669, #34d399);
+      color: #022c22;
+      border: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      padding: 12px 24px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+    }
+    .btn-portal {
+      display: inline-block;
+      margin-top: 10px;
+      color: #a7f3d0;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .btn-portal:hover { text-decoration: underline; color: #ffffff; }
+
+    @media (max-width: 900px) {
+      #app-layout { flex-direction: column; }
+      #clinic-viewport { height: 48%; }
+      #clinic-console { width: 100%; height: 52%; border-left: none; border-top: 2px solid var(--neon-emerald); }
+    }
+  </style>
+
+  <!-- Load Three.js and OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+  <div id="app-layout">
+    <!-- LEFT: 3D CLINIC VIEWPORT -->
+    <div id="clinic-viewport">
+      <div id="canvas-container"></div>
+
+      <!-- Floating Toolbar -->
+      <div class="clinic-toolbar">
+        <button class="tool-btn active" id="btn-cam-all" onclick="setCameraView('all')">🏥 Pemandangan Klinik</button>
+        <button class="tool-btn" id="btn-cam-mishka" onclick="setCameraView('mishka')">👩‍⚕️ Dr. Mishka</button>
+        <button class="tool-btn" id="btn-cam-patient" onclick="setCameraView('patient')">🤒 Pasien Periksa</button>
+        <button class="tool-btn" id="btn-cam-desk" onclick="setCameraView('desk')">📋 Meja Resep & Vitals</button>
+        <button class="tool-btn" id="btn-toggle-console" onclick="toggleConsole()">👁️ Layar Penuh 3D</button>
+      </div>
+
+      <div class="viewport-hint">
+        <span>🖱️ Putar 3D: Klik &amp; geser mouse | Zoom: Scroll roda mouse</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: CONSULTATION & PRESCRIPTION CONSOLE -->
+    <div id="clinic-console">
+      <div class="console-header">
+        <div class="header-top">
+          <span class="clinic-badge">Dr. Mishka, M.D. • Grade 5</span>
+          <span class="case-indicator" id="case-counter">Patient Case 1 of 4</span>
+        </div>
+        <div class="meters-row">
+          <div class="meter-box">
+            <div class="meter-label">
+              <span>Clinic Reputation</span>
+              <span id="rep-val">500 Pts</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-gold" id="rep-fill" style="width: 25%;"></div>
+            </div>
+          </div>
+          <div class="meter-box">
+            <div class="meter-label">
+              <span>Patient Recovery</span>
+              <span id="recovery-val">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="recovery-fill" style="width: 10%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="console-body">
+        <!-- Patient Vitals Card -->
+        <div class="patient-vitals-card">
+          <div class="patient-avatar-box" id="patient-icon">👦</div>
+          <div class="patient-info">
+            <h3 id="patient-name">Bima (10 Years Old)</h3>
+            <p id="patient-sub">Primary Complaint: Sudden acute stomach pain</p>
+          </div>
+        </div>
+
+        <!-- Dialogue Box -->
+        <div class="dialogue-card">
+          <div class="bubble-speaker">
+            <span>🗣️</span> <span id="dialogue-speaker">Patient Bima:</span>
+          </div>
+          <div class="bubble-text" id="dialogue-text">
+            "Good morning Doctor Mishka... Ouch! My tummy hurts so bad. I ate 3 packets of extra hot chili chips and drank cold soda yesterday."
+          </div>
+        </div>
+
+        <!-- Challenge Box -->
+        <div class="challenge-box">
+          <div class="challenge-title" id="phase-badge">🔍 Phase 1: Symptom Diagnosis</div>
+          <div class="challenge-question" id="challenge-q">
+            Based on Bima's complaint, what is his health problem?
+          </div>
+
+          <div class="options-grid" id="options-container">
+            <!-- Dynamic Buttons generated by JS -->
+          </div>
+
+          <div class="feedback-banner" id="feedback-box"></div>
+          <button class="btn-next-step" id="btn-next" onclick="nextStep()">Lanjutkan ke Langkah Berikutnya ❯</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VICTORY MODAL -->
+  <div id="victory-modal">
+    <div class="victory-card">
+      <div class="badge-icon">🏆🩺</div>
+      <h2 class="victory-title">EXCELLENT DIAGNOSIS, CHIEF DOCTOR!</h2>
+      <p class="victory-subtitle">Dr. Mishka has successfully treated all 4 patients with high empathy and accurate English medical advice!</p>
+
+      <div class="score-summary-grid">
+        <div class="summary-item">
+          Total Reputation
+          <div class="summary-val" id="final-rep">2000 Pts</div>
+        </div>
+        <div class="summary-item">
+          Average Recovery
+          <div class="summary-val">100% Restored</div>
+        </div>
+        <div class="summary-item">
+          Medical Grammar
+          <div class="summary-val" style="color:#34d399;">Should &amp; Shouldn't</div>
+        </div>
+        <div class="summary-item">
+          Clinical Seal
+          <div class="summary-val" style="color:#38bdf8;">Pediatric Specialist</div>
+        </div>
+      </div>
+
+      <button class="btn-restart" onclick="restartClinic()">Periksa Pasien Baru 🔄</button><br>
+      <a class="btn-portal" href="../index.html">🏠 Kembali ke Portal PKBM</a>
+    </div>
+  </div>
+
+  <!-- Audio Context Generator for Sound FX -->
+  <script>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSfx(type) {
+      if (!audioCtx) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const t = audioCtx.currentTime;
+
+        if (type === 'heartbeat') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(65, t);
+          osc.frequency.exponentialRampToValueAtTime(40, t + 0.12);
+          gain.gain.setValueAtTime(0.4, t);
+          gain.gain.linearRampToValueAtTime(0.01, t + 0.14);
+          osc.start(t);
+          osc.stop(t + 0.15);
+        } else if (type === 'correct') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(523.25, t); // C5
+          osc.frequency.setValueAtTime(659.25, t + 0.1); // E5
+          osc.frequency.setValueAtTime(783.99, t + 0.2); // G5
+          osc.frequency.setValueAtTime(1046.50, t + 0.3); // C6
+          gain.gain.setValueAtTime(0.25, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.55);
+          osc.start(t);
+          osc.stop(t + 0.55);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(180, t);
+          osc.frequency.setValueAtTime(130, t + 0.15);
+          gain.gain.setValueAtTime(0.2, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.35);
+          osc.start(t);
+          osc.stop(t + 0.35);
+        } else if (type === 'heal') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, t);
+          osc.frequency.exponentialRampToValueAtTime(880, t + 0.4);
+          gain.gain.setValueAtTime(0.2, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.45);
+          osc.start(t);
+          osc.stop(t + 0.45);
+        }
+      } catch (e) { console.log(e); }
+    }
+  </script>
+
+  <!-- Clinical Case Data (Grade 5 Unit 4: I've Got a Stomachache) -->
+  <script>
+    const CLINIC_CASES = [
+      {
+        id: 1,
+        patientName: "Bima (10 Years Old)",
+        icon: "👦",
+        sub: "Primary Complaint: Sudden acute stomachache",
+        dialogue: "\"Good morning Doctor Mishka... Ouch! My tummy feels like it's twisting inside! Yesterday I ate 3 packets of super spicy sambal chips and chugged iced soda while playing games.\"",
+        phase1: {
+          q: "What is Bima's health problem?",
+          options: [
+            { text: "He has got a stomachache (Sakit perut akibat makanan pedas).", correct: true, key: "A" },
+            { text: "He has got an earache (Sakit telinga kemasukan air).", correct: false, key: "B" },
+            { text: "He has got a broken arm (Patah tulang lengan).", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🎉 Correct! Bima has got a severe STOMACHACHE from eating too much spicy food.",
+          feedbackWrong: "⚠️ Perhatikan keluhan Bima: rasa sakit berpusat di perut (tummy), bukan telinga atau lengan."
+        },
+        phase2: {
+          q: "Formulate Dr. Mishka's medical advice: What SHOULD Bima do to recover?",
+          options: [
+            { text: "He SHOULD drink warm water, eat soft porridge, and rest.", correct: true, key: "A" },
+            { text: "He SHOULD drink more cold spicy soda to clean his tummy.", correct: false, key: "B" },
+            { text: "He SHOULD run a marathon immediately.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🌟 Excellent prescription! Warm water and light food will soothe his stomach lining.",
+          feedbackWrong: "⚠️ Makanan pedas dan es justru memperparah asam lambung Bima."
+        },
+        phase3: {
+          q: "Important Health Warning: What SHOULD NOT Bima do right now?",
+          options: [
+            { text: "He SHOULD NOT eat extra spicy chili snacks or drink acidic soda.", correct: true, key: "A" },
+            { text: "He SHOULD NOT take a rest or sleep at night.", correct: false, key: "B" },
+            { text: "He SHOULD NOT drink clean water.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🩺 Perfect Medical Advice! Pantangan utama pasien sakit perut adalah cabai dan minuman bersoda.",
+          feedbackWrong: "⚠️ Pasien yang sakit perut tetap wajib tidur cukup dan minum air putih."
+        },
+        cureReaction: "Bima drinks the warm chamomile remedy, rubs his tummy gently, and his stomach pain completely subsides! Thank you, Dr. Mishka!",
+        symptomMeshType: "stomach"
+      },
+      {
+        id: 2,
+        patientName: "Siti (11 Years Old)",
+        icon: "👧",
+        sub: "Primary Complaint: Throbbing lower right jaw pain",
+        dialogue: "\"Hello Doctor Mishka... Oh, my lower jaw is throbbing with pain! I ate lots of sticky caramel candies at my friend's birthday party and fell asleep without brushing my teeth.\"",
+        phase1: {
+          q: "What is Siti's health problem?",
+          options: [
+            { text: "She has got a toothache (Sakit gigi berdenyut akibat permen manis).", correct: true, key: "A" },
+            { text: "She has got a headache (Sakit kepala tegang).", correct: false, key: "B" },
+            { text: "She has got a sore eye (Mata merah iritasi).", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🎉 Spot on! Siti has got a TOOTHACHE caused by sticky candy residue.",
+          feedbackWrong: "⚠️ Siti mengeluhkan rasa ngilu berdenyut di rahang bawah (jaw), yaitu sakit gigi (toothache)."
+        },
+        phase2: {
+          q: "What SHOULD Siti do to treat her toothache?",
+          options: [
+            { text: "She SHOULD rinse with warm saltwater and visit a dentist (Dokter Gigi).", correct: true, key: "A" },
+            { text: "She SHOULD bite hard ice cubes directly with her sore tooth.", correct: false, key: "B" },
+            { text: "She SHOULD eat sticky chocolate to coat the tooth cavity.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🌟 Brilian! Berkumur air garam hangat dan mengunjungi dokter gigi adalah langkah medis paling tepat.",
+          feedbackWrong: "⚠️ Menggigit es atau memakan cokelat justru akan melukai saraf gigi yang sedang radang."
+        },
+        phase3: {
+          q: "Dental Hygiene SOP: What SHOULD NOT Siti do?",
+          options: [
+            { text: "She SHOULD NOT chew hard, sugary candies or skip brushing her teeth.", correct: true, key: "A" },
+            { text: "She SHOULD NOT smile at her friends.", correct: false, key: "B" },
+            { text: "She SHOULD NOT use toothpaste.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🩺 Superb Advice! Menghindari permen keras dan rutin sikat gigi 2x sehari mencegah gigi berlubang.",
+          feedbackWrong: "⚠️ Menjaga kebersihan gigi adalah kunci utama pencegahan."
+        },
+        cureReaction: "Siti rinses her mouth, the throbbing nerve calms down, and she promises to brush her teeth every night!",
+        symptomMeshType: "tooth"
+      },
+      {
+        id: 3,
+        patientName: "Kevin (10 Years Old)",
+        icon: "🧣",
+        sub: "Primary Complaint: Painful swallowing & body fever (38.8°C)",
+        dialogue: "\"Cough, cough... Doctor Mishka, my throat feels like it is on fire when I swallow water. My forehead feels burning hot, and my body is shivering under my jacket.\"",
+        phase1: {
+          q: "What are Kevin's medical symptoms?",
+          options: [
+            { text: "He has got a sore throat and fever (Radang tenggorokan & demam tinggi).", correct: true, key: "A" },
+            { text: "He has got a twisted knee (Lutut terkilir saat bermain basket).", correct: false, key: "B" },
+            { text: "He has got a toothache (Sakit gigi taring).", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🎉 Precise diagnosis! Kevin has got a SORE THROAT and high FEVER.",
+          feedbackWrong: "⚠️ Gejala Kevin adalah tenggorokan sakit menelan (throat) dan dahi panas menggigil (fever)."
+        },
+        phase2: {
+          q: "What medical advice SHOULD Dr. Mishka give to Kevin?",
+          options: [
+            { text: "He SHOULD wear warm clothes, rest in bed, and drink honey lemon tea.", correct: true, key: "A" },
+            { text: "He SHOULD swim in a cold outdoor pool for 2 hours.", correct: false, key: "B" },
+            { text: "He SHOULD scream as loud as possible to clear his throat.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🌟 Resep Medis Mantap! Madu lemon hangat melegakan pita suara dan istirahat menurunkan panas tubuh.",
+          feedbackWrong: "⚠️ Berenang air dingin atau berteriak kencang akan memperparah radang tenggorokan Kevin."
+        },
+        phase3: {
+          q: "Recovery Protocol: What SHOULD NOT Kevin do until he is fully healed?",
+          options: [
+            { text: "He SHOULD NOT drink iced beverages or stay up late at night.", correct: true, key: "A" },
+            { text: "He SHOULD NOT take a temperature check with thermometer.", correct: false, key: "B" },
+            { text: "He SHOULD NOT eat warm nutritious chicken soup.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🩺 Outstanding Medical SOP! Minuman dingin dan kurang tidur akan menekan sistem imun tubuh.",
+          feedbackWrong: "⚠️ Sup ayam hangat justru sangat bergizi untuk mempercepat pemulihan Kevin."
+        },
+        cureReaction: "Kevin sips the soothing honey tea, puts on a soft blanket, and his fever cools down safely!",
+        symptomMeshType: "throat"
+      },
+      {
+        id: 4,
+        patientName: "Nia (11 Years Old - Gymnast)",
+        icon: "🤸‍♀️",
+        sub: "Primary Complaint: Swollen right ankle & severe muscle fatigue",
+        dialogue: "\"Hello Coach Doctor Mishka! During my beam dismount today, I landed slightly off balance on the landing mat. My right ankle is swollen and throbbing, and my calf muscles are so tired!\"",
+        phase1: {
+          q: "What injury does Gymnast Nia have?",
+          options: [
+            { text: "She has got a sprained ankle and muscle fatigue (Keseleo pergelangan kaki & lelah otot).", correct: true, key: "A" },
+            { text: "She has got a stomachache (Sakit perut karena lapar).", correct: false, key: "B" },
+            { text: "She has got an earache (Sakit telinga akibat suara bising).", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🎉 Spot on Sports Medic! Nia has got a SPRAINED ANKLE and MUSCLE FATIGUE from her landing.",
+          feedbackWrong: "⚠️ Ini adalah cedera fisik olahraga senam artistik: pergelangan kaki terkilir (sprained ankle)."
+        },
+        phase2: {
+          q: "Sports Medicine (R.I.C.E Principle): What SHOULD Nia do?",
+          options: [
+            { text: "She SHOULD compress with an ice pack, elevate her leg, and rest.", correct: true, key: "A" },
+            { text: "She SHOULD immediately jump 50 times on a trampoline.", correct: false, key: "B" },
+            { text: "She SHOULD put boiling hot water directly on the swollen joint.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🌟 Pro Athlete Care! Kompres es (Ice) dan meninggikan kaki (Elevate) meredakan peradangan ligamen.",
+          feedbackWrong: "⚠️ Melompat atau memberi air panas pada cedera baru justru memperparah pembengkakan jaringan."
+        },
+        phase3: {
+          q: "Athlete Recovery Protocol: What SHOULD NOT Nia do?",
+          options: [
+            { text: "She SHOULD NOT run, jump, or bear heavy weight on her injured foot.", correct: true, key: "A" },
+            { text: "She SHOULD NOT drink water to stay hydrated.", correct: false, key: "B" },
+            { text: "She SHOULD NOT do gentle upper-body breathing exercises.", correct: false, key: "C" }
+          ],
+          feedbackCorrect: "🩺 Flawless Advice! Mengistirahatkan sendi dari beban berat menjamin pemulihan otot senam secara tuntas.",
+          feedbackWrong: "⚠️ Atlet yang cedera kaki tetap harus cukup hidrasi dan boleh melatih pernapasan atas."
+        },
+        cureReaction: "Nia applies the cooling wrap, rests her foot elevated on the clinic cushion, and gives Dr. Mishka a big high-five!",
+        symptomMeshType: "sprain"
+      }
+    ];
+
+    let currentCaseIdx = 0;
+    let currentPhase = 1;
+    let reputationScore = 500;
+    let totalCorrectInCase = 0;
+
+    function initCase() {
+      const c = CLINIC_CASES[currentCaseIdx];
+      document.getElementById('case-counter').textContent = `Patient Case ${currentCaseIdx + 1} of ${CLINIC_CASES.length}`;
+      document.getElementById('patient-icon').textContent = c.icon;
+      document.getElementById('patient-name').textContent = c.patientName;
+      document.getElementById('patient-sub').textContent = c.sub;
+      document.getElementById('dialogue-speaker').textContent = `Patient ${c.patientName.split(' ')[0]}:`;
+      document.getElementById('dialogue-text').textContent = c.dialogue;
+      document.getElementById('recovery-val').textContent = '0%';
+      document.getElementById('recovery-fill').style.width = '5%';
+
+      currentPhase = 1;
+      totalCorrectInCase = 0;
+      loadPhaseQuestion();
+      updatePatient3DModel(c.symptomMeshType);
+    }
+
+    function loadPhaseQuestion() {
+      const c = CLINIC_CASES[currentCaseIdx];
+      const phaseData = currentPhase === 1 ? c.phase1 : (currentPhase === 2 ? c.phase2 : c.phase3);
+      
+      const badgeTitles = [
+        "🔍 Phase 1: Symptom Diagnosis",
+        "💡 Phase 2: Prescribe Action (SHOULD)",
+        "⛔ Phase 3: Health Warning (SHOULD NOT)"
+      ];
+      document.getElementById('phase-badge').textContent = badgeTitles[currentPhase - 1];
+      document.getElementById('challenge-q').textContent = phaseData.q;
+
+      const optsCont = document.getElementById('options-container');
+      optsCont.innerHTML = '';
+      document.getElementById('feedback-box').style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+
+      phaseData.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="option-key">${opt.key}</span> <span>${opt.text}</span>`;
+        btn.onclick = () => selectOption(btn, opt, phaseData);
+        optsCont.appendChild(btn);
+      });
+    }
+
+    function selectOption(btn, opt, phaseData) {
+      const allBtns = document.querySelectorAll('.option-btn');
+      allBtns.forEach(b => b.disabled = true);
+
+      const fBox = document.getElementById('feedback-box');
+      const nextBtn = document.getElementById('btn-next');
+
+      if (opt.correct) {
+        btn.classList.add('correct');
+        fBox.className = 'feedback-banner correct';
+        fBox.innerHTML = `<b>EXCELLENT!</b> ${phaseData.feedbackCorrect}`;
+        playSfx('correct');
+        reputationScore += 125;
+        totalCorrectInCase++;
+      } else {
+        btn.classList.add('wrong');
+        fBox.className = 'feedback-banner wrong';
+        fBox.innerHTML = `<b>NOT QUITE RIGHT!</b> ${phaseData.feedbackWrong}`;
+        playSfx('wrong');
+        reputationScore = Math.max(100, reputationScore - 30);
+      }
+      fBox.style.display = 'block';
+
+      // Update Reputation UI
+      document.getElementById('rep-val').textContent = `${reputationScore} Pts`;
+      const repPercent = Math.min(100, Math.floor((reputationScore / 2000) * 100));
+      document.getElementById('rep-fill').style.width = `${repPercent}%`;
+
+      // Update Recovery UI
+      const recPercent = Math.floor((currentPhase / 3) * 100);
+      document.getElementById('recovery-val').textContent = `${recPercent}%`;
+      document.getElementById('recovery-fill').style.width = `${recPercent}%`;
+
+      // Show next button
+      if (currentPhase < 3) {
+        nextBtn.textContent = `Lanjut ke Fase ${currentPhase + 1} ❯`;
+      } else {
+        nextBtn.textContent = currentCaseIdx < CLINIC_CASES.length - 1 ? "Selesaikan Kasus & Panggil Pasien Berikutnya ❯" : "Lihat Penghargaan Kepala Klinik 🏆";
+      }
+      nextBtn.style.display = 'block';
+
+      // Animate 3D Patient reaction
+      if (currentPhase === 3 && opt.correct) {
+        triggerPatientHealing3D();
+      }
+    }
+
+    function nextStep() {
+      if (currentPhase < 3) {
+        currentPhase++;
+        loadPhaseQuestion();
+        playSfx('heartbeat');
+      } else {
+        if (currentCaseIdx < CLINIC_CASES.length - 1) {
+          currentCaseIdx++;
+          initCase();
+          playSfx('heal');
+          setCameraView('patient');
+        } else {
+          showVictoryModal();
+        }
+      }
+    }
+
+    function showVictoryModal() {
+      document.getElementById('final-rep').textContent = `${reputationScore} Pts`;
+      document.getElementById('victory-modal').style.display = 'flex';
+      playSfx('correct');
+    }
+
+    function restartClinic() {
+      document.getElementById('victory-modal').style.display = 'none';
+      currentCaseIdx = 0;
+      reputationScore = 500;
+      initCase();
+      setCameraView('all');
+    }
+
+    function toggleConsole() {
+      const c = document.getElementById('clinic-console');
+      c.classList.toggle('collapsed');
+      setTimeout(() => {
+        if (renderer && camera) {
+          const vp = document.getElementById('clinic-viewport');
+          camera.aspect = vp.clientWidth / vp.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(vp.clientWidth, vp.clientHeight);
+        }
+      }, 360);
+    }
+  </script>
+
+  <!-- THREE.JS 3D CLINIC ENGINE -->
+  <script>
+    let scene, camera, renderer, controls;
+    let drMishkaGroup, patientGroup, examBedGroup, stethoscopeMesh, heartAuraMesh;
+    let patientTorso, patientHead, patientArmL, patientArmR;
+    let particleGroup;
+
+    function init3D() {
+      const container = document.getElementById('canvas-container');
+      const vp = document.getElementById('clinic-viewport');
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x064e3b);
+      scene.fog = new THREE.FogExp2(0x064e3b, 0.025);
+
+      camera = new THREE.PerspectiveCamera(45, vp.clientWidth / vp.clientHeight, 0.1, 100);
+      camera.position.set(0, 4.2, 7.8);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(vp.clientWidth, vp.clientHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2.05;
+      controls.minDistance = 3;
+      controls.maxDistance = 14;
+      controls.target.set(0, 1.4, 0);
+
+      // LIGHTING: Cozy Warm Clinical Ghibli Lighting
+      const ambientLight = new THREE.AmbientLight(0xfffbeb, 0.7);
+      scene.add(ambientLight);
+
+      const hemiLight = new THREE.HemisphereLight(0xd1fae5, 0x064e3b, 0.6);
+      scene.add(hemiLight);
+
+      const mainSpot = new THREE.SpotLight(0xffedd5, 1.3);
+      mainSpot.position.set(3, 7, 5);
+      mainSpot.angle = Math.PI / 4;
+      mainSpot.penumbra = 0.4;
+      mainSpot.castShadow = true;
+      mainSpot.shadow.mapSize.width = 1024;
+      mainSpot.shadow.mapSize.height = 1024;
+      scene.add(mainSpot);
+
+      const deskLamp = new THREE.PointLight(0x34d399, 1.1, 8);
+      deskLamp.position.set(-1.2, 2.2, 0.5);
+      scene.add(deskLamp);
+
+      // BUILD SCENE OBJECTS
+      buildClinicRoom();
+      buildDoctorMishka();
+      buildPatientFigure();
+      buildExaminationBed();
+      buildAnatomyPoster();
+      buildHealingParticles();
+
+      window.addEventListener('resize', onWindowResize);
+      initCase();
+      animate();
+    }
+
+    // 1. Cozy Ghibli Clinic Room (Floor, Walls, Botanical Plant)
+    function buildClinicRoom() {
+      // Warm Cedar Wood Floor
+      const floorGeo = new THREE.PlaneGeometry(16, 16);
+      const floorMat = new THREE.MeshStandardMaterial({
+        color: 0x27272a,
+        roughness: 0.7,
+        metalness: 0.1
+      });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.receiveShadow = true;
+      scene.add(floor);
+
+      // Back Wall (Mint Cream Aesthetic)
+      const wallMat = new THREE.MeshStandardMaterial({ color: 0x0f3e36, roughness: 0.85 });
+      const backWall = new THREE.Mesh(new THREE.PlaneGeometry(16, 8), wallMat);
+      backWall.position.set(0, 4, -4);
+      backWall.receiveShadow = true;
+      scene.add(backWall);
+
+      // Left Wall
+      const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(16, 8), wallMat);
+      leftWall.position.set(-8, 4, 0);
+      leftWall.rotation.y = Math.PI / 2;
+      scene.add(leftWall);
+
+      // Doctor's Consultation Desk
+      const deskGroup = new THREE.Group();
+      const deskTopMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.5 });
+      const deskTop = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.1, 1.3), deskTopMat);
+      deskTop.position.set(-0.6, 1.4, 0.3);
+      deskTop.castShadow = true;
+      deskTop.receiveShadow = true;
+      deskGroup.add(deskTop);
+
+      // Desk Legs
+      const legMat = new THREE.MeshStandardMaterial({ color: 0x78350f });
+      const legPositions = [
+        [-1.7, 0.7, -0.2],
+        [0.5, 0.7, -0.2],
+        [-1.7, 0.7, 0.8],
+        [0.5, 0.7, 0.8]
+      ];
+      legPositions.forEach(p => {
+        const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.4), legMat);
+        leg.position.set(p[0], p[1], p[2]);
+        leg.castShadow = true;
+        deskGroup.add(leg);
+      });
+
+      // Desk Laptop / Rx Pad
+      const rxPad = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.02, 0.5), new THREE.MeshStandardMaterial({ color: 0xfef08a }));
+      rxPad.position.set(-0.4, 1.46, 0.4);
+      deskGroup.add(rxPad);
+
+      // Little Stethoscope on Desk
+      const stethMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.6 });
+      const steth = new THREE.Mesh(new THREE.TorusGeometry(0.12, 0.025, 8, 20), stethMat);
+      steth.rotation.x = Math.PI / 2;
+      steth.position.set(-0.9, 1.46, 0.45);
+      deskGroup.add(steth);
+
+      // Potted Plant (Ficus / Monstera)
+      const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.22, 0.6, 16), new THREE.MeshStandardMaterial({ color: 0xd97706 }));
+      pot.position.set(-3.5, 0.3, -3.2);
+      scene.add(pot);
+      const leafMat = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.4 });
+      for (let i = 0; i < 6; i++) {
+        const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.35, 8, 8), leafMat);
+        leaf.scale.set(1.4, 0.2, 0.9);
+        leaf.rotation.set(0.3 * i, 0.7 * i, 0.4);
+        leaf.position.set(-3.5 + Math.sin(i) * 0.2, 0.7 + i * 0.1, -3.2 + Math.cos(i) * 0.2);
+        scene.add(leaf);
+      }
+
+      scene.add(deskGroup);
+    }
+
+    // 2. 3D Dr. Mishka (Chief Pediatrician)
+    function buildDoctorMishka() {
+      drMishkaGroup = new THREE.Group();
+      drMishkaGroup.position.set(-0.6, 0, -0.4); // Behind consultation desk
+
+      const skinMat = new THREE.MeshStandardMaterial({ color: 0xfde047, roughness: 0.6 });
+      const coatMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 }); // White Doctor Coat
+      const emeraldDressMat = new THREE.MeshStandardMaterial({ color: 0x059669 });
+      const hairMat = new THREE.MeshStandardMaterial({ color: 0x374151 });
+
+      // Torso / Doctor Coat
+      const coat = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.28, 0.75, 16), coatMat);
+      coat.position.y = 1.6;
+      coat.castShadow = true;
+      drMishkaGroup.add(coat);
+
+      // Emerald Inner Dress Collar
+      const innerCollar = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.2, 0.2, 12), emeraldDressMat);
+      innerCollar.position.y = 1.95;
+      drMishkaGroup.add(innerCollar);
+
+      // Stethoscope around neck
+      const stethNeck = new THREE.Mesh(new THREE.TorusGeometry(0.18, 0.03, 8, 16, Math.PI), new THREE.MeshStandardMaterial({ color: 0x0284c7 }));
+      stethNeck.rotation.x = Math.PI / 2.4;
+      stethNeck.position.set(0, 1.92, 0.04);
+      drMishkaGroup.add(stethNeck);
+
+      // Head
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 18), skinMat);
+      head.position.y = 2.22;
+      head.castShadow = true;
+      drMishkaGroup.add(head);
+
+      // Hair (Ponytail & Bangs)
+      const hairBangs = new THREE.Mesh(new THREE.SphereGeometry(0.26, 16, 16), hairMat);
+      hairBangs.position.set(0, 2.26, -0.04);
+      drMishkaGroup.add(hairBangs);
+      const ponytail = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.12, 0.45, 12), hairMat);
+      ponytail.rotation.x = -0.5;
+      ponytail.position.set(0, 2.15, -0.28);
+      drMishkaGroup.add(ponytail);
+
+      // Doctor Arms (Gentle resting on desk)
+      const armMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc });
+      const lArm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.05, 0.45), armMat);
+      lArm.rotation.set(0.6, 0, 0.4);
+      lArm.position.set(-0.32, 1.65, 0.25);
+      drMishkaGroup.add(lArm);
+
+      const rArm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.05, 0.45), armMat);
+      rArm.rotation.set(0.6, 0, -0.4);
+      rArm.position.set(0.32, 1.65, 0.25);
+      drMishkaGroup.add(rArm);
+
+      scene.add(drMishkaGroup);
+    }
+
+    // 3. 3D Patient Figure (Dynamic Poses per Case)
+    function buildPatientFigure() {
+      patientGroup = new THREE.Group();
+      patientGroup.position.set(1.4, 0, 0.8); // In front of desk on examination chair
+
+      const skinMat = new THREE.MeshStandardMaterial({ color: 0xfde047, roughness: 0.6 });
+      const shirtMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6 });
+      const pantsMat = new THREE.MeshStandardMaterial({ color: 0x1e293b });
+
+      // Patient Stool / Chair
+      const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.1, 16), new THREE.MeshStandardMaterial({ color: 0x065f46 }));
+      stool.position.y = 0.95;
+      patientGroup.add(stool);
+      const stoolLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.9), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
+      stoolLeg.position.y = 0.45;
+      patientGroup.add(stoolLeg);
+
+      // Patient Torso
+      patientTorso = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.25, 0.65, 14), shirtMat);
+      patientTorso.position.y = 1.45;
+      patientTorso.castShadow = true;
+      patientGroup.add(patientTorso);
+
+      // Patient Head
+      patientHead = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), skinMat);
+      patientHead.position.y = 1.95;
+      patientHead.castShadow = true;
+      patientGroup.add(patientHead);
+
+      // Patient Hair
+      const hair = new THREE.Mesh(new THREE.SphereGeometry(0.24, 14, 14), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+      hair.position.set(0, 1.98, -0.02);
+      patientGroup.add(hair);
+
+      // Patient Left & Right Arms (Configured dynamically per symptom)
+      patientArmL = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.45), shirtMat);
+      patientArmL.position.set(-0.28, 1.45, 0.1);
+      patientGroup.add(patientArmL);
+
+      patientArmR = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.45), shirtMat);
+      patientArmR.position.set(0.28, 1.45, 0.1);
+      patientGroup.add(patientArmR);
+
+      // Turn patient towards Dr. Mishka
+      patientGroup.rotation.y = -Math.PI / 4;
+
+      scene.add(patientGroup);
+    }
+
+    // 4. Examination Bed & Medical Cabinet
+    function buildExaminationBed() {
+      examBedGroup = new THREE.Group();
+      examBedGroup.position.set(-4.2, 0, 0.5);
+
+      // Bed Frame
+      const bedFrame = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.7, 3.2), new THREE.MeshStandardMaterial({ color: 0x134e4a }));
+      bedFrame.position.y = 0.35;
+      examBedGroup.add(bedFrame);
+
+      // Soft Mint Mattress
+      const mat = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.2, 3.1), new THREE.MeshStandardMaterial({ color: 0xa7f3d0 }));
+      mat.position.y = 0.8;
+      examBedGroup.add(mat);
+
+      // Pillow
+      const pillow = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.15, 0.6), new THREE.MeshStandardMaterial({ color: 0xf8fafc }));
+      pillow.position.set(0, 0.95, -1.1);
+      examBedGroup.add(pillow);
+
+      scene.add(examBedGroup);
+    }
+
+    // 5. Anatomy Chart on Wall
+    function buildAnatomyPoster() {
+      const posterMat = new THREE.MeshStandardMaterial({ color: 0xecfdf5, roughness: 0.5 });
+      const poster = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 2.4), posterMat);
+      poster.position.set(0, 4.2, -3.95);
+      scene.add(poster);
+
+      // Stylized anatomical silhouettes on poster
+      const torsoDiag = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.0, 0.02), new THREE.MeshStandardMaterial({ color: 0x34d399 }));
+      torsoDiag.position.set(0, 4.2, -3.93);
+      scene.add(torsoDiag);
+    }
+
+    // 6. Healing Particles
+    function buildHealingParticles() {
+      particleGroup = new THREE.Group();
+      const pGeo = new THREE.SphereGeometry(0.04, 6, 6);
+      const pMat = new THREE.MeshBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0 });
+
+      for (let i = 0; i < 25; i++) {
+        const p = new THREE.Mesh(pGeo, pMat.clone());
+        p.position.set(
+          (Math.random() - 0.5) * 1.5,
+          1.2 + Math.random() * 1.2,
+          (Math.random() - 0.5) * 1.5
+        );
+        particleGroup.add(p);
+      }
+      particleGroup.position.set(1.4, 0, 0.8);
+      scene.add(particleGroup);
+    }
+
+    // Update Patient Appearance and Posture per Symptom
+    function updatePatient3DModel(type) {
+      if (!patientGroup) return;
+
+      if (type === 'stomach') {
+        // Clutching belly pose (hunched forward)
+        patientTorso.rotation.x = 0.35;
+        patientHead.rotation.x = 0.3;
+        patientArmL.rotation.set(0.8, 0.6, 0.4);
+        patientArmL.position.set(-0.2, 1.35, 0.22);
+        patientArmR.rotation.set(0.8, -0.6, -0.4);
+        patientArmR.position.set(0.2, 1.35, 0.22);
+      } else if (type === 'tooth') {
+        // Holding swollen cheek pose
+        patientTorso.rotation.x = 0.05;
+        patientHead.rotation.set(0.1, 0, -0.2);
+        patientArmL.rotation.set(0.2, 0, 0.2);
+        patientArmL.position.set(-0.28, 1.45, 0.1);
+        patientArmR.rotation.set(2.2, 0, -0.8); // Hand on cheek
+        patientArmR.position.set(0.18, 1.85, 0.15);
+      } else if (type === 'throat') {
+        // Holding throat & fever shiver
+        patientTorso.rotation.x = 0.1;
+        patientHead.rotation.set(-0.2, 0, 0);
+        patientArmL.rotation.set(1.8, 0.4, 0.6);
+        patientArmL.position.set(-0.15, 1.7, 0.15);
+        patientArmR.rotation.set(1.8, -0.4, -0.6);
+        patientArmR.position.set(0.15, 1.7, 0.15);
+      } else if (type === 'sprain') {
+        // Gymnast resting leg elevated
+        patientTorso.rotation.x = -0.1;
+        patientHead.rotation.set(0.1, 0, 0);
+        patientArmL.rotation.set(0.4, 0, 0.3);
+        patientArmR.rotation.set(0.4, 0, -0.3);
+      }
+    }
+
+    function triggerPatientHealing3D() {
+      playSfx('heal');
+      // Straighten patient pose happily
+      patientTorso.rotation.x = 0;
+      patientHead.rotation.set(0, 0, 0);
+      patientArmL.rotation.set(0.2, 0, 0.4);
+      patientArmR.rotation.set(-1.2, 0, 0.2); // Cheerful thumbs-up wave
+
+      // Trigger sparkle aura
+      particleGroup.children.forEach(p => {
+        p.material.opacity = 0.85;
+        p.material.color.setHex(0xfbbf24);
+      });
+      setTimeout(() => {
+        particleGroup.children.forEach(p => {
+          p.material.opacity = 0;
+        });
+      }, 1800);
+    }
+
+    // Camera preset view switcher
+    function setCameraView(view) {
+      document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-cam-${view}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      let targetPos, targetLook;
+      if (view === 'all') {
+        targetPos = new THREE.Vector3(0, 4.2, 7.8);
+        targetLook = new THREE.Vector3(0, 1.4, 0);
+      } else if (view === 'mishka') {
+        targetPos = new THREE.Vector3(-0.6, 2.4, 2.8);
+        targetLook = new THREE.Vector3(-0.6, 2.0, -0.4);
+      } else if (view === 'patient') {
+        targetPos = new THREE.Vector3(2.4, 2.2, 3.2);
+        targetLook = new THREE.Vector3(1.4, 1.5, 0.8);
+      } else if (view === 'desk') {
+        targetPos = new THREE.Vector3(0, 3.2, 3.5);
+        targetLook = new THREE.Vector3(-0.4, 1.4, 0.3);
+      }
+
+      animateCamera(targetPos, targetLook);
+    }
+
+    function animateCamera(newPos, newLook) {
+      const startPos = camera.position.clone();
+      const startLook = controls.target.clone();
+      let progress = 0;
+
+      function stepCam() {
+        progress += 0.05;
+        camera.position.lerpVectors(startPos, newPos, progress);
+        controls.target.lerpVectors(startLook, newLook, progress);
+        controls.update();
+        if (progress < 1) {
+          requestAnimationFrame(stepCam);
+        }
+      }
+      stepCam();
+    }
+
+    function onWindowResize() {
+      const vp = document.getElementById('clinic-viewport');
+      camera.aspect = vp.clientWidth / vp.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(vp.clientWidth, vp.clientHeight);
+    }
+
+    let clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      // Gentle breathing idle animations
+      if (drMishkaGroup) {
+        drMishkaGroup.position.y = Math.sin(time * 2) * 0.015;
+      }
+      if (patientGroup) {
+        patientGroup.position.y = Math.sin(time * 2.5 + 1) * 0.02;
+      }
+      // Floating particles
+      if (particleGroup) {
+        particleGroup.children.forEach((p, idx) => {
+          p.position.y += Math.sin(time * 3 + idx) * 0.005;
+        });
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    window.onload = init3D;
+  </script>
+</body>
+</html>
