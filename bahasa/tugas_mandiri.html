@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lembar Tugas Mandiri Jarak Jauh: Aqlan & Mishka — PKBM Penerus Bangsa</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --aqlan-cyan: #0284c7;
+      --aqlan-neon: #38bdf8;
+      --mishka-emerald: #059669;
+      --mishka-neon: #34d399;
+      --gold: #fbbf24;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: #090d16;
+      color: var(--text-main);
+      padding: 24px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 960px;
+    }
+
+    /* Top Nav */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 12px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-nav {
+      background: #334155;
+      color: #f8fafc;
+      text-decoration: none;
+      padding: 6px 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 20px;
+      border: 1px solid #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-nav:hover { background: #0284c7; border-color: #38bdf8; color: white; }
+    .btn-print { background: linear-gradient(135deg, #0284c7, #38bdf8); color: #0f172a; border: none; }
+
+    /* Hero */
+    .hero-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title { font-size: 22px; font-weight: 900; color: #ffffff; margin-bottom: 6px; }
+    .hero-sub { font-size: 13px; color: var(--text-muted); max-width: 680px; margin: 0 auto; line-height: 1.5; }
+
+    /* Tab switcher */
+    .tab-switcher {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 13.5px;
+      border: 2px solid transparent;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #1e293b;
+      color: #94a3b8;
+    }
+    .tab-btn:hover { background: #273549; }
+    .tab-btn.active.aqlan {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .tab-btn.active.mishka {
+      background: linear-gradient(135deg, #065f46, #059669);
+      border-color: #34d399;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+    }
+
+    /* Panes */
+    .tab-pane {
+      display: none;
+      background: #131d31;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 24px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active { display: block; }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    h2.task-header {
+      font-size: 16px;
+      font-weight: 900;
+      padding-bottom: 8px;
+      margin: 20px 0 12px;
+      border-bottom: 2px solid;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aqlan-theme h2.task-header { border-color: var(--aqlan-cyan); color: var(--aqlan-neon); }
+    .mishka-theme h2.task-header { border-color: var(--mishka-emerald); color: var(--mishka-neon); }
+
+    .callout-instruction {
+      border-left: 4px solid #f59e0b;
+      background: rgba(245, 158, 11, 0.12);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #fef3c7;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 14px 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    table.task-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    table.task-table th {
+      padding: 10px 12px;
+      font-weight: 800;
+      color: white;
+    }
+    .aqlan-theme table.task-table th { background: #0369a1; }
+    .mishka-theme table.task-table th { background: #065f46; }
+    table.task-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: #cbd5e1;
+      line-height: 1.45;
+      vertical-align: top;
+    }
+
+    .writing-box {
+      background: #0f172a;
+      border: 1px dashed rgba(255,255,255,0.25);
+      border-radius: 10px;
+      padding: 14px;
+      margin: 10px 0 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .game-shortcut-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--aqlan-neon);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .game-shortcut-mishka {
+      border-color: var(--mishka-neon);
+    }
+    .btn-play {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #0f172a;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 12px;
+      transition: 0.2s;
+    }
+    .btn-play-mishka {
+      background: linear-gradient(135deg, #059669, #34d399);
+    }
+    .btn-play:hover { transform: scale(1.03); }
+
+    @media print {
+      body { background: white; color: black; padding: 0; }
+      .top-nav, .tab-switcher, .game-shortcut-card { display: none !important; }
+      .tab-pane { display: block !important; background: white; border: none; box-shadow: none; padding: 0; page-break-after: always; }
+      table.task-table th { background: #eee !important; color: black !important; }
+      table.task-table td { color: black !important; border-bottom: 1px solid #ccc !important; }
+      .writing-box { border-color: #999 !important; color: #333 !important; background: #fafafa !important; }
+      .callout-instruction { background: #fdfdfd !important; color: #333 !important; border-left-color: #333 !important; }
+      h2.task-header { color: black !important; border-color: black !important; page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-nav">
+      <div class="brand-title">
+        <span>🚀</span> PKBM Penerus Bangsa • Lembar Tugas Mandiri Jarak Jauh
+      </div>
+      <div class="nav-actions">
+        <button class="btn-nav btn-print" onclick="window.print()">🖨️ Cetak Lembar Tugas / PDF</button>
+        <a class="btn-nav" href="catatan_textbook.html">📖 Buka Buku Catatan</a>
+        <a class="btn-nav" href="../index.html">🏠 Beranda PKBM</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <span class="hero-badge">Asynchronous Learning Task</span>
+      <h1 class="hero-title">📝 Lembar Tugas Mandiri di Rumah (Take-Home Task)</h1>
+      <p class="hero-sub">
+        Panduan tugas mandiri terstruktur untuk <b>Kapten Aqlan (Kelas 4)</b> dan <b>Jurnalis Cilik Mishka (Kelas 5)</b>. Siswa dapat menuliskan jawaban di buku catatan masing-masing, lalu mengirimkan foto hasilnya via WhatsApp ke Guru.
+      </p>
+    </div>
+
+    <div class="tab-switcher">
+      <button class="tab-btn active aqlan" id="tab-btn-aqlan" onclick="switchTask('aqlan')">
+        <span>🛹</span> Tugas Mandiri Aqlan (Kelas 4 SD)
+      </button>
+      <button class="tab-btn mishka" id="tab-btn-mishka" onclick="switchTask('mishka')">
+        <span>🌸</span> Tugas Mandiri Mishka (Kelas 5 SD)
+      </button>
+    </div>
+
+    <!-- PANE AQLAN -->
+    <div class="tab-pane active aqlan-theme" id="pane-aqlan">
+      <div class="callout-instruction">
+        <b>📢 Petunjuk Pengumpulan Aqlan:</b><br>
+        Halo Kapten Aqlan! Kerjakan 3 Misi Mandiri di bawah ini pada buku catatanmu. Gunakan pulpen atau spidol warna-warni agar rapi. Setelah selesai, minta tolong Ayah/Bunda memfotokan halaman jawabanmu dan kirim ke WhatsApp Bu Tiara ya!
+      </div>
+
+      <h2 class="task-header">🛑 MISI 1: Radar Pemburu Rambu Lalu Lintas (30 Poin)</h2>
+      <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+        Amati jalanan di sekitar rumahmu atau ingat rambu yang pernah kamu lihat. Isilah tabel berikut dengan 3 rambu berbeda kategori warna:
+      </p>
+      <div class="table-wrap">
+        <table class="task-table">
+          <thead>
+            <tr>
+              <th style="width: 8%;">No</th>
+              <th style="width: 28%;">Nama Rambu & Ciri Bentuk</th>
+              <th style="width: 28%;">Kategori & Kode Warna</th>
+              <th>Tindakan Pengendara Mobil/Sepeda</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Contoh</b></td>
+              <td><b>Rambu STOP</b><br>(Segi delapan merah)</td>
+              <td><b>LARANGAN</b><br>(Latar merah, tepi putih)</td>
+              <td>Wajib menginjak pedal rem hingga berhenti total, menengok kanan-kiri memastikan aman, baru jalan kembali.</td>
+            </tr>
+            <tr>
+              <td><b>1</b></td>
+              <td>........................................................</td>
+              <td>........................................................</td>
+              <td>................................................................................................................</td>
+            </tr>
+            <tr>
+              <td><b>2</b></td>
+              <td>........................................................</td>
+              <td>........................................................</td>
+              <td>................................................................................................................</td>
+            </tr>
+            <tr>
+              <td><b>3</b></td>
+              <td>........................................................</td>
+              <td>........................................................</td>
+              <td>................................................................................................................</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="task-header">📝 MISI 2: Merakit Teks Argumentasi Skater (35 Poin)</h2>
+      <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+        Gunakan jurus kata penghubung sebab-akibat: <b>KARENA</b>, <b>SEBAB</b>, dan <b>SEHINGGA</b>!
+      </p>
+      <div class="writing-box">
+        <b>A. Gabungkan 3 gagasan ini menjadi 1 kalimat argumen yang utuh:</b><br>
+        (Dilarang main HP saat menyetir) + (konsentrasi terpecah) + (berisiko kecelakaan)<br><br>
+        <i>Tuliskan jawabanmu di buku:</i><br>
+        "Pengemudi dilarang memainkan telepon genggam saat menyetir KARENA ....................................................., SEHINGGA ...................................................................................................................."
+      </div>
+      <div class="writing-box">
+        <b>B. Tuliskan 1 paragraf argumentasi (3-4 kalimat) di buku catatanmu dengan tema:</b><br>
+        <i>"Mengapa Pemain Skateboard Wajib Memakai Helm dan Pelindung Lutut Saat Meluncur?"</i><br>
+        (Wajib menggunakan kata penghubung <b>KARENA</b> dan <b>SEHINGGA</b>!)
+      </div>
+
+      <h2 class="task-header">🚗 MISI 3: Petualangan Mengemudi 3D (35 Poin)</h2>
+      <div class="game-shortcut-card">
+        <div>
+          <div style="font-weight: 800; font-size: 13px; color: var(--gold);">🎮 Game Simulator Jalan Raya 3D</div>
+          <div style="font-size: 11.5px; color: #bae6fd;">Selesaikan 5 misi rambu di lintasan jalan raya nyata!</div>
+        </div>
+        <a class="btn-play" href="aqlan_driving_3d.html" target="_blank">Mulai Mainkan Game 3D ❯</a>
+      </div>
+      <div class="writing-box">
+        <b>Jawablah 3 pertanyaan laporan mengemudi ini di buku catatanmu:</b><br>
+        1. Berapa <b>Skor Poin Tertib</b> yang berhasil kamu raih? (Target: 500 Poin) -> <i>.......... Poin</i><br>
+        2. Apa respons grafik 3D mobil saat kamu memilih jawaban BENAR di rambu penyeberang zebra cross?<br>
+           -> <i>.....................................................................................................................................</i><br>
+        3. Apa respons grafik 3D mobil saat kamu memilih jawaban SALAH di rambu tikungan tajam?<br>
+           -> <i>.....................................................................................................................................</i>
+      </div>
+    </div>
+
+    <!-- PANE MISHKA -->
+    <div class="tab-pane mishka-theme" id="pane-mishka">
+      <div class="callout-instruction" style="border-left-color: #34d399; background: rgba(52, 211, 153, 0.12); color: #d1fae5;">
+        <b>🌸 Petunjuk Pengumpulan Mishka:</b><br>
+        Halo Jurnalis Cilik Mishka! Hari ini Mishka mendapat misi investigasi mandiri yang dirancang untuk mengasah kemampuan menulis analitis dan wawancara. Tuliskan jawabanmu dengan rapi di buku catatan, lalu fotokan dan kirimkan ke WhatsApp Bu Tiara ya!
+      </div>
+
+      <h2 class="task-header">📋 TUGAS 1: Arsitek Teks Prosedur Hobi (35 Poin)</h2>
+      <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+        Susunlah satu <b>Teks Prosedur orisinal</b> tentang salah satu hobi Mishka (misal: <i>Pemanasan Senam Lantai</i>, <i>Merawat Tanaman Hias</i>, atau <i>Membuat Minuman Sehat</i>). Wajib memenuhi 4 pilar anatomi dan memakai akhiran <b>-kan</b> atau <b>-lah</b>:
+      </p>
+      <div class="table-wrap">
+        <table class="task-table">
+          <thead>
+            <tr>
+              <th style="width: 30%;">Pilar Anatomi Prosedur</th>
+              <th>Rancangan Tulisan Mishka</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>1. Judul Spesifik</b></td>
+              <td><i>"................................................................................................................................"</i></td>
+            </tr>
+            <tr>
+              <td><b>2. Tujuan Penulisan</b></td>
+              <td><i>Mengapa prosedur ini penting dilakukan bagi kesehatan/keberhasilan?</i><br>................................................................................................................................</td>
+            </tr>
+            <tr>
+              <td><b>3. Alat & Bahan</b></td>
+              <td>• ..............................................................................................................................<br>• ..............................................................................................................................</td>
+            </tr>
+            <tr>
+              <td><b>4. Langkah Kronologis</b><br>(Awali kata berakhiran -kan / -lah)</td>
+              <td>1. ............................................................................................................................<br>2. ............................................................................................................................<br>3. ............................................................................................................................</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="task-header">🎙️ TUGAS 2: Daftar Pertanyaan Wawancara ADIKSIMBA (40 Poin)</h2>
+      <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+        Bayangkan Mishka akan mewawancarai seorang wirausahawan (seperti Ibu Nadya pengusaha susu KS Group atau pemilik usaha di sekitar rumah). Rancanglah 6 pertanyaan santun menggunakan rumus <b>ADIKSIMBA (5W1H)</b>:
+      </p>
+      <div class="writing-box">
+        1. <b>[Apa / What]:</b> ........................................................................................................................................<br>
+        2. <b>[Di mana / Where]:</b> ................................................................................................................................<br>
+        3. <b>[Kapan / When]:</b> ....................................................................................................................................<br>
+        4. <b>[Siapa / Who]:</b> ......................................................................................................................................<br>
+        5. <b>[Mengapa / Why]:</b> ..................................................................................................................................<br>
+        6. <b>[Bagaimana / How]:</b> ..............................................................................................................................
+      </div>
+
+      <h2 class="task-header">🏛️ TUGAS 3: Simulasi Studio 3D & Refleksi Etika (25 Poin)</h2>
+      <div class="game-shortcut-card game-shortcut-mishka">
+        <div>
+          <div style="font-weight: 800; font-size: 13px; color: var(--gold);">🎙️ Studio Wawancara Ghibli 3D</div>
+          <div style="font-size: 11.5px; color: #a7f3d0;">Lakukan sesi wawancara bersama narasumber Ibu Nadya!</div>
+        </div>
+        <a class="btn-play btn-play-mishka" href="mishka_interview_3d.html" target="_blank">Buka Studio 3D ❯</a>
+      </div>
+      <div class="writing-box">
+        <b>Jawablah 2 pertanyaan refleksi ini di buku catatanmu:</b><br>
+        1. Berapa skor kredibilitas dan persentase rapport yang berhasil kamu raih? -> <i>Kredibilitas: .......... | Rapport: .......... %</i><br>
+        2. Mengapa seorang pewawancara profesional <b>TIDAK BOLEH</b> mengajukan pertanyaan yang memojokkan atau langsung menanyakan jumlah kekayaan/uang narasumber secara agresif di awal percakapan?<br>
+           -> <i>.....................................................................................................................................</i><br>
+           -> <i>.....................................................................................................................................</i>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTask(student) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      if (student === 'aqlan') {
+        document.getElementById('tab-btn-aqlan').classList.add('active');
+        document.getElementById('pane-aqlan').classList.add('active');
+      } else {
+        document.getElementById('tab-btn-mishka').classList.add('active');
+        document.getElementById('pane-mishka').classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
