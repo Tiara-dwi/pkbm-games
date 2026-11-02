@@ -6,8 +6,8 @@
   <title>Simulasi Wawancara 3D Studio Ghibli: Jurnalis Cilik — Mishka</title>
   <style>
     :root {
-      --bg-dark: #042f2e;
-      --card-bg: rgba(6, 78, 59, 0.94);
+      --bg-dark: #022c22;
+      --card-bg: rgba(4, 47, 46, 0.96);
       --card-border: #34d399;
       --neon-emerald: #34d399;
       --neon-gold: #fbbf24;
@@ -18,13 +18,31 @@
       --ghibli-warm: #fef3c7;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
-    body {
-      background: #022c22;
+    
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-dark);
       color: var(--text-main);
+    }
+
+    /* Main Container: Split-Screen Layout (Left: 3D Stage, Right: Interactive Console) */
+    #app-layout {
+      display: flex;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
       position: relative;
+    }
+
+    /* 3D Studio Viewport (Completely unobstructed, takes ~58% on wide screens, 100% when console collapsed) */
+    #studio-viewport {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s ease;
     }
 
     #canvas-container {
@@ -33,160 +51,160 @@
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 1;
     }
 
-    /* UI Overlay */
-    .ui-layer {
+    /* Floating Studio Toolbar (Top Left of 3D Scene) */
+    .studio-toolbar {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 10;
+      top: 14px;
+      left: 18px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      pointer-events: auto;
+    }
+    .tool-btn {
+      background: rgba(4, 47, 46, 0.88);
+      border: 1px solid #059669;
+      color: #d1fae5;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tool-btn:hover {
+      background: rgba(52, 211, 153, 0.25);
+      border-color: var(--neon-emerald);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .tool-btn.active {
+      background: linear-gradient(135deg, #059669, #34d399);
+      color: #022c22;
+      border-color: #34d399;
+    }
+
+    /* 3D Hint pill */
+    .studio-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      z-index: 20;
+      background: rgba(2, 44, 34, 0.82);
+      border: 1px solid #047857;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #a7f3d0;
+      backdrop-filter: blur(6px);
       pointer-events: none;
+    }
+
+    /* Right Side Interview Console (Dedicated panel, does NOT cover 3D scene) */
+    #interview-console {
+      width: 460px;
+      max-width: 45vw;
+      height: 100%;
+      background: var(--card-bg);
+      border-left: 2px solid var(--card-border);
+      box-shadow: -8px 0 35px rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(14px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 14px 20px;
+      padding: 18px 22px;
+      z-index: 30;
+      overflow-y: auto;
+      transition: all 0.35s ease;
     }
 
-    /* Header Bar */
-    header {
-      pointer-events: auto;
+    #interview-console.collapsed {
+      margin-right: -480px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Console Header */
+    .console-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(52, 211, 153, 0.25);
+    }
+    .header-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 10px 18px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.55);
-      max-width: 960px;
-      margin: 0 auto;
-      width: 100%;
     }
     .badge {
       background: linear-gradient(135deg, #059669, #34d399);
       color: #022c22;
       font-weight: 800;
-      font-size: 12px;
-      padding: 4px 12px;
+      font-size: 11.5px;
+      padding: 4px 10px;
       border-radius: 20px;
-      letter-spacing: 0.5px;
       text-transform: uppercase;
-      display: inline-block;
+      letter-spacing: 0.5px;
     }
-    .stats {
-      display: flex;
-      gap: 16px;
-      font-size: 13.5px;
-      font-weight: bold;
+    .console-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--neon-gold);
+      letter-spacing: 0.3px;
     }
-    .stat-val { color: var(--neon-gold); font-size: 15px; }
-
-    /* Top Control Bar (Camera presets + Character Style Switcher) */
-    .toolbar-row {
-      pointer-events: auto;
+    .stats-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      max-width: 960px;
-      margin: 6px auto 0;
-      width: 100%;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .cam-btn-group, .style-btn-group {
-      display: flex;
-      gap: 6px;
-      background: rgba(4, 47, 46, 0.88);
+      background: rgba(2, 44, 34, 0.7);
       border: 1px solid #059669;
-      padding: 4px 8px;
-      border-radius: 24px;
-      backdrop-filter: blur(6px);
-    }
-    .tool-btn {
-      background: transparent;
-      border: none;
-      color: #d1fae5;
-      font-size: 11.5px;
+      border-radius: 10px;
+      padding: 7px 12px;
+      font-size: 12.5px;
       font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
-    .tool-btn:hover {
-      background: rgba(52, 211, 153, 0.25);
-      color: #ffffff;
-    }
-    .tool-btn.active {
-      background: linear-gradient(135deg, #059669, #34d399);
-      color: #022c22;
-    }
+    .stat-val { color: var(--neon-gold); font-size: 13.5px; }
 
-    /* Hint Pill */
-    .hint-pill {
-      font-size: 11px;
-      color: #a7f3d0;
-      opacity: 0.9;
-    }
-
-    /* Interview Dialogue & Question Panel */
-    .interview-panel {
-      pointer-events: auto;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 16px 22px;
-      max-width: 960px;
-      margin: 0 auto;
-      width: 100%;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.75);
-      backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
-    }
-
-    /* Dialogue bubble for Interviewee's Answer */
-    .dialogue-box {
+    /* Dialogue box (Bu Nadya) */
+    .dialogue-section {
+      margin: 12px 0 10px;
       background: rgba(2, 44, 34, 0.92);
       border: 1px solid #047857;
       border-radius: 14px;
-      padding: 12px 16px;
-      margin-bottom: 12px;
+      padding: 12px 14px;
       display: flex;
-      gap: 14px;
-      align-items: center;
-      position: relative;
-      box-shadow: inset 0 0 15px rgba(52, 211, 153, 0.1);
+      gap: 12px;
+      align-items: flex-start;
+      box-shadow: inset 0 0 14px rgba(52, 211, 153, 0.1);
     }
     .avatar-wrapper {
       position: relative;
-      width: 62px;
-      height: 62px;
+      width: 52px;
+      height: 52px;
       flex-shrink: 0;
     }
     .speaker-avatar-img {
-      width: 62px;
-      height: 62px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid var(--neon-gold);
-      box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
-      transition: transform 0.3s ease;
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
     }
     .pulse-ring {
       position: absolute;
-      top: -4px;
-      left: -4px;
-      width: 70px;
-      height: 70px;
+      top: -3px;
+      left: -3px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
       border: 2px solid var(--neon-emerald);
       animation: pulse 1.8s infinite;
@@ -194,12 +212,8 @@
     }
     @keyframes pulse {
       0% { transform: scale(0.95); opacity: 0.8; }
-      50% { transform: scale(1.08); opacity: 0.2; }
+      50% { transform: scale(1.1); opacity: 0.2; }
       100% { transform: scale(0.95); opacity: 0.8; }
-    }
-
-    .speaker-content {
-      flex: 1;
     }
     .speaker-meta {
       display: flex;
@@ -208,58 +222,79 @@
       margin-bottom: 4px;
     }
     .speaker-name {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--neon-gold);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .speaker-badge {
-      font-size: 11px;
+      font-size: 10.5px;
       background: rgba(16, 185, 129, 0.25);
       color: #6ee7b7;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 10px;
       border: 1px solid #059669;
     }
     .speaker-text {
-      font-size: 14.5px;
+      font-size: 13.5px;
       line-height: 1.45;
       color: #ffffff;
-      font-weight: 500;
     }
 
-    /* Prompt text */
-    .question-prompt {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: var(--neon-emerald);
-      margin-bottom: 10px;
+    /* Question Prompt Box (Mishka) */
+    .prompt-section {
+      background: rgba(6, 95, 70, 0.45);
+      border: 1px solid #059669;
+      border-radius: 12px;
+      padding: 10px 12px;
       display: flex;
+      gap: 10px;
       align-items: center;
-      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .mishka-avatar-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-emerald);
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+    }
+    .prompt-label {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      color: var(--neon-emerald);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .prompt-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f0fdf4;
+      line-height: 1.35;
     }
 
-    /* Multiple choice options */
+    /* Multiple Choice Options */
     .options-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 7px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
     }
     button.opt-btn {
       background: #044e3f;
       border: 1px solid #059669;
       color: #f0fdf4;
       padding: 10px 14px;
-      font-size: 13.5px;
+      font-size: 12.5px;
       font-weight: 600;
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.2s ease;
       text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 8px;
       line-height: 1.35;
     }
     button.opt-btn:hover {
@@ -283,7 +318,7 @@
       margin-top: 8px;
       padding: 9px 12px;
       border-radius: 8px;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
       display: none;
       line-height: 1.4;
@@ -310,7 +345,7 @@
       border-radius: 10px;
       color: #022c22;
       font-weight: 800;
-      font-size: 13.5px;
+      font-size: 13px;
       cursor: pointer;
       display: none;
       transition: 0.2s;
@@ -327,27 +362,40 @@
       background: var(--card-bg);
       border: 2px solid var(--neon-gold);
       border-radius: 20px;
-      padding: 28px;
+      padding: 26px;
       text-align: center;
-      max-width: 520px;
+      max-width: 480px;
       width: 90%;
       box-shadow: 0 0 45px rgba(0,0,0,0.88);
       backdrop-filter: blur(14px);
       z-index: 100;
       pointer-events: auto;
     }
-    #victory-modal h2 { font-size: 24px; color: var(--neon-gold); margin-bottom: 8px; }
-    #victory-modal p { color: var(--text-muted); font-size: 13.5px; margin-bottom: 16px; line-height: 1.5; }
+    #victory-modal h2 { font-size: 22px; color: var(--neon-gold); margin-bottom: 8px; }
+    #victory-modal p { color: var(--text-muted); font-size: 13px; margin-bottom: 14px; line-height: 1.5; }
     .badge-seal {
       display: inline-block;
-      padding: 9px 20px;
+      padding: 8px 18px;
       background: linear-gradient(135deg, #f59e0b, #10b981);
       color: #022c22;
       font-weight: 900;
       border-radius: 30px;
-      font-size: 14px;
-      margin-bottom: 18px;
+      font-size: 13.5px;
+      margin-bottom: 16px;
       box-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+    }
+
+    /* Small Screen Responsive: Stack vertically */
+    @media (max-width: 900px) {
+      #app-layout { flex-direction: column; }
+      #studio-viewport { height: 50vh; }
+      #interview-console {
+        width: 100%;
+        max-width: 100vw;
+        height: 50vh;
+        border-left: none;
+        border-top: 2px solid var(--card-border);
+      }
     }
   </style>
   <script src="../assets/js/three.min.js"></script>
@@ -356,67 +404,67 @@
 </head>
 <body>
 
-  <div id="canvas-container"></div>
+  <div id="app-layout">
+    <!-- LEFT: 3D STUDIO STAGE (COMPLETELY UNOBSTRUCTED) -->
+    <div id="studio-viewport">
+      <div id="canvas-container"></div>
 
-  <div class="ui-layer">
-    <header>
-      <div>
-        <span class="badge">Mishka • Kelas 5 SD</span>
-        <span style="margin-left: 10px; font-weight: 700; font-size: 13.5px;">Wawancara 3D Studio Ghibli: "Investigasi Pengusaha Susu"</span>
-      </div>
-      <div class="stats">
-        <span>Kredibilitas: <span id="score" class="stat-val">0</span></span>
-        <span>Rapport: <span id="streak" class="stat-val">100</span>%⭐</span>
-        <span>Situasi: <span id="level" class="stat-val">1</span>/5</span>
-      </div>
-    </header>
-
-    <!-- Toolbar: Camera presets + Outfit Switcher -->
-    <div class="toolbar-row">
-      <div class="cam-btn-group">
+      <!-- Studio Floating Toolbar -->
+      <div class="studio-toolbar">
         <button class="tool-btn active" id="btn-cam-all" onclick="setCameraView('all')">🎥 Studio Penuh</button>
         <button class="tool-btn" id="btn-cam-mishka" onclick="setCameraView('mishka')">👧 Sorot Mishka</button>
-        <button class="tool-btn" id="btn-cam-nadya" onclick="setCameraView('nadya')">👩‍💼 Sorot Ibu Nadya</button>
+        <button class="tool-btn" id="btn-cam-nadya" onclick="setCameraView('nadya')">👩‍💼 Sorot Bu Nadya</button>
+        <button class="tool-btn" id="btn-toggle-console" onclick="toggleConsole()">👁️ Layar Penuh 3D</button>
       </div>
 
-      <div class="style-btn-group">
-        <button class="tool-btn active" id="btn-style-reporter" onclick="switchMishkaStyle('reporter')">👔 Mishka Reporter</button>
-        <button class="tool-btn" id="btn-style-user" onclick="switchMishkaStyle('user')">📖 Mishka Membaca (Foto Kamu)</button>
-      </div>
-
-      <div class="hint-pill">
-        <span>🖱️ Putar studio 3D: Klik &amp; geser | Zoom: Scroll mouse</span>
+      <div class="studio-hint">
+        <span>🖱️ Putar 3D: Klik &amp; geser mouse | Zoom: Scroll roda mouse</span>
       </div>
     </div>
 
-    <!-- Dialogue and Interview Panel -->
-    <div class="interview-panel">
-      <!-- Interviewee Speech Box -->
-      <div class="dialogue-box">
+    <!-- RIGHT: INTERACTIVE INTERVIEW CONSOLE (NEVER BLOCKS 3D FIGURES) -->
+    <div id="interview-console">
+      <div class="console-header">
+        <div class="header-top">
+          <span class="badge">Mishka • Kelas 5 SD</span>
+          <span style="font-size: 11px; color: var(--text-muted);">Bahasa Indonesia Bab 4</span>
+        </div>
+        <div class="console-title">Simulasi Wawancara: Pengusaha Susu</div>
+        <div class="stats-row">
+          <span>Kredibilitas: <span id="score" class="stat-val">0</span></span>
+          <span>Rapport: <span id="streak" class="stat-val">100</span>%⭐</span>
+          <span>Situasi: <span id="level" class="stat-val">1</span>/5</span>
+        </div>
+      </div>
+
+      <!-- Interviewee Speech Box (Bu Nadya) -->
+      <div class="dialogue-section">
         <div class="avatar-wrapper">
-          <img id="speaker-avatar" class="speaker-avatar-img" src="../assets/interview/nadya_circle.png" alt="Avatar">
+          <img id="speaker-avatar" class="speaker-avatar-img" src="../assets/interview/nadya_circle.png" alt="Bu Nadya">
           <div class="pulse-ring" id="avatar-pulse"></div>
         </div>
-        <div class="speaker-content">
+        <div style="flex:1;">
           <div class="speaker-meta">
             <span class="speaker-name" id="speaker-name">Ibu Nadya</span>
-            <span class="speaker-badge" id="speaker-badge">🎙️ Narasumber Menjawab</span>
+            <span class="speaker-badge" id="speaker-badge">🎙️ Menjawab</span>
           </div>
-          <p class="speaker-text" id="speaker-text">"Halo, selamat pagi! Selamat datang di kantor KS Group. Senang sekali bisa bertemu dengan jurnalis cilik berprestasi seperti Mishka. Ada yang bisa saya bantu?"</p>
+          <p class="speaker-text" id="speaker-text">"Halo, selamat pagi! Selamat datang di kantor KS Group. Senang sekali bisa bertemu dengan jurnalis cilik berprestasi seperti Mishka."</p>
         </div>
       </div>
 
-      <div class="question-prompt" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-        <img id="mishka-ui-avatar" src="../assets/interview/mishka_circle.png" alt="Mishka" style="width:42px; height:42px; border-radius:50%; border:2px solid var(--neon-emerald); object-fit:cover; flex-shrink:0; box-shadow:0 0 10px rgba(52,211,153,0.35);">
-        <div>
-          <div style="font-size:11px; text-transform:uppercase; color:var(--neon-emerald); font-weight:800; letter-spacing:0.5px;">Pertanyaan Mishka (Jurnalis Cilik):</div>
-          <span id="prompt-text">Sebagai pewawancara, apa kalimat pembuka santun yang akan Mishka tanyakan?</span>
+      <!-- Interviewer Question Prompt (Mishka) -->
+      <div class="prompt-section">
+        <img id="mishka-ui-avatar" class="mishka-avatar-img" src="../assets/interview/mishka_circle.png" alt="Mishka">
+        <div style="flex:1;">
+          <div class="prompt-label">Pertanyaan Mishka (Jurnalis Cilik):</div>
+          <div class="prompt-text" id="prompt-text">Sebagai pewawancara santun, apa kalimat pembuka yang akan Mishka tanyakan?</div>
         </div>
       </div>
+
+      <!-- Multiple Choice Options -->
+      <div class="options-grid" id="options"></div>
 
       <div class="feedback-banner" id="feedback"></div>
-
-      <div class="options-grid" id="options"></div>
 
       <button class="btn-next" id="btn-next" onclick="nextSituation()">
         LANJUT KE PERTANYAAN BERIKUTNYA ❯
@@ -426,12 +474,12 @@
 
   <!-- VICTORY MODAL -->
   <div id="victory-modal">
-    <div style="font-size: 52px; margin-bottom: 8px;">🎙️📰🏆</div>
+    <div style="font-size: 48px; margin-bottom: 8px;">🎙️📰🏆</div>
     <h2>WAWANCARA BERJALAN GEMILANG!</h2>
     <p>Selamat Mishka! Kamu telah mempraktikkan etika jurnalisme santun, menguasai kata tanya ADiKSiMBa, dan membedah idiom wirausaha (gulung tikar &amp; banting tulang) dengan analisis tajam dan penuh rasa hormat!</p>
     <div class="badge-seal">MASTER BUSINESS JOURNALIST 2026</div>
-    <div style="font-size: 15px;">Skor Kredibilitas Jurnalis: <strong id="final-score" style="color:var(--neon-gold); font-size:22px;">0</strong> / 500</div>
-    <button class="btn-next" style="display:inline-block; margin-top:18px; width:auto; padding:11px 26px;" onclick="location.reload()">
+    <div style="font-size: 14.5px; margin-bottom: 12px;">Skor Kredibilitas Jurnalis: <strong id="final-score" style="color:var(--neon-gold); font-size:20px;">0</strong> / 500</div>
+    <button class="btn-next" style="display:inline-block; width:auto; padding:10px 24px;" onclick="location.reload()">
       SIMULASI WAWANCARA BARU ↺
     </button>
   </div>
@@ -459,15 +507,14 @@
     }
 
     function playResponseChime() {
-      // Gentle warm Ghibli chord
       [523.25, 659.25, 783.99].forEach((f, i) => {
-        setTimeout(() => playTone(f, 'sine', 0.25, false), i * 70);
+        setTimeout(() => playTone(f, 'sine', 0.22, false), i * 65);
       });
     }
 
     function playCorrect() {
       [440, 554.37, 659.25, 880].forEach((f, i) => {
-        setTimeout(() => playTone(f, 'triangle', 0.22, true), i * 65);
+        setTimeout(() => playTone(f, 'triangle', 0.2, true), i * 60);
       });
     }
 
@@ -480,26 +527,27 @@
       gain.connect(audioCtx.destination);
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(190, now);
-      osc.frequency.linearRampToValueAtTime(130, now + 0.22);
+      osc.frequency.linearRampToValueAtTime(130, now + 0.2);
       gain.gain.setValueAtTime(0.2, now);
-      gain.gain.linearRampToValueAtTime(0, now + 0.22);
+      gain.gain.linearRampToValueAtTime(0, now + 0.2);
       osc.start(now);
-      osc.stop(now + 0.22);
+      osc.stop(now + 0.2);
     }
 
     // =========================================================================
-    // 2. THREE.JS 3D GHIBLI INTERVIEW STUDIO
+    // 2. THREE.JS 3D STUDIO SETUP
     // =========================================================================
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x042f2e);
-    scene.fog = new THREE.FogExp2(0x042f2e, 0.035);
+    scene.fog = new THREE.FogExp2(0x042f2e, 0.03);
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 4.0, 7.8);
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+    // Adjusted initial camera angle to center both characters perfectly in the left viewport
+    camera.position.set(0, 3.6, 6.8);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -509,31 +557,30 @@
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
     controls.maxPolarAngle = Math.PI / 2 - 0.04;
-    controls.minDistance = 3.5;
-    controls.maxDistance = 12;
-    controls.target.set(0, 1.4, 0);
+    controls.minDistance = 3.0;
+    controls.maxDistance = 11;
+    controls.target.set(0, 1.35, 0);
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xfffbeb, 0.8);
+    // Warm Studio Lighting
+    const ambientLight = new THREE.AmbientLight(0xfffbeb, 0.85);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfef3c7, 1.2);
+    const keyLight = new THREE.DirectionalLight(0xfef3c7, 1.25);
     keyLight.position.set(4, 7, 5);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
     keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    const rimLight = new THREE.PointLight(0x34d399, 1.0, 12);
-    rimLight.position.set(-3.5, 3, -2);
+    const rimLight = new THREE.PointLight(0x34d399, 1.1, 12);
+    rimLight.position.set(-3.5, 3.5, -2);
     scene.add(rimLight);
 
-    const fillLight = new THREE.PointLight(0xfbbf24, 0.6, 10);
+    const fillLight = new THREE.PointLight(0xfbbf24, 0.7, 10);
     fillLight.position.set(3.5, 2.5, 2);
     scene.add(fillLight);
 
-    // --- 3D Studio Architecture ---
-    // Warm Wooden Floor
+    // Hardwood Studio Floor
     const floorGeo = new THREE.PlaneGeometry(16, 16);
     const floorMat = new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.65 });
     const floor = new THREE.Mesh(floorGeo, floorMat);
@@ -547,178 +594,405 @@
     backWall.receiveShadow = true;
     scene.add(backWall);
 
-    // Acoustic Wooden Slats on Wall
+    // Acoustic Wooden Slats
     for (let x = -6.5; x <= 6.5; x += 1.0) {
       const slat = new THREE.Mesh(new THREE.BoxGeometry(0.12, 6, 0.08), new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.5 }));
       slat.position.set(x, 4, -4.26);
       scene.add(slat);
     }
 
-    // Modern Interview Desk
+    // Modern Wooden Interview Desk
     const deskGroup = new THREE.Group();
-    const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.4, 0.14, 2.1), new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.38 }));
-    deskTop.position.set(0, 1.4, 0);
+    const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.12, 1.9), new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.38 }));
+    deskTop.position.set(0, 1.35, 0);
     deskTop.castShadow = true; deskTop.receiveShadow = true;
     deskGroup.add(deskTop);
 
     // Desk Legs
     const legMat = new THREE.MeshStandardMaterial({ color: 0x1e293b });
-    [[-1.9, 0.7, -0.85], [1.9, 0.7, -0.85], [-1.9, 0.7, 0.85], [1.9, 0.7, 0.85]].forEach(p => {
-      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 1.4), legMat);
+    [[-1.8, 0.67, -0.75], [1.8, 0.67, -0.75], [-1.8, 0.67, 0.75], [1.8, 0.67, 0.75]].forEach(p => {
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 1.35), legMat);
       leg.position.set(...p);
       leg.castShadow = true;
       deskGroup.add(leg);
     });
 
-    // Desk Items: Broadcast Microphones, Notepad & KS Group Milk Bottle
+    // Broadcast Microphones
     const micMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.85, roughness: 0.2 });
-    // Mishka's Mic
-    const mic1 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), micMat);
-    mic1.position.set(-0.9, 1.75, 0.35);
-    const micStand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35), legMat);
-    micStand1.position.set(-0.9, 1.58, 0.35);
+    // Mishka's Desk Mic
+    const mic1 = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), micMat);
+    mic1.position.set(-0.85, 1.7, 0.3);
+    const micStand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.32), legMat);
+    micStand1.position.set(-0.85, 1.52, 0.3);
     deskGroup.add(mic1, micStand1);
 
-    // Ibu Nadya's Mic
-    const mic2 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), micMat);
-    mic2.position.set(0.9, 1.75, -0.35);
-    const micStand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35), legMat);
-    micStand2.position.set(0.9, 1.58, -0.35);
+    // Bu Nadya's Desk Mic
+    const mic2 = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), micMat);
+    mic2.position.set(0.85, 1.7, -0.3);
+    const micStand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.32), legMat);
+    micStand2.position.set(0.85, 1.52, -0.3);
     deskGroup.add(mic2, micStand2);
 
-    // Mishka's Reporter Notepad & Pen
-    const notepad = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.03, 0.65), new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.5 }));
-    notepad.position.set(-1.15, 1.49, 0.45);
-    notepad.rotation.y = 0.25;
+    // Reporter Notepad on Desk
+    const notepad = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.03, 0.6), new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.5 }));
+    notepad.position.set(-1.1, 1.43, 0.38);
+    notepad.rotation.y = 0.22;
+    notepad.castShadow = true;
     deskGroup.add(notepad);
 
-    // Pen
-    const pen = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.4), new THREE.MeshStandardMaterial({ color: 0x059669 }));
-    pen.position.set(-0.85, 1.49, 0.55);
+    // Reporter Pen
+    const pen = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.38), new THREE.MeshStandardMaterial({ color: 0x059669 }));
+    pen.position.set(-0.8, 1.43, 0.48);
     pen.rotation.z = Math.PI / 2;
-    pen.rotation.y = 0.4;
+    pen.rotation.y = 0.35;
     deskGroup.add(pen);
 
-    // Fresh Artisanal Milk Bottle (KS Group Prop)
+    // KS Group Fresh Milk Bottle (Prop)
     const bottleMat = new THREE.MeshStandardMaterial({ color: 0xfef9c3, roughness: 0.15, transparent: true, opacity: 0.92 });
-    const bottle = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.52, 16), bottleMat);
-    bottle.position.set(1.3, 1.68, -0.2);
-    const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.08), new THREE.MeshStandardMaterial({ color: 0x059669 }));
-    cap.position.set(1.3, 1.96, -0.2);
+    const bottle = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.5, 16), bottleMat);
+    bottle.position.set(1.25, 1.62, -0.18);
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.065, 0.08), new THREE.MeshStandardMaterial({ color: 0x059669 }));
+    cap.position.set(1.25, 1.88, -0.18);
     deskGroup.add(bottle, cap);
 
     scene.add(deskGroup);
 
     // =========================================================================
-    // 3. STUDIO GHIBLI CHARACTERS (2.5D ANIMATED ACRYLIC STANDEES)
+    // 3. REAL 3D HUMAN FIGURES (GHIBLI AESTHETIC — SOLID 3D GEOMETRY)
     // =========================================================================
     const texLoader = new THREE.TextureLoader();
 
-    // Use pre-bundled offline Base64 textures from textures.js, fallback to direct paths
-    const mishkaReporterTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_standee) || '../assets/interview/standee_mishka_ghibli.png');
-    const mishkaUserTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_user_standee) || '../assets/interview/standee_mishka_user.png');
-    const nadyaTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_standee) || '../assets/interview/standee_nadya_ghibli.png');
+    // Textures for 3D faces (from textures.js Base64 for 100% offline file:/// compatibility)
+    const mishkaFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_3d_face) || '../assets/interview/mishka_3d_face.png');
+    const nadyaFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_3d_face) || '../assets/interview/nadya_3d_face.png');
 
-    // Standee Dimensions: 1.6 width, 2.15 height
-    const standeeGeo = new THREE.PlaneGeometry(1.6, 2.15);
+    // Shared Helper: Wooden Armchair
+    function createArmchair() {
+      const chairGroup = new THREE.Group();
+      const woodMat = new THREE.MeshStandardMaterial({ color: 0x78350f, roughness: 0.5 });
+      const cushionMat = new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.7 });
 
-    // --- CHARACTER 1: MISHKA (LEFT SIDE / INTERVIEWER) ---
+      // 4 Legs
+      [[-0.45, 0.38, -0.4], [0.45, 0.38, -0.4], [-0.45, 0.38, 0.4], [0.45, 0.38, 0.4]].forEach(pos => {
+        const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.03, 0.76), woodMat);
+        leg.position.set(...pos);
+        leg.castShadow = true;
+        chairGroup.add(leg);
+      });
+
+      // Wooden Seat Base
+      const seatBase = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.08, 0.95), woodMat);
+      seatBase.position.set(0, 0.76, 0);
+      chairGroup.add(seatBase);
+
+      // Emerald Cushion
+      const cushion = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.12, 0.88), cushionMat);
+      cushion.position.set(0, 0.84, 0);
+      cushion.castShadow = true; cushion.receiveShadow = true;
+      chairGroup.add(cushion);
+
+      // Backrest Uprights & Slats
+      const backrest = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.85, 0.08), woodMat);
+      backrest.position.set(0, 1.3, -0.44);
+      backrest.castShadow = true;
+      chairGroup.add(backrest);
+
+      // Armrests
+      [-0.46, 0.46].forEach(x => {
+        const armRest = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.04, 0.75), woodMat);
+        armRest.position.set(x, 1.05, 0);
+        const armPost = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.22), woodMat);
+        armPost.position.set(x, 0.92, 0.28);
+        chairGroup.add(armRest, armPost);
+      });
+
+      return chairGroup;
+    }
+
+    // -------------------------------------------------------------------------
+    // FIGURE 1: MISHKA (REAL 3D STUDENT JOURNALIST — LEFT SIDE)
+    // -------------------------------------------------------------------------
     const mishkaGroup = new THREE.Group();
-    mishkaGroup.position.set(-1.45, 0, 0.75);
-    mishkaGroup.rotation.y = Math.PI / 4.2; // Angled toward table & interviewee
+    mishkaGroup.position.set(-1.4, 0, 0.65);
+    mishkaGroup.rotation.y = Math.PI / 4.4; // Angled toward table & Bu Nadya
 
-    // Armchair
-    const chairM = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 1.1), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
-    chairM.position.set(0, 0.4, 0);
-    chairM.castShadow = true; chairM.receiveShadow = true;
-    const chairMBack = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 0.15), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
-    chairMBack.position.set(0, 1.3, -0.5);
-    mishkaGroup.add(chairM, chairMBack);
+    // Chair
+    mishkaGroup.add(createArmchair());
 
-    // Wooden Standee Base Pedestal
-    const baseM = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.5, 0.08, 24), new THREE.MeshStandardMaterial({ color: 0xb45309 }));
-    baseM.position.set(0, 0.84, 0);
-    mishkaGroup.add(baseM);
+    // Materials
+    const skinMat = new THREE.MeshStandardMaterial({ color: 0xfed7aa, roughness: 0.55 });
+    const hairMat = new THREE.MeshStandardMaterial({ color: 0x2b1810, roughness: 0.65 });
+    const blazerMatM = new THREE.MeshStandardMaterial({ color: 0x059669, roughness: 0.5 });
+    const lapelMatM = new THREE.MeshStandardMaterial({ color: 0x047857, roughness: 0.5 });
+    const whiteShirtMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.4 });
+    const skirtMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.7 });
+    const redBowMat = new THREE.MeshStandardMaterial({ color: 0xe11d48, roughness: 0.4 });
+    const goldButtonMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.85, roughness: 0.25 });
+    const scrunchieMat = new THREE.MeshStandardMaterial({ color: 0xf472b6, roughness: 0.4 }); // Pink scrunchie!
 
-    // Mishka Ghibli Standee Mesh
-    const mishkaMat = new THREE.MeshStandardMaterial({
-      map: mishkaReporterTex,
-      transparent: true,
-      alphaTest: 0.05,
-      side: THREE.DoubleSide,
-      roughness: 0.3
+    // Lower Body: Seated Navy Skirt & Legs
+    const skirt = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.42, 0.4, 16), skirtMat);
+    skirt.position.set(0, 0.98, 0);
+    skirt.castShadow = true;
+    mishkaGroup.add(skirt);
+
+    // Seated Thighs (extending forward to table)
+    [-0.12, 0.12].forEach(x => {
+      const thigh = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.42, 12), skirtMat);
+      thigh.rotation.x = Math.PI / 2;
+      thigh.position.set(x, 0.92, 0.2);
+      const shin = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.45, 12), whiteShirtMat);
+      shin.position.set(x, 0.58, 0.4);
+      const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.18), skirtMat);
+      shoe.position.set(x, 0.35, 0.45);
+      mishkaGroup.add(thigh, shin, shoe);
     });
-    const mishkaStandee = new THREE.Mesh(standeeGeo, mishkaMat);
-    mishkaStandee.position.set(0, 1.9, 0);
-    mishkaStandee.castShadow = true;
-    mishkaGroup.add(mishkaStandee);
 
+    // Upper Torso: Tailored Emerald Blazer
+    const torsoMeshM = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.21, 0.58, 16), blazerMatM);
+    torsoMeshM.position.set(0, 1.36, 0);
+    torsoMeshM.castShadow = true;
+    mishkaGroup.add(torsoMeshM);
+
+    // 3D Lapels
+    [-0.08, 0.08].forEach(x => {
+      const lapel = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.32, 0.04), lapelMatM);
+      lapel.position.set(x, 1.4, 0.2);
+      lapel.rotation.z = (x < 0 ? -0.2 : 0.2);
+      mishkaGroup.add(lapel);
+    });
+
+    // White Shirt V-Neck & Red Ribbon Bow
+    const vShirt = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.22, 0.03), whiteShirtMat);
+    vShirt.position.set(0, 1.48, 0.21);
+    const redBow = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 12), redBowMat);
+    redBow.position.set(0, 1.54, 0.23);
+    const bowLeft = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.08, 8), redBowMat);
+    bowLeft.rotation.z = Math.PI / 2;
+    bowLeft.position.set(-0.05, 1.54, 0.23);
+    const bowRight = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.08, 8), redBowMat);
+    bowRight.rotation.z = -Math.PI / 2;
+    bowRight.position.set(0.05, 1.54, 0.23);
+    mishkaGroup.add(vShirt, redBow, bowLeft, bowRight);
+
+    // Gold Blazer Buttons
+    [1.32, 1.22].forEach(y => {
+      const btn = new THREE.Mesh(new THREE.SphereGeometry(0.02, 10, 10), goldButtonMat);
+      btn.position.set(0, y, 0.22);
+      mishkaGroup.add(btn);
+    });
+
+    // 3D Arms: Left arm on notepad, Right arm holding pen
+    // Left Arm (upper arm, forearm, hand)
+    const lUpperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.055, 0.38, 12), blazerMatM);
+    lUpperArm.position.set(-0.28, 1.34, 0.05);
+    lUpperArm.rotation.z = 0.3;
+    lUpperArm.rotation.x = 0.4;
+    const lForeArm = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.35, 12), blazerMatM);
+    lForeArm.position.set(-0.24, 1.22, 0.28);
+    lForeArm.rotation.x = Math.PI / 2.3;
+    const lHand = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), skinMat);
+    lHand.position.set(-0.2, 1.22, 0.45);
+    mishkaGroup.add(lUpperArm, lForeArm, lHand);
+
+    // Right Arm (resting forward holding pen)
+    const rUpperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.055, 0.38, 12), blazerMatM);
+    rUpperArm.position.set(0.28, 1.34, 0.05);
+    rUpperArm.rotation.z = -0.3;
+    rUpperArm.rotation.x = 0.45;
+    const rForeArm = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.35, 12), blazerMatM);
+    rForeArm.position.set(0.22, 1.22, 0.3);
+    rForeArm.rotation.x = Math.PI / 2.2;
+    const rHand = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), skinMat);
+    rHand.position.set(0.16, 1.22, 0.46);
+    mishkaGroup.add(rUpperArm, rForeArm, rHand);
+
+    // Neck
+    const neckM = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.08, 0.15, 16), skinMat);
+    neckM.position.set(0, 1.68, 0.02);
+    mishkaGroup.add(neckM);
+
+    // 3D Head Group (Animated during listening / nodding!)
+    const mishkaHeadGroup = new THREE.Group();
+    mishkaHeadGroup.position.set(0, 1.88, 0.04);
+
+    // 3D Head Sphere with Anime Face Texture
+    const faceMatM = new THREE.MeshStandardMaterial({
+      map: mishkaFaceTex,
+      roughness: 0.5,
+      metalness: 0.02
+    });
+    const headSphereM = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), faceMatM);
+    headSphereM.rotation.y = -Math.PI / 2; // Orient painted face forward
+    headSphereM.castShadow = true;
+    mishkaHeadGroup.add(headSphereM);
+
+    // 3D Hair Base Volume
+    const hairCapM = new THREE.Mesh(new THREE.SphereGeometry(0.29, 24, 24), hairMat);
+    hairCapM.position.set(0, 0.04, -0.05);
+    mishkaHeadGroup.add(hairCapM);
+
+    // Layered 3D Front Bangs (Ghibli cute fringe across forehead)
+    [-0.14, -0.07, 0, 0.07, 0.14].forEach((x, i) => {
+      const bang = new THREE.Mesh(new THREE.ConeGeometry(0.045, 0.14, 8), hairMat);
+      bang.position.set(x, 0.14, 0.24);
+      bang.rotation.x = Math.PI + 0.35;
+      bang.rotation.z = (x * 1.2);
+      mishkaHeadGroup.add(bang);
+    });
+
+    // 3D Side Locks (framing cheeks)
+    [-0.26, 0.26].forEach(x => {
+      const lock = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.22, 8), hairMat);
+      lock.position.set(x, 0.02, 0.1);
+      lock.rotation.x = Math.PI + 0.1;
+      lock.rotation.z = (x < 0 ? 0.25 : -0.25);
+      mishkaHeadGroup.add(lock);
+    });
+
+    // 3D High Ponytail with Pink Scrunchie (The iconic Ghibli Mishka hair!)
+    const scrunchie = new THREE.Mesh(new THREE.TorusGeometry(0.065, 0.025, 12, 24), scrunchieMat);
+    scrunchie.position.set(0, 0.16, -0.26);
+    scrunchie.rotation.x = Math.PI / 3;
+    mishkaHeadGroup.add(scrunchie);
+
+    const ponytailGroup = new THREE.Group();
+    ponytailGroup.position.set(0, 0.16, -0.26);
+    const ponytailMesh = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.38, 12), hairMat);
+    ponytailMesh.position.set(0, -0.16, -0.08);
+    ponytailMesh.rotation.x = -Math.PI / 2.8;
+    ponytailGroup.add(ponytailMesh);
+    mishkaHeadGroup.add(ponytailGroup);
+
+    mishkaGroup.add(mishkaHeadGroup);
     scene.add(mishkaGroup);
 
-    // --- CHARACTER 2: IBU NADYA (RIGHT SIDE / INTERVIEWEE) ---
+    // -------------------------------------------------------------------------
+    // FIGURE 2: BU NADYA (REAL 3D BUSINESSWOMAN ENTREPRENEUR — RIGHT SIDE)
+    // -------------------------------------------------------------------------
     const nadyaGroup = new THREE.Group();
-    nadyaGroup.position.set(1.45, 0, -0.75);
+    nadyaGroup.position.set(1.4, 0, -0.65);
     nadyaGroup.rotation.y = -3 * Math.PI / 4.2; // Angled toward Mishka & camera
 
-    // Armchair
-    const chairN = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 1.1), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
-    chairN.position.set(0, 0.4, 0);
-    chairN.castShadow = true; chairN.receiveShadow = true;
-    const chairNBack = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 0.15), new THREE.MeshStandardMaterial({ color: 0x065f46, roughness: 0.7 }));
-    chairNBack.position.set(0, 1.3, -0.5);
-    nadyaGroup.add(chairN, chairNBack);
+    // Chair
+    nadyaGroup.add(createArmchair());
 
-    // Wooden Standee Base Pedestal
-    const baseN = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.5, 0.08, 24), new THREE.MeshStandardMaterial({ color: 0xb45309 }));
-    baseN.position.set(0, 0.84, 0);
-    nadyaGroup.add(baseN);
+    // Materials
+    const skinNadyaMat = new THREE.MeshStandardMaterial({ color: 0xfed7aa, roughness: 0.55 });
+    const hijabMat = new THREE.MeshStandardMaterial({ color: 0xfef3c7, roughness: 0.65 }); // Soft cream hijab
+    const hijabFoldMat = new THREE.MeshStandardMaterial({ color: 0xfde68a, roughness: 0.7 });
+    const blazerMatN = new THREE.MeshStandardMaterial({ color: 0x047857, roughness: 0.5 }); // Forest green blazer
+    const skirtNadyaMat = new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.7 });
+    const broochMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9, roughness: 0.2 });
 
-    // Nadya Ghibli Standee Mesh
-    const nadyaMat = new THREE.MeshStandardMaterial({
-      map: nadyaTex,
-      transparent: true,
-      alphaTest: 0.05,
-      side: THREE.DoubleSide,
-      roughness: 0.3
+    // Lower Body: Long Modest Skirt & Legs
+    const skirtN = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.46, 0.45, 16), skirtNadyaMat);
+    skirtN.position.set(0, 0.96, 0);
+    skirtN.castShadow = true;
+    nadyaGroup.add(skirtN);
+
+    // Seated Thighs
+    [-0.12, 0.12].forEach(x => {
+      const thigh = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.085, 0.44, 12), skirtNadyaMat);
+      thigh.rotation.x = Math.PI / 2;
+      thigh.position.set(x, 0.92, 0.2);
+      nadyaGroup.add(thigh);
     });
-    const nadyaStandee = new THREE.Mesh(standeeGeo, nadyaMat);
-    nadyaStandee.position.set(0, 1.9, 0);
-    nadyaStandee.castShadow = true;
-    nadyaGroup.add(nadyaStandee);
 
+    // Upper Torso: Forest-Green Executive Blazer
+    const torsoMeshN = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.23, 0.62, 16), blazerMatN);
+    torsoMeshN.position.set(0, 1.38, 0);
+    torsoMeshN.castShadow = true;
+    nadyaGroup.add(torsoMeshN);
+
+    // Inner Cream Blouse & Lapels
+    const innerBlouse = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.26, 0.03), hijabMat);
+    innerBlouse.position.set(0, 1.5, 0.22);
+    const goldBrooch = new THREE.Mesh(new THREE.SphereGeometry(0.025, 12, 12), broochMat);
+    goldBrooch.position.set(-0.1, 1.52, 0.24);
+    nadyaGroup.add(innerBlouse, goldBrooch);
+
+    // Left Arm: Gracefully resting on desk beside milk bottle
+    const lUpperArmN = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.4, 12), blazerMatN);
+    lUpperArmN.position.set(-0.3, 1.36, 0.05);
+    lUpperArmN.rotation.z = 0.35;
+    lUpperArmN.rotation.x = 0.38;
+    const lForeArmN = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.05, 0.36, 12), blazerMatN);
+    lForeArmN.position.set(-0.24, 1.24, 0.28);
+    lForeArmN.rotation.x = Math.PI / 2.3;
+    const lHandN = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 12), skinNadyaMat);
+    lHandN.position.set(-0.2, 1.24, 0.46);
+    nadyaGroup.add(lUpperArmN, lForeArmN, lHandN);
+
+    // Right Arm: ARTICULATED CONVERSATIONAL GESTURING ARM!
+    const rArmGroupN = new THREE.Group();
+    rArmGroupN.position.set(0.3, 1.48, 0.08);
+
+    const rUpperArmN = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.38, 12), blazerMatN);
+    rUpperArmN.position.set(0, -0.16, 0);
+    rUpperArmN.rotation.z = -0.4;
+    rUpperArmN.rotation.x = 0.3;
+    rArmGroupN.add(rUpperArmN);
+
+    const rForeArmN = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.05, 0.34, 12), blazerMatN);
+    rForeArmN.position.set(0.12, -0.18, 0.22);
+    rForeArmN.rotation.x = Math.PI / 3;
+    rArmGroupN.add(rForeArmN);
+
+    const rHandN = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 12), skinNadyaMat);
+    rHandN.position.set(0.15, -0.05, 0.36);
+    rArmGroupN.add(rHandN);
+
+    nadyaGroup.add(rArmGroupN);
+
+    // Neck & Scarf Cowl Folds
+    const neckN = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.09, 0.16, 16), skinNadyaMat);
+    neckN.position.set(0, 1.7, 0.02);
+    const scarfCowl = new THREE.Mesh(new THREE.TorusGeometry(0.18, 0.06, 12, 24), hijabFoldMat);
+    scarfCowl.position.set(0, 1.64, 0.04);
+    scarfCowl.rotation.x = Math.PI / 2;
+    nadyaGroup.add(neckN, scarfCowl);
+
+    // 3D Head Group (Animated during speech!)
+    const nadyaHeadGroup = new THREE.Group();
+    nadyaHeadGroup.position.set(0, 1.9, 0.04);
+
+    // 3D Head Sphere with Bu Nadya Face Texture
+    const faceMatN = new THREE.MeshStandardMaterial({
+      map: nadyaFaceTex,
+      roughness: 0.5,
+      metalness: 0.02
+    });
+    const headSphereN = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), faceMatN);
+    headSphereN.rotation.y = -Math.PI / 2; // Orient painted face forward
+    headSphereN.castShadow = true;
+    nadyaHeadGroup.add(headSphereN);
+
+    // 3D Sculpted Hijab Wrap (Crown, back, and sides)
+    const hijabCap = new THREE.Mesh(new THREE.SphereGeometry(0.31, 28, 28), hijabMat);
+    hijabCap.position.set(0, 0.03, -0.04);
+    nadyaHeadGroup.add(hijabCap);
+
+    // 3D Hijab Chin Frame (Soft draping around jaw)
+    const chinWrap = new THREE.Mesh(new THREE.TorusGeometry(0.25, 0.04, 12, 24), hijabFoldMat);
+    chinWrap.position.set(0, -0.08, 0.06);
+    chinWrap.rotation.x = Math.PI / 2.5;
+    nadyaHeadGroup.add(chinWrap);
+
+    // 3D Draped Scarf Fold flowing over right shoulder
+    const drapedScarf = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.12, 0.35, 12), hijabMat);
+    drapedScarf.position.set(0.18, -0.22, 0.12);
+    drapedScarf.rotation.z = -0.3;
+    nadyaHeadGroup.add(drapedScarf);
+
+    nadyaGroup.add(nadyaHeadGroup);
     scene.add(nadyaGroup);
 
     // =========================================================================
-    // 4. MISHKA OUTFIT / STYLE SWITCHER
+    // 4. CAMERA VIEW CONTROLS & UI TOGGLE
     // =========================================================================
-    let currentMishkaStyle = 'reporter';
-
-    function switchMishkaStyle(style) {
-      currentMishkaStyle = style;
-      const btnRep = document.getElementById('btn-style-reporter');
-      const btnUser = document.getElementById('btn-style-user');
-
-      if (style === 'reporter') {
-        btnRep.classList.add('active');
-        btnUser.classList.remove('active');
-        mishkaMat.map = mishkaReporterTex;
-        mishkaMat.needsUpdate = true;
-        document.getElementById('mishka-ui-avatar').src = (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_avatar) || '../assets/interview/mishka_circle.png';
-      } else {
-        btnUser.classList.add('active');
-        btnRep.classList.remove('active');
-        mishkaMat.map = mishkaUserTex;
-        mishkaMat.needsUpdate = true;
-        document.getElementById('mishka-ui-avatar').src = (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.mishka_user_avatar) || '../assets/interview/mishka_reading_circle.png';
-      }
-      playResponseChime();
-    }
-
-    // =========================================================================
-    // 5. CAMERA PRESETS
-    // =========================================================================
-    let targetCamPos = { x: 0, y: 4.0, z: 7.8 };
-    let targetCamLook = { x: 0, y: 1.4, z: 0 };
+    let targetCamPos = { x: 0, y: 3.6, z: 6.8 };
+    let targetCamLook = { x: 0, y: 1.35, z: 0 };
     let isTransitioningCam = false;
 
     function setCameraView(view) {
@@ -728,29 +1002,49 @@
 
       if (view === 'all') {
         document.getElementById('btn-cam-all').classList.add('active');
-        targetCamPos = { x: 0, y: 4.0, z: 7.8 };
-        targetCamLook = { x: 0, y: 1.4, z: 0 };
+        targetCamPos = { x: 0, y: 3.6, z: 6.8 };
+        targetCamLook = { x: 0, y: 1.35, z: 0 };
       } else if (view === 'mishka') {
         document.getElementById('btn-cam-mishka').classList.add('active');
-        targetCamPos = { x: -2.3, y: 2.2, z: 3.2 };
-        targetCamLook = { x: -1.45, y: 1.8, z: 0.75 };
+        targetCamPos = { x: -2.0, y: 2.1, z: 2.8 };
+        targetCamLook = { x: -1.4, y: 1.6, z: 0.65 };
       } else if (view === 'nadya') {
         document.getElementById('btn-cam-nadya').classList.add('active');
-        targetCamPos = { x: 2.3, y: 2.2, z: 2.8 };
-        targetCamLook = { x: 1.45, y: 1.8, z: -0.75 };
+        targetCamPos = { x: 2.0, y: 2.1, z: 2.5 };
+        targetCamLook = { x: 1.4, y: 1.6, z: -0.65 };
       }
       isTransitioningCam = true;
       playTone(587.33, 'sine', 0.15, false);
     }
 
+    let isConsoleCollapsed = false;
+    function toggleConsole() {
+      isConsoleCollapsed = !isConsoleCollapsed;
+      const consoleEl = document.getElementById('interview-console');
+      const btn = document.getElementById('btn-toggle-console');
+
+      if (isConsoleCollapsed) {
+        consoleEl.classList.add('collapsed');
+        btn.innerText = "📋 Tampilkan Soal";
+        btn.classList.add('active');
+      } else {
+        consoleEl.classList.remove('collapsed');
+        btn.innerText = "👁️ Layar Penuh 3D";
+        btn.classList.remove('active');
+      }
+      setTimeout(() => {
+        onWindowResize();
+      }, 360);
+    }
+
     // =========================================================================
-    // 6. INTERVIEW SCENARIOS (5 SITUASI BERTAHAP BAB 4 BAHASA INDONESIA)
+    // 5. INTERVIEW SCENARIOS (5 SITUASI BERTAHAP BAB 4 BAHASA INDONESIA)
     // =========================================================================
     const interviewScenarios = [
       {
         situation: "SITUASI 1: ETIKA PEMBUKA & SALAM SANTUN",
         speakerName: "Ibu Nadya",
-        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerBadge: "🎙️ Menjawab",
         speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
         speakerText: "\"Halo, selamat pagi! Selamat datang di kantor KS Group. Senang sekali bisa bertemu dengan jurnalis cilik berprestasi seperti Mishka. Ada yang bisa saya bantu?\"",
         prompt: "Sebagai pewawancara profesional, bagaimana kalimat pembuka santun yang akan Mishka sampaikan?",
@@ -766,7 +1060,7 @@
       {
         situation: "SITUASI 2: MENGGALI IDE POKOK USAHA AWAL (KATA TANYA APA & KAPAN)",
         speakerName: "Ibu Nadya",
-        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerBadge: "🎙️ Menjawab",
         speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
         speakerText: "\"Sama-sama Mishka, dengan senang hati. Tentu, silakan tanyakan apa saja yang ingin kamu ketahui tentang sejarah dan produk usaha kami.\"",
         prompt: "Mishka ingin mengetahui ide pokok produk yang dibuat dan kapan usaha ini dimulai. Pertanyaan mana yang paling tepat?",
@@ -782,7 +1076,7 @@
       {
         situation: "SITUASI 3: MERESPONS IDIOM 'GULUNG TIKAR' & BANTING TULANG",
         speakerName: "Ibu Nadya",
-        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerBadge: "🎙️ Menjawab",
         speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
         speakerText: "\"Dulu di awal tahun 2019, usaha saya sempat gulung tikar karena mesin pendingin rusak dan modal habis. Tapi saya dan tim banting tulang siang malam untuk bangkit kembali.\"",
         prompt: "Ibu Nadya menyebut idiom 'gulung tikar' dan 'banting tulang'. Bagaimana tanggapan Mishka yang menunjukkan pemahaman makna kiasan serta empati jurnalis?",
@@ -798,7 +1092,7 @@
       {
         situation: "SITUASI 4: MENGGALI RAHASIA MUTU & PRODUK NAIK DAUN (BAGAIMANA)",
         speakerName: "Ibu Nadya",
-        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerBadge: "🎙️ Menjawab",
         speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
         speakerText: "\"Alhamdulillah, berkat kejujuran dan kerja keras, produk susu kemasan kami sekarang sedang naik daun dan menjadi buah bibir di kalangan anak sekolah serta atlet muda.\"",
         prompt: "Mishka ingin menggali proses menjaga kualitas produk yang sedang 'naik daun' (terkenal). Pertanyaan mana yang menggunakan kata tanya BAGAIMANA dengan tepat?",
@@ -814,7 +1108,7 @@
       {
         situation: "SITUASI 5: PENUTUPAN ELEGAN & PESAN INSPIRATIF",
         speakerName: "Ibu Nadya",
-        speakerBadge: "🎙️ Narasumber Menjawab",
+        speakerBadge: "🎙️ Menjawab",
         speakerAvatar: (window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.nadya_avatar) || '../assets/interview/nadya_circle.png',
         speakerText: "\"Kami selalu menjaga suhu susu murni di bawah 4 derajat Celsius dan bermitra langsung dengan peternak sapi lokal yang jujur dan higienis. Itu rahasianya.\"",
         prompt: "Waktu wawancara sudah hampir habis. Bagaimana kalimat penutup dan permintaan pesan inspirasi yang paling elegan dari Mishka?",
@@ -852,7 +1146,7 @@
       // Play soft chime
       playResponseChime();
 
-      // Trigger Ghibli character speaking animation
+      // Trigger Bu Nadya speaking animation (gesturing arm & head motion)
       triggerSpeakingAnimation();
 
       const optContainer = document.getElementById('options');
@@ -880,7 +1174,7 @@
         fb.innerText = "🌟 " + data.exp;
         fb.className = "feedback-banner show-correct";
 
-        // Mishka happy nodding animation
+        // Mishka happy 3D head nod!
         triggerMishkaNod();
       } else {
         playWrong();
@@ -905,7 +1199,7 @@
       }
     }
 
-    // Animation: Ibu Nadya gentle speaking motion
+    // Animation states
     let isSpeaking = false;
     let speakStartTime = 0;
 
@@ -918,17 +1212,16 @@
       setTimeout(() => {
         isSpeaking = false;
         if (pulse) pulse.style.display = 'none';
-      }, 2500);
+      }, 2800);
     }
 
-    // Animation: Mishka nodding when successful
     let isNodding = false;
     let nodStartTime = 0;
 
     function triggerMishkaNod() {
       isNodding = true;
       nodStartTime = performance.now();
-      setTimeout(() => { isNodding = false; }, 1200);
+      setTimeout(() => { isNodding = false; }, 1400);
     }
 
     function showVictoryModal() {
@@ -938,7 +1231,7 @@
     }
 
     // =========================================================================
-    // 7. RENDER LOOP & SMOOTH INTERPOLATIONS
+    // 6. RENDER LOOP & REAL 3D ANIMATIONS
     // =========================================================================
     let clock = new THREE.Clock();
 
@@ -946,57 +1239,71 @@
       requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // Gentle Ghibli character breathing idle animations
-      mishkaStandee.position.y = 1.9 + Math.sin(time * 2.2) * 0.02;
-      nadyaStandee.position.y = 1.9 + Math.sin(time * 2.0 + 1.2) * 0.02;
+      // Gentle organic breathing on both 3D human figures
+      torsoMeshM.position.y = 1.36 + Math.sin(time * 2.2) * 0.008;
+      mishkaHeadGroup.position.y = 1.88 + Math.sin(time * 2.2) * 0.008;
 
-      // Speaking animation on Nadya (gentle tilt & head motion)
+      torsoMeshN.position.y = 1.38 + Math.sin(time * 2.0 + 1.0) * 0.008;
+      nadyaHeadGroup.position.y = 1.9 + Math.sin(time * 2.0 + 1.0) * 0.008;
+
+      // Bu Nadya Speaking Animation (right arm gesture + head tilt)
       if (isSpeaking) {
         const elapsed = (performance.now() - speakStartTime) / 1000;
-        nadyaStandee.rotation.z = Math.sin(elapsed * 6) * 0.035;
-        nadyaStandee.rotation.y = Math.sin(elapsed * 4) * 0.04;
+        rArmGroupN.rotation.x = Math.sin(elapsed * 5) * 0.12;
+        rArmGroupN.rotation.y = Math.sin(elapsed * 3.5) * 0.08;
+        nadyaHeadGroup.rotation.y = Math.sin(elapsed * 3) * 0.06;
+        nadyaHeadGroup.rotation.x = Math.sin(elapsed * 4) * 0.04;
       } else {
-        nadyaStandee.rotation.z = 0;
-        nadyaStandee.rotation.y = 0;
+        rArmGroupN.rotation.x = 0;
+        rArmGroupN.rotation.y = 0;
+        nadyaHeadGroup.rotation.y = 0;
+        nadyaHeadGroup.rotation.x = 0;
       }
 
-      // Nodding animation on Mishka
+      // Mishka Attentive Nodding Animation
       if (isNodding) {
         const elapsed = (performance.now() - nodStartTime) / 1000;
-        mishkaStandee.rotation.x = Math.sin(elapsed * 10) * 0.06;
+        mishkaHeadGroup.rotation.x = Math.sin(elapsed * 9) * 0.12;
+        ponytailGroup.rotation.x = -Math.sin(elapsed * 9) * 0.18; // Ponytail bounce!
       } else {
-        mishkaStandee.rotation.x = 0;
+        mishkaHeadGroup.rotation.x = 0;
+        ponytailGroup.rotation.x = 0;
       }
 
-      // Smooth Camera Transition toward preset targets
+      // Smooth Camera Interpolation
       if (isTransitioningCam) {
-        camera.position.x += (targetCamPos.x - camera.position.x) * 0.05;
-        camera.position.y += (targetCamPos.y - camera.position.y) * 0.05;
-        camera.position.z += (targetCamPos.z - camera.position.z) * 0.05;
+        camera.position.x += (targetCamPos.x - camera.position.x) * 0.055;
+        camera.position.y += (targetCamPos.y - camera.position.y) * 0.055;
+        camera.position.z += (targetCamPos.z - camera.position.z) * 0.055;
 
-        controls.target.x += (targetCamLook.x - controls.target.x) * 0.05;
-        controls.target.y += (targetCamLook.y - controls.target.y) * 0.05;
-        controls.target.z += (targetCamLook.z - controls.target.z) * 0.05;
+        controls.target.x += (targetCamLook.x - controls.target.x) * 0.055;
+        controls.target.y += (targetCamLook.y - controls.target.y) * 0.055;
+        controls.target.z += (targetCamLook.z - controls.target.z) * 0.055;
 
         const dist = Math.hypot(
           targetCamPos.x - camera.position.x,
           targetCamPos.y - camera.position.y,
           targetCamPos.z - camera.position.z
         );
-        if (dist < 0.05) isTransitioningCam = false;
+        if (dist < 0.04) isTransitioningCam = false;
       }
 
       controls.update();
       renderer.render(scene, camera);
     }
 
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+    function onWindowResize() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+      renderer.setSize(w, h);
+    }
+
+    window.addEventListener('resize', onWindowResize);
 
     window.onload = () => {
+      onWindowResize();
       loadSituation(0);
       animate();
     };
