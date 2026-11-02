@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulasi Navigasi Lalu Lintas 3D: Petualangan Kapten Aqlan — Kelas 4</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: rgba(15, 23, 42, 0.96);
+      --card-border: #38bdf8;
+      --neon-cyan: #38bdf8;
+      --neon-gold: #fbbf24;
+      --neon-green: #34d399;
+      --neon-red: #f87171;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+    
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-dark);
+      color: var(--text-main);
+    }
+
+    /* Split Screen Layout: Left 3D Viewport, Right Mission Console */
+    #app-layout {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 3D Stage (Completely unobstructed, takes left 58% on desktop) */
+    #stage-viewport {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s ease;
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Floating Toolbar (Top Left of 3D Scene) */
+    .stage-toolbar {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      pointer-events: auto;
+    }
+    .tool-btn {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid #0284c7;
+      color: #e0f2fe;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tool-btn:hover {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: var(--neon-cyan);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .tool-btn.active {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #0f172a;
+      border-color: #38bdf8;
+    }
+
+    .stage-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      z-index: 20;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid #0369a1;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #bae6fd;
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+    }
+
+    /* Right Side Mission Console (Dedicated, never covers 3D characters) */
+    #mission-console {
+      width: 460px;
+      max-width: 45vw;
+      height: 100%;
+      background: var(--card-bg);
+      border-left: 2px solid var(--card-border);
+      box-shadow: -8px 0 35px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 22px;
+      z-index: 30;
+      overflow-y: auto;
+      transition: all 0.35s ease;
+    }
+
+    #mission-console.collapsed {
+      margin-right: -480px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Console Header */
+    .console-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 11.5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .console-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--neon-gold);
+      letter-spacing: 0.3px;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid #0284c7;
+      border-radius: 10px;
+      padding: 7px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+    .stat-val { color: var(--neon-gold); font-size: 13.5px; }
+
+    /* Officer Briefing Dialogue Box (Pak Arya) */
+    .dialogue-section {
+      margin: 12px 0 10px;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid #0369a1;
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      box-shadow: inset 0 0 14px rgba(56, 189, 248, 0.1);
+    }
+    .avatar-wrapper {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+    }
+    .speaker-avatar-img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--neon-gold);
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+    }
+    .pulse-ring {
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-cyan);
+      animation: pulse 1.8s infinite;
+      pointer-events: none;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 0.2; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .speaker-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .speaker-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--neon-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .speaker-badge {
+      font-size: 10.5px;
+      background: rgba(2, 132, 199, 0.25);
+      color: #38bdf8;
+      padding: 2px 7px;
+      border-radius: 10px;
+      border: 1px solid #0284c7;
+    }
+    .speaker-text {
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #ffffff;
+    }
+
+    /* Decision Prompt Box (Aqlan) */
+    .prompt-section {
+      background: rgba(2, 132, 199, 0.25);
+      border: 1px solid #0284c7;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .aqlan-avatar-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-cyan);
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+    }
+    .prompt-label {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .prompt-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f8fafc;
+      line-height: 1.35;
+    }
+
+    /* Multiple Choice Options */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    button.opt-btn {
+      background: #1e293b;
+      border: 1px solid #0284c7;
+      color: #f8fafc;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      line-height: 1.35;
+    }
+    button.opt-btn:hover {
+      background: #0369a1;
+      border-color: var(--neon-cyan);
+      transform: translateY(-1px);
+    }
+    button.opt-btn.correct {
+      background: #065f46 !important;
+      border-color: var(--neon-green) !important;
+      color: #6ee7b7 !important;
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+    }
+    button.opt-btn.wrong {
+      background: #7f1d1d !important;
+      border-color: var(--neon-red) !important;
+      color: #fecaca !important;
+    }
+
+    .feedback-banner {
+      margin-top: 8px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: none;
+      line-height: 1.4;
+    }
+    .feedback-banner.show-correct {
+      display: block;
+      background: rgba(52, 211, 153, 0.2);
+      border: 1px solid var(--neon-green);
+      color: #6ee7b7;
+    }
+    .feedback-banner.show-wrong {
+      display: block;
+      background: rgba(248, 113, 113, 0.2);
+      border: 1px solid var(--neon-red);
+      color: #fca5a5;
+    }
+
+    .btn-next {
+      margin-top: 10px;
+      width: 100%;
+      padding: 11px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border: none;
+      border-radius: 10px;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      display: none;
+      transition: 0.2s;
+    }
+    .btn-next:hover { opacity: 0.95; transform: scale(1.01); }
+
+    /* Victory Modal */
+    #victory-modal {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card-bg);
+      border: 2px solid var(--neon-gold);
+      border-radius: 20px;
+      padding: 26px;
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 0 45px rgba(0,0,0,0.88);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+      pointer-events: auto;
+    }
+    #victory-modal h2 { font-size: 22px; color: var(--neon-gold); margin-bottom: 8px; }
+    #victory-modal p { color: var(--text-muted); font-size: 13px; margin-bottom: 14px; line-height: 1.5; }
+    .badge-seal {
+      display: inline-block;
+      padding: 8px 18px;
+      background: linear-gradient(135deg, #f59e0b, #0284c7);
+      color: #ffffff;
+      font-weight: 900;
+      border-radius: 30px;
+      font-size: 13.5px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 20px rgba(2, 132, 199, 0.45);
+    }
+
+    @media (max-width: 900px) {
+      #app-layout { flex-direction: column; }
+      #stage-viewport { height: 50vh; }
+      #mission-console {
+        width: 100%;
+        max-width: 100vw;
+        height: 50vh;
+        border-left: none;
+        border-top: 2px solid var(--card-border);
+      }
+    }
+  </style>
+  <script src="../assets/js/three.min.js"></script>
+  <script src="../assets/js/OrbitControls.js"></script>
+  <script src="../assets/interview/textures.js"></script>
+</head>
+<body>
+
+  <div id="app-layout">
+    <!-- LEFT: 3D TRAFFIC STAGE (100% UNOBSTRUCTED) -->
+    <div id="stage-viewport">
+      <div id="canvas-container"></div>
+
+      <!-- Floating Controls Toolbar -->
+      <div class="stage-toolbar">
+        <button class="tool-btn active" id="btn-cam-all" onclick="setCameraView('all')">🎥 Pemandangan Jalan</button>
+        <button class="tool-btn" id="btn-cam-aqlan" onclick="setCameraView('aqlan')">🛹 Sorot Kapten Aqlan</button>
+        <button class="tool-btn" id="btn-cam-arya" onclick="setCameraView('arya')">👮 Sorot Pak Arya</button>
+        <button class="tool-btn" id="btn-toggle-console" onclick="toggleConsole()">👁️ Layar Penuh 3D</button>
+      </div>
+
+      <div class="stage-hint">
+        <span>🖱️ Putar 3D: Klik &amp; geser mouse | Zoom: Scroll roda mouse</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: INTERACTIVE NAVIGATION CONSOLE (NEVER BLOCKS 3D FIGURES) -->
+    <div id="mission-console">
+      <div class="console-header">
+        <div class="header-top">
+          <span class="badge">Aqlan • Kelas 4 SD</span>
+          <span style="font-size: 11px; color: var(--text-muted);">Bahasa Indonesia Bab 3</span>
+        </div>
+        <div class="console-title">Navigasi Kota: Petualangan Kapten Aqlan</div>
+        <div class="stats-row">
+          <span>Poin Observasi: <span id="score" class="stat-val">0</span></span>
+          <span>Ketertiban: <span id="streak" class="stat-val">100</span>%⭐</span>
+          <span>Misi: <span id="level" class="stat-val">1</span>/5</span>
+        </div>
+      </div>
+
+      <!-- Officer Briefing Dialogue Box (Pak Arya) -->
+      <div class="dialogue-section">
+        <div class="avatar-wrapper">
+          <img id="speaker-avatar" class="speaker-avatar-img" src="../assets/interview/arya_circle.png" alt="Pak Arya">
+          <div class="pulse-ring" id="avatar-pulse"></div>
+        </div>
+        <div style="flex:1;">
+          <div class="speaker-meta">
+            <span class="speaker-name" id="speaker-name">Pak Arya (Polisi Lalu Lintas)</span>
+            <span class="speaker-badge" id="speaker-badge">👮 Arahan Pos</span>
+          </div>
+          <p class="speaker-text" id="speaker-text">"Halo Kapten Aqlan! Selamat datang di pos lalu lintas kota. Sebelum kamu meluncur dengan skateboard, perhatikan rambu kuning belah ketupat di depanmu!"</p>
+        </div>
+      </div>
+
+      <!-- Aqlan's Decision Prompt -->
+      <div class="prompt-section">
+        <img id="aqlan-ui-avatar" class="aqlan-avatar-img" src="../assets/interview/aqlan_circle.png" alt="Aqlan">
+        <div style="flex:1;">
+          <div class="prompt-label">Analisis Kapten Aqlan:</div>
+          <div class="prompt-text" id="prompt-text">Berdasarkan warna dan bentuknya, apakah fungsi rambu kuning belah ketupat tersebut?</div>
+        </div>
+      </div>
+
+      <!-- Multiple Choice Options -->
+      <div class="options-grid" id="options"></div>
+
+      <div class="feedback-banner" id="feedback"></div>
+
+      <button class="btn-next" id="btn-next" onclick="nextSituation()">
+        LANJUT KE MISI BERIKUTNYA ❯
+      </button>
+    </div>
+  </div>
+
+  <!-- VICTORY MODAL -->
+  <div id="victory-modal">
+    <div style="font-size: 48px; margin-bottom: 8px;">🛹🚦🏆</div>
+    <h2>MISI KOTA BERHASIL GEMILANG!</h2>
+    <p>Hebat sekali Kapten Aqlan! Kamu telah menguasai arti semua rambu lalu lintas, navigasi arah mata angin denah, membedakan paragraf deskripsi vs argumentasi, dan menggunakan awalan 'ber-' dengan sangat cermat!</p>
+    <div class="badge-seal">KAPTEN LALU LINTAS &amp; LITERASI 2026</div>
+    <div style="font-size: 14.5px; margin-bottom: 12px;">Skor Observasi: <strong id="final-score" style="color:var(--neon-gold); font-size:20px;">0</strong> / 500</div>
+    <button class="btn-next" style="display:inline-block; width:auto; padding:10px 24px;" onclick="location.reload()">
+      PETUALANGAN MISI BARU ↺
+    </button>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. WEB AUDIO SYNTHESIZERS (WARM MELODIC SOUND EFFECTS)
+    // =========================================================================
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, type, dur, ramp=true) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      if (ramp) osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + dur);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.linearRampToValueAtTime(0, now + dur);
+      osc.start(now);
+      osc.stop(now + dur);
+    }
+
+    function playResponseChime() {
+      [440, 554.37, 659.25].forEach((f, i) => {
+        setTimeout(() => playTone(f, 'sine', 0.22, false), i * 65);
+      });
+    }
+
+    function playCorrect() {
+      [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+        setTimeout(() => playTone(f, 'triangle', 0.2, true), i * 55);
+      });
+    }
+
+    function playWrong() {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.linearRampToValueAtTime(120, now + 0.2);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.2);
+      osc.start(now);
+      osc.stop(now + 0.2);
+    }
+
+    // =========================================================================
+    // 2. THREE.JS 3D CITY INTERSECTION & STREET STAGE
+    // =========================================================================
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0f172a);
+    scene.fog = new THREE.FogExp2(0x0f172a, 0.025);
+
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(0, 3.8, 7.2);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.maxPolarAngle = Math.PI / 2 - 0.04;
+    controls.minDistance = 3.0;
+    controls.maxDistance = 12;
+    controls.target.set(0, 1.25, 0);
+
+    // Dynamic Lighting
+    const ambientLight = new THREE.AmbientLight(0xfff7ed, 0.85);
+    scene.add(ambientLight);
+
+    const sunLight = new THREE.DirectionalLight(0xfef08a, 1.3);
+    sunLight.position.set(5, 8, 4);
+    sunLight.castShadow = true;
+    sunLight.shadow.mapSize.width = 1024;
+    sunLight.shadow.mapSize.height = 1024;
+    scene.add(sunLight);
+
+    const skyRimLight = new THREE.PointLight(0x38bdf8, 1.0, 14);
+    skyRimLight.position.set(-4, 4, -2);
+    scene.add(skyRimLight);
+
+    // --- City Street Architecture ---
+    // Asphalt Road
+    const roadGeo = new THREE.PlaneGeometry(16, 16);
+    const roadMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.85 });
+    const road = new THREE.Mesh(roadGeo, roadMat);
+    road.rotation.x = -Math.PI / 2;
+    road.receiveShadow = true;
+    scene.add(road);
+
+    // White Painted Zebra Cross (Pedestrian Crosswalk)
+    const zebraGroup = new THREE.Group();
+    for (let z = -2.4; z <= 2.4; z += 0.8) {
+      const stripe = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.42), new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.6 }));
+      stripe.rotation.x = -Math.PI / 2;
+      stripe.position.set(0, 0.01, z);
+      stripe.receiveShadow = true;
+      zebraGroup.add(stripe);
+    }
+    scene.add(zebraGroup);
+
+    // Sidewalk Pavement (Raised Curb)
+    const curbMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.7 });
+    const sidewalk = new THREE.Mesh(new THREE.BoxGeometry(16, 0.2, 5.0), curbMat);
+    sidewalk.position.set(0, 0.1, -4.5);
+    sidewalk.receiveShadow = true;
+    scene.add(sidewalk);
+
+    // Traffic Light Post
+    const poleMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.7, roughness: 0.3 });
+    const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3.6), poleMat);
+    pole.position.set(3.2, 1.8, -1.8);
+    pole.castShadow = true;
+    scene.add(pole);
+
+    const tLightBox = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.0, 0.3), poleMat);
+    tLightBox.position.set(3.2, 3.2, -1.8);
+    scene.add(tLightBox);
+
+    // Glowing Signal Lights: Red, Yellow, Green
+    const redLight = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
+    redLight.position.set(3.2, 3.5, -1.64);
+    const yellowLight = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
+    yellowLight.position.set(3.2, 3.2, -1.64);
+    const greenLight = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), new THREE.MeshBasicMaterial({ color: 0x22c55e }));
+    greenLight.position.set(3.2, 2.9, -1.64);
+    scene.add(redLight, yellowLight, greenLight);
+
+    // Real 3D Traffic Signs (Rambu Kuning Peringatan & Rambu Merah Larangan)
+    const signPole1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 2.6), poleMat);
+    signPole1.position.set(-2.8, 1.3, -1.6);
+    signPole1.castShadow = true;
+    scene.add(signPole1);
+
+    // Yellow Diamond Warning Sign (Rambu Peringatan Belah Ketupat)
+    const warnSign = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, 0.04), new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.3 }));
+    warnSign.rotation.z = Math.PI / 4; // Rotated into diamond shape!
+    warnSign.position.set(-2.8, 2.4, -1.58);
+    warnSign.castShadow = true;
+    const warnBorder = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.62, 0.045), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
+    warnBorder.rotation.z = Math.PI / 4;
+    warnBorder.position.set(-2.8, 2.4, -1.57);
+    scene.add(warnSign, warnBorder);
+
+    // =========================================================================
+    // 3. REAL 3D SOLID FIGURES (AQLAN & PAK ARYA)
+    // =========================================================================
+    const texLoader = new THREE.TextureLoader();
+    const aqlanFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.aqlan_3d_face) || '../assets/interview/aqlan_3d_face.png');
+    const aryaFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.arya_3d_face) || '../assets/interview/arya_3d_face.png');
+
+    // -------------------------------------------------------------------------
+    // FIGURE 1: KAPTEN AQLAN (SOLID 3D GHIBLI SKATER BOY — LEFT SIDE)
+    // -------------------------------------------------------------------------
+    const aqlanGroup = new THREE.Group();
+    aqlanGroup.position.set(-1.3, 0, 0.4);
+    aqlanGroup.rotation.y = Math.PI / 4.8; // Angled facing the intersection & Pak Arya
+
+    // Materials
+    const skinAqlanMat = new THREE.MeshStandardMaterial({ color: 0xfacb99, roughness: 0.55 });
+    const hairDarkMat = new THREE.MeshStandardMaterial({ color: 0x24140d, roughness: 0.65 });
+    const helmetMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, metalness: 0.1 }); // Sporty red helmet
+    const helmetStripeMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 });
+    const jacketMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.5 }); // Sky blue windbreaker
+    const shirtMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.4 });
+    const shortsMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.7 });
+    const shoeMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.4 });
+    const kneePadMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.4 });
+
+    // 3D Skateboard beneath Aqlan's Feet
+    const boardGroup = new THREE.Group();
+    boardGroup.position.set(0, 0.08, 0);
+
+    const deck = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.035, 1.25), new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.4 }));
+    deck.castShadow = true;
+    const gripTape = new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.038, 1.2), new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.9 }));
+    boardGroup.add(deck, gripTape);
+
+    // Skateboard Wheels (4 wheels)
+    const wheelMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.3 });
+    const truckMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8 });
+    [[-0.22, -0.42], [0.22, -0.42], [-0.22, 0.42], [0.22, 0.42]].forEach(([x, z]) => {
+      const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 0.05, 12), wheelMat);
+      wheel.rotation.z = Math.PI / 2;
+      wheel.position.set(x, -0.04, z);
+      wheel.castShadow = true;
+      boardGroup.add(wheel);
+    });
+    const truckF = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.03, 0.05), truckMat);
+    truckF.position.set(0, -0.04, 0.42);
+    const truckB = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.03, 0.05), truckMat);
+    truckB.position.set(0, -0.04, -0.42);
+    boardGroup.add(truckF, truckB);
+
+    aqlanGroup.add(boardGroup);
+
+    // Legs & Stance: Athletic bent knees riding on the skateboard
+    // Left Leg (Front)
+    const lThigh = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.07, 0.38, 12), shortsMat);
+    lThigh.position.set(-0.12, 0.45, 0.22);
+    lThigh.rotation.x = -0.2;
+    const lShin = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.35, 12), skinAqlanMat);
+    lShin.position.set(-0.12, 0.2, 0.28);
+    const lKneePad = new THREE.Mesh(new THREE.SphereGeometry(0.065, 10, 10), kneePadMat);
+    lKneePad.position.set(-0.12, 0.32, 0.32);
+    const lShoe = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.22), shoeMat);
+    lShoe.position.set(-0.12, 0.08, 0.3);
+    aqlanGroup.add(lThigh, lShin, lKneePad, lShoe);
+
+    // Right Leg (Back)
+    const rThigh = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.07, 0.38, 12), shortsMat);
+    rThigh.position.set(0.12, 0.45, -0.2);
+    rThigh.rotation.x = 0.25;
+    const rShin = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.35, 12), skinAqlanMat);
+    rShin.position.set(0.12, 0.2, -0.25);
+    const rKneePad = new THREE.Mesh(new THREE.SphereGeometry(0.065, 10, 10), kneePadMat);
+    rKneePad.position.set(0.12, 0.32, -0.22);
+    const rShoe = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.22), shoeMat);
+    rShoe.position.set(0.12, 0.08, -0.26);
+    aqlanGroup.add(rThigh, rShin, rKneePad, rShoe);
+
+    // Torso: Sporty Windbreaker Jacket & T-Shirt
+    const torsoMeshA = new THREE.Mesh(new THREE.CylinderGeometry(0.23, 0.2, 0.55, 16), jacketMat);
+    torsoMeshA.position.set(0, 0.88, 0);
+    torsoMeshA.castShadow = true;
+    aqlanGroup.add(torsoMeshA);
+
+    const innerTShirt = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.22, 0.04), shirtMat);
+    innerTShirt.position.set(0, 0.98, 0.18);
+    aqlanGroup.add(innerTShirt);
+
+    // 3D Arms: Balancing stance on skateboard
+    const lUpperArmA = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.05, 0.35, 12), jacketMat);
+    lUpperArmA.position.set(-0.28, 0.88, 0.1);
+    lUpperArmA.rotation.z = 0.45;
+    lUpperArmA.rotation.x = 0.3;
+    const lForeArmA = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.32, 12), skinAqlanMat);
+    lForeArmA.position.set(-0.35, 0.72, 0.26);
+    lForeArmA.rotation.x = Math.PI / 3;
+    const lHandA = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 10), skinAqlanMat);
+    lHandA.position.set(-0.38, 0.72, 0.42);
+    aqlanGroup.add(lUpperArmA, lForeArmA, lHandA);
+
+    const rUpperArmA = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.05, 0.35, 12), jacketMat);
+    rUpperArmA.position.set(0.28, 0.88, -0.05);
+    rUpperArmA.rotation.z = -0.5;
+    rUpperArmA.rotation.x = -0.2;
+    const rForeArmA = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.32, 12), skinAqlanMat);
+    rForeArmA.position.set(0.36, 0.75, -0.15);
+    rForeArmA.rotation.x = -Math.PI / 4;
+    const rHandA = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 10), skinAqlanMat);
+    rHandA.position.set(0.42, 0.78, -0.28);
+    aqlanGroup.add(rUpperArmA, rForeArmA, rHandA);
+
+    // Neck
+    const neckA = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.08, 0.14, 16), skinAqlanMat);
+    neckA.position.set(0, 1.18, 0.02);
+    aqlanGroup.add(neckA);
+
+    // 3D Head Group (Animated during listening and cheering!)
+    const aqlanHeadGroup = new THREE.Group();
+    aqlanHeadGroup.position.set(0, 1.38, 0.04);
+
+    // Head Sphere with Aqlan Face Texture
+    const faceMatA = new THREE.MeshStandardMaterial({
+      map: aqlanFaceTex,
+      roughness: 0.5,
+      metalness: 0.02
+    });
+    const headSphereA = new THREE.Mesh(new THREE.SphereGeometry(0.27, 32, 32), faceMatA);
+    headSphereA.rotation.y = -Math.PI / 2; // Face forward
+    headSphereA.castShadow = true;
+    aqlanHeadGroup.add(headSphereA);
+
+    // 3D Skate Helmet with Racing Stripe
+    const helmetSphere = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 24), helmetMat);
+    helmetSphere.position.set(0, 0.05, -0.02);
+    const helmetStripe = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.62, 0.62), helmetStripeMat);
+    helmetStripe.position.set(0, 0.05, -0.02);
+    const helmetVisor = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.04, 0.12), helmetMat);
+    helmetVisor.position.set(0, 0.12, 0.28);
+    helmetVisor.rotation.x = -0.2;
+    aqlanHeadGroup.add(helmetSphere, helmetStripe, helmetVisor);
+
+    // Messy Hair Peeking Under Helmet
+    [-0.14, -0.07, 0, 0.07, 0.14].forEach(x => {
+      const bang = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.12, 8), hairDarkMat);
+      bang.position.set(x, 0.14, 0.22);
+      bang.rotation.x = Math.PI + 0.3;
+      bang.rotation.z = x * 1.1;
+      aqlanHeadGroup.add(bang);
+    });
+
+    aqlanGroup.add(aqlanHeadGroup);
+    scene.add(aqlanGroup);
+
+    // -------------------------------------------------------------------------
+    // FIGURE 2: PAK ARYA (SOLID 3D FRIENDLY TRAFFIC OFFICER — RIGHT SIDE)
+    // -------------------------------------------------------------------------
+    const aryaGroup = new THREE.Group();
+    aryaGroup.position.set(1.4, 0, -0.6);
+    aryaGroup.rotation.y = -3 * Math.PI / 4.2;
+
+    const skinAryaMat = new THREE.MeshStandardMaterial({ color: 0xfed7aa, roughness: 0.55 });
+    const policeNavyMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 });
+    const safetyVestMat = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.4 }); // High-vis yellow
+    const silverStripeMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.2, metalness: 0.6 });
+    const goldBadgeMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9, roughness: 0.2 });
+
+    // Standing Legs
+    [-0.14, 0.14].forEach(x => {
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.07, 0.92, 12), policeNavyMat);
+      leg.position.set(x, 0.46, 0);
+      const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.09, 0.24), policeNavyMat);
+      shoe.position.set(x, 0.05, 0.04);
+      shoe.castShadow = true;
+      aryaGroup.add(leg, shoe);
+    });
+
+    // Torso: Police Shirt + High-Vis Safety Vest
+    const torsoMeshArya = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.23, 0.68, 16), safetyVestMat);
+    torsoMeshArya.position.set(0, 1.25, 0);
+    torsoMeshArya.castShadow = true;
+    aryaGroup.add(torsoMeshArya);
+
+    // Silver Reflective Stripes
+    const stripe1 = new THREE.Mesh(new THREE.BoxGeometry(0.53, 0.06, 0.48), silverStripeMat);
+    stripe1.position.set(0, 1.32, 0);
+    const stripe2 = new THREE.Mesh(new THREE.BoxGeometry(0.53, 0.06, 0.48), silverStripeMat);
+    stripe2.position.set(0, 1.15, 0);
+    const badge = new THREE.Mesh(new THREE.SphereGeometry(0.035, 12, 12), goldBadgeMat);
+    badge.position.set(-0.11, 1.42, 0.22);
+    aryaGroup.add(stripe1, stripe2, badge);
+
+    // Left Arm: Rested at belt
+    const lArmArya = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.45, 12), policeNavyMat);
+    lArmArya.position.set(-0.32, 1.25, 0.06);
+    lArmArya.rotation.z = 0.35;
+    lArmArya.rotation.x = 0.2;
+    const lHandArya = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 10), skinAryaMat);
+    lHandArya.position.set(-0.25, 1.05, 0.16);
+    aryaGroup.add(lArmArya, lHandArya);
+
+    // Right Arm: ARTICULATED CONVERSATIONAL & SIGNALING ARM!
+    const rArmGroupArya = new THREE.Group();
+    rArmGroupArya.position.set(0.32, 1.42, 0.06);
+
+    const rUpperArmArya = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.4, 12), policeNavyMat);
+    rUpperArmArya.position.set(0, -0.16, 0);
+    rUpperArmArya.rotation.z = -0.4;
+    rArmGroupArya.add(rUpperArmArya);
+
+    const rForeArmArya = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.05, 0.36, 12), policeNavyMat);
+    rForeArmArya.position.set(0.12, -0.2, 0.2);
+    rForeArmArya.rotation.x = Math.PI / 3;
+    rArmGroupArya.add(rForeArmArya);
+
+    const rHandArya = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 10), skinAryaMat);
+    rHandArya.position.set(0.16, -0.06, 0.34);
+    // Holding friendly traffic sign baton
+    const baton = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35), new THREE.MeshStandardMaterial({ color: 0xef4444 }));
+    baton.position.set(0.18, 0.08, 0.36);
+    rArmGroupArya.add(rHandArya, baton);
+
+    aryaGroup.add(rArmGroupArya);
+
+    // Neck
+    const neckArya = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.09, 0.16, 16), skinAryaMat);
+    neckArya.position.set(0, 1.62, 0.02);
+    aryaGroup.add(neckArya);
+
+    // 3D Head Group
+    const aryaHeadGroup = new THREE.Group();
+    aryaHeadGroup.position.set(0, 1.82, 0.04);
+
+    const faceMatArya = new THREE.MeshStandardMaterial({
+      map: aryaFaceTex,
+      roughness: 0.5,
+      metalness: 0.02
+    });
+    const headSphereArya = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), faceMatArya);
+    headSphereArya.rotation.y = -Math.PI / 2;
+    headSphereArya.castShadow = true;
+    aryaHeadGroup.add(headSphereArya);
+
+    // Police Peaked Cap
+    const capCrown = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.28, 0.16, 24), policeNavyMat);
+    capCrown.position.set(0, 0.18, -0.02);
+    const capVisor = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.04, 0.18), new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2 }));
+    capVisor.position.set(0, 0.14, 0.22);
+    capVisor.rotation.x = -0.22;
+    const capBadge = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.06, 8), goldBadgeMat);
+    capBadge.position.set(0, 0.22, 0.25);
+    capBadge.rotation.x = Math.PI / 2;
+    aryaHeadGroup.add(capCrown, capVisor, capBadge);
+
+    aryaGroup.add(aryaHeadGroup);
+    scene.add(aryaGroup);
+
+    // =========================================================================
+    // 4. CAMERA VIEW CONTROLS & UI TOGGLE
+    // =========================================================================
+    let targetCamPos = { x: 0, y: 3.8, z: 7.2 };
+    let targetCamLook = { x: 0, y: 1.25, z: 0 };
+    let isTransitioningCam = false;
+
+    function setCameraView(view) {
+      document.getElementById('btn-cam-all').classList.remove('active');
+      document.getElementById('btn-cam-aqlan').classList.remove('active');
+      document.getElementById('btn-cam-arya').classList.remove('active');
+
+      if (view === 'all') {
+        document.getElementById('btn-cam-all').classList.add('active');
+        targetCamPos = { x: 0, y: 3.8, z: 7.2 };
+        targetCamLook = { x: 0, y: 1.25, z: 0 };
+      } else if (view === 'aqlan') {
+        document.getElementById('btn-cam-aqlan').classList.add('active');
+        targetCamPos = { x: -2.1, y: 1.8, z: 2.6 };
+        targetCamLook = { x: -1.3, y: 1.1, z: 0.4 };
+      } else if (view === 'arya') {
+        document.getElementById('btn-cam-arya').classList.add('active');
+        targetCamPos = { x: 2.2, y: 2.1, z: 2.4 };
+        targetCamLook = { x: 1.4, y: 1.5, z: -0.6 };
+      }
+      isTransitioningCam = true;
+      playTone(587.33, 'sine', 0.15, false);
+    }
+
+    let isConsoleCollapsed = false;
+    function toggleConsole() {
+      isConsoleCollapsed = !isConsoleCollapsed;
+      const consoleEl = document.getElementById('mission-console');
+      const btn = document.getElementById('btn-toggle-console');
+
+      if (isConsoleCollapsed) {
+        consoleEl.classList.add('collapsed');
+        btn.innerText = "📋 Tampilkan Misi";
+        btn.classList.add('active');
+      } else {
+        consoleEl.classList.remove('collapsed');
+        btn.innerText = "👁️ Layar Penuh 3D";
+        btn.classList.remove('active');
+      }
+      setTimeout(() => {
+        onWindowResize();
+      }, 360);
+    }
+
+    // =========================================================================
+    // 5. MISSION SCENARIOS (5 MISI BERTAHAP BAB 3 BAHASA INDONESIA KELAS 4)
+    // =========================================================================
+    const missionScenarios = [
+      {
+        situation: "MISI 1: MENGENAL WARNA & BENTUK RAMBU (RAMBU PERINGATAN)",
+        speakerName: "Pak Arya (Polisi Lalu Lintas)",
+        speakerBadge: "👮 Arahan Pos",
+        speakerText: "\"Halo Kapten Aqlan! Selamat datang di pos lalu lintas kota. Sebelum kamu meluncur dengan skateboard, perhatikan rambu kuning belah ketupat di tiang sebelah kiri!\"",
+        prompt: "Berdasarkan warna dan bentuknya pada Bab 3, apakah fungsi rambu kuning berbentuk belah ketupat tersebut?",
+        options: [
+          "A. Rambu Larangan (Melarang pengguna jalan melakukan suatu tindakan)",
+          "B. Rambu Peringatan (Memberi peringatan kemungkinan bahaya atau kondisi jalan di depan agar pengguna jalan waspada dan berhati-hati)",
+          "C. Rambu Perintah (Memerintahkan pengendara wajib belok kanan)",
+          "D. Rambu Petunjuk arah rumah sakit"
+        ],
+        correct: 1,
+        exp: "Analisis Rambu Tepat Sekali! Rambu berlatar KUNING dengan lambang HITAM adalah RAMBU PERINGATAN. Aqlan harus mengurangi laju skateboard dan waspada!"
+      },
+      {
+        situation: "MISI 2: RAMBU LARANGAN & ETIKA SKATER TERTIB",
+        speakerName: "Pak Arya (Polisi Lalu Lintas)",
+        speakerBadge: "👮 Arahan Pos",
+        speakerText: "\"Di ujung trotoar pejalan kaki, ada rambu berbentuk lingkaran putih dengan garis tepi merah tebal dan garis silang miring merah di tengahnya.\"",
+        prompt: "Jika Aqlan melihat rambu berlingkar MERAH dengan garis coret silang, apa jenis rambu tersebut dan bagaimana tindakan tertib yang harus Aqlan lakukan?",
+        options: [
+          "A. Rambu Petunjuk, Aqlan boleh meluncur secepat mungkin melompati pejalan kaki.",
+          "B. Rambu Larangan, yang melarang suatu tindakan (seperti melintas), sehingga Aqlan harus turun dari papan seluncur dan menuntunnya demi keselamatan orang lain.",
+          "C. Rambu Peringatan jalan licin.",
+          "D. Rambu Rekomendasi lomba kecepatan seluncur."
+        ],
+        correct: 1,
+        exp: "Sikap Skater Hebat! Rambu bertepi MERAH adalah RAMBU LARANGAN. Menuntun skateboard di zona dilarang melintas membuktikan Aqlan adalah jagoan yang tertib dan menghormati hak sesama!"
+      },
+      {
+        situation: "MISI 3: MEMBACA DENAH & ARAH MATA ANGIN (U-S-T-B)",
+        speakerName: "Pak Arya (Polisi Lalu Lintas)",
+        speakerBadge: "👮 Arahan Pos",
+        speakerText: "\"Kapten Aqlan ingin menuju ke Taman Skater yang berada di sebelah UTARA sekolah. Saat ini Aqlan berdiri di perempatan zebra cross menghadap ke arah TIMUR (terbit matahari).\"",
+        prompt: "Jika saat ini Aqlan sedang menghadap ke arah TIMUR, ke arah manakah Aqlan harus berbelok untuk menuju ke arah UTARA?",
+        options: [
+          "A. Berbelok ke kanan (searah jarum jam 90 derajat)",
+          "B. Berbelok ke kiri (berlawanan arah jarum jam 90 derajat)",
+          "C. Berbalik arah ke belakang (ke arah barat)",
+          "D. Terus lurus ke depan tanpa berbelok"
+        ],
+        correct: 1,
+        exp: "Penunjuk Arah Sempurna! Pada kompas dan denah, jika kita menghadap ke arah TIMUR, maka UTARA berada persis di sebelah KIRI, SELATAN di sebelah kanan, dan BARAT di belakang!"
+      },
+      {
+        situation: "MISI 4: MEMBEDAKAN PARAGRAF DESKRIPSI VS ARGUMENTASI",
+        speakerName: "Pak Arya (Polisi Lalu Lintas)",
+        speakerBadge: "👮 Arahan Pos",
+        speakerText: "\"Di papan informasi pos, tertulis: 'Jalan Diponegoro sangat rapi, aspalnya mulus berwarna abu-abu, dan deretan pohon trembesi rindang menaungi tepi jalan dengan sejuk.'\"",
+        prompt: "Kalimat di atas termasuk jenis paragraf DESKRIPSI atau ARGUMENTASI, dan apa ciri utamanya?",
+        options: [
+          "A. Paragraf Argumentasi, karena memuat pendapat pribadi penulis yang meyakinkan orang lain.",
+          "B. Paragraf Deskripsi, karena melukiskan rincian fisik objek jalan secara hidup menggunakan indra penglihatan sehingga pembaca seolah melihat langsung.",
+          "C. Paragraf Narasi cerita fiksi petualangan robot.",
+          "D. Paragraf Prosedur cara membuat rambu jalan."
+        ],
+        correct: 1,
+        exp: "Pemahaman Literasi Tajam! Paragraf yang menggambarkan ciri-ciri fisik objek (warna aspal, pohon rindang, suasana sejuk) secara konkret adalah PARAGRAF DESKRIPSI!"
+      },
+      {
+        situation: "MISI 5: KAIDAH KEBAHASAAN AWALAN 'BER-' YANG TEPAT",
+        speakerName: "Pak Arya (Polisi Lalu Lintas)",
+        speakerBadge: "👮 Arahan Pos",
+        speakerText: "\"Luar biasa Aqlan! Terakhir, kamu akan menulis kesimpulan perjalanan harianmu dengan menggunakan kata berimbuhan awalan 'ber-' secara tepat.\"",
+        prompt: "Manakah kalimat berikut yang menggunakan kata berimbuhan awalan 'ber-' dengan makna 'melakukan suatu tindakan/kegiatan' secara benar?",
+        options: [
+          "A. \"Kapten Aqlan berkuda di atas papan skateboard miliknya menuju sekolah.\"",
+          "B. \"Setiap sore, Kapten Aqlan bersepatu roda dan berseluncur dengan tertib di jalur olahraga taman kota.\"",
+          "C. \"Pohon di pinggir jalan itu berdaun sangat kencang saat ditiup angin badai.\"",
+          "D. \"Rambu lalu lintas itu bersuara merah terang di waktu malam hari.\""
+        ],
+        correct: 1,
+        exp: "Kaidah Tata Bahasa Sempurna! Kata 'berseluncur' dan 'bersepatu' dibentuk dari awalan ber- yang bermakna mengenakan atau melakukan kegiatan olahraga secara aktif!"
+      }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let rapport = 100;
+    let answered = false;
+
+    function loadSituation(idx) {
+      answered = false;
+      const data = missionScenarios[idx];
+      document.getElementById('level').innerText = idx + 1;
+      document.getElementById('speaker-name').innerText = data.speakerName;
+      document.getElementById('speaker-badge').innerText = data.speakerBadge;
+      document.getElementById('speaker-text').innerText = data.speakerText;
+      document.getElementById('prompt-text').innerText = data.prompt;
+
+      const fb = document.getElementById('feedback');
+      fb.className = 'feedback-banner';
+      fb.style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+
+      // Play soft chime
+      playResponseChime();
+
+      // Trigger Pak Arya gesturing arm
+      triggerAryaSpeech();
+
+      const optContainer = document.getElementById('options');
+      optContainer.innerHTML = '';
+      data.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerText = opt;
+        btn.onclick = () => selectOption(i);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(choiceIdx) {
+      if (answered) return;
+      answered = true;
+      const data = missionScenarios[currentIdx];
+      const buttons = document.querySelectorAll('.opt-btn');
+      const fb = document.getElementById('feedback');
+
+      if (choiceIdx === data.correct) {
+        playCorrect();
+        buttons[choiceIdx].classList.add('correct');
+        score += 100;
+        fb.innerText = "🌟 " + data.exp;
+        fb.className = "feedback-banner show-correct";
+
+        // Aqlan happy skate jump / nod!
+        triggerAqlanCheer();
+      } else {
+        playWrong();
+        buttons[choiceIdx].classList.add('wrong');
+        buttons[data.correct].classList.add('correct');
+        rapport = Math.max(70, rapport - 10);
+        fb.innerText = "💡 EVALUASI PETUALANG: " + data.exp;
+        fb.className = "feedback-banner show-wrong";
+      }
+
+      document.getElementById('score').innerText = score;
+      document.getElementById('streak').innerText = rapport;
+      document.getElementById('btn-next').style.display = 'block';
+    }
+
+    function nextSituation() {
+      currentIdx++;
+      if (currentIdx < missionScenarios.length) {
+        loadSituation(currentIdx);
+      } else {
+        showVictoryModal();
+      }
+    }
+
+    // Animation: Pak Arya speaking gesture
+    let isAryaSpeaking = false;
+    let aryaSpeakStart = 0;
+
+    function triggerAryaSpeech() {
+      isAryaSpeaking = true;
+      aryaSpeakStart = performance.now();
+      const pulse = document.getElementById('avatar-pulse');
+      if (pulse) pulse.style.display = 'block';
+
+      setTimeout(() => {
+        isAryaSpeaking = false;
+        if (pulse) pulse.style.display = 'none';
+      }, 2800);
+    }
+
+    // Animation: Aqlan skate cheer / nod
+    let isAqlanCheering = false;
+    let aqlanCheerStart = 0;
+
+    function triggerAqlanCheer() {
+      isAqlanCheering = true;
+      aqlanCheerStart = performance.now();
+      setTimeout(() => { isAqlanCheering = false; }, 1400);
+    }
+
+    function showVictoryModal() {
+      playCorrect();
+      document.getElementById('victory-modal').style.display = 'block';
+      document.getElementById('final-score').innerText = score;
+    }
+
+    // =========================================================================
+    // 6. RENDER LOOP & REAL 3D ANIMATIONS
+    // =========================================================================
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
+
+      // Skateboard riding idle sway (gentle carve on the asphalt)
+      boardGroup.rotation.z = Math.sin(time * 2.2) * 0.04;
+      torsoMeshA.rotation.z = Math.sin(time * 2.2) * 0.03;
+      aqlanHeadGroup.rotation.z = -Math.sin(time * 2.2) * 0.02;
+
+      // Pak Arya Idle breathing
+      torsoMeshArya.position.y = 1.25 + Math.sin(time * 2.0) * 0.008;
+      aryaHeadGroup.position.y = 1.82 + Math.sin(time * 2.0) * 0.008;
+
+      // Pak Arya Speaking gesture (signaling with arm & head)
+      if (isAryaSpeaking) {
+        const elapsed = (performance.now() - aryaSpeakStart) / 1000;
+        rArmGroupArya.rotation.x = Math.sin(elapsed * 5) * 0.14;
+        rArmGroupArya.rotation.y = Math.sin(elapsed * 3.5) * 0.09;
+        aryaHeadGroup.rotation.y = Math.sin(elapsed * 3) * 0.06;
+      } else {
+        rArmGroupArya.rotation.x = 0;
+        rArmGroupArya.rotation.y = 0;
+        aryaHeadGroup.rotation.y = 0;
+      }
+
+      // Aqlan Cheer (jumping / nodding with skateboard kick)
+      if (isAqlanCheering) {
+        const elapsed = (performance.now() - aqlanCheerStart) / 1000;
+        aqlanHeadGroup.rotation.x = Math.sin(elapsed * 10) * 0.14;
+        aqlanGroup.position.y = Math.max(0, Math.sin(elapsed * 8) * 0.12); // Small hop!
+      } else {
+        aqlanHeadGroup.rotation.x = 0;
+        aqlanGroup.position.y = 0;
+      }
+
+      // Smooth Camera Transitions
+      if (isTransitioningCam) {
+        camera.position.x += (targetCamPos.x - camera.position.x) * 0.055;
+        camera.position.y += (targetCamPos.y - camera.position.y) * 0.055;
+        camera.position.z += (targetCamPos.z - camera.position.z) * 0.055;
+
+        controls.target.x += (targetCamLook.x - controls.target.x) * 0.055;
+        controls.target.y += (targetCamLook.y - controls.target.y) * 0.055;
+        controls.target.z += (targetCamLook.z - controls.target.z) * 0.055;
+
+        const dist = Math.hypot(
+          targetCamPos.x - camera.position.x,
+          targetCamPos.y - camera.position.y,
+          targetCamPos.z - camera.position.z
+        );
+        if (dist < 0.04) isTransitioningCam = false;
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    function onWindowResize() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+
+    window.addEventListener('resize', onWindowResize);
+
+    window.onload = () => {
+      onWindowResize();
+      loadSituation(0);
+      animate();
+    };
+  </script>
+</body>
+</html>
