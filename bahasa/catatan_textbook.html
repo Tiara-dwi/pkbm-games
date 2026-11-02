@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buku Catatan Teks Pelajaran: Aqlan & Mishka — Bahasa Indonesia</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --aqlan-cyan: #0284c7;
+      --aqlan-neon: #38bdf8;
+      --mishka-emerald: #059669;
+      --mishka-neon: #34d399;
+      --gold: #fbbf24;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: #090d16;
+      color: var(--text-main);
+      padding: 24px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+    }
+
+    /* Top Navigation Header */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 12px 20px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-nav {
+      background: #334155;
+      color: #f8fafc;
+      text-decoration: none;
+      padding: 6px 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 20px;
+      border: 1px solid #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-nav:hover {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: white;
+    }
+    .btn-print {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #0f172a;
+      border: none;
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 2px solid #38bdf8;
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      text-align: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Student Tab Switcher */
+    .tab-switcher {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 13.5px;
+      border: 2px solid transparent;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #1e293b;
+      color: #94a3b8;
+    }
+    .tab-btn:hover {
+      background: #273549;
+    }
+    .tab-btn.active.aqlan {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .tab-btn.active.mishka {
+      background: linear-gradient(135deg, #065f46, #059669);
+      border-color: #34d399;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+    }
+
+    /* Tab Panes */
+    .tab-pane {
+      display: none;
+      background: #131d31;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 24px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Styling */
+    h2.section-header {
+      font-size: 16px;
+      font-weight: 900;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .aqlan-theme h2.section-header { border-color: var(--aqlan-cyan); color: var(--aqlan-neon); }
+    .mishka-theme h2.section-header { border-color: var(--mishka-emerald); color: var(--mishka-neon); }
+
+    .callout-box {
+      border-left: 4px solid;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+    .callout-aqlan {
+      background: rgba(2, 132, 199, 0.12);
+      border-color: var(--aqlan-cyan);
+      color: #e0f2fe;
+    }
+    .callout-mishka {
+      background: rgba(5, 150, 105, 0.12);
+      border-color: var(--mishka-emerald);
+      color: #d1fae5;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    table.content-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    table.content-table th {
+      padding: 10px 12px;
+      font-weight: 800;
+      color: white;
+    }
+    .aqlan-theme table.content-table th { background: #0369a1; }
+    .mishka-theme table.content-table th { background: #065f46; }
+
+    table.content-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: #cbd5e1;
+      line-height: 1.45;
+      vertical-align: top;
+    }
+    table.content-table tr:nth-child(even) td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .badge-sign {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .sign-kuning { background: #fef08a; color: #854d0e; }
+    .sign-merah { background: #fecaca; color: #991b1b; }
+    .sign-biru { background: #bae6fd; color: #075985; }
+    .sign-hijau { background: #bbf7d0; color: #166534; }
+
+    /* Action Links Bar */
+    .action-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-action-game {
+      flex: 1;
+      min-width: 220px;
+      background: #1e293b;
+      border: 1px solid #38bdf8;
+      color: #e0f2fe;
+      padding: 10px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-action-game:hover {
+      background: #0284c7;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Print View Styles */
+    @media print {
+      body { background: white; color: black; padding: 0; }
+      .top-nav, .tab-switcher, .action-links-row { display: none !important; }
+      .tab-pane { display: block !important; background: white; border: none; box-shadow: none; padding: 0; }
+      table.content-table th { background: #ddd !important; color: black !important; }
+      table.content-table td { color: black !important; border-bottom: 1px solid #ccc !important; }
+      .callout-box { border-left-color: #333 !important; background: #f5f5f5 !important; color: black !important; }
+      h2.section-header { color: black !important; border-color: black !important; page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Navigation -->
+    <div class="top-nav">
+      <div class="brand-title">
+        <span>🚀</span> PKBM Penerus Bangsa • Ruang Belajar Mandiri
+      </div>
+      <div class="nav-actions">
+        <button class="btn-nav btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+        <a class="btn-nav" href="../index.html">🏠 Beranda PKBM</a>
+      </div>
+    </div>
+
+    <!-- Hero Card -->
+    <div class="hero-card">
+      <span class="hero-badge">Kurikulum Merdeka • Bahan Ajar Resmi</span>
+      <h1 class="hero-title">📖 Buku Catatan Teks Pelajaran Bahasa Indonesia</h1>
+      <p class="hero-sub">
+        Rangkuman komprehensif konsep, rumus kebahasaan, tabel pembanding, dan etika komunikasi untuk <b>Kapten Aqlan (Kelas 4)</b> dan <b>Jurnalis Cilik Mishka (Kelas 5)</b>.
+      </p>
+    </div>
+
+    <!-- Student Switcher Tabs -->
+    <div class="tab-switcher">
+      <button class="tab-btn active aqlan" id="tab-btn-aqlan" onclick="switchStudent('aqlan')">
+        <span>🛹</span> Aqlan (Kelas 4 SD) • Bab 3 "Lihat Sekitar"
+      </button>
+      <button class="tab-btn mishka" id="tab-btn-mishka" onclick="switchStudent('mishka')">
+        <span>🌸</span> Mishka (Kelas 5 SD) • Bab 3 & Bab 4 (Wawancara)
+      </button>
+    </div>
+
+    <!-- ============================================================
+         1. TAB PANE: AQLAN (KELAS 4 SD - BAB 3)
+         ============================================================ -->
+    <div class="tab-pane active aqlan-theme" id="pane-aqlan">
+      <h2 class="section-header">🛑 1. Kode 4 Warna Rambu Lalu Lintas (UU No. 22 Tahun 2009)</h2>
+      <p style="font-size: 13px; line-height: 1.5; color: #cbd5e1; margin-bottom: 12px;">
+        Rambu lalu lintas adalah tanda fisik di jalan raya yang memuat lambang, huruf, angka, atau perpaduannya untuk menciptakan ketertiban dan menjamin keselamatan pengguna jalan.
+      </p>
+
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Kategori Rambu</th>
+              <th>Bentuk & Warna</th>
+              <th>Makna & Fungsi</th>
+              <th>Contoh Nyata</th>
+              <th>Tindakan Kapten Aqlan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Rambu Peringatan</b></td>
+              <td><span class="badge-sign sign-kuning">Belah Ketupat / Segitiga</span><br>Latar Kuning, Lambang Hitam</td>
+              <td>Peringatan dini bahaya jalan di depan agar waspada.</td>
+              <td>• Tikungan Tajam ke Kanan<br>• Penyeberang Jalan (Zebra Cross)<br>• Turunan Curam</td>
+              <td>Kurangi kecepatan perlahan, sentuh rem halus, dan siaga.</td>
+            </tr>
+            <tr>
+              <td><b>Rambu Larangan</b></td>
+              <td><span class="badge-sign sign-merah">Lingkaran / Segi Delapan</span><br>Latar Putih/Merah, Garis Merah</td>
+              <td>Menyatakan larangan mutlak yang tidak boleh dilanggar.</td>
+              <td>• Rambu STOP (Segi Delapan)<br>• Batas Kecepatan Maks 40 km/h<br>• Dilarang Masuk (Verboden)</td>
+              <td>Wajib berhenti total atau patuhi batas aman tanpa kompromi.</td>
+            </tr>
+            <tr>
+              <td><b>Rambu Perintah</b></td>
+              <td><span class="badge-sign sign-biru">Lingkaran / Persegi</span><br>Latar Biru, Lambang Putih</td>
+              <td>Menyatakan instruksi wajib yang harus dipatuhi.</td>
+              <td>• Wajib Putar Balik (U-Turn)<br>• Wajib Mengikuti Arah Panah<br>• Lajur Khusus Sepeda</td>
+              <td>Patuhi arah lajur yang diperintahkan dengan tertib.</td>
+            </tr>
+            <tr>
+              <td><b>Rambu Petunjuk</b></td>
+              <td><span class="badge-sign sign-hijau">Persegi Panjang</span><br>Latar Hijau/Biru, Tulisan Putih</td>
+              <td>Memberikan petunjuk jurusan arah, jarak kota, atau fasilitas.</td>
+              <td>• Jalan Tol Jagorawi 10 Km<br>• SPBU / Rumah Sakit<br>• Arah Kota Wisata</td>
+              <td>Gunakan sebagai navigasi rute perjalanan tanpa tersesat.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-header" style="margin-top: 24px;">🧭 2. Denah dan 8 Arah Mata Angin Pokok</h2>
+      <div class="callout-box callout-aqlan">
+        <b>☀️ Rumus Alami Menentukan Arah Mata Angin:</b><br>
+        1. Menghadap matahari terbit di pagi hari = <b>TIMUR</b>.<br>
+        2. Punggungmu menghadap arah matahari terbenam = <b>BARAT</b>.<br>
+        3. Tangan kiri merentang lurus = <b>UTARA</b>.<br>
+        4. Tangan kanan merentang lurus = <b>SELATAN</b>.
+      </div>
+
+      <h2 class="section-header" style="margin-top: 24px;">📝 3. Perbedaan Paragraf Deskripsi vs Argumentasi</h2>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Pembeda</th>
+              <th>Paragraf Deskripsi (Panca Indra)</th>
+              <th>Paragraf Argumentasi (Pendapat & Bukti)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Tujuan</b></td>
+              <td>Melukiskan bentuk, warna, dan suasana agar pembaca seolah melihat atau merasakan sendiri.</td>
+              <td>Menyampaikan opini yang didukung alasan rasional dan fakta agar pembaca setuju.</td>
+            </tr>
+            <tr>
+              <td><b>Ciri Bahasa</b></td>
+              <td>Banyak kata sifat (mengilap, kokoh, bising, sejuk) dan kata kerja indra.</td>
+              <td>Banyak konjungsi sebab-akibat (karena, sebab, sehingga) dan argumen logis.</td>
+            </tr>
+            <tr>
+              <td><b>Contoh Aqlan</b></td>
+              <td><i>"Mobil balap Kapten Aqlan berwarna biru sian mengilap dengan spoiler hitam kokoh di bagian belakang."</i></td>
+              <td><i>"Pengemudi wajib menurunkan laju hingga 40 km/jam di zona sekolah KARENA anak-anak sering menyeberang tiba-tiba, SEHINGGA keselamatan bersama terjamin."</i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Quick Action Games for Aqlan -->
+      <div class="action-links-row">
+        <a class="btn-action-game" href="aqlan_driving_3d.html">🚗 Mainkan Simulasi Mengemudi 3D Aqlan ❯</a>
+        <a class="btn-action-game" href="aqlan_traffic_3d.html">🛹 Buka Navigasi Rambu Skateboard 3D ❯</a>
+        <a class="btn-action-game" href="aqlan.html">⚡ Skater City Rush Duel ❯</a>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         2. TAB PANE: MISHKA (KELAS 5 SD - BAB 3 & BAB 4)
+         ============================================================ -->
+    <div class="tab-pane mishka-theme" id="pane-mishka">
+      <h2 class="section-header">📋 1. Anatomi 4 Pilar Teks Prosedur (Bab 3)</h2>
+      <p style="font-size: 13px; line-height: 1.5; color: #cbd5e1; margin-bottom: 12px;">
+        Teks Prosedur adalah teks petunjuk bertahap yang membimbing pembaca melakukan suatu aktivitas secara teratur, aman, dan berhasil.
+      </p>
+
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Pilar Anatomi</th>
+              <th>Fungsi Utama</th>
+              <th>Contoh Penerapan (Senam / Botani Mishka)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>1. JUDUL</b></td>
+              <td>Menggambarkan aktivitas atau hasil akhir yang dituju secara spesifik.</td>
+              <td><i>"Panduan Peregangan Fleksibilitas Sendi Pergelangan Kaki Sebelum Senam"</i></td>
+            </tr>
+            <tr>
+              <td><b>2. TUJUAN</b></td>
+              <td>Alasan urgensi mengapa langkah kerja tersebut penting bagi keselamatan.</td>
+              <td><i>"Mencegah terjadinya kram atau cedera ligamen serta mengoptimalkan kelenturan."</i></td>
+            </tr>
+            <tr>
+              <td><b>3. ALAT & BAHAN</b></td>
+              <td>Rincian perlengkapan dan takaran yang disiapkan sebelum beraktivitas.</td>
+              <td>• 1 buah matras senam busa empuk<br>• 1 botol air mineral bersuhu ruang</td>
+            </tr>
+            <tr>
+              <td><b>4. LANGKAH-LANGKAH</b></td>
+              <td>Instruksi berurutan bernomor (1, 2, 3...) yang diawali kata kerja imperatif.</td>
+              <td>1. Duduklah tegak di atas matras dengan kedua kaki lurus.<br>2. Putarkanlah kedua pergelangan kaki searah jarum jam 8 kali.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-box callout-mishka">
+        <b>⚙️ Kaidah Imbuhan Bahasa Imperatif:</b><br>
+        • <b>Akhiran '-kan':</b> Mengarahkan tindakan pada objek (contoh: <i>Posisikan kaki, Ratakan matras, Tuangkan air</i>).<br>
+        • <b>Akhiran '-lah':</b> Menegaskan instruksi secara santun dan teratur (contoh: <i>Lakukanlah peregangan, Amatilah perubahan daun, Jagalah kebersihan</i>).
+      </div>
+
+      <h2 class="section-header" style="margin-top: 24px;">🎙️ 2. Seni Wawancara Jurnalis Cilik & Rumus ADIKSIMBA (Bab 4)</h2>
+      <p style="font-size: 13px; line-height: 1.5; color: #cbd5e1; margin-bottom: 12px;">
+        Wawancara adalah proses tanya-jawab terencana antara <b>Pewawancara</b> (jurnalis cilik) dan <b>Narasumber</b> (Ibu Nadya) untuk memperoleh informasi terpercaya.
+      </p>
+
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Unsur ADIKSIMBA</th>
+              <th>Fungsi Pertanyaan</th>
+              <th>Contoh Pertanyaan Mishka kepada Ibu Nadya</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>A - Apa (What)</b></td>
+              <td>Menanyakan benda, produk, atau peristiwa pokok usaha.</td>
+              <td><i>"Apa inovasi keunggulan produk susu kemasan KS Group dibanding merek lain?"</i></td>
+            </tr>
+            <tr>
+              <td><b>Di - Di mana (Where)</b></td>
+              <td>Menanyakan lokasi pabrik atau peternakan susu.</td>
+              <td><i>"Di mana Ibu pertama kali mendirikan pabrik pengolahan susu higienis ini?"</i></td>
+            </tr>
+            <tr>
+              <td><b>K - Kapan (When)</b></td>
+              <td>Menanyakan waktu atau sejarah awal mula beroperasi.</td>
+              <td><i>"Kapan KS Group resmi meluncurkan produk susu kemasan pertama ke publik?"</i></td>
+            </tr>
+            <tr>
+              <td><b>S - Siapa (Who)</b></td>
+              <td>Menanyakan tokoh teladan atau mitra kerja.</td>
+              <td><i>"Siapakah sosok yang menjadi teladan terbesar Ibu saat merintis usaha susu?"</i></td>
+            </tr>
+            <tr>
+              <td><b>M - Mengapa (Why)</b></td>
+              <td>Menanyakan alasan atau motivasi keputusan wirausaha.</td>
+              <td><i>"Mengapa Ibu memilih fokus pada produk susu murni tanpa pengawet buatan?"</i></td>
+            </tr>
+            <tr>
+              <td><b>Ba - Bagaimana (How)</b></td>
+              <td>Menanyakan cara kerja atau kiat menghadapi rintangan.</td>
+              <td><i>"Bagaimana kiat Ibu menjaga mutu kesegaran susu saat proses pengiriman ke toko?"</i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-box callout-mishka">
+        <b>🌟 3 SOP Kesantunan Wawancara:</b><br>
+        1. <b>Pra-Wawancara:</b> Buat janji temu tepat waktu & siapkan daftar pertanyaan 5W1H.<br>
+        2. <b>Saat Wawancara:</b> Awali dengan salam hangat, perkenalkan diri, dan simak jawaban tanpa memotong.<br>
+        3. <b>Pasca-Wawancara:</b> Buat laporan narasi yang jujur dan kirimkan ucapan terima kasih tulus.
+      </div>
+
+      <!-- Quick Action Games for Mishka -->
+      <div class="action-links-row">
+        <a class="btn-action-game" href="mishka_interview_3d.html" style="border-color: #34d399;">🎙️ Mainkan Simulasi Wawancara 3D Mishka ❯</a>
+        <a class="btn-action-game" href="../index.html">🏠 Kembali ke Beranda Utama PKBM ❯</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchStudent(student) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+      if (student === 'aqlan') {
+        document.getElementById('tab-btn-aqlan').classList.add('active');
+        document.getElementById('pane-aqlan').classList.add('active');
+      } else {
+        document.getElementById('tab-btn-mishka').classList.add('active');
+        document.getElementById('pane-mishka').classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
