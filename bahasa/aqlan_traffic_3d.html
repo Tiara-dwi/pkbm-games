@@ -96,7 +96,7 @@
       bottom: 14px;
       left: 18px;
       z-index: 20;
-      background: rgba(15, 23, 42, 0.82);
+      background: rgba(15, 23, 42, 0.85);
       border: 1px solid #0369a1;
       padding: 6px 14px;
       border-radius: 20px;
@@ -411,6 +411,7 @@
         <button class="tool-btn active" id="btn-cam-all" onclick="setCameraView('all')">🎥 Pemandangan Jalan</button>
         <button class="tool-btn" id="btn-cam-aqlan" onclick="setCameraView('aqlan')">🛹 Sorot Kapten Aqlan</button>
         <button class="tool-btn" id="btn-cam-arya" onclick="setCameraView('arya')">👮 Sorot Pak Arya</button>
+        <button class="tool-btn" id="btn-cam-sign" onclick="setCameraView('sign')">🛑 Sorot Rambu Baja</button>
         <button class="tool-btn" id="btn-toggle-console" onclick="toggleConsole()">👁️ Layar Penuh 3D</button>
       </div>
 
@@ -445,7 +446,7 @@
             <span class="speaker-name" id="speaker-name">Pak Arya (Polisi Lalu Lintas)</span>
             <span class="speaker-badge" id="speaker-badge">👮 Arahan Pos</span>
           </div>
-          <p class="speaker-text" id="speaker-text">"Halo Kapten Aqlan! Selamat datang di pos lalu lintas kota. Sebelum kamu meluncur dengan skateboard, perhatikan rambu kuning belah ketupat di depanmu!"</p>
+          <p class="speaker-text" id="speaker-text">"Halo Kapten Aqlan! Selamat datang di pos lalu lintas kota. Sebelum kamu meluncur dengan skateboard, perhatikan rambu kuning belah ketupat di tiang baja depanmu!"</p>
         </div>
       </div>
 
@@ -532,15 +533,17 @@
     }
 
     // =========================================================================
-    // 2. THREE.JS 3D CITY INTERSECTION & STREET STAGE
+    // 2. THREE.JS 3D SCENE: REALISTIC ASPHALT ROAD & DAYLIGHT SKY
     // =========================================================================
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0f172a);
-    scene.fog = new THREE.FogExp2(0x0f172a, 0.025);
+    
+    // Sunny daytime sky with atmospheric gradient & distance fog
+    scene.background = new THREE.Color(0x38bdf8);
+    scene.fog = new THREE.FogExp2(0xbae6fd, 0.02);
 
     const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-    camera.position.set(0, 3.8, 7.2);
+    camera.position.set(0, 3.4, 6.8);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -553,114 +556,254 @@
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
     controls.maxPolarAngle = Math.PI / 2 - 0.04;
-    controls.minDistance = 3.0;
-    controls.maxDistance = 12;
+    controls.minDistance = 2.5;
+    controls.maxDistance = 14;
     controls.target.set(0, 1.25, 0);
 
-    // Dynamic Lighting
-    const ambientLight = new THREE.AmbientLight(0xfff7ed, 0.85);
+    // Dynamic Daylight Lighting
+    const ambientLight = new THREE.AmbientLight(0xfffbeb, 0.88);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xfef08a, 1.3);
-    sunLight.position.set(5, 8, 4);
+    const sunLight = new THREE.DirectionalLight(0xfef08a, 1.35);
+    sunLight.position.set(6, 10, 5);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 1024;
     sunLight.shadow.mapSize.height = 1024;
     scene.add(sunLight);
 
-    const skyRimLight = new THREE.PointLight(0x38bdf8, 1.0, 14);
-    skyRimLight.position.set(-4, 4, -2);
-    scene.add(skyRimLight);
+    const skyFillLight = new THREE.HemisphereLight(0x38bdf8, 0x475569, 0.6);
+    scene.add(skyFillLight);
 
-    // --- City Street Architecture ---
-    // Asphalt Road
-    const roadGeo = new THREE.PlaneGeometry(16, 16);
-    const roadMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.85 });
-    const road = new THREE.Mesh(roadGeo, roadMat);
+    const texLoader = new THREE.TextureLoader();
+
+    // Textures from textures.js (Base64 for 100% offline & GitHub Pages compatibility)
+    const asphaltTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.road_asphalt) || '../assets/signs/road_asphalt_hd.png');
+    asphaltTex.wrapS = THREE.RepeatWrapping;
+    asphaltTex.wrapT = THREE.RepeatWrapping;
+    asphaltTex.repeat.set(1, 4);
+
+    const signPedestrianTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.sign_pedestrian) || '../assets/signs/sign_pedestrian_cross_hd.png');
+    const signNoEntryTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.sign_no_entry) || '../assets/signs/sign_no_entry_hd.png');
+    const signStopTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.sign_stop) || '../assets/signs/sign_stop_hd.png');
+    const signUturnTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.sign_uturn) || '../assets/signs/sign_uturn_hd.png');
+    const signGuideTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.sign_guide) || '../assets/signs/sign_guide_hd.png');
+
+    const aqlanFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.aqlan_3d_face) || '../assets/interview/aqlan_3d_face.png');
+    const aryaFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.arya_3d_face) || '../assets/interview/arya_3d_face.png');
+
+    // --- REALISTIC ASPHALT ROAD ENVIRONMENT ---
+    const roadMat = new THREE.MeshStandardMaterial({
+      map: asphaltTex,
+      roughness: 0.85,
+      metalness: 0.05
+    });
+    const road = new THREE.Mesh(new THREE.PlaneGeometry(16, 20), roadMat);
     road.rotation.x = -Math.PI / 2;
     road.receiveShadow = true;
     scene.add(road);
 
     // White Painted Zebra Cross (Pedestrian Crosswalk)
     const zebraGroup = new THREE.Group();
-    for (let z = -2.4; z <= 2.4; z += 0.8) {
-      const stripe = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.42), new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.6 }));
+    for (let z = -2.2; z <= 2.2; z += 0.8) {
+      const stripe = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.8, 0.45),
+        new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.6 })
+      );
       stripe.rotation.x = -Math.PI / 2;
-      stripe.position.set(0, 0.01, z);
+      stripe.position.set(0, 0.015, z);
       stripe.receiveShadow = true;
       zebraGroup.add(stripe);
     }
     scene.add(zebraGroup);
 
-    // Sidewalk Pavement (Raised Curb)
-    const curbMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.7 });
-    const sidewalk = new THREE.Mesh(new THREE.BoxGeometry(16, 0.2, 5.0), curbMat);
-    sidewalk.position.set(0, 0.1, -4.5);
+    // Sidewalk & Concrete Curb
+    const curbMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.7 });
+    const sidewalk = new THREE.Mesh(new THREE.BoxGeometry(16, 0.22, 6.0), curbMat);
+    sidewalk.position.set(0, 0.11, -5.0);
     sidewalk.receiveShadow = true;
     scene.add(sidewalk);
 
-    // Traffic Light Post
-    const poleMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.7, roughness: 0.3 });
-    const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3.6), poleMat);
-    pole.position.set(3.2, 1.8, -1.8);
-    pole.castShadow = true;
-    scene.add(pole);
-
-    const tLightBox = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.0, 0.3), poleMat);
-    tLightBox.position.set(3.2, 3.2, -1.8);
-    scene.add(tLightBox);
-
-    // Glowing Signal Lights: Red, Yellow, Green
-    const redLight = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
-    redLight.position.set(3.2, 3.5, -1.64);
-    const yellowLight = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
-    yellowLight.position.set(3.2, 3.2, -1.64);
-    const greenLight = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), new THREE.MeshBasicMaterial({ color: 0x22c55e }));
-    greenLight.position.set(3.2, 2.9, -1.64);
-    scene.add(redLight, yellowLight, greenLight);
-
-    // Real 3D Traffic Signs (Rambu Kuning Peringatan & Rambu Merah Larangan)
-    const signPole1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 2.6), poleMat);
-    signPole1.position.set(-2.8, 1.3, -1.6);
-    signPole1.castShadow = true;
-    scene.add(signPole1);
-
-    // Yellow Diamond Warning Sign (Rambu Peringatan Belah Ketupat)
-    const warnSign = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, 0.04), new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.3 }));
-    warnSign.rotation.z = Math.PI / 4; // Rotated into diamond shape!
-    warnSign.position.set(-2.8, 2.4, -1.58);
-    warnSign.castShadow = true;
-    const warnBorder = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.62, 0.045), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
-    warnBorder.rotation.z = Math.PI / 4;
-    warnBorder.position.set(-2.8, 2.4, -1.57);
-    scene.add(warnSign, warnBorder);
+    // Galvanized Guardrail along road edge (Steel Barrier)
+    const guardMat = new THREE.MeshStandardMaterial({ color: 0xcfd8dc, metalness: 0.8, roughness: 0.25 });
+    for (let x = -7.5; x <= 7.5; x += 1.5) {
+      const post = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.7), guardMat);
+      post.position.set(x, 0.35, -2.05);
+      scene.add(post);
+    }
+    const guardBeam = new THREE.Mesh(new THREE.BoxGeometry(16, 0.18, 0.05), guardMat);
+    guardBeam.position.set(0, 0.55, -2.05);
+    scene.add(guardBeam);
 
     // =========================================================================
-    // 3. REAL 3D SOLID FIGURES (AQLAN & PAK ARYA)
+    // 3. REALISTIC TRAFFIC SIGNS ON GALVANIZED STEEL POLES (TIANG BAJA)
     // =========================================================================
-    const texLoader = new THREE.TextureLoader();
-    const aqlanFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.aqlan_3d_face) || '../assets/interview/aqlan_3d_face.png');
-    const aryaFaceTex = texLoader.load((window.GHIBLI_TEXTURES && window.GHIBLI_TEXTURES.arya_3d_face) || '../assets/interview/arya_3d_face.png');
+    const steelPoleMat = new THREE.MeshStandardMaterial({
+      color: 0x94a3b8,
+      metalness: 0.88,
+      roughness: 0.22
+    });
+    const steelBoltMat = new THREE.MeshStandardMaterial({
+      color: 0xe2e8f0,
+      metalness: 0.95,
+      roughness: 0.15
+    });
 
+    // Helper: Build a realistic galvanized steel pole with base flange & mounting clamps
+    function createSteelPole(height = 3.2) {
+      const poleGroup = new THREE.Group();
+      
+      // Main tubular steel pole
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.048, height, 20), steelPoleMat);
+      pole.position.y = height / 2;
+      pole.castShadow = true;
+      poleGroup.add(pole);
+
+      // Base Flange plate with 4 anchor bolts into ground
+      const flange = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.04, 16), steelPoleMat);
+      flange.position.y = 0.02;
+      flange.castShadow = true;
+      poleGroup.add(flange);
+
+      [[-0.09, -0.09], [0.09, -0.09], [-0.09, 0.09], [0.09, 0.09]].forEach(([bx, bz]) => {
+        const bolt = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.04), steelBoltMat);
+        bolt.position.set(bx, 0.04, bz);
+        poleGroup.add(bolt);
+      });
+
+      // Upper Sign Mounting Clamps
+      [height - 0.35, height - 0.85].forEach(cy => {
+        const clamp = new THREE.Mesh(new THREE.TorusGeometry(0.055, 0.014, 8, 16), steelBoltMat);
+        clamp.rotation.x = Math.PI / 2;
+        clamp.position.y = cy;
+        poleGroup.add(clamp);
+      });
+
+      return poleGroup;
+    }
+
+    // --- PRIMARY MISSION SIGN: Mounted on steel pole near pedestrian cross ---
+    const primarySignGroup = new THREE.Group();
+    primarySignGroup.position.set(-2.4, 0, -1.2);
+    primarySignGroup.add(createSteelPole(3.0));
+
+    // Dynamic Primary Sign Board (Front has realistic sign texture, back has aluminum plate)
+    const primarySignMat = new THREE.MeshStandardMaterial({
+      map: signPedestrianTex,
+      roughness: 0.25,
+      metalness: 0.15,
+      side: THREE.FrontSide
+    });
+    const signBackMat = new THREE.MeshStandardMaterial({
+      color: 0x94a3b8,
+      metalness: 0.85,
+      roughness: 0.3,
+      side: THREE.BackSide
+    });
+
+    const primarySignMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.05), primarySignMat);
+    primarySignMesh.position.set(0, 2.4, 0.06);
+    primarySignMesh.castShadow = true;
+
+    const primarySignBack = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.05), signBackMat);
+    primarySignBack.position.set(0, 2.4, 0.055);
+    primarySignGroup.add(primarySignMesh, primarySignBack);
+
+    scene.add(primarySignGroup);
+
+    // --- SECONDARY ROADSIDE SIGNS (Cluster of realistic signs from user's reference) ---
+    // 1. STOP Sign on steel pole
+    const stopSignGroup = new THREE.Group();
+    stopSignGroup.position.set(3.4, 0, -1.8);
+    stopSignGroup.add(createSteelPole(2.7));
+    const stopMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.95, 0.95),
+      new THREE.MeshStandardMaterial({ map: signStopTex, roughness: 0.3, metalness: 0.15 })
+    );
+    stopMesh.position.set(0, 2.2, 0.06);
+    stopMesh.castShadow = true;
+    stopSignGroup.add(stopMesh);
+    scene.add(stopSignGroup);
+
+    // 2. Dilarang Masuk (No Entry) on steel pole
+    const noEntryGroup = new THREE.Group();
+    noEntryGroup.position.set(2.2, 0, -3.2);
+    noEntryGroup.add(createSteelPole(2.5));
+    const noEntryMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.85, 0.85),
+      new THREE.MeshStandardMaterial({ map: signNoEntryTex, roughness: 0.3, metalness: 0.15 })
+    );
+    noEntryMesh.position.set(0, 2.05, 0.06);
+    noEntryMesh.castShadow = true;
+    noEntryGroup.add(noEntryMesh);
+    scene.add(noEntryGroup);
+
+    // 3. U-Turn Sign (Perintah Putar Balik) on steel pole
+    const uturnGroup = new THREE.Group();
+    uturnGroup.position.set(-4.2, 0, -2.8);
+    uturnGroup.add(createSteelPole(2.8));
+    const uturnMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.9, 0.9),
+      new THREE.MeshStandardMaterial({ map: signUturnTex, roughness: 0.3, metalness: 0.15 })
+    );
+    uturnMesh.position.set(0, 2.3, 0.06);
+    uturnMesh.castShadow = true;
+    uturnGroup.add(uturnMesh);
+    scene.add(uturnGroup);
+
+    // 4. Highway Guide Sign (Rambu Petunjuk Hijau) on dual steel poles
+    const guideGroup = new THREE.Group();
+    guideGroup.position.set(0, 0, -4.8);
+    
+    // Dual steel poles
+    const poleL = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 3.2, 16), steelPoleMat);
+    poleL.position.set(-1.0, 1.6, 0);
+    const poleR = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 3.2, 16), steelPoleMat);
+    poleR.position.set(1.0, 1.6, 0);
+    
+    const guideSign = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.6, 1.15),
+      new THREE.MeshStandardMaterial({ map: signGuideTex, roughness: 0.3, metalness: 0.2 })
+    );
+    guideSign.position.set(0, 2.5, 0.06);
+    guideSign.castShadow = true;
+    guideGroup.add(poleL, poleR, guideSign);
+    scene.add(guideGroup);
+
+    // Traffic Signal Light on Steel Mast
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 4.0), steelPoleMat);
+    mast.position.set(4.4, 2.0, -1.0);
+    const tLightBox = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.1, 0.3), new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3 }));
+    tLightBox.position.set(4.4, 3.4, -1.0);
+    const rL = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
+    rL.position.set(4.4, 3.75, -0.84);
+    const yL = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
+    yL.position.set(4.4, 3.4, -0.84);
+    const gL = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), new THREE.MeshBasicMaterial({ color: 0x22c55e }));
+    gL.position.set(4.4, 3.05, -0.84);
+    scene.add(mast, tLightBox, rL, yL, gL);
+
+    // =========================================================================
+    // 4. REAL 3D SOLID FIGURES (AQLAN & PAK ARYA)
+    // =========================================================================
     // -------------------------------------------------------------------------
     // FIGURE 1: KAPTEN AQLAN (SOLID 3D GHIBLI SKATER BOY — LEFT SIDE)
     // -------------------------------------------------------------------------
     const aqlanGroup = new THREE.Group();
-    aqlanGroup.position.set(-1.3, 0, 0.4);
-    aqlanGroup.rotation.y = Math.PI / 4.8; // Angled facing the intersection & Pak Arya
+    aqlanGroup.position.set(-1.1, 0, 0.5);
+    aqlanGroup.rotation.y = Math.PI / 4.8; // Angled toward zebra cross & sign
 
     // Materials
     const skinAqlanMat = new THREE.MeshStandardMaterial({ color: 0xfacb99, roughness: 0.55 });
     const hairDarkMat = new THREE.MeshStandardMaterial({ color: 0x24140d, roughness: 0.65 });
-    const helmetMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, metalness: 0.1 }); // Sporty red helmet
+    const helmetMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, metalness: 0.1 });
     const helmetStripeMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 });
-    const jacketMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.5 }); // Sky blue windbreaker
+    const jacketMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.5 });
     const shirtMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.4 });
     const shortsMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.7 });
     const shoeMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.4 });
     const kneePadMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.4 });
 
-    // 3D Skateboard beneath Aqlan's Feet
+    // 3D Skateboard
     const boardGroup = new THREE.Group();
     boardGroup.position.set(0, 0.08, 0);
 
@@ -669,7 +812,7 @@
     const gripTape = new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.038, 1.2), new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.9 }));
     boardGroup.add(deck, gripTape);
 
-    // Skateboard Wheels (4 wheels)
+    // Wheels
     const wheelMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.3 });
     const truckMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8 });
     [[-0.22, -0.42], [0.22, -0.42], [-0.22, 0.42], [0.22, 0.42]].forEach(([x, z]) => {
@@ -687,8 +830,7 @@
 
     aqlanGroup.add(boardGroup);
 
-    // Legs & Stance: Athletic bent knees riding on the skateboard
-    // Left Leg (Front)
+    // Athletic riding stance on skateboard
     const lThigh = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.07, 0.38, 12), shortsMat);
     lThigh.position.set(-0.12, 0.45, 0.22);
     lThigh.rotation.x = -0.2;
@@ -700,7 +842,6 @@
     lShoe.position.set(-0.12, 0.08, 0.3);
     aqlanGroup.add(lThigh, lShin, lKneePad, lShoe);
 
-    // Right Leg (Back)
     const rThigh = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.07, 0.38, 12), shortsMat);
     rThigh.position.set(0.12, 0.45, -0.2);
     rThigh.rotation.x = 0.25;
@@ -745,23 +886,19 @@
     rHandA.position.set(0.42, 0.78, -0.28);
     aqlanGroup.add(rUpperArmA, rForeArmA, rHandA);
 
-    // Neck
+    // Neck & Head
     const neckA = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.08, 0.14, 16), skinAqlanMat);
     neckA.position.set(0, 1.18, 0.02);
     aqlanGroup.add(neckA);
 
-    // 3D Head Group (Animated during listening and cheering!)
     const aqlanHeadGroup = new THREE.Group();
     aqlanHeadGroup.position.set(0, 1.38, 0.04);
 
-    // Head Sphere with Aqlan Face Texture
-    const faceMatA = new THREE.MeshStandardMaterial({
-      map: aqlanFaceTex,
-      roughness: 0.5,
-      metalness: 0.02
-    });
-    const headSphereA = new THREE.Mesh(new THREE.SphereGeometry(0.27, 32, 32), faceMatA);
-    headSphereA.rotation.y = -Math.PI / 2; // Face forward
+    const headSphereA = new THREE.Mesh(
+      new THREE.SphereGeometry(0.27, 32, 32),
+      new THREE.MeshStandardMaterial({ map: aqlanFaceTex, roughness: 0.5, metalness: 0.02 })
+    );
+    headSphereA.rotation.y = -Math.PI / 2;
     headSphereA.castShadow = true;
     aqlanHeadGroup.add(headSphereA);
 
@@ -788,7 +925,7 @@
     scene.add(aqlanGroup);
 
     // -------------------------------------------------------------------------
-    // FIGURE 2: PAK ARYA (SOLID 3D FRIENDLY TRAFFIC OFFICER — RIGHT SIDE)
+    // FIGURE 2: PAK ARYA (SOLID 3D POLICE OFFICER — RIGHT SIDE)
     // -------------------------------------------------------------------------
     const aryaGroup = new THREE.Group();
     aryaGroup.position.set(1.4, 0, -0.6);
@@ -796,11 +933,10 @@
 
     const skinAryaMat = new THREE.MeshStandardMaterial({ color: 0xfed7aa, roughness: 0.55 });
     const policeNavyMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 });
-    const safetyVestMat = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.4 }); // High-vis yellow
+    const safetyVestMat = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.4 });
     const silverStripeMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.2, metalness: 0.6 });
     const goldBadgeMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.9, roughness: 0.2 });
 
-    // Standing Legs
     [-0.14, 0.14].forEach(x => {
       const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.07, 0.92, 12), policeNavyMat);
       leg.position.set(x, 0.46, 0);
@@ -810,13 +946,11 @@
       aryaGroup.add(leg, shoe);
     });
 
-    // Torso: Police Shirt + High-Vis Safety Vest
     const torsoMeshArya = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.23, 0.68, 16), safetyVestMat);
     torsoMeshArya.position.set(0, 1.25, 0);
     torsoMeshArya.castShadow = true;
     aryaGroup.add(torsoMeshArya);
 
-    // Silver Reflective Stripes
     const stripe1 = new THREE.Mesh(new THREE.BoxGeometry(0.53, 0.06, 0.48), silverStripeMat);
     stripe1.position.set(0, 1.32, 0);
     const stripe2 = new THREE.Mesh(new THREE.BoxGeometry(0.53, 0.06, 0.48), silverStripeMat);
@@ -825,7 +959,6 @@
     badge.position.set(-0.11, 1.42, 0.22);
     aryaGroup.add(stripe1, stripe2, badge);
 
-    // Left Arm: Rested at belt
     const lArmArya = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.06, 0.45, 12), policeNavyMat);
     lArmArya.position.set(-0.32, 1.25, 0.06);
     lArmArya.rotation.z = 0.35;
@@ -834,7 +967,7 @@
     lHandArya.position.set(-0.25, 1.05, 0.16);
     aryaGroup.add(lArmArya, lHandArya);
 
-    // Right Arm: ARTICULATED CONVERSATIONAL & SIGNALING ARM!
+    // Right Arm: ARTICULATED CONVERSATIONAL & SIGNALING ARM
     const rArmGroupArya = new THREE.Group();
     rArmGroupArya.position.set(0.32, 1.42, 0.06);
 
@@ -850,33 +983,26 @@
 
     const rHandArya = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 10), skinAryaMat);
     rHandArya.position.set(0.16, -0.06, 0.34);
-    // Holding friendly traffic sign baton
     const baton = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.35), new THREE.MeshStandardMaterial({ color: 0xef4444 }));
     baton.position.set(0.18, 0.08, 0.36);
     rArmGroupArya.add(rHandArya, baton);
-
     aryaGroup.add(rArmGroupArya);
 
-    // Neck
     const neckArya = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.09, 0.16, 16), skinAryaMat);
     neckArya.position.set(0, 1.62, 0.02);
     aryaGroup.add(neckArya);
 
-    // 3D Head Group
     const aryaHeadGroup = new THREE.Group();
     aryaHeadGroup.position.set(0, 1.82, 0.04);
 
-    const faceMatArya = new THREE.MeshStandardMaterial({
-      map: aryaFaceTex,
-      roughness: 0.5,
-      metalness: 0.02
-    });
-    const headSphereArya = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), faceMatArya);
+    const headSphereArya = new THREE.Mesh(
+      new THREE.SphereGeometry(0.28, 32, 32),
+      new THREE.MeshStandardMaterial({ map: aryaFaceTex, roughness: 0.5, metalness: 0.02 })
+    );
     headSphereArya.rotation.y = -Math.PI / 2;
     headSphereArya.castShadow = true;
     aryaHeadGroup.add(headSphereArya);
 
-    // Police Peaked Cap
     const capCrown = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.28, 0.16, 24), policeNavyMat);
     capCrown.position.set(0, 0.18, -0.02);
     const capVisor = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.04, 0.18), new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2 }));
@@ -891,9 +1017,9 @@
     scene.add(aryaGroup);
 
     // =========================================================================
-    // 4. CAMERA VIEW CONTROLS & UI TOGGLE
+    // 5. CAMERA VIEW CONTROLS & UI TOGGLE
     // =========================================================================
-    let targetCamPos = { x: 0, y: 3.8, z: 7.2 };
+    let targetCamPos = { x: 0, y: 3.4, z: 6.8 };
     let targetCamLook = { x: 0, y: 1.25, z: 0 };
     let isTransitioningCam = false;
 
@@ -901,19 +1027,24 @@
       document.getElementById('btn-cam-all').classList.remove('active');
       document.getElementById('btn-cam-aqlan').classList.remove('active');
       document.getElementById('btn-cam-arya').classList.remove('active');
+      document.getElementById('btn-cam-sign').classList.remove('active');
 
       if (view === 'all') {
         document.getElementById('btn-cam-all').classList.add('active');
-        targetCamPos = { x: 0, y: 3.8, z: 7.2 };
+        targetCamPos = { x: 0, y: 3.4, z: 6.8 };
         targetCamLook = { x: 0, y: 1.25, z: 0 };
       } else if (view === 'aqlan') {
         document.getElementById('btn-cam-aqlan').classList.add('active');
         targetCamPos = { x: -2.1, y: 1.8, z: 2.6 };
-        targetCamLook = { x: -1.3, y: 1.1, z: 0.4 };
+        targetCamLook = { x: -1.1, y: 1.1, z: 0.5 };
       } else if (view === 'arya') {
         document.getElementById('btn-cam-arya').classList.add('active');
         targetCamPos = { x: 2.2, y: 2.1, z: 2.4 };
         targetCamLook = { x: 1.4, y: 1.5, z: -0.6 };
+      } else if (view === 'sign') {
+        document.getElementById('btn-cam-sign').classList.add('active');
+        targetCamPos = { x: -2.4, y: 2.4, z: 1.2 };
+        targetCamLook = { x: -2.4, y: 2.4, z: -1.2 };
       }
       isTransitioningCam = true;
       playTone(587.33, 'sine', 0.15, false);
@@ -940,14 +1071,15 @@
     }
 
     // =========================================================================
-    // 5. MISSION SCENARIOS (5 MISI BERTAHAP BAB 3 BAHASA INDONESIA KELAS 4)
+    // 6. MISSION SCENARIOS (5 MISI BERTAHAP BAB 3 BAHASA INDONESIA KELAS 4)
     // =========================================================================
     const missionScenarios = [
       {
         situation: "MISI 1: MENGENAL WARNA & BENTUK RAMBU (RAMBU PERINGATAN)",
+        signTexture: signPedestrianTex,
         speakerName: "Pak Arya (Polisi Lalu Lintas)",
         speakerBadge: "👮 Arahan Pos",
-        speakerText: "\"Halo Kapten Aqlan! Selamat datang di pos lalu lintas kota. Sebelum kamu meluncur dengan skateboard, perhatikan rambu kuning belah ketupat di tiang sebelah kiri!\"",
+        speakerText: "\"Halo Kapten Aqlan! Selamat datang di pos lalu lintas kota. Sebelum kamu meluncur dengan skateboard, perhatikan rambu kuning belah ketupat di tiang baja depanmu!\"",
         prompt: "Berdasarkan warna dan bentuknya pada Bab 3, apakah fungsi rambu kuning berbentuk belah ketupat tersebut?",
         options: [
           "A. Rambu Larangan (Melarang pengguna jalan melakukan suatu tindakan)",
@@ -960,13 +1092,14 @@
       },
       {
         situation: "MISI 2: RAMBU LARANGAN & ETIKA SKATER TERTIB",
+        signTexture: signNoEntryTex,
         speakerName: "Pak Arya (Polisi Lalu Lintas)",
         speakerBadge: "👮 Arahan Pos",
         speakerText: "\"Di ujung trotoar pejalan kaki, ada rambu berbentuk lingkaran putih dengan garis tepi merah tebal dan garis silang miring merah di tengahnya.\"",
-        prompt: "Jika Aqlan melihat rambu berlingkar MERAH dengan garis coret silang, apa jenis rambu tersebut dan bagaimana tindakan tertib yang harus Aqlan lakukan?",
+        prompt: "Jika Aqlan melihat rambu berlingkar MERAH dengan garis silang, apa jenis rambu tersebut dan bagaimana tindakan tertib yang harus Aqlan lakukan?",
         options: [
           "A. Rambu Petunjuk, Aqlan boleh meluncur secepat mungkin melompati pejalan kaki.",
-          "B. Rambu Larangan, yang melarang suatu tindakan (seperti melintas), sehingga Aqlan harus turun dari papan seluncur dan menuntunnya demi keselamatan orang lain.",
+          "B. Rambu Larangan, yang melarang suatu tindakan (seperti dilarang melintas), sehingga Aqlan harus turun dari papan seluncur dan menuntunnya demi keselamatan orang lain.",
           "C. Rambu Peringatan jalan licin.",
           "D. Rambu Rekomendasi lomba kecepatan seluncur."
         ],
@@ -975,6 +1108,7 @@
       },
       {
         situation: "MISI 3: MEMBACA DENAH & ARAH MATA ANGIN (U-S-T-B)",
+        signTexture: signStopTex,
         speakerName: "Pak Arya (Polisi Lalu Lintas)",
         speakerBadge: "👮 Arahan Pos",
         speakerText: "\"Kapten Aqlan ingin menuju ke Taman Skater yang berada di sebelah UTARA sekolah. Saat ini Aqlan berdiri di perempatan zebra cross menghadap ke arah TIMUR (terbit matahari).\"",
@@ -990,9 +1124,10 @@
       },
       {
         situation: "MISI 4: MEMBEDAKAN PARAGRAF DESKRIPSI VS ARGUMENTASI",
+        signTexture: signGuideTex,
         speakerName: "Pak Arya (Polisi Lalu Lintas)",
         speakerBadge: "👮 Arahan Pos",
-        speakerText: "\"Di papan informasi pos, tertulis: 'Jalan Diponegoro sangat rapi, aspalnya mulus berwarna abu-abu, dan deretan pohon trembesi rindang menaungi tepi jalan dengan sejuk.'\"",
+        speakerText: "\"Di papan petunjuk hijau pos, tertulis: 'Jalan Diponegoro sangat rapi, aspalnya mulus berwarna abu-abu, dan deretan pohon trembesi rindang menaungi tepi jalan dengan sejuk.'\"",
         prompt: "Kalimat di atas termasuk jenis paragraf DESKRIPSI atau ARGUMENTASI, dan apa ciri utamanya?",
         options: [
           "A. Paragraf Argumentasi, karena memuat pendapat pribadi penulis yang meyakinkan orang lain.",
@@ -1005,6 +1140,7 @@
       },
       {
         situation: "MISI 5: KAIDAH KEBAHASAAN AWALAN 'BER-' YANG TEPAT",
+        signTexture: signPedestrianTex,
         speakerName: "Pak Arya (Polisi Lalu Lintas)",
         speakerBadge: "👮 Arahan Pos",
         speakerText: "\"Luar biasa Aqlan! Terakhir, kamu akan menulis kesimpulan perjalanan harianmu dengan menggunakan kata berimbuhan awalan 'ber-' secara tepat.\"",
@@ -1033,6 +1169,12 @@
       document.getElementById('speaker-badge').innerText = data.speakerBadge;
       document.getElementById('speaker-text').innerText = data.speakerText;
       document.getElementById('prompt-text').innerText = data.prompt;
+
+      // Update primary traffic sign texture on steel pole!
+      if (data.signTexture) {
+        primarySignMat.map = data.signTexture;
+        primarySignMat.needsUpdate = true;
+      }
 
       const fb = document.getElementById('feedback');
       fb.className = 'feedback-banner';
@@ -1128,7 +1270,7 @@
     }
 
     // =========================================================================
-    // 6. RENDER LOOP & REAL 3D ANIMATIONS
+    // 7. RENDER LOOP & REAL 3D ANIMATIONS
     // =========================================================================
     let clock = new THREE.Clock();
 
@@ -1145,7 +1287,7 @@
       torsoMeshArya.position.y = 1.25 + Math.sin(time * 2.0) * 0.008;
       aryaHeadGroup.position.y = 1.82 + Math.sin(time * 2.0) * 0.008;
 
-      // Pak Arya Speaking gesture (signaling with arm & head)
+      // Pak Arya Speaking gesture (signaling with baton & head)
       if (isAryaSpeaking) {
         const elapsed = (performance.now() - aryaSpeakStart) / 1000;
         rArmGroupArya.rotation.x = Math.sin(elapsed * 5) * 0.14;
@@ -1161,7 +1303,7 @@
       if (isAqlanCheering) {
         const elapsed = (performance.now() - aqlanCheerStart) / 1000;
         aqlanHeadGroup.rotation.x = Math.sin(elapsed * 10) * 0.14;
-        aqlanGroup.position.y = Math.max(0, Math.sin(elapsed * 8) * 0.12); // Small hop!
+        aqlanGroup.position.y = Math.max(0, Math.sin(elapsed * 8) * 0.14);
       } else {
         aqlanHeadGroup.rotation.x = 0;
         aqlanGroup.position.y = 0;
