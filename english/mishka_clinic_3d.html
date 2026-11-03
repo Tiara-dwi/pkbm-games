@@ -1159,6 +1159,43 @@
       rArm.position.set(0.32, 1.65, 0.25);
       drMishkaGroup.add(rArm);
 
+      // --- Doctor Legs (Standing behind desk) ---
+      const docPantsMat = new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.5 }); // Dark emerald scrub trousers
+      const docShoeMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.3 }); // Medical shoes
+      const docSoleMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.5 }); // White medical sole
+
+      const docLegGeo = new THREE.CylinderGeometry(0.085, 0.075, 1.25, 14);
+
+      // Left Leg
+      const lLegDoc = new THREE.Mesh(docLegGeo, docPantsMat);
+      lLegDoc.position.set(-0.13, 0.65, 0);
+      lLegDoc.castShadow = true;
+      drMishkaGroup.add(lLegDoc);
+
+      // Right Leg
+      const rLegDoc = new THREE.Mesh(docLegGeo, docPantsMat);
+      rLegDoc.position.set(0.13, 0.65, 0);
+      rLegDoc.castShadow = true;
+      drMishkaGroup.add(rLegDoc);
+
+      // Left Shoe & Foot
+      const lShoeDoc = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.11, 0.28), docShoeMat);
+      lShoeDoc.position.set(-0.13, 0.06, 0.06);
+      lShoeDoc.castShadow = true;
+      drMishkaGroup.add(lShoeDoc);
+      const lSoleDoc = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.03, 0.29), docSoleMat);
+      lSoleDoc.position.set(-0.13, 0.015, 0.06);
+      drMishkaGroup.add(lSoleDoc);
+
+      // Right Shoe & Foot
+      const rShoeDoc = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.11, 0.28), docShoeMat);
+      rShoeDoc.position.set(0.13, 0.06, 0.06);
+      rShoeDoc.castShadow = true;
+      drMishkaGroup.add(rShoeDoc);
+      const rSoleDoc = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.03, 0.29), docSoleMat);
+      rSoleDoc.position.set(0.13, 0.015, 0.06);
+      drMishkaGroup.add(rSoleDoc);
+
       scene.add(drMishkaGroup);
     }
 
@@ -1204,6 +1241,78 @@
       patientArmR = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.45), shirtMat);
       patientArmR.position.set(0.28, 1.45, 0.1);
       patientGroup.add(patientArmR);
+
+      // --- Patient Hips, Legs & Feet (Seated naturally on Stool) ---
+      const patientShoeMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.4 }); // Blue sneakers
+      const patientSoleMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.6 }); // White sneaker soles
+
+      // Patient Pelvis/Hips
+      const pelvis = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.26, 0.2, 14), pantsMat);
+      pelvis.position.y = 1.08;
+      pelvis.castShadow = true;
+      patientGroup.add(pelvis);
+
+      // Thighs (Upper legs extending horizontally forward from stool)
+      const thighGeo = new THREE.CylinderGeometry(0.08, 0.075, 0.42, 14);
+      thighGeo.rotateX(Math.PI / 2); // Rotate to point forward
+
+      const lThigh = new THREE.Mesh(thighGeo, pantsMat);
+      lThigh.position.set(-0.13, 1.04, 0.2);
+      lThigh.castShadow = true;
+      patientGroup.add(lThigh);
+
+      const rThigh = new THREE.Mesh(thighGeo, pantsMat);
+      rThigh.position.set(0.13, 1.04, 0.2);
+      rThigh.castShadow = true;
+      patientGroup.add(rThigh);
+
+      // Knees (Rounded joints)
+      const kneeGeo = new THREE.SphereGeometry(0.08, 12, 12);
+      const lKnee = new THREE.Mesh(kneeGeo, pantsMat);
+      lKnee.position.set(-0.13, 1.04, 0.42);
+      patientGroup.add(lKnee);
+
+      const rKnee = new THREE.Mesh(kneeGeo, pantsMat);
+      rKnee.position.set(0.13, 1.04, 0.42);
+      patientGroup.add(rKnee);
+
+      // Calves/Shins (Lower legs descending vertically to floor)
+      const shinGeo = new THREE.CylinderGeometry(0.075, 0.065, 0.92, 14);
+
+      const lShin = new THREE.Mesh(shinGeo, pantsMat);
+      lShin.position.set(-0.13, 0.52, 0.42);
+      lShin.castShadow = true;
+      patientGroup.add(lShin);
+
+      const rShin = new THREE.Mesh(shinGeo, pantsMat);
+      rShin.position.set(0.13, 0.52, 0.42);
+      rShin.castShadow = true;
+      patientGroup.add(rShin);
+
+      // Ankle Compression Wrap (Bandage on Right Ankle for Sprain case)
+      const bandageMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 });
+      window.patientBandage = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.18, 14), bandageMat);
+      window.patientBandage.position.set(0.13, 0.16, 0.42);
+      window.patientBandage.visible = false; // Toggled in sprain case
+      patientGroup.add(window.patientBandage);
+
+      // Left Shoe & Foot (Resting firmly on the clinic floor)
+      const lShoe = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.12, 0.3), patientShoeMat);
+      lShoe.position.set(-0.13, 0.06, 0.51);
+      lShoe.castShadow = true;
+      patientGroup.add(lShoe);
+      const lSole = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.03, 0.31), patientSoleMat);
+      lSole.position.set(-0.13, 0.015, 0.51);
+      patientGroup.add(lSole);
+
+      // Right Shoe & Foot (Resting firmly on the clinic floor)
+      const rShoe = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.12, 0.3), patientShoeMat);
+      rShoe.position.set(0.13, 0.06, 0.51);
+      rShoe.castShadow = true;
+      patientGroup.add(rShoe);
+      const rSole = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.03, 0.31), patientSoleMat);
+      rSole.position.set(0.13, 0.015, 0.51);
+      patientGroup.add(rSole);
 
       // Turn patient towards Dr. Mishka
       patientGroup.rotation.y = -Math.PI / 4;
@@ -1295,11 +1404,15 @@
         patientArmR.rotation.set(1.8, -0.4, -0.6);
         patientArmR.position.set(0.15, 1.7, 0.15);
       } else if (type === 'sprain') {
-        // Gymnast resting leg elevated
+        // Gymnast resting leg with ice compress on ankle
         patientTorso.rotation.x = -0.1;
         patientHead.rotation.set(0.1, 0, 0);
         patientArmL.rotation.set(0.4, 0, 0.3);
         patientArmR.rotation.set(0.4, 0, -0.3);
+        if (window.patientBandage) window.patientBandage.visible = true;
+      }
+      if (type !== 'sprain' && window.patientBandage) {
+        window.patientBandage.visible = false;
       }
     }
 
