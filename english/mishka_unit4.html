@@ -17,14 +17,88 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body {
-      background: radial-gradient(circle at top, #065f46 0%, #022c22 100%);
+      background: linear-gradient(135deg, rgba(2, 44, 34, 0.82) 0%, rgba(4, 47, 46, 0.88) 100%),
+                  url('../assets/canva_visuals/mishka_clinic_anatomy_bg.jpg') center/cover no-repeat fixed;
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
+
+    /* Floating Medical Particles (like Sakura in Indonesian game) */
+    @keyframes floatMedical {
+      0% { transform: translateY(105vh) rotate(0deg) scale(0.85); opacity: 0; }
+      15% { opacity: 0.75; }
+      85% { opacity: 0.75; }
+      100% { transform: translateY(-50px) rotate(360deg) scale(1.1); opacity: 0; }
+    }
+    .med-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.7));
+      user-select: none;
+      font-size: 18px;
+    }
+
+    /* Pulse Glow for Anatomy Nodes */
+    @keyframes pulseNode {
+      0%, 100% { transform: scale(1); opacity: 0.85; filter: drop-shadow(0 0 4px #34d399); }
+      50% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 10px #fbbf24); }
+    }
+    .pulse-dot {
+      animation: pulseNode 2.2s infinite ease-in-out;
+      transform-origin: center;
+    }
+
+    /* Anatomy HUD Side Panels */
+    .hud-panel {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 220px;
+      background: rgba(4, 47, 46, 0.82);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      border-radius: 16px;
+      padding: 16px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), inset 0 0 15px rgba(52, 211, 153, 0.12);
+      z-index: 5;
+      display: none;
+    }
+    .hud-left { left: 24px; }
+    .hud-right { right: 24px; }
+    @media (min-width: 1300px) {
+      .hud-panel { display: block; }
+    }
+    .hud-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--neon-emerald);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(52, 211, 153, 0.3);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hud-node-list {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .hud-node-list span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
     header {
       width: 100%;
       max-width: 800px;
@@ -32,11 +106,15 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 20px;
-      background: rgba(4, 47, 46, 0.9);
+      background: rgba(4, 47, 46, 0.88);
       border: 1px solid var(--neon-emerald);
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(52, 211, 153, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(52, 211, 153, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       margin-bottom: 20px;
+      position: relative;
+      z-index: 10;
     }
     .badge {
       background: linear-gradient(135deg, #059669, #34d399);
@@ -53,11 +131,15 @@
     .container {
       width: 100%;
       max-width: 800px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      background: rgba(6, 78, 59, 0.86);
+      border: 1px solid rgba(52, 211, 153, 0.38);
       border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 16px 45px rgba(0,0,0,0.65), 0 0 30px rgba(6, 78, 59, 0.4);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+      z-index: 10;
     }
     .mission-header {
       display: flex;
@@ -204,6 +286,76 @@
 </head>
 <body>
 
+  <!-- LEFT HUD: Interactive Clinical Anatomy Scan -->
+  <div class="hud-panel hud-left">
+    <div class="hud-title"><span>🧬</span> ANATOMY SCAN HUD</div>
+    <div style="text-align:center; margin: 8px 0;">
+      <svg viewBox="0 0 120 220" width="110" height="200" style="filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.45));">
+        <!-- Body Contour -->
+        <circle cx="60" cy="28" r="16" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.75"/>
+        <path d="M54 44 L48 65 L38 75 L34 120 L42 140 L50 140 L50 185 L54 210 M66 44 L72 65 L82 75 L86 120 L78 140 L70 140 L70 185 L66 210" fill="none" stroke="#34d399" stroke-width="1.6" opacity="0.6"/>
+        <line x1="60" y1="44" x2="60" y2="140" stroke="#047857" stroke-dasharray="2,2" stroke-width="1.2"/>
+        <path d="M38 75 L22 110 L18 145 M82 75 L98 110 L102 145" fill="none" stroke="#34d399" stroke-width="1.4" opacity="0.5"/>
+        
+        <!-- Diagnostic Hologram Nodes -->
+        <!-- Head -->
+        <circle cx="60" cy="26" r="4.5" fill="#f87171" class="pulse-dot"/>
+        <line x1="60" y1="26" x2="95" y2="18" stroke="#f87171" stroke-width="1" opacity="0.75"/>
+        <text x="96" y="21" fill="#f87171" font-size="8" font-weight="bold" font-family="Segoe UI">Head</text>
+
+        <!-- Throat -->
+        <circle cx="60" cy="48" r="4" fill="#fbbf24" class="pulse-dot"/>
+        <line x1="60" y1="48" x2="22" y2="48" stroke="#fbbf24" stroke-width="1" opacity="0.75"/>
+        <text x="0" y="51" fill="#fbbf24" font-size="8" font-weight="bold" font-family="Segoe UI">Throat</text>
+
+        <!-- Lungs / Chest -->
+        <circle cx="60" cy="78" r="4.5" fill="#34d399" class="pulse-dot"/>
+        <line x1="60" y1="78" x2="96" y2="78" stroke="#34d399" stroke-width="1" opacity="0.75"/>
+        <text x="97" y="81" fill="#34d399" font-size="8" font-weight="bold" font-family="Segoe UI">Lungs</text>
+
+        <!-- Stomach -->
+        <circle cx="60" cy="110" r="5" fill="#38bdf8" class="pulse-dot"/>
+        <line x1="60" y1="110" x2="20" y2="110" stroke="#38bdf8" stroke-width="1" opacity="0.75"/>
+        <text x="0" y="113" fill="#38bdf8" font-size="8" font-weight="bold" font-family="Segoe UI">Stomach</text>
+
+        <!-- Muscle / Ankle -->
+        <circle cx="53" cy="185" r="4" fill="#a78bfa" class="pulse-dot"/>
+        <line x1="53" y1="185" x2="88" y2="185" stroke="#a78bfa" stroke-width="1" opacity="0.75"/>
+        <text x="90" y="188" fill="#a78bfa" font-size="8" font-weight="bold" font-family="Segoe UI">Muscle</text>
+      </svg>
+    </div>
+    <div class="hud-node-list">
+      <div>• <span>Headache</span> (Sakit Kepala)</div>
+      <div>• <span>Sore Throat</span> (Tenggorokan)</div>
+      <div>• <span>Stomachache</span> (Perut)</div>
+      <div>• <span>Toothache</span> (Gigi)</div>
+      <div>• <span>Muscle Soreness</span> (Otot)</div>
+    </div>
+  </div>
+
+  <!-- RIGHT HUD: Vital Signs & Doctor Prescription Code -->
+  <div class="hud-panel hud-right">
+    <div class="hud-title"><span>📊</span> VITAL SIGNS MONITOR</div>
+    <div style="margin: 8px 0; background: rgba(2, 44, 34, 0.85); border-radius: 8px; padding: 8px; border: 1px solid rgba(52, 211, 153, 0.25);">
+      <svg viewBox="0 0 160 40" width="100%" height="34">
+        <path d="M0 20 L40 20 L50 6 L58 34 L66 12 L72 26 L80 20 L160 20" fill="none" stroke="#34d399" stroke-width="2">
+          <animate attributeName="stroke-dashoffset" from="200" to="0" dur="2.2s" repeatCount="indefinite"/>
+        </path>
+      </svg>
+      <div style="display:flex; justify-content:space-between; font-size:10px; color:#a7f3d0; margin-top:3px;">
+        <span>PULSE: 76 BPM</span>
+        <span style="color:#fbbf24; font-weight:bold;">STABLE</span>
+      </div>
+    </div>
+    <div class="hud-title" style="margin-top:14px;"><span>💊</span> DOCTOR'S FORMULA</div>
+    <div class="hud-node-list">
+      <div style="color:#34d399; margin-bottom:3px;"><strong>ANJURAN (SHOULD):</strong></div>
+      <div style="font-size:11px; margin-bottom:8px; line-height:1.4;">• You should + Verb 1<br><em>(drink water, rest, brush)</em></div>
+      <div style="color:#f87171; margin-bottom:3px;"><strong>PANTANGAN (SHOULD NOT):</strong></div>
+      <div style="font-size:11px; line-height:1.4;">• You shouldn't + Verb 1<br><em>(no candy, no junk food)</em></div>
+    </div>
+  </div>
+
   <header>
     <div>
       <span class="badge">Mishka • Grade 5</span>
@@ -302,7 +454,7 @@
         desc: "Tetapkan diagnosis keluhan nyeri lambung!",
         q: "Patient: 'Doctor, my stomach hurts so badly after eating spicy food!' -> Diagnosis?",
         options: ["He has got a headache.", "He has got a stomachache.", "He has got a toothache.", "He has got an earache."],
-        correct: 1,
+        correctAnswer: "He has got a stomachache.",
         exp: "Sempurna! Nyeri pada lambung/perut disebut 'stomachache'!"
       },
       {
@@ -311,7 +463,7 @@
         desc: "Pasien mengeluh perih saat menelan makanan!",
         q: "Patient: 'It is painful when I swallow food and my throat is red.' -> Diagnosis?",
         options: ["She has got a sore throat.", "She has got a cough.", "She has got a fever.", "She has got an ache."],
-        correct: 0,
+        correctAnswer: "She has got a sore throat.",
         exp: "Tepat sekali! Nyeri tenggorokan disebut 'sore throat'!"
       },
       {
@@ -325,22 +477,22 @@
           "She is got toothache.",
           "She having toothache."
         ],
-        correct: 1,
+        correctAnswer: "She has got a toothache.",
         exp: "Luar biasa! Subjek tunggal orang ketiga (He/She) menggunakan 'HAS GOT'!"
       },
       {
         tag: "DOCTOR'S PRESCRIPTION",
         phase: "Konsultasi Pasien 4: Resep Medis Sakit Gigi",
-        desc: "Berikan anjuran pengobatan medis yang tepat!",
-        q: "Patient has got a severe toothache. What should he do?",
+        desc: "Berikan anjuran & pantangan medis gigi yang tepat!",
+        q: "Patient: 'I have got a severe toothache.' What should the patient do?",
         options: [
-          "He should eat lots of candy and chocolates.",
-          "He should see a dentist.",
-          "He should drink iced soda.",
-          "He should run a marathon."
+          "You should eat lots of candy and chocolates.",
+          "You should brush your teeth and you shouldn't eat candy.",
+          "You should drink iced soda.",
+          "You should eat spicy junk food."
         ],
-        correct: 1,
-        exp: "Benar! Untuk sakit gigi, saran terbaik adalah periksa ke dokter gigi (see a dentist)!"
+        correctAnswer: "You should brush your teeth and you shouldn't eat candy.",
+        exp: "Benar! 'You should brush your teeth' dan 'You shouldn't eat too much candy'!"
       },
       {
         tag: "MEDICAL PROHIBITION (SHOULD NOT)",
@@ -353,7 +505,7 @@
           "She should not take a cold shower or play outside.",
           "She should not drink water."
         ],
-        correct: 2,
+        correctAnswer: "She should not take a cold shower or play outside.",
         exp: "Analisis medis akurat! Saat demam tinggi, jangan mandi air dingin atau beraktivitas di luar rumah!"
       },
       {
@@ -367,7 +519,7 @@
           "You should eat spicy chili.",
           "You should not sleep tonight."
         ],
-        correct: 1,
+        correctAnswer: "You should stretch gently, apply ice, and rest.",
         exp: "Chief Medical Officer! Atlet senam yang pegal otot sebaiknya melakukan peregangan lembut, kompres es, dan istirahat cukup!"
       }
     ];
@@ -376,6 +528,17 @@
     let score = 0;
     let streak = 0;
     let answered = false;
+    let currentShuffledOptions = [];
+    let currentCorrectIdx = 0;
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
 
     function loadQuestion() {
       answered = false;
@@ -391,9 +554,13 @@
       fb.style.display = 'none';
       document.getElementById('btn-next').style.display = 'none';
 
+      // Randomize options so the answer is never predictable / not always B
+      currentShuffledOptions = shuffleArray(data.options);
+      currentCorrectIdx = currentShuffledOptions.indexOf(data.correctAnswer);
+
       const optContainer = document.getElementById('options');
       optContainer.innerHTML = '';
-      data.options.forEach((opt, i) => {
+      currentShuffledOptions.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'opt-btn';
         btn.innerHTML = `<span style="color:var(--neon-emerald)">[${String.fromCharCode(65+i)}]</span> ${opt}`;
@@ -409,7 +576,7 @@
       const buttons = document.querySelectorAll('.opt-btn');
       const fb = document.getElementById('feedback');
 
-      if (index === data.correct) {
+      if (index === currentCorrectIdx) {
         playSound('correct');
         buttons[index].classList.add('correct');
         score += 100;
@@ -419,7 +586,7 @@
       } else {
         playSound('wrong');
         buttons[index].classList.add('wrong');
-        buttons[data.correct].classList.add('correct');
+        buttons[currentCorrectIdx].classList.add('correct');
         streak = 0;
         fb.innerText = "⚠️ EVALUASI KLINIS: " + data.exp;
         fb.className = "feedback-banner show-wrong";
@@ -457,7 +624,37 @@
       loadQuestion();
     }
 
-    window.onload = loadQuestion;
+    // Floating Medical Particles Animation (like Sakura in Indonesian game)
+    function makeMedicalParticles() {
+      const symbols = ['✚', '💊', '🩺', '🧬', '✨', '❤️‍🩹', '✚', '💊'];
+      for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'med-particle';
+        p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        const size = Math.random() * 10 + 14;
+        p.style.fontSize = size + 'px';
+        p.style.left = Math.random() * 96 + 'vw';
+        p.style.top = '100vh';
+        p.style.opacity = Math.random() * 0.45 + 0.35;
+        const dur = Math.random() * 7 + 8;
+        const delay = Math.random() * 8;
+        p.style.animation = `floatMedical ${dur}s linear infinite`;
+        p.style.animationDelay = delay + 's';
+        if (p.innerText === '✚') {
+          p.style.color = '#34d399';
+        } else if (p.innerText === '✨') {
+          p.style.color = '#fbbf24';
+        } else {
+          p.style.color = '#a7f3d0';
+        }
+        document.body.appendChild(p);
+      }
+    }
+
+    window.onload = () => {
+      loadQuestion();
+      makeMedicalParticles();
+    };
   </script>
 </body>
 </html>
