@@ -653,14 +653,14 @@
         id: 1,
         patientName: "Bima (10 Years Old)",
         icon: "👦",
-        sub: "Primary Complaint: Sudden acute stomachache",
+        sub: "Patient Consultation: Acute Tummy Distress",
         dialogue: "\"Good morning Doctor Mishka... Ouch! My tummy feels like it's twisting inside! Yesterday I ate 3 packets of super spicy sambal chips and chugged iced soda while playing games.\"",
         phase1: {
           q: "What is Bima's health problem?",
           options: [
-            { text: "He has got a stomachache (Sakit perut akibat makanan pedas).", correct: true, key: "A" },
-            { text: "He has got an earache (Sakit telinga kemasukan air).", correct: false, key: "B" },
-            { text: "He has got a broken arm (Patah tulang lengan).", correct: false, key: "C" }
+            { text: "He has got a stomachache.", correct: true },
+            { text: "He has got an earache.", correct: false },
+            { text: "He has got a broken arm.", correct: false }
           ],
           feedbackCorrect: "🎉 Correct! Bima has got a severe STOMACHACHE from eating too much spicy food.",
           feedbackWrong: "⚠️ Perhatikan keluhan Bima: rasa sakit berpusat di perut (tummy), bukan telinga atau lengan."
@@ -668,9 +668,9 @@
         phase2: {
           q: "Formulate Dr. Mishka's medical advice: What SHOULD Bima do to recover?",
           options: [
-            { text: "He SHOULD drink warm water, eat soft porridge, and rest.", correct: true, key: "A" },
-            { text: "He SHOULD drink more cold spicy soda to clean his tummy.", correct: false, key: "B" },
-            { text: "He SHOULD run a marathon immediately.", correct: false, key: "C" }
+            { text: "He should drink warm water, eat soft porridge, and rest.", correct: true },
+            { text: "He should drink more cold spicy soda to clean his tummy.", correct: false },
+            { text: "He should run a marathon immediately.", correct: false }
           ],
           feedbackCorrect: "🌟 Excellent prescription! Warm water and light food will soothe his stomach lining.",
           feedbackWrong: "⚠️ Makanan pedas dan es justru memperparah asam lambung Bima."
@@ -678,9 +678,9 @@
         phase3: {
           q: "Important Health Warning: What SHOULD NOT Bima do right now?",
           options: [
-            { text: "He SHOULD NOT eat extra spicy chili snacks or drink acidic soda.", correct: true, key: "A" },
-            { text: "He SHOULD NOT take a rest or sleep at night.", correct: false, key: "B" },
-            { text: "He SHOULD NOT drink clean water.", correct: false, key: "C" }
+            { text: "He shouldn't eat extra spicy chili snacks or drink acidic soda.", correct: true },
+            { text: "He shouldn't take a rest or sleep at night.", correct: false },
+            { text: "He shouldn't drink clean water.", correct: false }
           ],
           feedbackCorrect: "🩺 Perfect Medical Advice! Pantangan utama pasien sakit perut adalah cabai dan minuman bersoda.",
           feedbackWrong: "⚠️ Pasien yang sakit perut tetap wajib tidur cukup dan minum air putih."
@@ -692,14 +692,14 @@
         id: 2,
         patientName: "Siti (11 Years Old)",
         icon: "👧",
-        sub: "Primary Complaint: Throbbing lower right jaw pain",
+        sub: "Patient Consultation: Throbbing Jaw Discomfort",
         dialogue: "\"Hello Doctor Mishka... Oh, my lower jaw is throbbing with pain! I ate lots of sticky caramel candies at my friend's birthday party and fell asleep without brushing my teeth.\"",
         phase1: {
           q: "What is Siti's health problem?",
           options: [
-            { text: "She has got a toothache (Sakit gigi berdenyut akibat permen manis).", correct: true, key: "A" },
-            { text: "She has got a headache (Sakit kepala tegang).", correct: false, key: "B" },
-            { text: "She has got a sore eye (Mata merah iritasi).", correct: false, key: "C" }
+            { text: "She has got a toothache.", correct: true },
+            { text: "She has got a headache.", correct: false },
+            { text: "She has got a sore eye.", correct: false }
           ],
           feedbackCorrect: "🎉 Spot on! Siti has got a TOOTHACHE caused by sticky candy residue.",
           feedbackWrong: "⚠️ Siti mengeluhkan rasa ngilu berdenyut di rahang bawah (jaw), yaitu sakit gigi (toothache)."
@@ -707,9 +707,9 @@
         phase2: {
           q: "What SHOULD Siti do to treat her toothache?",
           options: [
-            { text: "She SHOULD rinse with warm saltwater and visit a dentist (Dokter Gigi).", correct: true, key: "A" },
-            { text: "She SHOULD bite hard ice cubes directly with her sore tooth.", correct: false, key: "B" },
-            { text: "She SHOULD eat sticky chocolate to coat the tooth cavity.", correct: false, key: "C" }
+            { text: "She should rinse with warm saltwater and visit a dentist.", correct: true },
+            { text: "She should bite hard ice cubes directly with her sore tooth.", correct: false },
+            { text: "She should eat sticky chocolate to coat the tooth cavity.", correct: false }
           ],
           feedbackCorrect: "🌟 Brilian! Berkumur air garam hangat dan mengunjungi dokter gigi adalah langkah medis paling tepat.",
           feedbackWrong: "⚠️ Menggigit es atau memakan cokelat justru akan melukai saraf gigi yang sedang radang."
@@ -717,9 +717,9 @@
         phase3: {
           q: "Dental Hygiene SOP: What SHOULD NOT Siti do?",
           options: [
-            { text: "She SHOULD NOT chew hard, sugary candies or skip brushing her teeth.", correct: true, key: "A" },
-            { text: "She SHOULD NOT smile at her friends.", correct: false, key: "B" },
-            { text: "She SHOULD NOT use toothpaste.", correct: false, key: "C" }
+            { text: "She shouldn't chew hard, sugary candies or skip brushing her teeth.", correct: true },
+            { text: "She shouldn't smile at her friends.", correct: false },
+            { text: "She shouldn't use toothpaste.", correct: false }
           ],
           feedbackCorrect: "🩺 Superb Advice! Menghindari permen keras dan rutin sikat gigi 2x sehari mencegah gigi berlubang.",
           feedbackWrong: "⚠️ Menjaga kebersihan gigi adalah kunci utama pencegahan."
@@ -731,14 +731,14 @@
         id: 3,
         patientName: "Kevin (10 Years Old)",
         icon: "🧣",
-        sub: "Primary Complaint: Painful swallowing & body fever (38.8°C)",
+        sub: "Patient Consultation: Throat Irritation & Chills",
         dialogue: "\"Cough, cough... Doctor Mishka, my throat feels like it is on fire when I swallow water. My forehead feels burning hot, and my body is shivering under my jacket.\"",
         phase1: {
           q: "What are Kevin's medical symptoms?",
           options: [
-            { text: "He has got a sore throat and fever (Radang tenggorokan & demam tinggi).", correct: true, key: "A" },
-            { text: "He has got a twisted knee (Lutut terkilir saat bermain basket).", correct: false, key: "B" },
-            { text: "He has got a toothache (Sakit gigi taring).", correct: false, key: "C" }
+            { text: "He has got a sore throat and fever.", correct: true },
+            { text: "He has got a twisted knee.", correct: false },
+            { text: "He has got a toothache.", correct: false }
           ],
           feedbackCorrect: "🎉 Precise diagnosis! Kevin has got a SORE THROAT and high FEVER.",
           feedbackWrong: "⚠️ Gejala Kevin adalah tenggorokan sakit menelan (throat) dan dahi panas menggigil (fever)."
@@ -746,9 +746,9 @@
         phase2: {
           q: "What medical advice SHOULD Dr. Mishka give to Kevin?",
           options: [
-            { text: "He SHOULD wear warm clothes, rest in bed, and drink honey lemon tea.", correct: true, key: "A" },
-            { text: "He SHOULD swim in a cold outdoor pool for 2 hours.", correct: false, key: "B" },
-            { text: "He SHOULD scream as loud as possible to clear his throat.", correct: false, key: "C" }
+            { text: "He should wear warm clothes, rest in bed, and drink honey lemon tea.", correct: true },
+            { text: "He should swim in a cold outdoor pool for 2 hours.", correct: false },
+            { text: "He should scream as loud as possible to clear his throat.", correct: false }
           ],
           feedbackCorrect: "🌟 Resep Medis Mantap! Madu lemon hangat melegakan pita suara dan istirahat menurunkan panas tubuh.",
           feedbackWrong: "⚠️ Berenang air dingin atau berteriak kencang akan memperparah radang tenggorokan Kevin."
@@ -756,9 +756,9 @@
         phase3: {
           q: "Recovery Protocol: What SHOULD NOT Kevin do until he is fully healed?",
           options: [
-            { text: "He SHOULD NOT drink iced beverages or stay up late at night.", correct: true, key: "A" },
-            { text: "He SHOULD NOT take a temperature check with thermometer.", correct: false, key: "B" },
-            { text: "He SHOULD NOT eat warm nutritious chicken soup.", correct: false, key: "C" }
+            { text: "He shouldn't drink iced beverages or stay up late at night.", correct: true },
+            { text: "He shouldn't take a temperature check with thermometer.", correct: false },
+            { text: "He shouldn't eat warm nutritious chicken soup.", correct: false }
           ],
           feedbackCorrect: "🩺 Outstanding Medical SOP! Minuman dingin dan kurang tidur akan menekan sistem imun tubuh.",
           feedbackWrong: "⚠️ Sup ayam hangat justru sangat bergizi untuk mempercepat pemulihan Kevin."
@@ -770,14 +770,14 @@
         id: 4,
         patientName: "Nia (11 Years Old - Gymnast)",
         icon: "🤸‍♀️",
-        sub: "Primary Complaint: Swollen right ankle & severe muscle fatigue",
+        sub: "Sports Clinic Consultation: Athlete Landing Injury",
         dialogue: "\"Hello Coach Doctor Mishka! During my beam dismount today, I landed slightly off balance on the landing mat. My right ankle is swollen and throbbing, and my calf muscles are so tired!\"",
         phase1: {
           q: "What injury does Gymnast Nia have?",
           options: [
-            { text: "She has got a sprained ankle and muscle fatigue (Keseleo pergelangan kaki & lelah otot).", correct: true, key: "A" },
-            { text: "She has got a stomachache (Sakit perut karena lapar).", correct: false, key: "B" },
-            { text: "She has got an earache (Sakit telinga akibat suara bising).", correct: false, key: "C" }
+            { text: "She has got a sprained ankle and muscle fatigue.", correct: true },
+            { text: "She has got a stomachache.", correct: false },
+            { text: "She has got an earache.", correct: false }
           ],
           feedbackCorrect: "🎉 Spot on Sports Medic! Nia has got a SPRAINED ANKLE and MUSCLE FATIGUE from her landing.",
           feedbackWrong: "⚠️ Ini adalah cedera fisik olahraga senam artistik: pergelangan kaki terkilir (sprained ankle)."
@@ -785,9 +785,9 @@
         phase2: {
           q: "Sports Medicine (R.I.C.E Principle): What SHOULD Nia do?",
           options: [
-            { text: "She SHOULD compress with an ice pack, elevate her leg, and rest.", correct: true, key: "A" },
-            { text: "She SHOULD immediately jump 50 times on a trampoline.", correct: false, key: "B" },
-            { text: "She SHOULD put boiling hot water directly on the swollen joint.", correct: false, key: "C" }
+            { text: "She should compress with an ice pack, elevate her leg, and rest.", correct: true },
+            { text: "She should immediately jump 50 times on a trampoline.", correct: false },
+            { text: "She should put boiling hot water directly on the swollen joint.", correct: false }
           ],
           feedbackCorrect: "🌟 Pro Athlete Care! Kompres es (Ice) dan meninggikan kaki (Elevate) meredakan peradangan ligamen.",
           feedbackWrong: "⚠️ Melompat atau memberi air panas pada cedera baru justru memperparah pembengkakan jaringan."
@@ -795,9 +795,9 @@
         phase3: {
           q: "Athlete Recovery Protocol: What SHOULD NOT Nia do?",
           options: [
-            { text: "She SHOULD NOT run, jump, or bear heavy weight on her injured foot.", correct: true, key: "A" },
-            { text: "She SHOULD NOT drink water to stay hydrated.", correct: false, key: "B" },
-            { text: "She SHOULD NOT do gentle upper-body breathing exercises.", correct: false, key: "C" }
+            { text: "She shouldn't run, jump, or bear heavy weight on her injured foot.", correct: true },
+            { text: "She shouldn't drink water to stay hydrated.", correct: false },
+            { text: "She shouldn't do gentle upper-body breathing exercises.", correct: false }
           ],
           feedbackCorrect: "🩺 Flawless Advice! Mengistirahatkan sendi dari beban berat menjamin pemulihan otot senam secara tuntas.",
           feedbackWrong: "⚠️ Atlet yang cedera kaki tetap harus cukup hidrasi dan boleh melatih pernapasan atas."
@@ -829,6 +829,15 @@
       updatePatient3DModel(c.symptomMeshType);
     }
 
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
     function loadPhaseQuestion() {
       const c = CLINIC_CASES[currentCaseIdx];
       const phaseData = currentPhase === 1 ? c.phase1 : (currentPhase === 2 ? c.phase2 : c.phase3);
@@ -846,10 +855,14 @@
       document.getElementById('feedback-box').style.display = 'none';
       document.getElementById('btn-next').style.display = 'none';
 
-      phaseData.options.forEach((opt) => {
+      // Randomize options so the answer is never predictable (not always Option A)
+      const shuffledOptions = shuffleArray(phaseData.options);
+
+      shuffledOptions.forEach((opt, idx) => {
+        const letter = String.fromCharCode(65 + idx);
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.innerHTML = `<span class="option-key">${opt.key}</span> <span>${opt.text}</span>`;
+        btn.innerHTML = `<span class="option-key">${letter}</span> <span>${opt.text}</span>`;
         btn.onclick = () => selectOption(btn, opt, phaseData);
         optsCont.appendChild(btn);
       });
