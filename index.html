@@ -6,6 +6,75 @@
   <title>Portal Game Pembelajaran Interaktif - PKBM Penerus Bangsa</title>
   <link rel="stylesheet" href="assets/style.css">
   <style>
+    /* Solar System Cosmic Educational Background & Theme */
+    body {
+      background: linear-gradient(180deg, rgba(11, 15, 25, 0.72) 0%, rgba(15, 23, 42, 0.82) 40%, rgba(11, 15, 25, 0.90) 100%),
+                  url('assets/canva_visuals/tata_surya_filosofi_pendidikan.jpg') center top / cover no-repeat fixed;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .header-bar {
+      background: rgba(255, 255, 255, 0.94) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+    .philosophy-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: -8px auto 26px auto;
+      max-width: 950px;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      border-radius: 40px;
+      padding: 10px 24px;
+      color: #E0F2FE;
+      font-size: 0.93rem;
+      line-height: 1.5;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes floatCosmic {
+      0% {
+        transform: translateY(105vh) rotate(0deg) scale(0.7);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.85;
+      }
+      85% {
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-50px) rotate(360deg) scale(1.15);
+        opacity: 0;
+      }
+    }
+    .cosmic-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.8));
+      user-select: none;
+    }
+
     .hero-banner {
       background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
       color: white;
@@ -32,10 +101,14 @@
       justify-content: center;
       gap: 12px;
       margin-bottom: 32px;
-      background: #E2E8F0;
-      padding: 6px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 8px;
       border-radius: 40px;
-      max-width: 480px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 950px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -188,6 +261,12 @@
     <div class="hero-banner" id="hero-banner">
       <h1 class="hero-title" id="banner-title">🎮 Petualangan Belajar Interaktif</h1>
       <p class="hero-sub" id="banner-sub">Pilih mata pelajaran, cari namamu, dan selesaikan misi petualangan kata hari ini!</p>
+    </div>
+
+    <!-- FILOSOFI TATA SURYA PENDIDIKAN (KI HAJAR DEWANTARA) -->
+    <div class="philosophy-banner" id="philosophy-banner">
+      <span style="font-size: 1.35rem;">🪐☀️</span>
+      <span id="philosophy-text"><strong>Filosofi Tata Surya Pendidikan:</strong> Seperti planet yang beredar harmonis pada orbitnya masing-masing mengelilingi matahari, setiap anak bertumbuh merdeka sesuai kodrat, bakat, dan ritmenya.</span>
     </div>
 
     <!-- TABS SWITCHER -->
@@ -636,6 +715,8 @@
         heroBanner.style.background = 'linear-gradient(135deg, #0284C7 0%, #10B981 100%)';
         bannerTitle.innerText = "🇬🇧 English Adventure (My Next Words)";
         bannerSub.innerText = "Select your name and complete your English learning missions today!";
+        const pText = document.getElementById('philosophy-text');
+        if (pText) pText.innerHTML = "<strong>Solar System Philosophy of Education:</strong> Just as every planet journeys harmoniously in its own natural orbit around the sun, each child thrives according to their unique potential and pace.";
       } else if (lang === 'math') {
         toggleId.classList.remove('active');
         toggleEn.classList.remove('active');
@@ -648,6 +729,8 @@
         heroBanner.style.background = 'linear-gradient(135deg, #059669 0%, #2563EB 100%)';
         bannerTitle.innerText = "🔢 Petualangan Matematika: KPK & FPB";
         bannerSub.innerText = "Metode Bu Ajeng: Eksplorasi Grid Loncatan, Kalender Nyata, & Cangkir Pembagi!";
+        const pText = document.getElementById('philosophy-text');
+        if (pText) pText.innerHTML = "<strong>Filosofi Tata Surya Matematika:</strong> Pola lintasan orbit, harmoni kelipatan, dan keindahan keteraturan semesta. Setiap anak menemukan logika sainsnya sendiri!";
       } else {
         toggleEn.classList.remove('active');
         toggleId.classList.add('active');
@@ -660,6 +743,8 @@
         heroBanner.style.background = 'linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%)';
         bannerTitle.innerText = "🚀 Petualangan Bahasa Indonesia";
         bannerSub.innerText = "Pilih namamu dan selesaikan misi petualangan kata hari ini!";
+        const pText = document.getElementById('philosophy-text');
+        if (pText) pText.innerHTML = "<strong>Filosofi Tata Surya Pendidikan:</strong> Seperti planet yang beredar harmonis pada orbitnya masing-masing mengelilingi matahari, setiap anak bertumbuh merdeka sesuai kodrat, bakat, dan ritmenya.";
       }
     }
 
@@ -672,6 +757,23 @@
         setLanguage('math');
       }
     });
+
+    // Generate floating cosmic stars & planets particles
+    (function createCosmicField() {
+      const symbols = ['⭐', '✨', '🪐', '🌟', '🌕', '💫', '☀️'];
+      for (let i = 0; i < 16; i++) {
+        const p = document.createElement('div');
+        p.className = 'cosmic-particle';
+        p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        p.style.left = (Math.random() * 95) + 'vw';
+        p.style.fontSize = (12 + Math.random() * 16) + 'px';
+        const dur = (12 + Math.random() * 14);
+        const delay = (Math.random() * 8);
+        p.style.animation = `floatCosmic ${dur}s linear infinite ${delay}s`;
+        p.style.opacity = '0';
+        document.body.appendChild(p);
+      }
+    })();
   </script>
 </body>
 </html>
