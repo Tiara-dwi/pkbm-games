@@ -288,7 +288,7 @@
       <div class="stats">
         <span>Score: <span id="score" class="stat-val">0</span></span>
         <span>Streak: <span id="streak" class="stat-val">0</span>⭐</span>
-        <span>Level: <span id="level" class="stat-val">1</span>/6</span>
+        <span>Level: <span id="level" class="stat-val">1</span>/12</span>
       </div>
     </header>
 
@@ -298,12 +298,13 @@
 
     <div class="question-panel" id="question-panel">
       <div class="question-title">
-        <span style="font-size:12px; color:#cbd5e1;">Perhatikan posisi Burung Hantu Hootie di ruangan 3D!</span>
+        <span style="font-size:12px; color:#cbd5e1;" id="q-category">🧭 Misi Spasial: Amati posisi Burung Hantu Hootie di ruangan 3D!</span>
       </div>
       <div class="question-prompt" id="q-prompt">
-        <span>🦉</span>
+        <span id="prompt-icon">🦉</span>
         <span id="prompt-text">Where is Hootie the owl?</span>
       </div>
+      <div id="prompt-sub" style="font-size:18px; color:#fde047; font-weight:700; margin: 8px 0 12px 0; display:none; background:rgba(0,0,0,0.3); padding:8px 14px; border-radius:8px; border-left:4px solid #f59e0b;"></div>
 
       <div class="feedback-banner" id="feedback"></div>
 
@@ -319,9 +320,9 @@
   <div id="victory-modal">
     <div style="font-size: 55px; margin-bottom: 10px;">🦉🏆🌟</div>
     <h2>MISI 3D SELESAI DENGAN SEMPURNA!</h2>
-    <p>Hebat sekali Kapten Aqlan! Kamu telah menguasai seluruh posisi preposisi spasial <em>(in, on, under, beside, behind, in front of)</em> bersama Hootie si Burung Hantu!</p>
+    <p>Hebat sekali Kapten Aqlan! Kamu telah menguasai seluruh posisi preposisi spasial <em>(in, on, under, beside, behind, in front of)</em> serta formula <strong>"There is"</strong> (tunggal) &amp; <strong>"There are"</strong> (jamak) bersama Hootie si Burung Hantu!</p>
     <div class="badge-seal">MASTER 3D SPATIAL EXPLORER 2026</div>
-    <div>Skor Akhir: <strong id="final-score" style="color:var(--neon-gold); font-size:22px;">0</strong> / 600</div>
+    <div>Skor Akhir: <strong id="final-score" style="color:var(--neon-gold); font-size:22px;">0</strong> / 1200</div>
     <button class="btn-next" style="display:inline-block; margin-top:20px; width:auto; padding:12px 28px;" onclick="location.reload()">
       MAIN LAGI BERSAMA HOOTIE ↺
     </button>
@@ -552,6 +553,137 @@
     wardrobe.castShadow = true;
     scene.add(wardrobe);
 
+    // --- Skateboard (Under the study table) ---
+    const skateboardGroup = new THREE.Group();
+    skateboardGroup.position.set(0.1, 0.06, 0.2);
+    // Skateboard Deck
+    const deckMat = new THREE.MeshStandardMaterial({ color: 0xf97316, roughness: 0.3 }); // Bright orange skater deck
+    const deckGripMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.9 }); // Dark grip tape
+    const deck = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.035, 0.44), deckMat);
+    deck.position.set(0, 0.06, 0);
+    deck.castShadow = true;
+    skateboardGroup.add(deck);
+    const gripTape = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.005, 0.38), deckGripMat);
+    gripTape.position.set(0, 0.08, 0);
+    skateboardGroup.add(gripTape);
+    // 4 Wheels
+    const wheelGeo = new THREE.CylinderGeometry(0.065, 0.065, 0.06, 16);
+    const wheelMat = new THREE.MeshStandardMaterial({ color: 0x00f2fe }); // Neon cyan wheels
+    wheelGeo.rotateZ(Math.PI / 2);
+    [[-0.55, 0.04, -0.18], [0.55, 0.04, -0.18], [-0.55, 0.04, 0.18], [0.55, 0.04, 0.18]].forEach(wPos => {
+      const w = new THREE.Mesh(wheelGeo, wheelMat);
+      w.position.set(...wPos);
+      w.castShadow = true;
+      skateboardGroup.add(w);
+    });
+    scene.add(skateboardGroup);
+
+    // --- 3 Stacked Colorful Books (On the study desk) ---
+    const booksGroup = new THREE.Group();
+    booksGroup.position.set(0.9, 1.88, 0.2);
+    // Book 1 (Crimson Red)
+    const book1 = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.06, 0.46), new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.4 }));
+    book1.position.set(0, 0.03, 0);
+    book1.castShadow = true;
+    booksGroup.add(book1);
+    // Book 2 (Emerald Green)
+    const book2 = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.06, 0.42), new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.4 }));
+    book2.position.set(0.01, 0.09, 0.02);
+    book2.rotation.y = 0.08;
+    book2.castShadow = true;
+    booksGroup.add(book2);
+    // Book 3 (Royal Purple)
+    const book3 = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.06, 0.38), new THREE.MeshStandardMaterial({ color: 0x8b5cf6, roughness: 0.4 }));
+    book3.position.set(-0.02, 0.15, -0.01);
+    book3.rotation.y = -0.05;
+    book3.castShadow = true;
+    booksGroup.add(book3);
+    scene.add(booksGroup);
+
+    // --- 2 Sports Balls (Inside the toy chest) ---
+    const ballsGroup = new THREE.Group();
+    // Ball 1: Basketball (Orange)
+    const ball1 = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), new THREE.MeshStandardMaterial({ color: 0xea580c, roughness: 0.3 }));
+    ball1.position.set(-3.45, 0.26, 1.6);
+    ball1.castShadow = true;
+    ballsGroup.add(ball1);
+    // Ball 2: Neon Tennis Ball (Yellow-Green)
+    const ball2 = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), new THREE.MeshStandardMaterial({ color: 0x84cc16, roughness: 0.2 }));
+    ball2.position.set(-2.95, 0.22, 2.0);
+    ball2.castShadow = true;
+    ballsGroup.add(ball2);
+    scene.add(ballsGroup);
+
+    // --- Wall Clock (On the back wall) ---
+    const clockGroup = new THREE.Group();
+    clockGroup.position.set(0, 5.2, -4.75);
+    // Rim
+    const rimMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.3 });
+    const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.06, 32), rimMat);
+    rim.rotation.x = Math.PI / 2;
+    rim.castShadow = true;
+    clockGroup.add(rim);
+    // Face
+    const faceMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
+    const face = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 0.07, 32), faceMat);
+    face.rotation.x = Math.PI / 2;
+    clockGroup.add(face);
+    // Hands
+    const handMat = new THREE.MeshStandardMaterial({ color: 0x0f172a });
+    const hourHand = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.22, 0.08), handMat);
+    hourHand.position.set(0.07, 0.06, 0.01);
+    hourHand.rotation.z = -Math.PI / 4;
+    clockGroup.add(hourHand);
+    const minuteHand = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.34, 0.08), handMat);
+    minuteHand.position.set(0, 0.15, 0.01);
+    clockGroup.add(minuteHand);
+    scene.add(clockGroup);
+
+    // --- Desk Lamp (On the study table) ---
+    const lampGroup = new THREE.Group();
+    lampGroup.position.set(-1.3, 1.88, -0.45);
+    // Base
+    const lampBase = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.2, 0.04, 20), new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.7 }));
+    lampBase.castShadow = true;
+    lampGroup.add(lampBase);
+    // Stand
+    const lampStand = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.55, 12), new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.8 }));
+    lampStand.position.set(0, 0.27, 0);
+    lampStand.rotation.z = -0.15;
+    lampStand.castShadow = true;
+    lampGroup.add(lampStand);
+    // Shade (Glowing warm yellow)
+    const shadeMat = new THREE.MeshStandardMaterial({ color: 0xfef08a, emissive: 0xfef08a, emissiveIntensity: 0.35, roughness: 0.3 });
+    const lampShade = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.24, 20), shadeMat);
+    lampShade.position.set(-0.06, 0.55, 0);
+    lampShade.rotation.z = 0.4;
+    lampShade.castShadow = true;
+    lampGroup.add(lampShade);
+    scene.add(lampGroup);
+
+    // --- 2 Shoes / Sneakers (On the floor near the chair) ---
+    const shoesGroup = new THREE.Group();
+    shoesGroup.position.set(2.8, 0.08, 0.95);
+    const shoeMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.4 }); // Electric blue skater sneakers
+    const soleMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.6 });
+    // Left Shoe
+    const s1 = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.14, 0.44), shoeMat);
+    s1.position.set(-0.16, 0.07, 0);
+    s1.castShadow = true;
+    shoesGroup.add(s1);
+    const sole1 = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.04, 0.46), soleMat);
+    sole1.position.set(-0.16, 0.02, 0);
+    shoesGroup.add(sole1);
+    // Right Shoe
+    const s2 = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.14, 0.44), shoeMat);
+    s2.position.set(0.16, 0.07, 0);
+    s2.castShadow = true;
+    shoesGroup.add(s2);
+    const sole2 = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.04, 0.46), soleMat);
+    sole2.position.set(0.16, 0.02, 0);
+    shoesGroup.add(sole2);
+    scene.add(shoesGroup);
+
     // =========================================================================
     // 4. PROCEDURAL 3D CUTE OWL ("HOOTIE")
     // =========================================================================
@@ -654,10 +786,14 @@
     // 5. 3D SPATIAL MISSION COORDINATES
     // =========================================================================
     const spatialMissions = [
+      // -------------------------------------------------------------
+      // PART 1: 6 SPATIAL PREPOSITIONS MISSIONS ("WHERE IS HOOTIE?")
+      // -------------------------------------------------------------
       {
-        prep: "ON",
-        title: "Tantangan Spasial 1",
+        category: "🧭 Misi 1: Preposisi Spasial (Amati posisi Burung Hantu Hootie!)",
+        icon: "🦉",
         prompt: "Look around the room! Where is Hootie the owl?",
+        promptSub: "",
         targetPos: new THREE.Vector3(0, 2.38, 0),
         targetLookAt: new THREE.Vector3(0, 1.8, 0),
         targetCam: new THREE.Vector3(0, 4.0, 5.0),
@@ -671,9 +807,10 @@
         exp: "Sempurna! Hootie bertengger tepat di atas meja belajar (ON the table)!"
       },
       {
-        prep: "UNDER",
-        title: "Tantangan Spasial 2",
+        category: "🧭 Misi 2: Preposisi Spasial (Amati posisi Burung Hantu Hootie!)",
+        icon: "🦉",
         prompt: "Hootie flew away! Where is the owl hiding now?",
+        promptSub: "",
         targetPos: new THREE.Vector3(0, 0.48, 0),
         targetLookAt: new THREE.Vector3(0, 0.8, 0),
         targetCam: new THREE.Vector3(0, 1.8, 4.2),
@@ -687,9 +824,10 @@
         exp: "Hebat! Hootie bersembunyi di kolong/bawah meja belajar (UNDER the table)!"
       },
       {
-        prep: "BEHIND",
-        title: "Tantangan Spasial 3",
+        category: "🧭 Misi 3: Preposisi Spasial (Amati posisi Burung Hantu Hootie!)",
+        icon: "🦉",
         prompt: "Hootie is playing hide and seek! Where is he?",
+        promptSub: "",
         targetPos: new THREE.Vector3(-6.2, 1.2, -4.9),
         targetLookAt: new THREE.Vector3(-5.5, 2.0, -4.5),
         targetCam: new THREE.Vector3(-3.5, 3.2, -1.0),
@@ -703,9 +841,10 @@
         exp: "Luar biasa teliti! Hootie mengintip dari balik pintu (BEHIND the door)!"
       },
       {
-        prep: "IN",
-        title: "Tantangan Spasial 4",
+        category: "🧭 Misi 4: Preposisi Spasial (Amati posisi Burung Hantu Hootie!)",
+        icon: "🦉",
         prompt: "Look at the toy chest! Where is Hootie now?",
+        promptSub: "",
         targetPos: new THREE.Vector3(-3.2, 0.52, 1.8),
         targetLookAt: new THREE.Vector3(-3.2, 0.6, 1.8),
         targetCam: new THREE.Vector3(-1.8, 3.0, 3.8),
@@ -719,9 +858,10 @@
         exp: "Tepat sekali! Hootie masuk dan duduk di dalam kotak mainan (IN the box)!"
       },
       {
-        prep: "BESIDE",
-        title: "Tantangan Spasial 5",
+        category: "🧭 Misi 5: Preposisi Spasial (Amati posisi Burung Hantu Hootie!)",
+        icon: "🦉",
         prompt: "Where is Hootie sitting right now?",
+        promptSub: "",
         targetPos: new THREE.Vector3(2.8, 1.62, 0),
         targetLookAt: new THREE.Vector3(2.8, 1.2, 0),
         targetCam: new THREE.Vector3(2.0, 3.2, 4.0),
@@ -735,9 +875,10 @@
         exp: "Genius! Hootie duduk di kursi yang berada di samping meja (BESIDE the table)!"
       },
       {
-        prep: "IN FRONT OF",
-        title: "Tantangan Spasial 6",
+        category: "🧭 Misi 6: Preposisi Spasial (Amati posisi Burung Hantu Hootie!)",
+        icon: "🦉",
         prompt: "Hootie is showing off in front of the tall wardrobe! Where is he?",
+        promptSub: "",
         targetPos: new THREE.Vector3(5.5, 1.2, -2.6),
         targetLookAt: new THREE.Vector3(5.5, 2.0, -4.0),
         targetCam: new THREE.Vector3(4.0, 2.8, 1.2),
@@ -749,6 +890,112 @@
           "The owl is IN the backpack."
         ],
         exp: "Juara sejati! Hootie berdiri gagah tepat di depan lemari besar (IN FRONT OF the wardrobe)!"
+      },
+
+      // -------------------------------------------------------------
+      // PART 2: 6 "THERE IS" & "THERE ARE" ROOM DETECTIVE MISSIONS
+      // -------------------------------------------------------------
+      {
+        category: "🔍 Misi 7: Detektif Benda (There is vs There are)",
+        icon: "🛹",
+        prompt: "Look under the study desk! Complete the sentence:",
+        promptSub: '"_____ a cool skateboard under the desk."',
+        targetPos: new THREE.Vector3(-0.7, 0.48, 0.2),
+        targetLookAt: new THREE.Vector3(0.1, 0.15, 0.2),
+        targetCam: new THREE.Vector3(0.1, 1.0, 2.4),
+        correctText: "There is",
+        options: [
+          "There is",
+          "There are",
+          "There am",
+          "It are"
+        ],
+        exp: "Tepat sekali! Karena jumlah skateboard hanya 1 buah (singular / tunggal), kita memakai 'There is a skateboard'!"
+      },
+      {
+        category: "🔍 Misi 8: Detektif Benda (There is vs There are)",
+        icon: "📚",
+        prompt: "Look closely at the study table! Complete the sentence:",
+        promptSub: '"_____ three colorful books on the table."',
+        targetPos: new THREE.Vector3(0.35, 2.38, 0.2),
+        targetLookAt: new THREE.Vector3(0.9, 1.95, 0.2),
+        targetCam: new THREE.Vector3(0.9, 3.2, 1.8),
+        correctText: "There are",
+        options: [
+          "There are",
+          "There is",
+          "There have",
+          "There be"
+        ],
+        exp: "Brilian! Karena ada 3 buku (plural / jamak lebih dari satu), rumus yang wajib dipakai adalah 'There are three books'!"
+      },
+      {
+        category: "🔍 Misi 9: Detektif Benda (There is vs There are)",
+        icon: "⚽",
+        prompt: "Look inside the wooden toy chest! Complete the sentence:",
+        promptSub: '"_____ two sports balls in the toy box."',
+        targetPos: new THREE.Vector3(-3.2, 1.35, 1.1),
+        targetLookAt: new THREE.Vector3(-3.2, 0.35, 1.8),
+        targetCam: new THREE.Vector3(-3.2, 2.4, 3.4),
+        correctText: "There are",
+        options: [
+          "There are",
+          "There is",
+          "There is two",
+          "They is"
+        ],
+        exp: "Hebat! 2 bola adalah bentuk jamak (plural), maka rumus yang benar adalah 'There are two balls'!"
+      },
+      {
+        category: "🔍 Misi 10: Detektif Benda (There is vs There are)",
+        icon: "⏰",
+        prompt: "Look up high on the back wall! Complete the sentence:",
+        promptSub: '"_____ a round clock on the wall."',
+        targetPos: new THREE.Vector3(3.5, 4.2, -4.0),
+        targetLookAt: new THREE.Vector3(0, 5.2, -4.75),
+        targetCam: new THREE.Vector3(0, 4.0, -0.2),
+        correctText: "There is",
+        options: [
+          "There is",
+          "There are",
+          "There are a",
+          "They are"
+        ],
+        exp: "Genius! 'A round clock' adalah 1 buah jam dinding (tunggal / singular), maka kita gunakan 'There is a round clock'!"
+      },
+      {
+        category: "🔍 Misi 11: Detektif Benda (There is vs There are)",
+        icon: "👟",
+        prompt: "Look at the floor beside the chair! Complete the sentence:",
+        promptSub: '"_____ two skater shoes on the floor."',
+        targetPos: new THREE.Vector3(2.8, 1.62, 0),
+        targetLookAt: new THREE.Vector3(2.8, 0.15, 0.95),
+        targetCam: new THREE.Vector3(2.8, 1.8, 2.6),
+        correctText: "There are",
+        options: [
+          "There are",
+          "There is",
+          "There aren't a",
+          "There is two"
+        ],
+        exp: "Sempurna! Sepatu sepasang berjumlah dua (two shoes = jamak), jadi kita gunakan 'There are two shoes'!"
+      },
+      {
+        category: "🔍 Misi 12: Detektif Benda (There is vs There are)",
+        icon: "💡",
+        prompt: "Look at the glowing light on the desk! Complete the sentence:",
+        promptSub: '"_____ a study lamp on the desk."',
+        targetPos: new THREE.Vector3(-0.6, 2.38, -0.45),
+        targetLookAt: new THREE.Vector3(-1.3, 2.1, -0.45),
+        targetCam: new THREE.Vector3(-1.3, 3.0, 1.4),
+        correctText: "There is",
+        options: [
+          "There is",
+          "There are",
+          "There be",
+          "They are"
+        ],
+        exp: "Luar biasa! Karena hanya ada 1 lampu meja belajar (a study lamp), kalimat yang tepat adalah 'There is a study lamp'!"
       }
     ];
 
@@ -806,7 +1053,23 @@
       answered = false;
       const mission = spatialMissions[idx];
       document.getElementById('level').innerText = idx + 1;
+      if (document.getElementById('q-category')) {
+        document.getElementById('q-category').innerText = mission.category || "🧭 Misi Ruangan 3D bersama Hootie!";
+      }
+      if (document.getElementById('prompt-icon')) {
+        document.getElementById('prompt-icon').innerText = mission.icon || "🦉";
+      }
       document.getElementById('prompt-text').innerText = mission.prompt;
+      
+      const subElem = document.getElementById('prompt-sub');
+      if (subElem) {
+        if (mission.promptSub && mission.promptSub.trim() !== '') {
+          subElem.innerText = mission.promptSub;
+          subElem.style.display = 'block';
+        } else {
+          subElem.style.display = 'none';
+        }
+      }
 
       const fb = document.getElementById('feedback');
       fb.className = 'feedback-banner';
