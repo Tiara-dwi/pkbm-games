@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Textbook Study Companion: Aqlan & Mishka — PKBM Penerus Bangsa</title>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: #131d31;
+      --aqlan-cyan: #0284c7;
+      --aqlan-neon: #38bdf8;
+      --mishka-emerald: #059669;
+      --mishka-neon: #34d399;
+      --gold: #fbbf24;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; }
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      padding: 24px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 980px;
+    }
+
+    /* Top Navigation Header */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 12px 20px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-nav {
+      background: #334155;
+      color: #f8fafc;
+      text-decoration: none;
+      padding: 6px 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 20px;
+      border: 1px solid #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-nav:hover {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: white;
+    }
+    .btn-print {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #0f172a;
+      border: none;
+      font-weight: 800;
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 2px solid #38bdf8;
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      text-align: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      color: #0f172a;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+    .hero-sub {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Student Tab Switcher */
+    .tab-switcher {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 13.5px;
+      border: 2px solid transparent;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #1e293b;
+      color: #94a3b8;
+    }
+    .tab-btn:hover {
+      background: #273549;
+    }
+    .tab-btn.active.aqlan {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .tab-btn.active.mishka {
+      background: linear-gradient(135deg, #065f46, #059669);
+      border-color: #34d399;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+    }
+
+    /* Tab Panes */
+    .tab-pane {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 24px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Headers */
+    h2.section-header {
+      font-size: 16px;
+      font-weight: 900;
+      padding-bottom: 8px;
+      margin-top: 24px;
+      margin-bottom: 14px;
+      border-bottom: 2px solid;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h2.section-header:first-child { margin-top: 0; }
+    .aqlan-theme h2.section-header { border-color: var(--aqlan-cyan); color: var(--aqlan-neon); }
+    .mishka-theme h2.section-header { border-color: var(--mishka-emerald); color: var(--mishka-neon); }
+
+    .callout-box {
+      border-left: 4px solid;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 14px 0;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .callout-aqlan {
+      background: rgba(2, 132, 199, 0.12);
+      border-color: var(--aqlan-cyan);
+      color: #e0f2fe;
+    }
+    .callout-mishka {
+      background: rgba(5, 150, 105, 0.12);
+      border-color: var(--mishka-emerald);
+      color: #d1fae5;
+    }
+    .callout-warning {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: #f59e0b;
+      color: #fef3c7;
+    }
+
+    /* Content Tables */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    table.content-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      text-align: left;
+    }
+    table.content-table th {
+      padding: 11px 14px;
+      font-weight: 800;
+      color: white;
+    }
+    .aqlan-theme table.content-table th { background: #0369a1; }
+    .mishka-theme table.content-table th { background: #065f46; }
+
+    table.content-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: #cbd5e1;
+      line-height: 1.45;
+      vertical-align: top;
+    }
+    table.content-table tr:nth-child(even) td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Badges */
+    .badge-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .badge-cyan { background: #0284c7; color: white; }
+    .badge-emerald { background: #059669; color: white; }
+    .badge-amber { background: #d97706; color: white; }
+    .badge-rose { background: #e11d48; color: white; }
+
+    /* Flashcard Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .vocab-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      transition: all 0.2s ease;
+    }
+    .vocab-card:hover {
+      border-color: var(--aqlan-neon);
+      transform: translateY(-2px);
+    }
+    .vocab-en { font-size: 13.5px; font-weight: 800; color: #ffffff; }
+    .vocab-id { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .vocab-ex { font-size: 11.5px; color: #93c5fd; margin-top: 4px; font-style: italic; }
+
+    /* Action Links Row */
+    .action-links-row {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    .btn-action-game {
+      background: #1e293b;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-action-game:hover {
+      background: #334155;
+      transform: translateY(-2px);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0;
+      }
+      .top-nav, .tab-switcher, .action-links-row, .btn-nav {
+        display: none !important;
+      }
+      .container {
+        max-width: 100% !important;
+      }
+      .hero-card {
+        border: 1px solid #000 !important;
+        background: #f8fafc !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        page-break-after: avoid;
+      }
+      .hero-title, .hero-sub { color: #000 !important; }
+      .tab-pane {
+        display: block !important;
+        background: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        page-break-after: always;
+      }
+      h2.section-header {
+        color: #0f172a !important;
+        border-bottom: 2px solid #0f172a !important;
+      }
+      table.content-table th {
+        background: #e2e8f0 !important;
+        color: #0f172a !important;
+        border: 1px solid #94a3b8 !important;
+      }
+      table.content-table td {
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .callout-box {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+        border-left: 4px solid #0284c7 !important;
+      }
+      .vocab-card {
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+      }
+      .vocab-en, .vocab-id, .vocab-ex {
+        color: #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+      <div class="brand-title">
+        <span>🦉</span>
+        <span>PKBM Penerus Bangsa • English Textbook Study Companion</span>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-nav btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
+        <a class="btn-nav" href="../dashboard.html">📊 Dashboard</a>
+        <a class="btn-nav" href="../index.html">🏠 Home</a>
+      </div>
+    </header>
+
+    <!-- Hero Card -->
+    <section class="hero-card">
+      <div class="hero-badge">Curriculum Merdeka • My Next Words</div>
+      <h1 class="hero-title">English Textbook &amp; Practical Notes</h1>
+      <p class="hero-sub">
+        Comprehensive didactic companion for 1-on-1 Google Meet &amp; on-site sessions. Includes spatial prepositions, existential clauses (There is vs There are), health symptoms, and doctor consultation advice (Should vs Shouldn't).
+      </p>
+    </section>
+
+    <!-- Student Switcher -->
+    <div class="tab-switcher">
+      <button id="tab-btn-aqlan" class="tab-btn active aqlan" onclick="switchStudent('aqlan')">
+        <span>🛹</span>
+        <span>Aqlan (Grade 4) — Unit 5: "Where is the Owl?"</span>
+      </button>
+      <button id="tab-btn-mishka" class="tab-btn mishka" onclick="switchStudent('mishka')">
+        <span>🩺</span>
+        <span>Mishka (Grade 5) — Unit 4: "What's the Matter with You?"</span>
+      </button>
+    </div>
+
+    <!-- PANE AQLAN (GRADE 4 - UNIT 5) -->
+    <main id="pane-aqlan" class="tab-pane active aqlan-theme">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div>
+          <span class="badge-pill badge-cyan">Grade 4 • Elementary</span>
+          <span style="font-size: 12px; color: var(--text-muted); margin-left: 8px;">Theme: Spatial Awareness &amp; Skater Room Exploration</span>
+        </div>
+        <a href="owl_3d.html" class="btn-nav" style="background: #0284c7; border: none;">🎮 Launch 3D Owl Quest ❯</a>
+      </div>
+
+      <!-- Section 1: Prepositions -->
+      <h2 class="section-header">🧭 1. The 6 Master Prepositions of Place</h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Prepositions describe <b>where an object or person is located</b> relative to reference furniture in a room.
+      </p>
+
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Preposition</th>
+              <th style="width: 22%;">Meaning (Arti)</th>
+              <th style="width: 32%;">Example Sentence</th>
+              <th style="width: 28%;">Spatial Clue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b style="color: var(--aqlan-neon);">IN</b></td>
+              <td>Di dalam</td>
+              <td><i>"The owl is <b>in</b> the toy chest."</i></td>
+              <td>Surrounded inside an enclosure or container.</td>
+            </tr>
+            <tr>
+              <td><b style="color: var(--aqlan-neon);">ON</b></td>
+              <td>Di atas (menempel)</td>
+              <td><i>"The safety helmet is <b>on</b> the study desk."</i></td>
+              <td>Touching the top surface of furniture.</td>
+            </tr>
+            <tr>
+              <td><b style="color: var(--aqlan-neon);">UNDER</b></td>
+              <td>Di bawah</td>
+              <td><i>"The skateboard is <b>under</b> the bed."</i></td>
+              <td>Directly below another object or shelter.</td>
+            </tr>
+            <tr>
+              <td><b style="color: var(--aqlan-neon);">BESIDE / NEXT TO</b></td>
+              <td>Di sebelah / samping</td>
+              <td><i>"Aqlan is standing <b>beside</b> the ramp."</i></td>
+              <td>Side by side, with little space between.</td>
+            </tr>
+            <tr>
+              <td><b style="color: var(--aqlan-neon);">BEHIND</b></td>
+              <td>Di belakang</td>
+              <td><i>"The water bottle is <b>behind</b> the tree."</i></td>
+              <td>At the back side, partially hidden from front view.</td>
+            </tr>
+            <tr>
+              <td><b style="color: var(--aqlan-neon);">IN FRONT OF</b></td>
+              <td>Di depan</td>
+              <td><i>"The knee pads are <b>in front of</b> the wardrobe."</i></td>
+              <td>Facing forward, ahead of another object.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 2: There is vs There are -->
+      <h2 class="section-header">⚖️ 2. The Golden Grammar Formula: "There is" vs "There are"</h2>
+      
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th style="width: 20%;">Formula</th>
+              <th style="width: 30%;">When to Use</th>
+              <th style="width: 50%;">Examples in Daily Life</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b style="color: #38bdf8;">There is + a/an [Singular]</b></td>
+              <td>Used when there is only <b>ONE (1)</b> object or item.</td>
+              <td>
+                • <i>"<b>There is an</b> owl inside the box."</i><br>
+                • <i>"<b>There is a</b> skateboard under the wooden bed."</i><br>
+                • <i>"<b>There is a</b> study lamp on the desk."</i>
+              </td>
+            </tr>
+            <tr>
+              <td><b style="color: #a78bfa;">There are + [Number / Plural -s/-es]</b></td>
+              <td>Used when there are <b>TWO OR MORE (2+)</b> items.</td>
+              <td>
+                • <i>"<b>There are two</b> pillows on the mattress."</i><br>
+                • <i>"<b>There are five</b> English books in the bookcase."</i><br>
+                • <i>"<b>There are three</b> owls on the tree branch."</i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-box callout-warning">
+        ⚠️ <b>Crucial Trap to Avoid:</b><br>
+        ❌ <i>"There is two skateboards under the bed."</i> (Salah: subjek jamak tidak boleh menggunakan 'is')<br>
+        ✅ <i>"<b>There are two</b> skateboards under the bed."</i> (Benar: subjek jamak 2 skateboard memerlukan 'are')
+      </div>
+
+      <!-- Section 3: Room Vocabulary -->
+      <h2 class="section-header">🛏️ 3. Bedroom &amp; Skater Gear Vocabulary</h2>
+      <div class="card-grid">
+        <div class="vocab-card">
+          <div class="vocab-en">Study Desk</div>
+          <div class="vocab-id">Meja belajar</div>
+          <div class="vocab-ex">The book is on the desk.</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Wardrobe / Closet</div>
+          <div class="vocab-id">Lemari pakaian</div>
+          <div class="vocab-ex">Clothes are in the wardrobe.</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Bookshelf</div>
+          <div class="vocab-id">Rak buku</div>
+          <div class="vocab-ex">Storybooks are on the bookshelf.</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Skateboard</div>
+          <div class="vocab-id">Papan luncur</div>
+          <div class="vocab-ex">The board is under the bed.</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Safety Helmet</div>
+          <div class="vocab-id">Helm pelindung</div>
+          <div class="vocab-ex">The helmet is on the desk.</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Toy Chest / Box</div>
+          <div class="vocab-id">Kotak mainan</div>
+          <div class="vocab-ex">Hootie is inside the box.</div>
+        </div>
+      </div>
+
+      <!-- Section 4: Dialogue Pattern -->
+      <h2 class="section-header">💬 4. Daily Spatial Dialogue Patterns</h2>
+      <div class="callout-box callout-aqlan">
+        <b>Q1: Asking Object Location:</b><br>
+        — Teacher: <i>"Where is the safety helmet?"</i><br>
+        — Aqlan: <i>"<b>It is on the study desk.</b>"</i><br><br>
+        <b>Q2: Asking Existence (Singular):</b><br>
+        — Teacher: <i>"Is there an owl in the toy chest?"</i><br>
+        — Aqlan: <i>"<b>Yes, there is!</b>"</i> or <i>"<b>No, there isn't.</b>"</i><br><br>
+        <b>Q3: Asking Existence (Plural):</b><br>
+        — Teacher: <i>"Are there two pillows on the bed?"</i><br>
+        — Aqlan: <i>"<b>Yes, there are!</b>"</i>
+      </div>
+
+      <!-- Section 5: Challenge & Answers -->
+      <h2 class="section-header">🎯 5. Master Challenge C3–C4 Self-Quiz</h2>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th style="width: 10%;">No</th>
+              <th style="width: 55%;">Problem Statement</th>
+              <th style="width: 35%;">Answer &amp; Explanation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>1</b></td>
+              <td><i>"Where is the skateboard? It is ... the bed."</i> (Posisi persis di bawah dipan tempat tidur)</td>
+              <td><b>under</b><br><span style="font-size: 11px; color: var(--text-muted);">'Under' menandakan benda berada di kolong / bawah objek lain.</span></td>
+            </tr>
+            <tr>
+              <td><b>2</b></td>
+              <td><i>"... (There is / There are) three storybooks on the table."</i></td>
+              <td><b>There are</b><br><span style="font-size: 11px; color: var(--text-muted);">Tiga buku ('three storybooks') adalah plural/jamak, wajib memakai 'There are'.</span></td>
+            </tr>
+            <tr>
+              <td><b>3</b></td>
+              <td><i>"Where is the safety helmet? It is ... the study desk."</i> (Posisi diletakkan di permukaan meja)</td>
+              <td><b>on</b><br><span style="font-size: 11px; color: var(--text-muted);">'On' menandakan benda menempel pada permukaan atas meja.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="action-links-row">
+        <a class="btn-action-game" href="owl_3d.html" style="border-color: #38bdf8;">🦉 Mainkan Game 3D Owl Quest Aqlan ❯</a>
+        <a class="btn-action-game" href="aqlan_craft.html" style="border-color: #00f2fe;">🛹 Mainkan Skater Action Runner ❯</a>
+        <a class="btn-action-game" href="../index.html">🏠 Beranda PKBM ❯</a>
+      </div>
+    </main>
+
+    <!-- PANE MISHKA (GRADE 5 - UNIT 4) -->
+    <main id="pane-mishka" class="tab-pane mishka-theme">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div>
+          <span class="badge-pill badge-emerald">Grade 5 • Advanced</span>
+          <span style="font-size: 12px; color: var(--text-muted); margin-left: 8px;">Theme: Healthcare, Symptoms &amp; Doctor Consultation</span>
+        </div>
+        <a href="mishka_clinic_3d.html" class="btn-nav" style="background: #059669; border: none;">🩺 Launch 3D Clinic ❯</a>
+      </div>
+
+      <!-- Section 1: 8 Illnesses -->
+      <h2 class="section-header">🩺 1. The 8 Health Complaints &amp; Illnesses</h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Master the vocabulary of common pediatric illnesses and sports injuries:
+      </p>
+
+      <div class="card-grid">
+        <div class="vocab-card">
+          <div class="vocab-en">Stomachache</div>
+          <div class="vocab-id">Sakit perut / mulas</div>
+          <div class="vocab-ex">"I have got a stomachache."</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Toothache</div>
+          <div class="vocab-id">Sakit gigi berlubang</div>
+          <div class="vocab-ex">"He has got a bad toothache."</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Sore Throat</div>
+          <div class="vocab-id">Radang / sakit tenggorokan</div>
+          <div class="vocab-ex">"She has got a sore throat."</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Fever</div>
+          <div class="vocab-id">Demam panas tinggi</div>
+          <div class="vocab-ex">"He has a high fever."</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Headache</div>
+          <div class="vocab-id">Sakit kepala / pusing</div>
+          <div class="vocab-ex">"I have got a mild headache."</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Earache</div>
+          <div class="vocab-id">Sakit pada bagian telinga</div>
+          <div class="vocab-ex">"The baby has an earache."</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Broken Arm</div>
+          <div class="vocab-id">Patah tulang lengan</div>
+          <div class="vocab-ex">"He fell and broke his arm."</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-en">Sprained Ankle</div>
+          <div class="vocab-id">Keseleo pergelangan kaki</div>
+          <div class="vocab-ex">"The gymnast has a sprained ankle."</div>
+        </div>
+      </div>
+
+      <!-- Section 2: Clinical Consultation -->
+      <h2 class="section-header">💬 2. Doctor-Patient Clinical Dialogue Pattern</h2>
+      <div class="callout-box callout-mishka">
+        <b>Step 1: Doctor asks the complaint</b><br>
+        — Dr. Mishka: <i>"What's the matter with you, Made?"</i> (Ada apa denganmu?)<br><br>
+        <b>Step 2: Patient describes the condition</b><br>
+        — Patient Made: <i>"<b>I have got a stomachache.</b> My stomach hurts after eating spicy snacks."</i><br><br>
+        <b>Step 3: Doctor delivers medical verdict &amp; advice</b><br>
+        — Dr. Mishka: <i>"You <b>should</b> take this medicine and drink plenty of warm water. You <b>should not</b> eat too much spicy food."</i>
+      </div>
+
+      <!-- Section 3: Should vs Should Not -->
+      <h2 class="section-header">💊 3. Prescription Formula: "Should" vs "Should Not (Shouldn't)"</h2>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Modal Verb</th>
+              <th style="width: 30%;">Function &amp; Formula</th>
+              <th style="width: 45%;">Clinical Prescription Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b style="color: #34d399;">SHOULD</b></td>
+              <td><b>Subject + should + Verb 1</b><br>(Anjuran positif / hal yang wajib dilakukan demi kesembuhan)</td>
+              <td>
+                • <i>"You <b>should see</b> a dentist."</i><br>
+                • <i>"He <b>should take</b> a rest in bed."</i><br>
+                • <i>"She <b>should drink</b> warm tea with honey."</i>
+              </td>
+            </tr>
+            <tr>
+              <td><b style="color: #f87171;">SHOULD NOT<br>(SHOULDN'T)</b></td>
+              <td><b>Subject + shouldn't + Verb 1</b><br>(Pantangan medis / larangan keras agar penyakit tidak memburuk)</td>
+              <td>
+                • <i>"You <b>should not eat</b> too much candy."</i><br>
+                • <i>"He <b>shouldn't drink</b> icy beverages."</i><br>
+                • <i>"She <b>shouldn't run</b> on an injured foot."</i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-box callout-warning">
+        ⚠️ <b>Grammar Rule:</b> Modal verb <i>should / shouldn't</i> selalu diikuti <b>Verb 1 murni (Bare Infinitive)</b> tanpa tambahan <i>-s, -ed,</i> atau <i>to</i>!<br>
+        ❌ <i>"He should to takes medicine."</i><br>
+        ✅ <i>"He <b>should take</b> medicine."</i>
+      </div>
+
+      <!-- Section 4: 4 Clinical Cases Matrix -->
+      <h2 class="section-header">🏥 4. The 4 ER Cases Matrix (Canva &amp; 3D Clinic Study)</h2>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Diagnosis</th>
+              <th>Positive Advice (Should)</th>
+              <th>Medical Prohibition (Shouldn't)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Edo</b></td>
+              <td><span class="badge-pill badge-rose">Toothache</span></td>
+              <td>Should brush teeth twice daily &amp; see a dentist.</td>
+              <td>Should not eat too much candy and sweet chocolate.</td>
+            </tr>
+            <tr>
+              <td><b>Made</b></td>
+              <td><span class="badge-pill badge-amber">Sore Throat &amp; Fever</span></td>
+              <td>Should drink warm honey tea, take medicine, &amp; rest.</td>
+              <td>Should not eat oily fried snacks or drink iced soda.</td>
+            </tr>
+            <tr>
+              <td><b>Nia (Gymnast)</b></td>
+              <td><span class="badge-pill badge-rose">Sprained Ankle</span></td>
+              <td>Should compress with ice pack &amp; elevate leg.</td>
+              <td>Should not jump, run, or practice gymnastics today.</td>
+            </tr>
+            <tr>
+              <td><b>Asep</b></td>
+              <td><span class="badge-pill badge-amber">Stomachache</span></td>
+              <td>Should take stomach antacid &amp; drink warm water.</td>
+              <td>Should not eat extra spicy chili and instant noodles.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 5: Clinical Challenge & Answers -->
+      <h2 class="section-header">🎯 5. Master Challenge C3–C4 Clinical Analysis</h2>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th style="width: 10%;">No</th>
+              <th style="width: 55%;">Case Study</th>
+              <th style="width: 35%;">Doctor Prescription &amp; Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>1</b></td>
+              <td><i>"Nia twisted her ankle during gymnast beam dismount. The ankle is swollen. What should she do?"</i></td>
+              <td><b>Apply an ice pack, elevate the leg, and rest.</b><br><span style="font-size: 11px; color: var(--text-muted);">Protokol RICE (Rest, Ice, Compression, Elevation) meredakan inflamasi.</span></td>
+            </tr>
+            <tr>
+              <td><b>2</b></td>
+              <td><i>"Complete: Edo has got a toothache. He ... (should / shouldn't) eat crunchy hard candies."</i></td>
+              <td><b>shouldn't (should not)</b><br><span style="font-size: 11px; color: var(--text-muted);">Permen keras dan manis memperparah infeksi gigi berlubang.</span></td>
+            </tr>
+            <tr>
+              <td><b>3</b></td>
+              <td><i>"What is the polite doctor question to check a patient's condition?"</i></td>
+              <td><b>"What is the matter with you?"</b><br><span style="font-size: 11px; color: var(--text-muted);">Kalimat standar empati medis internasional.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="action-links-row">
+        <a class="btn-action-game" href="mishka_clinic_3d.html" style="border-color: #34d399;">🩺 Buka Dr. Mishka 3D Virtual Clinic ❯</a>
+        <a class="btn-action-game" href="mishka_unit4.html" style="border-color: #10b981;">📋 Buka Medical Clinic Quiz ❯</a>
+        <a class="btn-action-game" href="../index.html">🏠 Beranda PKBM ❯</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function switchStudent(student) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+      if (student === 'aqlan') {
+        document.getElementById('tab-btn-aqlan').classList.add('active');
+        document.getElementById('pane-aqlan').classList.add('active');
+      } else {
+        document.getElementById('tab-btn-mishka').classList.add('active');
+        document.getElementById('pane-mishka').classList.add('active');
+      }
+    }
+  </script>
+
+  <!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
+  <script src="../assets/js/pkbm_sync.js"></script>
+</body>
+</html>
