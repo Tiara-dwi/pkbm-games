@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Command Center & Raport Terpadu — PKBM Penerus Bangsa</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-light: #EEF2FF;
+      --secondary: #06B6D4;
+      --accent-gold: #F59E0B;
+      --success: #10B981;
+      --danger: #EF4444;
+      --dark-bg: #0B0F19;
+      --card-dark: #151D30;
+      --card-border: #233152;
+      --neon-cyan: #00F2FE;
+    }
+
+    body {
+      background: linear-gradient(180deg, rgba(11, 15, 25, 0.88) 0%, rgba(15, 23, 42, 0.94) 100%),
+                  url('assets/canva_visuals/tata_surya_filosofi_pendidikan.jpg') center top / cover no-repeat fixed;
+      color: #F8FAFC;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Top Navigation */
+    .dashboard-nav {
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 16px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      font-size: 26px;
+      filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-text p {
+      font-size: 0.8rem;
+      color: #94A3B8;
+      margin: 2px 0 0 0;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: #34D399;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .status-badge.connecting {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #FBBF24;
+    }
+
+    /* Tab Switcher */
+    .tab-container {
+      max-width: 1300px;
+      margin: 22px auto 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-tab-btn {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94A3B8;
+      padding: 12px 24px;
+      border-radius: 14px 14px 0 0;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-tab-btn.active {
+      background: rgba(15, 23, 42, 0.95);
+      color: #38BDF8;
+      border-bottom: 3px solid #38BDF8;
+      border-top: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Main Container */
+    .main-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 24px 20px 60px 20px;
+    }
+
+    /* Global Broadcast Deck */
+    .broadcast-deck {
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 18px;
+      padding: 16px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .broadcast-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #E0F2FE;
+    }
+
+    .btn-action-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-deck {
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-deck:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-lock { background: #DC2626; color: white; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); }
+    .btn-unlock { background: #10B981; color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+    .btn-confetti { background: #F59E0B; color: #0F172A; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+    .btn-portal { background: #38BDF8; color: #0F172A; text-decoration: none; }
+
+    /* Student Radar Grid */
+    .student-radar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .student-radar-card {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .student-radar-card.active-session {
+      border-color: #38BDF8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+    }
+
+    .student-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+
+    .student-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .student-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: #1E293B;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .student-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 0;
+    }
+
+    .student-sub {
+      font-size: 0.8rem;
+      color: #94A3B8;
+      margin: 2px 0 0 0;
+    }
+
+    /* Live Mirror Screen Box */
+    .live-mirror-box {
+      background: #090D16;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .mirror-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #38BDF8;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mirror-game-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-bottom: 8px;
+    }
+
+    .mirror-question {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 3px solid #F59E0B;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      color: #FEF3C7;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .mirror-last-action {
+      font-size: 0.85rem;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stat-pill {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .stat-pill .num {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #38BDF8;
+    }
+
+    .stat-pill .lbl {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Remote Control Form inside Card */
+    .remote-control-panel {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px dashed rgba(56, 189, 248, 0.4);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .control-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #E2E8F0;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-select-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .nav-select-row select {
+      flex: 1;
+      background: #0F172A;
+      color: #F8FAFC;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .btn-send-nav {
+      background: #0284C7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .btn-send-nav:hover { background: #0369A1; }
+
+    .quick-msg-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .quick-msg-row input {
+      flex: 1;
+      background: #0F172A;
+      color: #F8FAFC;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .btn-send-msg {
+      background: #475569;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* Table Styles for Raport */
+    .raport-pane {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-group select {
+      background: #1E293B;
+      color: white;
+      border: 1px solid #334155;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .score-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .score-table th {
+      background: #1E293B;
+      color: #38BDF8;
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #334155;
+    }
+
+    .score-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.92rem;
+      color: #E2E8F0;
+    }
+
+    .score-table tr:hover {
+      background: rgba(30, 41, 59, 0.5);
+    }
+
+    .badge-score {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.88rem;
+    }
+
+    .badge-perfect { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-good { background: rgba(56, 189, 248, 0.2); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .badge-pass { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.4); }
+
+    /* Print Styles */
+    @media print {
+      body { background: white !important; color: black !important; }
+      .dashboard-nav, .tab-container, .broadcast-deck, .filter-bar, .remote-control-panel, .no-print { display: none !important; }
+      .raport-pane { border: none !important; box-shadow: none !important; padding: 0 !important; }
+      .score-table th { background: #F1F5F9 !important; color: black !important; }
+      .score-table td { color: black !important; border-bottom: 1px solid #CBD5E1 !important; }
+      #print-header { display: block !important; text-align: center; margin-bottom: 24px; border-bottom: 3px double #000; padding-bottom: 14px; }
+    }
+
+    #print-header { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVIGATION -->
+  <div class="dashboard-nav">
+    <div class="brand-group">
+      <div class="brand-icon">🛰️</div>
+      <div class="brand-text">
+        <h1>Teacher Command Center &amp; Raport Siswa</h1>
+        <p>PKBM Penerus Bangsa • Live Telemetry, Remote Navigation, &amp; Unified Gradebook</p>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="status-badge connecting" id="mqtt-status-pill">
+        <span class="status-dot">🟡</span> Menghubungkan ke Cloud WebSockets...
+      </div>
+      <a href="index.html" class="btn-deck btn-portal no-print">🏠 Kembali ke Portal</a>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-container no-print">
+    <button class="nav-tab-btn active" id="tab-btn-radar" onclick="switchDashboardTab('radar')">
+      <span>🛰️ Live Radar &amp; Kendali Layar</span>
+    </button>
+    <button class="nav-tab-btn" id="tab-btn-raport" onclick="switchDashboardTab('raport')">
+      <span>📊 Buku Raport &amp; Riwayat Skor Siswa</span>
+    </button>
+  </div>
+
+  <div class="main-content">
+    
+    <!-- ========================================================================= -->
+    <!-- TAB 1: RADAR PEMANTAU & REMOTE CONTROL -->
+    <!-- ========================================================================= -->
+    <div id="pane-radar">
+      
+      <!-- GLOBAL BROADCAST DECK -->
+      <div class="broadcast-deck no-print">
+        <div class="broadcast-label">
+          <span>📡 <strong>Kendali Serentak Seluruh Siswa:</strong></span>
+          <span style="font-size:0.85rem; color:#94A3B8;">(Aqlan, Mishka, &amp; Seluruh Siswa Terhubung)</span>
+        </div>
+        <div class="btn-action-group">
+          <button class="btn-deck btn-lock" onclick="broadcastCommand('lock_screen', 'Sesi penjelasan bersama Bu Tiara di Google Meet! 😊')">
+            ⏸️ Kunci / Jeda Semua Layar
+          </button>
+          <button class="btn-deck btn-unlock" onclick="broadcastCommand('unlock_screen')">
+            ▶️ Buka Semua Layar
+          </button>
+          <button class="btn-deck btn-confetti" onclick="broadcastCommand('confetti', 'Semua siswa luar biasa! Hadiah bintang Bu Tiara ⭐⭐⭐')">
+            🎉 Kirim Confetti Bersama
+          </button>
+        </div>
+      </div>
+
+      <!-- MULTI-STUDENT LIVE RADAR GRID -->
+      <div class="student-radar-grid">
+
+        <!-- 1. KARTU AQLAN (KELAS 4) -->
+        <div class="student-radar-card active-session" id="card-aqlan">
+          <div>
+            <div class="student-card-header">
+              <div class="student-meta">
+                <div class="student-avatar" style="color:#00F2FE;">🛹</div>
+                <div>
+                  <h3 class="student-name">Aqlan</h3>
+                  <p class="student-sub">Kelas 4 SD • The Kinetic Explorer</p>
+                </div>
+              </div>
+              <div class="status-badge" id="aqlan-status">
+                <span>🟢</span> <span id="aqlan-status-text">Siap Belajar</span>
+              </div>
+            </div>
+
+            <!-- LIVE MIRROR SCREEN -->
+            <div class="live-mirror-box">
+              <div class="mirror-label">
+                <span>📺 Live Mirror Layar Aqlan (Tanpa Share Screen)</span>
+                <span id="aqlan-time-ping" style="color:#64748B;">Aktif</span>
+              </div>
+              <div class="mirror-game-title" id="aqlan-live-game">3D Owl Spatial Quest: "Where is Hootie?"</div>
+              <div class="mirror-question" id="aqlan-live-q">
+                Sedang memuat soal tantangan...
+              </div>
+              <div class="mirror-last-action" id="aqlan-live-action">
+                <span>👆 Jawaban Terakhir:</span> <strong id="aqlan-action-text" style="color:#38BDF8;">-</strong>
+              </div>
+            </div>
+
+            <!-- STATS ROW -->
+            <div class="stats-row">
+              <div class="stat-pill">
+                <div class="num" id="aqlan-score">0</div>
+                <div class="lbl">Skor Saat Ini</div>
+              </div>
+              <div class="stat-pill">
+                <div class="num" id="aqlan-level">1/9</div>
+                <div class="lbl">Level Misi</div>
+              </div>
+              <div class="stat-pill">
+                <div class="num" id="aqlan-streak">0 ⭐</div>
+                <div class="lbl">Kombo Benar</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- REMOTE CONTROL PANEL FOR AQLAN -->
+          <div class="remote-control-panel no-print">
+            <div class="control-label">
+              <span>🎮 <strong>Remote Control Layar Aqlan:</strong></span>
+            </div>
+            
+            <div class="nav-select-row">
+              <select id="aqlan-target-url">
+                <option value="english/owl_3d.html">🦉 English: 3D Owl Spatial Quest &amp; There is/are</option>
+                <option value="english/aqlan_craft.html">🛹 English: Skater Action Runner (-ing)</option>
+                <option value="bahasa/aqlan_traffic_3d.html">🚦 B. Indo: 3D Navigasi Rambu Kota</option>
+                <option value="bahasa/aqlan.html">🛹 B. Indo: Skater City Rush</option>
+                <option value="math/aqlan.html">🔢 Matematika: Lab KPK &amp; FPB Bu Ajeng</option>
+                <option value="science/aqlan.html">🔬 Sains IPAS: Lab Topeng Energi Kinetik</option>
+                <option value="pai/aqlan.html">🕌 PAI: Ksatria Baligh &amp; Radar Salat</option>
+                <option value="bab3.html">⭐ 3 Game Bab 3 (Terpadu)</option>
+              </select>
+              <button class="btn-send-nav" onclick="sendRemoteNav('aqlan', 'aqlan-target-url')">🚀 Luncurkan</button>
+            </div>
+
+            <div style="display:flex; gap:8px; margin-bottom:10px;">
+              <button class="btn-deck btn-lock" style="flex:1;" onclick="sendStudentCommand('aqlan', 'lock_screen', 'Perhatikan Kak Tiara di Google Meet ya Aqlan!')">
+                ⏸️ Kunci Layar
+              </button>
+              <button class="btn-deck btn-unlock" style="flex:1;" onclick="sendStudentCommand('aqlan', 'unlock_screen')">
+                ▶️ Buka Layar
+              </button>
+              <button class="btn-deck btn-confetti" onclick="sendStudentCommand('aqlan', 'confetti', 'Keren banget Kapten Aqlan! +100 Bintang! 🎉')">
+                🎉 Hadiah
+              </button>
+            </div>
+
+            <div class="quick-msg-row">
+              <input type="text" id="aqlan-msg-input" placeholder="Kirim pesan toast ke layar Aqlan...">
+              <button class="btn-send-msg" onclick="sendStudentToast('aqlan', 'aqlan-msg-input')">Kirim 💬</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. KARTU MISHKA (KELAS 5) -->
+        <div class="student-radar-card active-session" id="card-mishka">
+          <div>
+            <div class="student-card-header">
+              <div class="student-meta">
+                <div class="student-avatar" style="color:#34D399;">🩺</div>
+                <div>
+                  <h3 class="student-name">Mishka</h3>
+                  <p class="student-sub">Kelas 5 SD • The Analytical Thinker</p>
+                </div>
+              </div>
+              <div class="status-badge" id="mishka-status">
+                <span>🟢</span> <span id="mishka-status-text">Siap Belajar</span>
+              </div>
+            </div>
+
+            <!-- LIVE MIRROR SCREEN -->
+            <div class="live-mirror-box">
+              <div class="mirror-label">
+                <span>📺 Live Mirror Layar Mishka (Tanpa Share Screen)</span>
+                <span id="mishka-time-ping" style="color:#64748B;">Aktif</span>
+              </div>
+              <div class="mirror-game-title" id="mishka-live-game">Dr. Mishka's 3D Virtual Clinic &amp; ER</div>
+              <div class="mirror-question" id="mishka-live-q">
+                Sedang memuat diagnosis pasien...
+              </div>
+              <div class="mirror-last-action" id="mishka-live-action">
+                <span>💊 Tindakan Terakhir:</span> <strong id="mishka-action-text" style="color:#34D399;">-</strong>
+              </div>
+            </div>
+
+            <!-- STATS ROW -->
+            <div class="stats-row">
+              <div class="stat-pill">
+                <div class="num" id="mishka-score" style="color:#34D399;">0</div>
+                <div class="lbl">Skor Saat Ini</div>
+              </div>
+              <div class="stat-pill">
+                <div class="num" id="mishka-level" style="color:#34D399;">1/4</div>
+                <div class="lbl">Kasus Pasien</div>
+              </div>
+              <div class="stat-pill">
+                <div class="num" id="mishka-streak" style="color:#34D399;">0 ⭐</div>
+                <div class="lbl">Kombo Resep</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- REMOTE CONTROL PANEL FOR MISHKA -->
+          <div class="remote-control-panel no-print">
+            <div class="control-label">
+              <span>🎮 <strong>Remote Control Layar Mishka:</strong></span>
+            </div>
+            
+            <div class="nav-select-row">
+              <select id="mishka-target-url">
+                <option value="english/mishka_clinic_3d.html">🩺 English: Dr. Mishka's 3D Virtual Clinic (Health Rx)</option>
+                <option value="english/mishka.html">⏳ English: The Time Machine Lab (Past Tense)</option>
+                <option value="bahasa/mishka_interview_3d.html">🎙️ B. Indo: 3D Studio Wawancara ADIKSIMBA</option>
+                <option value="bahasa/mishka.html">📰 B. Indo: Redaksi Sahabat &amp; Prosedur</option>
+                <option value="math/mishka.html">🔢 Matematika: Grid Kalender KPK &amp; FPB</option>
+                <option value="science/mishka.html">🧲 Sains IPAS: Ekspedisi Magnet Rel Kereta Maglev</option>
+                <option value="pai/mishka.html">🌸 PAI: Petualangan Pohon Kebaikan Sakura</option>
+                <option value="bab3.html">⭐ 3 Game Bab 3 (Terpadu)</option>
+              </select>
+              <button class="btn-send-nav" style="background:#059669;" onclick="sendRemoteNav('mishka', 'mishka-target-url')">🚀 Luncurkan</button>
+            </div>
+
+            <div style="display:flex; gap:8px; margin-bottom:10px;">
+              <button class="btn-deck btn-lock" style="flex:1;" onclick="sendStudentCommand('mishka', 'lock_screen', 'Perhatikan penjelasan Kak Tiara di Google Meet ya Mishka!')">
+                ⏸️ Kunci Layar
+              </button>
+              <button class="btn-deck btn-unlock" style="flex:1;" onclick="sendStudentCommand('mishka', 'unlock_screen')">
+                ▶️ Buka Layar
+              </button>
+              <button class="btn-deck btn-confetti" onclick="sendStudentCommand('mishka', 'confetti', 'Diagnosis master dokter cilik Mishka! ⭐⭐⭐')">
+                🎉 Hadiah
+              </button>
+            </div>
+
+            <div class="quick-msg-row">
+              <input type="text" id="mishka-msg-input" placeholder="Kirim pesan toast ke layar Mishka...">
+              <button class="btn-send-msg" onclick="sendStudentToast('mishka', 'mishka-msg-input')">Kirim 💬</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: BUKU RAPORT & RIWAYAT SKOR SISWA -->
+    <!-- ========================================================================= -->
+    <div id="pane-raport" style="display:none;">
+
+      <div class="raport-pane">
+        
+        <!-- PRINT HEADER (HANYA MUNCUL DI PDF / CETAK) -->
+        <div id="print-header">
+          <h2 style="font-size:20px; font-weight:800; margin:0;">PKBM PENERUS BANGSA</h2>
+          <p style="margin:4px 0 0 0; font-size:13px; color:#475569;">Laporan Evaluasi Pembelajaran Interaktif &amp; Gamifikasi Edukatif</p>
+          <p style="margin:2px 0 14px 0; font-size:12px; color:#64748B;">Guru Pembimbing: Kak Tiara Dwi • Tahun Ajaran 2026/2027</p>
+        </div>
+
+        <div class="filter-bar no-print">
+          <div class="filter-group">
+            <label style="font-size:0.9rem; font-weight:700;">Filter Siswa:</label>
+            <select id="filter-student" onchange="renderScoreTable()">
+              <option value="all">Semua Siswa</option>
+              <option value="aqlan">Aqlan (Kelas 4)</option>
+              <option value="mishka">Mishka (Kelas 5)</option>
+              <option value="selvi">Selvi (Kelas 6)</option>
+              <option value="kinanti">Kinanti (Kelas 4)</option>
+              <option value="alisya">Alisya (Kelas 4)</option>
+              <option value="ardiansyah">Ardiansyah (Kelas 5)</option>
+            </select>
+
+            <label style="font-size:0.9rem; font-weight:700; margin-left:14px;">Mapel:</label>
+            <select id="filter-subject" onchange="renderScoreTable()">
+              <option value="all">Semua Mata Pelajaran</option>
+              <option value="English">English</option>
+              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+              <option value="Matematika">Matematika</option>
+              <option value="Sains IPAS">Sains IPAS</option>
+              <option value="PAI">PAI</option>
+            </select>
+          </div>
+
+          <div style="display:flex; gap:10px;">
+            <button class="btn-deck" style="background:#0284C7; color:white;" onclick="window.print()">
+              🖨️ Cetak Raport / Simpan PDF
+            </button>
+            <button class="btn-deck" style="background:#334155; color:#E2E8F0;" onclick="loadDemoScores()">
+              🧪 Muat Nilai Demo
+            </button>
+            <button class="btn-deck" style="background:#7F1D1D; color:#FECACA;" onclick="clearAllScores()">
+              🗑️ Reset Nilai
+            </button>
+          </div>
+        </div>
+
+        <!-- SUMMARY STATS CARDS -->
+        <div class="stats-row no-print" style="margin-bottom:24px;">
+          <div class="stat-pill">
+            <div class="num" id="summary-total-games">0</div>
+            <div class="lbl">Total Game Tuntas</div>
+          </div>
+          <div class="stat-pill">
+            <div class="num" id="summary-avg-acc" style="color:#10B981;">0%</div>
+            <div class="lbl">Rata-Rata Akurasi</div>
+          </div>
+          <div class="stat-pill">
+            <div class="num" id="summary-total-stars" style="color:#F59E0B;">0 ⭐</div>
+            <div class="lbl">Total Bintang Terkumpul</div>
+          </div>
+        </div>
+
+        <!-- DATA TABLE -->
+        <div style="overflow-x:auto;">
+          <table class="score-table">
+            <thead>
+              <tr>
+                <th>Waktu &amp; Tanggal</th>
+                <th>Siswa &amp; Kelas</th>
+                <th>Mata Pelajaran</th>
+                <th>Judul Game Pembelajaran</th>
+                <th>Skor Akhir</th>
+                <th>Akurasi</th>
+                <th>Bintang</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody id="score-table-body">
+              <tr>
+                <td colspan="8" style="text-align:center; padding:30px; color:#64748B;">
+                  Belum ada riwayat game yang diselesaikan. Mainkan game bersama murid atau klik <strong>"Muat Nilai Demo"</strong> untuk simulasi!
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. MQTT CLOUD WEBSOCKET CLIENT FOR TEACHER
+    // =========================================================================
+    let mqttClient = null;
+    let broadcastBus = null;
+
+    const studentLiveRecords = {
+      aqlan: { name: 'Aqlan', online: false, lastPing: 0, score: 0, level: '1/9', game: 'Belum membuka game', q: '-', action: '-', streak: 0 },
+      mishka: { name: 'Mishka', online: false, lastPing: 0, score: 0, level: '1/4', game: 'Belum membuka game', q: '-', action: '-', streak: 0 }
+    };
+
+    function initTeacherMqtt() {
+      const statusPill = document.getElementById('mqtt-status-pill');
+      
+      // Setup BroadcastChannel for local same-browser cross-tab testing
+      try {
+        if ('BroadcastChannel' in window) {
+          broadcastBus = new BroadcastChannel('pkbm_sync_bus');
+          broadcastBus.onmessage = function (ev) {
+            if (ev.data && ev.data.studentId) {
+              handleIncomingTelemetry(ev.data);
+            }
+          };
+        }
+      } catch (e) {}
+
+      // Connect to Cloud MQTT WebSockets (broker.emqx.io)
+      try {
+        const clientId = 'pkbm_teacher_' + Math.random().toString(16).slice(2, 8);
+        mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
+          clientId: clientId,
+          clean: true,
+          connectTimeout: 6000,
+          reconnectPeriod: 3000
+        });
+
+        mqttClient.on('connect', function () {
+          console.log('[Teacher Dashboard] 🟢 Cloud MQTT connected');
+          statusPill.className = 'status-badge';
+          statusPill.innerHTML = '<span>🟢</span> Cloud Radar Aktif (Real-Time)';
+
+          // Subscribe to all telemetry from all students
+          mqttClient.subscribe('pkbm/tiara/telemetry/+', { qos: 0 });
+
+          // Request ping from all active students
+          broadcastCommand('ping');
+        });
+
+        mqttClient.on('message', function (topic, message) {
+          try {
+            const telemetry = JSON.parse(message.toString());
+            handleIncomingTelemetry(telemetry);
+          } catch (e) {}
+        });
+
+        mqttClient.on('error', function (err) {
+          statusPill.className = 'status-badge connecting';
+          statusPill.innerHTML = '<span>🟡</span> Cloud Reconnecting...';
+        });
+      } catch (e) {
+        console.warn('MQTT error:', e);
+      }
+    }
+
+    // =========================================================================
+    // 2. TELEMETRY PROCESSOR & LIVE SCREEN MIRROR UPDATE
+    // =========================================================================
+    function handleIncomingTelemetry(t) {
+      if (!t || !t.studentId) return;
+
+      const sid = t.studentId.toLowerCase();
+      if (!studentLiveRecords[sid]) {
+        studentLiveRecords[sid] = { name: t.studentName || sid };
+      }
+
+      const rec = studentLiveRecords[sid];
+      rec.online = (t.status !== 'offline');
+      rec.lastPing = Date.now();
+      rec.score = t.score || 0;
+      rec.level = t.level ? (t.level + '/' + (t.totalLevels || 1)) : rec.level;
+      rec.game = t.gameTitle || rec.game;
+      rec.q = t.currentQuestion || rec.q;
+      rec.action = t.lastAnswer || rec.action;
+      rec.isCorrect = t.isCorrect;
+      rec.streak = t.streak || 0;
+
+      // Update DOM UI for Aqlan or Mishka
+      if (sid === 'aqlan') {
+        document.getElementById('aqlan-status').className = rec.online ? 'status-badge' : 'status-badge connecting';
+        document.getElementById('aqlan-status-text').innerText = rec.online ? '🟢 Sedang Bermain' : '⚪ Offline';
+        document.getElementById('aqlan-live-game').innerText = rec.game;
+        document.getElementById('aqlan-live-q').innerText = rec.q;
+        
+        let actHtml = `"${rec.action}"`;
+        if (rec.isCorrect === true) actHtml += ' <span style="color:#34D399; font-weight:800;">(BENAR ✅)</span>';
+        else if (rec.isCorrect === false) actHtml += ' <span style="color:#F87171; font-weight:800;">(SALAH ❌)</span>';
+        document.getElementById('aqlan-action-text').innerHTML = actHtml;
+
+        document.getElementById('aqlan-score').innerText = rec.score;
+        document.getElementById('aqlan-level').innerText = rec.level;
+        document.getElementById('aqlan-streak').innerText = rec.streak + ' ⭐';
+        document.getElementById('aqlan-time-ping').innerText = 'Update: ' + new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+      } else if (sid === 'mishka') {
+        document.getElementById('mishka-status').className = rec.online ? 'status-badge' : 'status-badge connecting';
+        document.getElementById('mishka-status-text').innerText = rec.online ? '🟢 Sedang Praktik' : '⚪ Offline';
+        document.getElementById('mishka-live-game').innerText = rec.game;
+        document.getElementById('mishka-live-q').innerText = rec.q;
+        
+        let actHtml = `"${rec.action}"`;
+        if (rec.isCorrect === true) actHtml += ' <span style="color:#34D399; font-weight:800;">(BENAR ✅)</span>';
+        else if (rec.isCorrect === false) actHtml += ' <span style="color:#F87171; font-weight:800;">(SALAH ❌)</span>';
+        document.getElementById('mishka-action-text').innerHTML = actHtml;
+
+        document.getElementById('mishka-score').innerText = rec.score;
+        document.getElementById('mishka-level').innerText = rec.level;
+        document.getElementById('mishka-streak').innerText = rec.streak + ' ⭐';
+        document.getElementById('mishka-time-ping').innerText = 'Update: ' + new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+      }
+
+      // Refresh score table if game completed
+      if (t.eventType === 'game_completed') {
+        renderScoreTable();
+      }
+    }
+
+    // =========================================================================
+    // 3. REMOTE COMMAND TRANSMITTERS (BU TIARA CONTROL)
+    // =========================================================================
+    function sendStudentCommand(studentId, action, message) {
+      const payload = {
+        action: action,
+        target: studentId,
+        message: message || '',
+        timestamp: Date.now()
+      };
+      dispatchCommand(payload);
+    }
+
+    function broadcastCommand(action, message) {
+      const payload = {
+        action: action,
+        target: 'all',
+        message: message || '',
+        timestamp: Date.now()
+      };
+      dispatchCommand(payload);
+    }
+
+    function sendRemoteNav(studentId, selectElemId) {
+      const sel = document.getElementById(selectElemId);
+      const targetUrl = sel.value;
+      const gameLabel = sel.options[sel.selectedIndex].text;
+      
+      const payload = {
+        action: 'navigate',
+        target: studentId,
+        url: targetUrl,
+        label: gameLabel,
+        timestamp: Date.now()
+      };
+      dispatchCommand(payload);
+      alert(`🚀 Perintah pindah layar terkirim!\nLayar ${studentId.toUpperCase()} akan langsung berpindah ke:\n"${gameLabel}"`);
+    }
+
+    function sendStudentToast(studentId, inputId) {
+      const inp = document.getElementById(inputId);
+      const text = inp.value.trim();
+      if (!text) return;
+
+      sendStudentCommand(studentId, 'toast', text);
+      inp.value = '';
+    }
+
+    function dispatchCommand(payload) {
+      const jsonStr = JSON.stringify(payload);
+
+      // 1. BroadcastChannel locally
+      if (broadcastBus) {
+        try { broadcastBus.postMessage(payload); } catch (e) {}
+      }
+
+      // 2. Cloud MQTT
+      if (mqttClient && mqttClient.connected) {
+        const topic = payload.target === 'all' ? 'pkbm/tiara/control/all' : ('pkbm/tiara/control/' + payload.target);
+        mqttClient.publish(topic, jsonStr, { qos: 0 });
+      }
+    }
+
+    // Check offline status every 7 seconds
+    setInterval(() => {
+      const now = Date.now();
+      ['aqlan', 'mishka'].forEach(sid => {
+        const rec = studentLiveRecords[sid];
+        if (rec && rec.online && (now - rec.lastPing > 9000)) {
+          rec.online = false;
+          const statusEl = document.getElementById(sid + '-status');
+          const textEl = document.getElementById(sid + '-status-text');
+          if (statusEl && textEl) {
+            statusEl.className = 'status-badge connecting';
+            textEl.innerText = '⚪ Menunggu...';
+          }
+        }
+      });
+    }, 7000);
+
+    // =========================================================================
+    // 4. RAPORT & SCORE TABLE MANAGER
+    // =========================================================================
+    function switchDashboardTab(tab) {
+      document.getElementById('tab-btn-radar').className = (tab === 'radar') ? 'nav-tab-btn active' : 'nav-tab-btn';
+      document.getElementById('tab-btn-raport').className = (tab === 'raport') ? 'nav-tab-btn active' : 'nav-tab-btn';
+      
+      document.getElementById('pane-radar').style.display = (tab === 'radar') ? 'block' : 'none';
+      document.getElementById('pane-raport').style.display = (tab === 'raport') ? 'block' : 'none';
+
+      if (tab === 'raport') {
+        renderScoreTable();
+      }
+    }
+
+    function renderScoreTable() {
+      const studentFilter = document.getElementById('filter-student').value;
+      const subjectFilter = document.getElementById('filter-subject').value;
+      const history = JSON.parse(localStorage.getItem('pkbm_score_history') || '[]');
+
+      const filtered = history.filter(item => {
+        const matchStudent = (studentFilter === 'all' || item.studentId === studentFilter);
+        const matchSubject = (subjectFilter === 'all' || item.subject === subjectFilter);
+        return matchStudent && matchSubject;
+      });
+
+      // Update Summary metrics
+      document.getElementById('summary-total-games').innerText = filtered.length;
+      let totalAcc = 0;
+      let totalStars = 0;
+      filtered.forEach(item => {
+        totalAcc += (item.accuracy || 100);
+        totalStars += (item.stars || 3);
+      });
+      document.getElementById('summary-avg-acc').innerText = filtered.length ? Math.round(totalAcc / filtered.length) + '%' : '0%';
+      document.getElementById('summary-total-stars').innerText = totalStars + ' ⭐';
+
+      const tbody = document.getElementById('score-table-body');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:30px; color:#64748B;">Tidak ada rekaman nilai yang sesuai dengan filter.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        let badgeClass = 'badge-perfect';
+        if (item.accuracy < 75) badgeClass = 'badge-pass';
+        else if (item.accuracy < 90) badgeClass = 'badge-good';
+
+        const starDisplay = '⭐'.repeat(item.stars || 3);
+
+        return `
+          <tr>
+            <td>
+              <div style="font-weight:700;">${item.dateStr || '-'}</div>
+              <div style="font-size:0.75rem; color:#94A3B8;">${item.timeStr || ''}</div>
+            </td>
+            <td>
+              <strong>${item.studentName}</strong>
+              <div style="font-size:0.75rem; color:#38BDF8;">${item.grade}</div>
+            </td>
+            <td><span style="color:#E0F2FE; font-weight:600;">${item.subject}</span></td>
+            <td><strong>${item.gameTitle}</strong></td>
+            <td>
+              <span style="font-size:1.05rem; font-weight:800; color:#38BDF8;">${item.score}</span>
+              <span style="font-size:0.8rem; color:#94A3B8;">/ ${item.maxScore}</span>
+            </td>
+            <td><span class="badge-score ${badgeClass}">${item.accuracy}%</span></td>
+            <td><span style="color:#F59E0B; font-size:1.05rem;">${starDisplay}</span></td>
+            <td><span style="font-size:0.85rem; color:#CBD5E1;">${item.summary || 'Tuntas'}</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function loadDemoScores() {
+      const demoData = [
+        {
+          id: 'demo_1',
+          studentId: 'aqlan',
+          studentName: 'Aqlan',
+          grade: 'Kelas 4',
+          subject: 'English',
+          gameTitle: '3D Owl Spatial Quest: Where is Hootie?',
+          score: 900,
+          maxScore: 900,
+          accuracy: 100,
+          stars: 3,
+          summary: 'Kuasai 6 Preposisi & 3 Soal There is/are secara sempurna!',
+          dateStr: '3 Nov 2026',
+          timeStr: '08:15',
+          completedAt: new Date().toISOString()
+        },
+        {
+          id: 'demo_2',
+          studentId: 'mishka',
+          studentName: 'Mishka',
+          grade: 'Kelas 5',
+          subject: 'English',
+          gameTitle: "Dr. Mishka's 3D Virtual Clinic & ER",
+          score: 600,
+          maxScore: 600,
+          accuracy: 100,
+          stars: 3,
+          summary: 'Tepat mendiagnosis 4 pasien & meracik resep should/should not',
+          dateStr: '3 Nov 2026',
+          timeStr: '08:10',
+          completedAt: new Date().toISOString()
+        },
+        {
+          id: 'demo_3',
+          studentId: 'aqlan',
+          studentName: 'Aqlan',
+          grade: 'Kelas 4',
+          subject: 'Bahasa Indonesia',
+          gameTitle: 'Navigasi Rambu Kota 3D: Aqlan & Pak Polisi Arya',
+          score: 500,
+          maxScore: 500,
+          accuracy: 100,
+          stars: 3,
+          summary: 'Mengidentifikasi 4 kode warna rambu & arah mata angin',
+          dateStr: '2 Nov 2026',
+          timeStr: '09:40',
+          completedAt: new Date().toISOString()
+        },
+        {
+          id: 'demo_4',
+          studentId: 'mishka',
+          studentName: 'Mishka',
+          grade: 'Kelas 5',
+          subject: 'Bahasa Indonesia',
+          gameTitle: 'Studio Wawancara 3D: Investigasi ADIKSIMBA',
+          score: 480,
+          maxScore: 500,
+          accuracy: 96,
+          stars: 3,
+          summary: 'Formulasi 6 pertanyaan jurnalis investigatif Ibu Nadya',
+          dateStr: '2 Nov 2026',
+          timeStr: '09:35',
+          completedAt: new Date().toISOString()
+        },
+        {
+          id: 'demo_5',
+          studentId: 'aqlan',
+          studentName: 'Aqlan',
+          grade: 'Kelas 4',
+          subject: 'Matematika',
+          gameTitle: 'Lab Grid Loncatan KPK & FPB Bu Ajeng',
+          score: 400,
+          maxScore: 400,
+          accuracy: 100,
+          stars: 3,
+          summary: 'Menemukan titik temu KPK Kodok & Kelinci pada angka 12',
+          dateStr: '1 Nov 2026',
+          timeStr: '10:20',
+          completedAt: new Date().toISOString()
+        }
+      ];
+
+      localStorage.setItem('pkbm_score_history', JSON.stringify(demoData));
+      renderScoreTable();
+      alert('🧪 Data simulasi nilai berhasil dimuat! Silakan periksa tabel raport dan coba fitur "Cetak Raport / Simpan PDF".');
+    }
+
+    function clearAllScores() {
+      if (confirm('Apakah Bu Tiara yakin ingin mengosongkan seluruh riwayat nilai raport?')) {
+        localStorage.removeItem('pkbm_score_history');
+        renderScoreTable();
+      }
+    }
+
+    // Inisialisasi saat halaman dibuka
+    window.onload = () => {
+      initTeacherMqtt();
+      renderScoreTable();
+    };
+  </script>
+</body>
+</html>

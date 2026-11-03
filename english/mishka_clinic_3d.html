@@ -855,6 +855,12 @@
       document.getElementById('feedback-box').style.display = 'none';
       document.getElementById('btn-next').style.display = 'none';
 
+      // Report to Teacher Command Center
+      if (window.PKBM_SYNC) {
+        const fullQ = `${c.patientName} (${c.problem}): ${phaseData.q}`;
+        window.PKBM_SYNC.reportQuestion(fullQ, (currentCaseIdx * 3) + currentPhase, CLINIC_CASES.length * 3);
+      }
+
       // Randomize options so the answer is never predictable (not always Option A)
       const shuffledOptions = shuffleArray(phaseData.options);
 
@@ -874,6 +880,10 @@
 
       const fBox = document.getElementById('feedback-box');
       const nextBtn = document.getElementById('btn-next');
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer(opt.text, opt.correct, opt.correct ? 125 : 0, opt.correct ? phaseData.feedbackCorrect : phaseData.feedbackWrong);
+      }
 
       if (opt.correct) {
         btn.classList.add('correct');
@@ -1510,5 +1520,8 @@
 
     window.onload = init3D;
   </script>
+
+  <!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
+  <script src="../assets/js/pkbm_sync.js"></script>
 </body>
 </html>

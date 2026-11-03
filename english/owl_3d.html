@@ -1032,6 +1032,12 @@
       currentShuffledOptions = shuffleArray(mission.options);
       currentCorrectIdx = currentShuffledOptions.indexOf(mission.correctText);
 
+      // Report Question to Teacher Command Center
+      if (window.PKBM_SYNC) {
+        const fullQ = mission.prompt + (mission.promptSub ? ' ' + mission.promptSub : '');
+        window.PKBM_SYNC.reportQuestion(fullQ, idx + 1, spatialMissions.length);
+      }
+
       // Render options
       const optContainer = document.getElementById('options');
       optContainer.innerHTML = '';
@@ -1050,6 +1056,13 @@
       const mission = spatialMissions[currentMissionIdx];
       const buttons = document.querySelectorAll('.opt-btn');
       const fb = document.getElementById('feedback');
+
+      const chosenOpt = currentShuffledOptions[choiceIdx];
+      const isCor = (choiceIdx === currentCorrectIdx);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer(chosenOpt, isCor, isCor ? 100 : 0, mission.exp);
+      }
 
       if (choiceIdx === currentCorrectIdx) {
         playCorrectSound();
@@ -1100,6 +1113,10 @@
       playCorrectSound();
       document.getElementById('victory-modal').style.display = 'block';
       document.getElementById('final-score').innerText = score;
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(score, spatialMissions.length * 100, 3, 'Menuntaskan seluruh 9 level 3D Owl Spatial Quest');
+      }
     }
 
     // =========================================================================
@@ -1161,5 +1178,8 @@
       animate();
     };
   </script>
+
+  <!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
+  <script src="../assets/js/pkbm_sync.js"></script>
 </body>
 </html>

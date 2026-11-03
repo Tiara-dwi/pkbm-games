@@ -246,14 +246,21 @@
       <div id="brand-title">PKBM Penerus Bangsa</div>
     </div>
 
-    <!-- Toggle Bahasa / Language Switcher -->
-    <div class="lang-toggle-container">
-      <button class="lang-toggle-btn active" id="toggle-id" onclick="setLanguage('indo')">
-        🇮🇩 Indonesia
-      </button>
-      <button class="lang-toggle-btn lang-en" id="toggle-en" onclick="setLanguage('eng')">
-        🇬🇧 English
-      </button>
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <a href="dashboard.html" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #0284C7, #00F2FE); color:#0F172A; font-weight:800; font-size:0.86rem; padding:8px 18px; border-radius:24px; box-shadow:0 4px 15px rgba(0, 242, 254, 0.35); transition:all 0.2s;">
+        <span style="font-size:16px;">🛰️</span>
+        <span>Teacher Radar &amp; Raport</span>
+      </a>
+
+      <!-- Toggle Bahasa / Language Switcher -->
+      <div class="lang-toggle-container">
+        <button class="lang-toggle-btn active" id="toggle-id" onclick="setLanguage('indo')">
+          🇮🇩 Indonesia
+        </button>
+        <button class="lang-toggle-btn lang-en" id="toggle-en" onclick="setLanguage('eng')">
+          🇬🇧 English
+        </button>
+      </div>
     </div>
   </div>
 
