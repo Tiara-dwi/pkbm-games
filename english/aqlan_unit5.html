@@ -18,14 +18,88 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body {
-      background: radial-gradient(circle at top, #1a2542 0%, var(--bg-dark) 100%);
+      background: linear-gradient(135deg, rgba(11, 15, 25, 0.82) 0%, rgba(15, 23, 42, 0.88) 100%),
+                  url('../assets/canva_visuals/ghibli_hootie_cozy_bedroom.jpg') center/cover no-repeat fixed;
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
+
+    /* Floating Skater & Detective Particles (like Sakura in Indonesian game) */
+    @keyframes floatSkater {
+      0% { transform: translateY(105vh) rotate(0deg) scale(0.85); opacity: 0; }
+      15% { opacity: 0.8; }
+      85% { opacity: 0.8; }
+      100% { transform: translateY(-50px) rotate(360deg) scale(1.1); opacity: 0; }
+    }
+    .skater-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.7));
+      user-select: none;
+      font-size: 18px;
+    }
+
+    /* Pulse Glow for Radar Blips */
+    @keyframes pulseRadar {
+      0%, 100% { transform: scale(1); opacity: 0.85; filter: drop-shadow(0 0 4px #00f2fe); }
+      50% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 10px #f59e0b); }
+    }
+    .radar-dot {
+      animation: pulseRadar 2s infinite ease-in-out;
+      transform-origin: center;
+    }
+
+    /* Spatial Radar HUD Side Panels */
+    .hud-panel {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 220px;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      border-radius: 16px;
+      padding: 16px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 242, 254, 0.12);
+      z-index: 5;
+      display: none;
+    }
+    .hud-left { left: 24px; }
+    .hud-right { right: 24px; }
+    @media (min-width: 1300px) {
+      .hud-panel { display: block; }
+    }
+    .hud-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--neon-cyan);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hud-node-list {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .hud-node-list span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
     header {
       width: 100%;
       max-width: 800px;
@@ -33,11 +107,15 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 20px;
-      background: rgba(21, 29, 48, 0.85);
+      background: rgba(15, 23, 42, 0.85);
       border: 1px solid var(--neon-cyan);
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       margin-bottom: 20px;
+      position: relative;
+      z-index: 10;
     }
     .badge {
       background: linear-gradient(135deg, #0284c7, #00f2fe);
@@ -54,11 +132,15 @@
     .container {
       width: 100%;
       max-width: 800px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      background: rgba(21, 29, 48, 0.86);
+      border: 1px solid rgba(0, 242, 254, 0.35);
       border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 16px 45px rgba(0,0,0,0.65), 0 0 30px rgba(0, 242, 254, 0.15);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+      z-index: 10;
     }
     .mission-header {
       display: flex;
@@ -205,6 +287,73 @@
 </head>
 <body>
 
+  <!-- LEFT HUD: Interactive Spatial Radar (8 Preposition Codes) -->
+  <div class="hud-panel hud-left">
+    <div class="hud-title"><span>🧭</span> SPATIAL RADAR HUD</div>
+    <div style="text-align:center; margin: 8px 0;">
+      <svg viewBox="0 0 140 140" width="120" height="120" style="filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.45));">
+        <!-- Circular Radar Grid -->
+        <circle cx="70" cy="70" r="60" fill="none" stroke="#00f2fe" stroke-width="1.2" opacity="0.4"/>
+        <circle cx="70" cy="70" r="40" fill="none" stroke="#00f2fe" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+        <circle cx="70" cy="70" r="20" fill="none" stroke="#00f2fe" stroke-width="1" opacity="0.6"/>
+        <line x1="70" y1="10" x2="70" y2="130" stroke="#00f2fe" stroke-width="1" opacity="0.3"/>
+        <line x1="10" y1="70" x2="130" y2="70" stroke="#00f2fe" stroke-width="1" opacity="0.3"/>
+        
+        <!-- Rotating Sweep Line -->
+        <line x1="70" y1="70" x2="120" y2="40" stroke="#f59e0b" stroke-width="1.8" opacity="0.75">
+          <animateTransform attributeName="transform" type="rotate" from="0 70 70" to="360 70 70" dur="4s" repeatCount="indefinite"/>
+        </line>
+        
+        <!-- Center Target: Hootie -->
+        <circle cx="70" cy="70" r="7" fill="#f59e0b" class="radar-dot"/>
+        <text x="63" y="74" font-size="10">🦉</text>
+
+        <!-- Surrounding Blips -->
+        <circle cx="70" cy="22" r="3.5" fill="#00f2fe" class="radar-dot"/>
+        <text x="75" y="24" fill="#00f2fe" font-size="7" font-weight="bold" font-family="Segoe UI">ON</text>
+
+        <circle cx="70" cy="118" r="3.5" fill="#f87171" class="radar-dot"/>
+        <text x="75" y="120" fill="#f87171" font-size="7" font-weight="bold" font-family="Segoe UI">UNDER</text>
+
+        <circle cx="25" cy="70" r="3.5" fill="#10b981" class="radar-dot"/>
+        <text x="10" y="66" fill="#10b981" font-size="7" font-weight="bold" font-family="Segoe UI">BESIDE</text>
+
+        <circle cx="115" cy="70" r="3.5" fill="#a78bfa" class="radar-dot"/>
+        <text x="95" y="82" fill="#a78bfa" font-size="7" font-weight="bold" font-family="Segoe UI">BEHIND</text>
+      </svg>
+    </div>
+    <div class="hud-node-list">
+      <div>• <span>IN</span> (Di dalam)</div>
+      <div>• <span>ON</span> (Di atas)</div>
+      <div>• <span>UNDER</span> (Di bawah)</div>
+      <div>• <span>BESIDE</span> (Di samping)</div>
+      <div>• <span>BEHIND</span> (Di belakang)</div>
+      <div>• <span>IN FRONT OF</span> (Di depan)</div>
+      <div>• <span>BETWEEN</span> (Di antara)</div>
+      <div>• <span>ABOVE</span> (Melayang di atas)</div>
+    </div>
+  </div>
+
+  <!-- RIGHT HUD: Rooms of the House & Detective Formula -->
+  <div class="hud-panel hud-right">
+    <div class="hud-title"><span>🏠</span> ROOMS OF THE HOUSE</div>
+    <div class="hud-node-list" style="margin-bottom: 12px; font-size:11px;">
+      <div>🔺 <span>Attic</span> (Loteng)</div>
+      <div>🛏️ <span>Bedroom</span> (Kamar Tidur)</div>
+      <div>🛋️ <span>Living Room</span> (Ruang Tamu)</div>
+      <div>🍳 <span>Kitchen</span> (Dapur)</div>
+      <div>🚗 <span>Garage</span> (Garasi)</div>
+      <div>🌳 <span>Yard / Garden</span> (Halaman)</div>
+    </div>
+    <div class="hud-title"><span>🎯</span> DETECTIVE FORMULA</div>
+    <div class="hud-node-list" style="font-size:11px; line-height:1.5;">
+      <div style="color:#00f2fe; margin-bottom:2px;"><strong>BENDA TUNGGAL (1):</strong></div>
+      <div style="margin-bottom:6px;">• Where IS the [item]?<br>→ It IS [preposisi] the [tempat].</div>
+      <div style="color:#f59e0b; margin-bottom:2px;"><strong>BENDA JAMAK (>1):</strong></div>
+      <div>• Where ARE the [items]?<br>→ They ARE [preposisi]...</div>
+    </div>
+  </div>
+
   <header>
     <div>
       <span class="badge">Aqlan • Grade 4</span>
@@ -213,7 +362,7 @@
     <div class="stat-box">
       <span>Score: <span id="score" class="stat-val">0</span></span>
       <span>Streak: <span id="streak" class="stat-val">0</span>🔥</span>
-      <span>Radar: <span id="current-q" class="stat-val">1</span>/6</span>
+      <span>Radar: <span id="current-q" class="stat-val">1</span>/<span id="total-q">9</span></span>
     </div>
   </header>
 
@@ -245,7 +394,7 @@
     <h1>ALL LOST GEAR FOUND!</h1>
     <p>Aqlan has mastered Prepositions of Place with 100% spatial accuracy!</p>
     <div class="badge-award">MASTER SPATIAL NAVIGATOR 2026</div>
-    <p>Skor Akhir: <strong id="final-score" style="color: var(--neon-cyan); font-size: 24px;">0</strong> / 600</p>
+    <p>Skor Akhir: <strong id="final-score" style="color: var(--neon-cyan); font-size: 24px;">0</strong> / <span id="max-score">900</span></p>
     <button class="btn-next" style="display:inline-block; width: auto; padding: 12px 30px;" onclick="restartGame()">PLAY AGAIN ↺</button>
   </div>
 
@@ -350,6 +499,33 @@
         options: ["is", "are", "am", "was"],
         correctAnswer: "are",
         exp: "Juara Skater! Karena 'knee pads' jamak (ada 's'), kita bertanya dengan 'Where ARE'!"
+      },
+      {
+        tag: "SPATIAL RADAR 7",
+        phase: "Misi 4: Living Room Radar",
+        desc: "Lacak posisi burung hantu Hootie di ruang tamu!",
+        q: "Where is Hootie the owl in the living room? Look! He is sitting ... the cozy sofa and the tall floor lamp.",
+        options: ["between", "under", "in", "behind"],
+        correctAnswer: "between",
+        exp: "Sempurna! 'Between' artinya berada di antara dua objek (sofa dan lampu)!"
+      },
+      {
+        tag: "SPATIAL RADAR 8",
+        phase: "Misi 4: Bedroom & Attic Gear",
+        desc: "Lacak posisi helm skater di dekat lemari pakaian!",
+        q: "Where did Aqlan put the skate helmet? It is right ... the tall wardrobe.",
+        options: ["in front of", "under", "inside", "between"],
+        correctAnswer: "in front of",
+        exp: "Hebat! 'In front of' artinya tepat di depan lemari pakaian!"
+      },
+      {
+        tag: "SPATIAL RADAR 9",
+        phase: "Misi 4: House Wall Radar",
+        desc: "Lacak posisi jam dinding di ruang tamu!",
+        q: "Look at the wall! Where is the round clock? It is hanging ... the couch.",
+        options: ["above", "under", "inside", "behind"],
+        correctAnswer: "above",
+        exp: "Juara Navigator! 'Above' artinya melayang / menggantung di atas objek tanpa menempel!"
       }
     ];
 
@@ -373,6 +549,7 @@
       answered = false;
       const data = quizData[currentIdx];
       document.getElementById('current-q').innerText = currentIdx + 1;
+      if (document.getElementById('total-q')) document.getElementById('total-q').innerText = quizData.length;
       document.getElementById('phase-title').innerText = data.phase;
       document.getElementById('phase-desc').innerText = data.desc;
       document.getElementById('q-tag').innerText = data.tag;
@@ -440,6 +617,32 @@
       document.getElementById('game-container').style.display = 'none';
       document.getElementById('victory-screen').style.display = 'block';
       document.getElementById('final-score').innerText = score;
+      if (document.getElementById('max-score')) document.getElementById('max-score').innerText = quizData.length * 100;
+    }
+
+    // Floating Skater & Detective Particles Animation (like Sakura in PAI game)
+    function makeSkaterParticles() {
+      const symbols = ['🛹', '🦉', '⭐', '🔍', '🧭', '⚡', '✨', '🛹', '🦉'];
+      for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'skater-particle';
+        p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        const size = Math.random() * 10 + 14;
+        p.style.fontSize = size + 'px';
+        p.style.left = Math.random() * 96 + 'vw';
+        p.style.top = '100vh';
+        p.style.opacity = Math.random() * 0.45 + 0.35;
+        const dur = Math.random() * 7 + 8;
+        const delay = Math.random() * 8;
+        p.style.animation = `floatSkater ${dur}s linear infinite`;
+        p.style.animationDelay = delay + 's';
+        if (p.innerText === '⚡' || p.innerText === '⭐') {
+          p.style.color = '#f59e0b';
+        } else if (p.innerText === '✨' || p.innerText === '🧭') {
+          p.style.color = '#00f2fe';
+        }
+        document.body.appendChild(p);
+      }
     }
 
     function restartGame() {
@@ -453,7 +656,10 @@
       loadQuestion();
     }
 
-    window.onload = loadQuestion;
+    window.onload = () => {
+      loadQuestion();
+      makeSkaterParticles();
+    };
   </script>
 </body>
 </html>
