@@ -288,7 +288,7 @@
       <div class="stats">
         <span>Score: <span id="score" class="stat-val">0</span></span>
         <span>Streak: <span id="streak" class="stat-val">0</span>⭐</span>
-        <span>Level: <span id="level" class="stat-val">1</span>/12</span>
+        <span>Level: <span id="level" class="stat-val">1</span>/9</span>
       </div>
     </header>
 
@@ -322,7 +322,7 @@
     <h2>MISI 3D SELESAI DENGAN SEMPURNA!</h2>
     <p>Hebat sekali Kapten Aqlan! Kamu telah menguasai seluruh posisi preposisi spasial <em>(in, on, under, beside, behind, in front of)</em> serta formula <strong>"There is"</strong> (tunggal) &amp; <strong>"There are"</strong> (jamak) bersama Hootie si Burung Hantu!</p>
     <div class="badge-seal">MASTER 3D SPATIAL EXPLORER 2026</div>
-    <div>Skor Akhir: <strong id="final-score" style="color:var(--neon-gold); font-size:22px;">0</strong> / 1200</div>
+    <div>Skor Akhir: <strong id="final-score" style="color:var(--neon-gold); font-size:22px;">0</strong> / 900</div>
     <button class="btn-next" style="display:inline-block; margin-top:20px; width:auto; padding:12px 28px;" onclick="location.reload()">
       MAIN LAGI BERSAMA HOOTIE ↺
     </button>
@@ -893,7 +893,7 @@
       },
 
       // -------------------------------------------------------------
-      // PART 2: 6 "THERE IS" & "THERE ARE" ROOM DETECTIVE MISSIONS
+      // PART 2: 3 "THERE IS" & "THERE ARE" ROOM DETECTIVE MISSIONS
       // -------------------------------------------------------------
       {
         category: "🔍 Misi 7: Detektif Benda (There is vs There are)",
@@ -945,57 +945,6 @@
           "They is"
         ],
         exp: "Hebat! 2 bola adalah bentuk jamak (plural), maka rumus yang benar adalah 'There are two balls'!"
-      },
-      {
-        category: "🔍 Misi 10: Detektif Benda (There is vs There are)",
-        icon: "⏰",
-        prompt: "Look up high on the back wall! Complete the sentence:",
-        promptSub: '"_____ a round clock on the wall."',
-        targetPos: new THREE.Vector3(3.5, 4.2, -4.0),
-        targetLookAt: new THREE.Vector3(0, 5.2, -4.75),
-        targetCam: new THREE.Vector3(0, 4.0, -0.2),
-        correctText: "There is",
-        options: [
-          "There is",
-          "There are",
-          "There are a",
-          "They are"
-        ],
-        exp: "Genius! 'A round clock' adalah 1 buah jam dinding (tunggal / singular), maka kita gunakan 'There is a round clock'!"
-      },
-      {
-        category: "🔍 Misi 11: Detektif Benda (There is vs There are)",
-        icon: "👟",
-        prompt: "Look at the floor beside the chair! Complete the sentence:",
-        promptSub: '"_____ two skater shoes on the floor."',
-        targetPos: new THREE.Vector3(2.8, 1.62, 0),
-        targetLookAt: new THREE.Vector3(2.8, 0.15, 0.95),
-        targetCam: new THREE.Vector3(2.8, 1.8, 2.6),
-        correctText: "There are",
-        options: [
-          "There are",
-          "There is",
-          "There aren't a",
-          "There is two"
-        ],
-        exp: "Sempurna! Sepatu sepasang berjumlah dua (two shoes = jamak), jadi kita gunakan 'There are two shoes'!"
-      },
-      {
-        category: "🔍 Misi 12: Detektif Benda (There is vs There are)",
-        icon: "💡",
-        prompt: "Look at the glowing light on the desk! Complete the sentence:",
-        promptSub: '"_____ a study lamp on the desk."',
-        targetPos: new THREE.Vector3(-0.6, 2.38, -0.45),
-        targetLookAt: new THREE.Vector3(-1.3, 2.1, -0.45),
-        targetCam: new THREE.Vector3(-1.3, 3.0, 1.4),
-        correctText: "There is",
-        options: [
-          "There is",
-          "There are",
-          "There be",
-          "They are"
-        ],
-        exp: "Luar biasa! Karena hanya ada 1 lampu meja belajar (a study lamp), kalimat yang tepat adalah 'There is a study lamp'!"
       }
     ];
 
