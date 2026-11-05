@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 3D Time-Travel Medical Archive & Case Files: Past Tense (Was / Were) — Grade 6 English</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: rgba(15, 23, 42, 0.95);
+      --card-border: #818cf8;
+      --neon-cyan: #38bdf8;
+      --neon-indigo: #818cf8;
+      --neon-purple: #c084fc;
+      --neon-gold: #fbbf24;
+      --neon-green: #34d399;
+      --neon-red: #f87171;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --sub-id: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+    
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-dark);
+      color: var(--text-main);
+    }
+
+    #app-layout {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 3D Archive Viewport (Left Side) */
+    #archive-viewport {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s ease;
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Floating Toolbar */
+    .archive-toolbar {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      pointer-events: auto;
+    }
+    .tool-btn {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid #4f46e5;
+      color: #e0e7ff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    .tool-btn:hover {
+      background: #4338ca;
+      border-color: #818cf8;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .tool-btn.active {
+      background: linear-gradient(135deg, #4f46e5, #818cf8);
+      color: #ffffff;
+      border-color: #a5b4fc;
+      font-weight: 800;
+      box-shadow: 0 0 14px rgba(129, 140, 248, 0.5);
+    }
+
+    /* 3D Camera Controls Hint */
+    .viewport-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 11.5px;
+      color: #c7d2fe;
+      backdrop-filter: blur(4px);
+      pointer-events: none;
+    }
+
+    /* Right Side Detective Console */
+    #archive-console {
+      width: 530px;
+      height: 100%;
+      background: var(--card-bg);
+      border-left: 2px solid rgba(129, 140, 248, 0.35);
+      box-shadow: -10px 0 35px rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;
+      z-index: 30;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s ease;
+      position: relative;
+    }
+    #archive-console.collapsed {
+      transform: translateX(100%);
+      position: absolute;
+      right: 0;
+    }
+
+    /* Console Header */
+    .console-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(129, 140, 248, 0.25);
+      background: rgba(10, 15, 30, 0.95);
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .student-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .student-select {
+      background: #1e1b4b;
+      color: var(--neon-purple);
+      border: 1px solid var(--neon-indigo);
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 11.5px;
+      font-weight: 800;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .case-indicator {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--neon-gold);
+    }
+    .meters-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .meter-box {
+      background: rgba(30, 27, 75, 0.5);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 10px;
+      padding: 6px 10px;
+    }
+    .meter-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .progress-bar {
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      width: 12%;
+      transition: width 0.4s ease;
+    }
+    .fill-gold {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    /* Console Body (Scrollable) */
+    .console-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Detective Card */
+    .detective-badge-card {
+      background: rgba(30, 27, 75, 0.6);
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .detective-avatar-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-indigo);
+      overflow: hidden;
+      background: #312e81;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .detective-info h3 {
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: 800;
+    }
+    .detective-info p {
+      font-size: 11.5px;
+      color: #cbd5e1;
+      margin-top: 2px;
+    }
+
+    /* Archive Reading Dialogue Card */
+    .archive-case-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .case-file-header {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--neon-gold);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btn-audio-tts {
+      background: rgba(49, 46, 129, 0.8);
+      border: 1px solid var(--neon-indigo);
+      color: #e0e7ff;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-audio-tts:hover {
+      background: var(--neon-indigo);
+      color: #ffffff;
+    }
+    .case-context-en {
+      font-size: 13.5px;
+      line-height: 1.4;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .case-context-id {
+      font-size: 11.5px;
+      line-height: 1.35;
+      color: #cbd5e1;
+      font-style: italic;
+      margin-top: 5px;
+      border-top: 1px dashed rgba(129, 140, 248, 0.3);
+      padding-top: 5px;
+    }
+
+    /* Interactive Multiple Choice Challenge Box */
+    .challenge-box {
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid rgba(129, 140, 248, 0.5);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .challenge-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .challenge-question-en {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+    .challenge-question-id {
+      font-size: 12px;
+      color: #94a3b8;
+      font-style: italic;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    /* Multiple Choices with Bilingual Subtitle */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-btn {
+      background: rgba(30, 27, 75, 0.7);
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      color: #f8fafc;
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .option-btn:hover {
+      background: rgba(67, 56, 202, 0.4);
+      border-color: var(--neon-indigo);
+      transform: translateX(4px);
+    }
+    .option-key {
+      background: #4338ca;
+      color: white;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .option-content {
+      flex: 1;
+    }
+    .opt-en {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+    .opt-id {
+      font-size: 11.5px;
+      color: #cbd5e1;
+      font-style: italic;
+      margin-top: 3px;
+      line-height: 1.25;
+    }
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.35) !important;
+      border-color: #34d399 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+    }
+    .option-btn.wrong {
+      background: rgba(239, 68, 68, 0.3) !important;
+      border-color: #f87171 !important;
+      color: #fecaca !important;
+    }
+
+    /* Feedback Banner */
+    .feedback-banner {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      line-height: 1.4;
+      margin-top: 10px;
+      animation: popIn 0.3s ease;
+    }
+    .feedback-banner.correct {
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid #34d399;
+      color: #a7f3d0;
+    }
+    .feedback-banner.wrong {
+      background: rgba(239, 68, 68, 0.25);
+      border: 1px solid #f87171;
+      color: #fca5a5;
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .btn-next-step {
+      display: none;
+      width: 100%;
+      margin-top: 12px;
+      background: linear-gradient(135deg, #4f46e5, #818cf8);
+      color: #ffffff;
+      border: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(129, 140, 248, 0.4);
+      transition: transform 0.2s;
+    }
+    .btn-next-step:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Final Victory Modal */
+    #victory-modal {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(10px);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .victory-card {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a);
+      border: 2px solid #818cf8;
+      box-shadow: 0 0 40px rgba(129, 140, 248, 0.5);
+      border-radius: 24px;
+      max-width: 540px;
+      width: 100%;
+      padding: 32px 28px;
+      text-align: center;
+      animation: popIn 0.4s ease;
+    }
+    .badge-icon {
+      font-size: 56px;
+      margin-bottom: 12px;
+      animation: float 2s infinite ease-in-out;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .victory-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .victory-subtitle {
+      font-size: 13px;
+      color: var(--neon-cyan);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .score-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: rgba(30, 27, 75, 0.6);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(129, 140, 248, 0.2);
+    }
+    .summary-item {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .summary-val {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--neon-gold);
+      margin-top: 2px;
+    }
+    .btn-restart {
+      background: linear-gradient(135deg, #4f46e5, #818cf8);
+      color: #ffffff;
+      border: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      padding: 12px 24px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
+    }
+    .btn-portal {
+      display: inline-block;
+      margin-top: 12px;
+      color: #c7d2fe;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .btn-portal:hover { text-decoration: underline; color: #ffffff; }
+
+    @media (max-width: 900px) {
+      #app-layout { flex-direction: column; }
+      #archive-viewport { height: 46%; }
+      #archive-console { width: 100%; height: 54%; border-left: none; border-top: 2px solid var(--neon-indigo); }
+    }
+  </style>
+
+  <!-- Load Local/Fallback Three.js and OrbitControls -->
+  <script src="../assets/js/three.min.js"></script>
+  <script src="../assets/js/OrbitControls.js"></script>
+  <script src="../assets/js/pkbm_sync.js"></script>
+</head>
+<body>
+
+  <div id="app-layout">
+    <!-- LEFT: 3D ARCHIVE VIEWPORT -->
+    <div id="archive-viewport">
+      <div id="canvas-container"></div>
+
+      <!-- Floating Toolbar -->
+      <div class="archive-toolbar">
+        <button class="tool-btn active" id="btn-cam-all" onclick="setCameraView('all')">🏛️ Ruang Arsip Medis</button>
+        <button class="tool-btn" id="btn-cam-desk" onclick="setCameraView('desk')">🔍 Meja Detektif</button>
+        <button class="tool-btn" id="btn-cam-timeline" onclick="setCameraView('timeline')">📅 Jam Linimasa (Was/Were)</button>
+        <button class="tool-btn" id="btn-cam-dossier" onclick="setCameraView('dossier')">🗄️ Lemari Berkas Kasus</button>
+        <button class="tool-btn" id="btn-toggle-console" onclick="toggleConsole()">👁️ Layar Penuh 3D</button>
+      </div>
+
+      <div class="viewport-hint">
+        <span>🖱️ Putar 3D: Klik &amp; geser mouse | Zoom: Scroll roda mouse</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: DETECTIVE CASE CONSOLE -->
+    <div id="archive-console">
+      <div class="console-header">
+        <div class="header-top">
+          <div class="student-select-wrap">
+            <span style="font-size: 12px; font-weight: 800; color: #818cf8;">🕵️ Detektif:</span>
+            <select class="student-select" id="student-select" onchange="switchStudentProfile(this.value)">
+              <option value="shan" selected>Shan (⚡ Fast Detective)</option>
+              <option value="selvi">Selvi (📜 Chief Medical Editor)</option>
+              <option value="aulya">Aulya (⚖️ Was/Were Classifier)</option>
+              <option value="hendra">Hendra (🔍 5W+1H Investigator)</option>
+            </select>
+          </div>
+          <span class="case-indicator" id="case-counter">Case Dossier 1 of 8</span>
+        </div>
+        <div class="meters-row">
+          <div class="meter-box">
+            <div class="meter-label">
+              <span>Detective Clues / Skor Bukti</span>
+              <span id="score-val">0 Pts</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-gold" id="score-fill" style="width: 10%;"></div>
+            </div>
+          </div>
+          <div class="meter-box">
+            <div class="meter-label">
+              <span>Archive Solved / Kasus Selesai</span>
+              <span id="progress-val">1 / 8</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progress-fill" style="width: 12%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="console-body">
+        <!-- Detective Badge Card -->
+        <div class="detective-badge-card">
+          <div class="detective-avatar-box" id="student-icon">⚡</div>
+          <div class="detective-info">
+            <h3 id="student-badge-title">Shan — Fast Past Tense Detective</h3>
+            <p id="student-badge-desc">Specialty: Lightning speed &amp; pinpoint accuracy on Past Tense (Was / Were)</p>
+          </div>
+        </div>
+
+        <!-- Archive Case Context Card -->
+        <div class="archive-case-card">
+          <div class="case-file-header">
+            <span id="case-tag">📁 Case Dossier #1: Monday Fever Intake Sheet</span>
+            <button class="btn-audio-tts" onclick="speakCurrentCase()">🔊 Dengar / Listen</button>
+          </div>
+          <div class="case-context-en" id="case-context-en">
+            Loading investigation log...
+          </div>
+          <div class="case-context-id" id="case-context-id">
+            (Memuat catatan penyelidikan kasus...)
+          </div>
+        </div>
+
+        <!-- Interactive Multiple Choice Challenge Box -->
+        <div class="challenge-box">
+          <div class="challenge-title" id="phase-badge">🔍 Investigation Question / Soal Pilihan Ganda</div>
+          <div class="challenge-question-en" id="challenge-q-en">
+            Loading question...
+          </div>
+          <div class="challenge-question-id" id="challenge-q-id">
+            (Memuat terjemahan soal...)
+          </div>
+
+          <!-- Multiple Choice Option Buttons Container -->
+          <div class="options-grid" id="options-container">
+            <!-- Dynamic Buttons generated by JS -->
+          </div>
+
+          <div class="feedback-banner" id="feedback-box"></div>
+          <button class="btn-next-step" id="btn-next" onclick="nextQuestion()">Buka Berkas Kasus Berikutnya ❯</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VICTORY MODAL -->
+  <div id="victory-modal">
+    <div class="victory-card">
+      <div class="badge-icon">🏛️🕵️🏆</div>
+      <h2 class="victory-title" id="vic-title">CASE CLOSED, MASTER INVESTIGATOR!</h2>
+      <p class="victory-subtitle" id="vic-subtitle">
+        The Medical Archives are fully solved! You have mastered Nominal Past Tense (Was / Were) across singular and plural subjects!
+        <br><i style="color:#c7d2fe; font-size:12px;">(Semua arsip medis telah terpecahkan! Kamu telah menguasai Past Tense Was &amp; Were untuk subjek tunggal dan jamak!)</i>
+      </p>
+
+      <div class="score-summary-grid">
+        <div class="summary-item">
+          Total Score / Skor Akhir
+          <div class="summary-val" id="final-score">800 Pts</div>
+        </div>
+        <div class="summary-item">
+          Solved Cases / Kasus Selesai
+          <div class="summary-val">8 of 8 Dossiers</div>
+        </div>
+        <div class="summary-item">
+          Grammar Mastery / Tata Bahasa
+          <div class="summary-val" style="color:#38bdf8;">Nominal Past (Was / Were)</div>
+        </div>
+        <div class="summary-item">
+          Detective Rank / Pangkat Detektif
+          <div class="summary-val" style="color:#c084fc;">Chief Inspector</div>
+        </div>
+      </div>
+
+      <button class="btn-restart" onclick="restartArchive()">Mulai Penyelidikan Baru 🔄</button><br>
+      <a class="btn-portal" id="student-return-link" href="shan.html">📋 Kembali ke Halaman Siswa</a> &bull; 
+      <a class="btn-portal" href="../index.html">🏠 Menu Utama Portal PKBM</a>
+    </div>
+  </div>
+
+  <!-- Audio Context Generator for Sound FX -->
+  <script>
+    let audioCtx;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSfx(type) {
+      try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const t = ctx.currentTime;
+
+        if (type === 'correct') {
+          // Detective Clue Discovery Chime
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, t); // A4
+          osc.frequency.setValueAtTime(554.37, t + 0.08); // C#5
+          osc.frequency.setValueAtTime(659.25, t + 0.16); // E5
+          osc.frequency.setValueAtTime(880, t + 0.24); // A5
+          gain.gain.setValueAtTime(0.25, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.5);
+          osc.start(t);
+          osc.stop(t + 0.5);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(200, t);
+          osc.frequency.setValueAtTime(140, t + 0.15);
+          gain.gain.setValueAtTime(0.2, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.35);
+          osc.start(t);
+          osc.stop(t + 0.35);
+        } else if (type === 'paper') {
+          // Soft typewriter / paper shuffle click
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(120, t);
+          gain.gain.setValueAtTime(0.1, t);
+          gain.gain.linearRampToValueAtTime(0.01, t + 0.06);
+          osc.start(t);
+          osc.stop(t + 0.06);
+        }
+      } catch (e) { console.log(e); }
+    }
+
+    function speakCurrentCase() {
+      if (!('speechSynthesis' in window)) {
+        alert("Browser tidak mendukung Text-to-Speech.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const text = document.getElementById('case-context-en').innerText + " " + document.getElementById('challenge-q-en').innerText;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    }
+  </script>
+
+  <!-- 8 Comprehensive Multiple Choice Investigative Questions for Grade 6 -->
+  <script>
+    const GRADE6_ARCHIVE_CASES = [
+      {
+        id: 1,
+        caseTag: "📁 Case Dossier #1: Monday Fever Intake Sheet",
+        dossierDrawerIndex: 0,
+        contextEn: "Last Monday morning, the PKBM clinic log recorded an acute fever case: Shan woke up shivering with a temperature of 39°C. He stayed in bed all morning.",
+        contextId: "(Senin pagi minggu lalu, log klinik PKBM mencatat kasus demam akut: Shan terbangun menggigil dengan suhu 39°C. Dia beristirahat di ranjang sepanjang pagi.)",
+        qEn: "Examine Monday's clinic intake sheet! Complete the sentence: 'Yesterday, Shan ______ sick with a high fever and headache.'",
+        qId: "(Periksa lembar pendaftaran klinik hari Senin! Lengkapi kalimat: 'Kemarin, Shan ______ sakit dengan demam tinggi dan sakit kepala.')",
+        options: [
+          {
+            en: "was",
+            id: "(was — tepat: subjek tunggal 'Shan' (He) menggunakan was di masa lampau)",
+            correct: true
+          },
+          {
+            en: "were",
+            id: "(were — salah: were digunakan untuk subjek jamak seperti you/we/they)",
+            correct: false
+          },
+          {
+            en: "is",
+            id: "(is — salah: is adalah to-be masa sekarang/present, sedangkan ada penanda 'Yesterday')",
+            correct: false
+          },
+          {
+            en: "are",
+            id: "(are — salah: are adalah to-be jamak masa sekarang)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🎯 Brilliant Deduction! Shan is a singular subject (He), so in Past Tense we use 'was'.<br><i>(Tepat sekali! Shan adalah subjek tunggal orang ketiga (He), sehingga bentuk to-be lampaunya adalah 'was'.)</i>",
+        feedbackWrong: "⚠️ Perhatikan subjek 'Shan' (tunggal/He) dan kata keterangan waktu 'Yesterday'. Subjek tunggal di masa lampau berpasangan dengan WAS.",
+        hologramType: "fever"
+      },
+      {
+        id: 2,
+        caseTag: "📁 Case Dossier #2: Tuesday Gymnastics Landing Incident",
+        dossierDrawerIndex: 1,
+        contextEn: "On Tuesday afternoon, gymnast Nia was practicing her balance beam routine. She landed on the edge of the mat, twisting her right joint.",
+        contextId: "(Pada Selasa sore, pesenam Nia sedang berlatih balok keseimbangan. Dia mendarat di tepi matras sehingga pergelangan kakinya terkilir.)",
+        qEn: "Open Tuesday's incident report! Which statement correctly records Nia's past condition?",
+        qId: "(Buka laporan insiden hari Selasa! Pernyataan manakah yang mencatat kondisi lampau Nia dengan tata bahasa yang benar?)",
+        options: [
+          {
+            en: "Nia was injured on the mat and her ankle was swollen.",
+            id: "(Nia mengalami cedera di matras dan pergelangan kakinya bengkak. Tepat: Nia & ankle adalah tunggal, memakai was.)",
+            correct: true
+          },
+          {
+            en: "Nia were injured on the mat and her ankle were swollen.",
+            id: "(Salah: Nia dan ankle adalah kata benda tunggal, tidak boleh menggunakan were)",
+            correct: false
+          },
+          {
+            en: "Nia are injured yesterday on the training mat.",
+            id: "(Salah: are adalah bentuk waktu sekarang, bukan lampau)",
+            correct: false
+          },
+          {
+            en: "Nia did injured on the mat yesterday.",
+            id: "(Salah: 'injured' adalah kata sifat/kondisi, kalimat nominal memerlukan to-be was bukan kata kerja bantu did)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🎯 Spot-on Editor Observation! Both 'Nia' and 'her ankle' are singular entities requiring 'was'.<br><i>(Tepat sekali! Baik Nia maupun pergelangan kakinya (ankle) adalah kata benda tunggal yang berpasangan dengan 'was'.)</i>",
+        feedbackWrong: "⚠️ Baik 'Nia' maupun 'ankle' adalah kata benda tunggal. Dalam kalimat nominal lampau, kita menggunakan 'was'.",
+        hologramType: "sprain"
+      },
+      {
+        id: 3,
+        caseTag: "📁 Case Dossier #3: Wednesday Mountain Excursion Log",
+        dossierDrawerIndex: 2,
+        contextEn: "On Wednesday, the 6th grade students hiked through cold mountain fog during their environmental study camp.",
+        contextId: "(Pada hari Rabu, siswa-siswi kelas 6 mendaki melewati kabut gunung yang dingin saat berkemah studi lingkungan.)",
+        qEn: "Inspect Wednesday's outdoor log! Complete the sentence: 'The 6th grade students ______ cold and exhausted after camping in the mountain.'",
+        qId: "(Periksa log kegiatan hari Rabu! Lengkapi kalimatnya: 'Siswa-siswi kelas 6 ______ kedinginan dan sangat letih setelah berkemah di gunung.')",
+        options: [
+          {
+            en: "were",
+            id: "(were — tepat: subjek 'The students' adalah jamak (They), berpasangan dengan were)",
+            correct: true
+          },
+          {
+            en: "was",
+            id: "(was — salah: was hanya untuk subjek tunggal I, He, She, It)",
+            correct: false
+          },
+          {
+            en: "been",
+            id: "(been — salah: been adalah past participle/Verb 3, bukan simple past to-be)",
+            correct: false
+          },
+          {
+            en: "are",
+            id: "(are — salah: peristiwa terjadi minggu lalu / masa lampau)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🎯 Flawless Plural Agreement! 'The students' is a plural noun (They), so the correct past form is 'were'.<br><i>(Sempurna! 'The students' berakhiran jamak (mereka/They), sehingga to-be lampaunya wajib 'were'.)</i>",
+        feedbackWrong: "⚠️ Perhatikan akhiran huruf -s pada 'students' (subjek jamak/They). Subjek jamak di masa lampau wajib memakai WERE.",
+        hologramType: "mountain"
+      },
+      {
+        id: 4,
+        caseTag: "📁 Case Dossier #4: Detective Interrogation of Nia",
+        dossierDrawerIndex: 1,
+        contextEn: "Detective Hendra is interviewing Nia to reconstruct the timeline of her injury and recovery.",
+        contextId: "(Detektif Hendra sedang mewawancarai Nia untuk merekonstruksi linimasa cedera dan pemulihannya.)",
+        qEn: "Which question is grammatically correct for asking Nia about her condition yesterday?",
+        qId: "(Kalimat tanya manakah yang tepat secara tata bahasa untuk menanyakan kondisi Nia kemarin?)",
+        options: [
+          {
+            en: "Were you in severe pain yesterday, Nia?",
+            id: "(Apakah kamu merasa sangat kesakitan kemarin, Nia? Tepat: subjek 'you' berpasangan dengan Were.)",
+            correct: true
+          },
+          {
+            en: "Was you in severe pain yesterday, Nia?",
+            id: "(Salah: subjek 'you' tidak pernah berpasangan dengan was dalam bahasa Inggris standar)",
+            correct: false
+          },
+          {
+            en: "Did you was in severe pain yesterday?",
+            id: "(Salah: 'pain' di sini adalah kondisi nominal, dilarang menggabungkan Did dengan Was)",
+            correct: false
+          },
+          {
+            en: "Are you in pain yesterday, Nia?",
+            id: "(Salah: ada kata keterangan waktu lampau 'yesterday', tidak boleh menggunakan are)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🎯 Master Interrogator Question! In English, the pronoun 'you' ALWAYS pairs with 'Were' in Past Tense.<br><i>(Tepat sekali! Kata ganti 'you' selalu berpasangan dengan 'Were' dalam kalimat tanya masa lampau.)</i>",
+        feedbackWrong: "⚠️ Ingat aturan penting: Subjek 'You' selalu berpasangan dengan WERE ('Were you...?'), bukan 'Was you'.",
+        hologramType: "interrogate"
+      },
+      {
+        id: 5,
+        caseTag: "📁 Case Dossier #5: Mountain Expedition Safety Review",
+        dossierDrawerIndex: 2,
+        contextEn: "Editor Selvi is proofreading the safety inspection ledger. Even though the weather was freezing, the hikers followed all protocols.",
+        contextId: "(Editor Selvi sedang memeriksa buku inspeksi keselamatan. Meskipun cuaca sangat dingin, para pendaki mematuhi seluruh protokol.)",
+        qEn: "Which negative past statement correctly proves the students followed safety rules?",
+        qId: "(Pernyataan negatif lampau manakah yang benar membuktikan bahwa para siswa mematuhi aturan keselamatan?)",
+        options: [
+          {
+            en: "The students weren't careless during the stormy expedition.",
+            id: "(Para siswa tidak ceroboh selama ekspedisi badai. Tepat: bentuk jamak negatif were not / weren't.)",
+            correct: true
+          },
+          {
+            en: "The students wasn't careless during the stormy expedition.",
+            id: "(Salah: subjek jamak 'the students' tidak boleh menggunakan wasn't)",
+            correct: false
+          },
+          {
+            en: "The students don't careless yesterday in the fog.",
+            id: "(Salah: don't adalah present tense dan bukan kalimat nominal)",
+            correct: false
+          },
+          {
+            en: "The students not were careless during the hike.",
+            id: "(Salah: susunan kata terbalik, harus were not / weren't)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🎯 Editorial Perfection! For plural subjects, the negative past To-Be is 'weren't' (were not).<br><i>(Tepat sekali! Untuk subjek jamak, bentuk negatif lampaunya adalah 'weren't' (were not).)</i>",
+        feedbackWrong: "⚠️ Bentuk negatif lampau untuk subjek jamak (The students) adalah WERE NOT atau disingkat WEREN'T.",
+        hologramType: "mountain"
+      },
+      {
+        id: 6,
+        caseTag: "📁 Case Dossier #6: First Aid Supply Location",
+        dossierDrawerIndex: 0,
+        contextEn: "Detective Hendra is confirming the location of emergency medical supplies when Nia landed awkwardly.",
+        contextId: "(Detektif Hendra memastikan lokasi pasokan medis darurat ketika Nia mendarat canggung.)",
+        qEn: "Where was the first-aid ice pack located? Complete: 'It ______ inside the red medical kit on the teacher's table.'",
+        qId: "(Di manakah kompres es P3K berada? Lengkapi kalimatnya: 'Benda itu ______ di dalam kotak medis merah di atas meja guru.')",
+        options: [
+          {
+            en: "was",
+            id: "(was — tepat: subjek 'It' (ice pack) adalah kata ganti tunggal di masa lampau)",
+            correct: true
+          },
+          {
+            en: "were",
+            id: "(were — salah: were untuk subjek jamak)",
+            correct: false
+          },
+          {
+            en: "has",
+            id: "(has — salah: has menyatakan kepemilikan, bukan to-be lokasi keberadaan)",
+            correct: false
+          },
+          {
+            en: "are",
+            id: "(are — salah: kejadian terjadi saat insiden lampau)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🎯 Exact Clue Retrieval! The singular pronoun 'It' (referring to the ice pack) takes 'was'.<br><i>(Tepat sekali! Kata ganti tunggal 'It' (merujuk pada kantong es) berpasangan dengan 'was'.)</i>",
+        feedbackWrong: "⚠️ Kata ganti 'It' adalah kata ganti benda tunggal, sehingga to-be lampau yang tepat adalah WAS.",
+        hologramType: "kit"
+      },
+      {
+        id: 7,
+        caseTag: "📁 Case Dossier #7: Friday Recovery & Discharge Ledger",
+        dossierDrawerIndex: 3,
+        contextEn: "By Friday afternoon, Dr. Ardiansyah's treatment had taken full effect. Both Shan and Nia walked into the courtyard smiling.",
+        contextId: "(Menjelang Jumat siang, perawatan Dokter Ardiansyah telah bekerja optimal. Baik Shan maupun Nia berjalan ke halaman sambil tersenyum.)",
+        qEn: "Check Friday's final ledger! Complete: 'After the medical treatment, Shan and Nia ______ relieved and ready to play.'",
+        qId: "(Periksa buku besar akhir hari Jumat! Lengkapi: 'Setelah perawatan medis, Shan dan Nia ______ merasa lega dan siap bermain kembali.')",
+        options: [
+          {
+            en: "were",
+            id: "(were — tepat: 'Shan and Nia' adalah 2 orang / subjek jamak 'They', memakai were)",
+            correct: true
+          },
+          {
+            en: "was",
+            id: "(was — salah: subjek gabungan dua orang menjadi jamak, tidak boleh was)",
+            correct: false
+          },
+          {
+            en: "is",
+            id: "(is — salah: is untuk tunggal waktu sekarang)",
+            correct: false
+          },
+          {
+            en: "did",
+            id: "(did — salah: 'relieved' adalah kata sifat rasa lega, memerlukan to-be)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🎯 Brilliant Compound Subject Rule! 'Shan and Nia' equals 'They' (plural), which takes 'were'.<br><i>(Luar biasa! Dua subjek yang dihubungkan dengan 'and' menjadi jamak (They), sehingga menggunakan 'were'.)</i>",
+        feedbackWrong: "⚠️ Karena ada dua orang ('Shan and Nia'), subjeknya menjadi jamak (They) dan harus menggunakan WERE.",
+        hologramType: "relief"
+      },
+      {
+        id: 8,
+        caseTag: "📁 Case Dossier #8: Master Timeline Synthesis (Past vs Present)",
+        dossierDrawerIndex: 3,
+        contextEn: "Detective synthesis: Compare the contrast between past health conditions and present strength.",
+        contextId: "(Sintesis detektif: Bandingkan perbedaan antara kondisi kesehatan di masa lampau dan kekuatan di masa sekarang.)",
+        qEn: "Synthesize the entire case timeline! Complete: 'Yesterday I ______ sick in bed, but today I ______ strong and healthy!'",
+        qId: "(Simpulkan seluruh linimasa kasus! Lengkapi: 'Kemarin saya ______ terbaring sakit di ranjang, tetapi hari ini saya ______ kuat dan sehat!')",
+        options: [
+          {
+            en: "was / am",
+            id: "(was / am — tepat: 'Yesterday I was' (lampau tunggal) dan 'today I am' (sekarang tunggal))",
+            correct: true
+          },
+          {
+            en: "were / is",
+            id: "(were / is — salah: 'I were' dan 'I is' salah tata bahasa)",
+            correct: false
+          },
+          {
+            en: "is / was",
+            id: "(is / was — salah: urutan waktu terbalik, kemarin lampau dan hari ini sekarang)",
+            correct: false
+          },
+          {
+            en: "am / was",
+            id: "(am / was — salah: am adalah masa sekarang, bukan untuk kemarin)",
+            correct: false
+          }
+        ],
+        feedbackCorrect: "🏆 Master Inspector Conclusion! 'Yesterday I was' (Past) perfectly contrasts with 'Today I am' (Present).<br><i>(Kesimpulan Juara! 'Yesterday I was' (lampau) berkontras tepat dengan 'Today I am' (masa kini).)</i>",
+        feedbackWrong: "⚠️ Perhatikan linimasa: 'Yesterday I' menggunakan WAS, sedangkan 'Today I' menggunakan AM.",
+        hologramType: "star"
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+    let score = 0;
+    let activeStudent = 'shan';
+
+    function switchStudentProfile(stu) {
+      activeStudent = stu;
+      const bTitle = document.getElementById('student-badge-title');
+      const bDesc = document.getElementById('student-badge-desc');
+      const bIcon = document.getElementById('student-icon');
+      const retLink = document.getElementById('student-return-link');
+
+      if (stu === 'shan') {
+        bIcon.innerText = "⚡";
+        bTitle.innerText = "Shan — Fast Past Tense Detective";
+        bDesc.innerText = "Specialty: Lightning speed & pinpoint accuracy on Past Tense (Was / Were)";
+        retLink.href = "shan.html";
+        retLink.innerText = "📋 Kembali ke Kuis Sprint Shan";
+      } else if (stu === 'selvi') {
+        bIcon.innerText = "📜";
+        bTitle.innerText = "Selvi — Chief Clinical Editor";
+        bDesc.innerText = "Specialty: Proofreading medical diaries & spotting incorrect past To-Be forms";
+        retLink.href = "selvi.html";
+        retLink.innerText = "📋 Kembali ke Editor Log Selvi";
+      } else if (stu === 'aulya') {
+        bIcon.innerText = "⚖️";
+        bTitle.innerText = "Aulya — Past Tense Classifier";
+        bDesc.innerText = "Specialty: Rapid sorting of singular (Was) and plural (Were) subjects";
+        retLink.href = "aulya.html";
+        retLink.innerText = "📋 Kembali ke Classifier Aulya";
+      } else if (stu === 'hendra') {
+        bIcon.innerText = "🔍";
+        bTitle.innerText = "Hendra — 5W+1H Case Investigator";
+        bDesc.innerText = "Specialty: Investigating past facts, places, and interrogative sentences";
+        retLink.href = "hendra.html";
+        retLink.innerText = "📋 Kembali ke Investigasi Hendra";
+      }
+    }
+
+    // Read URL query parameter ?student=...
+    function detectStudentFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get('student');
+      if (s && ['shan', 'selvi', 'aulya', 'hendra'].includes(s.toLowerCase())) {
+        document.getElementById('student-select').value = s.toLowerCase();
+        switchStudentProfile(s.toLowerCase());
+      }
+    }
+
+    function initCaseQuestion() {
+      const c = GRADE6_ARCHIVE_CASES[currentQuestionIdx];
+
+      document.getElementById('case-counter').textContent = `Case Dossier ${currentQuestionIdx + 1} of ${GRADE6_ARCHIVE_CASES.length}`;
+      document.getElementById('case-tag').textContent = c.caseTag;
+      document.getElementById('case-context-en').textContent = c.contextEn;
+      document.getElementById('case-context-id').textContent = c.contextId;
+
+      document.getElementById('challenge-q-en').textContent = c.qEn;
+      document.getElementById('challenge-q-id').textContent = c.qId;
+
+      document.getElementById('progress-val').textContent = `${currentQuestionIdx + 1} / ${GRADE6_ARCHIVE_CASES.length}`;
+      document.getElementById('progress-fill').style.width = `${((currentQuestionIdx + 1) / GRADE6_ARCHIVE_CASES.length) * 100}%`;
+
+      const fb = document.getElementById('feedback-box');
+      fb.style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+
+      // Report Question to PKBM Sync
+      if (window.PKBM_SYNC) {
+        const fullQ = `${c.qEn} ${c.qId}`;
+        window.PKBM_SYNC.reportQuestion(fullQ, currentQuestionIdx + 1, GRADE6_ARCHIVE_CASES.length);
+      }
+
+      // Render Multiple Choice Options (Shuffled)
+      const optContainer = document.getElementById('options-container');
+      optContainer.innerHTML = '';
+
+      const shuffled = [...c.options].sort(() => Math.random() - 0.5);
+
+      shuffled.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `
+          <span class="option-key">${String.fromCharCode(65 + idx)}</span>
+          <div class="option-content">
+            <div class="opt-en">${opt.en}</div>
+            <div class="opt-id">${opt.id}</div>
+          </div>
+        `;
+        btn.onclick = () => submitChoice(btn, opt.correct, c.feedbackCorrect, c.feedbackWrong);
+        optContainer.appendChild(btn);
+      });
+
+      // Update 3D Visual Focus & Hologram
+      updateArchive3DFocus(c.dossierDrawerIndex, c.hologramType);
+    }
+
+    function submitChoice(btn, isCorrect, fbCorrect, fbWrong) {
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach(b => b.style.pointerEvents = 'none');
+
+      const fb = document.getElementById('feedback-box');
+      fb.style.display = 'block';
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        fb.className = 'feedback-banner correct';
+        fb.innerHTML = fbCorrect;
+        playSfx('correct');
+
+        score += 100;
+        document.getElementById('score-val').textContent = score + ' Pts';
+        document.getElementById('score-fill').style.width = Math.min(100, (score / 800) * 100) + '%';
+
+        trigger3DHologramSuccess();
+      } else {
+        btn.classList.add('wrong');
+        fb.className = 'feedback-banner wrong';
+        fb.innerHTML = fbWrong;
+        playSfx('wrong');
+
+        score = Math.max(0, score - 20);
+        document.getElementById('score-val').textContent = score + ' Pts';
+      }
+
+      const nextBtn = document.getElementById('btn-next');
+      nextBtn.style.display = 'block';
+
+      if (currentQuestionIdx < GRADE6_ARCHIVE_CASES.length - 1) {
+        nextBtn.textContent = "Buka Berkas Kasus Berikutnya ❯";
+      } else {
+        nextBtn.textContent = "🎉 Selesaikan Seluruh Arsip & Terima Lencana Detektif!";
+      }
+    }
+
+    function nextQuestion() {
+      playSfx('paper');
+      if (currentQuestionIdx < GRADE6_ARCHIVE_CASES.length - 1) {
+        currentQuestionIdx++;
+        initCaseQuestion();
+      } else {
+        showVictory();
+      }
+    }
+
+    function showVictory() {
+      playSfx('correct');
+      document.getElementById('victory-modal').style.display = 'flex';
+      document.getElementById('final-score').textContent = score + ' Pts';
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportScore(score, 800);
+      }
+    }
+
+    function restartArchive() {
+      document.getElementById('victory-modal').style.display = 'none';
+      currentQuestionIdx = 0;
+      score = 0;
+      document.getElementById('score-val').textContent = '0 Pts';
+      document.getElementById('score-fill').style.width = '10%';
+      initCaseQuestion();
+      setCameraView('all');
+    }
+
+    function toggleConsole() {
+      const c = document.getElementById('archive-console');
+      c.classList.toggle('collapsed');
+      setTimeout(() => {
+        if (renderer && camera) {
+          const vp = document.getElementById('archive-viewport');
+          camera.aspect = vp.clientWidth / vp.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(vp.clientWidth, vp.clientHeight);
+        }
+      }, 360);
+    }
+  </script>
+
+  <!-- THREE.JS 3D ARCHIVE SCENE -->
+  <script>
+    let scene, camera, renderer, controls;
+    let timelineArchGroup, deskGroup, cabinetsGroup, holoProjectorGroup, holoIconMesh;
+    let archiveDrawers = [];
+    let dustParticles;
+
+    function init3D() {
+      const container = document.getElementById('canvas-container');
+      const vp = document.getElementById('archive-viewport');
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0a0f1d);
+      scene.fog = new THREE.FogExp2(0x0a0f1d, 0.028);
+
+      camera = new THREE.PerspectiveCamera(45, vp.clientWidth / vp.clientHeight, 0.1, 100);
+      camera.position.set(0, 4.6, 8.4);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(vp.clientWidth, vp.clientHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2.05;
+      controls.minDistance = 3;
+      controls.maxDistance = 15;
+      controls.target.set(0, 1.5, 0);
+
+      // LIGHTING: Atmospheric Library / Investigation Glow
+      const ambientLight = new THREE.AmbientLight(0xe0e7ff, 0.65);
+      scene.add(ambientLight);
+
+      const hemiLight = new THREE.HemisphereLight(0x818cf8, 0x0f172a, 0.5);
+      scene.add(hemiLight);
+
+      const mainSpot = new THREE.SpotLight(0xffedd5, 1.4);
+      mainSpot.position.set(2, 8, 4);
+      mainSpot.angle = Math.PI / 3.8;
+      mainSpot.penumbra = 0.45;
+      mainSpot.castShadow = true;
+      scene.add(mainSpot);
+
+      // Banker's Desk Green Light
+      const deskLampLight = new THREE.PointLight(0x34d399, 1.4, 6);
+      deskLampLight.position.set(-1.2, 2.1, 0.8);
+      scene.add(deskLampLight);
+
+      // Holographic Indigo Beacon
+      const holoLight = new THREE.PointLight(0x818cf8, 1.2, 7);
+      holoLight.position.set(1.5, 2.5, 0.5);
+      scene.add(holoLight);
+
+      // BUILD SCENE OBJECTS
+      buildArchiveRoom();
+      buildDetectiveDesk();
+      buildTimeTravelClockWall();
+      buildFilingCabinetWall();
+      buildHoloProjector();
+      buildArchiveAtmosphereParticles();
+
+      window.addEventListener('resize', onWindowResize);
+      detectStudentFromUrl();
+      initCaseQuestion();
+      animate();
+    }
+
+    function buildArchiveRoom() {
+      // Dark Parquet Floor
+      const floorGeo = new THREE.PlaneGeometry(18, 18);
+      const floorMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.65 });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.receiveShadow = true;
+      scene.add(floor);
+
+      // Back Wall
+      const wallMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.85 });
+      const backWall = new THREE.Mesh(new THREE.PlaneGeometry(18, 9), wallMat);
+      backWall.position.set(0, 4.5, -4.5);
+      backWall.receiveShadow = true;
+      scene.add(backWall);
+
+      // Left Wall
+      const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(18, 9), wallMat);
+      leftWall.position.set(-9, 4.5, 0);
+      leftWall.rotation.y = Math.PI / 2;
+      scene.add(leftWall);
+    }
+
+    function buildDetectiveDesk() {
+      deskGroup = new THREE.Group();
+
+      // Large Solid Mahogany Desk
+      const deskTopMat = new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.45, metalness: 0.1 });
+      const deskTop = new THREE.Mesh(new THREE.BoxGeometry(3.0, 0.12, 1.6), deskTopMat);
+      deskTop.position.set(-0.5, 1.4, 0.5);
+      deskTop.castShadow = true;
+      deskTop.receiveShadow = true;
+      deskGroup.add(deskTop);
+
+      // Desk Legs / Pedestals
+      const pedMat = new THREE.MeshStandardMaterial({ color: 0x292524, roughness: 0.7 });
+      const p1 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.34, 1.4), pedMat);
+      p1.position.set(-1.7, 0.67, 0.5);
+      p1.castShadow = true;
+      deskGroup.add(p1);
+
+      const p2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.34, 1.4), pedMat);
+      p2.position.set(0.7, 0.67, 0.5);
+      p2.castShadow = true;
+      deskGroup.add(p2);
+
+      // Classic Banker's Lamp (Brass Base + Emerald Hood)
+      const lampBase = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 0.04), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.8 }));
+      lampBase.position.set(-1.2, 1.48, 0.8);
+      deskGroup.add(lampBase);
+
+      const lampStem = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.4), new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.8 }));
+      lampStem.position.set(-1.2, 1.68, 0.8);
+      deskGroup.add(lampStem);
+
+      const lampShade = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.28, 16, 1, false, 0, Math.PI), new THREE.MeshStandardMaterial({ color: 0x059669, roughness: 0.3 }));
+      lampShade.rotation.z = Math.PI / 2;
+      lampShade.position.set(-1.2, 1.9, 0.8);
+      deskGroup.add(lampShade);
+
+      // Open Case Ledger Notebook
+      const bookMat = new THREE.MeshStandardMaterial({ color: 0xfef3c7 });
+      const ledgerL = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.02, 0.45), bookMat);
+      ledgerL.position.set(-0.4, 1.47, 0.6);
+      ledgerL.rotation.y = 0.08;
+      deskGroup.add(ledgerL);
+
+      const ledgerR = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.02, 0.45), bookMat);
+      ledgerR.position.set(-0.06, 1.47, 0.6);
+      ledgerR.rotation.y = -0.08;
+      deskGroup.add(ledgerR);
+
+      // Golden Brass Magnifying Glass
+      const glassRim = new THREE.Mesh(new THREE.TorusGeometry(0.1, 0.02, 8, 20), new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.85 }));
+      glassRim.rotation.x = Math.PI / 2;
+      glassRim.position.set(-0.7, 1.48, 0.3);
+      deskGroup.add(glassRim);
+
+      const glassHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.2), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+      glassHandle.rotation.z = Math.PI / 3;
+      glassHandle.position.set(-0.82, 1.48, 0.22);
+      deskGroup.add(glassHandle);
+
+      scene.add(deskGroup);
+    }
+
+    function buildTimeTravelClockWall() {
+      timelineArchGroup = new THREE.Group();
+
+      // Giant Timeline Clock Ring on Back Wall
+      const ringMat = new THREE.MeshStandardMaterial({ color: 0x4f46e5, metalness: 0.7, roughness: 0.3 });
+      const clockRing = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.08, 12, 48), ringMat);
+      clockRing.position.set(0, 4.8, -4.4);
+      timelineArchGroup.add(clockRing);
+
+      // Inner Glowing Gear
+      const innerGear = new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.04, 8, 36), new THREE.MeshBasicMaterial({ color: 0x818cf8, wireframe: true }));
+      innerGear.position.set(0, 4.8, -4.38);
+      timelineArchGroup.add(innerGear);
+
+      // WAS & WERE Signboards on Wall
+      const wasBoard = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.6, 0.05), new THREE.MeshStandardMaterial({ color: 0x1e1b4b }));
+      wasBoard.position.set(-1.8, 4.8, -4.35);
+      timelineArchGroup.add(wasBoard);
+
+      const wereBoard = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.6, 0.05), new THREE.MeshStandardMaterial({ color: 0x312e81 }));
+      wereBoard.position.set(1.8, 4.8, -4.35);
+      timelineArchGroup.add(wereBoard);
+
+      scene.add(timelineArchGroup);
+    }
+
+    function buildFilingCabinetWall() {
+      cabinetsGroup = new THREE.Group();
+      archiveDrawers = [];
+
+      // Steel Archival Wall Unit on Left
+      const bodyMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5 });
+      const cabinetBase = new THREE.Mesh(new THREE.BoxGeometry(1.2, 3.8, 4.2), bodyMat);
+      cabinetBase.position.set(-8.2, 2.4, -0.6);
+      cabinetsGroup.add(cabinetBase);
+
+      // 4 Labeled Bronze Drawers (Monday, Tuesday, Wednesday, Friday)
+      const drawerMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.4 });
+      const drawerColors = [0xef4444, 0xf59e0b, 0x3b82f6, 0x10b981];
+
+      for (let i = 0; i < 4; i++) {
+        const d = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.65, 3.8), drawerMat.clone());
+        d.position.set(-7.58, 1.0 + (i * 0.8), -0.6);
+        d.castShadow = true;
+
+        // Drawer Handle
+        const handle = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.08, 0.6), new THREE.MeshStandardMaterial({ color: drawerColors[i], metalness: 0.8 }));
+        handle.position.set(-7.52, 1.0 + (i * 0.8), -0.6);
+        cabinetsGroup.add(handle);
+
+        archiveDrawers.push(d);
+        cabinetsGroup.add(d);
+      }
+
+      scene.add(cabinetsGroup);
+    }
+
+    function buildHoloProjector() {
+      holoProjectorGroup = new THREE.Group();
+
+      // Projector Pedestal on Right of Desk
+      const ped = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.35, 0.1, 24), new THREE.MeshStandardMaterial({ color: 0x312e81, metalness: 0.6 }));
+      ped.position.set(2.4, 1.45, 0.5);
+      holoProjectorGroup.add(ped);
+
+      // Glowing Holographic Beam Ring
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.2, 0.28, 24), new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide }));
+      ring.rotation.x = -Math.PI / 2;
+      ring.position.set(2.4, 1.51, 0.5);
+      holoProjectorGroup.add(ring);
+
+      // Floating 3D Holographic Clue Icon
+      const holoGeo = new THREE.OctahedronGeometry(0.28, 0);
+      const holoMat = new THREE.MeshStandardMaterial({ color: 0x818cf8, wireframe: true, transparent: true, opacity: 0.85 });
+      holoIconMesh = new THREE.Mesh(holoGeo, holoMat);
+      holoIconMesh.position.set(2.4, 2.2, 0.5);
+      holoProjectorGroup.add(holoIconMesh);
+
+      scene.add(holoProjectorGroup);
+    }
+
+    function buildArchiveAtmosphereParticles() {
+      dustParticles = new THREE.Group();
+      const pGeo = new THREE.SphereGeometry(0.03, 6, 6);
+      const pMat = new THREE.MeshBasicMaterial({ color: 0x818cf8, transparent: true, opacity: 0.6 });
+
+      for (let i = 0; i < 28; i++) {
+        const p = new THREE.Mesh(pGeo, pMat);
+        p.position.set(
+          (Math.random() - 0.5) * 10,
+          1.0 + Math.random() * 4.0,
+          (Math.random() - 0.5) * 8
+        );
+        p.userData = { speedY: 0.005 + Math.random() * 0.015, baseY: p.position.y };
+        dustParticles.add(p);
+      }
+      scene.add(dustParticles);
+    }
+
+    function updateArchive3DFocus(drawerIndex, holoType) {
+      // Highlight Drawer
+      if (archiveDrawers && archiveDrawers.length > 0) {
+        archiveDrawers.forEach((d, idx) => {
+          if (idx === drawerIndex) {
+            d.material.color.setHex(0x6366f1);
+          } else {
+            d.material.color.setHex(0x334155);
+          }
+        });
+      }
+
+      // Change Hologram Shape / Color
+      if (holoIconMesh) {
+        if (holoType === 'fever') {
+          holoIconMesh.material.color.setHex(0xef4444);
+        } else if (holoType === 'sprain') {
+          holoIconMesh.material.color.setHex(0xf59e0b);
+        } else if (holoType === 'mountain') {
+          holoIconMesh.material.color.setHex(0x38bdf8);
+        } else if (holoType === 'relief' || holoType === 'star') {
+          holoIconMesh.material.color.setHex(0x34d399);
+        } else {
+          holoIconMesh.material.color.setHex(0x818cf8);
+        }
+      }
+    }
+
+    function trigger3DHologramSuccess() {
+      if (holoIconMesh) {
+        holoIconMesh.material.color.setHex(0x34d399);
+        holoIconMesh.scale.set(1.4, 1.4, 1.4);
+        setTimeout(() => {
+          if (holoIconMesh) holoIconMesh.scale.set(1.0, 1.0, 1.0);
+        }, 500);
+      }
+    }
+
+    function setCameraView(view) {
+      document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+      if (view === 'all') {
+        document.getElementById('btn-cam-all').classList.add('active');
+        moveCamera(new THREE.Vector3(0, 4.6, 8.4), new THREE.Vector3(0, 1.5, 0));
+      } else if (view === 'desk') {
+        document.getElementById('btn-cam-desk').classList.add('active');
+        moveCamera(new THREE.Vector3(-0.5, 2.6, 2.4), new THREE.Vector3(-0.5, 1.5, 0.5));
+      } else if (view === 'timeline') {
+        document.getElementById('btn-cam-timeline').classList.add('active');
+        moveCamera(new THREE.Vector3(0, 4.8, -0.8), new THREE.Vector3(0, 4.8, -4.4));
+      } else if (view === 'dossier') {
+        document.getElementById('btn-cam-dossier').classList.add('active');
+        moveCamera(new THREE.Vector3(-4.8, 2.5, 1.2), new THREE.Vector3(-7.5, 2.2, -0.6));
+      }
+    }
+
+    function moveCamera(targetPos, targetLookAt) {
+      const startPos = camera.position.clone();
+      const startLook = controls.target.clone();
+      let progress = 0;
+
+      function anim() {
+        progress += 0.04;
+        camera.position.lerpVectors(startPos, targetPos, progress);
+        controls.target.lerpVectors(startLook, targetLookAt, progress);
+        controls.update();
+        if (progress < 1) {
+          requestAnimationFrame(anim);
+        }
+      }
+      anim();
+    }
+
+    function onWindowResize() {
+      const vp = document.getElementById('archive-viewport');
+      camera.aspect = vp.clientWidth / vp.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(vp.clientWidth, vp.clientHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (holoIconMesh) {
+        holoIconMesh.rotation.y += 0.02;
+        holoIconMesh.rotation.x += 0.01;
+      }
+
+      if (timelineArchGroup) {
+        timelineArchGroup.children[1].rotation.z += 0.005; // Rotate timeline gear
+      }
+
+      if (dustParticles) {
+        dustParticles.children.forEach(p => {
+          p.position.y += p.userData.speedY;
+          if (p.position.y > p.userData.baseY + 1.2) {
+            p.position.y = p.userData.baseY;
+          }
+        });
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    window.onload = () => {
+      init3D();
+    };
+  </script>
+</body>
+</html>
