@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hendra's Mission: 5W+1H Past Diary Investigator</title>
+  <title>Hendra's Mission: 5W+1H Past Case Investigator (Was/Were)</title>
   <link rel="stylesheet" href="../assets/style.css">
   <style>
     .pos-card {
@@ -37,129 +37,132 @@
 <body>
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
-      <div class="badge-icon" style="background:#16A34A;">📖</div>
-      <div data-en="Hendra's Diary Mission" data-id="Misi Catatan Harian Hendra">Hendra's Diary Mission</div>
+      <div class="badge-icon" style="background:#16A34A;">🔍</div>
+      <div data-en="Hendra's Case Investigation" data-id="Investigasi Kasus Hendra">Hendra's Case Investigation</div>
     </a>
     <div class="lang-switch-wrap">
       <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
       <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-    <div class="student-tag" style="background:#F0FDF4; color:#15803D;">Grade 6 • Hendra</div>
+    <div class="student-tag" style="background:#F0FDF4; color:#15803D;">Grade 6 • Table 6 • Hendra</div>
     <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
       <div class="star-count" style="color:#15803D;"><span data-en="⭐ Stars: " data-id="⭐ Bintang: ">⭐ Stars: </span><span id="star-display">0</span>/5</div>
-      <div style="font-weight:600; color:var(--text-muted);" data-en="Past Diary Investigation" data-id="Investigasi Catatan Harian">Past Diary Investigation</div>
+      <div style="font-weight:600; color:var(--text-muted);" data-en="Past Case 5W+1H Investigation" data-id="Investigasi Kasus Medis 5W+1H">Past Case 5W+1H Investigation</div>
     </div>
 
     <!-- READING CASE -->
     <div class="reading-box">
       <div class="card-header-flex">
-        <div class="reading-title" style="margin-bottom:0;" data-en="📖 Weekend Diary Entry" data-id="📖 Catatan Buku Harian">📖 Weekend Diary Entry</div>
+        <div class="reading-title" style="margin-bottom:0;" data-en="📜 Archive: The Tuesday Gymnastics Incident" data-id="📜 Arsip: Insiden Senam Hari Selasa">
+          📜 Archive: The Tuesday Gymnastics Incident
+        </div>
         <button class="btn-card-lang" onclick="toggleReadingLanguage(this)">
           🌐 <span>Terjemahkan Cerita</span>
         </button>
       </div>
       <p class="reading-text"
-         data-en="'Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they bought fresh oranges at the market and cooked fried rice together at home. They recorded all their experiences in their English diaries.'"
-         data-id="'Sabtu lalu, Shine, Zahra, dan Yusman mengunjungi museum kota di pagi hari. Setelah itu, mereka membeli jeruk segar di pasar dan memasak nasi goreng bersama di rumah. Mereka mencatat semua pengalaman berkesan ini di buku harian bahasa Inggris mereka.'">
-        "Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they bought fresh oranges 
-        at the market and cooked fried rice together at home. They recorded all their experiences in their English diaries."
+         data-en="Last Tuesday afternoon, gymnast Nia was in severe pain after a high vault jump in the sports hall. Her right ankle was swollen and painful because of an awkward landing. Immediately, Table 4 detectives retrieved the ice pack located inside the first-aid kit on the bookshelf. Dr. Ardiansyah examined Nia and prescribed: 'She should compress her ankle with ice and she shouldn't run.' By Friday, Nia was relieved and grateful!"
+         data-id="Selasa sore lalu, pesenam Nia merasa sangat kesakitan setelah lompatan kubus tinggi di aula olahraga. Pergelangan kakinya bengkak dan sakit karena pendaratan yang salah posisi. Seketika itu juga, detektif Meja 4 mengambil kantong kompres es di dalam kotak P3K di atas rak buku. Dokter Ardiansyah memeriksa Nia dan meresepkan: 'Dia sebaiknya mengompres kakinya dengan es dan jangan berlari.' Pada hari Jumat, Nia merasa lega dan bersyukur!">
+        Last Tuesday afternoon, gymnast Nia was in severe pain after a high vault jump in the sports hall. Her right ankle was swollen and painful because of an awkward landing. Immediately, Table 4 detectives retrieved the ice pack located inside the first-aid kit on the bookshelf. Dr. Ardiansyah examined Nia and prescribed: 'She should compress her ankle with ice and she shouldn't run.' By Friday, Nia was relieved and grateful!
       </p>
     </div>
 
     <div class="challenge-card">
       <div class="card-header-flex">
         <div class="challenge-question" style="margin-bottom:0;"
-             data-en="Match the diary facts to the correct 5W+1H investigation question:"
-             data-id="Jodohkan fakta buku harian ke pertanyaan investigasi 5W+1H yang benar:">
-          Match the diary facts to the correct 5W+1H investigation question:
+             data-en="Match the archive facts to the correct 5W+1H investigation questions:"
+             data-id="Jodohkan fakta arsip ke pertanyaan investigasi 5W+1H yang benar:">
+          Match the archive facts to the correct 5W+1H investigation questions:
         </div>
         <button class="btn-card-lang" onclick="toggleCardLanguage('challenge-card', this)">
-          🌐 <span>Terjemahkan Pos</span>
+          🌐 <span>Terjemahkan Soal</span>
         </button>
       </div>
 
       <!-- POS 1: WHO -->
       <div class="pos-card">
         <div class="pos-header">
-          <span data-en="1. WHO - Who explored the city last weekend?" data-id="1. WHO (Siapa) - Siapa yang menjelajahi kota akhir pekan lalu?">1. WHO - Who explored the city last weekend?</span>
+          <span data-en="1. WHO - Who was injured during practice last Tuesday?" data-id="1. WHO (Siapa) - Siapa yang cedera saat latihan Selasa lalu?">1. WHO - Who was injured during practice last Tuesday?</span>
         </div>
         <select class="slot-select" id="pos-who">
-          <option value="" data-en="-- Choose the Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose the Matching Fact --</option>
-          <option value="correct">Shine, Zahra, and Yusman</option>
-          <option value="wrong1">Acip and Nanda</option>
-          <option value="wrong2">The bus driver</option>
+          <option value="" data-en="-- Choose Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose Matching Fact --</option>
+          <option value="correct">Gymnast Nia</option>
+          <option value="wrong1">The sports bus driver</option>
+          <option value="wrong2">Hootie the pet owl</option>
         </select>
       </div>
 
       <!-- POS 2: WHERE -->
       <div class="pos-card">
         <div class="pos-header">
-          <span data-en="2. WHERE - Where did they go in the morning?" data-id="2. WHERE (Di mana) - Ke mana mereka pergi di pagi hari?">2. WHERE - Where did they go in the morning?</span>
+          <span data-en="2. WHERE - Where was the emergency ice pack located?" data-id="2. WHERE (Di mana) - Di manakah letak kantong kompres es darurat?">2. WHERE - Where was the emergency ice pack located?</span>
         </div>
         <select class="slot-select" id="pos-where">
-          <option value="" data-en="-- Choose the Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose the Matching Fact --</option>
-          <option value="wrong1">To the airport</option>
-          <option value="correct">To the city museum and market</option>
-          <option value="wrong2">To the swimming pool</option>
+          <option value="" data-en="-- Choose Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose Matching Fact --</option>
+          <option value="wrong1">Under the car tire in the garage</option>
+          <option value="correct">Inside the first-aid kit on the bookshelf</option>
+          <option value="wrong2">In the attic ceiling</option>
         </select>
       </div>
 
       <!-- POS 3: WHEN -->
       <div class="pos-card">
         <div class="pos-header">
-          <span data-en="3. WHEN - When did this weekend journey take place?" data-id="3. WHEN (Kapan) - Kapan perjalanan ini berlangsung?">3. WHEN - When did this weekend journey take place?</span>
+          <span data-en="3. WHEN - When did the incident happen?" data-id="3. WHEN (Kapan) - Kapan insiden tersebut terjadi?">3. WHEN - When did the incident happen?</span>
         </div>
         <select class="slot-select" id="pos-when">
-          <option value="" data-en="-- Choose the Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose the Matching Fact --</option>
-          <option value="correct">Last Saturday</option>
-          <option value="wrong1">Next month</option>
-          <option value="wrong2">Every single day</option>
+          <option value="" data-en="-- Choose Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose Matching Fact --</option>
+          <option value="correct">Last Tuesday afternoon</option>
+          <option value="wrong1">Tomorrow morning</option>
+          <option value="wrong2">Next year in December</option>
         </select>
       </div>
 
-      <!-- POS 4: WHAT -->
+      <!-- POS 4: WHY -->
       <div class="pos-card">
         <div class="pos-header">
-          <span data-en="4. WHAT - What did they cook in the afternoon?" data-id="4. WHAT (Apa) - Apa yang mereka masak di sore hari?">4. WHAT - What did they cook in the afternoon?</span>
+          <span data-en="4. WHY - Why was Nia's ankle swollen?" data-id="4. WHY (Mengapa) - Mengapa pergelangan kaki Nia bengkak?">4. WHY - Why was Nia's ankle swollen?</span>
         </div>
-        <select class="slot-select" id="pos-what">
-          <option value="" data-en="-- Choose the Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose the Matching Fact --</option>
-          <option value="wrong1">Chocolate cake</option>
-          <option value="correct">Fried rice at home</option>
-          <option value="wrong2">Pizza</option>
+        <select class="slot-select" id="pos-why">
+          <option value="" data-en="-- Choose Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose Matching Fact --</option>
+          <option value="wrong1">Because she ate too much candy</option>
+          <option value="correct">Because she landed awkwardly from a high jump</option>
+          <option value="wrong2">Because she was reading an English book</option>
         </select>
       </div>
 
-      <!-- POS 5: HOW -->
+      <!-- POS 5: HOW WAS -->
       <div class="pos-card">
         <div class="pos-header">
-          <span data-en="5. HOW - How did they save their memories?" data-id="5. HOW (Bagaimana) - Bagaimana cara mereka mengabadikan kenangan?">5. HOW - How did they save their memories?</span>
+          <span data-en="5. HOW WAS - How was Nia's feeling after the medical therapy?" data-id="5. HOW WAS (Bagaimana) - Bagaimana perasaan Nia setelah terapi medis?">5. HOW WAS - How was Nia's feeling after the medical therapy?</span>
         </div>
         <select class="slot-select" id="pos-how">
-          <option value="" data-en="-- Choose the Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose the Matching Fact --</option>
-          <option value="correct">By writing in their personal English diaries</option>
-          <option value="wrong1">By losing their books</option>
-          <option value="wrong2">By sleeping all afternoon</option>
+          <option value="" data-en="-- Choose Matching Fact --" data-id="-- Pilih Fakta yang Sesuai --">-- Choose Matching Fact --</option>
+          <option value="correct">She was relieved and grateful</option>
+          <option value="wrong1">She was very angry</option>
+          <option value="wrong2">She was freezing in the snow</option>
         </select>
       </div>
 
+      <div style="margin-top: 16px;">
+        <button class="btn-action" style="background:#16A34A;" onclick="checkInvestigation()" data-en="Verify Medical Facts ✔️" data-id="Verifikasi Fakta Medis ✔️">Verify Medical Facts ✔️</button>
+      </div>
       <div class="feedback-box" id="feedback-box"></div>
-      <button class="btn-action" style="background:#16A34A;" onclick="checkAllSlots()" data-en="Verify Diary Investigation 🔍" data-id="Periksa Hasil Investigasi 🔍">Verify Diary Investigation 🔍</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
-      <div style="font-size: 3.5rem; margin-bottom: 12px;">📖 🌟 👏</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Investigation Complete, Hendra!" data-id="Investigasi Tuntas, Hendra!">Investigation Complete, Hendra!</h2>
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🏆 ⭐ 🔍</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Chief Investigator, Hendra!" data-id="Penyelidik Utama Hebat, Hendra!">Chief Investigator, Hendra!</h2>
       <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
-         data-en="All 5W+1H diary details were identified perfectly! You are a brilliant investigator!"
-         data-id="Semua rincian 5W+1H buku harian berhasil diidentifikasi dengan sempurna! Penyelidik hebat!">
-        All 5W+1H diary details were identified perfectly! You are a brilliant investigator!
+         data-en="You linked all 5W+1H facts with Was and Were, connecting past evidence with clinical precision!"
+         data-id="Kamu menghubungkan semua fakta 5W+1H dengan Was dan Were, memadukan bukti masa lalu dengan presisi klinis yang sempurna!">
+        You linked all 5W+1H facts with Was and Were, connecting past evidence with clinical precision!
       </p>
       <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#16A34A;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
@@ -167,33 +170,43 @@
 
   <script src="../assets/game.js"></script>
   <script>
-    function checkAllSlots() {
+    function checkInvestigation() {
       const who = document.getElementById('pos-who').value;
       const where = document.getElementById('pos-where').value;
       const when = document.getElementById('pos-when').value;
-      const what = document.getElementById('pos-what').value;
+      const why = document.getElementById('pos-why').value;
       const how = document.getElementById('pos-how').value;
+      const fbox = document.getElementById('feedback-box');
 
-      const feedback = document.getElementById('feedback-box');
-
-      if (!who || !where || !when || !what || !how) {
+      const isAllFilled = who && where && when && why && how;
+      if (!isAllFilled) {
         playSfx('wrong');
-        feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = window.currentLang === 'id' 
-          ? "⚠️ Lengkapi semua pos investigasi terlebih dahulu sebelum memeriksa!"
-          : "⚠️ Please answer all investigation slots before checking!";
+        fbox.className = "feedback-box show wrong";
+        fbox.innerHTML = "⚠️ Harap pilih semua 5 pos investigasi terlebih dahulu ya!";
         return;
       }
 
-      let correctCount = 0;
-      if (who === 'correct') correctCount++;
-      if (where === 'correct') correctCount++;
-      if (when === 'correct') correctCount++;
-      if (what === 'correct') correctCount++;
-      if (how === 'correct') correctCount++;
+      const isAllCorrect = who === 'correct' && where === 'correct' && when === 'correct' && why === 'correct' && how === 'correct';
 
-      document.getElementById('star-display').innerText = correctCount;
-      triggerGameOutcome(correctCount, 5, "Hendra", null, true);
+      if (isAllCorrect) {
+        playSfx('correct');
+        playSfx('star');
+        fbox.className = "feedback-box show correct";
+        fbox.innerHTML = "✅ Sempurna Hendra! Seluruh rekonstruksi kasus 5W+1H (Was/Were) terbukti valid!";
+        document.getElementById('star-display').innerText = "5";
+        setTimeout(() => {
+          playSfx('win');
+          launchConfetti();
+          document.getElementById('victory-modal').classList.add('active');
+          if (window.PKBM_SYNC) {
+            window.PKBM_SYNC.reportGameComplete(5, 5, 3, "Hendra solved 5W+1H Past Case Investigation");
+          }
+        }, 800);
+      } else {
+        playSfx('wrong');
+        fbox.className = "feedback-box show wrong";
+        fbox.innerHTML = "❌ Beberapa fakta masih belum sesuai dengan teks arsip. Periksa kembali ya!";
+      }
     }
 
     initLanguageToggle('en');

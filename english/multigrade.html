@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mystery House & Health Clinic Adventure - Multigrade English Quest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    :root {
+      --primary: #0284C7;
+      --primary-dark: #0369A1;
+      --secondary: #0D9488;
+      --accent: #F59E0B;
+      --purple: #7C3AED;
+      --emerald: #059669;
+      --rose: #E11D48;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 25px -5px rgba(2, 132, 199, 0.12);
+      --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.15);
+    }
+
+    body {
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 40%, #F5F3FF 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding-bottom: 50px;
+    }
+
+    /* HEADER & BRANDING */
+    .hero-banner {
+      background: linear-gradient(135deg, #0369A1 0%, #0284C7 45%, #7C3AED 100%);
+      color: white;
+      padding: 30px 24px;
+      border-radius: var(--radius-xl);
+      margin-bottom: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 35px -10px rgba(3, 105, 161, 0.4);
+    }
+    .hero-banner::after {
+      content: "🏡🩺📜";
+      position: absolute;
+      right: 20px;
+      bottom: -15px;
+      font-size: 5rem;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .hero-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* STUDENT SELECTOR BAR */
+    .control-card {
+      background: white;
+      padding: 18px 24px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #E2E8F0;
+    }
+    .student-select-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .student-select-box label {
+      font-weight: 800;
+      color: var(--primary-dark);
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+    .select-dropdown {
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 2px solid #BAE6FD;
+      background: #F0F9FF;
+      color: #0369A1;
+      font-weight: 700;
+      font-size: 0.95rem;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .select-dropdown:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+    }
+
+    .active-profile-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1E40AF;
+    }
+
+    /* MISSION ZONE TABS */
+    .zone-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 860px) {
+      .zone-tabs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .zone-btn {
+      padding: 16px 12px;
+      border: none;
+      border-radius: 16px;
+      background: white;
+      color: #475569;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+      border: 2px solid transparent;
+    }
+    .zone-btn .zone-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: #F1F5F9;
+      color: #64748B;
+    }
+    .zone-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .zone-btn.active {
+      background: white;
+      border-color: var(--zone-color, #0284C7);
+      color: var(--zone-color, #0284C7);
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.2);
+      transform: translateY(-3px);
+    }
+    .zone-btn.active .zone-tag {
+      background: var(--zone-bg, #E0F2FE);
+      color: var(--zone-color, #0284C7);
+    }
+
+    /* ZONE PANES */
+    .zone-pane {
+      display: none;
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 30px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid #E2E8F0;
+      animation: fadeIn 0.3s ease;
+    }
+    .zone-pane.active {
+      display: block;
+    }
+
+    .zone-header-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      border-bottom: 2px dashed #E2E8F0;
+    }
+    .zone-title-area h2 {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      color: #0F172A;
+    }
+    .zone-title-area p {
+      color: #64748B;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* VISUAL ILLUSTRATION BANNER */
+    .visual-banner-card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .visual-banner-img {
+      max-width: 100%;
+      height: auto;
+      max-height: 280px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      object-fit: cover;
+    }
+    .visual-banner-caption {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    /* AUDIO PRONUNCIATION BUTTON */
+    .btn-audio-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border: 1px solid #93C5FD;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-audio-pill:hover {
+      background: #DBEAFE;
+      transform: scale(1.04);
+    }
+    .btn-audio-pill.speaking {
+      background: #FDE047;
+      color: #854D0E;
+      border-color: #EAB308;
+      animation: pulseGlow 1s infinite;
+    }
+
+    /* PREPOSITION 9-GRID */
+    .prep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 768px) {
+      .prep-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .prep-card {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 16px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .prep-card:hover {
+      border-color: var(--primary);
+      background: #F0F9FF;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+    .prep-card.selected {
+      border-color: var(--primary);
+      background: #E0F2FE;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
+    }
+    .prep-card.correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+    }
+    .prep-card.wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+    }
+    .prep-icon {
+      font-size: 2rem;
+    }
+    .prep-word {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #0F172A;
+    }
+    .prep-meaning {
+      font-size: 0.85rem;
+      color: #64748B;
+      font-weight: 600;
+    }
+
+    /* PRESCRIPTION RX PAD (GRADE 5) */
+    .rx-pad {
+      background: #FFFDF8;
+      border: 2px solid #FDE68A;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(217, 119, 6, 0.08);
+      position: relative;
+    }
+    .rx-pad::before {
+      content: "Rx";
+      position: absolute;
+      top: 14px;
+      right: 20px;
+      font-family: 'Fredoka', cursive;
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(217, 119, 6, 0.18);
+    }
+    .rx-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 2px dashed #FCD34D;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+    .rx-doctor-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #FEF3C7;
+      color: #D97706;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .rx-patient-info {
+      font-size: 0.95rem;
+      color: #451A03;
+      line-height: 1.4;
+    }
+
+    /* INTERACTIVE QUESTION CARD */
+    .quest-card {
+      background: #FFFFFF;
+      border: 2px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 20px;
+      transition: all 0.25s;
+    }
+    .quest-card:hover {
+      border-color: #CBD5E1;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    }
+    .quest-prompt {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .quest-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 650px) {
+      .quest-options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .quest-btn {
+      padding: 14px 18px;
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #334155;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .quest-btn:hover {
+      background: #EFF6FF;
+      border-color: #93C5FD;
+      color: #1E40AF;
+      transform: translateX(4px);
+    }
+    .quest-btn.correct {
+      background: #DCFCE7 !important;
+      border-color: #22C55E !important;
+      color: #15803D !important;
+    }
+    .quest-btn.wrong {
+      background: #FEE2E2 !important;
+      border-color: #EF4444 !important;
+      color: #B91C1C !important;
+    }
+
+    /* EXPLANATION BOX */
+    .expl-box {
+      margin-top: 14px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+    .expl-box.show {
+      display: block;
+    }
+    .expl-box.success {
+      background: #ECFDF5;
+      border: 1px solid #6EE7B7;
+      color: #065F46;
+    }
+    .expl-box.error {
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      color: #991B1B;
+    }
+
+    /* MULTIGRADE RELAY FINAL CASE */
+    .relay-case-box {
+      background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+      color: white;
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 35px rgba(30, 27, 75, 0.25);
+    }
+    .relay-step-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.25s;
+    }
+    .relay-step-card.active {
+      border-color: #38BDF8;
+      background: rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+    .relay-step-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #38BDF8;
+      margin-bottom: 10px;
+    }
+
+    /* DYSLEXIA MODE (FOR ALISYA) */
+    body.dyslexia-mode {
+      letter-spacing: 0.06em;
+      word-spacing: 0.12em;
+      line-height: 1.8;
+    }
+    body.dyslexia-mode .quest-prompt,
+    body.dyslexia-mode .prep-word,
+    body.dyslexia-mode .quest-btn {
+      font-size: 1.25rem !important;
+      letter-spacing: 0.08em;
+    }
+
+    /* LIVE METRICS TRACKER */
+    .metrics-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 12px 20px;
+      margin-bottom: 24px;
+    }
+    .metric-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GLOBAL NAV BAR -->
+  <div class="header-bar">
+    <a href="../index.html" class="logo-badge">
+      <div class="badge-icon" style="background:#0284C7;">🌐</div>
+      <div data-en="Multigrade English Quest" data-id="Petualangan English Multigrade">Multigrade English Quest</div>
+    </a>
+    <div class="lang-switch-wrap">
+      <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
+      <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
+    </div>
+    <button class="btn-audio-pill" id="dyslexia-toggle" onclick="toggleDyslexiaMode()" title="Toggle Dyslexia-Friendly Mode">
+      <span>👁️ Mode Ramah Baca (Alisya)</span>
+    </button>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
+  </div>
+
+  <div class="container" style="max-width: 1040px; margin: 0 auto; padding: 0 16px;">
+
+    <!-- HERO BANNER -->
+    <div class="hero-banner">
+      <div class="hero-badge">
+        <span>🌟 Multigrade Elementary • Classes 4, 5, 6 SD</span>
+      </div>
+      <h1 class="hero-title" data-en="The Mystery House &amp; Health Clinic Adventure" data-id="Petualangan Rumah Detektif &amp; Klinik Kesehatan">
+        The Mystery House &amp; Health Clinic Adventure
+      </h1>
+      <p class="hero-sub" 
+         data-en="One connected mission across 3 tables: Detective Room Prepositions (Grade 4), Dr. Ardiansyah's Clinic Rx (Grade 5), and Past Medical Archives Was/Were (Grade 6)!"
+         data-id="Satu misi terhubung lintas 3 meja: Preposisi Ruangan Detektif (Kelas 4), Resep Klinik Dokter Ardiansyah (Kelas 5), &amp; Arsip Medis Masa Lalu Was/Were (Kelas 6)!">
+        One connected mission across 3 tables: Detective Room Prepositions (Grade 4), Dr. Ardiansyah's Clinic Rx (Grade 5), and Past Medical Archives Was/Were (Grade 6)!
+      </p>
+    </div>
+
+    <!-- LIVE METRICS BAR -->
+    <div class="metrics-bar">
+      <div class="metric-pill" style="color: #0284C7;">
+        <span>🔥 Streak:</span>
+        <span id="streak-val">0</span>
+      </div>
+      <div class="metric-pill" style="color: #F59E0B;">
+        <span>⭐ Stars:</span>
+        <span id="star-val">0</span> / 12
+      </div>
+      <div class="metric-pill" style="color: #10B981;">
+        <span>🎯 Accuracy:</span>
+        <span id="acc-val">100%</span>
+      </div>
+    </div>
+
+    <!-- STUDENT SELECTION & PROFILE BAR -->
+    <div class="control-card">
+      <div class="student-select-box">
+        <label for="student-select" data-en="Select Explorer:" data-id="Pilih Siswa:">Select Explorer:</label>
+        <select id="student-select" class="select-dropdown" onchange="switchStudentProfile(this.value)">
+          <optgroup label="🔴 Table 4 (Grade 4 SD) — Room &amp; Spatial Detectives">
+            <option value="acip" selected>Acip (Room Grammar Detective)</option>
+            <option value="kinanti">Kinanti (House &amp; Furniture Organizer)</option>
+            <option value="alisya">Alisya (Spatial Audio Explorer ✨)</option>
+          </optgroup>
+          <optgroup label="🟠 Table 5 (Grade 5 SD) — Clinic &amp; Medical Rx">
+            <option value="ardiansyah">Ardiansyah (Chief Medical Doctor Rx)</option>
+          </optgroup>
+          <optgroup label="🟢 Table 6 (Grade 6 SD) — Past Records &amp; Was/Were">
+            <option value="shan">Shan (Rapid Past Sprint Specialist)</option>
+            <option value="selvi">Selvi (Past Diary &amp; Clinical Editor)</option>
+            <option value="aulya">Aulya (Was vs Were Sorter)</option>
+            <option value="hendra">Hendra (5W+1H Medical Investigator)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="active-profile-pill" id="profile-pill">
+        <span>👤 Explorer: <strong id="profile-name">Acip</strong> • <span id="profile-grade">Grade 4 SD (Table 4)</span></span>
+      </div>
+    </div>
+
+    <!-- 4 MISSION ZONE TABS -->
+    <div class="zone-tabs">
+      <button class="zone-btn active" style="--zone-color:#0284C7; --zone-bg:#E0F2FE;" onclick="switchZone('zone-1', this)">
+        <span class="zone-tag">TABLE 4 • GRADE 4</span>
+        <span style="font-size:1.1rem;">🔍 Detective Rooms</span>
+        <span style="font-size:0.8rem; opacity:0.8;">Prepositions &amp; There is/are</span>
+      </button>
+
+      <button class="zone-btn" style="--zone-color:#D97706; --zone-bg:#FEF3C7;" onclick="switchZone('zone-2', this)">
+        <span class="zone-tag">TABLE 5 • GRADE 5</span>
+        <span style="font-size:1.1rem;">🩺 Doctor's Clinic</span>
+        <span style="font-size:0.8rem; opacity:0.8;">Symptoms &amp; Should / Shouldn't</span>
+      </button>
+
+      <button class="zone-btn" style="--zone-color:#7C3AED; --zone-bg:#F5F3FF;" onclick="switchZone('zone-3', this)">
+        <span class="zone-tag">TABLE 6 • GRADE 6</span>
+        <span style="font-size:1.1rem;">📜 Medical Archive</span>
+        <span style="font-size:0.8rem; opacity:0.8;">Was vs Were &amp; Past Feelings</span>
+      </button>
+
+      <button class="zone-btn" style="--zone-color:#E11D48; --zone-bg:#FFE4E6;" onclick="switchZone('zone-4', this)">
+        <span class="zone-tag">ALL TABLES • RELAY</span>
+        <span style="font-size:1.1rem;">🏆 Multigrade Relay</span>
+        <span style="font-size:0.8rem; opacity:0.8;">Grand Cross-Table Emergency</span>
+      </button>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- ZONE 1: GRADE 4 (ACIP, KINANTI, ALISYA) -->
+    <!-- ===================================================================== -->
+    <div class="zone-pane active" id="zone-1">
+      <div class="zone-header-card">
+        <div class="zone-title-area">
+          <h2 data-en="🔍 Zone 1: The Detective Room &amp; Spatial Search" data-id="🔍 Zona 1: Ruangan Detektif &amp; Radar Spasial">
+            🔍 Zone 1: The Detective Room &amp; Spatial Search
+          </h2>
+          <p data-en="Table 4 (Acip, Kinanti, Alisya) • Master 9 Prepositions of Place, Rooms of the House &amp; 'There is / There are'!"
+             data-id="Meja 4 (Acip, Kinanti, Alisya) • Kuasai 9 Preposisi Tempat, Ruangan Rumah &amp; 'There is / There are'!">
+            Table 4 (Acip, Kinanti, Alisya) • Master 9 Prepositions of Place, Rooms of the House &amp; 'There is / There are'!
+          </p>
+        </div>
+        <button class="btn-audio-pill" onclick="speakEn('Welcome to the Detective Room! Let us explore where items are hidden in the house.')">
+          🔊 <span>Listen Intro</span>
+        </button>
+      </div>
+
+      <!-- VISUAL BANNER -->
+      <div class="visual-banner-card">
+        <img src="../assets/canva_visuals/ghibli_hootie_cozy_bedroom.jpg" alt="Detective Room" class="visual-banner-img" onerror="this.style.display='none'">
+        <div class="visual-banner-caption">
+          🏡 The Detective Cozy Bedroom: Where is Hootie the Owl? Where is the First-Aid Kit?
+        </div>
+      </div>
+
+      <!-- INTERACTIVE 9-PREPOSITIONS SOUNDBOARD -->
+      <h3 style="font-size:1.2rem; margin-bottom:12px; color:#0369A1;" data-en="🔊 Interactive Spatial Radar (Tap to Listen &amp; Practice):" data-id="🔊 Radar Spasial Interaktif (Ketuk untuk Mendengar &amp; Berlatih):">
+        🔊 Interactive Spatial Radar (Tap to Listen &amp; Practice):
+      </h3>
+      <div class="prep-grid">
+        <div class="prep-card" onclick="speakWord('in', 'Di dalam (dalam kotak atau ruangan)')">
+          <div class="prep-icon">📥</div>
+          <div class="prep-word">IN</div>
+          <div class="prep-meaning">Di dalam</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('on', 'Di atas (menempel pada permukaan meja/lantai)')">
+          <div class="prep-icon">📦</div>
+          <div class="prep-word">ON</div>
+          <div class="prep-meaning">Di atas (menempel)</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('under', 'Di bawah (di bagian bawah kasur atau meja)')">
+          <div class="prep-icon">🛹</div>
+          <div class="prep-word">UNDER</div>
+          <div class="prep-meaning">Di bawah</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('behind', 'Di belakang (bersembunyi di sisi belakang)')">
+          <div class="prep-icon">🚪</div>
+          <div class="prep-word">BEHIND</div>
+          <div class="prep-meaning">Di belakang</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('between', 'Di antara dua benda yang mengapit')">
+          <div class="prep-icon">🦉</div>
+          <div class="prep-word">BETWEEN</div>
+          <div class="prep-meaning">Di antara (2 benda)</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('among', 'Di antara banyak teman atau sekelompok benda')">
+          <div class="prep-icon">🌳</div>
+          <div class="prep-word">AMONG</div>
+          <div class="prep-meaning">Di antara (banyak)</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('in front of', 'Di bagian muka atau depan suatu objek')">
+          <div class="prep-icon">🪑</div>
+          <div class="prep-word">IN FRONT OF</div>
+          <div class="prep-meaning">Di depan</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('next to', 'Di sebelah atau berdampingan sejajar')">
+          <div class="prep-icon">🛏️</div>
+          <div class="prep-word">NEXT TO</div>
+          <div class="prep-meaning">Di sebelah / samping</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+        <div class="prep-card" onclick="speakWord('opposite', 'Berseberangan saling berhadapan melintasi lorong')">
+          <div class="prep-icon">↔️</div>
+          <div class="prep-word">OPPOSITE</div>
+          <div class="prep-meaning">Berseberangan</div>
+          <button class="btn-audio-pill" style="font-size:0.75rem; padding:3px 8px;">🔊 Play</button>
+        </div>
+      </div>
+
+      <!-- QUESTIONS 1.1 - 1.3 -->
+      <div class="quest-card" id="q1_1">
+        <div class="quest-prompt" data-en="1. Look at the bedroom desk: Where is the English textbook? 'The book is ______ the study desk.'"
+             data-id="1. Lihat meja belajar: Di manakah letak buku cetak bahasa Inggris? 'The book is ______ the study desk.'">
+          1. Look at the bedroom desk: Where is the English textbook? "The book is ______ the study desk."
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q1_1', 0, false, 'UNDER means di bawah. The book is resting on the surface!')">
+            <span>A.</span> <span>UNDER</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_1', 1, true, 'Spot on! The book is resting on the flat surface of the desk!')">
+            <span>B.</span> <span>ON</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_1', 2, false, 'IN means inside an enclosed container.')">
+            <span>C.</span> <span>IN</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_1', 3, false, 'BEHIND means behind the desk.')">
+            <span>D.</span> <span>BEHIND</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q1_1-expl"></div>
+      </div>
+
+      <div class="quest-card" id="q1_2">
+        <div class="quest-prompt" data-en="2. Singular vs Plural Law: Complete the sentence for TWO skateboards under the bed: '______ two skateboards under the bed.'"
+             data-id="2. Hukum Tunggal vs Jamak: Lengkapi kalimat untuk DUA skateboard di bawah kasur: '______ two skateboards under the bed.'">
+          2. Singular vs Plural Law: Complete the sentence for TWO skateboards under the bed: "______ two skateboards under the bed."
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q1_2', 0, false, 'There is is ONLY for 1 item (singular).')">
+            <span>A.</span> <span>There is</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_2', 1, true, 'Bravo! TWO skateboards is plural, so we use THERE ARE!')">
+            <span>B.</span> <span>There are</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_2', 2, false, 'There was is past tense singular.')">
+            <span>C.</span> <span>There was</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_2', 3, false, 'Is there is an interrogative question.')">
+            <span>D.</span> <span>Is there</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q1_2-expl"></div>
+      </div>
+
+      <div class="quest-card" id="q1_3">
+        <div class="quest-prompt" data-en="3. Detective Case: Where should we place the emergency First-Aid Kit in the bedroom? 'There is a first-aid kit ______ the bookshelf beside the bed.'"
+             data-id="3. Misi Detektif: Di manakah kotak P3K darurat diletakkan di kamar? 'There is a first-aid kit ______ the bookshelf beside the bed.'">
+          3. Detective Case: Where should we place the emergency First-Aid Kit in the bedroom? "There is a first-aid kit ______ the bookshelf beside the bed."
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q1_3', 0, true, 'Excellent! The first-aid kit rests ON the bookshelf for easy grab!')">
+            <span>A.</span> <span>ON</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_3', 1, false, 'UNDER the bookshelf makes it hard to see during an emergency!')">
+            <span>B.</span> <span>UNDER</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_3', 2, false, 'AMONG requires 3 or more surrounding items.')">
+            <span>C.</span> <span>AMONG</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q1_3', 3, false, 'BEHIND hides the kit behind the shelf.')">
+            <span>D.</span> <span>BEHIND</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q1_3-expl"></div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- ZONE 2: GRADE 5 (ARDIANSYAH) -->
+    <!-- ===================================================================== -->
+    <div class="zone-pane" id="zone-2">
+      <div class="zone-header-card">
+        <div class="zone-title-area">
+          <h2 data-en="🩺 Zone 2: Dr. Ardiansyah's Clinic &amp; Rx Pharmacy" data-id="🩺 Zona 2: Klinik Dokter Ardiansyah &amp; Resep Rx">
+            🩺 Zone 2: Dr. Ardiansyah's Clinic &amp; Rx Pharmacy
+          </h2>
+          <p data-en="Table 5 (Ardiansyah) • Master 7 Illnesses, 'Have/Has got', and the Golden Medical Law: 'Should / Shouldn't + Verb 1 Pure'!"
+             data-id="Meja 5 (Ardiansyah) • Kuasai 7 Penyakit, 'Have/Has got', dan Hukum Emas Medis: 'Should / Shouldn't + Verb 1 Murni'!">
+            Table 5 (Ardiansyah) • Master 7 Illnesses, 'Have/Has got', and the Golden Medical Law: 'Should / Shouldn't + Verb 1 Pure'!
+          </p>
+        </div>
+        <button class="btn-audio-pill" onclick="speakEn('Welcome to Dr. Ardiansyah clinic! Let us examine patients and write medical advice.')">
+          🔊 <span>Listen Intro</span>
+        </button>
+      </div>
+
+      <!-- VISUAL BANNER -->
+      <div class="visual-banner-card">
+        <img src="../assets/canva_visuals/nia_atlet_senam_kompres_ankle.jpg" alt="Patient Nia" class="visual-banner-img" onerror="this.style.display='none'">
+        <div class="visual-banner-caption">
+          🩺 Patient Case 1: Gymnast Nia with a Sprained Ankle (Compressing with ice &amp; elevating leg)
+        </div>
+      </div>
+
+      <!-- RX PRESCRIPTION PAD -->
+      <div class="rx-pad">
+        <div class="rx-header">
+          <div class="rx-doctor-avatar">🩺</div>
+          <div class="rx-patient-info">
+            <strong>DR. ARDIANSYAH, M.D. • CLINICAL FORMULARY</strong><br>
+            <span>Patient: Nia (Gymnast) • Chief Complaint: Swollen right ankle during landing practice.</span>
+          </div>
+        </div>
+
+        <div style="background:white; padding:16px; border-radius:12px; border:1px solid #FDE68A; margin-bottom:14px;">
+          <h4 style="color:#B45309; margin-bottom:6px;">⚠️ THE GOLDEN MEDICAL LAW (THE NO-ING, NO-ED, NO-S RULE):</h4>
+          <p style="font-size:0.92rem; color:#78350F; line-height:1.5;">
+            After modal verbs <strong>SHOULD</strong> (anjuran) and <strong>SHOULDN'T</strong> (pantangan), the action verb must always be in <strong>VERB 1 PURE</strong>!<br>
+            ❌ <em>You should resting</em> &nbsp; ➔ &nbsp; ✔️ <strong>You should rest.</strong><br>
+            ❌ <em>He shouldn't runs</em> &nbsp; ➔ &nbsp; ✔️ <strong>He shouldn't run.</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTIONS 2.1 - 2.3 -->
+      <div class="quest-card" id="q2_1">
+        <div class="quest-prompt" data-en="1. Subject Agreement: Choose the correct diagnosis for Gymnast Nia: 'Nia ______ a sprained ankle.'"
+             data-id="1. Kesepakatan Subjek: Pilih diagnosis yang benar untuk atlet senam Nia: 'Nia ______ a sprained ankle.'">
+          1. Subject Agreement: Choose the correct diagnosis for Gymnast Nia: "Nia ______ a sprained ankle."
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q2_1', 0, true, 'Accurate doctor! Nia is singular 3rd person (She), so we use HAS GOT!')">
+            <span>A.</span> <span>has got</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_1', 1, false, 'Have got is for I, You, We, They.')">
+            <span>B.</span> <span>have got</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_1', 2, false, 'Having got is grammatically invalid here.')">
+            <span>C.</span> <span>having got</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_1', 3, false, 'Has get is incorrect.')">
+            <span>D.</span> <span>has get</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q2_1-expl"></div>
+      </div>
+
+      <div class="quest-card" id="q2_2">
+        <div class="quest-prompt" data-en="2. Spot the Error! Which prescription follows the Golden Law of Medicine (Verb 1 Pure)?"
+             data-id="2. Temukan yang Benar! Resep manakah yang mematuhi Hukum Emas Kedokteran (Verb 1 Murni)?">
+          2. Spot the Error! Which prescription follows the Golden Law of Medicine (Verb 1 Pure)?
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q2_2', 0, false, 'Error: compressing has -ing! It must be compress.')">
+            <span>A.</span> <span>She should compressing her ankle.</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_2', 1, false, 'Error: running has -ing! It must be run.')">
+            <span>B.</span> <span>She shouldn't running in the gym.</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_2', 2, true, '100% Precision! Rest is a pure Verb 1 with no -ing, -ed, or -s!')">
+            <span>C.</span> <span>She should rest and compress it with ice.</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_2', 3, false, 'Error: rested has -ed past form!')">
+            <span>D.</span> <span>She should rested on the bed.</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q2_2-expl"></div>
+      </div>
+
+      <div class="quest-card" id="q2_3">
+        <div class="quest-prompt" data-en="3. Patient Case 2: Jordan has got a severe toothache and swollen cheek. What is Dr. Ardiansyah's advice?"
+             data-id="3. Kasus Pasien 2: Jordan sakit gigi parah dan pipinya bengkak. Apakah anjuran Dokter Ardiansyah?">
+          3. Patient Case 2: Jordan has got a severe toothache and swollen cheek. What is Dr. Ardiansyah's advice?
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q2_3', 0, false, 'Eating candy worsens tooth decay and bacteria!')">
+            <span>A.</span> <span>He should eat crunchy sweet candy.</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_3', 1, true, 'Perfect Rx! Jordan must visit a dentist and avoid sugary treats!')">
+            <span>B.</span> <span>He should see a dentist and shouldn't eat candy.</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_3', 2, false, 'Cold drinks trigger sharp tooth nerve pain!')">
+            <span>C.</span> <span>He should drink very cold ice water.</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q2_3', 3, false, 'Skipping brushing increases bacteria!')">
+            <span>D.</span> <span>He shouldn't brush his teeth anymore.</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q2_3-expl"></div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- ZONE 3: GRADE 6 (SHAN, SELVI, AULYA, HENDRA) -->
+    <!-- ===================================================================== -->
+    <div class="zone-pane" id="zone-3">
+      <div class="zone-header-card">
+        <div class="zone-title-area">
+          <h2 data-en="📜 Zone 3: Medical Archives &amp; Was/Were Investigator" data-id="📜 Zona 3: Arsip Medis &amp; Penyelidik Was/Were">
+            📜 Zone 3: Medical Archives &amp; Was/Were Investigator
+          </h2>
+          <p data-en="Table 6 (Shan, Selvi, Aulya, Hendra) • Master Nominal Past Tense (Was / Were), Past Feelings &amp; Health Conditions!"
+             data-id="Meja 6 (Shan, Selvi, Aulya, Hendra) • Kuasai Nominal Past Tense (Was / Were), Perasaan Lampau &amp; Kondisi Tubuh!">
+            Table 6 (Shan, Selvi, Aulya, Hendra) • Master Nominal Past Tense (Was / Were), Past Feelings &amp; Health Conditions!
+          </p>
+        </div>
+        <button class="btn-audio-pill" onclick="speakEn('Welcome to the Medical Archive! Let us investigate past patient records with was and were.')">
+          🔊 <span>Listen Intro</span>
+        </button>
+      </div>
+
+      <!-- FORMULA CARD -->
+      <div style="background:#FAF5FF; border:2px solid #E9D5FF; border-radius:16px; padding:20px; margin-bottom:24px;">
+        <h4 style="color:#7C3AED; margin-bottom:10px;">⚡ NOMINAL PAST TENSE MATRIX:</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div style="background:white; padding:12px; border-radius:10px; border:1px solid #D8B4FE;">
+            <strong style="color:#6B21A8;">WAS (Singular):</strong><br>
+            <span style="font-size:0.9rem; color:#4B5563;">I, He, She, It, Shan, Nia</span><br>
+            <em>"Yesterday Nia <strong>was</strong> injured."</em>
+          </div>
+          <div style="background:white; padding:12px; border-radius:10px; border:1px solid #D8B4FE;">
+            <strong style="color:#6B21A8;">WERE (Plural):</strong><br>
+            <span style="font-size:0.9rem; color:#4B5563;">You, We, They, The students</span><br>
+            <em>"Last week they <strong>were</strong> cold."</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTIONS 3.1 - 3.3 -->
+      <div class="quest-card" id="q3_1">
+        <div class="quest-prompt" data-en="1. Clinical Record: Complete the past health condition: 'Yesterday morning, Shan ______ feverish with a temperature of 38.5°C.'"
+             data-id="1. Rekam Klinis: Lengkapi kondisi kesehatan lampau: 'Yesterday morning, Shan ______ feverish with a temperature of 38.5°C.'">
+          1. Clinical Record: Complete the past health condition: "Yesterday morning, Shan ______ feverish with a temperature of 38.5°C."
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q3_1', 0, true, 'Bullseye! Shan is singular (He), so the past To-Be is WAS!')">
+            <span>A.</span> <span>was</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_1', 1, false, 'Were is for plural subjects (You, We, They).')">
+            <span>B.</span> <span>were</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_1', 2, false, 'Is is present tense, but yesterday indicates past tense!')">
+            <span>C.</span> <span>is</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_1', 3, false, 'Been requires a helper verb (has/have been).')">
+            <span>D.</span> <span>been</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q3_1-expl"></div>
+      </div>
+
+      <div class="quest-card" id="q3_2">
+        <div class="quest-prompt" data-en="2. Plural Past Condition: 'After running in the rain last Tuesday, the students ______ cold and tired.'"
+             data-id="2. Kondisi Jamak Masa Lampau: 'After running in the rain last Tuesday, the students ______ cold and tired.'">
+          2. Plural Past Condition: "After running in the rain last Tuesday, the students ______ cold and tired."
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q3_2', 0, false, 'The students is plural (They), so was is incorrect!')">
+            <span>A.</span> <span>was</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_2', 1, true, 'Masterful! The students = They (plural), so we use WERE!')">
+            <span>B.</span> <span>were</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_2', 2, false, 'Are is present tense.')">
+            <span>C.</span> <span>are</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_2', 3, false, 'Was not is singular negative.')">
+            <span>D.</span> <span>wasn\'t</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q3_2-expl"></div>
+      </div>
+
+      <div class="quest-card" id="q3_3">
+        <div class="quest-prompt" data-en="3. Doctor-Patient Inquiry: Which question correctly asks about past feelings?"
+             data-id="3. Tanya-Jawab Dokter-Pasien: Pertanyaan manakah yang tepat untuk menanyakan perasaan kemarin?">
+          3. Doctor-Patient Inquiry: Which question correctly asks about past feelings?
+        </div>
+        <div class="quest-options-grid">
+          <button class="quest-btn" onclick="checkQuest('q3_3', 0, true, 'Top-tier grammar! Subject you takes Were: Were you tired yesterday?')">
+            <span>A.</span> <span>Were you tired yesterday?</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_3', 1, false, 'Grammar error: you never takes was!')">
+            <span>B.</span> <span>Was you tired yesterday?</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_3', 2, false, 'Tired is an adjective, so did you tired is invalid!')">
+            <span>C.</span> <span>Did you tired yesterday?</span>
+          </button>
+          <button class="quest-btn" onclick="checkQuest('q3_3', 3, false, 'Are you is present tense.')">
+            <span>D.</span> <span>Are you tired yesterday?</span>
+          </button>
+        </div>
+        <div class="expl-box" id="q3_3-expl"></div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- ZONE 4: GRAND MULTIGRADE RELAY (CROSS-TABLE EMERGENCY) -->
+    <!-- ===================================================================== -->
+    <div class="zone-pane" id="zone-4">
+      <div class="zone-header-card">
+        <div class="zone-title-area">
+          <h2 style="color:#E11D48;" data-en="🏆 Zone 4: The Grand Multigrade Emergency Relay" data-id="🏆 Zona 4: Estafet Darurat Akbar Lintas Meja">
+            🏆 Zone 4: The Grand Multigrade Emergency Relay
+          </h2>
+          <p data-en="Cross-Table Collaboration! Solve the full emergency case together: Table 6 investigates past facts ➔ Table 4 finds the supplies ➔ Table 5 dispenses the Rx cure!"
+             data-id="Kolaborasi Lintas Meja! Pecahkan kasus darurat bersama: Meja 6 selidiki masa lalu ➔ Meja 4 temukan perlengkapan ➔ Meja 5 racik resep penyembuh!">
+            Cross-Table Collaboration! Solve the full emergency case together: Table 6 investigates past facts ➔ Table 4 finds the supplies ➔ Table 5 dispenses the Rx cure!
+          </p>
+        </div>
+        <button class="btn-audio-pill" onclick="speakEn('Emergency Alert! Athlete Nia was injured. All three tables must work together!')">
+          🔊 <span>Listen Alert</span>
+        </button>
+      </div>
+
+      <div class="relay-case-box">
+        <h3 style="font-family:'Fredoka', cursive; font-size:1.6rem; color:#FDE047; margin-bottom:8px;">
+          🚨 CODE BLUE CASE: The Fall in Gymnastics Hall
+        </h3>
+        <p style="font-size:0.98rem; opacity:0.95; line-height:1.6; margin-bottom:16px;">
+          During training yesterday afternoon, Nia missed a high vault landing. She fell awkwardly on the floor mat. Her right ankle swelled up immediately, and she couldn't walk. The coach called PKBM Penerus Bangsa Medical Team!
+        </p>
+
+        <!-- STEP 1: TABLE 6 INVESTIGATION -->
+        <div class="relay-step-card active" id="relay-1">
+          <div class="relay-step-title">
+            <span>🟢 STEP 1 • TABLE 6 (GRADE 6 RECORD):</span>
+          </div>
+          <p style="font-size:0.95rem; margin-bottom:12px;">
+            How do you record Nia's state in yesterday's official logbook?
+          </p>
+          <div class="quest-options-grid">
+            <button class="quest-btn" style="color:white; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);"
+                    onclick="checkRelay(1, 0, true, 'Step 1 Clear! Nia was in severe pain yesterday.')">
+              <span>A.</span> <span>Yesterday Nia was in severe pain and she was unable to walk.</span>
+            </button>
+            <button class="quest-btn" style="color:white; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);"
+                    onclick="checkRelay(1, 1, false, 'Error: Nia is singular, so were is incorrect.')">
+              <span>B.</span> <span>Yesterday Nia were very happy and healthy.</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: TABLE 4 SUPPLY RETRIEVAL -->
+        <div class="relay-step-card" id="relay-2" style="opacity:0.6;">
+          <div class="relay-step-title" style="color:#FBBF24;">
+            <span>🔴 STEP 2 • TABLE 4 (GRADE 4 DETECTIVE LOCATION):</span>
+          </div>
+          <p style="font-size:0.95rem; margin-bottom:12px;">
+            Coach shouts: <em>"Quick! Where is the ice pack and elastic compression bandage?!"</em>
+          </p>
+          <div class="quest-options-grid">
+            <button class="quest-btn" style="color:white; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);"
+                    onclick="checkRelay(2, 0, true, 'Step 2 Clear! There is an ice pack IN the first-aid kit ON the bookshelf!')">
+              <span>A.</span> <span>There is an ice pack IN the first-aid kit ON the bookshelf beside the bed!</span>
+            </button>
+            <button class="quest-btn" style="color:white; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);"
+                    onclick="checkRelay(2, 1, false, 'There are is plural, but an ice pack is singular!')">
+              <span>B.</span> <span>There are an ice pack under the ceiling fan.</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: TABLE 5 CLINICAL CURE -->
+        <div class="relay-step-card" id="relay-3" style="opacity:0.6;">
+          <div class="relay-step-title" style="color:#34D399;">
+            <span>🟠 STEP 3 • TABLE 5 (GRADE 5 DOCTOR'S PRESCRIPTION):</span>
+          </div>
+          <p style="font-size:0.95rem; margin-bottom:12px;">
+            Dr. Ardiansyah signs the official recovery order for Nia:
+          </p>
+          <div class="quest-options-grid">
+            <button class="quest-btn" style="color:white; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);"
+                    onclick="checkRelay(3, 0, true, 'GRAND VICTORY! Pure Verb 1 therapy applied perfectly!')">
+              <span>A.</span> <span>She should elevate her leg, compress with ice, and shouldn't jump for two weeks!</span>
+            </button>
+            <button class="quest-btn" style="color:white; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);"
+                    onclick="checkRelay(3, 1, false, 'Jumping immediately would tear the damaged ligaments!')">
+              <span>B.</span> <span>She should jumping on the trampoline right now.</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="relay-victory-msg" style="display:none; text-align:center; padding:20px; background:rgba(16, 185, 129, 0.2); border:2px solid #34D399; border-radius:16px; margin-top:16px;">
+          <h3 style="color:#6EE7B7; font-size:1.6rem; margin-bottom:6px;">🎉 MISSION ACCOMPLISHED!</h3>
+          <p style="color:#E0F2FE;">All three tables successfully cooperated to diagnose, locate first-aid, and cure athlete Nia!</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VICTORY MODAL -->
+  <div class="modal-overlay" id="victory-modal">
+    <div class="modal-card">
+      <div style="font-size: 3.8rem; margin-bottom: 12px;">🏆 🥇 🌟</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Multigrade Champion Team!" data-id="Tim Juara Multigrade!">
+        Multigrade Champion Team!
+      </h2>
+      <p style="color: var(--text-muted); margin-bottom: 20px; line-height: 1.6;"
+         data-en="Outstanding teamwork across Table 4, Table 5, and Table 6! You mastered Prepositions, Doctor's Rx, and Nominal Past Tense Was/Were!"
+         data-id="Kerja sama luar biasa lintas Meja 4, Meja 5, dan Meja 6! Kalian menguasai Preposisi, Resep Dokter Rx, dan Nominal Past Tense Was/Were!">
+        Outstanding teamwork across Table 4, Table 5, and Table 6!
+      </p>
+      <div style="background:#F0FDF4; border:1px solid #BBF7D0; padding:12px; border-radius:12px; margin-bottom:20px;">
+        <span style="font-weight:800; color:#15803D;">Official PKBM Penerus Bangsa Certificate Awarded!</span>
+      </div>
+      <button class="btn-action" style="margin: 0 auto; background:#0284C7;" onclick="closeVictoryModal()" data-en="Continue Exploring" data-id="Lanjutkan Eksplorasi">
+        Continue Exploring
+      </button>
+    </div>
+  </div>
+
+  <!-- SHARED GAME AUDIO & REACTION ENGINE -->
+  <script src="../assets/game.js"></script>
+  <!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
+  <script src="../assets/js/pkbm_sync.js"></script>
+
+  <script>
+    // State Tracking
+    let currentScore = 0;
+    const maxScore = 12;
+    let streakCount = 0;
+    let totalAttempts = 0;
+    let correctAttempts = 0;
+    let currentStudent = "acip";
+    let isDyslexia = false;
+
+    // Student Profiles Meta
+    const studentProfiles = {
+      acip: { name: "Acip", grade: "Grade 4 SD (Table 4)", defaultZone: "zone-1" },
+      kinanti: { name: "Kinanti", grade: "Grade 4 SD (Table 4)", defaultZone: "zone-1" },
+      alisya: { name: "Alisya", grade: "Grade 4 SD (Table 4 - Spatial Audio ✨)", defaultZone: "zone-1", autoDyslexia: true },
+      ardiansyah: { name: "Ardiansyah", grade: "Grade 5 SD (Table 5 - Medical Doctor Rx)", defaultZone: "zone-2" },
+      shan: { name: "Shan", grade: "Grade 6 SD (Table 6 - Rapid Past Specialist)", defaultZone: "zone-3" },
+      selvi: { name: "Selvi", grade: "Grade 6 SD (Table 6 - Past Diary Editor)", defaultZone: "zone-3" },
+      aulya: { name: "Aulya", grade: "Grade 6 SD (Table 6 - Was vs Were Sorter)", defaultZone: "zone-3" },
+      hendra: { name: "Hendra", grade: "Grade 6 SD (Table 6 - 5W+1H Investigator)", defaultZone: "zone-3" }
+    };
+
+    function switchStudentProfile(studentId) {
+      currentStudent = studentId;
+      const profile = studentProfiles[studentId];
+      if (!profile) return;
+
+      document.getElementById('profile-name').innerText = profile.name;
+      document.getElementById('profile-grade').innerText = profile.grade;
+
+      if (profile.autoDyslexia && !isDyslexia) {
+        toggleDyslexiaMode(true);
+      } else if (!profile.autoDyslexia && isDyslexia) {
+        toggleDyslexiaMode(false);
+      }
+
+      // Switch to the relevant zone automatically
+      const btn = document.querySelector(`.zone-btn[onclick*="${profile.defaultZone}"]`);
+      if (btn) switchZone(profile.defaultZone, btn);
+
+      playSfx('click');
+      speakEn(`Hello ${profile.name}! Welcome to your English mission.`);
+    }
+
+    function toggleDyslexiaMode(forceVal = null) {
+      isDyslexia = (forceVal !== null) ? forceVal : !isDyslexia;
+      const btn = document.getElementById('dyslexia-toggle');
+      if (isDyslexia) {
+        document.body.classList.add('dyslexia-mode');
+        if (btn) btn.style.background = '#FEF08A';
+      } else {
+        document.body.classList.remove('dyslexia-mode');
+        if (btn) btn.style.background = '';
+      }
+      playSfx('click');
+    }
+
+    function switchZone(zoneId, btnElement) {
+      document.querySelectorAll('.zone-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+
+      const targetPane = document.getElementById(zoneId);
+      if (targetPane) targetPane.classList.add('active');
+      if (btnElement) btnElement.classList.add('active');
+
+      playSfx('click');
+      window.scrollTo({ top: 320, behavior: 'smooth' });
+    }
+
+    function speakWord(word, idExpl) {
+      playSfx('click');
+      speakEn(word);
+      const isIndo = document.getElementById('btn-lang-id').classList.contains('active');
+      if (isIndo) {
+        setTimeout(() => speak(idExpl), 1000);
+      }
+    }
+
+    function checkQuest(cardId, optIdx, isCorrect, explanation) {
+      totalAttempts++;
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const buttons = card.querySelectorAll('.quest-btn');
+      const clickedBtn = buttons[optIdx];
+      const explBox = document.getElementById(`${cardId}-expl`);
+
+      if (isCorrect) {
+        correctAttempts++;
+        streakCount++;
+        currentScore++;
+        clickedBtn.classList.add('correct');
+        buttons.forEach(b => b.disabled = true);
+        playSfx('correct');
+        playSfx('star');
+
+        explBox.className = "expl-box show success";
+        explBox.innerHTML = `<strong>✔️ BRILLIANT!</strong> ${explanation}`;
+
+        // Live Telemetry Sync
+        if (window.PKBM_SYNC) {
+          window.PKBM_SYNC.reportAnswer(clickedBtn.innerText, true, 10, explanation);
+        }
+      } else {
+        streakCount = 0;
+        clickedBtn.classList.add('wrong');
+        playSfx('wrong');
+
+        explBox.className = "expl-box show error";
+        explBox.innerHTML = `<strong>❌ NOT QUITE:</strong> ${explanation}`;
+
+        if (window.PKBM_SYNC) {
+          window.PKBM_SYNC.reportAnswer(clickedBtn.innerText, false, 0, explanation);
+        }
+      }
+
+      updateMetrics();
+      if (currentScore >= 9) {
+        setTimeout(showVictory, 900);
+      }
+    }
+
+    let relayStep = 1;
+    function checkRelay(step, optIdx, isCorrect, explanation) {
+      totalAttempts++;
+      const stepCard = document.getElementById(`relay-${step}`);
+      const buttons = stepCard.querySelectorAll('.quest-btn');
+      const clickedBtn = buttons[optIdx];
+
+      if (isCorrect) {
+        correctAttempts++;
+        streakCount++;
+        currentScore++;
+        clickedBtn.classList.add('correct');
+        buttons.forEach(b => b.disabled = true);
+        playSfx('correct');
+
+        if (step === 1) {
+          document.getElementById('relay-2').style.opacity = '1';
+          document.getElementById('relay-2').classList.add('active');
+          speakEn('Step 1 complete! Now Table 4, locate the first aid kit!');
+        } else if (step === 2) {
+          document.getElementById('relay-3').style.opacity = '1';
+          document.getElementById('relay-3').classList.add('active');
+          speakEn('Step 2 complete! Now Doctor Ardiansyah, write the prescription!');
+        } else if (step === 3) {
+          document.getElementById('relay-victory-msg').style.display = 'block';
+          playSfx('win');
+          launchConfetti();
+          speakEn('Grand Emergency Relay Complete! Amazing multigrade collaboration!');
+          setTimeout(showVictory, 1200);
+        }
+      } else {
+        streakCount = 0;
+        clickedBtn.classList.add('wrong');
+        playSfx('wrong');
+      }
+      updateMetrics();
+    }
+
+    function updateMetrics() {
+      document.getElementById('streak-val').innerText = streakCount;
+      document.getElementById('star-val').innerText = currentScore;
+      const acc = totalAttempts > 0 ? Math.round((correctAttempts / totalAttempts) * 100) : 100;
+      document.getElementById('acc-val').innerText = `${acc}%`;
+    }
+
+    function showVictory() {
+      playSfx('win');
+      launchConfetti();
+      document.getElementById('victory-modal').classList.add('active');
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(currentScore, maxScore, 3, "Mastered Multigrade English Quest");
+      }
+    }
+
+    function closeVictoryModal() {
+      document.getElementById('victory-modal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alisya's Kitchen & Food Adventure 🌟</title>
+  <title>Alisya's Spatial &amp; Audio Explorer 🌟</title>
   <link rel="stylesheet" href="../assets/style.css">
   <style>
     body {
@@ -19,6 +19,7 @@
       border-radius: 24px;
       padding: 24px;
       margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.08);
     }
     .alisya-title {
       font-size: 1.45rem;
@@ -27,303 +28,330 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-bottom: 12px;
     }
-    .photo-preview {
-      width: 100%;
-      max-height: 220px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin-bottom: 14px;
-      border: 2px solid #FEF3C7;
+    .card-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 768px) {
+      .card-choice-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
     .card-choice {
       background: #FFFFFF;
       border: 3px solid #E2E8F0;
       border-radius: 20px;
-      padding: 18px;
+      padding: 20px 14px;
       text-align: center;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-choice:hover {
+      border-color: #F59E0B;
+      background: #FFFBEB;
+      transform: translateY(-4px);
+    }
+    .card-choice.selected-correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+    }
+    .card-choice.selected-wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+    }
+    .card-icon {
+      font-size: 3.5rem;
+    }
+    .card-word {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #0F172A;
+    }
+    .card-sub {
+      font-size: 1rem;
+      color: #64748B;
+      font-weight: 700;
+    }
+    .btn-audio-big {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 2px solid #FCD34D;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       transition: all 0.2s;
     }
-    .card-choice:hover { border-color: #F59E0B; background: #FFFBEB; }
-    .card-icon { font-size: 3.2rem; }
-    .card-label { font-size: 1.3rem; font-weight: 800; }
+    .btn-audio-big:hover {
+      background: #FDE68A;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body class="dyslexia-mode">
   <div class="header-bar" style="background:#FFFDF7;">
     <a href="../index.html" class="logo-badge">
       <div class="badge-icon" style="background:#F59E0B;">🌟</div>
-      <div data-en="Alisya's Adventure" data-id="Petualangan Alisya">Alisya's Adventure</div>
+      <div data-en="Alisya's Spatial Sound" data-id="Suara Spasial Alisya">Alisya's Spatial Sound</div>
     </a>
     <div class="lang-switch-wrap">
       <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
       <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-    <div class="student-tag" style="background:#FEF3C7; color:#92400E;">Grade 4 • Alisya</div>
-    <a href="../index.html" class="btn-back" data-en="← Back" data-id="← Kembali">← Back</a>
+    <div class="student-tag" style="background:#FEF3C7; color:#92400E;">Grade 4 • Alisya 🌟</div>
+    <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
-  <div class="container">
+  <div class="container" style="max-width: 880px;">
     <div class="tracker-bar">
-      <div class="star-count" style="font-size: 1.3rem;"><span data-en="⭐ Stars: " data-id="⭐ Bintang: ">⭐ Stars: </span><span id="star-display">0</span>/5</div>
-      <button class="btn-speaker" onclick="handleSpeakGuide(this)">
-        <span data-en="🔊 Listen Guide" data-id="🔊 Dengar Panduan">🔊 Listen Guide</span>
-      </button>
+      <div class="star-count" style="color:#D97706;"><span data-en="⭐ Stars: " data-id="⭐ Bintang: ">⭐ Stars: </span><span id="star-display">0</span>/5</div>
+      <div class="progress-pills">
+        <div class="pill-dot active" id="dot-1"></div>
+        <div class="pill-dot" id="dot-2"></div>
+        <div class="pill-dot" id="dot-3"></div>
+        <div class="pill-dot" id="dot-4"></div>
+        <div class="pill-dot" id="dot-5"></div>
+      </div>
     </div>
 
-    <!-- MISI 1: FRYING PAN -->
-    <div class="alisya-box" id="stage-1">
-      <div class="card-header-flex">
-        <div class="alisya-title" data-en="🍳 Mission 1: Cooking in the Pan" data-id="🍳 Misi 1: Memasak di Wajan">🍳 Mission 1: Cooking in the Pan</div>
-        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-1', this)">
-          🌐 <span>Terjemahkan</span>
-        </button>
+    <!-- SOUNDBOARD EXPLORATION -->
+    <div class="alisya-box">
+      <div class="alisya-title">
+        <span>🎧 1. Suara &amp; Posisi Benda (Tap untuk Mendengar Suara Jernih):</span>
       </div>
-      <img src="../assets/images/eng_kls4_frying_pan_egg.jpg" class="photo-preview" alt="Frying Pan" onerror="this.style.display='none'">
-      <button class="btn-speaker" onclick="handleSpeakQ1(this)">
-        <span data-en="🔊 Listen Question" data-id="🔊 Dengar Soal">🔊 Listen Question</span>
-      </button>
-      <div class="option-grid two-col" style="margin-top:14px;">
-        <div class="card-choice" onclick="chooseAlisya(1, 'pan')">
-          <div class="card-icon">🍳</div>
-          <div class="card-label">FRYING PAN</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Frying pan', this)">🔊 EN: Frying pan</button>
+      <div class="card-choice-grid">
+        <div class="card-choice" onclick="playWordSound('IN', 'Di dalam kotak')">
+          <div class="card-icon">📥</div>
+          <div class="card-word">IN</div>
+          <div class="card-sub">Di dalam</div>
+          <button class="btn-audio-big" style="padding:4px 12px; font-size:0.9rem;">🔊 Dengar</button>
         </div>
-        <div class="card-choice" onclick="chooseAlisya(1, 'spoon')">
-          <div class="card-icon">🥄</div>
-          <div class="card-label">SPOON</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Spoon', this)">🔊 EN: Spoon</button>
+        <div class="card-choice" onclick="playWordSound('ON', 'Di atas meja')">
+          <div class="card-icon">📦</div>
+          <div class="card-word">ON</div>
+          <div class="card-sub">Di atas</div>
+          <button class="btn-audio-big" style="padding:4px 12px; font-size:0.9rem;">🔊 Dengar</button>
+        </div>
+        <div class="card-choice" onclick="playWordSound('UNDER', 'Di bawah tempat tidur')">
+          <div class="card-icon">🛹</div>
+          <div class="card-word">UNDER</div>
+          <div class="card-sub">Di bawah</div>
+          <button class="btn-audio-big" style="padding:4px 12px; font-size:0.9rem;">🔊 Dengar</button>
+        </div>
+        <div class="card-choice" onclick="playWordSound('BEHIND', 'Di belakang pintu')">
+          <div class="card-icon">🚪</div>
+          <div class="card-word">BEHIND</div>
+          <div class="card-sub">Di belakang</div>
+          <button class="btn-audio-big" style="padding:4px 12px; font-size:0.9rem;">🔊 Dengar</button>
+        </div>
+        <div class="card-choice" onclick="playWordSound('NEXT TO', 'Di sebelah ranjang')">
+          <div class="card-icon">🛏️</div>
+          <div class="card-word">NEXT TO</div>
+          <div class="card-sub">Di sebelah</div>
+          <button class="btn-audio-big" style="padding:4px 12px; font-size:0.9rem;">🔊 Dengar</button>
+        </div>
+        <div class="card-choice" onclick="playWordSound('BETWEEN', 'Di antara dua kotak')">
+          <div class="card-icon">🦉</div>
+          <div class="card-word">BETWEEN</div>
+          <div class="card-sub">Di antara</div>
+          <button class="btn-audio-big" style="padding:4px 12px; font-size:0.9rem;">🔊 Dengar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHALLENGE 1 -->
+    <div class="alisya-box" id="stage-1">
+      <div class="alisya-title">
+        <span>⭐ Misi 1: Dengarkan Suara &amp; Pilih Kartu yang Tepat!</span>
+      </div>
+      <p style="margin-bottom:12px;">Dengarkan suara bahasa Inggris ini:</p>
+      <button class="btn-audio-big" onclick="speakEn('Where is the skateboard? The skateboard is UNDER the bed.')">
+        🔊 Putar Suara Pertanyaan
+      </button>
+      <div style="margin-top:16px; font-weight:800; color:#451A03;">Di manakah papan luncur berada?</div>
+      <div class="card-choice-grid">
+        <div class="card-choice" onclick="checkChoice(1, 0, false)">
+          <div class="card-icon">📦</div>
+          <div class="card-word">ON</div>
+          <div class="card-sub">Di atas</div>
+        </div>
+        <div class="card-choice" onclick="checkChoice(1, 1, true)">
+          <div class="card-icon">🛹</div>
+          <div class="card-word">UNDER</div>
+          <div class="card-sub">Di bawah</div>
+        </div>
+        <div class="card-choice" onclick="checkChoice(1, 2, false)">
+          <div class="card-icon">📥</div>
+          <div class="card-word">IN</div>
+          <div class="card-sub">Di dalam</div>
         </div>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
-      <button class="btn-action" id="next-1" style="display:none; margin-top:16px;" onclick="goToStage(2)" data-en="Next Mission 🌟 →" data-id="Misi Berikutnya 🌟 →">Next Mission 🌟 →</button>
+      <button class="btn-action" id="next-1" style="display:none; margin-top:14px; background:#D97706;" onclick="goToStage(2)">Lanjut Misi Berikutnya 🌟 →</button>
     </div>
 
-    <!-- MISI 2: WARM MILK -->
+    <!-- CHALLENGE 2 -->
     <div class="alisya-box" id="stage-2" style="display:none;">
-      <div class="card-header-flex">
-        <div class="alisya-title" data-en="🥛 Mission 2: A Glass of Milk" data-id="🥛 Misi 2: Segelas Susu Hangat">🥛 Mission 2: A Glass of Milk</div>
-        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-2', this)">
-          🌐 <span>Terjemahkan</span>
-        </button>
+      <div class="alisya-title">
+        <span>⭐ Misi 2: Burung Hantu Hootie Bersembunyi!</span>
       </div>
-      <img src="../assets/images/eng_kls4_glass_of_milk.jpg" class="photo-preview" alt="Glass of Milk" onerror="this.style.display='none'">
-      <button class="btn-speaker" onclick="handleSpeakQ2(this)">
-        <span data-en="🔊 Listen Question" data-id="🔊 Dengar Soal">🔊 Listen Question</span>
+      <button class="btn-audio-big" onclick="speakEn('Hootie the owl is hiding BEHIND the door.')">
+        🔊 Putar Suara Pertanyaan
       </button>
-      <div class="option-grid two-col" style="margin-top:14px;">
-        <div class="card-choice" onclick="chooseAlisya(2, 'milk')">
-          <div class="card-icon">🥛</div>
-          <div class="card-label">WARM MILK</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('A glass of warm milk', this)">🔊 EN: Milk</button>
+      <div style="margin-top:16px; font-weight:800; color:#451A03;">Hootie bersembunyi di mana?</div>
+      <div class="card-choice-grid">
+        <div class="card-choice" onclick="checkChoice(2, 0, true)">
+          <div class="card-icon">🚪</div>
+          <div class="card-word">BEHIND</div>
+          <div class="card-sub">Di belakang pintu</div>
         </div>
-        <div class="card-choice" onclick="chooseAlisya(2, 'pizza')">
-          <div class="card-icon">🍕</div>
-          <div class="card-label">PIZZA</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Pizza', this)">🔊 EN: Pizza</button>
+        <div class="card-choice" onclick="checkChoice(2, 1, false)">
+          <div class="card-icon">📥</div>
+          <div class="card-word">IN</div>
+          <div class="card-sub">Di dalam</div>
+        </div>
+        <div class="card-choice" onclick="checkChoice(2, 2, false)">
+          <div class="card-icon">🛹</div>
+          <div class="card-word">UNDER</div>
+          <div class="card-sub">Di bawah</div>
         </div>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
-      <button class="btn-action" id="next-2" style="display:none; margin-top:16px;" onclick="goToStage(3)" data-en="Next Mission 🌟 →" data-id="Misi Berikutnya 🌟 →">Next Mission 🌟 →</button>
+      <button class="btn-action" id="next-2" style="display:none; margin-top:14px; background:#D97706;" onclick="goToStage(3)">Lanjut Misi Berikutnya 🌟 →</button>
     </div>
 
-    <!-- MISI 3: REFRIGERATOR -->
+    <!-- CHALLENGE 3 -->
     <div class="alisya-box" id="stage-3" style="display:none;">
-      <div class="card-header-flex">
-        <div class="alisya-title" data-en="🧊 Mission 3: Cold Refrigerator" data-id="🧊 Misi 3: Kulkas Pendingin">🧊 Mission 3: Cold Refrigerator</div>
-        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-3', this)">
-          🌐 <span>Terjemahkan</span>
-        </button>
+      <div class="alisya-title">
+        <span>⭐ Misi 3: Kotak P3K di Kamar Tidur!</span>
       </div>
-      <button class="btn-speaker" onclick="handleSpeakQ3(this)">
-        <span data-en="🔊 Listen Question" data-id="🔊 Dengar Soal">🔊 Listen Question</span>
+      <button class="btn-audio-big" onclick="speakEn('There is a first aid kit ON the bookshelf.')">
+        🔊 Putar Suara Pertanyaan
       </button>
-      <div class="option-grid two-col" style="margin-top:14px;">
-        <div class="card-choice" onclick="chooseAlisya(3, 'fridge')">
-          <div class="card-icon">🧊</div>
-          <div class="card-label">REFRIGERATOR</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Refrigerator', this)">🔊 EN: Refrigerator</button>
+      <div style="margin-top:16px; font-weight:800; color:#451A03;">Di manakah kotak P3K berada?</div>
+      <div class="card-choice-grid">
+        <div class="card-choice" onclick="checkChoice(3, 0, true)">
+          <div class="card-icon">📦</div>
+          <div class="card-word">ON</div>
+          <div class="card-sub">Di atas rak buku</div>
         </div>
-        <div class="card-choice" onclick="chooseAlisya(3, 'bed')">
-          <div class="card-icon">🛏️</div>
-          <div class="card-label">BED</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Bed', this)">🔊 EN: Bed</button>
+        <div class="card-choice" onclick="checkChoice(3, 1, false)">
+          <div class="card-icon">🛹</div>
+          <div class="card-word">UNDER</div>
+          <div class="card-sub">Di bawah</div>
+        </div>
+        <div class="card-choice" onclick="checkChoice(3, 2, false)">
+          <div class="card-icon">📥</div>
+          <div class="card-word">IN</div>
+          <div class="card-sub">Di dalam</div>
         </div>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
-      <button class="btn-action" id="next-3" style="display:none; margin-top:16px;" onclick="goToStage(4)" data-en="Next Mission 🌟 →" data-id="Misi Berikutnya 🌟 →">Next Mission 🌟 →</button>
+      <button class="btn-action" id="next-3" style="display:none; margin-top:14px; background:#D97706;" onclick="goToStage(4)">Lanjut Misi Berikutnya 🌟 →</button>
     </div>
 
-    <!-- MISI 4: KITCHEN ITEM OR PET -->
+    <!-- CHALLENGE 4 -->
     <div class="alisya-box" id="stage-4" style="display:none;">
-      <div class="card-header-flex">
-        <div class="alisya-title" data-en="🍳 Mission 4: Word Category" data-id="🍳 Misi 4: Kelompok Benda Dapur">🍳 Mission 4: Word Category</div>
-        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-4', this)">
-          🌐 <span>Terjemahkan</span>
-        </button>
+      <div class="alisya-title">
+        <span>⭐ Misi 4: Aturan Emas 1 Benda!</span>
       </div>
-      <button class="btn-speaker" onclick="handleSpeakQ4(this)">
-        <span data-en="🔊 Listen Question" data-id="🔊 Dengar Soal">🔊 Listen Question</span>
-      </button>
-      <div class="option-grid two-col" style="margin-top:14px;">
-        <div class="card-choice" onclick="chooseAlisya(4, 'kitchen')">
-          <div class="card-icon">🏠</div>
-          <div class="card-label" data-en="KITCHEN THING" data-id="BENDA DAPUR">KITCHEN THING</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Kitchen thing', this)">🔊 EN: Kitchen</button>
+      <p style="margin-bottom:12px;">Kalau bendanya cuma <strong>SATU</strong>, kita pakai kata apa?</p>
+      <div class="card-choice-grid">
+        <div class="card-choice" onclick="checkChoice(4, 0, true)">
+          <div class="card-icon">1️⃣</div>
+          <div class="card-word">THERE IS</div>
+          <div class="card-sub">Untuk 1 benda</div>
         </div>
-        <div class="card-choice" onclick="chooseAlisya(4, 'pet')">
-          <div class="card-icon">🐶</div>
-          <div class="card-label" data-en="PET ANIMAL" data-id="HEWAN PELIHARAAN">PET ANIMAL</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Pet animal', this)">🔊 EN: Pet</button>
+        <div class="card-choice" onclick="checkChoice(4, 1, false)">
+          <div class="card-icon">🔢</div>
+          <div class="card-word">THERE ARE</div>
+          <div class="card-sub">Untuk banyak benda</div>
         </div>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
-      <button class="btn-action" id="next-4" style="display:none; margin-top:16px;" onclick="goToStage(5)" data-en="Next Mission 🌟 →" data-id="Misi Berikutnya 🌟 →">Next Mission 🌟 →</button>
+      <button class="btn-action" id="next-4" style="display:none; margin-top:14px; background:#D97706;" onclick="goToStage(5)">Lanjut Misi Terakhir 🌟 →</button>
     </div>
 
-    <!-- MISI 5: TWO GREEN APPLES -->
+    <!-- CHALLENGE 5 -->
     <div class="alisya-box" id="stage-5" style="display:none;">
-      <div class="card-header-flex">
-        <div class="alisya-title" data-en="🍏 Mission 5: Green Apples" data-id="🍏 Misi 5: Apel Hijau Segar">🍏 Mission 5: Green Apples</div>
-        <button class="btn-card-lang" onclick="toggleCardLanguage('stage-5', this)">
-          🌐 <span>Terjemahkan</span>
-        </button>
+      <div class="alisya-title">
+        <span>⭐ Misi 5: Aturan Emas BANYAK Benda!</span>
       </div>
-      <button class="btn-speaker" onclick="handleSpeakQ5(this)">
-        <span data-en="🔊 Listen Question" data-id="🔊 Dengar Soal">🔊 Listen Question</span>
-      </button>
-      <div class="option-grid two-col" style="margin-top:14px;">
-        <div class="card-choice" onclick="chooseAlisya(5, 'apple')">
-          <div class="card-icon">🍏</div>
-          <div class="card-label">GREEN APPLES</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Sweet green apples', this)">🔊 EN: Apples</button>
+      <p style="margin-bottom:12px;">Kalau bendanya ada <strong>DUA, TIGA, atau BANYAK</strong>, kita pakai kata apa?</p>
+      <div class="card-choice-grid">
+        <div class="card-choice" onclick="checkChoice(5, 0, false)">
+          <div class="card-icon">1️⃣</div>
+          <div class="card-word">THERE IS</div>
+          <div class="card-sub">Untuk 1 benda</div>
         </div>
-        <div class="card-choice" onclick="chooseAlisya(5, 'car')">
-          <div class="card-icon">🚗</div>
-          <div class="card-label">CAR</div>
-          <button class="btn-speaker" onclick="event.stopPropagation(); speakEn('Car', this)">🔊 EN: Car</button>
+        <div class="card-choice" onclick="checkChoice(5, 1, true)">
+          <div class="card-icon">🔢</div>
+          <div class="card-word">THERE ARE</div>
+          <div class="card-sub">Untuk banyak benda</div>
         </div>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
-      <button class="btn-action" id="next-5" style="display:none; margin-top:16px;" onclick="completeAlisya()" data-en="Open Star Reward! 👑" data-id="Buka Hadiah Bintang! 👑">Open Star Reward! 👑</button>
+      <button class="btn-action" id="next-5" style="display:none; margin-top:14px; background:#D97706;" onclick="completeAlisya()">Ambil Bintang Emas! 🏆</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
-    <div class="modal-card" style="border: 4px solid #F59E0B;">
-      <div style="font-size: 4rem; margin-bottom: 12px;">🌟 👑 💖</div>
-      <h2 style="font-size: 2rem; color: #92400E; margin-bottom: 10px;" data-en="Awesome, Alisya!" data-id="Hebat Sekali, Alisya!">Awesome, Alisya!</h2>
-      <p style="font-size: 1.25rem; color: #4B5563; margin-bottom: 24px; line-height: 1.7;"
-         data-en="You did fantastic! All kitchen and food English words matched perfectly!"
-         data-id="Alisya pintar sekali! Semua kata bahasa Inggris untuk benda dapur berhasil dicocokkan!">
-        You did fantastic! All kitchen and food English words matched perfectly!
+    <div class="modal-card">
+      <div style="font-size: 3.8rem; margin-bottom: 12px;">🌟 🏆 🦉</div>
+      <h2 style="font-size: 2rem; color:#B45309; margin-bottom: 8px;">Hebat Sekali, Alisya!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+        Alisya berhasil mendengarkan semua suara bahasa Inggris dengan teliti dan menemukan posisi semua benda dengan sempurna!
       </p>
-      <button class="btn-speaker" onclick="handleSpeakCheer(this)">
-        <span data-en="🔊 Hear Cheer" data-id="🔊 Dengar Ucapan Selamat">🔊 Hear Cheer</span>
-      </button>
-      <div style="margin-top: 20px;">
-        <a href="../index.html" class="btn-action" data-en="Finish Playing 🎉" data-id="Selesai Bermain 🎉">Finish Playing 🎉</a>
-      </div>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#D97706;">Kembali ke Menu Utama 🏠</a>
     </div>
   </div>
 
   <script src="../assets/game.js"></script>
   <script>
     let stars = 0;
-    const correctTargets = { 1: 'pan', 2: 'milk', 3: 'fridge', 4: 'kitchen', 5: 'apple' };
 
-    function handleSpeakGuide(btn) {
-      if (window.currentLang === 'id') {
-        speak('Halo Alisya! Dengarkan petunjuk kata bahasa Inggris dan pilih gambar yang tepat ya!', btn);
-      } else {
-        speakEn('Hello Alisya! Listen to the English words and tap the picture!', btn);
-      }
+    function playWordSound(word, idMeaning) {
+      playSfx('click');
+      speakEn(word);
+      setTimeout(() => speak(idMeaning), 900);
     }
 
-    function handleSpeakQ1(btn) {
-      if (window.currentLang === 'id') {
-        speak('Hasyif menggoreng telur di wajan penggorengan frying pan. Manakah gambar frying pan?', btn);
-      } else {
-        speakEn('Hasyif is making a fried egg in the frying pan. Which one is the frying pan?', btn);
-      }
-    }
-
-    function handleSpeakQ2(btn) {
-      if (window.currentLang === 'id') {
-        speak('Nanda sedang minum segelas susu hangat warm milk. Manakah gambar warm milk?', btn);
-      } else {
-        speakEn('Nanda is drinking a glass of warm milk. Which one is milk?', btn);
-      }
-    }
-
-    function handleSpeakQ3(btn) {
-      if (window.currentLang === 'id') {
-        speak('Kulkas putih refrigerator menjaga makanan tetap dingin. Manakah kata refrigerator?', btn);
-      } else {
-        speakEn('The white refrigerator keeps our food cold. Which word is refrigerator?', btn);
-      }
-    }
-
-    function handleSpeakQ4(btn) {
-      if (window.currentLang === 'id') {
-        speak('Apakah frying pan wajan itu benda dapur kitchen thing atau hewan peliharaan pet animal?', btn);
-      } else {
-        speakEn('Is a frying pan a kitchen item or a pet animal?', btn);
-      }
-    }
-
-    function handleSpeakQ5(btn) {
-      if (window.currentLang === 'id') {
-        speak('Nanda punya apel hijau manis green apples di piring. Manakah gambar green apples?', btn);
-      } else {
-        speakEn('Nanda has sweet green apples on the plate. Which picture is apples?', btn);
-      }
-    }
-
-    function handleSpeakCheer(btn) {
-      if (window.currentLang === 'id') {
-        speak('Hebat sekali Alisya! Kamu pintar sekali mengumpulkan lima bintang bahasa Inggris!', btn);
-      } else {
-        speakEn('Awesome Alisya! Great job! You collected all five stars!', btn);
-      }
-    }
-
-    function chooseAlisya(stage, answer) {
+    function checkChoice(stage, choiceIdx, isCorrect) {
+      const card = document.getElementById(`stage-${stage}`);
+      const cards = card.querySelectorAll('.card-choice');
       const feedback = document.getElementById(`feedback-${stage}`);
       const nextBtn = document.getElementById(`next-${stage}`);
 
-      if (answer === correctTargets[stage]) {
+      cards.forEach(c => c.style.pointerEvents = 'none');
+
+      if (isCorrect) {
+        cards[choiceIdx].classList.add('selected-correct');
         playSfx('correct');
+        playSfx('star');
         feedback.className = "feedback-box show correct";
-        feedback.innerHTML = window.currentLang === 'id' 
-          ? "🎉 <b>Hebat Alisya!</b> Pilihanmu benar!"
-          : "🎉 <b>Awesome Alisya!</b> That is correct!";
-        
-        if (window.currentLang === 'id') {
-          speak('Hebat Alisya! Pilihanmu benar!');
-        } else {
-          speakEn('Awesome Alisya! That is correct!');
-        }
+        feedback.innerHTML = "🌟 LUAR BIASA ALISYA! Jawabanmu 100% tepat!";
+        speak("Luar biasa Alisya! Tepat sekali!");
         stars++;
         document.getElementById('star-display').innerText = stars;
-        playSfx('star');
+        document.getElementById(`dot-${stage}`).classList.add('completed');
       } else {
+        cards[choiceIdx].classList.add('selected-wrong');
         playSfx('wrong');
         feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = window.currentLang === 'id' 
-          ? "🌸 Ayo coba lagi ya sayang, dengarkan suaranya pelan-pelan."
-          : "🌸 Let's try again, listen carefully!";
-        
-        if (window.currentLang === 'id') {
-          speak('Ayo coba lagi ya Alisya.');
-        } else {
-          speakEn('Let us try again, listen carefully!');
-        }
+        feedback.innerHTML = "Ayo dengarkan sekali lagi suaranya ya!";
+        speak("Ayo dengarkan sekali lagi ya Alisya!");
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -332,10 +360,17 @@
       playSfx('click');
       document.getElementById(`stage-${nextStage - 1}`).style.display = "none";
       document.getElementById(`stage-${nextStage}`).style.display = "block";
+      document.getElementById(`dot-${nextStage}`).classList.add('active');
     }
 
     function completeAlisya() {
-      triggerGameOutcome(stars, 5, "Alisya", null, true);
+      playSfx('win');
+      launchConfetti();
+      speak("Selamat Alisya! Kamu mendapatkan lima bintang emas penuh!");
+      document.getElementById('victory-modal').classList.add('active');
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(stars, 5, 3, "Alisya finished Spatial Sound Explorer");
+      }
     }
 
     initLanguageToggle('en');

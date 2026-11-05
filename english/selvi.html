@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selvi's Mission: Past Tense Diary & Travel Editor</title>
+  <title>Selvi's Mission: Nominal Past (Was/Were) &amp; Clinical Diary Editor</title>
   <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
-      <div class="badge-icon" style="background:#8B5CF6;">🏛️</div>
+      <div class="badge-icon" style="background:#7C3AED;">📜</div>
       <div data-en="Selvi's Past Editor Mission" data-id="Misi Editor Lampau Selvi">Selvi's Past Editor Mission</div>
     </a>
     <div class="lang-switch-wrap">
       <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
       <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-    <div class="student-tag" style="background:#FAF5FF; color:#7C3AED;">Grade 6 • Selvi</div>
+    <div class="student-tag" style="background:#FAF5FF; color:#7C3AED;">Grade 6 • Table 6 • Selvi</div>
     <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
@@ -35,17 +35,17 @@
     <!-- READING CASE -->
     <div class="reading-box">
       <div class="card-header-flex">
-        <div class="reading-title" style="margin-bottom:0;" data-en="🏛️ Diary: Shine, Zahra, and Yusman's Weekend" data-id="🏛️ Catatan Harian: Akhir Pekan Shine, Zahra, dan Yusman">
-          🏛️ Diary: Shine, Zahra, and Yusman's Weekend
+        <div class="reading-title" style="margin-bottom:0;" data-en="📜 Clinical Log: Medical Center Activity Last Week" data-id="📜 Log Klinis: Aktivitas Pusat Medis Minggu Lalu">
+          📜 Clinical Log: Medical Center Activity Last Week
         </div>
         <button class="btn-card-lang" onclick="toggleReadingLanguage(this)">
           🌐 <span>Terjemahkan Cerita</span>
         </button>
       </div>
       <p class="reading-text"
-         data-en="Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they went to a traditional culinary market. Shine bought a kilo of fresh oranges, while Zahra and Yusman ordered delicious chicken satay. In the afternoon, they cooked fried rice together at home. Zahra said, 'Last week was wonderful! We studied hard for the test, but we enjoyed our weekend together.'"
-         data-id="Sabtu lalu, Shine, Zahra, dan Yusman mengunjungi museum kota di pagi hari. Setelah itu, mereka pergi ke pasar kuliner tradisional. Shine membeli sekilo jeruk segar, sementara Zahra dan Yusman memesan sate ayam yang lezat. Pada sore harinya, mereka memasak nasi goreng bersama di rumah. Zahra berkata, 'Minggu lalu sangat menyenangkan! Kami belajar giat untuk ujian, tetapi kami menikmati akhir pekan bersama.'">
-        Last Saturday, Shine, Zahra, and Yusman visited the city museum in the morning. After that, they went to a traditional culinary market. Shine bought a kilo of fresh oranges, while Zahra and Yusman ordered delicious chicken satay. In the afternoon, they cooked fried rice together at home. Zahra said, 'Last week was wonderful! We studied hard for the test, but we enjoyed our weekend together.'
+         data-en="Last week, Selvi reviewed the health clinic logs. On Monday, Shan was sick with a high fever and headache. He was in bed all morning. On Tuesday afternoon, gymnast Nia was injured during vault landing; her ankle was swollen and painful. On Wednesday, the 6th grade students were cold and exhausted after camping in the mountain. Fortunately, they were not careless. After following Dr. Ardiansyah's advice, Shan was relieved and the students were happy and energized again by Friday!"
+         data-id="Minggu lalu, Selvi meninjau log klinik kesehatan. Pada hari Senin, Shan sakit demam tinggi dan pusing. Dia berada di ranjang sepanjang pagi. Pada Selasa sore, atlet senam Nia cedera saat mendarat; pergelangan kakinya bengkak dan nyeri. Pada hari Rabu, siswa kelas 6 kedinginan dan sangat letih setelah berkemah di gunung. Untungnya, mereka tidak ceroboh. Setelah mematuhi anjuran Dokter Ardiansyah, Shan merasa lega dan para siswa kembali gembira dan berenergi pada hari Jumat!">
+        Last week, Selvi reviewed the health clinic logs. On Monday, Shan was sick with a high fever and headache. He was in bed all morning. On Tuesday afternoon, gymnast Nia was injured during vault landing; her ankle was swollen and painful. On Wednesday, the 6th grade students were cold and exhausted after camping in the mountain. Fortunately, they were not careless. After following Dr. Ardiansyah's advice, Shan was relieved and the students were happy and energized again by Friday!
       </p>
     </div>
 
@@ -53,9 +53,9 @@
     <div class="challenge-card" id="stage-1">
       <div class="card-header-flex">
         <div class="challenge-question" style="margin-bottom:0;"
-             data-en="Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?"
-             data-id="Tantangan 1: Deteksi Kesalahan! Kalimat draf manakah yang memuat kata kerja lampau <u>SALAH</u>?">
-          Challenge 1: Error Detection! Which draft sentence contains an <u>INCORRECT</u> past tense verb?
+             data-en="Challenge 1: Editorial Detection! Which sentence contains an <u>INCORRECT</u> past To-Be?"
+             data-id="Tantangan 1: Deteksi Editor! Kalimat manakah yang memuat To-Be lampau <u>SALAH</u>?">
+          Challenge 1: Editorial Detection! Which sentence contains an <u>INCORRECT</u> past To-Be?
         </div>
         <button class="btn-card-lang" onclick="toggleCardLanguage('stage-1', this)">
           🌐 <span>Terjemahkan Soal</span>
@@ -63,13 +63,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(1, 0)">
-          <span>A.</span> <span data-en="Last Saturday, they goed to the traditional culinary market." data-id="Last Saturday, they goed to the traditional culinary market.">Last Saturday, they goed to the traditional culinary market.</span>
+          <span>A.</span> <span data-en="Shan were sick with a fever." data-id="Shan were sick with a fever. (SALAH: Shan tunggal, harus was)">Shan were sick with a fever.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(1, 1)">
-          <span>B.</span> <span data-en="They visited the city museum in the morning." data-id="They visited the city museum in the morning.">They visited the city museum in the morning.</span>
+          <span>B.</span> <span data-en="Nia was injured during landing." data-id="Nia was injured during landing.">Nia was injured during landing.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(1, 2)">
-          <span>C.</span> <span data-en="Zahra bought a kilo of fresh oranges." data-id="Zahra bought a kilo of fresh oranges.">Zahra bought a kilo of fresh oranges.</span>
+          <span>C.</span> <span data-en="They were cold in the mountain." data-id="They were cold in the mountain.">They were cold in the mountain.</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-1"></div>
@@ -80,9 +80,9 @@
     <div class="challenge-card" id="stage-2" style="display:none;">
       <div class="card-header-flex">
         <div class="challenge-question" style="margin-bottom:0;"
-             data-en="Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?"
-             data-id="Tantangan 2: Klasifikasi Kata Kerja! Pada kalimat: <i>'They cooked fried rice and studied together'</i>, termasuk jenis kata kerja lampau apakah 'cooked' dan 'studied'?">
-          Challenge 2: Verb Classification! In the sentence: <i>'They cooked fried rice and studied together'</i>, what type of past verbs are 'cooked' and 'studied'?
+             data-en="Challenge 2: Plural Subject Agreement! Complete: 'The students ______ very tired after the trip.'"
+             data-id="Tantangan 2: Kesepakatan Subjek Jamak! Lengkapi: 'The students ______ very tired after the trip.'">
+          Challenge 2: Plural Subject Agreement! Complete: "The students ______ very tired after the trip."
         </div>
         <button class="btn-card-lang" onclick="toggleCardLanguage('stage-2', this)">
           🌐 <span>Terjemahkan Soal</span>
@@ -90,10 +90,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(2, 0)">
-          <span>A.</span> <span data-en="Regular past verbs (formed by adding -ed to the base verb)." data-id="Kata kerja lampau beraturan (Regular verbs).">Regular past verbs (formed by adding -ed to the base verb).</span>
+          <span>A.</span> <span data-en="was" data-id="was (untuk tunggal)">was</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(2, 1)">
-          <span>B.</span> <span data-en="Irregular past verbs." data-id="Kata kerja lampau tidak beraturan (Irregular verbs).">Irregular past verbs.</span>
+          <span>B.</span> <span data-en="were" data-id="were (untuk jamak/they)">were</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(2, 2)">
+          <span>C.</span> <span data-en="is" data-id="is (present tense)">is</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-2"></div>
@@ -104,18 +107,24 @@
     <div class="challenge-card" id="stage-3" style="display:none;">
       <div class="card-header-flex">
         <div class="challenge-question" style="margin-bottom:0;"
-             data-en="Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?"
-             data-id="Tantangan 3: Mengedit Kalimat! Bagaimana mengubah: <i>'Yesterday, we (eat) satay and (go) home'</i> menjadi bentuk Simple Past Tense yang tepat?">
-          Challenge 3: Sentence Editing! How do you rewrite: <i>'Yesterday, we (eat) satay and (go) home'</i> into proper Simple Past Tense?
+             data-en="Challenge 3: Negative Form! How do you say they were NOT careless in the past?"
+             data-id="Tantangan 3: Kalimat Negatif! Bagaimana menyatakan bahwa mereka TIDAK ceroboh di masa lalu?">
+          Challenge 3: Negative Form! How do you say they were NOT careless in the past?
         </div>
         <button class="btn-card-lang" onclick="toggleCardLanguage('stage-3', this)">
           🌐 <span>Terjemahkan Soal</span>
         </button>
       </div>
       <div class="option-grid">
-        <button class="btn-option" onclick="checkAnswer(3, 0)"><span>A.</span> Yesterday, we ate satay and went home.</button>
-        <button class="btn-option" onclick="checkAnswer(3, 1)"><span>B.</span> Yesterday, we eaten satay and gone home.</button>
-        <button class="btn-option" onclick="checkAnswer(3, 2)"><span>C.</span> Yesterday, we eat satay and go home.</button>
+        <button class="btn-option" onclick="checkAnswer(3, 0)">
+          <span>A.</span> <span data-en="They weren't (were not) careless." data-id="They weren't (were not) careless.">They weren't (were not) careless.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 1)">
+          <span>B.</span> <span data-en="They wasn't careless." data-id="They wasn't careless.">They wasn't careless.</span>
+        </button>
+        <button class="btn-option" onclick="checkAnswer(3, 2)">
+          <span>C.</span> <span data-en="They didn't careless." data-id="They didn't careless.">They didn't careless.</span>
+        </button>
       </div>
       <div class="feedback-box" id="feedback-3"></div>
       <button class="btn-action" id="next-3" style="display:none;" onclick="goToStage(4)" data-en="Next Challenge →" data-id="Tantangan Berikutnya →">Next Challenge →</button>
@@ -125,9 +134,9 @@
     <div class="challenge-card" id="stage-4" style="display:none;">
       <div class="card-header-flex">
         <div class="challenge-question" style="margin-bottom:0;"
-             data-en="Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?"
-             data-id="Tantangan 4: Penanda Waktu! Pasangan manakah yang merupakan penanda waktu yang sah untuk <u>Simple Past Tense</u>?">
-          Challenge 4: Time Signals! Which pair represents valid time signals for the <u>Simple Past Tense</u>?
+             data-en="Challenge 4: Past Feelings! How did Shan feel after receiving good news from the doctor?"
+             data-id="Tantangan 4: Perasaan Lampau! Bagaimana perasaan Shan setelah menerima kabar baik dari dokter?">
+          Challenge 4: Past Feelings! How did Shan feel after receiving good news from the doctor?
         </div>
         <button class="btn-card-lang" onclick="toggleCardLanguage('stage-4', this)">
           🌐 <span>Terjemahkan Soal</span>
@@ -135,13 +144,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(4, 0)">
-          <span>A.</span> <span data-en="Last weekend and two days ago" data-id="Akhir pekan lalu dan dua hari lalu">Last weekend and two days ago</span>
+          <span>A.</span> <span data-en="Shan was relieved." data-id="Shan merasa lega (relieved).">Shan was relieved.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(4, 1)">
-          <span>B.</span> <span data-en="Right now and at the moment" data-id="Saat ini dan sekarang">Right now and at the moment</span>
+          <span>B.</span> <span data-en="Shan were angry." data-id="Shan were angry.">Shan were angry.</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(4, 2)">
-          <span>C.</span> <span data-en="Tomorrow and next year" data-id="Besok dan tahun depan">Tomorrow and next year</span>
+          <span>C.</span> <span data-en="Shan was terrified." data-id="Shan was terrified.">Shan was terrified.</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-4"></div>
@@ -152,9 +161,9 @@
     <div class="challenge-card" id="stage-5" style="display:none;">
       <div class="card-header-flex">
         <div class="challenge-question" style="margin-bottom:0;"
-             data-en="Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?"
-             data-id="Tantangan 5: Kalimat Negatif! Manakah kalimat negatif lampau yang tepat jika Zahra tidak memasak kemarin?">
-          Challenge 5: Negative Form! What is the correct negative past sentence if Zahra did not cook yesterday?
+             data-en="Challenge 5: Interrogative Past! Which question correctly asks about past condition?"
+             data-id="Tantangan 5: Kalimat Tanya Lampau! Pertanyaan manakah yang tepat menanyakan kondisi kemarin?">
+          Challenge 5: Interrogative Past! Which question correctly asks about past condition?
         </div>
         <button class="btn-card-lang" onclick="toggleCardLanguage('stage-5', this)">
           🌐 <span>Terjemahkan Soal</span>
@@ -162,13 +171,13 @@
       </div>
       <div class="option-grid">
         <button class="btn-option" onclick="checkAnswer(5, 0)">
-          <span>A.</span> <span data-en="Zahra didn't cook fried rice yesterday." data-id="Zahra didn't cook fried rice yesterday.">Zahra didn't cook fried rice yesterday.</span>
+          <span>A.</span> <span data-en="Were you sick yesterday morning?" data-id="Were you sick yesterday morning?">Were you sick yesterday morning?</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(5, 1)">
-          <span>B.</span> <span data-en="Zahra didn't cooked fried rice yesterday." data-id="Zahra didn't cooked fried rice yesterday.">Zahra didn't cooked fried rice yesterday.</span>
+          <span>B.</span> <span data-en="Was you sick yesterday morning?" data-id="Was you sick yesterday morning?">Was you sick yesterday morning?</span>
         </button>
         <button class="btn-option" onclick="checkAnswer(5, 2)">
-          <span>C.</span> <span data-en="Zahra wasn't cook fried rice yesterday." data-id="Zahra wasn't cook fried rice yesterday.">Zahra wasn't cook fried rice yesterday.</span>
+          <span>C.</span> <span data-en="Did you sick yesterday morning?" data-id="Did you sick yesterday morning?">Did you sick yesterday morning?</span>
         </button>
       </div>
       <div class="feedback-box" id="feedback-5"></div>
@@ -178,12 +187,12 @@
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
-      <div style="font-size: 3.5rem; margin-bottom: 12px;">🌟 🏛️ 🎓</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Masterful Editor, Selvi!" data-id="Editor Andal, Selvi!">Masterful Editor, Selvi!</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
-         data-en="Your critical analysis of regular, irregular past verbs, and negative formulas was flawless!"
-         data-id="Analisis kritismu terhadap kata kerja lampau beraturan, tidak beraturan, dan rumus kalimat negatif sangat sempurna!">
-        Your critical analysis of regular, irregular past verbs, and negative formulas was flawless!
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🏆 ⭐ 📜</div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Master Editor, Selvi!" data-id="Editor Hebat, Selvi!">Master Editor, Selvi!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;" 
+         data-en="You proved exceptional mastery over Nominal Past Tense (Was / Were) and past emotional states!"
+         data-id="Kamu membuktikan penguasaan luar biasa atas Nominal Past Tense (Was / Were) dan kondisi emosional lampau!">
+        You proved exceptional mastery over Nominal Past Tense (Was / Were) and past emotional states!
       </p>
       <a href="../index.html" class="btn-action" style="background:#7C3AED; margin: 0 auto;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
@@ -192,7 +201,7 @@
   <script src="../assets/game.js"></script>
   <script>
     let stars = 0;
-    const correctAnswers = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    const correctAnswers = { 1: 0, 2: 1, 3: 0, 4: 0, 5: 0 };
 
     function checkAnswer(stage, chosenIndex) {
       const card = document.getElementById(`stage-${stage}`);
@@ -207,8 +216,8 @@
         buttons[chosenIndex].classList.add('selected-correct');
         feedback.className = "feedback-box show correct";
         feedback.innerHTML = window.currentLang === 'id' 
-          ? "✅ Tepat dan Kritis! Penyuntingan tata bahasa lampaumu sangat akurat!"
-          : "✅ Spot on! Excellent grammar editing!";
+          ? "✅ Tepat sekali Selvi! Analisis tata bahasa Was/Were dan penyuntinganmu sangat cermat!"
+          : "✅ Spot on Selvi! Sharp Was/Were analysis and editing!";
         stars++;
         document.getElementById('star-display').innerText = stars;
         playSfx('star');
@@ -218,8 +227,8 @@
         buttons[chosenIndex].classList.add('selected-wrong');
         feedback.className = "feedback-box show wrong";
         feedback.innerHTML = window.currentLang === 'id' 
-          ? "❌ Belum tepat. Tinjau kembali kaidah kata kerja lampaunya ya!"
-          : "❌ Not quite right. Review the past verb rules!";
+          ? "❌ Belum tepat. Periksa kembali subjek tunggal (was) vs jamak (were) ya!"
+          : "❌ Not quite right. Review singular was vs plural were!";
       }
       nextBtn.style.display = "inline-flex";
     }
@@ -232,7 +241,12 @@
     }
 
     function completeSelvi() {
-      triggerGameOutcome(stars, 5, "Selvi", null, true);
+      playSfx('win');
+      launchConfetti();
+      document.getElementById('victory-modal').classList.add('active');
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(stars, 5, 3, "Selvi finished Was/Were Clinical Editor");
+      }
     }
 
     initLanguageToggle('en');

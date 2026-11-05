@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aulya's Mission: Regular vs Irregular Past Verb Sorter</title>
+  <title>Aulya's Mission: Was vs Were Past Classifier</title>
   <link rel="stylesheet" href="../assets/style.css">
   <style>
     .card-swipe {
@@ -14,184 +14,225 @@
       text-align: center;
       margin-bottom: 24px;
       box-shadow: var(--shadow-card);
-      min-height: 140px;
+      min-height: 150px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      letter-spacing: 2px;
       color: #1E293B;
+      line-height: 1.4;
     }
     .sort-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
-    .btn-regular {
-      background: #10B981;
+    .btn-was {
+      background: #7C3AED;
       color: white;
       border: none;
-      padding: 16px;
+      padding: 18px;
       border-radius: var(--radius-md);
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 800;
       cursor: pointer;
+      transition: all 0.2s;
     }
-    .btn-irregular {
-      background: #8B5CF6;
+    .btn-was:hover {
+      background: #6D28D9;
+      transform: translateY(-2px);
+    }
+    .btn-were {
+      background: #0284C7;
       color: white;
       border: none;
-      padding: 16px;
+      padding: 18px;
       border-radius: var(--radius-md);
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 800;
       cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-were:hover {
+      background: #0369A1;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
   <div class="header-bar">
     <a href="../index.html" class="logo-badge">
-      <div class="badge-icon" style="background:#8B5CF6;">⚖️</div>
-      <div data-en="Aulya's Verb Sorter" data-id="Sortir Kata Kerja Aulya">Aulya's Verb Sorter</div>
+      <div class="badge-icon" style="background:#7C3AED;">⚖️</div>
+      <div data-en="Aulya's Was vs Were" data-id="Pilah Was vs Were Aulya">Aulya's Was vs Were</div>
     </a>
     <div class="lang-switch-wrap">
       <button class="btn-lang active" id="btn-lang-en" onclick="setLanguage('en')">🇬🇧 EN</button>
       <button class="btn-lang" id="btn-lang-id" onclick="setLanguage('id')">🇮🇩 ID</button>
     </div>
-    <div class="student-tag" style="background:#F5F3FF; color:#7C3AED;">Grade 6 • Aulya</div>
+    <div class="student-tag" style="background:#F5F3FF; color:#7C3AED;">Grade 6 • Table 6 • Aulya</div>
     <a href="../index.html" class="btn-back" data-en="← Main Portal" data-id="← Menu Utama">← Main Portal</a>
   </div>
 
   <div class="container">
     <div class="tracker-bar">
-      <div class="star-count" style="color:#7C3AED;"><span data-en="⭐ Score: " data-id="⭐ Skor: ">⭐ Score: </span><span id="score-display">0</span>/5</div>
-      <div style="font-weight:600; color:var(--text-muted);"><span data-en="Card " data-id="Kartu ">Card </span><span id="card-num">1</span> <span data-en="of 5" data-id="dari 5">of 5</span></div>
+      <div class="star-count" style="color:#7C3AED;"><span data-en="⭐ Score: " data-id="⭐ Skor: ">⭐ Score: </span><span id="score-display">0</span>/6</div>
+      <div style="font-weight:600; color:var(--text-muted);"><span data-en="Sentence " data-id="Kalimat ">Sentence </span><span id="card-num">1</span> <span data-en="of 6" data-id="dari 6">of 6</span></div>
     </div>
 
     <div class="card-swipe" id="statement-box">
       <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
         <span style="font-size:0.95rem; color:#64748B; font-weight:600; letter-spacing:0;"
-              data-en="Classify this past verb:" data-id="Pilah jenis kata kerja lampau ini:">Classify this past verb:</span>
+              data-en="Choose WAS (Singular) or WERE (Plural):" data-id="Pilih WAS (Tunggal) atau WERE (Jamak):">
+          Choose WAS (Singular) or WERE (Plural):
+        </span>
         <button class="btn-card-lang" onclick="toggleCardLanguage('statement-box', this)">
           🌐 <span>Terjemahkan</span>
         </button>
       </div>
-      <span id="verb-text">VISITED</span>
+      <span id="sentence-text">Loading sentence...</span>
     </div>
 
     <div class="sort-buttons">
-      <button class="btn-regular" onclick="submitSort('REGULAR')">
-        <span data-en="📘 REGULAR" data-id="📘 BERATURAN">📘 REGULAR</span>
+      <button class="btn-was" onclick="submitChoice('WAS')">
+        <span>⚡ WAS</span>
+        <span style="display:block; font-size:0.8rem; font-weight:600; opacity:0.9;">I, He, She, It, Nia</span>
       </button>
-      <button class="btn-irregular" onclick="submitSort('IRREGULAR')">
-        <span data-en="📙 IRREGULAR" data-id="📙 TIDAK BERATURAN">📙 IRREGULAR</span>
+      <button class="btn-were" onclick="submitChoice('WERE')">
+        <span>🌊 WERE</span>
+        <span style="display:block; font-size:0.8rem; font-weight:600; opacity:0.9;">You, We, They, Students</span>
       </button>
     </div>
 
     <div class="feedback-box" id="feedback-box"></div>
     <div style="text-align: center; margin-top: 18px;">
-      <button class="btn-action" id="next-btn" style="display:none;" onclick="nextCard()" data-en="Next Verb →" data-id="Kata Kerja Berikutnya →">Next Verb →</button>
+      <button class="btn-action" id="next-btn" style="display:none; background:#7C3AED;" onclick="nextCard()" data-en="Next Sentence →" data-id="Kalimat Berikutnya →">Next Sentence →</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="victory-modal">
     <div class="modal-card">
       <div style="font-size: 3.5rem; margin-bottom: 12px;">⚖️ 🌟 👏</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Brilliant Sorting, Aulya!" data-id="Sortir Hebat, Aulya!">Brilliant Sorting, Aulya!</h2>
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-en="Brilliant Classifier, Aulya!" data-id="Pemilah Hebat, Aulya!">Brilliant Classifier, Aulya!</h2>
       <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;"
-         data-en="You classified all regular and irregular past verbs with complete accuracy!"
-         data-id="Semua kata kerja lampau beraturan dan tidak beraturan berhasil kamu pilah dengan tepat!">
-        You classified all regular and irregular past verbs with complete accuracy!
+         data-en="You sorted all Was and Were past sentences with 100% accuracy and sharp grammar insight!"
+         data-id="Semua kalimat lampau Was dan Were berhasil kamu pilah dengan akurasi 100% dan wawasan tata bahasa yang tajam!">
+        You sorted all Was and Were past sentences with 100% accuracy and sharp grammar insight!
       </p>
-      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#8B5CF6;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
+      <a href="../index.html" class="btn-action" style="margin: 0 auto; background:#7C3AED;" data-en="Back to Main Portal" data-id="Kembali ke Menu Utama">Back to Main Portal</a>
     </div>
   </div>
 
   <script src="../assets/game.js"></script>
   <script>
     const deck = [
-      { 
-        verb: "VISITED", 
-        type: "REGULAR", 
-        reasonEn: "Formed by adding -ed to base verb 'visit'.",
-        reasonId: "Dibentuk dengan menambahkan akhiran -ed pada kata dasar 'visit'."
+      {
+        textEn: "Yesterday, Shan ______ sick with a fever.",
+        textId: "Kemarin, Shan ______ sakit demam.",
+        answer: "WAS",
+        reasonEn: "Shan is singular (He), so we use WAS.",
+        reasonId: "Shan adalah subjek tunggal (He), sehingga menggunakan WAS."
       },
-      { 
-        verb: "WENT", 
-        type: "IRREGULAR", 
-        reasonEn: "Irregular past form of 'go' (changes form completely).",
-        reasonId: "Bentuk lampau tidak beraturan dari 'go' (berubah bentuk total)."
+      {
+        textEn: "Last week, the 6th grade students ______ cold in the mountain.",
+        textId: "Minggu lalu, para siswa kelas 6 ______ kedinginan di gunung.",
+        answer: "WERE",
+        reasonEn: "The students is plural (They), so we use WERE.",
+        reasonId: "The students adalah subjek jamak (They), sehingga menggunakan WERE."
       },
-      { 
-        verb: "COOKED", 
-        type: "REGULAR", 
-        reasonEn: "Formed by adding -ed to base verb 'cook'.",
-        reasonId: "Dibentuk dengan menambahkan -ed pada kata dasar 'cook'."
+      {
+        textEn: "Nia ______ injured during gymnastics practice.",
+        textId: "Nia ______ cedera saat latihan senam.",
+        answer: "WAS",
+        reasonEn: "Nia is singular (She), so we use WAS.",
+        reasonId: "Nia adalah subjek tunggal (She), sehingga menggunakan WAS."
       },
-      { 
-        verb: "BOUGHT", 
-        type: "IRREGULAR", 
-        reasonEn: "Irregular past form of 'buy'.",
-        reasonId: "Bentuk lampau tidak beraturan dari 'buy' (membeli)."
+      {
+        textEn: "We ______ exhausted after the long walk.",
+        textId: "Kami ______ sangat letih setelah jalan jauh.",
+        answer: "WERE",
+        reasonEn: "We is a first-person plural pronoun, which takes WERE.",
+        reasonId: "We adalah kata ganti orang pertama jamak, menggunakan WERE."
       },
-      { 
-        verb: "STUDIED", 
-        type: "REGULAR", 
-        reasonEn: "Formed by changing 'study' (-y into -ied).",
-        reasonId: "Kata beraturan: huruf 'y' berubah menjadi '-ied' (study -> studied)."
+      {
+        textEn: "It ______ very cold in the bedroom last night.",
+        textId: "Udara ______ sangat dingin di kamar tidur tadi malam.",
+        answer: "WAS",
+        reasonEn: "It (singular object/weather) takes WAS.",
+        reasonId: "It (subjek tunggal/kondisi cuaca) berpasangan dengan WAS."
+      },
+      {
+        textEn: "______ you tired after school yesterday?",
+        textId: "Apakah kamu letih setelah pulang sekolah kemarin?",
+        answer: "WERE",
+        reasonEn: "Subject 'you' always pairs with WERE in past tense.",
+        reasonId: "Subjek 'you' selalu berpasangan dengan WERE dalam past tense."
       }
     ];
 
-    let currentIndex = 0;
+    let currentCardIdx = 0;
     let score = 0;
 
-    function submitSort(choice) {
-      const current = deck[currentIndex];
-      const feedback = document.getElementById('feedback-box');
-      const nextBtn = document.getElementById('next-btn');
-      const buttons = document.querySelectorAll('.sort-buttons button');
-      buttons.forEach(b => b.disabled = true);
+    function renderCard() {
+      const card = deck[currentCardIdx];
+      const isIndo = window.currentLang === 'id';
+      document.getElementById('sentence-text').innerText = isIndo ? card.textId : card.textEn;
+      document.getElementById('card-num').innerText = currentCardIdx + 1;
+      document.getElementById('feedback-box').className = "feedback-box";
+      document.getElementById('feedback-box').innerHTML = "";
+      document.getElementById('next-btn').style.display = "none";
+      enableButtons(true);
+    }
 
-      const isId = window.currentLang === 'id';
-      const reason = isId ? current.reasonId : current.reasonEn;
+    function submitChoice(chosen) {
+      enableButtons(false);
+      const card = deck[currentCardIdx];
+      const isCorrect = chosen === card.answer;
+      const fbox = document.getElementById('feedback-box');
+      const isIndo = window.currentLang === 'id';
 
-      if (choice === current.type) {
-        playSfx('correct');
+      if (isCorrect) {
         score++;
-        document.getElementById('score-display').innerText = score;
+        playSfx('correct');
         playSfx('star');
-        feedback.className = "feedback-box show correct";
-        feedback.innerHTML = isId 
-          ? `✅ Tepat Sekali! (${current.type})<br>${reason}`
-          : `✅ Correct! (${current.type})<br>${reason}`;
+        fbox.className = "feedback-box show correct";
+        fbox.innerHTML = `✅ <strong>${chosen}</strong>! ${isIndo ? card.reasonId : card.reasonEn}`;
+        document.getElementById('score-display').innerText = score;
       } else {
         playSfx('wrong');
-        feedback.className = "feedback-box show wrong";
-        feedback.innerHTML = isId
-          ? `❌ Jawaban yang tepat: ${current.type}<br>${reason}`
-          : `❌ Correct Answer: ${current.type}<br>${reason}`;
+        fbox.className = "feedback-box show wrong";
+        fbox.innerHTML = `❌ Seharusnya <strong>${card.answer}</strong>. ${isIndo ? card.reasonId : card.reasonEn}`;
       }
-      nextBtn.style.display = "inline-flex";
+
+      if (currentCardIdx < deck.length - 1) {
+        document.getElementById('next-btn').style.display = "inline-flex";
+      } else {
+        setTimeout(showAulyaVictory, 1000);
+      }
+    }
+
+    function enableButtons(enabled) {
+      document.querySelectorAll('.sort-buttons button').forEach(b => b.disabled = !enabled);
     }
 
     function nextCard() {
       playSfx('click');
-      currentIndex++;
-      if (currentIndex < deck.length) {
-        document.getElementById('card-num').innerText = currentIndex + 1;
-        document.getElementById('verb-text').innerText = deck[currentIndex].verb;
-        document.getElementById('feedback-box').className = "feedback-box";
-        document.getElementById('next-btn').style.display = "none";
-        document.querySelectorAll('.sort-buttons button').forEach(b => b.disabled = false);
-      } else {
-        triggerGameOutcome(score, 5, "Aulya", null, true);
+      currentCardIdx++;
+      renderCard();
+    }
+
+    function showAulyaVictory() {
+      playSfx('win');
+      launchConfetti();
+      document.getElementById('victory-modal').classList.add('active');
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(score, deck.length, 3, "Aulya mastered Was vs Were Sorter");
       }
     }
 
     initLanguageToggle('en');
+    renderCard();
   </script>
 
   <!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
