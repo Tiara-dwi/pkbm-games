@@ -281,11 +281,20 @@
 
   <div class="ui-layer">
     <header>
-      <div>
-        <span class="badge">Aqlan • Grade 4</span>
-        <span style="margin-left: 10px; font-weight: 700; font-size: 14px;">3D Owl Spatial Quest: "Where is Hootie?"</span>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a href="../index.html" style="text-decoration:none; color:#38bdf8; font-size:13px; font-weight:800; background:rgba(255,255,255,0.08); padding:5px 12px; border-radius:10px; border:1px solid rgba(56,189,248,0.3);">← Portal</a>
+        <select id="student-3d-select" style="background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; border-radius:10px; padding:5px 10px; font-weight:800; font-size:12px; cursor:pointer; outline:none;" onchange="switch3DStudent(this.value)">
+          <option value="aqlan">🛹 Aqlan (Grade 4 • Schema 1)</option>
+          <option value="acip">🔍 Acip (Grade 4 • Meja 4)</option>
+          <option value="kinanti">🏡 Kinanti (Grade 4 • Meja 4)</option>
+          <option value="alisya">🌟 Alisya (Grade 4 • Meja 4 🔊)</option>
+        </select>
+        <span class="badge" id="student-3d-badge">Aqlan • Grade 4</span>
       </div>
       <div class="stats">
+        <button id="btn-tts-listen" onclick="speakCurrentQ()" style="background:rgba(251,191,36,0.15); border:1px solid #fbbf24; color:#fde047; padding:4px 10px; border-radius:14px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+          🔊 <span id="tts-btn-text">Listen</span>
+        </button>
         <span>Score: <span id="score" class="stat-val">0</span></span>
         <span>Streak: <span id="streak" class="stat-val">0</span>⭐</span>
         <span>Level: <span id="level" class="stat-val">1</span>/9</span>
@@ -1113,6 +1122,11 @@
       playCorrectSound();
       document.getElementById('victory-modal').style.display = 'block';
       document.getElementById('final-score').innerText = score;
+      const meta = studentMeta3D[currentStudent3D] || studentMeta3D['aqlan'];
+      const vicH2 = document.querySelector('#victory-modal h2');
+      const vicP = document.querySelector('#victory-modal p');
+      if (vicH2 && meta.victoryTitle) vicH2.innerText = meta.victoryTitle;
+      if (vicP && meta.victoryDesc) vicP.innerText = meta.victoryDesc;
 
       if (window.PKBM_SYNC) {
         window.PKBM_SYNC.reportGameComplete(score, spatialMissions.length * 100, 3, 'Menuntaskan seluruh 9 level 3D Owl Spatial Quest');
@@ -1173,7 +1187,104 @@
     });
 
     // Start with Mission 1
+    
+    // =========================================================================
+    // MULTIGRADE 4TH GRADE STUDENT PROFILES & SPEECH ENGINE
+    // =========================================================================
+    const studentMeta3D = {
+      aqlan: {
+        badge: '🛹 Aqlan • Grade 4 SD',
+        role: 'Kapten Aqlan',
+        greeting: 'Hoo! Halo Kapten Aqlan! Siap mengaktifkan radar spasial 3D?',
+        victoryTitle: 'MISI 3D SELESAI, KAPTEN AQLAN!',
+        victoryDesc: 'Hebat sekali Kapten Aqlan! Kamu telah menguasai seluruh posisi preposisi spasial (in, on, under, beside, behind, in front of) serta formula There is & There are bersama Hootie!'
+      },
+      acip: {
+        badge: '🔍 Acip • Grade 4 SD (Meja 4)',
+        role: 'Detektif Acip',
+        greeting: 'Hoo! Halo Detektif Acip! Mari selidiki letak kotak P3K dan barang kamar tidur!',
+        victoryTitle: 'DETEKTIF TERBAIK, ACIP!',
+        victoryDesc: 'Luar biasa Detektif Acip! Kamu telah membongkar seluruh letak barang kamar tidur dan formula There is / There are dengan presisi 100%!'
+      },
+      kinanti: {
+        badge: '🏡 Kinanti • Grade 4 SD (Meja 4)',
+        role: 'Arsitek Kinanti',
+        greeting: 'Hoo! Halo Kinanti! Amati rancangan ranjang, nakas, dan posisi Hootie di kamar 3D ya!',
+        victoryTitle: 'ARSITEK SPASIAL HEBAT, KINANTI!',
+        victoryDesc: 'Keren sekali Kinanti! Penataan furnitur kamar tidur dan analisis preposisi spasialmu sangat rapi dan akurat!'
+      },
+      alisya: {
+        badge: '🌟 Alisya • Grade 4 SD (Meja 4 🔊)',
+        role: 'Penjelajah Alisya',
+        greeting: 'Hoo! Halo Alisya! Dengarkan suara bahasa Inggris dan temukan posisi Hootie ya! 🔊',
+        victoryTitle: 'BINTANG EMAS SPASIAL, ALISYA! 🌟',
+        victoryDesc: 'Hebat luar biasa Alisya! Kamu mendengarkan suara bahasa Inggris dengan teliti dan menemukan semua posisi Hootie dengan sempurna!',
+        autoTts: true,
+        dyslexia: true
+      }
+    };
+
+    let currentStudent3D = 'aqlan';
+
+    function initStudentProfile() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const studentParam = urlParams.get('student');
+      if (studentParam && studentMeta3D[studentParam]) {
+        currentStudent3D = studentParam;
+      }
+      const selectElem = document.getElementById('student-3d-select');
+      if (selectElem) selectElem.value = currentStudent3D;
+      applyStudent3D(currentStudent3D);
+    }
+
+    function switch3DStudent(studentKey) {
+      currentStudent3D = studentKey;
+      applyStudent3D(studentKey);
+      playHootSound();
+      if (window.history.replaceState) {
+        const newUrl = window.location.pathname + '?student=' + studentKey;
+        window.history.replaceState(null, '', newUrl);
+      }
+    }
+
+    function applyStudent3D(key) {
+      const meta = studentMeta3D[key] || studentMeta3D['aqlan'];
+      const badge = document.getElementById('student-3d-badge');
+      if (badge) badge.innerText = meta.badge;
+
+      if (meta.dyslexia) {
+        document.body.style.letterSpacing = '0.06em';
+      } else {
+        document.body.style.letterSpacing = 'normal';
+      }
+
+      // Update owl greeting in speech bubble if present
+      const bubble = document.getElementById('owl-speech-text');
+      if (bubble) bubble.innerText = meta.greeting;
+
+      if (meta.autoTts) {
+        setTimeout(() => speakCurrentQ(), 600);
+      }
+    }
+
+    function speakCurrentQ() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const mission = spatialMissions[currentMissionIdx];
+      if (!mission) return;
+      const textToSpeak = mission.prompt + (mission.promptSub ? '. ' + mission.promptSub.replace(/_/g, 'blank') : '');
+      const utter = new SpeechSynthesisUtterance(textToSpeak);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+      utter.pitch = 1.05;
+      const btn = document.getElementById('btn-tts-listen');
+      if (btn) btn.style.background = '#fbbf24';
+      utter.onend = () => { if (btn) btn.style.background = 'rgba(251,191,36,0.15)'; };
+      window.speechSynthesis.speak(utter);
+    }
+
     window.onload = () => {
+      initStudentProfile();
       loadMission(0);
       animate();
     };

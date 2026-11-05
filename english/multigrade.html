@@ -682,6 +682,26 @@
         </div>
       </div>
 
+      <!-- 3D OWL SPATIAL QUEST LAUNCHER (AQLAN 3D SCHEMA FOR GRADE 4) -->
+      <div style="background: linear-gradient(135deg, #0F172A, #1E293B); border: 2px solid #38BDF8; border-radius: 18px; padding: 22px; margin-bottom: 24px; box-shadow: 0 0 25px rgba(56, 189, 248, 0.25); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+        <div style="flex: 1; min-width: 260px;">
+          <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(56,189,248,0.2); color:#38BDF8; font-weight:800; font-size:0.8rem; padding:3px 10px; border-radius:12px; margin-bottom:8px; text-transform:uppercase;">
+            🎮 Skema Game 3D Aqlan (Tingkat Lanjut untuk Kelas 4)
+          </div>
+          <div style="color: #F8FAFC; font-weight: 800; font-size: 1.25rem; margin-bottom: 4px;">
+            3D Owl Spatial Quest: "Where is Hootie?" 🦉
+          </div>
+          <div style="color: #94A3B8; font-size: 0.92rem; line-height: 1.5;">
+            Gunakan kontrol mouse untuk memutar, zoom, dan menjelajahi kamar tidur 3D Three.js! Terbangkan burung hantu Hootie ke 9 posisi perabotan nyata (in, on, under, beside, behind, in front of) serta formula There is / There are!
+          </div>
+        </div>
+        <div>
+          <a href="owl_3d.html?student=acip" id="btn-launch-3d-zone1" target="_blank" style="text-decoration: none; background: linear-gradient(135deg, #0284C7, #38BDF8); color: #0F172A; font-weight: 800; padding: 12px 22px; border-radius: 14px; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(56,189,248,0.4);">
+            🚀 Buka Simulasi Kamar 3D ❯
+          </a>
+        </div>
+      </div>
+
       <!-- INTERACTIVE 9-PREPOSITIONS SOUNDBOARD -->
       <h3 style="font-size:1.2rem; margin-bottom:12px; color:#0369A1;" data-en="🔊 Interactive Spatial Radar (Tap to Listen &amp; Practice):" data-id="🔊 Radar Spasial Interaktif (Ketuk untuk Mendengar &amp; Berlatih):">
         🔊 Interactive Spatial Radar (Tap to Listen &amp; Practice):
@@ -1181,6 +1201,10 @@
 
       document.getElementById('profile-name').innerText = profile.name;
       document.getElementById('profile-grade').innerText = profile.grade;
+      const btn3d = document.getElementById('btn-launch-3d-zone1');
+      if (btn3d) {
+        btn3d.href = 'owl_3d.html?student=' + studentId;
+      }
 
       if (profile.autoDyslexia && !isDyslexia) {
         toggleDyslexiaMode(true);
