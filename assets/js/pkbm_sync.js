@@ -210,6 +210,16 @@
         removeLockScreenOverlay();
         break;
 
+      case 'approve_doodle':
+        // Persetujuan Sketsa Doodle dari Dasbor Guru
+        if (typeof window.onTeacherApproveDoodle === 'function') {
+          window.onTeacherApproveDoodle(cmd.questId);
+        } else if (typeof approveDoodle === 'function') {
+          approveDoodle(cmd.questId, true);
+        }
+        showTeacherToast('🎨 Bu Tiara telah menyetujui sketsa doodle Soal ' + (cmd.questId || '') + '! ✨');
+        break;
+
       case 'confetti':
         // Beri hadiah confetti & suara kemenangan dari jauh
         triggerCelebrationEffect(cmd.text);

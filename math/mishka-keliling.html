@@ -581,7 +581,7 @@
                   <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(1, '#1E293B', this)"></button>
                   <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(1, this)">🧹 Hapus</button>
                   <button class="wb-action-btn" onclick="clearWb(1)">Reset</button>
-                  <button id="btn-approve-1" class="wb-action-btn" style="background:#ECFDF5; border:1px solid #10B981; color:#047857; font-weight:800;" onclick="approveDoodle(1)">👩‍🏫 Approve Doodle</button>
+                  <button id="btn-approve-1" class="wb-action-btn" style="background:#FEF3C7; border:1px solid #F59E0B; color:#92400E; font-weight:700;" onclick="showStudentApprovalNotice(1)" title="Klik untuk info persetujuan guru">⏳ Menunggu Approval Guru di Dasbor</button>
                   <button id="btn-sketch-1" class="wb-action-btn" disabled style="opacity:0.45; cursor:not-allowed; background:#F1F5F9; border:1px solid #CBD5E1; color:#94A3B8;" onclick="autoSketch(1)">🔒 Contoh Sketsa</button>
                 </div>
               </div>
@@ -634,7 +634,7 @@
                   <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(2, '#1E293B', this)"></button>
                   <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(2, this)">🧹 Hapus</button>
                   <button class="wb-action-btn" onclick="clearWb(2)">Reset</button>
-                  <button id="btn-approve-2" class="wb-action-btn" style="background:#ECFDF5; border:1px solid #10B981; color:#047857; font-weight:800;" onclick="approveDoodle(2)">👩‍🏫 Approve Doodle</button>
+                  <button id="btn-approve-2" class="wb-action-btn" style="background:#FEF3C7; border:1px solid #F59E0B; color:#92400E; font-weight:700;" onclick="showStudentApprovalNotice(2)" title="Klik untuk info persetujuan guru">⏳ Menunggu Approval Guru di Dasbor</button>
                   <button id="btn-sketch-2" class="wb-action-btn" disabled style="opacity:0.45; cursor:not-allowed; background:#F1F5F9; border:1px solid #CBD5E1; color:#94A3B8;" onclick="autoSketch(2)">🔒 Contoh Sketsa</button>
                 </div>
               </div>
@@ -687,7 +687,7 @@
                   <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(3, '#1E293B', this)"></button>
                   <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(3, this)">🧹 Hapus</button>
                   <button class="wb-action-btn" onclick="clearWb(3)">Reset</button>
-                  <button id="btn-approve-3" class="wb-action-btn" style="background:#ECFDF5; border:1px solid #10B981; color:#047857; font-weight:800;" onclick="approveDoodle(3)">👩‍🏫 Approve Doodle</button>
+                  <button id="btn-approve-3" class="wb-action-btn" style="background:#FEF3C7; border:1px solid #F59E0B; color:#92400E; font-weight:700;" onclick="showStudentApprovalNotice(3)" title="Klik untuk info persetujuan guru">⏳ Menunggu Approval Guru di Dasbor</button>
                   <button id="btn-sketch-3" class="wb-action-btn" disabled style="opacity:0.45; cursor:not-allowed; background:#F1F5F9; border:1px solid #CBD5E1; color:#94A3B8;" onclick="autoSketch(3)">🔒 Contoh Sketsa</button>
                 </div>
               </div>
@@ -864,27 +864,113 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
 
     const wbApproved = { 1: false, 2: false, 3: false };
 
-    function approveDoodle(id) {
+    function showStudentApprovalNotice(id) {
+      if (wbApproved[id]) {
+        alert("🌟 Sketsa Soal " + id + " sudah disetujui Bu Tiara! Tombol 'Contoh Sketsa' sudah aktif.");
+        return;
+      }
+      alert("🔒 Tombol ini HANYA bisa diklik oleh Bu Tiara melalui Dasbor Guru!\n\n👉 Mishka buat coretan sketsa di Whiteboard dulu ya. Nanti Bu Tiara yang akan menekan tombol 'Approve Doodle' dari layar Dasbor Guru.");
+    }
+
+    function approveDoodle(id, fromTeacher) {
+      if (!fromTeacher) {
+        showStudentApprovalNotice(id);
+        return;
+      }
+
       wbApproved[id] = true;
-      playFanfare();
+      try { playFanfare(); } catch(e){}
 
       const btnApprove = document.getElementById('btn-approve-' + id);
-      btnApprove.innerText = '✅ Doodle Disetujui Guru! 🌟';
-      btnApprove.style.background = '#D1FAE5';
-      btnApprove.style.color = '#065F46';
-      btnApprove.style.borderColor = '#10B981';
+      if (btnApprove) {
+        btnApprove.innerText = '✅ Doodle Disetujui Guru! 🌟';
+        btnApprove.style.background = '#D1FAE5';
+        btnApprove.style.color = '#065F46';
+        btnApprove.style.borderColor = '#10B981';
+      }
 
       const btnSketch = document.getElementById('btn-sketch-' + id);
-      btnSketch.disabled = false;
-      btnSketch.innerText = '✨ Contoh Sketsa (Buka)';
-      btnSketch.style.opacity = '1';
-      btnSketch.style.cursor = 'pointer';
-      btnSketch.style.background = '#EDE9FE';
-      btnSketch.style.borderColor = '#C4B5FD';
-      btnSketch.style.color = '#6D28D9';
+      if (btnSketch) {
+        btnSketch.disabled = false;
+        btnSketch.innerText = '✨ Contoh Sketsa (Buka)';
+        btnSketch.style.opacity = '1';
+        btnSketch.style.cursor = 'pointer';
+        btnSketch.style.background = '#EDE9FE';
+        btnSketch.style.borderColor = '#C4B5FD';
+        btnSketch.style.color = '#6D28D9';
+      }
 
-      alert('🎉 Hore! Hasil doodle Mishka telah di-approve Bu Tiara!\nSekarang tombol "Contoh Sketsa" sudah aktif dan bisa dibuka.');
+      // Simpan status agar persetujuan tetap aktif jika tab di-refresh
+      try {
+        localStorage.setItem('pkbm_doodle_approved_' + id, 'true');
+      } catch(e){}
+
+      // Efek perayaan visual
+      showApprovalBanner(id);
     }
+
+    function showApprovalBanner(id) {
+      const banner = document.createElement('div');
+      banner.style.position = 'fixed';
+      banner.style.top = '20px';
+      banner.style.left = '50%';
+      banner.style.transform = 'translateX(-50%)';
+      banner.style.background = 'linear-gradient(135deg, #059669, #10B981)';
+      banner.style.color = 'white';
+      banner.style.padding = '14px 24px';
+      banner.style.borderRadius = '20px';
+      banner.style.boxShadow = '0 10px 25px rgba(0,0,0,0.3)';
+      banner.style.fontWeight = '800';
+      banner.style.fontSize = '1.05rem';
+      banner.style.zIndex = '9999';
+      banner.style.display = 'flex';
+      banner.style.alignItems = 'center';
+      banner.style.gap = '10px';
+      banner.innerHTML = '<span>🎉</span><span>Sketsa Soal ' + id + ' Disetujui Bu Tiara dari Dasbor! Tombol Contoh Sketsa Terbuka! ✨</span>';
+      document.body.appendChild(banner);
+      setTimeout(() => { banner.remove(); }, 4500);
+    }
+
+    // Listener Real-Time dari Dasbor Guru (PKBM Sync, BroadcastChannel, & LocalStorage)
+    window.onTeacherApproveDoodle = function(questId) {
+      approveDoodle(questId, true);
+    };
+
+    try {
+      if ('BroadcastChannel' in window) {
+        const bus = new BroadcastChannel('pkbm_sync_bus');
+        bus.onmessage = function(ev) {
+          if (ev.data && ev.data.action === 'approve_doodle') {
+            if (!ev.data.target || ev.data.target === 'mishka' || ev.data.target === 'all') {
+              approveDoodle(ev.data.questId, true);
+            }
+          }
+        };
+      }
+    } catch(e){}
+
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'pkbm_cmd_mishka' && e.newValue) {
+        try {
+          const cmd = JSON.parse(e.newValue);
+          if (cmd.action === 'approve_doodle') {
+            approveDoodle(cmd.questId, true);
+          }
+        } catch(err){}
+      }
+      if (e.key && e.key.startsWith('pkbm_doodle_approved_') && e.newValue === 'true') {
+        const qid = parseInt(e.key.replace('pkbm_doodle_approved_', ''));
+        if (!isNaN(qid)) approveDoodle(qid, true);
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+      [1, 2, 3].forEach(id => {
+        if (localStorage.getItem('pkbm_doodle_approved_' + id) === 'true') {
+          approveDoodle(id, true);
+        }
+      });
+    });
 
     function initWhiteboard(id) {
       const canvas = document.getElementById('wb-canvas-' + id);

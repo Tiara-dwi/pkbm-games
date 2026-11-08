@@ -473,6 +473,28 @@
           <span>⚡</span>
           <span id="act-mishka">Menunggu Mishka membuka website game...</span>
         </div>
+
+        <!-- DOODLE APPROVAL PANEL FOR MISHKA (KHUSUS DASBOR GURU) -->
+        <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 16px; padding: 14px; margin-top: 16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="font-size:0.9rem; color:#166534;">🎨 Approval Whiteboard Doodle Mishka</strong>
+            <span style="font-size:0.75rem; color:#15803D; font-weight:700;">(Khusus Dasbor Guru)</span>
+          </div>
+          <p style="font-size:0.8rem; color:#15803D; margin:0 0 10px 0; line-height:1.4;">
+            Setelah Mishka mencoret di Whiteboard, klik tombol di bawah untuk membuka kunci <em>"Contoh Sketsa"</em> di layar Mishka:
+          </p>
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+            <button id="teacher-approve-1" style="background:#16A34A; color:white; font-size:0.8rem; font-weight:800; padding:10px 4px; border:none; border-radius:10px; cursor:pointer;" onclick="sendApproveDoodle('mishka', 1)">
+              👩‍🏫 Approve Soal 1
+            </button>
+            <button id="teacher-approve-2" style="background:#16A34A; color:white; font-size:0.8rem; font-weight:800; padding:10px 4px; border:none; border-radius:10px; cursor:pointer;" onclick="sendApproveDoodle('mishka', 2)">
+              👩‍🏫 Approve Soal 2
+            </button>
+            <button id="teacher-approve-3" style="background:#16A34A; color:white; font-size:0.8rem; font-weight:800; padding:10px 4px; border:none; border-radius:10px; cursor:pointer;" onclick="sendApproveDoodle('mishka', 3)">
+              👩‍🏫 Approve Soal 3
+            </button>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -494,6 +516,50 @@
 
   <script>
     // 1. PIN Protection
+    
+    let teacherBroadcastBus = null;
+    try {
+      if ('BroadcastChannel' in window) {
+        teacherBroadcastBus = new BroadcastChannel('pkbm_sync_bus');
+      }
+    } catch(e){}
+
+    function sendApproveDoodle(studentId, questId) {
+      const payload = {
+        action: 'approve_doodle',
+        target: studentId || 'mishka',
+        questId: questId,
+        timestamp: Date.now()
+      };
+      
+      // 1. BroadcastChannel
+      if (teacherBroadcastBus) {
+        try { teacherBroadcastBus.postMessage(payload); } catch(e){}
+      }
+      
+      // 2. LocalStorage
+      try {
+        localStorage.setItem('pkbm_cmd_' + (studentId || 'mishka'), JSON.stringify(payload));
+        localStorage.setItem('pkbm_doodle_approved_' + questId, 'true');
+      } catch(e){}
+      
+      // 3. MQTT
+      if (typeof mqttClient !== 'undefined' && mqttClient && mqttClient.connected) {
+        try {
+          mqttClient.publish('pkbm/tiara/control/' + (studentId || 'mishka'), JSON.stringify(payload), { qos: 0 });
+        } catch(e){}
+      }
+      
+      // Update UI button
+      const btn = document.getElementById('teacher-approve-' + questId);
+      if (btn) {
+        btn.innerText = '✅ Soal ' + questId + ' Disetujui!';
+        btn.style.background = '#059669';
+      }
+      
+      alert('🎨 Berhasil meng-approve sketsa doodle Soal ' + questId + ' untuk Mishka!\nKunci Contoh Sketsa di layar Mishka kini telah terbuka.');
+    }
+
     function checkPin() {
       const input = document.getElementById('pin-input').value;
       if (input === '2026' || input === '1234') {
