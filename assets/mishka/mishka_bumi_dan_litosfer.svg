@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="skyPastel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EEF2FF"/>
+      <stop offset="50%" stop-color="#F5F3FF"/>
+      <stop offset="100%" stop-color="#ECFDF5"/>
+    </linearGradient>
+    <linearGradient id="atmosGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#818CF8" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="oceanBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="mantlePeach" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDBA74"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="coreGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#3B82F6" flood-opacity="0.1"/>
+    </filter>
+    <filter id="planetGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="15" flood-color="#60A5FA" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#skyPastel)"/>
+
+  <!-- Aesthetic Star & Cloud Doodles -->
+  <g fill="#A78BFA" opacity="0.4" font-size="22">
+    <text x="70" y="80">✨</text>
+    <text x="1200" y="100">✨</text>
+    <text x="110" y="650">🌸</text>
+    <text x="1180" y="630">🌿</text>
+    <text x="1220" y="320">⭐</text>
+  </g>
+  <!-- Floating Whimsical Clouds -->
+  <g fill="#FFFFFF" opacity="0.75">
+    <path d="M 80 180 Q 95 160 120 165 Q 145 155 165 175 Q 185 180 175 200 Q 140 215 90 200 Z"/>
+    <path d="M 1080 200 Q 1095 180 1120 185 Q 1145 175 1165 195 Q 1185 200 1175 220 Q 1140 235 1090 220 Z"/>
+  </g>
+
+  <!-- Header Banner -->
+  <g transform="translate(640, 56)" text-anchor="middle">
+    <rect x="-380" y="-30" width="760" height="60" rx="30" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="2.5" filter="url(#softShadow)"/>
+    <rect x="-370" y="-22" width="130" height="44" rx="22" fill="#DBEAFE"/>
+    <text x="-305" y="6" font-size="14" font-weight="800" fill="#2563EB">IPAS KELAS 5</text>
+    <text x="55" y="8" font-size="22" font-weight="900" fill="#1E3A8A" letter-spacing="0.5">
+      🌍 Eksplorasi 3 Selimut &amp; Anatomi Bumi
+    </text>
+  </g>
+
+  <!-- Subtitle Quote -->
+  <text x="640" y="112" text-anchor="middle" font-size="15" font-weight="600" fill="#2563EB">
+    "Bumi kita ibarat telur ajaib: cangkang padat tempat kita berpijak mengapung di atas mantel yang hangat!"
+  </text>
+
+  <!-- LEFT SIDE: 3 SELIMUT BUMI CARDS -->
+  <g transform="translate(60, 140)">
+    
+    <!-- SELIMUT 1: ATMOSFER -->
+    <g transform="translate(0, 0)">
+      <rect width="360" height="140" rx="22" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2" filter="url(#softShadow)"/>
+      <rect x="20" y="16" width="46" height="46" rx="14" fill="#E0F2FE"/>
+      <text x="43" y="46" text-anchor="middle" font-size="22">🌬️</text>
+      <text x="80" y="36" font-size="16" font-weight="900" fill="#0369A1">1. ATMOSFER (Selimut Udara)</text>
+      <text x="80" y="58" font-size="12.5" font-weight="700" fill="#0284C7">Gas pelindung bumi dari meteor &amp; radiasi</text>
+      <text x="24" y="94" font-size="12" font-weight="600" fill="#475569">• Kaya Oksigen ($O_2$) untuk bernapas manusia &amp; satwa.</text>
+      <text x="24" y="116" font-size="12" font-weight="600" fill="#475569">• Menjaga suhu bumi tetap hangat dan nyaman dihuni.</text>
+    </g>
+
+    <!-- SELIMUT 2: LITOSFER -->
+    <g transform="translate(0, 160)">
+      <rect width="360" height="140" rx="22" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="2" filter="url(#softShadow)"/>
+      <rect x="20" y="16" width="46" height="46" rx="14" fill="#DCFCE7"/>
+      <text x="43" y="46" text-anchor="middle" font-size="22">⛰️</text>
+      <text x="80" y="36" font-size="16" font-weight="900" fill="#15803D">2. LITOSFER (Selimut Batuan)</text>
+      <text x="80" y="58" font-size="12.5" font-weight="700" fill="#16A34A">Kerak padat daratan, gunung, &amp; lembah</text>
+      <text x="24" y="94" font-size="12" font-weight="600" fill="#475569">• Tempat kita membangun rumah, sekolah, &amp; jalan.</text>
+      <text x="24" y="116" font-size="12" font-weight="600" fill="#475569">• Terdiri dari lempeng tektonik yang bergerak retak.</text>
+    </g>
+
+    <!-- SELIMUT 3: HIDROSFER -->
+    <g transform="translate(0, 320)">
+      <rect width="360" height="140" rx="22" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="2" filter="url(#softShadow)"/>
+      <rect x="20" y="16" width="46" height="46" rx="14" fill="#EDE9FE"/>
+      <text x="43" y="46" text-anchor="middle" font-size="22">🌊</text>
+      <text x="80" y="36" font-size="16" font-weight="900" fill="#6D28D9">3. HIDROSFER (Selimut Air)</text>
+      <text x="80" y="58" font-size="12.5" font-weight="700" fill="#7C3AED">Menutupi 71% permukaan bumi!</text>
+      <text x="24" y="94" font-size="12" font-weight="600" fill="#475569">• Samudera luas, danau jernih, sungai, hingga kutub es.</text>
+      <text x="24" y="116" font-size="12" font-weight="600" fill="#475569">• Siklus hidrologi abadi: Menguap ➔ Awan ➔ Hujan.</text>
+    </g>
+
+  </g>
+
+  <!-- CENTER: BEAUTIFUL 3D CUTAWAY GLOBE -->
+  <g transform="translate(640, 380)">
+    
+    <!-- Outer Glow Atmosfer Layer -->
+    <circle cx="0" cy="0" r="195" fill="none" stroke="#38BDF8" stroke-width="12" opacity="0.35" filter="url(#planetGlow)"/>
+    <circle cx="0" cy="0" r="185" fill="none" stroke="#93C5FD" stroke-width="4" opacity="0.6"/>
+
+    <!-- Full Earth Sphere Base -->
+    <circle cx="0" cy="0" r="175" fill="url(#oceanBlue)"/>
+
+    <!-- Continents Shape (Pastel Mint Green) -->
+    <path d="M -120 -80 Q -90 -120 -30 -100 Q 10 -80 -10 -40 Q -40 -10 -80 -20 Q -130 -40 -120 -80 Z" fill="#86EFAC"/>
+    <path d="M -40 20 Q 20 0 50 40 Q 30 110 -20 120 Q -70 90 -40 20 Z" fill="#86EFAC"/>
+    <path d="M 60 -110 Q 120 -100 130 -40 Q 110 10 70 -20 Q 50 -70 60 -110 Z" fill="#86EFAC"/>
+    
+    <!-- Cutaway Wedge (Pie Slice to show inside layers) -->
+    <!-- From center (0,0) to angle 0 (right) and angle 90 (bottom) -->
+    <path d="M 0 0 L 175 0 A 175 175 0 0 1 0 175 Z" fill="#FB923C"/>
+    
+    <!-- Mantel Inner Slice (Warm Peach) -->
+    <path d="M 0 0 L 160 0 A 160 160 0 0 1 0 160 Z" fill="url(#mantlePeach)"/>
+
+    <!-- Outer Core Slice (Warm Golden Orange) -->
+    <path d="M 0 0 L 100 0 A 100 100 0 0 1 0 100 Z" fill="#FBBF24"/>
+
+    <!-- Inner Core Slice (Glowing Golden Yellow) -->
+    <path d="M 0 0 L 50 0 A 50 50 0 0 1 0 50 Z" fill="url(#coreGold)"/>
+
+    <!-- Crust Ring Line (Brown/Greenish thin rim) -->
+    <path d="M 175 0 A 175 175 0 0 1 0 175" fill="none" stroke="#78350F" stroke-width="7"/>
+
+    <!-- Cutaway Labels with soft pointer lines -->
+    <g font-size="12" font-weight="800">
+      <!-- Kerak -->
+      <line x1="160" y1="20" x2="210" y2="-10" stroke="#78350F" stroke-width="2"/>
+      <rect x="210" y="-24" width="105" height="24" rx="8" fill="#FEF3C7"/>
+      <text x="262" y="-8" text-anchor="middle" fill="#78350F">Kerak Bumi (Crust)</text>
+
+      <!-- Mantel -->
+      <line x1="120" y1="70" x2="200" y2="60" stroke="#FB923C" stroke-width="2"/>
+      <rect x="200" y="46" width="105" height="24" rx="8" fill="#FFEDD5"/>
+      <text x="252" y="62" text-anchor="middle" fill="#C2410C">Mantel Bumi</text>
+
+      <!-- Inti Bumi -->
+      <line x1="30" y1="30" x2="160" y2="130" stroke="#D97706" stroke-width="2"/>
+      <rect x="160" y="116" width="115" height="24" rx="8" fill="#FEF08A"/>
+      <text x="217" y="132" text-anchor="middle" fill="#854D0E">Inti Bumi (Core)</text>
+    </g>
+
+    <!-- Center sparkle -->
+    <text x="10" y="25" font-size="18">🌟</text>
+  </g>
+
+  <!-- RIGHT SIDE: ANALOGI TELUR REBUS & LEMPENG GEMPA -->
+  <g transform="translate(860, 140)">
+    
+    <!-- CARD 1: ANALOGI TELUR REBUS -->
+    <g transform="translate(0, 0)">
+      <rect width="360" height="225" rx="24" fill="#FFFFFF" stroke="#FED7AA" stroke-width="2.5" filter="url(#softShadow)"/>
+      <rect x="20" y="18" width="160" height="30" rx="15" fill="#FFEDD5"/>
+      <text x="100" y="38" text-anchor="middle" font-size="12.5" font-weight="900" fill="#C2410C">🥚 ANALOGI TELUR REBUS</text>
+      
+      <text x="24" y="76" font-size="15" font-weight="900" fill="#1E293B">Bumi Persis Seperti Telur Rebus:</text>
+      <text x="24" y="104" font-size="12.5" font-weight="700" fill="#475569">1. Cangkang Telur Tipis ➔ <tspan fill="#78350F" font-weight="900">Kerak Bumi</tspan></text>
+      <text x="40" y="122" font-size="11.5" font-weight="600" fill="#64748B">Tempat kita berdiri, tipis &amp; bisa retak!</text>
+      
+      <text x="24" y="146" font-size="12.5" font-weight="700" fill="#475569">2. Putih Telur Padat Panas ➔ <tspan fill="#EA580C" font-weight="900">Mantel Bumi</tspan></text>
+      <text x="40" y="164" font-size="11.5" font-weight="600" fill="#64748B">Lapisan magma tebal yang terus bergolak.</text>
+
+      <text x="24" y="188" font-size="12.5" font-weight="700" fill="#475569">3. Kuning Telur di Pusat ➔ <tspan fill="#D97706" font-weight="900">Inti Bumi</tspan></text>
+      <text x="40" y="206" font-size="11.5" font-weight="600" fill="#64748B">Sangat padat, besi membara seperti oven raksasa!</text>
+    </g>
+
+    <!-- CARD 2: LEMPENG RETAK & GEMPA BUMI -->
+    <g transform="translate(0, 245)">
+      <rect width="360" height="215" rx="24" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="2.5" filter="url(#softShadow)"/>
+      <rect x="20" y="18" width="180" height="30" rx="15" fill="#F3E8FF"/>
+      <text x="110" y="38" text-anchor="middle" font-size="12.5" font-weight="900" fill="#7C3AED">⚡ MENGAPA BUMI BERUBAH?</text>
+      
+      <text x="24" y="76" font-size="15" font-weight="900" fill="#1E293B">Lempeng Tektonik yang Mengapung</text>
+      <text x="24" y="102" font-size="12" font-weight="600" fill="#475569">• Kerak bumi tidak menyatu bulat utuh, tetapi terbagi menjadi kepingan puzzle (lempeng tektonik).</text>
+      <text x="24" y="140" font-size="12" font-weight="600" fill="#475569">• <tspan font-weight="800" fill="#9333EA">Tabrakan Lempeng:</tspan> Membentuk jajaran pegunungan tinggi dan memicu gempa bumi.</text>
+      <text x="24" y="178" font-size="12" font-weight="600" fill="#475569">• <tspan font-weight="800" fill="#9333EA">Patahan Retakan:</tspan> Magma dari mantel keluar menjadi gunung berapi.</text>
+    </g>
+
+  </g>
+
+  <!-- Bottom Floating Ribbon Note -->
+  <g transform="translate(640, 665)" text-anchor="middle">
+    <rect x="-340" y="-18" width="680" height="36" rx="18" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5"/>
+    <text y="5" font-size="13" font-weight="800" fill="#1D4ED8">
+      🌸 Pesan Sains Mishka: Menjaga bumi berarti merawat litosfer, hidrosfer, dan atmosfer agar tetap harmonis!
+    </text>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -6,75 +6,6 @@
   <title>Portal Game Pembelajaran Interaktif - PKBM Penerus Bangsa</title>
   <link rel="stylesheet" href="assets/style.css">
   <style>
-    /* Solar System Cosmic Educational Background & Theme */
-    body {
-      background: linear-gradient(180deg, rgba(11, 15, 25, 0.72) 0%, rgba(15, 23, 42, 0.82) 40%, rgba(11, 15, 25, 0.90) 100%),
-                  url('assets/canva_visuals/tata_surya_filosofi_pendidikan.jpg') center top / cover no-repeat fixed;
-      color: var(--text-dark);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow-x: hidden;
-    }
-    .header-bar {
-      background: rgba(255, 255, 255, 0.94) !important;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .container {
-      position: relative;
-      z-index: 1;
-    }
-    .philosophy-banner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin: -8px auto 26px auto;
-      max-width: 950px;
-      background: rgba(15, 23, 42, 0.82);
-      border: 1px solid rgba(56, 189, 248, 0.5);
-      border-radius: 40px;
-      padding: 10px 24px;
-      color: #E0F2FE;
-      font-size: 0.93rem;
-      line-height: 1.5;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-      text-align: center;
-      animation: fadeIn 0.4s ease;
-    }
-    @keyframes floatCosmic {
-      0% {
-        transform: translateY(105vh) rotate(0deg) scale(0.7);
-        opacity: 0;
-      }
-      15% {
-        opacity: 0.85;
-      }
-      85% {
-        opacity: 0.85;
-      }
-      100% {
-        transform: translateY(-50px) rotate(360deg) scale(1.15);
-        opacity: 0;
-      }
-    }
-    .cosmic-particle {
-      position: fixed;
-      pointer-events: none;
-      z-index: 0;
-      filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.8));
-      user-select: none;
-    }
-
     .hero-banner {
       background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
       color: white;
@@ -101,14 +32,10 @@
       justify-content: center;
       gap: 12px;
       margin-bottom: 32px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      padding: 8px;
+      background: #E2E8F0;
+      padding: 6px;
       border-radius: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      max-width: 950px;
+      max-width: 480px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -246,21 +173,14 @@
       <div id="brand-title">PKBM Penerus Bangsa</div>
     </div>
 
-    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-      <a href="dashboard.html" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #0284C7, #00F2FE); color:#0F172A; font-weight:800; font-size:0.86rem; padding:8px 18px; border-radius:24px; box-shadow:0 4px 15px rgba(0, 242, 254, 0.35); transition:all 0.2s;">
-        <span style="font-size:16px;">🛰️</span>
-        <span>Teacher Radar &amp; Raport</span>
-      </a>
-
-      <!-- Toggle Bahasa / Language Switcher -->
-      <div class="lang-toggle-container">
-        <button class="lang-toggle-btn active" id="toggle-id" onclick="setLanguage('indo')">
-          🇮🇩 Indonesia
-        </button>
-        <button class="lang-toggle-btn lang-en" id="toggle-en" onclick="setLanguage('eng')">
-          🇬🇧 English
-        </button>
-      </div>
+    <!-- Toggle Bahasa / Language Switcher -->
+    <div class="lang-toggle-container">
+      <button class="lang-toggle-btn active" id="toggle-id" onclick="setLanguage('indo')">
+        🇮🇩 Indonesia
+      </button>
+      <button class="lang-toggle-btn lang-en" id="toggle-en" onclick="setLanguage('eng')">
+        🇬🇧 English
+      </button>
     </div>
   </div>
 
@@ -268,12 +188,6 @@
     <div class="hero-banner" id="hero-banner">
       <h1 class="hero-title" id="banner-title">🎮 Petualangan Belajar Interaktif</h1>
       <p class="hero-sub" id="banner-sub">Pilih mata pelajaran, cari namamu, dan selesaikan misi petualangan kata hari ini!</p>
-    </div>
-
-    <!-- FILOSOFI TATA SURYA PENDIDIKAN (KI HAJAR DEWANTARA) -->
-    <div class="philosophy-banner" id="philosophy-banner">
-      <span style="font-size: 1.35rem;">🪐☀️</span>
-      <span id="philosophy-text"><strong>Filosofi Tata Surya Pendidikan:</strong> Seperti planet yang beredar harmonis pada orbitnya masing-masing mengelilingi matahari, setiap anak bertumbuh merdeka sesuai kodrat, bakat, dan ritmenya.</span>
     </div>
 
     <!-- TABS SWITCHER -->
@@ -290,11 +204,11 @@
       <a href="science/index.html" class="tab-btn" style="text-decoration:none; color:#0D9488; font-weight:700;">
         🔬 Sains IPAS
       </a>
+      <a href="pancasila/index.html" class="tab-btn" style="text-decoration:none; color:#E11D48; font-weight:700;">
+        🛡️ Pancasila
+      </a>
       <a href="pai/index.html" class="tab-btn" style="text-decoration:none; color:#047857; font-weight:700;">
         🕌 PAI
-      </a>
-      <a href="bab3.html" class="tab-btn" style="text-decoration:none; background:linear-gradient(135deg, #4F46E5, #06B6D4); color:white; font-weight:800; box-shadow:0 4px 14px rgba(79,70,229,0.35);">
-        ⭐ 3 Game Bab 3 (Terpadu)
       </a>
     </div>
 
@@ -302,74 +216,6 @@
     <!-- 1. PANE BAHASA INDONESIA -->
     <!-- ========================================================================= -->
     <div class="subject-pane active" id="pane-indo">
-      <!-- SESI ONLINE GOOGLE MEET: AQLAN & MISHKA -->
-      <div class="grade-section" style="background: linear-gradient(135deg, #0F172A, #1E293B); padding: 20px; border-radius: 16px; border: 1px solid #38BDF8; margin-bottom: 30px;">
-        <div class="grade-header">
-          <span class="grade-badge" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">Google Meet Online</span>
-          <span class="grade-topic" style="color: #38BDF8;">Bab 3: Sesi Interaktif 1-on-1 Aqlan (Kelas 4) &amp; Mishka (Kelas 5)</span>
-        </div>
-        <div class="student-grid">
-          <a href="bahasa/aqlan.html" class="student-card" style="border: 2px solid #00F2FE;">
-            <div>
-              <div class="student-avatar" style="background:#0F172A; color:#00F2FE;">🛹</div>
-              <div class="name-title">Aqlan (Kelas 4)</div>
-              <div class="game-title" style="color:#0284C7;">Skater City Rush: Radar Rambu &amp; Argumen</div>
-              <div class="game-desc">Taklukkan sirkuit kota! Kenali 4 kode warna rambu lalu lintas &amp; tembakkan kombo kalimat argumentasi.</div>
-            </div>
-            <div class="start-arrow" style="color:#0284C7;">Mulai Meluncur →</div>
-          </a>
-
-          <a href="bahasa/aqlan_traffic_3d.html" class="student-card" style="border: 2px solid #38BDF8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.35); background: linear-gradient(135deg, #0F172A, #0369A1);">
-            <div>
-              <div class="student-avatar" style="background:#0284C7; color:#FBBF24;">🛹</div>
-              <div class="name-title" style="color:#38BDF8;">Aqlan (Kelas 4) • Game Utama 3D ✨</div>
-              <div class="game-title" style="color:#FBBF24;">Navigasi Rambu Kota 3D: Kapten Aqlan &amp; Pak Polisi Arya</div>
-              <div class="game-desc">Perempatan Jalan 3D! Kapten Aqlan meluncur di atas skateboard bersama Pak Polisi Arya di penyeberangan zebra cross, menganalisis rambu lalu lintas pada tiang baja realistis, arah mata angin, dan deskripsi vs argumentasi.</div>
-            </div>
-            <div class="start-arrow" style="color:#38BDF8;">Mulai Petualangan Skateboard ❯</div>
-          </a>
-
-          <a href="bahasa/mishka_interview_3d.html" class="student-card" style="border: 2px solid #34D399; box-shadow: 0 0 20px rgba(52, 211, 153, 0.35); background: linear-gradient(135deg, #042F2E, #064E3B);">
-            <div>
-              <div class="student-avatar" style="background:#065F46; color:#FBBF24;">🎙️</div>
-              <div class="name-title" style="color:#34D399;">Mishka (Kelas 5) • Bab 4 3D ✨</div>
-              <div class="game-title" style="color:#FBBF24;">Simulasi Wawancara 3D: Jurnalis Cilik</div>
-              <div class="game-desc">Studio Wawancara 3D! Mishka berperan sebagai interviewer mewawancarai pengusaha Ibu Nadya, memilih pertanyaan santun (ADiKSiMBa) &amp; idiom bisnis.</div>
-            </div>
-            <div class="start-arrow" style="color:#34D399;">Mulai Wawancara ❯</div>
-          </a>
-
-          <a href="bahasa/mishka.html" class="student-card" style="border: 2px solid #10B981;">
-            <div>
-              <div class="student-avatar" style="background:#ECFDF5; color:#047857;">🌿</div>
-              <div class="name-title">Mishka (Kelas 5) • Bab 3</div>
-              <div class="game-title" style="color:#047857;">The Procedural Lab: Arsitek Langkah &amp; Surat</div>
-              <div class="game-desc">Laboratorium Ghibli: Susun urutan prosedur senam &amp; botani, kuasai akhiran -kan/-lah, dan detektif surat pribadi.</div>
-            </div>
-            <div class="start-arrow" style="color:#047857;">Masuk Laboratorium →</div>
-          </a>
-
-          <a href="bahasa/catatan_textbook.html" class="student-card" style="border: 2px solid #A855F7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.35); background: linear-gradient(135deg, #1E1B4B, #3B0764); grid-column: span 2;">
-            <div>
-              <div class="student-avatar" style="background:#6B21A8; color:#FDE047;">📖</div>
-              <div class="name-title" style="color:#C084FC;">Buku Catatan Teks Pelajaran (Aqlan &amp; Mishka) ✨</div>
-              <div class="game-title" style="color:#FDE047;">Catatan Pendamping Kurikulum Merdeka (B. Indonesia)</div>
-              <div class="game-desc">Rangkuman materi saku lengkap: Tabel 4 warna rambu lalu lintas, denah mata angin, beda deskripsi vs argumentasi, anatomi 4 pilar prosedur, serta formula wawancara ADIKSIMBA (5W1H). Siap dibaca di semua perangkat &amp; bisa dicetak/PDF!</div>
-            </div>
-            <div class="start-arrow" style="color:#C084FC;">Buka Catatan Belajar ❯</div>
-          </a>
-
-          <a href="bahasa/tugas_mandiri.html" class="student-card" style="border: 2px solid #F59E0B; box-shadow: 0 0 20px rgba(245, 158, 11, 0.35); background: linear-gradient(135deg, #451A03, #78350F); grid-column: span 2;">
-            <div>
-              <div class="student-avatar" style="background:#B45309; color:#FEF3C7;">📝</div>
-              <div class="name-title" style="color:#FBBF24;">Lembar Tugas Mandiri di Rumah (Asynchronous Task) ✨</div>
-              <div class="game-title" style="color:#FEF3C7;">Misi Lapangan Aqlan (Kelas 4) &amp; Investigasi Mishka (Kelas 5)</div>
-              <div class="game-desc">Tugas mandiri terstruktur saat siswa belajar dari rumah: Misi pemburu rambu &amp; teks argumentasi Aqlan, serta arsitek prosedur hobi &amp; daftar pertanyaan wawancara ADIKSIMBA Mishka. Dilengkapi fitur cetak lembar tugas / PDF!</div>
-            </div>
-            <div class="start-arrow" style="color:#FBBF24;">Buka Lembar Tugas ❯</div>
-          </a>
-        </div>
-      </div>
       <!-- KELAS 4 INDO -->
       <div class="grade-section">
         <div class="grade-header">
@@ -482,141 +328,41 @@
     <!-- 2. PANE ENGLISH CLASS -->
     <!-- ========================================================================= -->
     <div class="subject-pane" id="pane-eng">
-      <!-- SESI ONLINE GOOGLE MEET: AQLAN & MISHKA -->
-      <div class="grade-section" style="background: linear-gradient(135deg, #0F172A, #1E293B); padding: 20px; border-radius: 16px; border: 1px solid #38BDF8; margin-bottom: 30px;">
-        <div class="grade-header">
-          <span class="grade-badge" style="background: linear-gradient(135deg, #0284C7, #00F2FE); color: #0F172A; font-weight: 800;">Google Meet Online</span>
-          <span class="grade-topic" style="color: #38BDF8;">Schema 1: 1-on-1 English Duel • Aqlan (Grade 4) &amp; Mishka (Grade 5)</span>
-        </div>
-        <div class="student-grid">
-          <a href="english/aqlan_craft.html" class="student-card" style="border: 2px solid #00F2FE; box-shadow: 0 0 15px rgba(0,242,254,0.3);">
-            <div>
-              <div class="student-avatar" style="background:#0F172A; color:#00F2FE;">🛹</div>
-              <div class="name-title">Aqlan (Grade 4)</div>
-              <div class="game-title" style="color:#0284C7;">Skater Action Runner: Present Continuous Blast</div>
-              <div class="game-desc">Extreme Skater Arena: Kuasai kereta gandeng To Be (is/am/are), 3 mantra ejaan sakti (-ing), &amp; misi aksi tubuh!</div>
-            </div>
-            <div class="start-arrow" style="color:#0284C7;">Start Action ❯</div>
-          </a>
-
-          <a href="english/mishka.html" class="student-card" style="border: 2px solid #34D399;">
-            <div>
-              <div class="student-avatar" style="background:#042F2E; color:#34D399;">🏛️</div>
-              <div class="name-title">Mishka (Grade 5) • Unit 2</div>
-              <div class="game-title" style="color:#059669;">The Time Machine Lab: Irregular Verbs &amp; Past Diary</div>
-              <div class="game-desc">Ekspedisi Museum &amp; Senam: Kuasai Simple Past Tense (S + V2), 12 bunglon emas, &amp; detektif time paradox!</div>
-            </div>
-            <div class="start-arrow" style="color:#059669;">Enter Lab ❯</div>
-          </a>
-
-          <a href="english/owl_3d.html" class="student-card" style="border: 2px solid #38BDF8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.35); background: linear-gradient(135deg, #0F172A, #1E293B);">
-            <div>
-              <div class="student-avatar" style="background:#0284C7; color:#FFFFFF;">🦉</div>
-              <div class="name-title" style="color:#38BDF8;">Aqlan (Grade 4) • Unit 5 3D Quest ✨</div>
-              <div class="game-title" style="color:#38BDF8;">3D Owl Spatial Quest: "Where is Hootie?"</div>
-              <div class="game-desc">Game Web 3D Interaktif! Burung hantu Hootie memandu 9 level: Kuasai 6 preposisi spasial (in, on, under, beside, behind, in front of) serta 3 misi detektif "There is" &amp; "There are"!</div>
-            </div>
-            <div class="start-arrow" style="color:#38BDF8;">Explore 3D Room ❯</div>
-          </a>
-
-          <a href="english/mishka_clinic_3d.html" class="student-card" style="border: 2px solid #34D399; box-shadow: 0 0 20px rgba(52, 211, 153, 0.35); background: linear-gradient(135deg, #042F2E, #065F46);">
-            <div>
-              <div class="student-avatar" style="background:#064E3B; color:#FBBF24;">🩺</div>
-              <div class="name-title" style="color:#34D399;">Mishka (Grade 5) • 3D Clinic ✨</div>
-              <div class="game-title" style="color:#FBBF24;">Dr. Mishka's 3D Virtual Clinic &amp; ER</div>
-              <div class="game-desc">Simulasi Klinik Dokter 3D Ghibli! Periksa 4 pasien dengan keluhan nyata (stomachache, toothache, fever, athlete sprain) &amp; racik resep 'should/should not'!</div>
-            </div>
-            <div class="start-arrow" style="color:#34D399;">Masuk Ruang Praktik 3D ❯</div>
-          </a>
-
-          <a href="english/catatan_textbook.html" class="student-card" style="border: 2px solid #A855F7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.35); background: linear-gradient(135deg, #1E1B4B, #3B0764); grid-column: span 2;">
-            <div>
-              <div class="student-avatar" style="background:#6B21A8; color:#FDE047;">📖</div>
-              <div class="name-title" style="color:#C084FC;">English Textbook Study Companion (Aqlan &amp; Mishka) ✨</div>
-              <div class="game-title" style="color:#FDE047;">Catatan Pendamping Kurikulum Merdeka (English Unit 4 &amp; 5)</div>
-              <div class="game-desc">Rangkuman materi saku lengkap: Tabel 6 preposisi spasial (in, on, under, etc.), formula sakti "There is vs There are", 8 keluhan medis &amp; resep anjuran/pantangan "should/shouldn't". Siap dibaca di semua perangkat &amp; bisa dicetak/PDF!</div>
-            </div>
-            <div class="start-arrow" style="color:#C084FC;">Buka Catatan Belajar ❯</div>
-          </a>
-
-          <a href="english/mishka_unit4.html" class="student-card" style="border: 2px solid #10B981;">
-            <div>
-              <div class="student-avatar" style="background:#042F2E; color:#10B981;">🩺</div>
-              <div class="name-title">Mishka (Grade 5) • Unit 4</div>
-              <div class="game-title" style="color:#059669;">Dr. Mishka's Medical Clinic: Symptoms &amp; Rx</div>
-              <div class="game-desc">Klinik Dokter Spesialis: Diagnosis 7 keluhan medis (stomachache, headache, etc.) &amp; formulasi resep 'should/should not'!</div>
-            </div>
-            <div class="start-arrow" style="color:#059669;">Open Clinic ❯</div>
-          </a>
-        </div>
-      </div>
-      <!-- FEATURED MULTIGRADE ENGLISH QUEST (NEW!) -->
-      <div style="margin-bottom: 32px;">
-        <a href="english/multigrade.html" class="student-card" style="border: 2px solid #0284C7; box-shadow: 0 10px 30px rgba(2, 132, 199, 0.25); background: linear-gradient(135deg, #0369A1, #0284C7 50%, #7C3AED); color: white; padding: 26px;">
-          <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
-            <div style="flex:1; min-width:280px;">
-              <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.22); padding:4px 12px; border-radius:20px; font-size:0.85rem; font-weight:800; text-transform:uppercase; margin-bottom:10px;">
-                <span>🌟 ALL TABLES MULTIGRADE ADVENTURE (KELAS 4, 5, 6 SD)</span>
-              </div>
-              <div style="font-family:'Fredoka', cursive; font-size:1.8rem; font-weight:700; margin-bottom:8px; color:#FDE047;">
-                The Mystery House &amp; Health Clinic Adventure 🏡🩺📜
-              </div>
-              <div style="font-size:0.95rem; opacity:0.95; line-height:1.5;">
-                Game Interaktif Multigrade Terpadu! Pilih nama siswa (Acip, Kinanti, Alisya, Ardiansyah, Shan, Selvi, Aulya, Hendra): Jelajahi 9 Preposisi &amp; Perabotan Kamar (Meja 4), Resep Medis Should/Shouldn't (Meja 5), Arsip Masa Lalu Was/Were (Meja 6), serta Estafet Darurat Akbar!
-              </div>
-            </div>
-            <div style="text-align:right;">
-              <span class="start-arrow" style="color:#FDE047; font-size:1.2rem; font-weight:800; background:rgba(0,0,0,0.2); padding:10px 18px; border-radius:30px; display:inline-block;">Mainkan Quest Terpadu ❯</span>
-            </div>
-          </div>
-        </a>
-      </div>
-
       <!-- GRADE 4 ENGLISH -->
       <div class="grade-section">
         <div class="grade-header">
-          <span class="grade-badge" style="background: linear-gradient(135deg, #0284C7, #00F2FE); color: #0F172A; font-weight: 800;">Grade 4 SD • 3D Game Schema 🦉</span>
-          <span class="grade-topic">Unit 5: 3D Owl Spatial Adventure ("Where is Hootie?") • Prepositions &amp; "There is / There are"</span>
+          <span class="grade-badge" style="background:#0284C7;">Grade 4</span>
+          <span class="grade-topic">Things in The Kitchen & Daily Actions (Present Continuous)</span>
         </div>
         <div class="student-grid">
-          <a href="english/owl_3d.html?student=acip" class="student-card" style="border: 2px solid #38BDF8; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.25);">
+          <a href="english/acip.html" class="student-card">
             <div>
-              <div class="student-avatar" style="background:#0F172A; color:#38BDF8;">🔍</div>
-              <div class="name-title" style="color:#0284C7;">Acip (Grade 4 • Meja 4)</div>
-              <div class="game-title" style="color:#0369A1;">3D Owl Spatial Quest: Detective Mode</div>
-              <div class="game-desc">Jelajahi kamar 3D interaktif Three.js bersama Hootie: Selidiki 9 posisi preposisi (under, on, behind, between), barang kamar, dan kotak P3K!</div>
+              <div class="student-avatar" style="background:#E0F2FE;">🍳</div>
+              <div class="name-title">Acip</div>
+              <div class="game-title">Kitchen Grammar & Safety Detective</div>
+              <div class="game-desc">Analyze Present Continuous (Verb-ing), kitchen prepositions, and safety logic.</div>
             </div>
-            <div class="start-arrow" style="color:#0284C7;">Masuk Kamar 3D ❯</div>
+            <div class="start-arrow" style="color:#0284C7;">Start Mission →</div>
           </a>
 
-          <a href="english/owl_3d.html?student=kinanti" class="student-card" style="border: 2px solid #10B981; box-shadow: 0 4px 18px rgba(16, 185, 129, 0.25);">
+          <a href="english/kinanti.html" class="student-card">
             <div>
-              <div class="student-avatar" style="background:#064E3B; color:#34D399;">🏡</div>
-              <div class="name-title" style="color:#059669;">Kinanti (Grade 4 • Meja 4)</div>
-              <div class="game-title" style="color:#047857;">3D Owl Spatial Quest: Architect Mode</div>
-              <div class="game-desc">Putar dan zoom kamera 3D untuk mengamati denah kamar, posisi perabotan ranjang &amp; meja belajar, serta formula There is vs There are!</div>
+              <div class="student-avatar" style="background:#ECFDF5;">🥗</div>
+              <div class="name-title">Kinanti</div>
+              <div class="game-title">Kitchen Actions & Recipe Sequencer</div>
+              <div class="game-desc">Reorder morning kitchen steps and complete daily action sentences.</div>
             </div>
-            <div class="start-arrow" style="color:#059669;">Masuk Kamar 3D ❯</div>
+            <div class="start-arrow" style="color:#10B981;">Start Mission →</div>
           </a>
 
-          <a href="english/owl_3d.html?student=alisya" class="student-card special-alisya" style="border: 2px solid #F59E0B; box-shadow: 0 4px 18px rgba(245, 158, 11, 0.25);">
+          <a href="english/alisya.html" class="student-card special-alisya">
             <div>
-              <div class="student-avatar" style="background:#451A03; color:#FBBF24;">🌟</div>
-              <div class="name-title" style="color:#B45309;">Alisya (Grade 4 • Meja 4)</div>
-              <div class="game-title" style="color:#92400E;">3D Owl Spatial: Audio &amp; Dyslexia Mode 🔊</div>
-              <div class="game-desc">Mode 3D ramah baca dengan Text-to-Speech audio otomatis! Dengarkan suara bahasa Inggris Hootie dan klik letak posisi 3D di kamar tidur!</div>
+              <div class="student-avatar" style="background:#FEF3C7;">🌟</div>
+              <div class="name-title">Alisya</div>
+              <div class="game-title">Kitchen & Food Audio Explorer</div>
+              <div class="game-desc">Tap picture cards, listen to clear English pronunciation, and collect stars.</div>
             </div>
-            <div class="start-arrow" style="color:#D97706;">Masuk Kamar 3D 🔊 ❯</div>
-          </a>
-
-          <a href="english/owl_3d.html?student=aqlan" class="student-card" style="border: 2px solid #00F2FE; box-shadow: 0 4px 18px rgba(0, 242, 254, 0.3); background: linear-gradient(135deg, #0F172A, #1E293B);">
-            <div>
-              <div class="student-avatar" style="background:#0284C7; color:#FFFFFF;">🛹</div>
-              <div class="name-title" style="color:#38BDF8;">Aqlan (Grade 4 • Schema 1)</div>
-              <div class="game-title" style="color:#38BDF8;">3D Owl Spatial Quest: Kinetic Skater</div>
-              <div class="game-desc">Eksplorasi ruang 3D orisinal Aqlan: 9 level tantangan preposisi spasial, kamera terbang dinamis, dan misi detektif There is / There are!</div>
-            </div>
-            <div class="start-arrow" style="color:#38BDF8;">Masuk Kamar 3D ❯</div>
+            <div class="start-arrow" style="color:#D97706;">Start Mission 🔊 →</div>
           </a>
         </div>
       </div>
@@ -625,25 +371,15 @@
       <div class="grade-section">
         <div class="grade-header">
           <span class="grade-badge" style="background:#059669;">Grade 5</span>
-          <span class="grade-topic">Health Diagnoses, Subject Agreements &amp; Doctor's Advice (Should / Shouldn't + Verb 1)</span>
+          <span class="grade-topic">Tastes, Foods & Quantifying Nouns (Countable vs Uncountable)</span>
         </div>
         <div class="student-grid">
-          <a href="english/ardiansyah_clinic_3d.html" class="student-card" style="border: 2px solid #34D399; box-shadow: 0 0 15px rgba(52, 211, 153, 0.35);">
-            <div>
-              <div class="student-avatar" style="background:#ECFDF5;">🩺✨</div>
-              <div class="name-title" style="color:#059669;">Dr. Ardiansyah • 3D Clinic 🎮</div>
-              <div class="game-title">Dr. Ardiansyah's 3D Virtual Clinic: Symptoms &amp; Pure Rx</div>
-              <div class="game-desc">Ruang periksa 3D WebGL: periksa pasien Jordan &amp; Nia, racik resep 'Should / Shouldn't + Pure Verb 1' dengan terjemahan dwibahasa!</div>
-            </div>
-            <div class="start-arrow" style="color:#059669;">Mainkan 3D →</div>
-          </a>
-
           <a href="english/ardiansyah.html" class="student-card">
             <div>
-              <div class="student-avatar" style="background:#ECFDF5;">🩺</div>
+              <div class="student-avatar" style="background:#ECFDF5;">🍜</div>
               <div class="name-title">Ardiansyah</div>
-              <div class="game-title">Dr. Ardiansyah's Clinic: Symptoms &amp; Rx Formulations</div>
-              <div class="game-desc">Diagnose 7 illnesses, master have/has got, and dispense pure Verb 1 prescriptions for Nia and Jordan.</div>
+              <div class="game-title">Food & Quantifier Detective</div>
+              <div class="game-desc">Match food containers (a bowl of, a glass of, a bar of) and delicious tastes.</div>
             </div>
             <div class="start-arrow" style="color:#059669;">Start Mission →</div>
           </a>
@@ -654,25 +390,15 @@
       <div class="grade-section">
         <div class="grade-header">
           <span class="grade-badge" style="background:#7C3AED;">Grade 6</span>
-          <span class="grade-topic">Unit 3 &amp; 4: Nominal Past Tense (Was / Were) &amp; Past Feelings/Conditions</span>
+          <span class="grade-topic">Simple Past Tense: Weekend Activities & Experiences</span>
         </div>
         <div class="student-grid">
-          <a href="english/grade6_archive_3d.html" class="student-card" style="border: 2px solid #818CF8; box-shadow: 0 0 15px rgba(129, 140, 248, 0.35);">
-            <div>
-              <div class="student-avatar" style="background:#EEF2FF;">🏛️✨</div>
-              <div class="name-title" style="color:#4F46E5;">Grade 6 • 3D Archive 🎮</div>
-              <div class="game-title">3D Time-Travel Medical Archive &amp; Was/Were Case Files</div>
-              <div class="game-desc">Ruang arsip detektif 3D Three.js: 8 soal pilihan ganda was/were dwibahasa untuk Shan, Selvi, Aulya, &amp; Hendra!</div>
-            </div>
-            <div class="start-arrow" style="color:#4F46E5;">Mainkan 3D →</div>
-          </a>
-
           <a href="english/selvi.html" class="student-card">
             <div>
-              <div class="student-avatar" style="background:#FAF5FF;">📜</div>
+              <div class="student-avatar" style="background:#FAF5FF;">🏛️</div>
               <div class="name-title">Selvi</div>
-              <div class="game-title">Was/Were &amp; Clinical Diary Editor</div>
-              <div class="game-desc">Edit past health clinic logs, spot was/were agreement errors, and reconstruct negative past forms.</div>
+              <div class="game-title">Past Tense Diary & Travel Editor</div>
+              <div class="game-desc">Spot past verb errors, classify regular/irregular verbs, and edit past sentences.</div>
             </div>
             <div class="start-arrow" style="color:#7C3AED;">Start Mission →</div>
           </a>
@@ -681,8 +407,8 @@
             <div>
               <div class="student-avatar" style="background:#F5F3FF;">⚖️</div>
               <div class="name-title">Aulya</div>
-              <div class="game-title">Was vs Were Past Classifier</div>
-              <div class="game-desc">Fast classification of singular (was) and plural (were) past sentences with instant feedback!</div>
+              <div class="game-title">Regular vs Irregular Past Verb Sorter</div>
+              <div class="game-desc">Sort past verbs (visited, went, bought, cooked) into proper grammatical boxes.</div>
             </div>
             <div class="start-arrow" style="color:#7C3AED;">Start Mission →</div>
           </a>
@@ -692,17 +418,17 @@
               <div class="student-avatar" style="background:#FEF2F2;">⚡</div>
               <div class="name-title">Shan</div>
               <div class="game-title">Rapid Past Tense Sprint Quiz</div>
-              <div class="game-desc">Fast-paced was/were challenges with streak bonuses, high energy bars, and gold medal badges!</div>
+              <div class="game-desc">Fast-paced Verb 2 challenges with streak bonuses and gold medal badges!</div>
             </div>
             <div class="start-arrow" style="color:#DC2626;">Start Mission →</div>
           </a>
 
           <a href="english/hendra.html" class="student-card">
             <div>
-              <div class="student-avatar" style="background:#F0FDF4;">🔍</div>
+              <div class="student-avatar" style="background:#F0FDF4;">📖</div>
               <div class="name-title">Hendra</div>
-              <div class="game-title">5W+1H Past Case Investigator (Was/Were)</div>
-              <div class="game-desc">Investigate WHO, WHERE, WHEN, WHY, and HOW WAS/WERE from Nia's Tuesday gymnastics case.</div>
+              <div class="game-title">5W+1H Past Diary Investigator</div>
+              <div class="game-desc">Investigate WHO, WHERE, WHEN, WHAT, and HOW from Shine, Zahra & Yusman's diary.</div>
             </div>
             <div class="start-arrow" style="color:#16A34A;">Start Mission →</div>
           </a>
@@ -714,6 +440,46 @@
     <!-- 3. PANE MATEMATIKA (METODE BU AJENG - KPK & FPB) -->
     <!-- ========================================================================= -->
     <div class="subject-pane" id="pane-math">
+      <!-- SESI TERBARU: BAB 3 & BAB 4 -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <span class="grade-badge" style="background:linear-gradient(135deg, #BE185D 0%, #7C3AED 100%);">🔥 Sesi Mengajar Besok (Privat 1-on-1)</span>
+          <span class="grade-topic">Kurikulum Merdeka — Bab 3 & Bab 4 Bersama Bu Tiara</span>
+        </div>
+        <div class="student-grid">
+          <!-- Aqlan Bab 3 -->
+          <a href="math/aqlan-pola.html" class="student-card" style="border-top: 4px solid #10B981; border: 2px solid #A7F3D0; box-shadow: 0 10px 20px rgba(16,185,129,0.15);">
+            <div>
+              <div class="student-avatar" style="background:#ECFDF5;">🛹</div>
+              <div class="name-title">Aqlan (Kelas 4 SD)</div>
+              <div class="game-title" style="color:#059669;">Bab 3: Pola Gambar & Pola Bilangan</div>
+              <div class="game-desc">Simulator Modular Rampa Skatepark, Prediksi Insinyur STEM, dan 3 Kode Brankas Rahasia.</div>
+            </div>
+            <div class="start-arrow" style="color:#059669;">Mulai Main Aqlan →</div>
+          </a>
+          <!-- Mishka Bab 4 -->
+          <a href="math/mishka-keliling.html" class="student-card" style="border-top: 4px solid #BE185D; border: 2px solid #FBCFE8; box-shadow: 0 10px 20px rgba(190,24,93,0.15);">
+            <div>
+              <div class="student-avatar" style="background:#FFF1F2;">🎀</div>
+              <div class="name-title">Mishka (Kelas 5 SD)</div>
+              <div class="game-title" style="color:#BE185D;">Bab 4: Keliling Bangun Datar</div>
+              <div class="game-desc">Studio Arsitek Ritmik Pita Rose-Gold, 3 Soal Cerita Detektif & Whiteboard Coretan Digital.</div>
+            </div>
+            <div class="start-arrow" style="color:#BE185D;">Mulai Main Mishka →</div>
+          </a>
+          <!-- Lab IPAS Shortcut -->
+          <a href="science/mishka-bumi.html" class="student-card" style="border-top: 4px solid #0284C7; border: 2px solid #BAE6FD; box-shadow: 0 10px 20px rgba(2,132,199,0.15);">
+            <div>
+              <div class="student-avatar" style="background:#F0F9FF;">🪐</div>
+              <div class="name-title">Mishka (IPAS Bab 4)</div>
+              <div class="game-title" style="color:#0284C7;">Ayo Berkenalan dengan Bumi</div>
+              <div class="game-desc">Space-to-Earth Zoom-In 400 Km, Analogi Telur Rebus, dan Tabrakan Lempeng Tektonik.</div>
+            </div>
+            <div class="start-arrow" style="color:#0284C7;">Buka Lab Bumi IPAS →</div>
+          </a>
+        </div>
+      </div>
+      <!-- KELAS ONLINE SEBELUMNYA: KPK & FPB -->
       <!-- KELAS ONLINE: AQLAN & MISHKA -->
       <div class="grade-section">
         <div class="grade-header">
@@ -784,8 +550,6 @@
         heroBanner.style.background = 'linear-gradient(135deg, #0284C7 0%, #10B981 100%)';
         bannerTitle.innerText = "🇬🇧 English Adventure (My Next Words)";
         bannerSub.innerText = "Select your name and complete your English learning missions today!";
-        const pText = document.getElementById('philosophy-text');
-        if (pText) pText.innerHTML = "<strong>Solar System Philosophy of Education:</strong> Just as every planet journeys harmoniously in its own natural orbit around the sun, each child thrives according to their unique potential and pace.";
       } else if (lang === 'math') {
         toggleId.classList.remove('active');
         toggleEn.classList.remove('active');
@@ -798,8 +562,6 @@
         heroBanner.style.background = 'linear-gradient(135deg, #059669 0%, #2563EB 100%)';
         bannerTitle.innerText = "🔢 Petualangan Matematika: KPK & FPB";
         bannerSub.innerText = "Metode Bu Ajeng: Eksplorasi Grid Loncatan, Kalender Nyata, & Cangkir Pembagi!";
-        const pText = document.getElementById('philosophy-text');
-        if (pText) pText.innerHTML = "<strong>Filosofi Tata Surya Matematika:</strong> Pola lintasan orbit, harmoni kelipatan, dan keindahan keteraturan semesta. Setiap anak menemukan logika sainsnya sendiri!";
       } else {
         toggleEn.classList.remove('active');
         toggleId.classList.add('active');
@@ -812,8 +574,6 @@
         heroBanner.style.background = 'linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%)';
         bannerTitle.innerText = "🚀 Petualangan Bahasa Indonesia";
         bannerSub.innerText = "Pilih namamu dan selesaikan misi petualangan kata hari ini!";
-        const pText = document.getElementById('philosophy-text');
-        if (pText) pText.innerHTML = "<strong>Filosofi Tata Surya Pendidikan:</strong> Seperti planet yang beredar harmonis pada orbitnya masing-masing mengelilingi matahari, setiap anak bertumbuh merdeka sesuai kodrat, bakat, dan ritmenya.";
       }
     }
 
@@ -826,23 +586,6 @@
         setLanguage('math');
       }
     });
-
-    // Generate floating cosmic stars & planets particles
-    (function createCosmicField() {
-      const symbols = ['⭐', '✨', '🪐', '🌟', '🌕', '💫', '☀️'];
-      for (let i = 0; i < 16; i++) {
-        const p = document.createElement('div');
-        p.className = 'cosmic-particle';
-        p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-        p.style.left = (Math.random() * 95) + 'vw';
-        p.style.fontSize = (12 + Math.random() * 16) + 'px';
-        const dur = (12 + Math.random() * 14);
-        const delay = (Math.random() * 8);
-        p.style.animation = `floatCosmic ${dur}s linear infinite ${delay}s`;
-        p.style.opacity = '0';
-        document.body.appendChild(p);
-      }
-    })();
   </script>
 </body>
 </html>

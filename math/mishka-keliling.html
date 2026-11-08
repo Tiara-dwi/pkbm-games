@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Arsitek Ritmik: Keliling Bangun Datar — Mishka (Kelas 5)</title>
+  <style>
+    :root {
+      --bg: #FAF5FF;
+      --card-bg: #FFFFFF;
+      --lavender: #7C3AED;
+      --lavender-light: #EDE9FE;
+      --rose: #BE185D;
+      --rose-light: #FFE4E6;
+      --mint: #059669;
+      --mint-light: #D1FAE5;
+      --gold: #D97706;
+      --text: #1E1B4B;
+      --text-muted: #6B7280;
+      --shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.1), 0 8px 10px -6px rgba(124, 58, 237, 0.05);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 50px;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #7C3AED 0%, #BE185D 100%);
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(190, 24, 93, 0.25);
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .header p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .nav-btn {
+      position: absolute;
+      left: 16px;
+      top: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+    .container {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    /* TABS */
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      background: #EDE9FE;
+      padding: 6px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--lavender);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--rose);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+    }
+
+    /* CARD SECTION */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(124, 58, 237, 0.1);
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--lavender);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* SIMULATOR CANVAS AREA */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .sim-grid { grid-template-columns: 1fr; }
+    }
+
+    .canvas-box {
+      background: #FAF5FF;
+      border: 2px dashed #C4B5FD;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+    }
+
+    .shape-stage {
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Ribbon perimeter glow */
+    .shape-perimeter {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border: 4px solid #BE185D;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(190, 24, 93, 0.6);
+      animation: ribbonPulse 2s infinite ease-in-out;
+    }
+    @keyframes ribbonPulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(190, 24, 93, 0.5); }
+      50% { box-shadow: 0 0 22px rgba(217, 119, 6, 0.8); }
+    }
+
+    .shape-label {
+      position: absolute;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #BE185D;
+      background: white;
+      padding: 2px 8px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      white-space: nowrap;
+    }
+
+    .controls-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #374151;
+    }
+    input[type=range] {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #DDD6FE;
+      outline: none;
+      accent-color: #BE185D;
+    }
+
+    .formula-badge {
+      background: linear-gradient(135deg, #FFF1F2 0%, #FAF5FF 100%);
+      border: 2px solid #FBCFE8;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .formula-badge .calc {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #BE185D;
+      margin: 4px 0;
+    }
+
+    /* DETECTIVE CHALLENGES */
+    .quest-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      border: 2px solid #F3E8FF;
+      padding: 20px;
+      margin-bottom: 22px;
+      transition: all 0.2s;
+    }
+    .quest-card:hover {
+      border-color: #C084FC;
+    }
+    .quest-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .quest-tag {
+      background: #FDF2F8;
+      color: #BE185D;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid #FCE7F3;
+    }
+    .quest-story {
+      font-size: 1rem;
+      color: #374151;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .doodle-btn {
+      background: #F3E8FF;
+      color: #7C3AED;
+      border: 1px dashed #A855F7;
+      padding: 9px 16px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      transition: all 0.2s;
+    }
+    .doodle-btn:hover { background: #E9D5FF; }
+
+    /* DOODLE SPLIT: TEXT (LEFT) + WHITEBOARD (RIGHT) */
+    .doodle-box {
+      display: none;
+      background: #FFFBEB;
+      border: 2px solid #FDE68A;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: translateY(0); } }
+
+    .doodle-split {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 820px) {
+      .doodle-split { grid-template-columns: 1fr; }
+    }
+
+    .doodle-text-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #78350F;
+    }
+
+    .whiteboard-box {
+      background: #FFFFFF;
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+    .wb-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .wb-tools {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .wb-color-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #CBD5E1;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .wb-color-btn.active {
+      transform: scale(1.25);
+      border-color: #0F172A;
+      box-shadow: 0 0 6px rgba(0,0,0,0.3);
+    }
+    .wb-action-btn {
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .wb-action-btn:hover { background: #E2E8F0; }
+    .wb-action-btn.primary {
+      background: #EDE9FE;
+      border-color: #C4B5FD;
+      color: #6D28D9;
+    }
+    .wb-action-btn.primary:hover { background: #DDD6FE; }
+    .wb-canvas {
+      width: 100%;
+      height: 195px;
+      background-color: #FFFFFF;
+      background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+      background-size: 16px 16px;
+      border: 1px dashed #94A3B8;
+      border-radius: 8px;
+      cursor: crosshair;
+      touch-action: none;
+      display: block;
+    }
+
+    .opt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 550px) {
+      .opt-grid { grid-template-columns: 1fr; }
+    }
+    .opt-btn {
+      background: #F9FAFB;
+      border: 2px solid #E5E7EB;
+      color: #1F2937;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .opt-btn:hover {
+      background: #F5F3FF;
+      border-color: #C084FC;
+      color: #7C3AED;
+    }
+    .opt-btn.correct {
+      background: #D1FAE5 !important;
+      border-color: #10B981 !important;
+      color: #065F46 !important;
+    }
+    .opt-btn.wrong {
+      background: #FFE4E6 !important;
+      border-color: #F43F5E !important;
+      color: #9F1239 !important;
+    }
+
+    /* NOTEBOOK BLOCK */
+    .note-box {
+      background: linear-gradient(135deg, #FEFCE8 0%, #FFFBEB 100%);
+      border: 2px solid #FDE047;
+      border-radius: 16px;
+      padding: 20px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #713F12;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      box-shadow: 0 4px 15px rgba(234, 179, 8, 0.15);
+    }
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .timer-badge {
+      background: #CA8A04;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="index.html" class="nav-btn">← Portal Math</a>
+    <span class="header-badge">📐 FASE C • KELAS 5 SD • ARSITEK GEOMETRI</span>
+    <h1>Studio Arsitek Ritmik: Keliling Bangun Datar</h1>
+    <p>Simulasi Interaktif Pita Rose-Gold, Eksperimen Keliling, & Whiteboard Detektif Soal Cerita Bersama Mishka</p>
+  </div>
+
+  <div class="container">
+
+    <!-- TAB NAVIGATION -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('sim')">📏 1. Lab Simulator Pita</button>
+      <button class="tab-btn" onclick="switchTab('quest')">🔍 2. Misi Detektif Soal Cerita</button>
+      <button class="tab-btn" onclick="switchTab('note')">✍️ 3. Blok 5 Menit Menulis</button>
+    </div>
+
+    <!-- TAB 1: SIMULATOR LAB -->
+    <div id="tab-sim" class="card">
+      <div class="card-title">
+        <span>🎀</span>
+        <span>Laboratorium Pita Pengukur Bangun Datar</span>
+      </div>
+
+      <!-- SHAPE SUB-TABS -->
+      <div style="display:flex; gap:8px; margin-bottom:16px;">
+        <button id="btn-shape-square" class="tab-btn active" style="flex:none; padding:8px 16px; font-size:0.85rem;" onclick="setShape('square')">🟩 Persegi</button>
+        <button id="btn-shape-rect" class="tab-btn" style="flex:none; padding:8px 16px; font-size:0.85rem;" onclick="setShape('rect')">📄 Persegi Panjang</button>
+        <button id="btn-shape-tri" class="tab-btn" style="flex:none; padding:8px 16px; font-size:0.85rem;" onclick="setShape('tri')">🔺 Segitiga</button>
+      </div>
+
+      <div class="sim-grid">
+        <!-- CANVAS DISPLAY -->
+        <div class="canvas-box">
+          <div id="shape-view" class="shape-stage" style="width:160px; height:160px; background:#FCE7F3; border-radius:8px;">
+            <div class="shape-perimeter"></div>
+            <!-- Labels -->
+            <div id="label-top" class="shape-label" style="top:-14px; left:50%; transform:translateX(-50%);">8 m</div>
+            <div id="label-right" class="shape-label" style="right:-18px; top:50%; transform:translateY(-50%);">8 m</div>
+            <div id="label-bottom" class="shape-label" style="bottom:-14px; left:50%; transform:translateX(-50%);">8 m</div>
+            <div id="label-left" class="shape-label" style="left:-18px; top:50%; transform:translateY(-50%);">8 m</div>
+          </div>
+          <div style="margin-top:20px; font-size:0.85rem; color:#BE185D; font-weight:700;">
+            ✨ Pita Emas Berkeliling dari START hingga FINISH!
+          </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls-box">
+          <!-- Square controls -->
+          <div id="ctrl-square" class="slider-group">
+            <div class="slider-label">
+              <span>Panjang Sisi Matras (s):</span>
+              <span id="val-square" style="color:#BE185D;">8 meter</span>
+            </div>
+            <input type="range" id="rng-square" min="4" max="15" value="8" oninput="updateSquare(this.value)">
+          </div>
+
+          <!-- Rect controls -->
+          <div id="ctrl-rect" class="slider-group" style="display:none;">
+            <div class="slider-label">
+              <span>Panjang Bingkai (p):</span>
+              <span id="val-rect-p" style="color:#BE185D;">10 cm</span>
+            </div>
+            <input type="range" id="rng-rect-p" min="6" max="25" value="10" oninput="updateRect()">
+            <div class="slider-label" style="margin-top:8px;">
+              <span>Lebar Bingkai (l):</span>
+              <span id="val-rect-l" style="color:#BE185D;">6 cm</span>
+            </div>
+            <input type="range" id="rng-rect-l" min="4" max="16" value="6" oninput="updateRect()">
+          </div>
+
+          <!-- Tri controls -->
+          <div id="ctrl-tri" class="slider-group" style="display:none;">
+            <div class="slider-label">
+              <span>Sisi a:</span>
+              <span id="val-tri-a" style="color:#BE185D;">7 meter</span>
+            </div>
+            <input type="range" id="rng-tri-a" min="3" max="12" value="7" oninput="updateTri()">
+            <div class="slider-label" style="margin-top:6px;">
+              <span>Sisi b:</span>
+              <span id="val-tri-b" style="color:#BE185D;">7 meter</span>
+            </div>
+            <input type="range" id="rng-tri-b" min="3" max="12" value="7" oninput="updateTri()">
+            <div class="slider-label" style="margin-top:6px;">
+              <span>Sisi c:</span>
+              <span id="val-tri-c" style="color:#BE185D;">6 meter</span>
+            </div>
+            <input type="range" id="rng-tri-c" min="3" max="12" value="6" oninput="updateTri()">
+          </div>
+
+          <!-- Formula Output -->
+          <div class="formula-badge">
+            <div style="font-size:0.85rem; font-weight:700; color:#6B7280;" id="formula-name">RUMUS KELILING PERSEGI:</div>
+            <div class="calc" id="formula-calc">K = 4 × 8 m = 32 meter</div>
+            <div style="font-size:0.8rem; color:#BE185D;">💡 Pita rose-gold pas membingkai tanpa kurang!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: DETECTIVE CHALLENGES WITH WHITEBOARD -->
+    <div id="tab-quest" class="card" style="display:none;">
+      <div class="card-title">
+        <span>🔍</span>
+        <span>3 Kasus Soal Cerita Detektif & Whiteboard Coretan</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:20px;">
+        Gunakan 3 Senjata Rahasia: <strong>1. Tutup Angka</strong> ➔ <strong>2. Sketsa di Whiteboard Samping</strong> ➔ <strong>3. Panggil Rumus & Uji Akal Sehat</strong>!
+      </p>
+
+      <!-- QUEST 1 -->
+      <div class="quest-card">
+        <div class="quest-header">
+          <span class="quest-tag">KASUS 1 • PERSEGI PANJANG</span>
+          <span style="font-size:0.85rem; color:#7C3AED; font-weight:700;">Skor: 100 Poin</span>
+        </div>
+        <div class="quest-story">
+          🎻 <strong>Pigura Konser Biola:</strong> Mishka ingin menghias seluruh tepian pigura fotonya dengan renda emas rose-gold. Pigura tersebut berbentuk persegi panjang dengan <strong>panjang 20 cm</strong> dan <strong>lebar 15 cm</strong>. Berapa cm panjang pita renda yang harus disiapkan Mishka?
+        </div>
+        
+        <button class="doodle-btn" onclick="toggleDoodle('doodle1', 1)">✏️ Buka Bantuan Sketsa Doodling & Whiteboard</button>
+        
+        <div id="doodle1" class="doodle-box">
+          <div class="doodle-split">
+            <!-- Left: Text breakdown -->
+            <div class="doodle-text-col">
+              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Sketsa Kasar di Kertas Buram:</strong>
+              <div>• <strong>Bentuk:</strong> Persegi Panjang (2 sisi p + 2 sisi l).</div>
+              <div>• <strong>Ukuran Garis:</strong> Atas = 20 cm, Bawah = 20 cm, Kiri = 15 cm, Kanan = 15 cm.</div>
+              <div>• <strong>Rumus yang Dipanggil:</strong> <code>K = 2 × (p + l)</code></div>
+              <div>• <strong>Kalkulasi:</strong> <code>2 × (20 + 15) = 2 × 35 = 70 cm!</code></div>
+              <div style="margin-top:10px; font-size:0.85rem; color:#BE185D; font-weight:700;">
+                👉 Coba coret atau gunakan tombol "✨ Contoh Sketsa" di Whiteboard samping!
+              </div>
+            </div>
+            <!-- Right: Whiteboard Canvas -->
+            <div class="whiteboard-box">
+              <div class="wb-toolbar">
+                <span style="font-size:0.8rem; font-weight:800; color:#475569;">🎨 Whiteboard Mishka</span>
+                <div class="wb-tools">
+                  <button class="wb-color-btn active" style="background:#BE185D;" title="Rose Gold" onclick="setWbColor(1, '#BE185D', this)"></button>
+                  <button class="wb-color-btn" style="background:#7C3AED;" title="Ungu" onclick="setWbColor(1, '#7C3AED', this)"></button>
+                  <button class="wb-color-btn" style="background:#D97706;" title="Emas" onclick="setWbColor(1, '#D97706', this)"></button>
+                  <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(1, '#1E293B', this)"></button>
+                  <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(1, this)">🧹 Hapus</button>
+                  <button class="wb-action-btn primary" onclick="autoSketch(1)">✨ Contoh Sketsa</button>
+                  <button class="wb-action-btn" onclick="clearWb(1)">Reset</button>
+                </div>
+              </div>
+              <canvas id="wb-canvas-1" class="wb-canvas" width="400" height="220"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="opt-grid">
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Kurang tepat! Ingat rumus persegi panjang ada 2 panjang dan 2 lebar!')">A. 35 cm</button>
+          <button class="opt-btn" onclick="checkAnswer(this, true, 'LUAR BIASA! 2 x (20 + 15) = 2 x 35 = 70 cm! Pita renda pas sempurna!')">B. 70 cm</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Itu jika menghitung Luas (20 x 15), sedangkan kita menghias tepian (Keliling)!')">C. 300 cm</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Coba hitung kembali: 20 + 15 = 35, lalu dikali dua!')">D. 50 cm</button>
+        </div>
+      </div>
+
+      <!-- QUEST 2 -->
+      <div class="quest-card">
+        <div class="quest-header">
+          <span class="quest-tag">KASUS 2 • PERSEGI</span>
+          <span style="font-size:0.85rem; color:#7C3AED; font-weight:700;">Skor: 100 Poin</span>
+        </div>
+        <div class="quest-story">
+          🎀 <strong>Karpet Senam Ritmik:</strong> Ibu guru senam membeli karpet persegi dengan <strong>panjang sisi 6 meter</strong>. Di sepanjang keempat tepian karpet akan dipasangi selotip perekat emas. Berapa meter total selotip yang dibutuhkan?
+        </div>
+        
+        <button class="doodle-btn" onclick="toggleDoodle('doodle2', 2)">✏️ Buka Bantuan Sketsa Doodling & Whiteboard</button>
+        
+        <div id="doodle2" class="doodle-box">
+          <div class="doodle-split">
+            <!-- Left: Text breakdown -->
+            <div class="doodle-text-col">
+              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Sketsa Kasar di Kertas Buram:</strong>
+              <div>• <strong>Bentuk:</strong> Persegi (keempat sisinya sama bernilai 6 meter).</div>
+              <div>• <strong>Ukuran Garis:</strong> Atas = 6 m, Bawah = 6 m, Kiri = 6 m, Kanan = 6 m.</div>
+              <div>• <strong>Rumus yang Dipanggil:</strong> <code>K = 4 × s</code></div>
+              <div>• <strong>Kalkulasi:</strong> <code>4 × 6 = 24 meter selotip emas!</code></div>
+              <div style="margin-top:10px; font-size:0.85rem; color:#BE185D; font-weight:700;">
+                👉 Gambar kotak perseginya di Whiteboard samping!
+              </div>
+            </div>
+            <!-- Right: Whiteboard Canvas -->
+            <div class="whiteboard-box">
+              <div class="wb-toolbar">
+                <span style="font-size:0.8rem; font-weight:800; color:#475569;">🎨 Whiteboard Mishka</span>
+                <div class="wb-tools">
+                  <button class="wb-color-btn active" style="background:#BE185D;" title="Rose Gold" onclick="setWbColor(2, '#BE185D', this)"></button>
+                  <button class="wb-color-btn" style="background:#7C3AED;" title="Ungu" onclick="setWbColor(2, '#7C3AED', this)"></button>
+                  <button class="wb-color-btn" style="background:#D97706;" title="Emas" onclick="setWbColor(2, '#D97706', this)"></button>
+                  <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(2, '#1E293B', this)"></button>
+                  <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(2, this)">🧹 Hapus</button>
+                  <button class="wb-action-btn primary" onclick="autoSketch(2)">✨ Contoh Sketsa</button>
+                  <button class="wb-action-btn" onclick="clearWb(2)">Reset</button>
+                </div>
+              </div>
+              <canvas id="wb-canvas-2" class="wb-canvas" width="400" height="220"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="opt-grid">
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Itu baru 2 sisi! Persegi memiliki 4 sisi.')">A. 12 meter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, true, 'BINTANG LIMA! K = 4 x 6 meter = 24 meter selotip emas!')">B. 24 meter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Itu Luas karpet (6 x 6), kita mencari tepian luarnya!')">C. 36 meter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Persegi ada 4 sisi, bukan 3 sisi!')">D. 18 meter</button>
+        </div>
+      </div>
+
+      <!-- QUEST 3 (C4 ANALYSIS) -->
+      <div class="quest-card">
+        <div class="quest-header">
+          <span class="quest-tag" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">KASUS 3 • TANTANGAN C4 ANALISIS</span>
+          <span style="font-size:0.85rem; color:#BE185D; font-weight:700;">Misi Khusus: 150 Poin</span>
+        </div>
+        <div class="quest-story">
+          🌸 <strong>Taman Berpagar Segitiga + Pintu Masuk:</strong> Taman bunga di depan studio berbentuk segitiga dengan sisi masing-masing <strong>5 meter, 7 meter, dan 8 meter</strong>. Seluruh tepian taman akan dipasangi pagar kawat pelindung, <strong>KECUALI bagian pintu gerbang selebar 2 meter</strong> yang dibiarkan terbuka. Berapa meter kawat pagar yang harus dibeli?
+        </div>
+        
+        <button class="doodle-btn" onclick="toggleDoodle('doodle3', 3)">✏️ Buka Bantuan Sketsa Doodling & Whiteboard</button>
+        
+        <div id="doodle3" class="doodle-box">
+          <div class="doodle-split">
+            <!-- Left: Text breakdown -->
+            <div class="doodle-text-col">
+              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Sketsa Kasar & Dekonstruksi Masalah:</strong>
+              <div>1. Hitung dulu total keliling segitiga: <code>5 + 7 + 8 = 20 meter</code>.</div>
+              <div>2. Dekonstruksi gerbang: Pintu selebar 2 meter TIDAK dipasangi kawat!</div>
+              <div>3. Kawat yang dibutuhkan = <code>20 meter - 2 meter = 18 meter!</code></div>
+              <div style="margin-top:10px; font-size:0.85rem; color:#BE185D; font-weight:700;">
+                👉 Lihat sketsa segitiga berlubang pintu di Whiteboard samping!
+              </div>
+            </div>
+            <!-- Right: Whiteboard Canvas -->
+            <div class="whiteboard-box">
+              <div class="wb-toolbar">
+                <span style="font-size:0.8rem; font-weight:800; color:#475569;">🎨 Whiteboard Mishka</span>
+                <div class="wb-tools">
+                  <button class="wb-color-btn active" style="background:#BE185D;" title="Rose Gold" onclick="setWbColor(3, '#BE185D', this)"></button>
+                  <button class="wb-color-btn" style="background:#7C3AED;" title="Ungu" onclick="setWbColor(3, '#7C3AED', this)"></button>
+                  <button class="wb-color-btn" style="background:#D97706;" title="Emas" onclick="setWbColor(3, '#D97706', this)"></button>
+                  <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(3, '#1E293B', this)"></button>
+                  <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(3, this)">🧹 Hapus</button>
+                  <button class="wb-action-btn primary" onclick="autoSketch(3)">✨ Contoh Sketsa</button>
+                  <button class="wb-action-btn" onclick="clearWb(3)">Reset</button>
+                </div>
+              </div>
+              <canvas id="wb-canvas-3" class="wb-canvas" width="400" height="220"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="opt-grid">
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Itu total seluruh keliling jika pintunya ikut ditutup kawat!')">A. 20 meter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, true, 'MASYA ALLAH CEMERLANG! Total 20 m dikurang pintu 2 m = 18 meter kawat! Analisis C4 sempurna!')">B. 18 meter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Coba cek: 5 + 7 + 8 = 20, lalu kurangi 2!')">C. 16 meter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Kurang tepat!')">D. 22 meter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: NOTEBOOK BLOCK -->
+    <div id="tab-note" class="card" style="display:none;">
+      <div class="card-title">
+        <span>✍️</span>
+        <span>Blok 5 Menit Menulis Terbimbing di Buku Tulis Fisik</span>
+      </div>
+
+      <div class="timer-wrap">
+        <span style="font-weight:700; color:#374151;">Waktu Menulis Bersama Bu Tiara:</span>
+        <span id="timer-display" class="timer-badge">⏱️ 05:00</span>
+        <button onclick="startTimer()" style="background:#7C3AED; color:white; border:none; padding:6px 14px; border-radius:8px; font-weight:700; cursor:pointer;">Mulai Timer</button>
+      </div>
+
+      <div class="note-box">
+==============================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📐 RUMUS EMAS KELILING BANGUN DATAR<br>
+==============================================<br>
+1. Konsep: Keliling = Jumlah SEMUA sisi terluar!<br>
+2. Tiga Formula Emas:<br>
+&nbsp;&nbsp;&nbsp;• Persegi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: K = 4 x s<br>
+&nbsp;&nbsp;&nbsp;• Persegi Panjang&nbsp;&nbsp;: K = 2 x (p + l)<br>
+&nbsp;&nbsp;&nbsp;• Segitiga&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: K = sisi 1 + sisi 2 + sisi 3<br>
+3. Contoh Cepat: Persegi s = 8 cm ➔ K = 4 x 8 = 32 cm.<br>
+----------------------------------------------<br>
+🔍 TIPS DETEKTIF SOAL CERITA:<br>
+Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
+==============================================
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // WEB AUDIO API
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    function playBeep(freq = 600, duration = 0.15, type = 'sine') {
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playFanfare() {
+      playBeep(523.25, 0.12);
+      setTimeout(() => playBeep(659.25, 0.12), 120);
+      setTimeout(() => playBeep(783.99, 0.25), 240);
+    }
+
+    // TABS
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#tab-sim, #tab-quest, #tab-note').forEach(d => d.style.display = 'none');
+      document.getElementById('tab-' + tabId).style.display = 'block';
+      event.target.classList.add('active');
+      playBeep(450, 0.08);
+    }
+
+    // SHAPES
+    let currentShape = 'square';
+    function setShape(shape) {
+      currentShape = shape;
+      document.querySelectorAll('#btn-shape-square, #btn-shape-rect, #btn-shape-tri').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-shape-' + shape).classList.add('active');
+
+      document.getElementById('ctrl-square').style.display = (shape === 'square') ? 'flex' : 'none';
+      document.getElementById('ctrl-rect').style.display = (shape === 'rect') ? 'flex' : 'none';
+      document.getElementById('ctrl-tri').style.display = (shape === 'tri') ? 'flex' : 'none';
+
+      const stage = document.getElementById('shape-view');
+      if (shape === 'square') {
+        stage.style.width = '160px'; stage.style.height = '160px';
+        stage.style.borderRadius = '8px';
+        updateSquare(document.getElementById('rng-square').value);
+      } else if (shape === 'rect') {
+        stage.style.width = '200px'; stage.style.height = '120px';
+        stage.style.borderRadius = '8px';
+        updateRect();
+      } else if (shape === 'tri') {
+        stage.style.width = '160px'; stage.style.height = '140px';
+        stage.style.borderRadius = '0';
+        updateTri();
+      }
+      playBeep(500, 0.08);
+    }
+
+    function updateSquare(s) {
+      document.getElementById('val-square').innerText = s + ' meter';
+      const sizePx = 100 + (s * 7);
+      const stage = document.getElementById('shape-view');
+      stage.style.width = sizePx + 'px';
+      stage.style.height = sizePx + 'px';
+
+      document.getElementById('label-top').innerText = s + ' m';
+      document.getElementById('label-right').innerText = s + ' m';
+      document.getElementById('label-bottom').innerText = s + ' m';
+      document.getElementById('label-left').innerText = s + ' m';
+
+      const keliling = 4 * s;
+      document.getElementById('formula-name').innerText = 'RUMUS KELILING PERSEGI:';
+      document.getElementById('formula-calc').innerText = `K = 4 × ${s} m = ${keliling} meter`;
+    }
+
+    function updateRect() {
+      const p = parseInt(document.getElementById('rng-rect-p').value);
+      const l = parseInt(document.getElementById('rng-rect-l').value);
+      document.getElementById('val-rect-p').innerText = p + ' cm';
+      document.getElementById('val-rect-l').innerText = l + ' cm';
+
+      const stage = document.getElementById('shape-view');
+      stage.style.width = (100 + (p * 5)) + 'px';
+      stage.style.height = (80 + (l * 4)) + 'px';
+
+      document.getElementById('label-top').innerText = p + ' cm';
+      document.getElementById('label-bottom').innerText = p + ' cm';
+      document.getElementById('label-left').innerText = l + ' cm';
+      document.getElementById('label-right').innerText = l + ' cm';
+
+      const keliling = 2 * (p + l);
+      document.getElementById('formula-name').innerText = 'RUMUS KELILING PERSEGI PANJANG:';
+      document.getElementById('formula-calc').innerText = `K = 2 × (${p} + ${l}) = 2 × ${p + l} = ${keliling} cm`;
+    }
+
+    function updateTri() {
+      const a = parseInt(document.getElementById('rng-tri-a').value);
+      const b = parseInt(document.getElementById('rng-tri-b').value);
+      const c = parseInt(document.getElementById('rng-tri-c').value);
+      document.getElementById('val-tri-a').innerText = a + ' m';
+      document.getElementById('val-tri-b').innerText = b + ' m';
+      document.getElementById('val-tri-c').innerText = c + ' m';
+
+      document.getElementById('label-top').innerText = 'a: ' + a + ' m';
+      document.getElementById('label-right').innerText = 'b: ' + b + ' m';
+      document.getElementById('label-bottom').innerText = 'c: ' + c + ' m';
+      document.getElementById('label-left').innerText = '';
+
+      const keliling = a + b + c;
+      document.getElementById('formula-name').innerText = 'RUMUS KELILING SEGITIGA:';
+      document.getElementById('formula-calc').innerText = `K = ${a} + ${b} + ${c} = ${keliling} meter`;
+    }
+
+    // WHITEBOARD ENGINE
+    const wbState = {
+      1: { color: '#BE185D', width: 3, isDrawing: false, lastX: 0, lastY: 0, initialized: false },
+      2: { color: '#BE185D', width: 3, isDrawing: false, lastX: 0, lastY: 0, initialized: false },
+      3: { color: '#BE185D', width: 3, isDrawing: false, lastX: 0, lastY: 0, initialized: false }
+    };
+
+    function initWhiteboard(id) {
+      const canvas = document.getElementById('wb-canvas-' + id);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (clientX - rect.left) * (canvas.width / rect.width),
+          y: (clientY - rect.top) * (canvas.height / rect.height)
+        };
+      }
+
+      function startDraw(e) {
+        wbState[id].isDrawing = true;
+        const pos = getPos(e);
+        wbState[id].lastX = pos.x;
+        wbState[id].lastY = pos.y;
+        if (e.type === 'touchstart') e.preventDefault();
+      }
+
+      function draw(e) {
+        if (!wbState[id].isDrawing) return;
+        const pos = getPos(e);
+        ctx.strokeStyle = wbState[id].color;
+        ctx.lineWidth = wbState[id].width;
+        ctx.beginPath();
+        ctx.moveTo(wbState[id].lastX, wbState[id].lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        wbState[id].lastX = pos.x;
+        wbState[id].lastY = pos.y;
+        if (e.type === 'touchmove') e.preventDefault();
+      }
+
+      function stopDraw() {
+        wbState[id].isDrawing = false;
+      }
+
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDraw);
+      canvas.addEventListener('mouseleave', stopDraw);
+
+      canvas.addEventListener('touchstart', startDraw, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', stopDraw);
+
+      wbState[id].initialized = true;
+    }
+
+    function setWbColor(id, color, btn) {
+      wbState[id].color = color;
+      wbState[id].width = 3;
+      const parent = btn.closest('.wb-tools');
+      parent.querySelectorAll('.wb-color-btn, .wb-action-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      playBeep(520, 0.05);
+    }
+
+    function setWbEraser(id, btn) {
+      wbState[id].color = '#FFFFFF';
+      wbState[id].width = 16;
+      const parent = btn.closest('.wb-tools');
+      parent.querySelectorAll('.wb-color-btn, .wb-action-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      playBeep(400, 0.05);
+    }
+
+    function clearWb(id) {
+      const canvas = document.getElementById('wb-canvas-' + id);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      playBeep(350, 0.08);
+    }
+
+    function autoSketch(id) {
+      const canvas = document.getElementById('wb-canvas-' + id);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      playFanfare();
+
+      if (id === 1) {
+        // Kasus 1: Persegi Panjang Pigura Biola (20 cm x 15 cm)
+        ctx.strokeStyle = '#BE185D';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(80, 45, 240, 110);
+
+        // Arrows / Labels
+        ctx.fillStyle = '#7C3AED';
+        ctx.font = 'bold 15px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Panjang = 20 cm', 200, 32);
+        ctx.fillText('20 cm', 200, 175);
+
+        ctx.textAlign = 'right';
+        ctx.fillText('15 cm', 70, 105);
+        ctx.textAlign = 'left';
+        ctx.fillText('15 cm', 330, 105);
+
+        // Formula pill
+        ctx.fillStyle = '#059669';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('K = 2 × (20 + 15) = 70 cm', 200, 205);
+      } else if (id === 2) {
+        // Kasus 2: Persegi Karpet Senam Ritmik (s = 6 m)
+        ctx.strokeStyle = '#BE185D';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(130, 35, 140, 140);
+
+        ctx.fillStyle = '#7C3AED';
+        ctx.font = 'bold 15px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('s = 6 m', 200, 24);
+        ctx.fillText('6 m', 200, 194);
+        ctx.textAlign = 'right';
+        ctx.fillText('6 m', 120, 110);
+        ctx.textAlign = 'left';
+        ctx.fillText('6 m', 280, 110);
+
+        ctx.fillStyle = '#059669';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('K = 4 × 6 = 24 meter', 200, 212);
+      } else if (id === 3) {
+        // Kasus 3: Taman Segitiga (5m, 7m, 8m) + Gerbang 2m
+        ctx.strokeStyle = '#BE185D';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(200, 30); // Top
+        ctx.lineTo(80, 160); // Bottom-left
+        ctx.lineTo(240, 160); // Bottom-middle (gap starts)
+        ctx.stroke();
+
+        // Gap for gate
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = '#D97706';
+        ctx.beginPath();
+        ctx.moveTo(240, 160);
+        ctx.lineTo(310, 160); // Gate
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Close to top
+        ctx.strokeStyle = '#BE185D';
+        ctx.beginPath();
+        ctx.moveTo(310, 160);
+        ctx.lineTo(200, 30);
+        ctx.stroke();
+
+        // Labels
+        ctx.fillStyle = '#7C3AED';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('a = 5 m', 130, 90);
+        ctx.textAlign = 'left';
+        ctx.fillText('b = 7 m', 270, 90);
+        ctx.textAlign = 'center';
+        ctx.fillText('c = 8 m (Pagar)', 160, 180);
+
+        ctx.fillStyle = '#D97706';
+        ctx.fillText('🚪 Pintu 2 m', 275, 180);
+
+        ctx.fillStyle = '#059669';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.fillText('Kawat = 20 m - 2 m = 18 meter', 200, 208);
+      }
+    }
+
+    function toggleDoodle(id, questNum) {
+      const el = document.getElementById(id);
+      const isShowing = (el.style.display === 'block');
+      el.style.display = isShowing ? 'none' : 'block';
+      playBeep(520, 0.08);
+
+      if (!isShowing && questNum) {
+        setTimeout(() => {
+          if (!wbState[questNum].initialized) {
+            initWhiteboard(questNum);
+          }
+        }, 50);
+      }
+    }
+
+    function checkAnswer(btn, isCorrect, msg) {
+      if (isCorrect) {
+        btn.classList.add('correct');
+        playFanfare();
+        alert('🎉 BENAR! ' + msg);
+      } else {
+        btn.classList.add('wrong');
+        playBeep(240, 0.2, 'sawtooth');
+        alert('❌ ' + msg);
+      }
+    }
+
+    // TIMER 5 MENIT
+    let timeLeft = 300;
+    let timerInterval = null;
+    function startTimer() {
+      if (timerInterval) return;
+      playFanfare();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        document.getElementById('timer-display').innerText = `⏱️ 0${m}:${s < 10 ? '0' : ''}${s}`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          playFanfare();
+          alert('⏰ WAKTU 5 MENIT MENULIS SELESAI! Tunjukkan buku tulismu ke Bu Tiara!');
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

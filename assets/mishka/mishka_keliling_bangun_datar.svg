@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="bgSoft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF5FF"/>
+      <stop offset="50%" stop-color="#FFF1F2"/>
+      <stop offset="100%" stop-color="#F0FDF4"/>
+    </linearGradient>
+    <linearGradient id="ribbonPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB7185"/>
+      <stop offset="50%" stop-color="#F43F5E"/>
+      <stop offset="100%" stop-color="#E11D48"/>
+    </linearGradient>
+    <linearGradient id="cardLavender" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FAF5FF"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#7C3AED" flood-opacity="0.08"/>
+    </filter>
+    <filter id="glowGold" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#F59E0B" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bgSoft)"/>
+
+  <!-- Decorative Doodles & Sparkles -->
+  <g fill="#F472B6" opacity="0.4">
+    <circle cx="80" cy="80" r="4"/>
+    <circle cx="120" cy="110" r="6"/>
+    <circle cx="1200" cy="90" r="5"/>
+    <circle cx="1230" cy="130" r="3"/>
+    <circle cx="70" cy="640" r="5"/>
+    <circle cx="1210" cy="630" r="6"/>
+  </g>
+  <g fill="#A855F7" opacity="0.3" font-size="20">
+    <text x="1140" y="70">✨</text>
+    <text x="130" y="650">✨</text>
+    <text x="60" y="320">🌸</text>
+    <text x="1220" y="380">🎻</text>
+    <text x="1180" y="240">🎀</text>
+  </g>
+
+  <!-- Header Pill Banner -->
+  <g transform="translate(640, 56)" text-anchor="middle">
+    <rect x="-360" y="-30" width="720" height="60" rx="30" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="2.5" filter="url(#softShadow)"/>
+    <rect x="-350" y="-22" width="130" height="44" rx="22" fill="#F3E8FF"/>
+    <text x="-285" y="6" font-size="14" font-weight="800" fill="#7C3AED">MATEMATIKA</text>
+    <text x="50" y="8" font-size="22" font-weight="900" fill="#3B0764" letter-spacing="0.5">
+      🎀 Studio Arsitek: Keliling Bangun Datar
+    </text>
+  </g>
+
+  <!-- Subtitle Quote -->
+  <text x="640" y="112" text-anchor="middle" font-size="15" font-weight="600" fill="#86198F">
+    "Keliling adalah perjalanan pita emas menelusuri seluruh tepian luar bangun hingga kembali ke awal!"
+  </text>
+
+  <!-- 3 Aesthetic Concept Cards -->
+
+  <!-- CARD 1: PERSEGI (Matras Senam Ritmik) -->
+  <g transform="translate(90, 140)">
+    <rect width="340" height="480" rx="28" fill="url(#cardLavender)" stroke="#DDD6FE" stroke-width="2.5" filter="url(#softShadow)"/>
+    
+    <!-- Badge -->
+    <rect x="24" y="20" width="120" height="32" rx="16" fill="#EDE9FE"/>
+    <text x="84" y="41" text-anchor="middle" font-size="13" font-weight="800" fill="#6D28D9">1. PERSEGI 🟩</text>
+    
+    <text x="24" y="80" font-size="17" font-weight="800" fill="#1E1B4B">Matras Senam Ritmik</text>
+    <text x="24" y="102" font-size="13" font-weight="600" fill="#64748B">Memiliki 4 sisi yang sama panjang ($s$)</text>
+
+    <!-- Visual Shape with Gymnast Ribbon Trace -->
+    <g transform="translate(170, 220)">
+      <!-- Base Shape -->
+      <rect x="-75" y="-75" width="150" height="150" rx="16" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="3" stroke-dasharray="6 4"/>
+      
+      <!-- Side labels -->
+      <text x="0" y="-88" text-anchor="middle" font-size="14" font-weight="800" fill="#7C3AED">s = 8 m</text>
+      <text x="92" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#7C3AED">s = 8 m</text>
+      <text x="0" y="104" text-anchor="middle" font-size="14" font-weight="800" fill="#7C3AED">s = 8 m</text>
+      <text x="-94" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#7C3AED">s = 8 m</text>
+      
+      <!-- Flowing Ribbon around edge -->
+      <rect x="-75" y="-75" width="150" height="150" rx="16" fill="none" stroke="url(#ribbonPink)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="-75" cy="-75" r="7" fill="#F43F5E" filter="url(#glowGold)"/>
+      <text x="-75" y="-60" text-anchor="middle" font-size="11" font-weight="900" fill="#F43F5E">START</text>
+    </g>
+
+    <!-- Formula Box -->
+    <rect x="24" y="340" width="292" height="108" rx="20" fill="#FDF2F8" stroke="#FBCFE8" stroke-width="2"/>
+    <text x="40" y="368" font-size="13" font-weight="800" fill="#BE185D">FORMULA EMAS:</text>
+    <text x="40" y="398" font-size="20" font-weight="900" fill="#9D174D">K = 4 × s</text>
+    <text x="40" y="428" font-size="13" font-weight="700" fill="#701A75">K = 4 × 8 m = 32 meter 🎀</text>
+  </g>
+
+  <!-- CARD 2: PERSEGI PANJANG (Partitur Musik & Meja Balet) -->
+  <g transform="translate(470, 140)">
+    <rect width="340" height="480" rx="28" fill="#FFFFFF" stroke="#FBCFE8" stroke-width="2.5" filter="url(#softShadow)"/>
+    
+    <!-- Badge -->
+    <rect x="24" y="20" width="160" height="32" rx="16" fill="#FCE7F3"/>
+    <text x="104" y="41" text-anchor="middle" font-size="13" font-weight="800" fill="#BE185D">2. PERSEGI PANJANG 📄</text>
+    
+    <text x="24" y="80" font-size="17" font-weight="800" fill="#1E1B4B">Bingkai Partitur Biola</text>
+    <text x="24" y="102" font-size="13" font-weight="600" fill="#64748B">2 Panjang ($p$) + 2 Lebar ($l$)</text>
+
+    <!-- Visual Shape with Gymnast Ribbon Trace -->
+    <g transform="translate(170, 220)">
+      <rect x="-105" y="-60" width="210" height="120" rx="16" fill="#FFF1F2" stroke="#FDA4AF" stroke-width="3" stroke-dasharray="6 4"/>
+      
+      <!-- Side labels -->
+      <text x="0" y="-72" text-anchor="middle" font-size="14" font-weight="800" fill="#E11D48">p = 10 cm</text>
+      <text x="122" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#E11D48">l = 6 cm</text>
+      <text x="0" y="88" text-anchor="middle" font-size="14" font-weight="800" fill="#E11D48">p = 10 cm</text>
+      <text x="-124" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#E11D48">l = 6 cm</text>
+      
+      <!-- Ribbon Outline -->
+      <rect x="-105" y="-60" width="210" height="120" rx="16" fill="none" stroke="#A855F7" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="-105" cy="-60" r="7" fill="#A855F7" filter="url(#glowGold)"/>
+      <text x="-105" y="-45" text-anchor="middle" font-size="11" font-weight="900" fill="#9333EA">START</text>
+    </g>
+
+    <!-- Formula Box -->
+    <rect x="24" y="340" width="292" height="108" rx="20" fill="#FAF5FF" stroke="#E9D5FF" stroke-width="2"/>
+    <text x="40" y="368" font-size="13" font-weight="800" fill="#7C3AED">FORMULA EMAS:</text>
+    <text x="40" y="398" font-size="20" font-weight="900" fill="#6D28D9">K = 2 × (p + l)</text>
+    <text x="40" y="428" font-size="13" font-weight="700" fill="#581C87">K = 2 × (10 + 6) = 32 cm 🎻</text>
+  </g>
+
+  <!-- CARD 3: SEGITIGA (Podium Juara Pesenam) -->
+  <g transform="translate(850, 140)">
+    <rect width="340" height="480" rx="28" fill="url(#cardLavender)" stroke="#BAE6FD" stroke-width="2.5" filter="url(#softShadow)"/>
+    
+    <!-- Badge -->
+    <rect x="24" y="20" width="130" height="32" rx="16" fill="#E0F2FE"/>
+    <text x="89" y="41" text-anchor="middle" font-size="13" font-weight="800" fill="#0369A1">3. SEGITIGA 🔺</text>
+    
+    <text x="24" y="80" font-size="17" font-weight="800" fill="#1E1B4B">Podium Juara Senam</text>
+    <text x="24" y="102" font-size="13" font-weight="600" fill="#64748B">Jumlahkan ketiga sisinya ($a + b + c$)</text>
+
+    <!-- Visual Shape with Ribbon -->
+    <g transform="translate(170, 220)">
+      <polygon points="0,-75 80,65 -80,65" fill="#F0F9FF" stroke="#7DD3FC" stroke-width="3" stroke-dasharray="6 4"/>
+      
+      <!-- Side labels -->
+      <text x="-56" y="-5" text-anchor="middle" font-size="14" font-weight="800" fill="#0284C7">a = 7 m</text>
+      <text x="56" y="-5" text-anchor="middle" font-size="14" font-weight="800" fill="#0284C7">b = 7 m</text>
+      <text x="0" y="88" text-anchor="middle" font-size="14" font-weight="800" fill="#0284C7">c = 6 m</text>
+      
+      <!-- Ribbon Outline -->
+      <polygon points="0,-75 80,65 -80,65" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="0" cy="-75" r="7" fill="#10B981" filter="url(#glowGold)"/>
+      <text x="0" y="-90" text-anchor="middle" font-size="11" font-weight="900" fill="#059669">START</text>
+    </g>
+
+    <!-- Formula Box -->
+    <rect x="24" y="340" width="292" height="108" rx="20" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="2"/>
+    <text x="40" y="368" font-size="13" font-weight="800" fill="#059669">FORMULA EMAS:</text>
+    <text x="40" y="398" font-size="20" font-weight="900" fill="#047857">K = a + b + c</text>
+    <text x="40" y="428" font-size="13" font-weight="700" fill="#065F46">K = 7 + 7 + 6 = 20 meter 🏆</text>
+  </g>
+
+  <!-- Bottom Floating Ribbon Note -->
+  <g transform="translate(640, 665)" text-anchor="middle">
+    <rect x="-320" y="-18" width="640" height="36" rx="18" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="1.5"/>
+    <text y="5" font-size="13" font-weight="800" fill="#7C3AED">
+      💡 Rahasia Cepat Mishka: Jika bangunnya beraturan, kalikan panjang sisi dengan jumlah sisinya!
+    </text>
+  </g>
+</svg>

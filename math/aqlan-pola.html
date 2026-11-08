@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insinyur Skatepark: Pola Gambar & Pola Bilangan — Aqlan (Kelas 4)</title>
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --neon-toska: #10B981;
+      --neon-toska-glow: rgba(16, 185, 129, 0.4);
+      --orange: #F97316;
+      --orange-glow: rgba(249, 115, 22, 0.4);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 50px;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #047857 0%, #0F172A 70%, #C2410C 100%);
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      border-bottom: 3px solid var(--neon-toska);
+      box-shadow: 0 4px 25px rgba(16, 185, 129, 0.2);
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--neon-toska);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #34D399;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .nav-btn {
+      position: absolute;
+      left: 16px;
+      top: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.25); }
+
+    .container {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    /* TABS */
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      background: #1E293B;
+      padding: 6px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      border: 1px solid #334155;
+    }
+    .tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .tab-btn.active {
+      background: var(--neon-toska);
+      color: #0F172A;
+      box-shadow: 0 4px 15px var(--neon-toska-glow);
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--neon-toska);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    /* RAMP SIMULATOR CANVAS */
+    .ramp-stage {
+      background: #0B1120;
+      border: 2px dashed #334155;
+      border-radius: 16px;
+      padding: 24px;
+      min-height: 280px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 16px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+    .ramp-col {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 6px;
+    }
+    .ramp-block {
+      width: 44px;
+      height: 22px;
+      background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+      border: 2px solid #FDBA74;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px var(--orange-glow);
+      transition: all 0.3s;
+    }
+    .ramp-info {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--neon-toska);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .seq-display {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .seq-pill {
+      background: #0F172A;
+      border: 2px solid var(--neon-toska);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #34D399;
+      box-shadow: 0 0 10px var(--neon-toska-glow);
+    }
+    .seq-arrow {
+      color: var(--orange);
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    /* DETECTIVE QUESTS */
+    .quest-card {
+      background: #0F172A;
+      border-radius: 16px;
+      border: 2px solid #334155;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: all 0.2s;
+    }
+    .quest-card:hover {
+      border-color: var(--neon-toska);
+    }
+    .quest-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .quest-tag {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--neon-toska);
+    }
+    .quest-story {
+      font-size: 1rem;
+      color: #E2E8F0;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .doodle-btn {
+      background: rgba(249, 115, 22, 0.15);
+      color: #FB923C;
+      border: 1px dashed var(--orange);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+      transition: all 0.2s;
+    }
+    .doodle-btn:hover { background: rgba(249, 115, 22, 0.25); }
+
+    .doodle-box {
+      display: none;
+      background: #1E293B;
+      border: 2px solid var(--orange);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      color: #FED7AA;
+      font-size: 0.9rem;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: translateY(0); } }
+
+    .opt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 550px) {
+      .opt-grid { grid-template-columns: 1fr; }
+    }
+    .opt-btn {
+      background: #1E293B;
+      border: 2px solid #475569;
+      color: #F8FAFC;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .opt-btn:hover {
+      background: #334155;
+      border-color: var(--neon-toska);
+      color: #34D399;
+    }
+    .opt-btn.correct {
+      background: rgba(16, 185, 129, 0.25) !important;
+      border-color: #10B981 !important;
+      color: #34D399 !important;
+    }
+    .opt-btn.wrong {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border-color: #EF4444 !important;
+      color: #FCA5A5 !important;
+    }
+
+    /* NOTEBOOK BLOCK */
+    .note-box {
+      background: #0B1120;
+      border: 2px solid var(--neon-toska);
+      border-radius: 16px;
+      padding: 20px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #34D399;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      box-shadow: 0 4px 20px var(--neon-toska-glow);
+    }
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .timer-badge {
+      background: var(--neon-toska);
+      color: #0F172A;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="index.html" class="nav-btn">← Portal Math</a>
+    <span class="header-badge">🛹 FASE B • KELAS 4 SD • DETEKTIF KODE POLA</span>
+    <h1>Insinyur Skatepark: Pola Gambar & Pola Bilangan</h1>
+    <p>Simulasi Modular Rampa Skate, Eksperimen Lompatan Delta (Δ), & Kode Brankas Bersama Aqlan</p>
+  </div>
+
+  <div class="container">
+
+    <!-- TABS -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('sim')">🏗️ 1. Lab Insinyur Rampa</button>
+      <button class="tab-btn" onclick="switchTab('quest')">🔍 2. 3 Kasus Detektif Kode</button>
+      <button class="tab-btn" onclick="switchTab('note')">✍️ 3. Blok 5 Menit Menulis</button>
+    </div>
+
+    <!-- TAB 1: RAMP SIMULATOR -->
+    <div id="tab-sim" class="card">
+      <div class="card-title">
+        <span>🛹</span>
+        <span>Laboratorium Rampa Modular Insinyur STEM</span>
+      </div>
+
+      <!-- Controls -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div>
+          <label style="font-size:0.85rem; font-weight:800; color:var(--text-muted); display:block; margin-bottom:6px;">
+            PILIH ATURAN LOMPATAN POLA (DELTA / Δ):
+          </label>
+          <select id="sel-delta" onchange="renderRamp()" style="width:100%; background:#0F172A; border:2px solid var(--neon-toska); color:#34D399; font-size:1rem; font-weight:800; padding:10px 14px; border-radius:12px;">
+            <option value="2">📈 Pola Naik: +2 Balok / Undakan</option>
+            <option value="3" selected>📈 Pola Naik: +3 Balok / Undakan</option>
+            <option value="4">📈 Pola Naik: +4 Balok / Undakan</option>
+            <option value="5">📈 Pola Naik: +5 Balok / Undakan</option>
+            <option value="-2">📉 Pola Turun: -2 Balok / Undakan</option>
+            <option value="-3">📉 Pola Turun: -3 Balok / Undakan</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.85rem; font-weight:800; color:var(--text-muted); display:block; margin-bottom:6px;">
+            TITIK AWAL (BALOK UNDAKAN 1):
+          </label>
+          <input type="number" id="inp-start" value="3" min="1" max="25" onchange="renderRamp()" style="width:100%; background:#0F172A; border:2px solid var(--orange); color:#FB923C; font-size:1rem; font-weight:800; padding:10px 14px; border-radius:12px;">
+        </div>
+      </div>
+
+      <!-- Live Sequence Pills -->
+      <div class="seq-display" id="seq-pills"></div>
+
+      <!-- Ramp Visual Stage -->
+      <div class="ramp-stage" id="ramp-stage"></div>
+
+      <!-- Extrapolation Card -->
+      <div style="background:#0F172A; border:2px solid #334155; border-radius:14px; padding:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div>
+          <div style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">PREDIKSI INSINYUR STEM:</div>
+          <div style="font-size:1.1rem; font-weight:900; color:#34D399;" id="extrap-text">Undakan ke-10 = 30 Balok!</div>
+        </div>
+        <button onclick="predictTarget()" style="background:var(--orange); color:#0F172A; border:none; padding:10px 18px; border-radius:10px; font-weight:900; cursor:pointer;">
+          🚀 Uji Prediksi Suku ke-10
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 2: DETECTIVE CHALLENGES -->
+    <div id="tab-quest" class="card" style="display:none;">
+      <div class="card-title">
+        <span>🔑</span>
+        <span>3 Tantangan Soal Cerita Detektif Aqlan</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:20px;">
+        Gunakan 3 Langkah Detektif STEM: <strong>1. Tulis Deret Angka</strong> ➔ <strong>2. Cari Selisih Lompatan (Delta)</strong> ➔ <strong>3. Lompat ke Target!</strong>
+      </p>
+
+      <!-- QUEST 1 -->
+      <div class="quest-card">
+        <div class="quest-header">
+          <span class="quest-tag">KASUS 1 • UPGRADE BEARING RODA</span>
+          <span style="font-size:0.85rem; color:#34D399; font-weight:800;">Skor: 100 Poin</span>
+        </div>
+        <div class="quest-story">
+          🛹 <strong>Tabungan Upgrade Bearing Skateboard:</strong> Aqlan punya misi menabung koin untuk upgrade bearing roda skateboard agar luncurannya makin licin. Hari ke-1 ia menabung <strong>4 koin</strong>, hari ke-2 menabung <strong>8 koin</strong>, dan hari ke-3 menabung <strong>12 koin</strong>. Berapa koin yang ditabung Aqlan pada <strong>hari ke-5</strong>?
+        </div>
+        <button class="doodle-btn" onclick="toggleDoodle('doodle1')">💡 Buka Analisis Selisih Delta (Δ)</button>
+        <div id="doodle1" class="doodle-box">
+          <strong>🔍 Analisis Insinyur Aqlan:</strong><br>
+          • Deret Angka: 4, 8, 12, ...<br>
+          • Cari Selisih: <code>8 - 4 = 4</code> (Pola Membesar: selalu DITAMBAH 4 tiap hari).<br>
+          • Lanjutkan: Hari 4 = <code>12 + 4 = 16</code>, Hari 5 = <code>16 + 4 = 20 koin</code>!
+        </div>
+        <div class="opt-grid">
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Itu tabungan pada hari ke-4! Pertanyaan meminta hari ke-5.')">A. 16 koin</button>
+          <button class="opt-btn" onclick="checkAnswer(this, true, 'BOOOOM! TEPAT 100%! Selisihnya +4, sehingga hari ke-5 = 20 koin!')">B. 20 koin</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Kurang tepat! Coba hitung lompatan +4.')">C. 24 koin</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Angka tidak sesuai pola!')">D. 18 koin</button>
+        </div>
+      </div>
+
+      <!-- QUEST 2 -->
+      <div class="quest-card">
+        <div class="quest-header">
+          <span class="quest-tag" style="background:rgba(249,115,22,0.15); color:#FB923C; border-color:var(--orange);">KASUS 2 • POLA MENGECIL (LUNCURAN TURUN)</span>
+          <span style="font-size:0.85rem; color:#34D399; font-weight:800;">Skor: 100 Poin</span>
+        </div>
+        <div class="quest-story">
+          🏁 <strong>Bahan Bakar Mesin Kabut Skatepark:</strong> Sebuah mesin asap di tepi panggung kompetisi berisi <strong>50 liter cairan</strong>. Setiap 1 jam pertunjukan musik, cairan di tangki berkurang <strong>6 liter</strong> secara konstan. Berapa liter sisa cairan setelah panggung berjalan selama <strong>4 jam</strong>?
+        </div>
+        <button class="doodle-btn" onclick="toggleDoodle('doodle2')">💡 Buka Analisis Selisih Delta (Δ)</button>
+        <div id="doodle2" class="doodle-box">
+          <strong>🔍 Analisis Insinyur Aqlan:</strong><br>
+          • Arah: Pola Mengecil ➔ DIKURANG 6 (-6) tiap jam.<br>
+          • Jam 1: 50 - 6 = 44 liter.<br>
+          • Jam 2: 44 - 6 = 38 liter.<br>
+          • Jam 3: 38 - 6 = 32 liter.<br>
+          • Jam 4: <code>32 - 6 = 26 liter</code>!
+        </div>
+        <div class="opt-grid">
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Itu sisa setelah 3 jam!')">A. 32 liter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, true, 'EXCELLENT BRO! 50 dikurang (4 x 6) = 50 - 24 = 26 liter! Nalar mekanikmu mantap!')">B. 26 liter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Kurang tepat!')">C. 20 liter</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Perhatikan selisih pengurangan 6 liter!')">D. 28 liter</button>
+        </div>
+      </div>
+
+      <!-- QUEST 3 -->
+      <div class="quest-card">
+        <div class="quest-header">
+          <span class="quest-tag" style="background:#4C1D95; color:#DDD6FE; border-color:#8B5CF6;">KASUS 3 • SANDI BRANKAS UBIN BOLONG</span>
+          <span style="font-size:0.85rem; color:#F97316; font-weight:800;">Misi Rahasia: 150 Poin</span>
+        </div>
+        <div class="quest-story">
+          🧩 <strong>Kode Rahasia Loker Skatepark:</strong> Kode sandi loker tersusun berpola: <code>15, 23, [ ❓ ], 39, 47</code>. Berapa angka rahasia pada kotak misteri tanda tanya di tengah itu?
+        </div>
+        <button class="doodle-btn" onclick="toggleDoodle('doodle3')">💡 Buka Analisis Selisih Delta (Δ)</button>
+        <div id="doodle3" class="doodle-box">
+          <strong>🔍 Analisis Insinyur Aqlan:</strong><br>
+          1. Cari selisih 2 angka pertama: <code>23 - 15 = 8</code> (+8).<br>
+          2. Tambahkan ke kotak misteri: <code>23 + 8 = 31</code>.<br>
+          3. Uji kecocokan: Apakah <code>31 + 8 = 39</code>? YA, COCOK SEMPURNA!
+        </div>
+        <div class="opt-grid">
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Coba cek: 23 - 15 = 8, lalu 23 + 8 = ?')">A. 29</button>
+          <button class="opt-btn" onclick="checkAnswer(this, true, 'BINTANG LIMA! Angka ubin bolong adalah 31! Kode brankas terbuka!')">B. 31</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Kurang tepat!')">C. 33</button>
+          <button class="opt-btn" onclick="checkAnswer(this, false, 'Terlalu jauh dari pola!')">D. 35</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: NOTEBOOK BLOCK -->
+    <div id="tab-note" class="card" style="display:none;">
+      <div class="card-title">
+        <span>✍️</span>
+        <span>Blok 5 Menit Menulis Terbimbing di Buku Tulis Fisik</span>
+      </div>
+
+      <div class="timer-wrap">
+        <span style="font-weight:800; color:var(--text-muted);">Waktu Menulis Bersama Bu Tiara:</span>
+        <span id="timer-display" class="timer-badge">⏱️ 05:00</span>
+        <button onclick="startTimer()" style="background:var(--neon-toska); color:#0F172A; border:none; padding:6px 14px; border-radius:8px; font-weight:900; cursor:pointer;">Mulai Timer</button>
+      </div>
+
+      <div class="note-box">
+==============================================<br>
+&nbsp;&nbsp;🔢 RAHASIA POLA BILANGAN DETEKTIF AQLAN<br>
+==============================================<br>
+1. Pola Membesar: Angka makin naik ➔ DITAMBAH (+)<br>
+&nbsp;&nbsp;&nbsp;Contoh: 2, 5, 8, 11 (Aturannya: +3).<br>
+2. Pola Mengecil: Angka makin turun ➔ DIKURANG (-)<br>
+&nbsp;&nbsp;&nbsp;Contoh: 30, 25, 20, 15 (Aturannya: -5).<br>
+3. Kunci STEM: Cari selisih antara 2 angka pertama!<br>
+----------------------------------------------<br>
+🔍 TIPS SOAL CERITA:<br>
+Tulis Deretnya ➔ Cari Selisihnya (+ / -) ➔ Lompat ke Target!<br>
+==============================================
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // AUDIO SYNTH
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    function playBeep(freq = 400, duration = 0.15, type = 'sine') {
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playFanfare() {
+      playBeep(440, 0.12, 'triangle');
+      setTimeout(() => playBeep(554.37, 0.12, 'triangle'), 110);
+      setTimeout(() => playBeep(659.25, 0.25, 'triangle'), 220);
+    }
+
+    // TABS
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#tab-sim, #tab-quest, #tab-note').forEach(d => d.style.display = 'none');
+      document.getElementById('tab-' + tabId).style.display = 'block';
+      event.target.classList.add('active');
+      playBeep(320, 0.08);
+    }
+
+    // RAMP BUILDER
+    function renderRamp() {
+      const delta = parseInt(document.getElementById('sel-delta').value);
+      let val = parseInt(document.getElementById('inp-start').value);
+      if (isNaN(val) || val < 1) val = 1;
+
+      const stage = document.getElementById('ramp-stage');
+      const pills = document.getElementById('seq-pills');
+      stage.innerHTML = '';
+      pills.innerHTML = '';
+
+      let currentVal = val;
+      const count = 5;
+
+      for (let i = 1; i <= count; i++) {
+        // Safe bound
+        if (currentVal < 0) currentVal = 0;
+
+        // Add pill
+        const pill = document.createElement('div');
+        pill.className = 'seq-pill';
+        pill.innerText = currentVal;
+        pills.appendChild(pill);
+
+        if (i < count) {
+          const arrow = document.createElement('span');
+          arrow.className = 'seq-arrow';
+          arrow.innerText = (delta >= 0 ? `+${delta}` : `${delta}`) + ' ➔';
+          pills.appendChild(arrow);
+        }
+
+        // Add ramp column
+        const col = document.createElement('div');
+        col.className = 'ramp-col';
+
+        // Add info label
+        const info = document.createElement('div');
+        info.className = 'ramp-info';
+        info.innerHTML = `Undakan ${i}<br><span style="color:#FB923C;">${currentVal} Balok</span>`;
+
+        // Add blocks (cap at 15 for visual clarity)
+        const visibleBlocks = Math.min(Math.max(currentVal, 1), 12);
+        for (let b = 0; b < visibleBlocks; b++) {
+          const block = document.createElement('div');
+          block.className = 'ramp-block';
+          col.appendChild(block);
+        }
+        col.appendChild(info);
+        stage.appendChild(col);
+
+        currentVal += delta;
+      }
+
+      // Extrapolation target (suku ke-10)
+      const target10 = val + (delta * 9);
+      document.getElementById('extrap-text').innerText = `Undakan ke-10 = ${target10} Balok!`;
+      playBeep(450, 0.06);
+    }
+
+    function predictTarget() {
+      playFanfare();
+      const delta = parseInt(document.getElementById('sel-delta').value);
+      const val = parseInt(document.getElementById('inp-start').value);
+      const target10 = val + (delta * 9);
+      alert(`🚀 PREDIKSI INSINYUR STEM:\nUndakan ke-1: ${val}\nAturan Lompatan: ${delta >= 0 ? '+' : ''}${delta}\n➔ Undakan ke-10 = ${val} + (9 × ${delta}) = ${target10} Balok!`);
+    }
+
+    function toggleDoodle(id) {
+      const el = document.getElementById(id);
+      el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+      playBeep(480, 0.08);
+    }
+
+    function checkAnswer(btn, isCorrect, msg) {
+      if (isCorrect) {
+        btn.classList.add('correct');
+        playFanfare();
+        alert('🎉 ' + msg);
+      } else {
+        btn.classList.add('wrong');
+        playBeep(200, 0.2, 'sawtooth');
+        alert('❌ ' + msg);
+      }
+    }
+
+    // TIMER 5 MENIT
+    let timeLeft = 300;
+    let timerInterval = null;
+    function startTimer() {
+      if (timerInterval) return;
+      playFanfare();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        document.getElementById('timer-display').innerText = `⏱️ 0${m}:${s < 10 ? '0' : ''}${s}`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          playFanfare();
+          alert('⏰ WAKTU 5 MENIT MENULIS SELESAI! Tunjukkan buku catatan Aqlan ke Bu Tiara!');
+        }
+      }, 1000);
+    }
+
+    // Init
+    window.onload = () => renderRamp();
+  </script>
+</body>
+</html>
