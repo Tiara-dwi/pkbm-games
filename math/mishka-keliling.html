@@ -328,6 +328,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
+      flex-wrap: wrap;
     }
     .wb-color-btn {
       width: 22px;
@@ -345,21 +346,15 @@
     .wb-action-btn {
       background: #F8FAFC;
       border: 1px solid #CBD5E1;
-      padding: 4px 8px;
+      padding: 5px 9px;
       border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: all 0.2s;
     }
     .wb-action-btn:hover { background: #E2E8F0; }
-    .wb-action-btn.primary {
-      background: #EDE9FE;
-      border-color: #C4B5FD;
-      color: #6D28D9;
-    }
-    .wb-action-btn.primary:hover { background: #DDD6FE; }
     .wb-canvas {
       width: 100%;
       height: 195px;
@@ -540,7 +535,7 @@
       </div>
     </div>
 
-    <!-- TAB 2: DETECTIVE CHALLENGES WITH WHITEBOARD -->
+    <!-- TAB 2: DETECTIVE CHALLENGES WITH WHITEBOARD & TEACHER APPROVAL -->
     <div id="tab-quest" class="card" style="display:none;">
       <div class="card-title">
         <span>🔍</span>
@@ -564,18 +559,18 @@
         
         <div id="doodle1" class="doodle-box">
           <div class="doodle-split">
-            <!-- Left: Text breakdown -->
+            <!-- Left: Text breakdown (TANPA KALKULASI HASIL) -->
             <div class="doodle-text-col">
-              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Sketsa Kasar di Kertas Buram:</strong>
-              <div>• <strong>Bentuk:</strong> Persegi Panjang (2 sisi p + 2 sisi l).</div>
-              <div>• <strong>Ukuran Garis:</strong> Atas = 20 cm, Bawah = 20 cm, Kiri = 15 cm, Kanan = 15 cm.</div>
+              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Panduan Sketsa di Kertas / Whiteboard:</strong>
+              <div>• <strong>Bentuk:</strong> Persegi Panjang (2 sisi Panjang + 2 sisi Lebar).</div>
+              <div>• <strong>Ukuran Garis:</strong> Panjang = 20 cm, Lebar = 15 cm.</div>
               <div>• <strong>Rumus yang Dipanggil:</strong> <code>K = 2 × (p + l)</code></div>
-              <div>• <strong>Kalkulasi:</strong> <code>2 × (20 + 15) = 2 × 35 = 70 cm!</code></div>
               <div style="margin-top:10px; font-size:0.85rem; color:#BE185D; font-weight:700;">
-                👉 Coba coret atau gunakan tombol "✨ Contoh Sketsa" di Whiteboard samping!
+                👉 Mishka, buat sketsa piguranya di Whiteboard dulu ya!<br>
+                <span style="color:#6B7280; font-weight:600;">(Bu Tiara akan klik <em>Approve</em> untuk membuka contoh sketsa)</span>
               </div>
             </div>
-            <!-- Right: Whiteboard Canvas -->
+            <!-- Right: Whiteboard Canvas with Teacher Approval -->
             <div class="whiteboard-box">
               <div class="wb-toolbar">
                 <span style="font-size:0.8rem; font-weight:800; color:#475569;">🎨 Whiteboard Mishka</span>
@@ -585,8 +580,9 @@
                   <button class="wb-color-btn" style="background:#D97706;" title="Emas" onclick="setWbColor(1, '#D97706', this)"></button>
                   <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(1, '#1E293B', this)"></button>
                   <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(1, this)">🧹 Hapus</button>
-                  <button class="wb-action-btn primary" onclick="autoSketch(1)">✨ Contoh Sketsa</button>
                   <button class="wb-action-btn" onclick="clearWb(1)">Reset</button>
+                  <button id="btn-approve-1" class="wb-action-btn" style="background:#ECFDF5; border:1px solid #10B981; color:#047857; font-weight:800;" onclick="approveDoodle(1)">👩‍🏫 Approve Doodle</button>
+                  <button id="btn-sketch-1" class="wb-action-btn" disabled style="opacity:0.45; cursor:not-allowed; background:#F1F5F9; border:1px solid #CBD5E1; color:#94A3B8;" onclick="autoSketch(1)">🔒 Contoh Sketsa</button>
                 </div>
               </div>
               <canvas id="wb-canvas-1" class="wb-canvas" width="400" height="220"></canvas>
@@ -616,18 +612,18 @@
         
         <div id="doodle2" class="doodle-box">
           <div class="doodle-split">
-            <!-- Left: Text breakdown -->
+            <!-- Left: Text breakdown (TANPA KALKULASI HASIL) -->
             <div class="doodle-text-col">
-              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Sketsa Kasar di Kertas Buram:</strong>
-              <div>• <strong>Bentuk:</strong> Persegi (keempat sisinya sama bernilai 6 meter).</div>
-              <div>• <strong>Ukuran Garis:</strong> Atas = 6 m, Bawah = 6 m, Kiri = 6 m, Kanan = 6 m.</div>
+              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Panduan Sketsa di Kertas / Whiteboard:</strong>
+              <div>• <strong>Bentuk:</strong> Persegi (4 sisi sama panjang).</div>
+              <div>• <strong>Ukuran Garis:</strong> s = 6 meter pada setiap sisi.</div>
               <div>• <strong>Rumus yang Dipanggil:</strong> <code>K = 4 × s</code></div>
-              <div>• <strong>Kalkulasi:</strong> <code>4 × 6 = 24 meter selotip emas!</code></div>
               <div style="margin-top:10px; font-size:0.85rem; color:#BE185D; font-weight:700;">
-                👉 Gambar kotak perseginya di Whiteboard samping!
+                👉 Mishka, sketsa karpet perseginya di Whiteboard dulu ya!<br>
+                <span style="color:#6B7280; font-weight:600;">(Bu Tiara akan klik <em>Approve</em> untuk membuka contoh sketsa)</span>
               </div>
             </div>
-            <!-- Right: Whiteboard Canvas -->
+            <!-- Right: Whiteboard Canvas with Teacher Approval -->
             <div class="whiteboard-box">
               <div class="wb-toolbar">
                 <span style="font-size:0.8rem; font-weight:800; color:#475569;">🎨 Whiteboard Mishka</span>
@@ -637,8 +633,9 @@
                   <button class="wb-color-btn" style="background:#D97706;" title="Emas" onclick="setWbColor(2, '#D97706', this)"></button>
                   <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(2, '#1E293B', this)"></button>
                   <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(2, this)">🧹 Hapus</button>
-                  <button class="wb-action-btn primary" onclick="autoSketch(2)">✨ Contoh Sketsa</button>
                   <button class="wb-action-btn" onclick="clearWb(2)">Reset</button>
+                  <button id="btn-approve-2" class="wb-action-btn" style="background:#ECFDF5; border:1px solid #10B981; color:#047857; font-weight:800;" onclick="approveDoodle(2)">👩‍🏫 Approve Doodle</button>
+                  <button id="btn-sketch-2" class="wb-action-btn" disabled style="opacity:0.45; cursor:not-allowed; background:#F1F5F9; border:1px solid #CBD5E1; color:#94A3B8;" onclick="autoSketch(2)">🔒 Contoh Sketsa</button>
                 </div>
               </div>
               <canvas id="wb-canvas-2" class="wb-canvas" width="400" height="220"></canvas>
@@ -668,17 +665,18 @@
         
         <div id="doodle3" class="doodle-box">
           <div class="doodle-split">
-            <!-- Left: Text breakdown -->
+            <!-- Left: Text breakdown (TANPA KALKULASI HASIL) -->
             <div class="doodle-text-col">
-              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Sketsa Kasar & Dekonstruksi Masalah:</strong>
-              <div>1. Hitung dulu total keliling segitiga: <code>5 + 7 + 8 = 20 meter</code>.</div>
-              <div>2. Dekonstruksi gerbang: Pintu selebar 2 meter TIDAK dipasangi kawat!</div>
-              <div>3. Kawat yang dibutuhkan = <code>20 meter - 2 meter = 18 meter!</code></div>
+              <strong style="color:#B45309; font-size:1.05rem; margin-bottom:6px;">🎨 Panduan Sketsa & Analisis Masalah:</strong>
+              <div>1. <strong>Bentuk:</strong> Segitiga dengan 3 sisi pembatas (5 m, 7 m, dan 8 m).</div>
+              <div>2. <strong>Formula Dasar:</strong> <code>K = sisi 1 + sisi 2 + sisi 3</code>.</div>
+              <div>3. <strong>Analisis Pintu Gerbang:</strong> Pintu gerbang selebar 2 m <em>tidak</em> dipasangi kawat!</div>
               <div style="margin-top:10px; font-size:0.85rem; color:#BE185D; font-weight:700;">
-                👉 Lihat sketsa segitiga berlubang pintu di Whiteboard samping!
+                👉 Sketsa segitiganya di Whiteboard dan buat celah pintu gerbangnya ya!<br>
+                <span style="color:#6B7280; font-weight:600;">(Bu Tiara akan klik <em>Approve</em> untuk membuka contoh sketsa)</span>
               </div>
             </div>
-            <!-- Right: Whiteboard Canvas -->
+            <!-- Right: Whiteboard Canvas with Teacher Approval -->
             <div class="whiteboard-box">
               <div class="wb-toolbar">
                 <span style="font-size:0.8rem; font-weight:800; color:#475569;">🎨 Whiteboard Mishka</span>
@@ -688,8 +686,9 @@
                   <button class="wb-color-btn" style="background:#D97706;" title="Emas" onclick="setWbColor(3, '#D97706', this)"></button>
                   <button class="wb-color-btn" style="background:#1E293B;" title="Pensil" onclick="setWbColor(3, '#1E293B', this)"></button>
                   <button class="wb-action-btn" title="Penghapus" onclick="setWbEraser(3, this)">🧹 Hapus</button>
-                  <button class="wb-action-btn primary" onclick="autoSketch(3)">✨ Contoh Sketsa</button>
                   <button class="wb-action-btn" onclick="clearWb(3)">Reset</button>
+                  <button id="btn-approve-3" class="wb-action-btn" style="background:#ECFDF5; border:1px solid #10B981; color:#047857; font-weight:800;" onclick="approveDoodle(3)">👩‍🏫 Approve Doodle</button>
+                  <button id="btn-sketch-3" class="wb-action-btn" disabled style="opacity:0.45; cursor:not-allowed; background:#F1F5F9; border:1px solid #CBD5E1; color:#94A3B8;" onclick="autoSketch(3)">🔒 Contoh Sketsa</button>
                 </div>
               </div>
               <canvas id="wb-canvas-3" class="wb-canvas" width="400" height="220"></canvas>
@@ -856,12 +855,36 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
       document.getElementById('formula-calc').innerText = `K = ${a} + ${b} + ${c} = ${keliling} meter`;
     }
 
-    // WHITEBOARD ENGINE
+    // WHITEBOARD ENGINE WITH TEACHER APPROVAL
     const wbState = {
       1: { color: '#BE185D', width: 3, isDrawing: false, lastX: 0, lastY: 0, initialized: false },
       2: { color: '#BE185D', width: 3, isDrawing: false, lastX: 0, lastY: 0, initialized: false },
       3: { color: '#BE185D', width: 3, isDrawing: false, lastX: 0, lastY: 0, initialized: false }
     };
+
+    const wbApproved = { 1: false, 2: false, 3: false };
+
+    function approveDoodle(id) {
+      wbApproved[id] = true;
+      playFanfare();
+
+      const btnApprove = document.getElementById('btn-approve-' + id);
+      btnApprove.innerText = '✅ Doodle Disetujui Guru! 🌟';
+      btnApprove.style.background = '#D1FAE5';
+      btnApprove.style.color = '#065F46';
+      btnApprove.style.borderColor = '#10B981';
+
+      const btnSketch = document.getElementById('btn-sketch-' + id);
+      btnSketch.disabled = false;
+      btnSketch.innerText = '✨ Contoh Sketsa (Buka)';
+      btnSketch.style.opacity = '1';
+      btnSketch.style.cursor = 'pointer';
+      btnSketch.style.background = '#EDE9FE';
+      btnSketch.style.borderColor = '#C4B5FD';
+      btnSketch.style.color = '#6D28D9';
+
+      alert('🎉 Hore! Hasil doodle Mishka telah di-approve Bu Tiara!\nSekarang tombol "Contoh Sketsa" sudah aktif dan bisa dibuka.');
+    }
 
     function initWhiteboard(id) {
       const canvas = document.getElementById('wb-canvas-' + id);
@@ -945,6 +968,11 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
     }
 
     function autoSketch(id) {
+      if (!wbApproved[id]) {
+        alert('🔒 Tombol ini masih terkunci!\nBu Tiara perlu mengklik tombol "Approve Doodle" terlebih dahulu.');
+        return;
+      }
+
       const canvas = document.getElementById('wb-canvas-' + id);
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -969,11 +997,11 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
         ctx.textAlign = 'left';
         ctx.fillText('15 cm', 330, 105);
 
-        // Formula pill
+        // Formula label (NO spoiler calculation)
         ctx.fillStyle = '#059669';
         ctx.font = 'bold 13px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('K = 2 × (20 + 15) = 70 cm', 200, 205);
+        ctx.fillText('Formula: K = 2 × (p + l)', 200, 205);
       } else if (id === 2) {
         // Kasus 2: Persegi Karpet Senam Ritmik (s = 6 m)
         ctx.strokeStyle = '#BE185D';
@@ -990,18 +1018,19 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
         ctx.textAlign = 'left';
         ctx.fillText('6 m', 280, 110);
 
+        // Formula label (NO spoiler calculation)
         ctx.fillStyle = '#059669';
         ctx.font = 'bold 13px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('K = 4 × 6 = 24 meter', 200, 212);
+        ctx.fillText('Formula: K = 4 × s', 200, 212);
       } else if (id === 3) {
         // Kasus 3: Taman Segitiga (5m, 7m, 8m) + Gerbang 2m
         ctx.strokeStyle = '#BE185D';
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.moveTo(200, 30); // Top
-        ctx.lineTo(80, 160); // Bottom-left
-        ctx.lineTo(240, 160); // Bottom-middle (gap starts)
+        ctx.moveTo(200, 30);
+        ctx.lineTo(80, 160);
+        ctx.lineTo(240, 160);
         ctx.stroke();
 
         // Gap for gate
@@ -1009,7 +1038,7 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
         ctx.strokeStyle = '#D97706';
         ctx.beginPath();
         ctx.moveTo(240, 160);
-        ctx.lineTo(310, 160); // Gate
+        ctx.lineTo(310, 160);
         ctx.stroke();
         ctx.setLineDash([]);
 
@@ -1033,9 +1062,10 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
         ctx.fillStyle = '#D97706';
         ctx.fillText('🚪 Pintu 2 m', 275, 180);
 
+        // Formula label (NO spoiler calculation)
         ctx.fillStyle = '#059669';
         ctx.font = 'bold 13px sans-serif';
-        ctx.fillText('Kawat = 20 m - 2 m = 18 meter', 200, 208);
+        ctx.fillText('Formula: Kawat = Total K - Pintu', 200, 208);
       }
     }
 
