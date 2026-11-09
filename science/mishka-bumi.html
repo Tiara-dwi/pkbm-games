@@ -1,1266 +1,2957 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Misi Kosmis: Ayo Berkenalan dengan Bumi Kita - Mishka (Kelas 5)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --space-dark: #0B0F19;
-      --space-purple: #1E1B4B;
-      --soft-lavender: #E0E7FF;
-      --pastel-blue: #38BDF8;
-      --ocean-blue: #0284C7;
-      --mint-land: #86EFAC;
-      --peach-mantle: #FB923C;
-      --gold-core: #F59E0B;
-      --pink-accent: #F43F5E;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --font-main: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
-
-    body {
-      background: var(--space-dark);
-      color: #FFFFFF;
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
-    }
-
-    /* Starfield Canvas Background */
-    #space-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Top Persistent Nav */
-    .top-nav {
-      position: fixed;
-      top: 16px;
-      left: 20px;
-      right: 20px;
-      z-index: 50;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      pointer-events: auto;
-    }
-    .nav-btn {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #E2E8F0;
-      padding: 10px 18px;
-      border-radius: 20px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.25s ease;
-      cursor: pointer;
-    }
-    .nav-btn:hover {
-      background: rgba(79, 70, 229, 0.85);
-      border-color: #818CF8;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-    }
-    .hud-badge {
-      background: linear-gradient(135deg, rgba(236, 72, 153, 0.85) 0%, rgba(168, 85, 247, 0.85) 100%);
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
-    }
-
-    /* VIEWPORT CONTAINER */
-    #viewport-container {
-      position: relative;
-      z-index: 10;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 20px 40px;
-      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* =========================================================================
-       SCENE 1: ORBIT KOSMIS (DEEP SPACE VIEW)
-       ========================================================================= */
-    #scene-space {
-      text-align: center;
-      max-width: 900px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .space-title-box {
-      margin-bottom: 24px;
-      animation: fadeInDown 1s ease;
-    }
-    .space-title-box h1 {
-      font-size: 2.6rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, #FFFFFF 0%, #BAE6FD 50%, #DDD6FE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-      text-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
-    }
-    .space-title-box p {
-      font-size: 1.15rem;
-      color: #94A3B8;
-      max-width: 650px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* Floating Earth Sphere in Space */
-    .earth-orbit-wrapper {
-      position: relative;
-      width: 320px;
-      height: 320px;
-      margin: 20px auto 35px;
-      cursor: pointer;
-    }
-    .earth-glow-aura {
-      position: absolute;
-      top: -20px; left: -20px; right: -20px; bottom: -20px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 70%);
-      animation: pulseAura 4s ease-in-out infinite alternate;
-    }
-    @keyframes pulseAura {
-      0% { transform: scale(0.96); opacity: 0.7; }
-      100% { transform: scale(1.08); opacity: 1; }
-    }
-
-    .earth-sphere {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #60A5FA 0%, #2563EB 50%, #1E3A8A 100%);
-      box-shadow: inset -30px -30px 50px rgba(0, 0, 0, 0.75), 0 0 50px rgba(56, 189, 248, 0.4);
-      position: relative;
-      overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .earth-orbit-wrapper:hover .earth-sphere {
-      transform: scale(1.05);
-      box-shadow: inset -25px -25px 45px rgba(0, 0, 0, 0.6), 0 0 70px rgba(56, 189, 248, 0.7);
-    }
-
-    /* Continents on globe */
-    .continent {
-      position: absolute;
-      background: #86EFAC;
-      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-      filter: blur(0.5px);
-      opacity: 0.95;
-    }
-    .c1 { width: 120px; height: 100px; top: 40px; left: 30px; }
-    .c2 { width: 80px; height: 110px; top: 140px; left: 110px; }
-    .c3 { width: 90px; height: 70px; top: 70px; left: 180px; }
-    
-    /* Cloud veil */
-    .clouds {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 10%, transparent 50%);
-      filter: blur(4px);
-      animation: rotateClouds 25s linear infinite;
-    }
-    @keyframes rotateClouds {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Orbit Satellite */
-    .satellite-orbit {
-      position: absolute;
-      top: -30px; left: -30px; right: -30px; bottom: -30px;
-      border-radius: 50%;
-      border: 1px dashed rgba(255, 255, 255, 0.2);
-      animation: spinOrbit 14s linear infinite;
-      pointer-events: none;
-    }
-    .satellite-dot {
-      position: absolute;
-      top: 15px; left: 45px;
-      font-size: 1.4rem;
-      filter: drop-shadow(0 0 8px #F59E0B);
-    }
-    @keyframes spinOrbit {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Zoom in Launch Button */
-    .btn-zoom-launch {
-      background: linear-gradient(135deg, #0284C7 0%, #4F46E5 50%, #E11D48 100%);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      padding: 16px 36px;
-      border-radius: 40px;
-      font-size: 1.2rem;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      animation: bounceBtn 2.5s infinite;
-    }
-    .btn-zoom-launch:hover {
-      transform: scale(1.08) translateY(-4px);
-      box-shadow: 0 15px 40px rgba(225, 29, 72, 0.6);
-      border-color: #FFFFFF;
-    }
-    @keyframes bounceBtn {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-8px); }
-      60% { transform: translateY(-4px); }
-    }
-
-    /* =========================================================================
-       ZOOM-IN WARP EFFECT OVERLAY
-       ========================================================================= */
-    #warp-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle, transparent 20%, rgba(56, 189, 248, 0.8) 70%, white 100%);
-      z-index: 100;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .warp-active {
-      opacity: 1 !important;
-      animation: warpFlash 1.4s ease forwards;
-    }
-    @keyframes warpFlash {
-      0% { opacity: 0; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.5); }
-      100% { opacity: 0; transform: scale(2.2); }
-    }
-
-    /* =========================================================================
-       SCENE 2: SURFACE LAB (LABORATORIUM ANATOMI BUMI)
-       ========================================================================= */
-    #scene-lab {
-      display: none;
-      max-width: 1100px;
-      width: 100%;
-      animation: fadeInUp 0.8s ease forwards;
-    }
-
-    .lab-header {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(16px);
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
-      border-radius: 24px;
-      padding: 24px 28px;
-      margin-bottom: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .lab-title h2 {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #FFFFFF;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .lab-title p {
-      color: #94A3B8;
-      font-size: 0.95rem;
-      margin-top: 4px;
-    }
-    .btn-zoom-out {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 16px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-zoom-out:hover {
-      background: rgba(239, 68, 68, 0.6);
-      border-color: #F87171;
-    }
-
-    /* 3 LAB MODULE TABS */
-    .lab-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-    .lab-tab-btn {
-      flex: 1;
-      min-width: 220px;
-      background: rgba(15, 23, 42, 0.7);
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      color: #94A3B8;
-      padding: 14px 18px;
-      border-radius: 18px;
-      font-size: 0.95rem;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.25s ease;
-    }
-    .lab-tab-btn:hover {
-      background: rgba(30, 41, 59, 0.9);
-      color: white;
-      border-color: #818CF8;
-    }
-    .lab-tab-btn.active {
-      background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(147, 51, 234, 0.9) 100%);
-      color: white;
-      border-color: #C084FC;
-      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
-      transform: translateY(-2px);
-    }
-
-    /* MODULE CONTAINER CARDS */
-    .module-pane {
-      display: none;
-      background: rgba(255, 255, 255, 0.97);
-      color: #0F172A;
-      border-radius: 28px;
-      padding: 32px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-      animation: fadeIn 0.4s ease;
-    }
-    .module-pane.active { display: block; }
-
-    /* MODULE 1: 3 SELIMUT KEHIDUPAN */
-    .selimut-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-    .selimut-card {
-      border-radius: 20px;
-      padding: 22px;
-      border: 2.5px solid transparent;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .selimut-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
-    }
-    .selimut-atmosfer { background: #F0F9FF; border-color: #BAE6FD; }
-    .selimut-atmosfer.selected { border-color: #0284C7; background: #E0F2FE; box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.2); }
-    .selimut-litosfer { background: #F0FDF4; border-color: #BBF7D0; }
-    .selimut-litosfer.selected { border-color: #16A34A; background: #DCFCE7; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.2); }
-    .selimut-hidrosfer { background: #FAF5FF; border-color: #DDD6FE; }
-    .selimut-hidrosfer.selected { border-color: #7C3AED; background: #EDE9FE; box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2); }
-
-    .selimut-icon { font-size: 2.4rem; margin-bottom: 10px; }
-    .selimut-title { font-size: 1.25rem; font-weight: 900; margin-bottom: 4px; }
-    .selimut-desc { font-size: 0.88rem; color: #475569; line-height: 1.5; margin-bottom: 12px; }
-    .selimut-fact { font-size: 0.82rem; font-weight: 700; padding: 6px 12px; border-radius: 10px; background: rgba(255,255,255,0.8); }
-
-    /* Interactive Simulator Box inside Module */
-    .sim-box {
-      background: #F8FAFC;
-      border: 2px dashed #CBD5E1;
-      border-radius: 20px;
-      padding: 24px;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    /* MODULE 2: IRISAN ANATOMI TELUR REBUS */
-    .slice-visual-area {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 36px;
-      flex-wrap: wrap;
-      margin: 20px 0;
-    }
-    .globe-slice-img {
-      width: 320px;
-      height: 320px;
-      border-radius: 24px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      border: 3px solid #E2E8F0;
-      transition: all 0.3s ease;
-    }
-    .layer-selector-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      flex: 1;
-      min-width: 280px;
-    }
-    .layer-btn {
-      background: white;
-      border: 2px solid #E2E8F0;
-      border-radius: 16px;
-      padding: 14px 18px;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      transition: all 0.2s;
-    }
-    .layer-btn:hover {
-      border-color: #3B82F6;
-      background: #EFF6FF;
-      transform: translateX(4px);
-    }
-    .layer-btn.active {
-      border-color: #F59E0B;
-      background: #FFFBEB;
-      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);
-    }
-    .layer-badge-dot {
-      width: 16px; height: 16px; border-radius: 50%;
-    }
-
-    /* MODULE 3: LEMPENG TEKTONIK & GEMPA */
-    .tectonic-stage {
-      background: #0F172A;
-      color: white;
-      border-radius: 20px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      margin: 16px 0;
-    }
-    .plates-container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      height: 180px;
-      position: relative;
-    }
-    .plate {
-      width: 180px;
-      height: 80px;
-      background: linear-gradient(135deg, #78350F 0%, #B45309 100%);
-      border: 2px solid #D97706;
-      border-radius: 12px 12px 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 0.9rem;
-      position: absolute;
-      bottom: 0;
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #plate-left { left: 15%; }
-    #plate-right { right: 15%; }
-    .mountain-peak {
-      position: absolute;
-      bottom: 0;
-      width: 0; height: 0;
-      border-left: 60px solid transparent;
-      border-right: 60px solid transparent;
-      border-bottom: 0px solid #16A34A;
-      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 5;
-    }
-    .seismograph-box {
-      background: #020617;
-      border: 1px solid #1E293B;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .seismo-needle {
-      font-family: monospace;
-      color: #10B981;
-      font-size: 1.1rem;
-      font-weight: 900;
-    }
-
-    /* MINI QUIZ QUESTION CARD */
-    .quiz-card {
-      background: #FFF1F2;
-      border: 2px solid #FECDD3;
-      border-radius: 18px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-    .quiz-question {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #9F1239;
-      margin-bottom: 12px;
-    }
-    .quiz-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .opt-btn {
-      background: white;
-      border: 2px solid #FDA4AF;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #881337;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s;
-    }
-    .opt-btn:hover { background: #FFE4E6; border-color: #F43F5E; }
-    .opt-btn.correct { background: #DCFCE7 !important; border-color: #16A34A !important; color: #166534 !important; }
-    .opt-btn.wrong { background: #FEE2E2 !important; border-color: #EF4444 !important; color: #991B1B !important; }
-
-    /* 5-MINUTE WRITING MODAL */
-    .writing-banner {
-      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-      border: 2px dashed #D97706;
-      border-radius: 18px;
-      padding: 18px 24px;
-      margin-top: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    /* Animations */
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .space-title-box h1 { font-size: 2rem; }
-      .earth-orbit-wrapper { width: 250px; height: 250px; }
-      .quiz-options { grid-template-columns: 1fr; }
-    }
-
-    /* ===== TABLET & TOUCH ENHANCED ===== */
-    @media (max-width: 768px) {
-      .lab-tabs { flex-direction: column; gap: 8px; }
-      .lab-tab-btn { padding: 12px 16px; font-size: 0.9rem; touch-action: manipulation; }
-      .selimut-grid { grid-template-columns: 1fr !important; }
-      .btn-zoom-launch { padding: 14px 24px; font-size: 1rem; touch-action: manipulation; }
-      .opt-btn { padding: 12px 16px; font-size: 0.9rem; touch-action: manipulation; }
-      #plate-left, #plate-right { padding: 14px 20px; font-size: 1rem; touch-action: manipulation; }
-      button.btn-zoom-out { padding: 12px 16px; touch-action: manipulation; }
-      .earth-orbit-wrapper { width: 240px; height: 240px; }
-    }
-    @media (max-width: 480px) {
-      .earth-orbit-wrapper { width: 200px; height: 200px; }
-      .lab-tab-btn { font-size: 0.82rem; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Starfield Canvas -->
-  <canvas id="space-canvas"></canvas>
-
-  <!-- Warp Flash Overlay -->
-  <div id="warp-overlay"></div>
-
-  <!-- Persistent Navigation Header -->
-  <div class="top-nav">
-    <a href="index.html" class="nav-btn">← Kembali ke Lab IPAS</a>
-    <div class="hud-badge">🪐 DUTA BUMI: MISHKA (KELAS 5)</div>
-    <button class="nav-btn" onclick="toggleAudio()" id="audio-toggle-btn">🔊 Efek Kosmis: Nyala</button>
-  </div>
-
-  <div id="viewport-container">
-
-    <!-- =========================================================================
-         SCENE 1: DEEP SPACE VIEW (MELAYANG DI ORBIT BUMI)
-         ========================================================================= -->
-    <div id="scene-space">
-      <div class="space-title-box">
-        <div style="font-size:1.1rem; color:#38BDF8; font-weight:800; letter-spacing:1px; margin-bottom:6px;">
-          ✨ STASIUN LUAR ANGKASA INTERNASIONAL • KETINGGIAN 400 KM
-        </div>
-        <h1>Ayo Berkenalan dengan Bumi Kita</h1>
-        <p>
-          Dari heningnya kosmos, bumi tampak seperti permata biru yang damai. Tataplah selimut awan dan keajaiban yang melindungi kita sebelum memulai penyelidikan!
-        </p>
-      </div>
-
-      <!-- Floating 3D Globe with Atmosphere Aura -->
-      <div class="earth-orbit-wrapper" onclick="startZoomIn()">
-        <div class="earth-glow-aura"></div>
-        <div class="earth-sphere">
-          <div class="continent c1"></div>
-          <div class="continent c2"></div>
-          <div class="continent c3"></div>
-          <div class="clouds"></div>
-        </div>
-        <div class="satellite-orbit">
-          <div class="satellite-dot">🛰️</div>
-        </div>
-      </div>
-
-      <!-- Launch Zoom In Button -->
-      <div>
-        <button class="btn-zoom-launch" onclick="startZoomIn()">
-          <span>🚀 LUNCURKAN TEROPONG &amp; ZOOM-IN KE BUMI</span>
-          <span>→</span>
-        </button>
-      </div>
-      <div style="font-size:0.85rem; color:#64748B; margin-top:12px;">
-        💡 Klik bola bumi atau tombol di atas untuk menembus atmosfer!
-      </div>
-    </div>
-
-    <!-- =========================================================================
-         SCENE 2: SURFACE LAB (LABORATORIUM ANATOMI & MATERI BUMI)
-         ========================================================================= -->
-    <div id="scene-lab">
-      
-      <!-- Lab Header -->
-      <div class="lab-header">
-        <div class="lab-title">
-          <h2>🌍 Stasiun Penyelidikan Bumi Mishka</h2>
-          <p>Ketinggian: 0 km (Permukaan Daratan) • Analisis 3 Selimut &amp; Anatomi Perut Bumi</p>
-        </div>
-        <button class="btn-zoom-out" onclick="zoomOutToSpace()">
-          🪐 Zoom Out ke Luar Angkasa
-        </button>
-      </div>
-
-      <!-- Tab Switcher -->
-      <div class="lab-tabs">
-        <button class="lab-tab-btn active" id="tab-btn-1" onclick="switchLabModule(1)">
-          <span>🌬️</span> 1. Tiga Selimut Kehidupan
-        </button>
-        <button class="lab-tab-btn" id="tab-btn-2" onclick="switchLabModule(2)">
-          <span>🥚</span> 2. Anatomi Telur Rebus
-        </button>
-        <button class="lab-tab-btn" id="tab-btn-3" onclick="switchLabModule(3)">
-          <span>⚡</span> 3. Tabrakan Lempeng &amp; Gempa
-        </button>
-      </div>
-
-      <!-- =====================================================================
-           MODULE 1: 3 SELIMUT KEHIDUPAN (ATMOSFER, LITOSFER, HIDROSFER)
-           ===================================================================== -->
-      <div class="module-pane active" id="module-1">
-        <div style="margin-bottom:18px;">
-          <h3 style="font-size:1.4rem; font-weight:900; color:#1E3A8A; margin-bottom:4px;">
-            🌬️ Misi 1: Tiga Selimut Pelindung Makhluk Hidup
-          </h3>
-          <p style="color:#64748B; font-size:0.95rem;">
-            Bumi adalah satu-satunya planet yang memiliki perpaduan 3 selimut sempurna. Klik kartu selimut untuk mengujinya!
-          </p>
-        </div>
-
-        <div class="selimut-grid">
-          <!-- Atmosfer -->
-          <div class="selimut-card selimut-atmosfer selected" id="card-atmos" onclick="selectSelimut('atmos')">
-            <div>
-              <div class="selimut-icon">🌬️</div>
-              <div class="selimut-title" style="color:#0369A1;">1. Atmosfer</div>
-              <div class="selimut-desc">
-                Lapisan gas udara pelindung dari radiasi ultraviolet dan gesekan meteorit luar angkasa.
-              </div>
-            </div>
-            <div class="selimut-fact" style="color:#0284C7;">
-              ✅ Mengandung Oksigen (O₂) untuk napas
-            </div>
-          </div>
-
-          <!-- Litosfer -->
-          <div class="selimut-card selimut-litosfer" id="card-litos" onclick="selectSelimut('litos')">
-            <div>
-              <div class="selimut-icon">⛰️</div>
-              <div class="selimut-title" style="color:#15803D;">2. Litosfer</div>
-              <div class="selimut-desc">
-                Kerak padat daratan, gunung, bukit, dan tanah tempat kita berpijak dan membangun kehidupan.
-              </div>
-            </div>
-            <div class="selimut-fact" style="color:#16A34A;">
-              ✅ Terdiri dari lempeng tektonik
-            </div>
-          </div>
-
-          <!-- Hidrosfer -->
-          <div class="selimut-card selimut-hidrosfer" id="card-hidros" onclick="selectSelimut('hidros')">
-            <div>
-              <div class="selimut-icon">🌊</div>
-              <div class="selimut-title" style="color:#6D28D9;">3. Hidrosfer</div>
-              <div class="selimut-desc">
-                Seluruh lapisan air bumi: samudera, laut, danau, sungai, hingga es kutub yang abadi.
-              </div>
-            </div>
-            <div class="selimut-fact" style="color:#7C3AED;">
-              ✅ Menutupi 71% permukaan bumi!
-            </div>
-          </div>
-        </div>
-
-        <!-- Dynamic Feedback Box -->
-        <div class="sim-box" id="selimut-feedback-box">
-          <h4 style="font-size:1.15rem; font-weight:900; color:#0369A1; margin-bottom:6px;" id="selimut-fb-title">
-            🛡️ Uji Atmosfer: Perisai Bintang Jatuh Aktif!
-          </h4>
-          <p style="font-size:0.95rem; color:#475569; max-width:680px; margin:0 auto;" id="selimut-fb-text">
-            Saat meteorit meluncur dari antariksa dengan kecepatan 50.000 km/jam, gesekan udara di atmosfer membakarnya hingga habis menjadi bintang jatuh sebelum menyentuh tanah litosfer!
-          </p>
-        </div>
-
-        <!-- Mini Quiz Module 1 -->
-        <div class="quiz-card">
-          <div class="quiz-question">
-            ❓ Uji Nalar Mishka: Berapa persen permukaan bumi kita yang diselimuti oleh air (Hidrosfer)?
-          </div>
-          <div class="quiz-options">
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Kurang tepat! Daratan hanya 29%!')">A. Sekitar 29%</button>
-            <button class="opt-btn" onclick="checkQuiz(this, true, 'HEBAT! 71% permukaan bumi adalah air lautan!')">B. Sekitar 71%</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Terlalu sedikit!')">C. Sekitar 50%</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Masih ada daratan 29%!')">D. 100%</button>
-          </div>
-          <div id="quiz-fb-1" style="margin-top:10px; font-weight:800; font-size:0.9rem;"></div>
-        </div>
-      </div>
-
-      <!-- =====================================================================
-           MODULE 2: ANATOMI TELUR REBUS & IRISAN BUMI 3D
-           ===================================================================== -->
-      <div class="module-pane" id="module-2">
-        <div style="margin-bottom:18px;">
-          <h3 style="font-size:1.4rem; font-weight:900; color:#9A3412; margin-bottom:4px;">
-            🥚 Misi 2: Irisan Anatomi Bumi &amp; Analogi Telur Rebus
-          </h3>
-          <p style="color:#64748B; font-size:0.95rem;">
-            Bayangkan bumi kita dibelah menjadi irisan kue raksasa. Klik lapisan di bawah untuk menembus ke inti bumi!
-          </p>
-        </div>
-
-        <div class="slice-visual-area">
-          <img src="../assets/mishka/mishka_ipas_bumi_kita_layers.jpg" alt="Diorama Bumi Mishka" class="globe-slice-img" id="globe-preview-img">
-          
-          <div class="layer-selector-list">
-            <!-- Kerak Bumi -->
-            <div class="layer-btn active" onclick="selectEarthLayer('crust', this)">
-              <div class="layer-badge-dot" style="background:#78350F;"></div>
-              <div>
-                <div style="font-weight:900; font-size:1.05rem; color:#78350F;">1. Kerak Bumi (Crust) • 0 - 70 km</div>
-                <div style="font-size:0.85rem; color:#64748B;">Analogi: <b>Cangkang telur rebus</b> tipis &amp; padat tempat kita tinggal.</div>
-              </div>
-            </div>
-
-            <!-- Mantel Bumi -->
-            <div class="layer-btn" onclick="selectEarthLayer('mantle', this)">
-              <div class="layer-badge-dot" style="background:#FB923C;"></div>
-              <div>
-                <div style="font-weight:900; font-size:1.05rem; color:#C2410C;">2. Mantel Bumi • 70 - 2.900 km</div>
-                <div style="font-size:0.85rem; color:#64748B;">Analogi: <b>Putih telur rebus</b> tebal, magma panas 1.000°C.</div>
-              </div>
-            </div>
-
-            <!-- Inti Bumi -->
-            <div class="layer-btn" onclick="selectEarthLayer('core', this)">
-              <div class="layer-badge-dot" style="background:#F59E0B;"></div>
-              <div>
-                <div style="font-weight:900; font-size:1.05rem; color:#854D0E;">3. Inti Bumi (Core) • 2.900 - 6.370 km</div>
-                <div style="font-size:0.85rem; color:#64748B;">Analogi: <b>Kuning telur</b>, bola besi emas menyala 5.000°C!</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Layer Details Box -->
-        <div class="sim-box" id="layer-detail-box" style="background:#FFFBEB; border-color:#FCD34D;">
-          <h4 style="font-size:1.15rem; font-weight:900; color:#78350F; margin-bottom:6px;" id="layer-detail-title">
-            🧱 Kerak Bumi: Cangkang Rapuh yang Mengapung
-          </h4>
-          <p style="font-size:0.95rem; color:#78350F;" id="layer-detail-text">
-            Ketebalannya hanya 5-70 km (kurang dari 1% dari total jari-jari bumi). Kerak ini retak-retak menjadi kepingan lempeng puzzle yang mengapung di atas mantel magma yang panas!
-          </p>
-        </div>
-
-        <!-- Mini Quiz Module 2 -->
-        <div class="quiz-card">
-          <div class="quiz-question">
-            ❓ Uji Logika Telur: Mengapa kerak bumi diibaratkan seperti cangkang telur rebus?
-          </div>
-          <div class="quiz-options">
-            <button class="opt-btn" onclick="checkQuiz(this, true, 'BENAR! Sangat tipis dibanding isi dalamnya dan terbagi retak-retak!')">A. Karena sangat tipis dan bisa retak</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Bumi tidak manis seperti kue!')">B. Karena rasanya manis</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Kerak bumi padat, bukan cair!')">C. Karena berbentuk air cair</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Salah, kerak bumi ada batuan!')">D. Karena tidak ada batuannya</button>
-          </div>
-          <div id="quiz-fb-2" style="margin-top:10px; font-weight:800; font-size:0.9rem;"></div>
-        </div>
-      </div>
-
-      <!-- =====================================================================
-           MODULE 3: TABRAKAN LEMPENG TEKTONIK & GEMPA
-           ===================================================================== -->
-      <div class="module-pane" id="module-3">
-        <div style="margin-bottom:18px;">
-          <h3 style="font-size:1.4rem; font-weight:900; color:#7C3AED; margin-bottom:4px;">
-            ⚡ Misi 3: Simulasi Tabrakan Lempeng Tektonik &amp; Seismograf
-          </h3>
-          <p style="color:#64748B; font-size:0.95rem;">
-            Kerak bumi tidak diam! Lempeng-lempeng benua bergerak beberapa sentimeter per tahun. Coba tabrakkan dua lempeng di bawah!
-          </p>
-        </div>
-
-        <div class="tectonic-stage">
-          <div class="plates-container">
-            <div class="plate" id="plate-left">Lempeng Benua A ➔</div>
-            <div class="mountain-peak" id="mountain-peak"></div>
-            <div class="plate" id="plate-right">⬅ Lempeng Benua B</div>
-          </div>
-
-          <div style="text-align:center; margin-top:20px;">
-            <button class="btn-zoom-launch" style="padding:12px 28px; font-size:1rem;" onclick="triggerCollision()">
-              💥 TABRAKKAN DUA LEMPENG!
-            </button>
-            <button class="btn-zoom-out" style="margin-left:10px; padding:12px 20px;" onclick="resetCollision()">
-              🔄 Reset Posisi
-            </button>
-          </div>
-
-          <!-- Seismograph readout -->
-          <div class="seismograph-box">
-            <div>
-              <span style="font-size:0.85rem; color:#94A3B8;">STATUS SEISMOGRAF:</span>
-              <span class="seismo-needle" id="seismo-status">TENANG (0.0 Skala Richter)</span>
-            </div>
-            <div id="mountain-status" style="font-size:0.88rem; font-weight:800; color:#F59E0B;">
-              Tinggi Pegunungan: 0 m
-            </div>
-          </div>
-        </div>
-
-        <!-- Explanation box -->
-        <div class="sim-box" id="tectonic-explain" style="background:#FAF5FF; border-color:#DDD6FE;">
-          <h4 style="font-size:1.15rem; font-weight:900; color:#6D28D9; margin-bottom:6px;">
-            ⛰️ Lahirnya Pegunungan &amp; Gempa Bumi
-          </h4>
-          <p style="font-size:0.95rem; color:#475569;">
-            Ketika dua lempeng benua bertabrakan dengan kekuatan raksasa, lapisan tanah tidak punya jalan lain selain terlipat terdorong ke atas, membentuk puncak pegunungan tinggi seperti Pegunungan Himalaya! Getarannya memicu gempa bumi seismik.
-          </p>
-        </div>
-
-        <!-- Mini Quiz Module 3 -->
-        <div class="quiz-card">
-          <div class="quiz-question">
-            ❓ Uji Geologi: Peristiwa alam apakah yang terjadi ketika dua lempeng kerak bumi saling bertabrakan keras?
-          </div>
-          <div class="quiz-options">
-            <button class="opt-btn" onclick="checkQuiz(this, true, 'TEPAT SEKALI! Memicu gempa tektonik dan pembentukan gunung!')">A. Gempa Bumi &amp; Pegunungan Lipatan</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Hujan salju dipengaruhi cuaca atmosfer!')">B. Hujan Salju Lebat</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Bumi tidak mengecil!')">C. Ukuran bumi menyusut</button>
-            <button class="opt-btn" onclick="checkQuiz(this, false, 'Matahari di luar angkasa!')">D. Gerhana Matahari Total</button>
-          </div>
-          <div id="quiz-fb-3" style="margin-top:10px; font-weight:800; font-size:0.9rem;"></div>
-        </div>
-      </div>
-
-      <!-- =====================================================================
-           FOOTER: 5-MINUTE NOTEBOOK TEMPLATE BANNER
-           ===================================================================== -->
-      <div class="writing-banner">
-        <div>
-          <div style="font-weight:900; font-size:1.1rem; color:#92400E;">
-            ✍️ Sesi Menulis Terbimbing 5 Menit (Buku Tulis Fisik)
-          </div>
-          <div style="font-size:0.88rem; color:#B45309; margin-top:2px;">
-            Buka buku IPAS Mishka, salin 3 poin mutiara bumi ini secara rapi!
-          </div>
-        </div>
-        <button class="nav-btn" style="background:#D97706; border-color:#F59E0B; color:white;" onclick="toggleWritingBox()">
-          📋 Tampilkan Template Catatan
-        </button>
-      </div>
-
-      <!-- Writing Box Dropdown -->
-      <div id="writing-template-box" style="display:none; background:#FFFBEB; border:2px dashed #F59E0B; border-radius:18px; padding:20px; margin-top:16px; font-family:monospace; color:#78350F; font-size:0.95rem; line-height:1.6;">
-        ==============================================<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🌍 3 LAPISAN RAHASIA BUMI MISHKA<br>
-        ==============================================<br>
-        1. Tiga Selimut Kehidupan Bumi:<br>
-        &nbsp;&nbsp;&nbsp;• Litosfer : Lapisan tanah &amp; batuan daratan.<br>
-        &nbsp;&nbsp;&nbsp;• Hidrosfer: Lapisan air samudera &amp; sungai (71%).<br>
-        &nbsp;&nbsp;&nbsp;• Atmosfer : Lapisan udara gas pelindung bumi.<br>
-        2. Lapisan Dalam: Kerak ➔ Mantel ➔ Inti Bumi.<br>
-        3. Lempeng Tektonik: Kerak bumi terbagi puzzle yang <br>
-        &nbsp;&nbsp;&nbsp;bergerak memicu gempa &amp; membentuk pegunungan.<br>
-        ==============================================
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    /* =========================================================================
-       1. STARFIELD CANVAS ANIMATION (SPACE BACKGROUND)
-       ========================================================================= */
-    const canvas = document.getElementById('space-canvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    let numStars = 220;
-    let isWarping = false;
-    let audioEnabled = true;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Star {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = (Math.random() - 0.5) * canvas.width * 2;
-        this.y = (Math.random() - 0.5) * canvas.height * 2;
-        this.z = Math.random() * canvas.width;
-        this.pz = this.z;
-        this.color = ['#BAE6FD', '#E0E7FF', '#DDD6FE', '#FED7AA', '#FFFFFF'][Math.floor(Math.random() * 5)];
-        this.size = Math.random() * 1.8 + 0.5;
-      }
-      update(speed) {
-        this.pz = this.z;
-        this.z -= speed;
-        if (this.z <= 0) {
-          this.reset();
-          this.z = canvas.width;
-          this.pz = this.z;
-        }
-      }
-      draw() {
-        const cx = canvas.width / 2;
-        const cy = canvas.height / 2;
-        const sx = (this.x / this.z) * canvas.width * 0.5 + cx;
-        const sy = (this.y / this.z) * canvas.height * 0.5 + cy;
-
-        if (sx < 0 || sx >= canvas.width || sy < 0 || sy >= canvas.height) return;
-
-        const r = (1 - this.z / canvas.width) * this.size * (isWarping ? 3 : 1);
-        ctx.beginPath();
-        ctx.arc(sx, sy, Math.max(0.6, r), 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-
-        // Warp lines when zooming in
-        if (isWarping) {
-          const px = (this.x / this.pz) * canvas.width * 0.5 + cx;
-          const py = (this.y / this.pz) * canvas.height * 0.5 + cy;
-          ctx.beginPath();
-          ctx.moveTo(px, py);
-          ctx.lineTo(sx, sy);
-          ctx.strokeStyle = this.color;
-          ctx.lineWidth = r * 1.5;
-          ctx.stroke();
-        }
-      }
-    }
-
-    for (let i = 0; i < numStars; i++) {
-      stars.push(new Star());
-    }
-
-    function animateSpace() {
-      ctx.fillStyle = isWarping ? 'rgba(11, 15, 25, 0.35)' : 'rgba(11, 15, 25, 0.9)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const currentSpeed = isWarping ? 38 : 1.2;
-      for (let star of stars) {
-        star.update(currentSpeed);
-        star.draw();
-      }
-      requestAnimationFrame(animateSpace);
-    }
-    animateSpace();
-
-    /* =========================================================================
-       2. WEB AUDIO SYNTHESIZER (NO EXTERNAL FILES NEEDED)
-       ========================================================================= */
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    function playSound(type) {
-      if (!audioEnabled || !audioCtx) return;
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      if (type === 'chime') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(587.33, now); // D5
-        osc.frequency.exponentialRampToValueAtTime(880, now + 0.3); // A5
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
-        osc.start(now);
-        osc.stop(now + 0.6);
-      } else if (type === 'warp') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(120, now);
-        osc.frequency.exponentialRampToValueAtTime(750, now + 1.2);
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.3);
-        osc.start(now);
-        osc.stop(now + 1.3);
-      } else if (type === 'rumble') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(65, now);
-        osc.frequency.linearRampToValueAtTime(110, now + 0.3);
-        osc.frequency.linearRampToValueAtTime(45, now + 0.8);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.9);
-        osc.start(now);
-        osc.stop(now + 0.9);
-      } else if (type === 'success') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.setValueAtTime(659.25, now + 0.12); // E5
-        osc.frequency.setValueAtTime(783.99, now + 0.24); // G5
-        osc.frequency.setValueAtTime(1046.50, now + 0.36); // C6
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.7);
-        osc.start(now);
-        osc.stop(now + 0.7);
-      }
-    }
-
-    function toggleAudio() {
-      audioEnabled = !audioEnabled;
-      const btn = document.getElementById('audio-toggle-btn');
-      btn.innerText = audioEnabled ? '🔊 Efek Kosmis: Nyala' : '🔇 Efek Kosmis: Bisu';
-      if (audioEnabled) playSound('chime');
-    }
-
-    /* =========================================================================
-       3. ZOOM IN & ZOOM OUT ORBIT CINEMATICS
-       ========================================================================= */
-    function startZoomIn() {
-      playSound('warp');
-      isWarping = true;
-      const warp = document.getElementById('warp-overlay');
-      const sceneSpace = document.getElementById('scene-space');
-      const sceneLab = document.getElementById('scene-lab');
-
-      warp.classList.add('warp-active');
-      sceneSpace.style.transform = 'scale(2.2)';
-      sceneSpace.style.opacity = '0';
-
-      setTimeout(() => {
-        sceneSpace.style.display = 'none';
-        sceneLab.style.display = 'block';
-        warp.classList.remove('warp-active');
-        isWarping = false;
-        playSound('success');
-      }, 1100);
-    }
-
-    function zoomOutToSpace() {
-      playSound('chime');
-      const sceneSpace = document.getElementById('scene-space');
-      const sceneLab = document.getElementById('scene-lab');
-
-      sceneLab.style.display = 'none';
-      sceneSpace.style.display = 'flex';
-      sceneSpace.style.transform = 'scale(1)';
-      sceneSpace.style.opacity = '1';
-    }
-
-    /* =========================================================================
-       4. LAB MODULE TABS & LOGIC
-       ========================================================================= */
-    function switchLabModule(modIndex) {
-      playSound('chime');
-      for (let i = 1; i <= 3; i++) {
-        document.getElementById(`tab-btn-${i}`).classList.remove('active');
-        document.getElementById(`module-${i}`).classList.remove('active');
-      }
-      document.getElementById(`tab-btn-${modIndex}`).classList.add('active');
-      document.getElementById(`module-${modIndex}`).classList.add('active');
-    }
-
-    // MODULE 1: SELIMUT SELECTOR
-    function selectSelimut(type) {
-      playSound('chime');
-      document.getElementById('card-atmos').classList.remove('selected');
-      document.getElementById('card-litos').classList.remove('selected');
-      document.getElementById('card-hidros').classList.remove('selected');
-
-      const title = document.getElementById('selimut-fb-title');
-      const text = document.getElementById('selimut-fb-text');
-      const box = document.getElementById('selimut-feedback-box');
-
-      if (type === 'atmos') {
-        document.getElementById('card-atmos').classList.add('selected');
-        title.style.color = '#0369A1';
-        title.innerHTML = '🛡️ Uji Atmosfer: Perisai Bintang Jatuh Aktif!';
-        text.innerText = 'Saat meteorit meluncur dari antariksa dengan kecepatan 50.000 km/jam, gesekan gas di lapisan atmosfer membakarnya menjadi bintang jatuh sebelum menyentuh tanah litosfer!';
-        box.style.background = '#F0F9FF';
-      } else if (type === 'litos') {
-        document.getElementById('card-litos').classList.add('selected');
-        title.style.color = '#15803D';
-        title.innerHTML = '⛰️ Uji Litosfer: Tempat Berpijak & Lempeng Benua!';
-        text.innerText = 'Litosfer adalah batuan padat setebal 100 km. Di sinilah kita mendirikan rumah, jalanan, dan taman bunga. Kerak litosfer ini retak-retak menjadi lempeng yang terus bergerak!';
-        box.style.background = '#F0FDF4';
-      } else if (type === 'hidros') {
-        document.getElementById('card-hidros').classList.add('selected');
-        title.style.color = '#6D28D9';
-        title.innerHTML = '🌊 Uji Hidrosfer: 71% Samudera Biru Menakjubkan!';
-        text.innerText = 'Samudera Pasifik, Atlantik, Hindia, serta danau dan es kutub membentuk hidrosfer. Air menguap terkena matahari, membentuk awan di atmosfer, lalu turun kembali sebagai hujan berkah.';
-        box.style.background = '#FAF5FF';
-      }
-    }
-
-    // MODULE 2: EARTH LAYERS SELECTOR
-    function selectEarthLayer(layer, elem) {
-      playSound('chime');
-      const buttons = document.querySelectorAll('.layer-btn');
-      buttons.forEach(b => b.classList.remove('active'));
-      elem.classList.add('active');
-
-      const title = document.getElementById('layer-detail-title');
-      const text = document.getElementById('layer-detail-text');
-
-      if (layer === 'crust') {
-        title.innerText = '🧱 Kerak Bumi (Crust): Cangkang Rapuh yang Mengapung';
-        text.innerText = 'Ketebalannya hanya 5-70 km (sangat tipis dibanding isi dalamnya). Terbagi menjadi lempeng samudra dan lempeng benua yang terus bergeser di atas magma mantel.';
-      } else if (layer === 'mantle') {
-        title.innerText = '🔥 Mantel Bumi: Lautan Magma Panas 1.000°C';
-        text.innerText = 'Mencakup 84% volume bumi! Batuan di sini sangat panas sehingga bergerak lambat seperti cairan kental yang mengalir. Panas inilah yang mendorong pergerakan lempeng di atasnya!';
-      } else if (layer === 'core') {
-        title.innerText = '🌟 Inti Bumi (Core): Pusat Gravitasi Panas 5.000°C';
-        text.innerText = 'Terdiri dari Inti Luar cair dan Inti Dalam berupa bola besi-nikel padat seukuran bulan. Perputaran inti bumi menciptakan Medan Magnet Pelindung yang membentengi bumi dari badai matahari!';
-      }
-    }
-
-    // MODULE 3: TECTONIC COLLISION & SEISMOGRAPH
-    let isCollided = false;
-    function triggerCollision() {
-      if (isCollided) return;
-      playSound('rumble');
-      isCollided = true;
-
-      const pLeft = document.getElementById('plate-left');
-      const pRight = document.getElementById('plate-right');
-      const peak = document.getElementById('mountain-peak');
-      const seismo = document.getElementById('seismo-status');
-      const mStatus = document.getElementById('mountain-status');
-
-      pLeft.style.transform = 'translateX(90px)';
-      pRight.style.transform = 'translateX(-90px)';
-
-      seismo.innerText = '💥 GEMPA TEKTONIK! (7.8 Skala Richter)';
-      seismo.style.color = '#EF4444';
-
-      setTimeout(() => {
-        peak.style.borderBottom = '110px solid #16A34A';
-        mStatus.innerText = 'Tinggi Pegunungan: 8.848 m (Puncak Himalaya Terbentuk!)';
-        playSound('success');
-      }, 350);
-    }
-
-    function resetCollision() {
-      playSound('chime');
-      isCollided = false;
-      const pLeft = document.getElementById('plate-left');
-      const pRight = document.getElementById('plate-right');
-      const peak = document.getElementById('mountain-peak');
-      const seismo = document.getElementById('seismo-status');
-      const mStatus = document.getElementById('mountain-status');
-
-      pLeft.style.transform = 'translateX(0)';
-      pRight.style.transform = 'translateX(0)';
-      peak.style.borderBottom = '0px solid #16A34A';
-      seismo.innerText = 'TENANG (0.0 Skala Richter)';
-      seismo.style.color = '#10B981';
-      mStatus.innerText = 'Tinggi Pegunungan: 0 m';
-    }
-
-    // QUIZ CHECKER
-    function checkQuiz(btn, isCorrect, msg) {
-      const parent = btn.parentElement;
-      const buttons = parent.querySelectorAll('.opt-btn');
-      const card = parent.parentElement;
-      const fb = card.querySelector('[id^="quiz-fb"]');
-
-      buttons.forEach(b => b.disabled = true);
-
-      if (isCorrect) {
-        btn.classList.add('correct');
-        fb.innerHTML = `🎉 <span style="color:#16A34A;">${msg}</span>`;
-        playSound('success');
-      } else {
-        btn.classList.add('wrong');
-        fb.innerHTML = `❌ <span style="color:#DC2626;">${msg}</span>`;
-        playSound('rumble');
-      }
-    }
-
-    function toggleWritingBox() {
-      playSound('chime');
-      const box = document.getElementById('writing-template-box');
-      box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-  </script>
-</body>
-</html>
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Misi Kosmis: Ayo Berkenalan dengan Bumi Kita - Mishka (Kelas 5)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    :root {
+
+      --space-dark: #0B0F19;
+
+      --space-purple: #1E1B4B;
+
+      --soft-lavender: #E0E7FF;
+
+      --pastel-blue: #38BDF8;
+
+      --ocean-blue: #0284C7;
+
+      --mint-land: #86EFAC;
+
+      --peach-mantle: #FB923C;
+
+      --gold-core: #F59E0B;
+
+      --pink-accent: #F43F5E;
+
+      --card-bg: rgba(255, 255, 255, 0.95);
+
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+
+    }
+
+
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
+
+
+
+    body {
+
+      background: var(--space-dark);
+
+      color: #FFFFFF;
+
+      overflow-x: hidden;
+
+      min-height: 100vh;
+
+      position: relative;
+
+    }
+
+
+
+    /* Starfield Canvas Background */
+
+    #space-canvas {
+
+      position: fixed;
+
+      top: 0;
+
+      left: 0;
+
+      width: 100vw;
+
+      height: 100vh;
+
+      z-index: 1;
+
+      pointer-events: none;
+
+    }
+
+
+
+    /* Top Persistent Nav */
+
+    .top-nav {
+
+      position: fixed;
+
+      top: 16px;
+
+      left: 20px;
+
+      right: 20px;
+
+      z-index: 50;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      pointer-events: auto;
+
+    }
+
+    .nav-btn {
+
+      background: rgba(15, 23, 42, 0.75);
+
+      backdrop-filter: blur(12px);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      color: #E2E8F0;
+
+      padding: 10px 18px;
+
+      border-radius: 20px;
+
+      font-size: 0.88rem;
+
+      font-weight: 700;
+
+      text-decoration: none;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      transition: all 0.25s ease;
+
+      cursor: pointer;
+
+    }
+
+    .nav-btn:hover {
+
+      background: rgba(79, 70, 229, 0.85);
+
+      border-color: #818CF8;
+
+      transform: translateY(-2px);
+
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+
+    }
+
+    .hud-badge {
+
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.85) 0%, rgba(168, 85, 247, 0.85) 100%);
+
+      padding: 8px 18px;
+
+      border-radius: 20px;
+
+      font-weight: 800;
+
+      font-size: 0.85rem;
+
+      letter-spacing: 0.5px;
+
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+
+    }
+
+
+
+    /* VIEWPORT CONTAINER */
+
+    #viewport-container {
+
+      position: relative;
+
+      z-index: 10;
+
+      min-height: 100vh;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 80px 20px 40px;
+
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    }
+
+
+
+    /* =========================================================================
+
+       SCENE 1: ORBIT KOSMIS (DEEP SPACE VIEW)
+
+       ========================================================================= */
+
+    #scene-space {
+
+      text-align: center;
+
+      max-width: 900px;
+
+      width: 100%;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+
+    }
+
+
+
+    .space-title-box {
+
+      margin-bottom: 24px;
+
+      animation: fadeInDown 1s ease;
+
+    }
+
+    .space-title-box h1 {
+
+      font-size: 2.6rem;
+
+      font-weight: 900;
+
+      background: linear-gradient(135deg, #FFFFFF 0%, #BAE6FD 50%, #DDD6FE 100%);
+
+      -webkit-background-clip: text;
+
+      -webkit-text-fill-color: transparent;
+
+      margin-bottom: 10px;
+
+      text-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
+
+    }
+
+    .space-title-box p {
+
+      font-size: 1.15rem;
+
+      color: #94A3B8;
+
+      max-width: 650px;
+
+      margin: 0 auto;
+
+      line-height: 1.6;
+
+    }
+
+
+
+    /* Floating Earth Sphere in Space */
+
+    .earth-orbit-wrapper {
+
+      position: relative;
+
+      width: 320px;
+
+      height: 320px;
+
+      margin: 20px auto 35px;
+
+      cursor: pointer;
+
+    }
+
+    .earth-glow-aura {
+
+      position: absolute;
+
+      top: -20px; left: -20px; right: -20px; bottom: -20px;
+
+      border-radius: 50%;
+
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 70%);
+
+      animation: pulseAura 4s ease-in-out infinite alternate;
+
+    }
+
+    @keyframes pulseAura {
+
+      0% { transform: scale(0.96); opacity: 0.7; }
+
+      100% { transform: scale(1.08); opacity: 1; }
+
+    }
+
+
+
+    .earth-sphere {
+
+      width: 100%;
+
+      height: 100%;
+
+      border-radius: 50%;
+
+      background: radial-gradient(circle at 30% 30%, #60A5FA 0%, #2563EB 50%, #1E3A8A 100%);
+
+      box-shadow: inset -30px -30px 50px rgba(0, 0, 0, 0.75), 0 0 50px rgba(56, 189, 248, 0.4);
+
+      position: relative;
+
+      overflow: hidden;
+
+      border: 2px solid rgba(255, 255, 255, 0.3);
+
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    }
+
+    .earth-orbit-wrapper:hover .earth-sphere {
+
+      transform: scale(1.05);
+
+      box-shadow: inset -25px -25px 45px rgba(0, 0, 0, 0.6), 0 0 70px rgba(56, 189, 248, 0.7);
+
+    }
+
+
+
+    /* Continents on globe */
+
+    .continent {
+
+      position: absolute;
+
+      background: #86EFAC;
+
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+
+      filter: blur(0.5px);
+
+      opacity: 0.95;
+
+    }
+
+    .c1 { width: 120px; height: 100px; top: 40px; left: 30px; }
+
+    .c2 { width: 80px; height: 110px; top: 140px; left: 110px; }
+
+    .c3 { width: 90px; height: 70px; top: 70px; left: 180px; }
+
+    
+
+    /* Cloud veil */
+
+    .clouds {
+
+      position: absolute;
+
+      top: 0; left: 0; width: 100%; height: 100%;
+
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 10%, transparent 50%);
+
+      filter: blur(4px);
+
+      animation: rotateClouds 25s linear infinite;
+
+    }
+
+    @keyframes rotateClouds {
+
+      from { transform: rotate(0deg); }
+
+      to { transform: rotate(360deg); }
+
+    }
+
+
+
+    /* Orbit Satellite */
+
+    .satellite-orbit {
+
+      position: absolute;
+
+      top: -30px; left: -30px; right: -30px; bottom: -30px;
+
+      border-radius: 50%;
+
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+
+      animation: spinOrbit 14s linear infinite;
+
+      pointer-events: none;
+
+    }
+
+    .satellite-dot {
+
+      position: absolute;
+
+      top: 15px; left: 45px;
+
+      font-size: 1.4rem;
+
+      filter: drop-shadow(0 0 8px #F59E0B);
+
+    }
+
+    @keyframes spinOrbit {
+
+      to { transform: rotate(360deg); }
+
+    }
+
+
+
+    /* Zoom in Launch Button */
+
+    .btn-zoom-launch {
+
+      background: linear-gradient(135deg, #0284C7 0%, #4F46E5 50%, #E11D48 100%);
+
+      color: white;
+
+      border: 2px solid rgba(255, 255, 255, 0.4);
+
+      padding: 16px 36px;
+
+      border-radius: 40px;
+
+      font-size: 1.2rem;
+
+      font-weight: 900;
+
+      cursor: pointer;
+
+      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+      animation: bounceBtn 2.5s infinite;
+
+    }
+
+    .btn-zoom-launch:hover {
+
+      transform: scale(1.08) translateY(-4px);
+
+      box-shadow: 0 15px 40px rgba(225, 29, 72, 0.6);
+
+      border-color: #FFFFFF;
+
+    }
+
+    @keyframes bounceBtn {
+
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+
+      40% { transform: translateY(-8px); }
+
+      60% { transform: translateY(-4px); }
+
+    }
+
+
+
+    /* =========================================================================
+
+       ZOOM-IN WARP EFFECT OVERLAY
+
+       ========================================================================= */
+
+    #warp-overlay {
+
+      position: fixed;
+
+      top: 0; left: 0; width: 100vw; height: 100vh;
+
+      background: radial-gradient(circle, transparent 20%, rgba(56, 189, 248, 0.8) 70%, white 100%);
+
+      z-index: 100;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity 0.5s ease;
+
+    }
+
+    .warp-active {
+
+      opacity: 1 !important;
+
+      animation: warpFlash 1.4s ease forwards;
+
+    }
+
+    @keyframes warpFlash {
+
+      0% { opacity: 0; transform: scale(1); }
+
+      50% { opacity: 1; transform: scale(1.5); }
+
+      100% { opacity: 0; transform: scale(2.2); }
+
+    }
+
+
+
+    /* =========================================================================
+
+       SCENE 2: SURFACE LAB (LABORATORIUM ANATOMI BUMI)
+
+       ========================================================================= */
+
+    #scene-lab {
+
+      display: none;
+
+      max-width: 1100px;
+
+      width: 100%;
+
+      animation: fadeInUp 0.8s ease forwards;
+
+    }
+
+
+
+    .lab-header {
+
+      background: rgba(255, 255, 255, 0.1);
+
+      backdrop-filter: blur(16px);
+
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+
+      border-radius: 24px;
+
+      padding: 24px 28px;
+
+      margin-bottom: 24px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      flex-wrap: wrap;
+
+      gap: 16px;
+
+    }
+
+    .lab-title h2 {
+
+      font-size: 1.8rem;
+
+      font-weight: 900;
+
+      color: #FFFFFF;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+    }
+
+    .lab-title p {
+
+      color: #94A3B8;
+
+      font-size: 0.95rem;
+
+      margin-top: 4px;
+
+    }
+
+    .btn-zoom-out {
+
+      background: rgba(255, 255, 255, 0.15);
+
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      color: white;
+
+      padding: 8px 16px;
+
+      border-radius: 16px;
+
+      font-size: 0.85rem;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: all 0.2s;
+
+    }
+
+    .btn-zoom-out:hover {
+
+      background: rgba(239, 68, 68, 0.6);
+
+      border-color: #F87171;
+
+    }
+
+
+
+    /* 3 LAB MODULE TABS */
+
+    .lab-tabs {
+
+      display: flex;
+
+      gap: 10px;
+
+      margin-bottom: 24px;
+
+      flex-wrap: wrap;
+
+    }
+
+    .lab-tab-btn {
+
+      flex: 1;
+
+      min-width: 220px;
+
+      background: rgba(15, 23, 42, 0.7);
+
+      border: 2px solid rgba(255, 255, 255, 0.15);
+
+      color: #94A3B8;
+
+      padding: 14px 18px;
+
+      border-radius: 18px;
+
+      font-size: 0.95rem;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      transition: all 0.25s ease;
+
+    }
+
+    .lab-tab-btn:hover {
+
+      background: rgba(30, 41, 59, 0.9);
+
+      color: white;
+
+      border-color: #818CF8;
+
+    }
+
+    .lab-tab-btn.active {
+
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(147, 51, 234, 0.9) 100%);
+
+      color: white;
+
+      border-color: #C084FC;
+
+      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+
+      transform: translateY(-2px);
+
+    }
+
+
+
+    /* MODULE CONTAINER CARDS */
+
+    .module-pane {
+
+      display: none;
+
+      background: rgba(255, 255, 255, 0.97);
+
+      color: #0F172A;
+
+      border-radius: 28px;
+
+      padding: 32px;
+
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+
+      animation: fadeIn 0.4s ease;
+
+    }
+
+    .module-pane.active { display: block; }
+
+
+
+    /* MODULE 1: 3 SELIMUT KEHIDUPAN */
+
+    .selimut-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+      gap: 18px;
+
+      margin-bottom: 24px;
+
+    }
+
+    .selimut-card {
+
+      border-radius: 20px;
+
+      padding: 22px;
+
+      border: 2.5px solid transparent;
+
+      cursor: pointer;
+
+      transition: all 0.25s ease;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+    }
+
+    .selimut-card:hover {
+
+      transform: translateY(-5px);
+
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+
+    }
+
+    .selimut-atmosfer { background: #F0F9FF; border-color: #BAE6FD; }
+
+    .selimut-atmosfer.selected { border-color: #0284C7; background: #E0F2FE; box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.2); }
+
+    .selimut-litosfer { background: #F0FDF4; border-color: #BBF7D0; }
+
+    .selimut-litosfer.selected { border-color: #16A34A; background: #DCFCE7; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.2); }
+
+    .selimut-hidrosfer { background: #FAF5FF; border-color: #DDD6FE; }
+
+    .selimut-hidrosfer.selected { border-color: #7C3AED; background: #EDE9FE; box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2); }
+
+
+
+    .selimut-icon { font-size: 2.4rem; margin-bottom: 10px; }
+
+    .selimut-title { font-size: 1.25rem; font-weight: 900; margin-bottom: 4px; }
+
+    .selimut-desc { font-size: 0.88rem; color: #475569; line-height: 1.5; margin-bottom: 12px; }
+
+    .selimut-fact { font-size: 0.82rem; font-weight: 700; padding: 6px 12px; border-radius: 10px; background: rgba(255,255,255,0.8); }
+
+
+
+    /* Interactive Simulator Box inside Module */
+
+    .sim-box {
+
+      background: #F8FAFC;
+
+      border: 2px dashed #CBD5E1;
+
+      border-radius: 20px;
+
+      padding: 24px;
+
+      margin-top: 20px;
+
+      text-align: center;
+
+    }
+
+
+
+    /* MODULE 2: IRISAN ANATOMI TELUR REBUS */
+
+    .slice-visual-area {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 36px;
+
+      flex-wrap: wrap;
+
+      margin: 20px 0;
+
+    }
+
+    .globe-slice-img {
+
+      width: 320px;
+
+      height: 320px;
+
+      border-radius: 24px;
+
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+
+      border: 3px solid #E2E8F0;
+
+      transition: all 0.3s ease;
+
+    }
+
+    .layer-selector-list {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 12px;
+
+      flex: 1;
+
+      min-width: 280px;
+
+    }
+
+    .layer-btn {
+
+      background: white;
+
+      border: 2px solid #E2E8F0;
+
+      border-radius: 16px;
+
+      padding: 14px 18px;
+
+      text-align: left;
+
+      cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      transition: all 0.2s;
+
+    }
+
+    .layer-btn:hover {
+
+      border-color: #3B82F6;
+
+      background: #EFF6FF;
+
+      transform: translateX(4px);
+
+    }
+
+    .layer-btn.active {
+
+      border-color: #F59E0B;
+
+      background: #FFFBEB;
+
+      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);
+
+    }
+
+    .layer-badge-dot {
+
+      width: 16px; height: 16px; border-radius: 50%;
+
+    }
+
+
+
+    /* MODULE 3: LEMPENG TEKTONIK & GEMPA */
+
+    .tectonic-stage {
+
+      background: #0F172A;
+
+      color: white;
+
+      border-radius: 20px;
+
+      padding: 24px;
+
+      position: relative;
+
+      overflow: hidden;
+
+      margin: 16px 0;
+
+    }
+
+    .plates-container {
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: flex-end;
+
+      height: 180px;
+
+      position: relative;
+
+    }
+
+    .plate {
+
+      width: 180px;
+
+      height: 80px;
+
+      background: linear-gradient(135deg, #78350F 0%, #B45309 100%);
+
+      border: 2px solid #D97706;
+
+      border-radius: 12px 12px 0 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-weight: 800;
+
+      font-size: 0.9rem;
+
+      position: absolute;
+
+      bottom: 0;
+
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    }
+
+    #plate-left { left: 15%; }
+
+    #plate-right { right: 15%; }
+
+    .mountain-peak {
+
+      position: absolute;
+
+      bottom: 0;
+
+      width: 0; height: 0;
+
+      border-left: 60px solid transparent;
+
+      border-right: 60px solid transparent;
+
+      border-bottom: 0px solid #16A34A;
+
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+      z-index: 5;
+
+    }
+
+    .seismograph-box {
+
+      background: #020617;
+
+      border: 1px solid #1E293B;
+
+      border-radius: 12px;
+
+      padding: 12px;
+
+      margin-top: 14px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+    }
+
+    .seismo-needle {
+
+      font-family: monospace;
+
+      color: #10B981;
+
+      font-size: 1.1rem;
+
+      font-weight: 900;
+
+    }
+
+
+
+    /* MINI QUIZ QUESTION CARD */
+
+    .quiz-card {
+
+      background: #FFF1F2;
+
+      border: 2px solid #FECDD3;
+
+      border-radius: 18px;
+
+      padding: 20px;
+
+      margin-top: 20px;
+
+    }
+
+    .quiz-question {
+
+      font-size: 1.05rem;
+
+      font-weight: 800;
+
+      color: #9F1239;
+
+      margin-bottom: 12px;
+
+    }
+
+    .quiz-options {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 10px;
+
+    }
+
+    .opt-btn {
+
+      background: white;
+
+      border: 2px solid #FDA4AF;
+
+      border-radius: 12px;
+
+      padding: 10px 14px;
+
+      font-size: 0.95rem;
+
+      font-weight: 700;
+
+      color: #881337;
+
+      cursor: pointer;
+
+      text-align: left;
+
+      transition: all 0.2s;
+
+    }
+
+    .opt-btn:hover { background: #FFE4E6; border-color: #F43F5E; }
+
+    .opt-btn.correct { background: #DCFCE7 !important; border-color: #16A34A !important; color: #166534 !important; }
+
+    .opt-btn.wrong { background: #FEE2E2 !important; border-color: #EF4444 !important; color: #991B1B !important; }
+
+
+
+    /* 5-MINUTE WRITING MODAL */
+
+    .writing-banner {
+
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+
+      border: 2px dashed #D97706;
+
+      border-radius: 18px;
+
+      padding: 18px 24px;
+
+      margin-top: 24px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+    }
+
+
+
+    /* Animations */
+
+    @keyframes fadeInDown {
+
+      from { opacity: 0; transform: translateY(-30px); }
+
+      to { opacity: 1; transform: translateY(0); }
+
+    }
+
+    @keyframes fadeInUp {
+
+      from { opacity: 0; transform: translateY(30px); }
+
+      to { opacity: 1; transform: translateY(0); }
+
+    }
+
+    @keyframes fadeIn {
+
+      from { opacity: 0; }
+
+      to { opacity: 1; }
+
+    }
+
+
+
+    /* Responsive */
+
+    @media (max-width: 768px) {
+
+      .space-title-box h1 { font-size: 2rem; }
+
+      .earth-orbit-wrapper { width: 250px; height: 250px; }
+
+      .quiz-options { grid-template-columns: 1fr; }
+
+    }
+
+
+
+    /* ===== TABLET & TOUCH ENHANCED ===== */
+
+    @media (max-width: 768px) {
+
+      .lab-tabs { flex-direction: column; gap: 8px; }
+
+      .lab-tab-btn { padding: 12px 16px; font-size: 0.9rem; touch-action: manipulation; }
+
+      .selimut-grid { grid-template-columns: 1fr !important; }
+
+      .btn-zoom-launch { padding: 14px 24px; font-size: 1rem; touch-action: manipulation; }
+
+      .opt-btn { padding: 12px 16px; font-size: 0.9rem; touch-action: manipulation; }
+
+      #plate-left, #plate-right { padding: 14px 20px; font-size: 1rem; touch-action: manipulation; }
+
+      button.btn-zoom-out { padding: 12px 16px; touch-action: manipulation; }
+
+      .earth-orbit-wrapper { width: 240px; height: 240px; }
+
+    }
+
+    @media (max-width: 480px) {
+
+      .earth-orbit-wrapper { width: 200px; height: 200px; }
+
+      .lab-tab-btn { font-size: 0.82rem; }
+
+    }
+
+
+    /* =========================================================================
+       INTERACTIVE 3D DIORAMA & LAYER INQUIRY (MODULE 2)
+       ========================================================================= */
+    .diorama-controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .diorama-mode-btn {
+      background: white;
+      border: 1.5px solid #CBD5E1;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .diorama-mode-btn:hover {
+      border-color: #FB923C;
+      color: #9A3412;
+      background: #FFF7ED;
+    }
+    .diorama-mode-btn.active {
+      background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+      color: white;
+      border-color: #EA580C;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+    }
+
+    .diorama-3d-stage {
+      position: relative;
+      width: 330px;
+      height: 330px;
+      perspective: 900px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      background: radial-gradient(circle, #FFFBEB 0%, #FEF3C7 60%, #FDE68A 100%);
+      border-radius: 24px;
+      border: 2px solid #FCD34D;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.1);
+      overflow: hidden;
+    }
+
+    .diorama-viewport {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    .svg-3d-layer {
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .svg-3d-layer:hover {
+      filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.85));
+      transform: scale(1.03);
+      transform-origin: 160px 160px;
+    }
+    .svg-3d-layer.highlighted {
+      filter: drop-shadow(0 0 16px rgba(234, 88, 12, 1)) brightness(1.18);
+      stroke: #FFFFFF !important;
+      stroke-width: 3.5 !important;
+      transform: scale(1.04);
+      transform-origin: 160px 160px;
+    }
+
+    /* Compare side-by-side mode */
+    .compare-stage {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 10px;
+    }
+    .compare-item {
+      text-align: center;
+      flex: 1;
+    }
+    .compare-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #78350F;
+      margin-top: 6px;
+    }
+
+    /* Interactive Inquiry Challenge Card */
+    .inquiry-card {
+      background: #FFFFFF;
+      border: 2px dashed #FDBA74;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 16px;
+      box-shadow: 0 4px 15px rgba(249, 115, 22, 0.05);
+    }
+    .inquiry-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #9A3412;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .inquiry-question {
+      font-size: 0.88rem;
+      color: #78350F;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .inquiry-options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .inquiry-btn {
+      background: #FFF7ED;
+      border: 1.5px solid #FED7AA;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: #7C2D12;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .inquiry-btn:hover {
+      background: #FFEDD5;
+      border-color: #FB923C;
+      transform: translateX(3px);
+    }
+    .inquiry-btn.correct {
+      background: #ECFDF5 !important;
+      border-color: #10B981 !important;
+      color: #065F46 !important;
+      box-shadow: 0 0 0 2px #10B981;
+    }
+    .inquiry-btn.wrong {
+      background: #FEF2F2 !important;
+      border-color: #F87171 !important;
+      color: #991B1B !important;
+    }
+    .inquiry-feedback {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: none;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <!-- Starfield Canvas -->
+
+  <canvas id="space-canvas"></canvas>
+
+
+
+  <!-- Warp Flash Overlay -->
+
+  <div id="warp-overlay"></div>
+
+
+
+  <!-- Persistent Navigation Header -->
+
+  <div class="top-nav">
+
+    <a href="index.html" class="nav-btn">← Kembali ke Lab IPAS</a>
+
+    <div class="hud-badge">🪐 DUTA BUMI: MISHKA (KELAS 5)</div>
+
+    <button class="nav-btn" onclick="toggleAudio()" id="audio-toggle-btn">🔊 Efek Kosmis: Nyala</button>
+
+  </div>
+
+
+
+  <div id="viewport-container">
+
+
+
+    <!-- =========================================================================
+
+         SCENE 1: DEEP SPACE VIEW (MELAYANG DI ORBIT BUMI)
+
+         ========================================================================= -->
+
+    <div id="scene-space">
+
+      <div class="space-title-box">
+
+        <div style="font-size:1.1rem; color:#38BDF8; font-weight:800; letter-spacing:1px; margin-bottom:6px;">
+
+          ✨ STASIUN LUAR ANGKASA INTERNASIONAL • KETINGGIAN 400 KM
+
+        </div>
+
+        <h1>Ayo Berkenalan dengan Bumi Kita</h1>
+
+        <p>
+
+          Dari heningnya kosmos, bumi tampak seperti permata biru yang damai. Tataplah selimut awan dan keajaiban yang melindungi kita sebelum memulai penyelidikan!
+
+        </p>
+
+      </div>
+
+
+
+      <!-- Floating 3D Globe with Atmosphere Aura -->
+
+      <div class="earth-orbit-wrapper" onclick="startZoomIn()">
+
+        <div class="earth-glow-aura"></div>
+
+        <div class="earth-sphere">
+
+          <div class="continent c1"></div>
+
+          <div class="continent c2"></div>
+
+          <div class="continent c3"></div>
+
+          <div class="clouds"></div>
+
+        </div>
+
+        <div class="satellite-orbit">
+
+          <div class="satellite-dot">🛰️</div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Launch Zoom In Button -->
+
+      <div>
+
+        <button class="btn-zoom-launch" onclick="startZoomIn()">
+
+          <span>🚀 LUNCURKAN TEROPONG &amp; ZOOM-IN KE BUMI</span>
+
+          <span>→</span>
+
+        </button>
+
+      </div>
+
+      <div style="font-size:0.85rem; color:#64748B; margin-top:12px;">
+
+        💡 Klik bola bumi atau tombol di atas untuk menembus atmosfer!
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =========================================================================
+
+         SCENE 2: SURFACE LAB (LABORATORIUM ANATOMI & MATERI BUMI)
+
+         ========================================================================= -->
+
+    <div id="scene-lab">
+
+      
+
+      <!-- Lab Header -->
+
+      <div class="lab-header">
+
+        <div class="lab-title">
+
+          <h2>🌍 Stasiun Penyelidikan Bumi Mishka</h2>
+
+          <p>Ketinggian: 0 km (Permukaan Daratan) • Analisis 3 Selimut &amp; Anatomi Perut Bumi</p>
+
+        </div>
+
+        <button class="btn-zoom-out" onclick="zoomOutToSpace()">
+
+          🪐 Zoom Out ke Luar Angkasa
+
+        </button>
+
+      </div>
+
+
+
+      <!-- Tab Switcher -->
+
+      <div class="lab-tabs">
+
+        <button class="lab-tab-btn active" id="tab-btn-1" onclick="switchLabModule(1)">
+
+          <span>🌬️</span> 1. Tiga Selimut Kehidupan
+
+        </button>
+
+        <button class="lab-tab-btn" id="tab-btn-2" onclick="switchLabModule(2)">
+
+          <span>🥚</span> 2. Anatomi Telur Rebus
+
+        </button>
+
+        <button class="lab-tab-btn" id="tab-btn-3" onclick="switchLabModule(3)">
+
+          <span>⚡</span> 3. Tabrakan Lempeng &amp; Gempa
+
+        </button>
+
+      </div>
+
+
+
+      <!-- =====================================================================
+
+           MODULE 1: 3 SELIMUT KEHIDUPAN (ATMOSFER, LITOSFER, HIDROSFER)
+
+           ===================================================================== -->
+
+      <div class="module-pane active" id="module-1">
+
+        <div style="margin-bottom:18px;">
+
+          <h3 style="font-size:1.4rem; font-weight:900; color:#1E3A8A; margin-bottom:4px;">
+
+            🌬️ Misi 1: Tiga Selimut Pelindung Makhluk Hidup
+
+          </h3>
+
+          <p style="color:#64748B; font-size:0.95rem;">
+
+            Bumi adalah satu-satunya planet yang memiliki perpaduan 3 selimut sempurna. Klik kartu selimut untuk mengujinya!
+
+          </p>
+
+        </div>
+
+
+
+        <div class="selimut-grid">
+
+          <!-- Atmosfer -->
+
+          <div class="selimut-card selimut-atmosfer selected" id="card-atmos" onclick="selectSelimut('atmos')">
+
+            <div>
+
+              <div class="selimut-icon">🌬️</div>
+
+              <div class="selimut-title" style="color:#0369A1;">1. Atmosfer</div>
+
+              <div class="selimut-desc">
+
+                Lapisan gas udara pelindung dari radiasi ultraviolet dan gesekan meteorit luar angkasa.
+
+              </div>
+
+            </div>
+
+            <div class="selimut-fact" style="color:#0284C7;">
+
+              ✅ Mengandung Oksigen (O₂) untuk napas
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Litosfer -->
+
+          <div class="selimut-card selimut-litosfer" id="card-litos" onclick="selectSelimut('litos')">
+
+            <div>
+
+              <div class="selimut-icon">⛰️</div>
+
+              <div class="selimut-title" style="color:#15803D;">2. Litosfer</div>
+
+              <div class="selimut-desc">
+
+                Kerak padat daratan, gunung, bukit, dan tanah tempat kita berpijak dan membangun kehidupan.
+
+              </div>
+
+            </div>
+
+            <div class="selimut-fact" style="color:#16A34A;">
+
+              ✅ Terdiri dari lempeng tektonik
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Hidrosfer -->
+
+          <div class="selimut-card selimut-hidrosfer" id="card-hidros" onclick="selectSelimut('hidros')">
+
+            <div>
+
+              <div class="selimut-icon">🌊</div>
+
+              <div class="selimut-title" style="color:#6D28D9;">3. Hidrosfer</div>
+
+              <div class="selimut-desc">
+
+                Seluruh lapisan air bumi: samudera, laut, danau, sungai, hingga es kutub yang abadi.
+
+              </div>
+
+            </div>
+
+            <div class="selimut-fact" style="color:#7C3AED;">
+
+              ✅ Menutupi sebagian besar permukaan bumi!
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Dynamic Feedback Box -->
+
+        <div class="sim-box" id="selimut-feedback-box">
+
+          <h4 style="font-size:1.15rem; font-weight:900; color:#0369A1; margin-bottom:6px;" id="selimut-fb-title">
+
+            🛡️ Uji Atmosfer: Perisai Bintang Jatuh Aktif!
+
+          </h4>
+
+          <p style="font-size:0.95rem; color:#475569; max-width:680px; margin:0 auto;" id="selimut-fb-text">
+
+            Saat meteorit meluncur dari antariksa dengan kecepatan 50.000 km/jam, gesekan udara di atmosfer membakarnya hingga habis menjadi bintang jatuh sebelum menyentuh tanah litosfer!
+
+          </p>
+
+        </div>
+
+
+
+        <!-- Mini Quiz Module 1 -->
+
+        <div class="quiz-card">
+
+          <div class="quiz-question">
+
+            ❓ Uji Nalar Mishka: Berapa persen permukaan bumi kita yang diselimuti oleh air (Hidrosfer)?
+
+          </div>
+
+          <div class="quiz-options">
+
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Kurang tepat! Daratan hanya 29%!')">A. Sekitar 29%</button>
+
+            <button class="opt-btn" onclick="checkQuiz(this, true, 'HEBAT! 71% permukaan bumi adalah air lautan!')">B. Sekitar 71%</button>
+
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Terlalu sedikit!')">C. Sekitar 50%</button>
+
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Masih ada daratan 29%!')">D. 100%</button>
+
+          </div>
+
+          <div id="quiz-fb-1" style="margin-top:10px; font-weight:800; font-size:0.9rem;"></div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================================
+
+           MODULE 2: ANATOMI TELUR REBUS & IRISAN BUMI 3D
+
+           ===================================================================== -->
+
+      <div class="module-pane" id="module-2">
+        <div style="margin-bottom:16px;">
+          <h3 style="font-size:1.4rem; font-weight:900; color:#9A3412; margin-bottom:4px;">
+            🥚 Misi 2: Irisan Anatomi Bumi &amp; Analogi Telur Rebus 3D
+          </h3>
+          <p style="color:#64748B; font-size:0.95rem;">
+            Pilih mode visual 3D di bawah, lalu klik atau susun lapisan untuk membongkar rahasia perut bumi kita!
+          </p>
+        </div>
+
+        <!-- 3D Diorama Mode Controls -->
+        <div class="diorama-controls">
+          <button class="diorama-mode-btn active" id="btn-mode-earth" onclick="switchDioramaMode('earth')">
+            <span>🌍</span> 3D Irisan Bumi
+          </button>
+          <button class="diorama-mode-btn" id="btn-mode-egg" onclick="switchDioramaMode('egg')">
+            <span>🥚</span> 3D Irisan Telur Rebus
+          </button>
+          <button class="diorama-mode-btn" id="btn-mode-compare" onclick="switchDioramaMode('compare')">
+            <span>🔄</span> Bandingkan 3D Berdampingan
+          </button>
+          <button class="diorama-mode-btn" id="btn-mode-diorama" onclick="switchDioramaMode('diorama')">
+            <span>🖼️</span> Ilustrasi Pastel
+          </button>
+        </div>
+
+        <div class="slice-visual-area">
+          <!-- 3D Interactive Stage -->
+          <div class="diorama-3d-stage" id="diorama-container">
+            
+            <!-- VIEW 1: 3D EARTH CUTAWAY SVG -->
+            <div class="diorama-viewport" id="view-earth">
+              <svg viewBox="0 0 320 320" width="310" height="310">
+                <defs>
+                  <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="35%" stop-color="#FEF08A" />
+                    <stop offset="70%" stop-color="#F59E0B" />
+                    <stop offset="100%" stop-color="#D97706" />
+                  </radialGradient>
+                  <radialGradient id="mantleGrad" cx="40%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="#FB923C" />
+                    <stop offset="70%" stop-color="#EA580C" />
+                    <stop offset="100%" stop-color="#C2410C" />
+                  </radialGradient>
+                  <radialGradient id="crustGrad" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#38BDF8" />
+                    <stop offset="50%" stop-color="#0284C7" />
+                    <stop offset="100%" stop-color="#0F172A" />
+                  </radialGradient>
+                  <filter id="shadow3d">
+                    <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.3" />
+                  </filter>
+                </defs>
+
+                <!-- Full Globe Base (Atmosphere Glow) -->
+                <circle cx="160" cy="160" r="148" fill="rgba(56, 189, 248, 0.2)" stroke="#38BDF8" stroke-width="1.5" />
+
+                <!-- Outer Crust Shell (Left & Bottom Hemisphere) -->
+                <path class="svg-3d-layer" id="svg-crust" onclick="selectEarthLayer('crust', this)"
+                      d="M 160 16 A 144 144 0 1 0 304 160 L 160 160 Z"
+                      fill="url(#crustGrad)" stroke="#78350F" stroke-width="3" filter="url(#shadow3d)" />
+
+                <!-- Continents on Globe Exterior -->
+                <path d="M 90 60 Q 120 40 140 70 Q 150 110 110 130 Q 80 110 90 60 Z" fill="#86EFAC" opacity="0.9" pointer-events="none" />
+                <path d="M 60 160 Q 90 140 110 180 Q 100 230 70 240 Q 40 210 60 160 Z" fill="#86EFAC" opacity="0.9" pointer-events="none" />
+                <path d="M 170 210 Q 220 200 240 240 Q 220 280 180 270 Q 150 250 170 210 Z" fill="#86EFAC" opacity="0.9" pointer-events="none" />
+
+                <!-- Mantle Layer (Quarter Cutaway) -->
+                <path class="svg-3d-layer" id="svg-mantle" onclick="selectEarthLayer('mantle', this)"
+                      d="M 160 36 A 124 124 0 0 1 284 160 L 222 160 A 62 62 0 0 0 160 98 Z"
+                      fill="url(#mantleGrad)" stroke="#B45309" stroke-width="2.5" />
+
+                <!-- Inner Crust Rim Indicator -->
+                <path d="M 160 36 A 124 124 0 0 1 284 160 L 288 160 A 128 128 0 0 0 160 32 Z"
+                      fill="#78350F" stroke="#451A03" stroke-width="1" pointer-events="none" />
+
+                <!-- Outer Core Layer -->
+                <path class="svg-3d-layer" id="svg-outercore" onclick="selectEarthLayer('core', this)"
+                      d="M 160 98 A 62 62 0 0 1 222 160 L 195 160 A 35 35 0 0 0 160 125 Z"
+                      fill="#F59E0B" stroke="#D97706" stroke-width="2" />
+
+                <!-- Solid Inner Core (Quarter Center) -->
+                <path class="svg-3d-layer" id="svg-innercore" onclick="selectEarthLayer('core', this)"
+                      d="M 160 125 A 35 35 0 0 1 195 160 L 160 160 Z"
+                      fill="url(#coreGlow)" stroke="#FDE047" stroke-width="2" />
+
+                <!-- Depth Pointer Labels (3D HUD) -->
+                <g style="font-size:9px; font-weight:800; font-family:'Plus Jakarta Sans', sans-serif;">
+                  <!-- Crust Pointer -->
+                  <line x1="284" y1="90" x2="250" y2="70" stroke="#78350F" stroke-width="1.5" />
+                  <rect x="235" y="48" width="80" height="20" rx="6" fill="rgba(255,255,255,0.92)" stroke="#78350F" />
+                  <text x="242" y="62" fill="#78350F">Kerak (0-70km)</text>
+
+                  <!-- Mantle Pointer -->
+                  <line x1="240" y1="125" x2="210" y2="105" stroke="#EA580C" stroke-width="1.5" />
+                  <rect x="180" y="85" width="85" height="20" rx="6" fill="rgba(255,255,255,0.92)" stroke="#EA580C" />
+                  <text x="187" y="99" fill="#EA580C">Mantel (2900km)</text>
+
+                  <!-- Core Pointer -->
+                  <line x1="175" y1="145" x2="140" y2="120" stroke="#D97706" stroke-width="1.5" />
+                  <rect x="75" y="105" width="75" height="20" rx="6" fill="rgba(255,255,255,0.95)" stroke="#D97706" />
+                  <text x="82" y="119" fill="#B45309">Inti (6000°C)</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- VIEW 2: 3D BOILED EGG CUTAWAY SVG -->
+            <div class="diorama-viewport" id="view-egg" style="display:none;">
+              <svg viewBox="0 0 320 320" width="310" height="310">
+                <defs>
+                  <radialGradient id="yolkGrad" cx="45%" cy="45%" r="55%">
+                    <stop offset="0%" stop-color="#FEF08A" />
+                    <stop offset="60%" stop-color="#F59E0B" />
+                    <stop offset="100%" stop-color="#D97706" />
+                  </radialGradient>
+                  <radialGradient id="albumenGrad" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="75%" stop-color="#F8FAFC" />
+                    <stop offset="100%" stop-color="#E2E8F0" />
+                  </radialGradient>
+                  <radialGradient id="shellGrad" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#E29578" />
+                    <stop offset="70%" stop-color="#B07D62" />
+                    <stop offset="100%" stop-color="#8D5B4C" />
+                  </radialGradient>
+                </defs>
+
+                <!-- Egg Shadow -->
+                <ellipse cx="160" cy="275" rx="100" ry="18" fill="rgba(0,0,0,0.12)" />
+
+                <!-- Left Half (Eggshell Exterior 3D) -->
+                <path class="svg-3d-layer" id="egg-shell-ext" onclick="selectEarthLayer('crust', this)"
+                      d="M 160 30 C 90 30 50 120 50 190 C 50 250 100 270 160 270 Z"
+                      fill="url(#shellGrad)" stroke="#78350F" stroke-width="2.5" />
+
+                <!-- Right Half (Sliced Boiled Egg Inside) -->
+                <!-- Eggshell Edge Rim -->
+                <path class="svg-3d-layer" id="egg-shell-rim" onclick="selectEarthLayer('crust', this)"
+                      d="M 160 30 C 230 30 270 120 270 190 C 270 250 220 270 160 270 L 160 266 C 216 266 264 246 264 190 C 264 124 226 36 160 36 Z"
+                      fill="#78350F" stroke="#451A03" stroke-width="1.5" />
+
+                <!-- White Albumen (Putih Telur = Mantel) -->
+                <path class="svg-3d-layer" id="egg-albumen" onclick="selectEarthLayer('mantle', this)"
+                      d="M 160 36 C 226 36 264 124 264 190 C 264 246 216 266 160 266 Z"
+                      fill="url(#albumenGrad)" stroke="#CBD5E1" stroke-width="2" />
+
+                <!-- Golden Yolk (Kuning Telur = Inti Bumi) -->
+                <circle class="svg-3d-layer" id="egg-yolk" onclick="selectEarthLayer('core', this)"
+                        cx="160" cy="180" r="48"
+                        fill="url(#yolkGrad)" stroke="#F59E0B" stroke-width="2.5" />
+
+                <!-- HUD Egg Pointers -->
+                <g style="font-size:9.5px; font-weight:800; font-family:'Plus Jakarta Sans', sans-serif;">
+                  <rect x="205" y="45" width="105" height="22" rx="6" fill="rgba(255,255,255,0.95)" stroke="#78350F" />
+                  <text x="212" y="60" fill="#78350F">Cangkang (Kulit)</text>
+
+                  <rect x="205" y="115" width="105" height="22" rx="6" fill="rgba(255,255,255,0.95)" stroke="#C2410C" />
+                  <text x="212" y="130" fill="#C2410C">Putih Telur (Mantel)</text>
+
+                  <rect x="180" y="215" width="115" height="22" rx="6" fill="rgba(255,255,255,0.95)" stroke="#D97706" />
+                  <text x="187" y="230" fill="#B45309">Kuning Telur (Inti)</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- VIEW 3: SIDE-BY-SIDE COMPARE -->
+            <div class="diorama-viewport compare-stage" id="view-compare" style="display:none;">
+              <!-- Mini Earth -->
+              <div class="compare-item">
+                <svg viewBox="0 0 160 160" width="135" height="135">
+                  <circle cx="80" cy="80" r="70" fill="url(#crustGrad)" stroke="#78350F" stroke-width="2" />
+                  <path d="M 80 12 A 68 68 0 0 1 148 80 L 115 80 A 35 35 0 0 0 80 45 Z" fill="#FB923C" stroke="#EA580C" />
+                  <path d="M 80 45 A 35 35 0 0 1 115 80 L 80 80 Z" fill="#F59E0B" />
+                </svg>
+                <div class="compare-label">🌍 Bumi 3 Lapisan</div>
+              </div>
+
+              <div style="font-size:1.6rem; color:#EA580C; font-weight:900;">⇄</div>
+
+              <!-- Mini Egg -->
+              <div class="compare-item">
+                <svg viewBox="0 0 160 160" width="135" height="135">
+                  <ellipse cx="80" cy="80" rx="55" ry="70" fill="#FFFFFF" stroke="#78350F" stroke-width="3" />
+                  <circle cx="80" cy="88" r="28" fill="#F59E0B" stroke="#D97706" stroke-width="2" />
+                </svg>
+                <div class="compare-label">🥚 Telur Rebus 3 Lapisan</div>
+              </div>
+            </div>
+
+            <!-- VIEW 4: DIORAMA PASTEL IMAGE -->
+            <div class="diorama-viewport" id="view-diorama" style="display:none;">
+              <img src="../assets/mishka/mishka_ipas_bumi_kita_layers.jpg" alt="Diorama Bumi Pastel" style="width:100%; height:100%; object-fit:cover; border-radius:22px;">
+            </div>
+
+          </div>
+
+          <!-- Layer Selector List -->
+          <div class="layer-selector-list">
+            <!-- Kerak Bumi -->
+            <div class="layer-btn active" id="btn-layer-crust" onclick="selectEarthLayer('crust', this)">
+              <div class="layer-badge-dot" style="background:#78350F;"></div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#78350F;">1. Kerak Bumi (Crust) • 0 - 70 km</div>
+                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Cangkang telur rebus</b> tipis &amp; retak tempat kita hidup.</div>
+              </div>
+            </div>
+
+            <!-- Mantel Bumi -->
+            <div class="layer-btn" id="btn-layer-mantle" onclick="selectEarthLayer('mantle', this)">
+              <div class="layer-badge-dot" style="background:#FB923C;"></div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#C2410C;">2. Mantel Bumi (Mantle) • 70 - 2.900 km</div>
+                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Putih telur rebus</b> tebal, magma liat 3.000°C.</div>
+              </div>
+            </div>
+
+            <!-- Inti Bumi -->
+            <div class="layer-btn" id="btn-layer-core" onclick="selectEarthLayer('core', this)">
+              <div class="layer-badge-dot" style="background:#F59E0B;"></div>
+              <div>
+                <div style="font-weight:900; font-size:1.02rem; color:#854D0E;">3. Inti Bumi (Core) • 2.900 - 6.370 km</div>
+                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Kuning telur</b> bola besi membara 6.000°C!</div>
+              </div>
+            </div>
+
+            <!-- INTERACTIVE LAYER INQUIRY: ANAK MEMILIH ISI LAPISAN -->
+            <div class="inquiry-card" id="layer-inquiry-box">
+              <div class="inquiry-title">
+                <span>🧩</span> <span id="inquiry-badge-title">Misi Detektif: Tebak Karakteristik Kerak Bumi!</span>
+              </div>
+              <div class="inquiry-question" id="inquiry-question-text">
+                "Menurut Mishka, seperti apa sifat dan wujud lapisan terluar (Kerak Bumi) ini?"
+              </div>
+              <div class="inquiry-options-grid" id="inquiry-options-container">
+                <!-- Dynamically populated options -->
+              </div>
+              <div class="inquiry-feedback" id="inquiry-fb-msg"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Layer Details Box -->
+        <div class="sim-box" id="layer-detail-box" style="background:#FFFBEB; border-color:#FCD34D;">
+          <h4 style="font-size:1.15rem; font-weight:900; color:#78350F; margin-bottom:6px;" id="layer-detail-title">
+            🧱 Kerak Bumi: Cangkang Rapuh yang Mengapung
+          </h4>
+          <p style="font-size:0.95rem; color:#78350F;" id="layer-detail-text">
+            Ketebalannya hanya 5-70 km (kurang dari 1% jari-jari bumi). Kerak ini retak-retak menjadi kepingan lempeng puzzle yang mengapung di atas mantel magma yang panas!
+          </p>
+        </div>
+
+        <!-- Mini Quiz Module 2 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            ❓ Uji Logika Telur: Mengapa kerak bumi diibaratkan seperti cangkang telur rebus?
+          </div>
+          <div class="quiz-options">
+            <button class="opt-btn" onclick="checkQuiz(this, true, 'BENAR! Sangat tipis dibanding isi dalamnya dan terbagi retak-retak!')">A. Karena sangat tipis dan bisa retak</button>
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Bumi tidak manis seperti kue!')">B. Karena rasanya manis</button>
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Kerak bumi padat, bukan cair!')">C. Karena berbentuk air cair</button>
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Salah, kerak bumi ada batuan!')">D. Karena tidak ada batuannya</button>
+          </div>
+          <div id="quiz-fb-2" style="margin-top:10px; font-weight:800; font-size:0.9rem;"></div>
+        </div>
+      </div>
+
+      <div class="module-pane" id="module-3">
+
+        <div style="margin-bottom:18px;">
+
+          <h3 style="font-size:1.4rem; font-weight:900; color:#7C3AED; margin-bottom:4px;">
+
+            ⚡ Misi 3: Simulasi Tabrakan Lempeng Tektonik &amp; Seismograf
+
+          </h3>
+
+          <p style="color:#64748B; font-size:0.95rem;">
+
+            Kerak bumi tidak diam! Lempeng-lempeng benua bergerak beberapa sentimeter per tahun. Coba tabrakkan dua lempeng di bawah!
+
+          </p>
+
+        </div>
+
+
+
+        <div class="tectonic-stage">
+
+          <div class="plates-container">
+
+            <div class="plate" id="plate-left">Lempeng Benua A ➔</div>
+
+            <div class="mountain-peak" id="mountain-peak"></div>
+
+            <div class="plate" id="plate-right">⬅ Lempeng Benua B</div>
+
+          </div>
+
+
+
+          <div style="text-align:center; margin-top:20px;">
+
+            <button class="btn-zoom-launch" style="padding:12px 28px; font-size:1rem;" onclick="triggerCollision()">
+
+              💥 TABRAKKAN DUA LEMPENG!
+
+            </button>
+
+            <button class="btn-zoom-out" style="margin-left:10px; padding:12px 20px;" onclick="resetCollision()">
+
+              🔄 Reset Posisi
+
+            </button>
+
+          </div>
+
+
+
+          <!-- Seismograph readout -->
+
+          <div class="seismograph-box">
+
+            <div>
+
+              <span style="font-size:0.85rem; color:#94A3B8;">STATUS SEISMOGRAF:</span>
+
+              <span class="seismo-needle" id="seismo-status">TENANG (0.0 Skala Richter)</span>
+
+            </div>
+
+            <div id="mountain-status" style="font-size:0.88rem; font-weight:800; color:#F59E0B;">
+
+              Tinggi Pegunungan: 0 m
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Explanation box -->
+
+        <div class="sim-box" id="tectonic-explain" style="background:#FAF5FF; border-color:#DDD6FE;">
+
+          <h4 style="font-size:1.15rem; font-weight:900; color:#6D28D9; margin-bottom:6px;">
+
+            ⛰️ Lahirnya Pegunungan &amp; Gempa Bumi
+
+          </h4>
+
+          <p style="font-size:0.95rem; color:#475569;">
+
+            Ketika dua lempeng benua bertabrakan dengan kekuatan raksasa, lapisan tanah tidak punya jalan lain selain terlipat terdorong ke atas, membentuk puncak pegunungan tinggi seperti Pegunungan Himalaya! Getarannya memicu gempa bumi seismik.
+
+          </p>
+
+        </div>
+
+
+
+        <!-- Mini Quiz Module 3 -->
+
+        <div class="quiz-card">
+
+          <div class="quiz-question">
+
+            ❓ Uji Geologi: Peristiwa alam apakah yang terjadi ketika dua lempeng kerak bumi saling bertabrakan keras?
+
+          </div>
+
+          <div class="quiz-options">
+
+            <button class="opt-btn" onclick="checkQuiz(this, true, 'TEPAT SEKALI! Memicu gempa tektonik dan pembentukan gunung!')">A. Gempa Bumi &amp; Pegunungan Lipatan</button>
+
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Hujan salju dipengaruhi cuaca atmosfer!')">B. Hujan Salju Lebat</button>
+
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Bumi tidak mengecil!')">C. Ukuran bumi menyusut</button>
+
+            <button class="opt-btn" onclick="checkQuiz(this, false, 'Matahari di luar angkasa!')">D. Gerhana Matahari Total</button>
+
+          </div>
+
+          <div id="quiz-fb-3" style="margin-top:10px; font-weight:800; font-size:0.9rem;"></div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================================
+
+           FOOTER: 5-MINUTE NOTEBOOK TEMPLATE BANNER
+
+           ===================================================================== -->
+
+      <div class="writing-banner">
+
+        <div>
+
+          <div style="font-weight:900; font-size:1.1rem; color:#92400E;">
+
+            ✍️ Sesi Menulis Terbimbing 5 Menit (Buku Tulis Fisik)
+
+          </div>
+
+          <div style="font-size:0.88rem; color:#B45309; margin-top:2px;">
+
+            Buka buku IPAS Mishka, salin 3 poin mutiara bumi ini secara rapi!
+
+          </div>
+
+        </div>
+
+        <button class="nav-btn" style="background:#D97706; border-color:#F59E0B; color:white;" onclick="toggleWritingBox()">
+
+          📋 Tampilkan Template Catatan
+
+        </button>
+
+      </div>
+
+
+
+      <!-- Writing Box Dropdown -->
+
+      <div id="writing-template-box" style="display:none; background:#FFFBEB; border:2px dashed #F59E0B; border-radius:18px; padding:20px; margin-top:16px; font-family:monospace; color:#78350F; font-size:0.95rem; line-height:1.6;">
+
+        ==============================================<br>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🌍 3 LAPISAN RAHASIA BUMI MISHKA<br>
+
+        ==============================================<br>
+
+        1. Tiga Selimut Kehidupan Bumi:<br>
+
+        &nbsp;&nbsp;&nbsp;• Litosfer : Lapisan tanah &amp; batuan daratan.<br>
+
+        &nbsp;&nbsp;&nbsp;• Hidrosfer: Lapisan air samudera &amp; sungai (71%).<br>
+
+        &nbsp;&nbsp;&nbsp;• Atmosfer : Lapisan udara gas pelindung bumi.<br>
+
+        2. Lapisan Dalam: Kerak ➔ Mantel ➔ Inti Bumi.<br>
+
+        3. Lempeng Tektonik: Kerak bumi terbagi puzzle yang <br>
+
+        &nbsp;&nbsp;&nbsp;bergerak memicu gempa &amp; membentuk pegunungan.<br>
+
+        ==============================================
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+    /* =========================================================================
+
+       1. STARFIELD CANVAS ANIMATION (SPACE BACKGROUND)
+
+       ========================================================================= */
+
+    const canvas = document.getElementById('space-canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    let stars = [];
+
+    let numStars = 220;
+
+    let isWarping = false;
+
+    let audioEnabled = true;
+
+
+
+    function resizeCanvas() {
+
+      canvas.width = window.innerWidth;
+
+      canvas.height = window.innerHeight;
+
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    resizeCanvas();
+
+
+
+    class Star {
+
+      constructor() {
+
+        this.reset();
+
+      }
+
+      reset() {
+
+        this.x = (Math.random() - 0.5) * canvas.width * 2;
+
+        this.y = (Math.random() - 0.5) * canvas.height * 2;
+
+        this.z = Math.random() * canvas.width;
+
+        this.pz = this.z;
+
+        this.color = ['#BAE6FD', '#E0E7FF', '#DDD6FE', '#FED7AA', '#FFFFFF'][Math.floor(Math.random() * 5)];
+
+        this.size = Math.random() * 1.8 + 0.5;
+
+      }
+
+      update(speed) {
+
+        this.pz = this.z;
+
+        this.z -= speed;
+
+        if (this.z <= 0) {
+
+          this.reset();
+
+          this.z = canvas.width;
+
+          this.pz = this.z;
+
+        }
+
+      }
+
+      draw() {
+
+        const cx = canvas.width / 2;
+
+        const cy = canvas.height / 2;
+
+        const sx = (this.x / this.z) * canvas.width * 0.5 + cx;
+
+        const sy = (this.y / this.z) * canvas.height * 0.5 + cy;
+
+
+
+        if (sx < 0 || sx >= canvas.width || sy < 0 || sy >= canvas.height) return;
+
+
+
+        const r = (1 - this.z / canvas.width) * this.size * (isWarping ? 3 : 1);
+
+        ctx.beginPath();
+
+        ctx.arc(sx, sy, Math.max(0.6, r), 0, Math.PI * 2);
+
+        ctx.fillStyle = this.color;
+
+        ctx.fill();
+
+
+
+        // Warp lines when zooming in
+
+        if (isWarping) {
+
+          const px = (this.x / this.pz) * canvas.width * 0.5 + cx;
+
+          const py = (this.y / this.pz) * canvas.height * 0.5 + cy;
+
+          ctx.beginPath();
+
+          ctx.moveTo(px, py);
+
+          ctx.lineTo(sx, sy);
+
+          ctx.strokeStyle = this.color;
+
+          ctx.lineWidth = r * 1.5;
+
+          ctx.stroke();
+
+        }
+
+      }
+
+    }
+
+
+
+    for (let i = 0; i < numStars; i++) {
+
+      stars.push(new Star());
+
+    }
+
+
+
+    function animateSpace() {
+
+      ctx.fillStyle = isWarping ? 'rgba(11, 15, 25, 0.35)' : 'rgba(11, 15, 25, 0.9)';
+
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+
+      const currentSpeed = isWarping ? 38 : 1.2;
+
+      for (let star of stars) {
+
+        star.update(currentSpeed);
+
+        star.draw();
+
+      }
+
+      requestAnimationFrame(animateSpace);
+
+    }
+
+    animateSpace();
+
+
+
+    /* =========================================================================
+
+       2. WEB AUDIO SYNTHESIZER (NO EXTERNAL FILES NEEDED)
+
+       ========================================================================= */
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+
+
+    function playSound(type) {
+
+      if (!audioEnabled || !audioCtx) return;
+
+      if (audioCtx.state === 'suspended') {
+
+        audioCtx.resume();
+
+      }
+
+
+
+      const now = audioCtx.currentTime;
+
+      const osc = audioCtx.createOscillator();
+
+      const gain = audioCtx.createGain();
+
+      osc.connect(gain);
+
+      gain.connect(audioCtx.destination);
+
+
+
+      if (type === 'chime') {
+
+        osc.type = 'sine';
+
+        osc.frequency.setValueAtTime(587.33, now); // D5
+
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.3); // A5
+
+        gain.gain.setValueAtTime(0.15, now);
+
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+
+        osc.start(now);
+
+        osc.stop(now + 0.6);
+
+      } else if (type === 'warp') {
+
+        osc.type = 'sawtooth';
+
+        osc.frequency.setValueAtTime(120, now);
+
+        osc.frequency.exponentialRampToValueAtTime(750, now + 1.2);
+
+        gain.gain.setValueAtTime(0.1, now);
+
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.3);
+
+        osc.start(now);
+
+        osc.stop(now + 1.3);
+
+      } else if (type === 'rumble') {
+
+        osc.type = 'triangle';
+
+        osc.frequency.setValueAtTime(65, now);
+
+        osc.frequency.linearRampToValueAtTime(110, now + 0.3);
+
+        osc.frequency.linearRampToValueAtTime(45, now + 0.8);
+
+        gain.gain.setValueAtTime(0.2, now);
+
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.9);
+
+        osc.start(now);
+
+        osc.stop(now + 0.9);
+
+      } else if (type === 'success') {
+
+        osc.type = 'sine';
+
+        osc.frequency.setValueAtTime(523.25, now); // C5
+
+        osc.frequency.setValueAtTime(659.25, now + 0.12); // E5
+
+        osc.frequency.setValueAtTime(783.99, now + 0.24); // G5
+
+        osc.frequency.setValueAtTime(1046.50, now + 0.36); // C6
+
+        gain.gain.setValueAtTime(0.15, now);
+
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.7);
+
+        osc.start(now);
+
+        osc.stop(now + 0.7);
+
+      }
+
+    }
+
+
+
+    function toggleAudio() {
+
+      audioEnabled = !audioEnabled;
+
+      const btn = document.getElementById('audio-toggle-btn');
+
+      btn.innerText = audioEnabled ? '🔊 Efek Kosmis: Nyala' : '🔇 Efek Kosmis: Bisu';
+
+      if (audioEnabled) playSound('chime');
+
+    }
+
+
+
+    /* =========================================================================
+
+       3. ZOOM IN & ZOOM OUT ORBIT CINEMATICS
+
+       ========================================================================= */
+
+    function startZoomIn() {
+
+      playSound('warp');
+
+      isWarping = true;
+
+      const warp = document.getElementById('warp-overlay');
+
+      const sceneSpace = document.getElementById('scene-space');
+
+      const sceneLab = document.getElementById('scene-lab');
+
+
+
+      warp.classList.add('warp-active');
+
+      sceneSpace.style.transform = 'scale(2.2)';
+
+      sceneSpace.style.opacity = '0';
+
+
+
+      setTimeout(() => {
+
+        sceneSpace.style.display = 'none';
+
+        sceneLab.style.display = 'block';
+
+        warp.classList.remove('warp-active');
+
+        isWarping = false;
+
+        playSound('success');
+
+      }, 1100);
+
+    }
+
+
+
+    function zoomOutToSpace() {
+
+      playSound('chime');
+
+      const sceneSpace = document.getElementById('scene-space');
+
+      const sceneLab = document.getElementById('scene-lab');
+
+
+
+      sceneLab.style.display = 'none';
+
+      sceneSpace.style.display = 'flex';
+
+      sceneSpace.style.transform = 'scale(1)';
+
+      sceneSpace.style.opacity = '1';
+
+    }
+
+
+
+    /* =========================================================================
+
+       4. LAB MODULE TABS & LOGIC
+
+       ========================================================================= */
+
+    function switchLabModule(modIndex) {
+
+      playSound('chime');
+
+      for (let i = 1; i <= 3; i++) {
+
+        document.getElementById(`tab-btn-${i}`).classList.remove('active');
+
+        document.getElementById(`module-${i}`).classList.remove('active');
+
+      }
+
+      document.getElementById(`tab-btn-${modIndex}`).classList.add('active');
+
+      document.getElementById(`module-${modIndex}`).classList.add('active');
+
+    }
+
+
+
+    // MODULE 1: SELIMUT SELECTOR
+
+    function selectSelimut(type) {
+
+      playSound('chime');
+
+      document.getElementById('card-atmos').classList.remove('selected');
+
+      document.getElementById('card-litos').classList.remove('selected');
+
+      document.getElementById('card-hidros').classList.remove('selected');
+
+
+
+      const title = document.getElementById('selimut-fb-title');
+
+      const text = document.getElementById('selimut-fb-text');
+
+      const box = document.getElementById('selimut-feedback-box');
+
+
+
+      if (type === 'atmos') {
+
+        document.getElementById('card-atmos').classList.add('selected');
+
+        title.style.color = '#0369A1';
+
+        title.innerHTML = '🛡️ Uji Atmosfer: Perisai Bintang Jatuh Aktif!';
+
+        text.innerText = 'Saat meteorit meluncur dari antariksa dengan kecepatan 50.000 km/jam, gesekan gas di lapisan atmosfer membakarnya menjadi bintang jatuh sebelum menyentuh tanah litosfer!';
+
+        box.style.background = '#F0F9FF';
+
+      } else if (type === 'litos') {
+
+        document.getElementById('card-litos').classList.add('selected');
+
+        title.style.color = '#15803D';
+
+        title.innerHTML = '⛰️ Uji Litosfer: Tempat Berpijak & Lempeng Benua!';
+
+        text.innerText = 'Litosfer adalah batuan padat setebal 100 km. Di sinilah kita mendirikan rumah, jalanan, dan taman bunga. Kerak litosfer ini retak-retak menjadi lempeng yang terus bergerak!';
+
+        box.style.background = '#F0FDF4';
+
+      } else if (type === 'hidros') {
+
+        document.getElementById('card-hidros').classList.add('selected');
+
+        title.style.color = '#6D28D9';
+
+        title.innerHTML = '🌊 Uji Hidrosfer: Samudera Biru Menakjubkan!';
+
+        text.innerText = 'Samudera Pasifik, Atlantik, Hindia, serta danau dan es kutub membentuk hidrosfer. Air menguap terkena matahari, membentuk awan di atmosfer, lalu turun kembali sebagai hujan berkah.';
+
+        box.style.background = '#FAF5FF';
+
+      }
+
+    }
+
+
+
+    // MODULE 2: EARTH LAYERS SELECTOR
+
+    // =========================================================================
+    // MODULE 2: 3D DIORAMA & INTERACTIVE LAYER INQUIRY BUILDER
+    // =========================================================================
+    let currentDioramaMode = 'earth';
+    let currentActiveLayer = 'crust';
+
+    const layerInquiryData = {
+      crust: {
+        title: 'Misi Detektif: Tebak Karakteristik Kerak Bumi!',
+        question: 'Menurut Mishka, seperti apa sifat dan wujud lapisan terluar (Kerak Bumi) ini?',
+        analogy: 'Cangkang Telur Rebus',
+        options: [
+          { text: 'A. Sangat tipis (5-70 km), padat, retak-retak jadi lempeng puzzle tempat kita berpijak.', correct: true, exp: 'HEBAT MISHKA! Kerak bumi memang tipis (<1% bumi) dan menjadi tempat daratan serta lautan berada!' },
+          { text: 'B. Cairan magma mendidih setebal 2.900 km tempat lava mengalir.', correct: false, exp: 'Kurang tepat! Magma mendidih ada di lapisan Mantel Bumi di bawah kerak!' },
+          { text: 'C. Bola logam besi emas membara bersuhu 6.000°C di pusat terdalam.', correct: false, exp: 'Itu adalah ciri-ciri Inti Bumi di pusat terdalam!' }
+        ]
+      },
+      mantle: {
+        title: 'Misi Detektif: Tebak Karakteristik Mantel Bumi!',
+        question: 'Bagaimana wujud dan suhu lapisan tengah (Mantel Bumi) ini?',
+        analogy: 'Putih Telur Rebus',
+        options: [
+          { text: 'A. Lapisan tanah dingin tempat menanam pohon dan bunga.', correct: false, exp: 'Tanah tempat tanaman hidup berada di lapisan Kerak terluar!' },
+          { text: 'B. Tebal 2.900 km, bersuhu 3.000°C, seperti adonan pasta batu magma panas yang mengalir perlahan.', correct: true, exp: 'LUAR BIASA! Mantel bumi sangat tebal seperti putih telur dan menjadi tempat lempeng mengapung!' },
+          { text: 'C. Ruang hampa udara dingin yang menahan meteorit jatuh.', correct: false, exp: 'Ruang gas penahan meteorit adalah Atmosfer udara!' }
+        ]
+      },
+      core: {
+        title: 'Misi Detektif: Tebak Karakteristik Inti Bumi!',
+        question: 'Apa rahasia terdalam di pusat Inti Bumi kita?',
+        analogy: 'Kuning Telur Rebus',
+        options: [
+          { text: 'A. Bola besi dan nikel membara 6.000°C (sepanas matahari) yang memancarkan medan magnet perisai bumi.', correct: true, exp: 'SEMPURNA! Inti bumi sangat padat membara seperti kuning telur dan menjaga kompas serta kutub magnet bumi!' },
+          { text: 'B. Kumpulan air es abadi yang sangat dingin beku.', correct: false, exp: 'Pusat bumi justru bagian terpanas di seluruh planet kita!' },
+          { text: 'C. Lapisan udara gas oksigen untuk bernapas.', correct: false, exp: 'Oksigen ada di atmosfer udara atas, bukan di inti bumi!' }
+        ]
+      }
+    };
+
+    function switchDioramaMode(mode) {
+      currentDioramaMode = mode;
+      playSound('chime');
+      document.querySelectorAll('.diorama-mode-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-mode-' + mode);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      ['view-earth', 'view-egg', 'view-compare', 'view-diorama'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+
+      if (mode === 'earth') {
+        document.getElementById('view-earth').style.display = 'flex';
+      } else if (mode === 'egg') {
+        document.getElementById('view-egg').style.display = 'flex';
+      } else if (mode === 'compare') {
+        document.getElementById('view-compare').style.display = 'flex';
+      } else if (mode === 'diorama') {
+        document.getElementById('view-diorama').style.display = 'flex';
+      }
+      highlight3DLayer(currentActiveLayer);
+    }
+
+    function selectEarthLayer(layer, elem) {
+      playSound('chime');
+      currentActiveLayer = layer;
+
+      // Update selector buttons
+      document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('btn-layer-' + layer);
+      if (btn) btn.classList.add('active');
+
+      // Update 3D layer highlights
+      highlight3DLayer(layer);
+
+      // Update Detail Box
+      const title = document.getElementById('layer-detail-title');
+      const text = document.getElementById('layer-detail-text');
+
+      if (layer === 'crust') {
+        title.innerText = '🧱 Kerak Bumi (Crust) = Cangkang Telur Rebus';
+        text.innerText = 'Ketebalannya hanya 5-70 km (kurang dari 1% jari-jari bumi). Seperti cangkang telur yang retak, kerak bumi terbagi menjadi lempeng-lempeng tektonik tempat manusia tinggal dan beraktivitas.';
+      } else if (layer === 'mantle') {
+        title.innerText = '🔥 Mantel Bumi (Mantle) = Putih Telur Rebus';
+        text.innerText = 'Lapisan paling tebal (2.900 km) bersuhu hingga 3.000°C. Terdiri dari batuan magma liat yang terus bergolak perlahan, menyebabkan lempeng kerak di atasnya bergeser!';
+      } else if (layer === 'core') {
+        title.innerText = '⚡ Inti Bumi (Core) = Kuning Telur Rebus';
+        text.innerText = 'Terbagi atas Inti Luar (cair) dan Inti Dalam (padat). Suhunya mencapai 5.000 - 6.000°C (sepanas permukaan Matahari!). Kandungan besi-nikelnya menciptakan medan magnet pelindung bumi dari badai kosmis antariksa.';
+      }
+
+      // Render Interactive Inquiry Challenge for this layer
+      renderLayerInquiry(layer);
+    }
+
+    function highlight3DLayer(layer) {
+      // Remove all highlights
+      document.querySelectorAll('.svg-3d-layer').forEach(el => el.classList.remove('highlighted'));
+
+      if (layer === 'crust') {
+        const elCrust = document.getElementById('svg-crust');
+        if (elCrust) elCrust.classList.add('highlighted');
+        const elEggShell = document.getElementById('egg-shell-rim');
+        if (elEggShell) elEggShell.classList.add('highlighted');
+        const elEggExt = document.getElementById('egg-shell-ext');
+        if (elEggExt) elEggExt.classList.add('highlighted');
+      } else if (layer === 'mantle') {
+        const elMantle = document.getElementById('svg-mantle');
+        if (elMantle) elMantle.classList.add('highlighted');
+        const elEggWhite = document.getElementById('egg-albumen');
+        if (elEggWhite) elEggWhite.classList.add('highlighted');
+      } else if (layer === 'core') {
+        const elCore1 = document.getElementById('svg-outercore');
+        if (elCore1) elCore1.classList.add('highlighted');
+        const elCore2 = document.getElementById('svg-innercore');
+        if (elCore2) elCore2.classList.add('highlighted');
+        const elYolk = document.getElementById('egg-yolk');
+        if (elYolk) elYolk.classList.add('highlighted');
+      }
+    }
+
+    function renderLayerInquiry(layer) {
+      const data = layerInquiryData[layer];
+      if (!data) return;
+
+      document.getElementById('inquiry-badge-title').innerText = data.title;
+      document.getElementById('inquiry-question-text').innerText = data.question;
+
+      const container = document.getElementById('inquiry-options-container');
+      container.innerHTML = '';
+
+      const fbMsg = document.getElementById('inquiry-fb-msg');
+      fbMsg.style.display = 'none';
+
+      data.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'inquiry-btn';
+        btn.innerHTML = opt.text;
+        btn.onclick = function() {
+          checkLayerInquiry(btn, opt.correct, opt.exp);
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function checkLayerInquiry(btnElem, isCorrect, expText) {
+      const parent = btnElem.parentElement;
+      parent.querySelectorAll('.inquiry-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+
+      const fb = document.getElementById('inquiry-fb-msg');
+      fb.style.display = 'block';
+
+      if (isCorrect) {
+        playSound('chime');
+        btnElem.classList.add('correct');
+        fb.style.background = '#ECFDF5';
+        fb.style.color = '#065F46';
+        fb.style.border = '1px solid #10B981';
+        fb.innerHTML = '🎉 <strong>VERIFIKASI TEPAT:</strong> ' + expText;
+        highlight3DLayer(currentActiveLayer);
+      } else {
+        btnElem.classList.add('wrong');
+        fb.style.background = '#FEF2F2';
+        fb.style.color = '#991B1B';
+        fb.style.border = '1px solid #F87171';
+        fb.innerHTML = '💡 <strong>TEBAKAN BELUM PAS:</strong> ' + expText;
+      }
+    }
+
+    // Auto-init inquiry on load
+    setTimeout(() => {
+      renderLayerInquiry('crust');
+    }, 400);
+
+    // MODULE 3: TECTONIC COLLISION & SEISMOGRAPH
+
+    let isCollided = false;
+
+    function triggerCollision() {
+
+      if (isCollided) return;
+
+      playSound('rumble');
+
+      isCollided = true;
+
+
+
+      const pLeft = document.getElementById('plate-left');
+
+      const pRight = document.getElementById('plate-right');
+
+      const peak = document.getElementById('mountain-peak');
+
+      const seismo = document.getElementById('seismo-status');
+
+      const mStatus = document.getElementById('mountain-status');
+
+
+
+      pLeft.style.transform = 'translateX(90px)';
+
+      pRight.style.transform = 'translateX(-90px)';
+
+
+
+      seismo.innerText = '💥 GEMPA TEKTONIK! (7.8 Skala Richter)';
+
+      seismo.style.color = '#EF4444';
+
+
+
+      setTimeout(() => {
+
+        peak.style.borderBottom = '110px solid #16A34A';
+
+        mStatus.innerText = 'Tinggi Pegunungan: 8.848 m (Puncak Himalaya Terbentuk!)';
+
+        playSound('success');
+
+      }, 350);
+
+    }
+
+
+
+    function resetCollision() {
+
+      playSound('chime');
+
+      isCollided = false;
+
+      const pLeft = document.getElementById('plate-left');
+
+      const pRight = document.getElementById('plate-right');
+
+      const peak = document.getElementById('mountain-peak');
+
+      const seismo = document.getElementById('seismo-status');
+
+      const mStatus = document.getElementById('mountain-status');
+
+
+
+      pLeft.style.transform = 'translateX(0)';
+
+      pRight.style.transform = 'translateX(0)';
+
+      peak.style.borderBottom = '0px solid #16A34A';
+
+      seismo.innerText = 'TENANG (0.0 Skala Richter)';
+
+      seismo.style.color = '#10B981';
+
+      mStatus.innerText = 'Tinggi Pegunungan: 0 m';
+
+    }
+
+
+
+    // QUIZ CHECKER
+
+    function checkQuiz(btn, isCorrect, msg) {
+
+      const parent = btn.parentElement;
+
+      const buttons = parent.querySelectorAll('.opt-btn');
+
+      const card = parent.parentElement;
+
+      const fb = card.querySelector('[id^="quiz-fb"]');
+
+
+
+      buttons.forEach(b => b.disabled = true);
+
+
+
+      if (isCorrect) {
+
+        btn.classList.add('correct');
+
+        fb.innerHTML = `🎉 <span style="color:#16A34A;">${msg}</span>`;
+
+        playSound('success');
+
+      } else {
+
+        btn.classList.add('wrong');
+
+        fb.innerHTML = `❌ <span style="color:#DC2626;">${msg}</span>`;
+
+        playSound('rumble');
+
+      }
+
+    }
+
+
+
+    function toggleWritingBox() {
+
+      playSound('chime');
+
+      const box = document.getElementById('writing-template-box');
+
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+
+    }
+
+  </script>
+
+</body>
+
+</html>
+
