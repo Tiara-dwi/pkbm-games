@@ -202,17 +202,19 @@
       margin-top: 4px;
     }
     .btn-step {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
       border: 1px solid #475569;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 900;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.15s;
+      touch-action: manipulation;
+      user-select: none;
     }
     .btn-step:active {
       transform: scale(0.9);
@@ -340,8 +342,22 @@
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
+    @media (max-width: 768px) {
+      .container { padding: 0 12px; margin: 16px auto; }
+      .card { padding: 18px 14px; border-radius: 16px; }
+      .header { padding: 18px 14px; }
+      .header h1 { font-size: 1.45rem; }
+      .tab-bar { gap: 6px; }
+      .tab-btn { font-size: 0.85rem; padding: 10px 8px; touch-action: manipulation; }
+      .ramp-stage { padding: 18px 10px; gap: 12px; }
+      .ramp-col { min-width: 68px; gap: 8px; }
+      .ramp-block { width: 44px; height: 18px; }
+      .btn-step { width: 34px; height: 34px; font-size: 1.1rem; }
+    }
     @media (max-width: 550px) {
       .opt-grid { grid-template-columns: 1fr; }
+      .ramp-stage { justify-content: flex-start; }
+      .tab-bar { flex-direction: column; }
     }
     .opt-btn {
       background: #1E293B;
@@ -436,11 +452,15 @@
             Mulai dari Titik Awal, lalu gunakan tombol <strong>(+)</strong> atau <strong>(−)</strong> untuk menyusun undakan berikutnya!
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:10px;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
           <label for="inp-start" style="font-size:0.85rem; font-weight:800; color:#FB923C; white-space:nowrap;">
             🏁 TITIK AWAL (UNDAKAN 1):
           </label>
-          <input type="number" id="inp-start" value="10" min="1" max="15" onchange="setStartPoint(this.value)" oninput="setStartPoint(this.value)" style="width:70px; background:#0B1120; border:2px solid var(--orange); color:#FB923C; font-size:1.1rem; font-weight:900; text-align:center; padding:6px 8px; border-radius:10px; outline:none;">
+          <div style="display:inline-flex; align-items:center; gap:6px;">
+            <button class="btn-step btn-minus" onclick="setStartPoint(rampCounts[0] - 1)" title="Kurang balok awal" style="width:36px; height:36px; font-size:1.1rem; touch-action:manipulation;">−</button>
+            <input type="number" id="inp-start" value="10" min="1" max="15" onchange="setStartPoint(this.value)" oninput="setStartPoint(this.value)" style="width:65px; height:36px; background:#0B1120; border:2px solid var(--orange); color:#FB923C; font-size:1.15rem; font-weight:900; text-align:center; padding:4px 6px; border-radius:8px; outline:none; touch-action:manipulation;">
+            <button class="btn-step btn-plus" onclick="setStartPoint(rampCounts[0] + 1)" title="Tambah balok awal" style="width:36px; height:36px; font-size:1.1rem; touch-action:manipulation;">+</button>
+          </div>
         </div>
       </div>
 

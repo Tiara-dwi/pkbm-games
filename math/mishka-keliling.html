@@ -319,12 +319,13 @@
       flex-wrap: wrap;
     }
     .wb-color-btn {
-      width: 22px;
-      height: 22px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       border: 2px solid #CBD5E1;
       cursor: pointer;
       transition: all 0.15s;
+      touch-action: manipulation;
     }
     .wb-color-btn.active {
       transform: scale(1.25);
@@ -334,13 +335,14 @@
     .wb-action-btn {
       background: #F8FAFC;
       border: 1px solid #CBD5E1;
-      padding: 5px 9px;
+      padding: 6px 11px;
       border-radius: 6px;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
       transition: all 0.2s;
+      touch-action: manipulation;
     }
     .wb-action-btn:hover { background: #E2E8F0; }
     .wb-canvas {
@@ -361,8 +363,18 @@
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
+    @media (max-width: 768px) {
+      .container { padding: 0 12px; margin: 16px auto; }
+      .card { padding: 18px 14px; }
+      .header { padding: 18px 14px; }
+      .header h1 { font-size: 1.5rem; }
+      .tab-btn { font-size: 0.85rem; padding: 10px 8px; touch-action: manipulation; }
+      .wb-toolbar { gap: 8px; }
+      .wb-tools { gap: 6px; }
+    }
     @media (max-width: 550px) {
       .opt-grid { grid-template-columns: 1fr; }
+      .tab-bar { flex-direction: column; }
     }
     .opt-btn {
       background: #F9FAFB;
@@ -991,8 +1003,15 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
 
       function getPos(e) {
         const rect = canvas.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        let clientX = e.clientX;
+        let clientY = e.clientY;
+        if (e.touches && e.touches.length > 0) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else if (e.changedTouches && e.changedTouches.length > 0) {
+          clientX = e.changedTouches[0].clientX;
+          clientY = e.changedTouches[0].clientY;
+        }
         return {
           x: (clientX - rect.left) * (canvas.width / rect.width),
           y: (clientY - rect.top) * (canvas.height / rect.height)
@@ -1033,6 +1052,7 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
       canvas.addEventListener('touchstart', startDraw, { passive: false });
       canvas.addEventListener('touchmove', draw, { passive: false });
       canvas.addEventListener('touchend', stopDraw);
+      canvas.addEventListener('touchcancel', stopDraw);
 
       wbState[id].initialized = true;
     }
