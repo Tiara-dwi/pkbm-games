@@ -134,16 +134,33 @@
     }
 
     /* RAMP SIMULATOR CANVAS */
+    .tool-btn {
+      background: #1E293B;
+      border: 1px solid #475569;
+      color: #E2E8F0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tool-btn:hover {
+      background: #334155;
+      border-color: var(--neon-toska);
+      color: #34D399;
+    }
+
     .ramp-stage {
       background: #0B1120;
       border: 2px dashed #334155;
       border-radius: 16px;
       padding: 24px;
-      min-height: 280px;
+      min-height: 300px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 16px;
+      gap: 18px;
       overflow-x: auto;
       margin-bottom: 20px;
     }
@@ -151,47 +168,107 @@
       display: flex;
       flex-direction: column-reverse;
       align-items: center;
+      gap: 10px;
+      min-width: 80px;
+      user-select: none;
+    }
+    .ramp-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 8px 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width: 100%;
+    }
+    .undakan-name {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--neon-toska);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .undakan-count {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #FB923C;
+    }
+    .ramp-btn-group {
+      display: flex;
       gap: 6px;
+      margin-top: 4px;
+    }
+    .btn-step {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid #475569;
+      font-size: 1.15rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .btn-step:active {
+      transform: scale(0.9);
+    }
+    .btn-minus {
+      background: #1E293B;
+      color: #F87171;
+      border-color: #EF4444;
+    }
+    .btn-minus:hover {
+      background: #EF4444;
+      color: white;
+    }
+    .btn-plus {
+      background: #064E3B;
+      color: #34D399;
+      border-color: #10B981;
+    }
+    .btn-plus:hover {
+      background: #10B981;
+      color: #0F172A;
+    }
+
+    .ramp-stack {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 5px;
+      min-height: 28px;
+      width: 100%;
+      padding: 4px 2px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .ramp-stack:hover {
+      background: rgba(249, 115, 22, 0.08);
     }
     .ramp-block {
-      width: 44px;
-      height: 22px;
+      width: 48px;
+      height: 20px;
       background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
       border: 2px solid #FDBA74;
       border-radius: 6px;
       box-shadow: 0 4px 10px var(--orange-glow);
-      transition: all 0.3s;
+      transition: transform 0.15s, opacity 0.15s;
+      cursor: pointer;
+      animation: blockPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .ramp-info {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--neon-toska);
-      text-align: center;
-      margin-top: 8px;
+    .ramp-block:hover {
+      transform: scale(1.08);
+      filter: brightness(1.15);
     }
-
-    .seq-display {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-    .seq-pill {
-      background: #0F172A;
-      border: 2px solid var(--neon-toska);
-      padding: 8px 16px;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: #34D399;
-      box-shadow: 0 0 10px var(--neon-toska-glow);
-    }
-    .seq-arrow {
-      color: var(--orange);
-      font-weight: 900;
-      font-size: 1.1rem;
+    @keyframes blockPop {
+      0% { transform: scale(0.4); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     /* DETECTIVE QUESTS */
@@ -341,50 +418,45 @@
       <button class="tab-btn" onclick="switchTab('note')">✍️ 3. Blok 5 Menit Menulis</button>
     </div>
 
-    <!-- TAB 1: RAMP SIMULATOR -->
+    <!-- TAB 1: RAMP SIMULATOR (WORKSHOP MANDIRI AQLAN) -->
     <div id="tab-sim" class="card">
       <div class="card-title">
         <span>🛹</span>
-        <span>Laboratorium Rampa Modular Insinyur STEM</span>
+        <span>Laboratorium Rampa Modular: Workshop Mandiri Insinyur Aqlan</span>
       </div>
 
-      <!-- Controls -->
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+      <!-- Workshop Toolbar -->
+      <div style="background:#0F172A; border:1px solid #334155; border-radius:14px; padding:14px 18px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
         <div>
-          <label style="font-size:0.85rem; font-weight:800; color:var(--text-muted); display:block; margin-bottom:6px;">
-            PILIH ATURAN LOMPATAN POLA (DELTA / Δ):
-          </label>
-          <select id="sel-delta" onchange="renderRamp()" style="width:100%; background:#0F172A; border:2px solid var(--neon-toska); color:#34D399; font-size:1rem; font-weight:800; padding:10px 14px; border-radius:12px;">
-            <option value="2">📈 Pola Naik: +2 Balok / Undakan</option>
-            <option value="3" selected>📈 Pola Naik: +3 Balok / Undakan</option>
-            <option value="4">📈 Pola Naik: +4 Balok / Undakan</option>
-            <option value="5">📈 Pola Naik: +5 Balok / Undakan</option>
-            <option value="-2">📉 Pola Turun: -2 Balok / Undakan</option>
-            <option value="-3">📉 Pola Turun: -3 Balok / Undakan</option>
-          </select>
+          <div style="font-size:0.95rem; font-weight:800; color:#34D399; display:flex; align-items:center; gap:8px;">
+            <span>🧱</span>
+            <span>Susun Balok Mandiri: Klik (+) atau (−) di setiap undakan</span>
+          </div>
+          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:2px;">
+            Aqlan bebas mengatur jumlah balok di tiap undakan atau klik langsung baloknya!
+          </div>
         </div>
-        <div>
-          <label style="font-size:0.85rem; font-weight:800; color:var(--text-muted); display:block; margin-bottom:6px;">
-            TITIK AWAL (BALOK UNDAKAN 1):
-          </label>
-          <input type="number" id="inp-start" value="3" min="1" max="25" onchange="renderRamp()" style="width:100%; background:#0F172A; border:2px solid var(--orange); color:#FB923C; font-size:1rem; font-weight:800; padding:10px 14px; border-radius:12px;">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="tool-btn" onclick="setPreset([2, 4, 6, 8, 10])" title="Pola Naik +2">📈 Pola +2</button>
+          <button class="tool-btn" onclick="setPreset([3, 6, 9, 12, 15])" title="Pola Naik +3">📈 Pola +3</button>
+          <button class="tool-btn" onclick="setPreset([10, 8, 6, 4, 2])" title="Pola Turun -2">📉 Pola -2</button>
+          <button class="tool-btn" onclick="resetAllBlocks(1)" title="Set semua ke 1 balok">🔄 Reset</button>
         </div>
       </div>
 
-      <!-- Live Sequence Pills -->
-      <div class="seq-display" id="seq-pills"></div>
-
-      <!-- Ramp Visual Stage -->
+      <!-- Ramp Visual Stage (Interactive columns) -->
       <div class="ramp-stage" id="ramp-stage"></div>
 
-      <!-- Extrapolation Card -->
-      <div style="background:#0F172A; border:2px solid #334155; border-radius:14px; padding:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <!-- Verification & Pattern Detective Card -->
+      <div style="background:#0F172A; border:2px solid #334155; border-radius:14px; padding:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
         <div>
-          <div style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">PREDIKSI INSINYUR STEM:</div>
-          <div style="font-size:1.1rem; font-weight:900; color:#34D399;" id="extrap-text">Undakan ke-10 = 30 Balok!</div>
+          <div style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">STATUS POLA SUSUNAN AQLAN:</div>
+          <div style="font-size:1.05rem; font-weight:900; color:#34D399;" id="pattern-status">
+            🛹 Susunan Siap: Klik "Cek Pola Balok" untuk menguji apakah lompatannya sudah konstan!
+          </div>
         </div>
-        <button onclick="predictTarget()" style="background:var(--orange); color:#0F172A; border:none; padding:10px 18px; border-radius:10px; font-weight:900; cursor:pointer;">
-          🚀 Uji Prediksi Suku ke-10
+        <button onclick="checkAqlanPattern()" style="background:var(--orange); color:#0F172A; border:none; padding:10px 18px; border-radius:10px; font-weight:900; font-size:0.95rem; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+          🔍 Cek Pola Balok Aqlan
         </button>
       </div>
     </div>
@@ -540,71 +612,127 @@ Tulis Deretnya ➔ Cari Selisihnya (+ / -) ➔ Lompat ke Target!<br>
       playBeep(320, 0.08);
     }
 
-    // RAMP BUILDER
+    // RAMP BUILDER (MANUAL ADJUSTABLE BY AQLAN)
+    let rampCounts = [10, 8, 6, 4, 2];
+
     function renderRamp() {
-      const delta = parseInt(document.getElementById('sel-delta').value);
-      let val = parseInt(document.getElementById('inp-start').value);
-      if (isNaN(val) || val < 1) val = 1;
-
       const stage = document.getElementById('ramp-stage');
-      const pills = document.getElementById('seq-pills');
       stage.innerHTML = '';
-      pills.innerHTML = '';
 
-      let currentVal = val;
-      const count = 5;
+      for (let i = 0; i < rampCounts.length; i++) {
+        const count = rampCounts[i];
 
-      for (let i = 1; i <= count; i++) {
-        // Safe bound
-        if (currentVal < 0) currentVal = 0;
-
-        // Add pill
-        const pill = document.createElement('div');
-        pill.className = 'seq-pill';
-        pill.innerText = currentVal;
-        pills.appendChild(pill);
-
-        if (i < count) {
-          const arrow = document.createElement('span');
-          arrow.className = 'seq-arrow';
-          arrow.innerText = (delta >= 0 ? `+${delta}` : `${delta}`) + ' ➔';
-          pills.appendChild(arrow);
-        }
-
-        // Add ramp column
+        // Column container
         const col = document.createElement('div');
         col.className = 'ramp-col';
 
-        // Add info label
-        const info = document.createElement('div');
-        info.className = 'ramp-info';
-        info.innerHTML = `Undakan ${i}<br><span style="color:#FB923C;">${currentVal} Balok</span>`;
+        // Ramp stack (holds blocks from bottom to top)
+        const stack = document.createElement('div');
+        stack.className = 'ramp-stack';
+        stack.title = 'Klik untuk tambah 1 balok pada Undakan ' + (i + 1);
+        stack.onclick = (e) => {
+          e.stopPropagation();
+          adjustBlock(i, 1);
+        };
 
-        // Add blocks (cap at 15 for visual clarity)
-        const visibleBlocks = Math.min(Math.max(currentVal, 1), 12);
-        for (let b = 0; b < visibleBlocks; b++) {
+        for (let b = 0; b < count; b++) {
           const block = document.createElement('div');
           block.className = 'ramp-block';
-          col.appendChild(block);
+          block.title = 'Klik balok ini untuk menguranginya';
+          block.onclick = (e) => {
+            e.stopPropagation();
+            adjustBlock(i, -1);
+          };
+          stack.appendChild(block);
         }
+
+        // Info box (top of column)
+        const info = document.createElement('div');
+        info.className = 'ramp-info';
+        info.innerHTML = `
+          <div class="undakan-name">Undakan ${i + 1}</div>
+          <div class="undakan-count">${count} Balok</div>
+          <div class="ramp-btn-group">
+            <button class="btn-step btn-minus" onclick="event.stopPropagation(); adjustBlock(${i}, -1)" title="Kurang 1 balok">−</button>
+            <button class="btn-step btn-plus" onclick="event.stopPropagation(); adjustBlock(${i}, 1)" title="Tambah 1 balok">+</button>
+          </div>
+        `;
+
+        col.appendChild(stack);
         col.appendChild(info);
         stage.appendChild(col);
-
-        currentVal += delta;
       }
-
-      // Extrapolation target (suku ke-10)
-      const target10 = val + (delta * 9);
-      document.getElementById('extrap-text').innerText = `Undakan ke-10 = ${target10} Balok!`;
-      playBeep(450, 0.06);
     }
 
-    function predictTarget() {
+    function adjustBlock(colIdx, change) {
+      const current = rampCounts[colIdx];
+      const next = current + change;
+
+      if (next < 0) {
+        playBeep(200, 0.1, 'sawtooth');
+        return;
+      }
+      if (next > 15) {
+        playBeep(200, 0.1, 'sawtooth');
+        alert('⚠️ Undakan sudah mencapai batas maksimal 15 balok ya Aqlan!');
+        return;
+      }
+
+      rampCounts[colIdx] = next;
+      if (change > 0) {
+        playBeep(520, 0.08, 'triangle');
+      } else {
+        playBeep(320, 0.08, 'sine');
+      }
+
+      renderRamp();
+
+      const statusEl = document.getElementById('pattern-status');
+      if (statusEl) {
+        statusEl.innerHTML = `🛹 Susunan Sekarang: <strong>${rampCounts.join(' ➔ ')} Balok</strong>. Klik <em>"Cek Pola Balok"</em> untuk menguji!`;
+      }
+    }
+
+    function setPreset(arr) {
+      rampCounts = [...arr];
       playFanfare();
-      const delta = parseInt(document.getElementById('sel-delta').value);
-      const val = parseInt(document.getElementById('inp-start').value);
-      const target10 = val + (delta * 9);
-      alert(`🚀 PREDIKSI INSINYUR STEM:\nUndakan ke-1: ${val}\nAturan Lompatan: ${delta >= 0 ? '+' : ''}${delta}\n➔ Undakan ke-10 = ${val} + (9 × ${delta}) = ${target10} Balok!`);
+      renderRamp();
+      const statusEl = document.getElementById('pattern-status');
+      if (statusEl) {
+        statusEl.innerHTML = `🛹 Contoh Pola Dimuat: <strong>${rampCounts.join(' ➔ ')} Balok</strong>. Silakan diamati atau diubah!`;
+      }
+    }
+
+    function resetAllBlocks(val = 1) {
+      rampCounts = [val, val, val, val, val];
+      playBeep(380, 0.1);
+      renderRamp();
+      const statusEl = document.getElementById('pattern-status');
+      if (statusEl) {
+        statusEl.innerHTML = `🔄 Semua undakan di-reset ke <strong>${val} Balok</strong>. Ayo susun kembali dari awal!`;
+      }
+    }
+
+    function checkAqlanPattern() {
+      const d1 = rampCounts[1] - rampCounts[0];
+      const d2 = rampCounts[2] - rampCounts[1];
+      const d3 = rampCounts[3] - rampCounts[2];
+      const d4 = rampCounts[4] - rampCounts[3];
+
+      const statusEl = document.getElementById('pattern-status');
+
+      if (d1 === d2 && d2 === d3 && d3 === d4) {
+        playFanfare();
+        const sign = d1 >= 0 ? '+' : '';
+        const type = d1 > 0 ? 'Pola Membesar (Naik)' : (d1 < 0 ? 'Pola Mengecil (Turun)' : 'Pola Datar');
+        const u10 = rampCounts[0] + (9 * d1);
+        statusEl.innerHTML = `🌟 <strong>LUAR BIASA AQLAN!</strong> Terbentuk <strong>${type}</strong> dengan selisih konstan <strong>${sign}${d1} balok</strong>!<br><span style="color:#FB923C;">Prediksi Undakan ke-10 = ${u10} Balok!</span>`;
+        alert(`🎉 ANALISIS DETEKTIF AQLAN:\n\n• Deret Balok: ${rampCounts.join(', ')}\n• Aturan Lompatan (Delta): ${sign}${d1} balok tiap undakan!\n• Jenis: ${type}\n• Prediksi Undakan ke-10: ${u10} balok!\n\nKeren banget Insinyur Aqlan!`);
+      } else {
+        playBeep(300, 0.2, 'sawtooth');
+        statusEl.innerHTML = `🛹 <strong>Susunan Bebas:</strong> Deret: ${rampCounts.join(', ')}.<br><span style="color:#FCA5A5;">Lompatan: ${d1}, ${d2}, ${d3}, ${d4} (belum konstan). Coba sesuaikan agar lompatannya sama ya!</span>`;
+        alert(`🔍 CEK LOMPATAN BALOK AQLAN:\n\nDeret: ${rampCounts.join(', ')}\nLompatan antar undakan: ${d1}, ${d2}, ${d3}, ${d4}\n\nLompatannya belum sama di setiap undakan. Coba klik [+] atau [−] agar selisihnya sama ya!`);
+      }
     }
 
     function toggleDoodle(id) {
