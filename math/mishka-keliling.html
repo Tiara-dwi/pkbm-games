@@ -173,6 +173,12 @@
       0%, 100% { box-shadow: 0 0 10px rgba(190, 24, 93, 0.5); }
       50% { box-shadow: 0 0 22px rgba(217, 119, 6, 0.8); }
     }
+    @keyframes ribbonDash {
+      to { stroke-dashoffset: -36; }
+    }
+    .anim-ribbon {
+      animation: ribbonDash 1.2s linear infinite;
+    }
 
     .shape-label {
       position: absolute;
@@ -468,6 +474,7 @@
       <div class="sim-grid">
         <!-- CANVAS DISPLAY -->
         <div class="canvas-box">
+          <!-- Square & Rect View -->
           <div id="shape-view" class="shape-stage" style="width:160px; height:160px; background:#FCE7F3; border-radius:8px;">
             <div class="shape-perimeter"></div>
             <!-- Labels -->
@@ -476,6 +483,24 @@
             <div id="label-bottom" class="shape-label" style="bottom:-14px; left:50%; transform:translateX(-50%);">8 m</div>
             <div id="label-left" class="shape-label" style="left:-18px; top:50%; transform:translateY(-50%);">8 m</div>
           </div>
+
+          <!-- True Triangle View (SVG + Glowing Rose-Gold Perimeter) -->
+          <div id="tri-view" class="shape-stage" style="display:none; position:relative; width:260px; height:200px;">
+            <svg id="triangle-svg" viewBox="0 0 260 200" style="width:100%; height:100%; overflow:visible;">
+              <defs>
+                <filter id="glow-rose" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#BE185D" flood-opacity="0.6"/>
+                </filter>
+              </defs>
+              <polygon id="tri-poly" points="130,25 230,165 30,165" fill="#FCE7F3" stroke="#BE185D" stroke-width="4" stroke-linejoin="round" filter="url(#glow-rose)" />
+              <polygon id="tri-ribbon" points="130,25 230,165 30,165" fill="none" stroke="#F59E0B" stroke-width="3" stroke-dasharray="10 8" stroke-linejoin="round" class="anim-ribbon" />
+            </svg>
+            <!-- Dynamic Triangle Side Labels -->
+            <div id="tri-label-a" class="shape-label" style="position:absolute; top:85px; left:10px;">sisi a: 7 m</div>
+            <div id="tri-label-b" class="shape-label" style="position:absolute; top:85px; right:10px;">sisi b: 7 m</div>
+            <div id="tri-label-c" class="shape-label" style="position:absolute; bottom:2px; left:50%; transform:translateX(-50%);">sisi c: 6 m</div>
+          </div>
+
           <div style="margin-top:20px; font-size:0.85rem; color:#BE185D; font-weight:700;">
             ✨ Pita Emas Berkeliling dari START hingga FINISH!
           </div>
@@ -784,17 +809,22 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
       document.getElementById('ctrl-tri').style.display = (shape === 'tri') ? 'flex' : 'none';
 
       const stage = document.getElementById('shape-view');
+      const triStage = document.getElementById('tri-view');
       if (shape === 'square') {
+        stage.style.display = 'block';
+        if (triStage) triStage.style.display = 'none';
         stage.style.width = '160px'; stage.style.height = '160px';
         stage.style.borderRadius = '8px';
         updateSquare(document.getElementById('rng-square').value);
       } else if (shape === 'rect') {
+        stage.style.display = 'block';
+        if (triStage) triStage.style.display = 'none';
         stage.style.width = '200px'; stage.style.height = '120px';
         stage.style.borderRadius = '8px';
         updateRect();
       } else if (shape === 'tri') {
-        stage.style.width = '160px'; stage.style.height = '140px';
-        stage.style.borderRadius = '0';
+        stage.style.display = 'none';
+        if (triStage) triStage.style.display = 'block';
         updateTri();
       }
       playBeep(500, 0.08);
@@ -845,10 +875,50 @@ Baca Cerita ➔ Sketsa Gambarnya ➔ Beri Angka di Tepi ➔ Panggil Rumus!<br>
       document.getElementById('val-tri-b').innerText = b + ' m';
       document.getElementById('val-tri-c').innerText = c + ' m';
 
-      document.getElementById('label-top').innerText = 'a: ' + a + ' m';
-      document.getElementById('label-right').innerText = 'b: ' + b + ' m';
-      document.getElementById('label-bottom').innerText = 'c: ' + c + ' m';
-      document.getElementById('label-left').innerText = '';
+      // Base c scaled: c from 3 to 12 -> base width from 110px to 230px
+      const basePx = 90 + (c * 11);
+      const leftX = 130 - (basePx / 2);
+      const rightX = 130 + (basePx / 2);
+      const baseY = 165;
+
+      // Apex Y scaled according to a and b
+      const avgSide = (a + b) / 2;
+      const apexY = Math.max(22, 165 - (avgSide * 11));
+
+      // Apex X tilt if a != b
+      const tilt = (b - a) * 4;
+      const apexX = Math.max(leftX + 20, Math.min(rightX - 20, 130 + tilt));
+
+      const pts = `${apexX},${apexY} ${rightX},${baseY} ${leftX},${baseY}`;
+      const triPoly = document.getElementById('tri-poly');
+      const triRibbon = document.getElementById('tri-ribbon');
+      if (triPoly) triPoly.setAttribute('points', pts);
+      if (triRibbon) triRibbon.setAttribute('points', pts);
+
+      // Midpoints for labels
+      const midAX = (apexX + leftX) / 2;
+      const midAY = (apexY + baseY) / 2;
+      const lblA = document.getElementById('tri-label-a');
+      if (lblA) {
+        lblA.innerText = 'sisi a: ' + a + ' m';
+        lblA.style.left = Math.max(0, midAX - 58) + 'px';
+        lblA.style.top = (midAY - 12) + 'px';
+      }
+
+      const midBX = (apexX + rightX) / 2;
+      const midBY = (apexY + baseY) / 2;
+      const lblB = document.getElementById('tri-label-b');
+      if (lblB) {
+        lblB.innerText = 'sisi b: ' + b + ' m';
+        lblB.style.left = (midBX + 8) + 'px';
+        lblB.style.top = (midBY - 12) + 'px';
+      }
+
+      const lblC = document.getElementById('tri-label-c');
+      if (lblC) {
+        lblC.innerText = 'sisi c: ' + c + ' m';
+        lblC.style.bottom = '0px';
+      }
 
       const keliling = a + b + c;
       document.getElementById('formula-name').innerText = 'RUMUS KELILING SEGITIGA:';
