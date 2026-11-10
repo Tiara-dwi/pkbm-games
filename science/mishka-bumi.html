@@ -1378,8 +1378,199 @@
       display: none;
     }
 
+
+    /* =========================================================================
+       ASTRA AI 3D WEBGL VIEWPORT & CONTROLS (MODULE 2)
+       ========================================================================= */
+    .astra-3d-wrapper {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 24px;
+      align-items: start;
+      margin: 18px 0;
+    }
+    @media (max-width: 950px) {
+      .astra-3d-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .astra-viewport-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: radial-gradient(circle at 50% 40%, #1E1B4B 0%, #0B0F19 75%, #05070C 100%);
+      border-radius: 24px;
+      border: 2px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(56, 189, 248, 0.15);
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #astra-3d-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #astra-3d-canvas:active {
+      cursor: grabbing;
+    }
+
+    /* Top Floating Bar inside 3D Viewport */
+    .astra-hud-top {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .astra-mode-pill-group {
+      pointer-events: auto;
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 4px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .astra-pill-btn {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .astra-pill-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .astra-pill-btn.active {
+      background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
+    }
+    .astra-status-badge {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34D399;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Bottom Floating Bar inside 3D Viewport */
+    .astra-hud-bottom {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .astra-explode-bar {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .astra-explode-bar label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #E2E8F0;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .astra-explode-bar input[type="range"] {
+      flex: 1;
+      accent-color: #38BDF8;
+      cursor: pointer;
+    }
+    .astra-hud-actions {
+      pointer-events: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .astra-tool-btn-group {
+      display: flex;
+      gap: 6px;
+    }
+    .astra-tool-btn {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #CBD5E1;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .astra-tool-btn:hover {
+      background: rgba(56, 189, 248, 0.3);
+      color: #FFFFFF;
+      border-color: #38BDF8;
+    }
+    .astra-gesture-hint {
+      font-size: 0.72rem;
+      color: rgba(226, 232, 240, 0.7);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px 8px;
+      border-radius: 8px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Fallback image container inside 3D stage if user wants to see 2D drawing */
+    #astra-diorama-img-view {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #0B0F19;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+    #astra-diorama-img-view img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
   </style>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
@@ -1725,228 +1916,106 @@
            ===================================================================== -->
 
       <div class="module-pane" id="module-2">
-        <div style="margin-bottom:16px;">
-          <h3 style="font-size:1.4rem; font-weight:900; color:#9A3412; margin-bottom:4px;">
-            🥚 Misi 2: Irisan Anatomi Bumi &amp; Analogi Telur Rebus 3D
-          </h3>
-          <p style="color:#64748B; font-size:0.95rem;">
-            Pilih mode visual 3D di bawah, lalu klik atau susun lapisan untuk membongkar rahasia perut bumi kita!
+        <div style="margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <h3 style="font-size:1.35rem; font-weight:900; color:#1E3A8A; display:flex; align-items:center; gap:8px;">
+              <span>🛰️</span> Misi 2: Laboratorium 3D Anatomi Bumi &amp; Analogi Telur Rebus
+            </h3>
+            <span style="font-size:0.8rem; font-weight:800; color:#0284C7; background:#E0F2FE; border:1px solid #BAE6FD; padding:4px 12px; border-radius:14px;">
+              ✨ Model 3D Interaktif 360° (Astra Science Engine)
+            </span>
+          </div>
+          <p style="color:#64748B; font-size:0.9rem; margin-top:4px;">
+            Putar model 3D di bawah ini 360°, geser tuas <b>Kupas Lapisan</b> untuk melihat ke dalam perut bumi, atau klik langsung tiap lapisan untuk merakit penjelasannya!
           </p>
         </div>
 
-        <!-- 3D Diorama Mode Controls -->
-        <div class="diorama-controls">
-          <button class="diorama-mode-btn active" id="btn-mode-earth" onclick="switchDioramaMode('earth')">
-            <span>🌍</span> 3D Irisan Bumi
-          </button>
-          <button class="diorama-mode-btn" id="btn-mode-egg" onclick="switchDioramaMode('egg')">
-            <span>🥚</span> 3D Irisan Telur Rebus
-          </button>
-          <button class="diorama-mode-btn" id="btn-mode-compare" onclick="switchDioramaMode('compare')">
-            <span>🔄</span> Bandingkan 3D Berdampingan
-          </button>
-          <button class="diorama-mode-btn" id="btn-mode-diorama" onclick="switchDioramaMode('diorama')">
-            <span>🖼️</span> Ilustrasi Pastel
-          </button>
-        </div>
-
-        <div class="slice-visual-area">
-          <!-- 3D Interactive Stage -->
-          <div class="diorama-3d-stage" id="diorama-container">
-            
-            <!-- VIEW 1: 3D EARTH CUTAWAY SVG -->
-            <div class="diorama-viewport" id="view-earth">
-              <svg viewBox="0 0 320 320" width="310" height="310">
-                <defs>
-                  <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#FFFFFF" />
-                    <stop offset="35%" stop-color="#FEF08A" />
-                    <stop offset="70%" stop-color="#F59E0B" />
-                    <stop offset="100%" stop-color="#D97706" />
-                  </radialGradient>
-                  <radialGradient id="mantleGrad" cx="40%" cy="40%" r="60%">
-                    <stop offset="0%" stop-color="#FB923C" />
-                    <stop offset="70%" stop-color="#EA580C" />
-                    <stop offset="100%" stop-color="#C2410C" />
-                  </radialGradient>
-                  <radialGradient id="crustGrad" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#38BDF8" />
-                    <stop offset="50%" stop-color="#0284C7" />
-                    <stop offset="100%" stop-color="#0F172A" />
-                  </radialGradient>
-                  <filter id="shadow3d">
-                    <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.3" />
-                  </filter>
-                </defs>
-
-                <!-- Full Globe Base (Atmosphere Glow) -->
-                <circle cx="160" cy="160" r="148" fill="rgba(56, 189, 248, 0.2)" stroke="#38BDF8" stroke-width="1.5" />
-
-                <!-- Outer Crust Shell (Left & Bottom Hemisphere) -->
-                <path class="svg-3d-layer" id="svg-crust" onclick="selectEarthLayer('crust', this)"
-                      d="M 160 16 A 144 144 0 1 0 304 160 L 160 160 Z"
-                      fill="url(#crustGrad)" stroke="#78350F" stroke-width="3" filter="url(#shadow3d)" />
-
-                <!-- Continents on Globe Exterior -->
-                <path d="M 90 60 Q 120 40 140 70 Q 150 110 110 130 Q 80 110 90 60 Z" fill="#86EFAC" opacity="0.9" pointer-events="none" />
-                <path d="M 60 160 Q 90 140 110 180 Q 100 230 70 240 Q 40 210 60 160 Z" fill="#86EFAC" opacity="0.9" pointer-events="none" />
-                <path d="M 170 210 Q 220 200 240 240 Q 220 280 180 270 Q 150 250 170 210 Z" fill="#86EFAC" opacity="0.9" pointer-events="none" />
-
-                <!-- Mantle Layer (Quarter Cutaway) -->
-                <path class="svg-3d-layer" id="svg-mantle" onclick="selectEarthLayer('mantle', this)"
-                      d="M 160 36 A 124 124 0 0 1 284 160 L 222 160 A 62 62 0 0 0 160 98 Z"
-                      fill="url(#mantleGrad)" stroke="#B45309" stroke-width="2.5" />
-
-                <!-- Inner Crust Rim Indicator -->
-                <path d="M 160 36 A 124 124 0 0 1 284 160 L 288 160 A 128 128 0 0 0 160 32 Z"
-                      fill="#78350F" stroke="#451A03" stroke-width="1" pointer-events="none" />
-
-                <!-- Outer Core Layer -->
-                <path class="svg-3d-layer" id="svg-outercore" onclick="selectEarthLayer('core', this)"
-                      d="M 160 98 A 62 62 0 0 1 222 160 L 195 160 A 35 35 0 0 0 160 125 Z"
-                      fill="#F59E0B" stroke="#D97706" stroke-width="2" />
-
-                <!-- Solid Inner Core (Quarter Center) -->
-                <path class="svg-3d-layer" id="svg-innercore" onclick="selectEarthLayer('core', this)"
-                      d="M 160 125 A 35 35 0 0 1 195 160 L 160 160 Z"
-                      fill="url(#coreGlow)" stroke="#FDE047" stroke-width="2" />
-
-                <!-- Depth Pointer Labels (3D HUD) -->
-                <g style="font-size:9px; font-weight:800; font-family:'Plus Jakarta Sans', sans-serif;">
-                  <!-- Crust Pointer -->
-                  <line x1="284" y1="90" x2="250" y2="70" stroke="#78350F" stroke-width="1.5" />
-                  <rect x="235" y="48" width="80" height="20" rx="6" fill="rgba(255,255,255,0.92)" stroke="#78350F" />
-                  <text x="242" y="62" fill="#78350F">Kerak (0-70km)</text>
-
-                  <!-- Mantle Pointer -->
-                  <line x1="240" y1="125" x2="210" y2="105" stroke="#EA580C" stroke-width="1.5" />
-                  <rect x="180" y="85" width="85" height="20" rx="6" fill="rgba(255,255,255,0.92)" stroke="#EA580C" />
-                  <text x="187" y="99" fill="#EA580C">Mantel (2900km)</text>
-
-                  <!-- Core Pointer -->
-                  <line x1="175" y1="145" x2="140" y2="120" stroke="#D97706" stroke-width="1.5" />
-                  <rect x="75" y="105" width="75" height="20" rx="6" fill="rgba(255,255,255,0.95)" stroke="#D97706" />
-                  <text x="82" y="119" fill="#B45309">Inti (6000°C)</text>
-                </g>
-              </svg>
-            </div>
-
-            <!-- VIEW 2: 3D BOILED EGG CUTAWAY SVG -->
-            <div class="diorama-viewport" id="view-egg" style="display:none;">
-              <svg viewBox="0 0 320 320" width="310" height="310">
-                <defs>
-                  <radialGradient id="yolkGrad" cx="45%" cy="45%" r="55%">
-                    <stop offset="0%" stop-color="#FEF08A" />
-                    <stop offset="60%" stop-color="#F59E0B" />
-                    <stop offset="100%" stop-color="#D97706" />
-                  </radialGradient>
-                  <radialGradient id="albumenGrad" cx="35%" cy="35%" r="65%">
-                    <stop offset="0%" stop-color="#FFFFFF" />
-                    <stop offset="75%" stop-color="#F8FAFC" />
-                    <stop offset="100%" stop-color="#E2E8F0" />
-                  </radialGradient>
-                  <radialGradient id="shellGrad" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#E29578" />
-                    <stop offset="70%" stop-color="#B07D62" />
-                    <stop offset="100%" stop-color="#8D5B4C" />
-                  </radialGradient>
-                </defs>
-
-                <!-- Egg Shadow -->
-                <ellipse cx="160" cy="275" rx="100" ry="18" fill="rgba(0,0,0,0.12)" />
-
-                <!-- Left Half (Eggshell Exterior 3D) -->
-                <path class="svg-3d-layer" id="egg-shell-ext" onclick="selectEarthLayer('crust', this)"
-                      d="M 160 30 C 90 30 50 120 50 190 C 50 250 100 270 160 270 Z"
-                      fill="url(#shellGrad)" stroke="#78350F" stroke-width="2.5" />
-
-                <!-- Right Half (Sliced Boiled Egg Inside) -->
-                <!-- Eggshell Edge Rim -->
-                <path class="svg-3d-layer" id="egg-shell-rim" onclick="selectEarthLayer('crust', this)"
-                      d="M 160 30 C 230 30 270 120 270 190 C 270 250 220 270 160 270 L 160 266 C 216 266 264 246 264 190 C 264 124 226 36 160 36 Z"
-                      fill="#78350F" stroke="#451A03" stroke-width="1.5" />
-
-                <!-- White Albumen (Putih Telur = Mantel) -->
-                <path class="svg-3d-layer" id="egg-albumen" onclick="selectEarthLayer('mantle', this)"
-                      d="M 160 36 C 226 36 264 124 264 190 C 264 246 216 266 160 266 Z"
-                      fill="url(#albumenGrad)" stroke="#CBD5E1" stroke-width="2" />
-
-                <!-- Golden Yolk (Kuning Telur = Inti Bumi) -->
-                <circle class="svg-3d-layer" id="egg-yolk" onclick="selectEarthLayer('core', this)"
-                        cx="160" cy="180" r="48"
-                        fill="url(#yolkGrad)" stroke="#F59E0B" stroke-width="2.5" />
-
-                <!-- HUD Egg Pointers -->
-                <g style="font-size:9.5px; font-weight:800; font-family:'Plus Jakarta Sans', sans-serif;">
-                  <rect x="205" y="45" width="105" height="22" rx="6" fill="rgba(255,255,255,0.95)" stroke="#78350F" />
-                  <text x="212" y="60" fill="#78350F">Cangkang (Kulit)</text>
-
-                  <rect x="205" y="115" width="105" height="22" rx="6" fill="rgba(255,255,255,0.95)" stroke="#C2410C" />
-                  <text x="212" y="130" fill="#C2410C">Putih Telur (Mantel)</text>
-
-                  <rect x="180" y="215" width="115" height="22" rx="6" fill="rgba(255,255,255,0.95)" stroke="#D97706" />
-                  <text x="187" y="230" fill="#B45309">Kuning Telur (Inti)</text>
-                </g>
-              </svg>
-            </div>
-
-            <!-- VIEW 3: SIDE-BY-SIDE COMPARE -->
-            <div class="diorama-viewport compare-stage" id="view-compare" style="display:none;">
-              <!-- Mini Earth -->
-              <div class="compare-item">
-                <svg viewBox="0 0 160 160" width="135" height="135">
-                  <circle cx="80" cy="80" r="70" fill="url(#crustGrad)" stroke="#78350F" stroke-width="2" />
-                  <path d="M 80 12 A 68 68 0 0 1 148 80 L 115 80 A 35 35 0 0 0 80 45 Z" fill="#FB923C" stroke="#EA580C" />
-                  <path d="M 80 45 A 35 35 0 0 1 115 80 L 80 80 Z" fill="#F59E0B" />
-                </svg>
-                <div class="compare-label">🌍 Bumi 3 Lapisan</div>
+        <!-- ASTRA 3D WRAPPER (CANVAS 3D ON LEFT, CONTROLS ON RIGHT) -->
+        <div class="astra-3d-wrapper">
+          
+          <!-- 3D VIEWPORT CONTAINER -->
+          <div class="astra-viewport-container" id="astraViewport">
+            <!-- Top HUD Bar -->
+            <div class="astra-hud-top">
+              <div class="astra-mode-pill-group">
+                <button class="astra-pill-btn active" id="btn-astra-earth" onclick="setAstraModel('earth')">
+                  <span>🌍</span> 3D Bumi
+                </button>
+                <button class="astra-pill-btn" id="btn-astra-egg" onclick="setAstraModel('egg')">
+                  <span>🥚</span> 3D Telur Rebus
+                </button>
+                <button class="astra-pill-btn" id="btn-astra-art" onclick="setAstraModel('art')">
+                  <span>🖼️</span> Ilustrasi
+                </button>
               </div>
-
-              <div style="font-size:1.6rem; color:#EA580C; font-weight:900;">⇄</div>
-
-              <!-- Mini Egg -->
-              <div class="compare-item">
-                <svg viewBox="0 0 160 160" width="135" height="135">
-                  <ellipse cx="80" cy="80" rx="55" ry="70" fill="#FFFFFF" stroke="#78350F" stroke-width="3" />
-                  <circle cx="80" cy="88" r="28" fill="#F59E0B" stroke="#D97706" stroke-width="2" />
-                </svg>
-                <div class="compare-label">🥚 Telur Rebus 3 Lapisan</div>
+              <div class="astra-status-badge">
+                <span style="display:inline-block; width:7px; height:7px; background:#10B981; border-radius:50%; animation:pulseAura 1.5s infinite alternate;"></span>
+                <span id="astraActiveLabel">Kerak Bumi (Aktif)</span>
               </div>
             </div>
 
-            <!-- VIEW 4: DIORAMA PASTEL IMAGE -->
-            <div class="diorama-viewport" id="view-diorama" style="display:none;">
-              <img src="../assets/mishka/mishka_ipas_bumi_kita_layers.jpg" alt="Diorama Bumi Pastel" style="width:100%; height:100%; object-fit:cover; border-radius:22px;">
+            <!-- WebGL 3D Canvas -->
+            <canvas id="astra-3d-canvas"></canvas>
+
+            <!-- 2D Diorama Image Overlay (if user chooses Ilustrasi) -->
+            <div id="astra-diorama-img-view">
+              <img src="../assets/mishka/mishka_ipas_bumi_kita_layers.jpg" alt="Diorama Bumi Pastel">
             </div>
 
+            <!-- Bottom HUD Bar -->
+            <div class="astra-hud-bottom">
+              <!-- Explode Slider -->
+              <div class="astra-explode-bar">
+                <label for="astraExplodeSlider">
+                  <span>💥</span> Kupas Lapisan 3D:
+                </label>
+                <input type="range" id="astraExplodeSlider" min="0" max="100" value="0" step="1" oninput="onAstraExplodeInput(this.value)">
+                <span id="astraExplodeVal" style="font-size:0.75rem; font-weight:800; color:#38BDF8; min-width:32px;">0%</span>
+              </div>
+
+              <!-- Action Buttons & Hint -->
+              <div class="astra-hud-actions">
+                <div class="astra-tool-btn-group">
+                  <button class="astra-tool-btn" onclick="toggleAstraAutoRotate()" id="btnAstraAutoRotate">
+                    <span>🔄</span> Putar Otomatis
+                  </button>
+                  <button class="astra-tool-btn" onclick="resetAstraCamera()">
+                    <span>🎯</span> Reset Kamera
+                  </button>
+                </div>
+                <div class="astra-gesture-hint">
+                  👆 Drag putar 360° • Scroll zoom • Klik layer
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Layer Selector List -->
+          <!-- LAYER SELECTOR & INQUIRY BUILDER (RIGHT COLUMN) -->
           <div class="layer-selector-list">
-            <!-- Kerak Bumi -->
+            <!-- 1. Kerak Bumi -->
             <div class="layer-btn active" id="btn-layer-crust" onclick="selectEarthLayer('crust', this)">
               <div class="layer-badge-dot" style="background:#78350F;"></div>
               <div>
-                <div style="font-weight:900; font-size:1.02rem; color:#78350F;">1. Kerak Bumi (Crust) • 0 - 70 km</div>
-                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Cangkang telur rebus</b> tipis &amp; retak tempat kita hidup.</div>
+                <div style="font-weight:900; font-size:1rem; color:#78350F;">1. Kerak Bumi (Crust) • 0 - 70 km</div>
+                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Cangkang telur rebus</b> tipis &amp; padat tempat kita tinggal.</div>
               </div>
             </div>
 
-            <!-- Mantel Bumi -->
+            <!-- 2. Mantel Bumi -->
             <div class="layer-btn" id="btn-layer-mantle" onclick="selectEarthLayer('mantle', this)">
               <div class="layer-badge-dot" style="background:#FB923C;"></div>
               <div>
-                <div style="font-weight:900; font-size:1.02rem; color:#C2410C;">2. Mantel Bumi (Mantle) • 70 - 2.900 km</div>
-                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Putih telur rebus</b> tebal, magma liat 3.000°C.</div>
+                <div style="font-weight:900; font-size:1rem; color:#C2410C;">2. Mantel Bumi (Mantle) • 70 - 2.900 km</div>
+                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Putih telur rebus</b> tebal, magma liat panas 3.000°C.</div>
               </div>
             </div>
 
-            <!-- Inti Bumi -->
+            <!-- 3. Inti Bumi -->
             <div class="layer-btn" id="btn-layer-core" onclick="selectEarthLayer('core', this)">
               <div class="layer-badge-dot" style="background:#F59E0B;"></div>
               <div>
-                <div style="font-weight:900; font-size:1.02rem; color:#854D0E;">3. Inti Bumi (Core) • 2.900 - 6.370 km</div>
-                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Kuning telur</b> bola besi membara 6.000°C!</div>
+                <div style="font-weight:900; font-size:1rem; color:#854D0E;">3. Inti Bumi (Core) • 2.900 - 6.370 km</div>
+                <div style="font-size:0.82rem; color:#64748B;">Analogi: <b>Kuning telur</b>, bola besi emas membara 6.000°C!</div>
               </div>
             </div>
 
@@ -1963,17 +2032,16 @@
               </div>
               <div class="inquiry-feedback" id="inquiry-fb-msg"></div>
             </div>
-
           </div>
         </div>
 
         <!-- Layer Details Box -->
         <div class="sim-box" id="layer-detail-box" style="background:#FFFBEB; border-color:#FCD34D;">
           <h4 style="font-size:1.15rem; font-weight:900; color:#78350F; margin-bottom:6px;" id="layer-detail-title">
-            🧱 Kerak Bumi: Cangkang Rapuh yang Mengapung
+            🧱 Kerak Bumi (Crust) = Cangkang Telur Rebus
           </h4>
           <p style="font-size:0.95rem; color:#78350F;" id="layer-detail-text">
-            Ketebalannya hanya 5-70 km (kurang dari 1% jari-jari bumi). Kerak ini retak-retak menjadi kepingan lempeng puzzle yang mengapung di atas mantel magma yang panas!
+            Ketebalannya hanya 5-70 km (kurang dari 1% jari-jari bumi). Seperti cangkang telur yang retak, kerak bumi terbagi menjadi lempeng-lempeng tektonik tempat manusia tinggal dan beraktivitas.
           </p>
         </div>
 
@@ -2641,18 +2709,37 @@
     // MODULE 2: EARTH LAYERS SELECTOR
 
     // =========================================================================
-    // MODULE 2: 3D DIORAMA & INTERACTIVE LAYER INQUIRY BUILDER
     // =========================================================================
-    let currentDioramaMode = 'earth';
+    // MODULE 2: ASTRA AI 3D WEBGL ENGINE & INTERACTIVE LAYER INQUIRY
+    // =========================================================================
+    let currentAstraModel = 'earth';
     let currentActiveLayer = 'crust';
+    let astraAutoRotate = true;
+    let astraExplodePercent = 0;
 
+    // Three.js Core Variables
+    let astraScene, astraCamera, astraRenderer;
+    let astraRootGroup, astraEarthGroup, astraEggGroup;
+    let crustGroup, mantleGroup, outerCoreGroup, innerCoreGroup;
+    let eggShellGroup, eggWhiteGroup, eggYolkGroup;
+    let astraClickableMeshes = [];
+
+    // Orbit Controls State (Supports Mouse & Multi-touch Tablet)
+    let isAstraDragging = false;
+    let astraPrevMouse = { x: 0, y: 0 };
+    let astraPointerStart = { x: 0, y: 0 };
+    let astraSpherical = { radius: 10.5, theta: 0.65, phi: 1.15 };
+    let astraTargetSpherical = { radius: 10.5, theta: 0.65, phi: 1.15 };
+    let astraPinchStartDist = 0;
+
+    // Inquiry Data for Mishka
     const layerInquiryData = {
       crust: {
         title: 'Misi Detektif: Tebak Karakteristik Kerak Bumi!',
         question: 'Menurut Mishka, seperti apa sifat dan wujud lapisan terluar (Kerak Bumi) ini?',
         analogy: 'Cangkang Telur Rebus',
         options: [
-          { text: 'A. Sangat tipis (5-70 km), padat, retak-retak jadi lempeng puzzle tempat kita berpijak.', correct: true, exp: 'HEBAT MISHKA! Kerak bumi memang tipis (<1% bumi) dan menjadi tempat daratan serta lautan berada!' },
+          { text: 'A. Sangat tipis (5-70 km), padat, retak-retak jadi lempeng puzzle tempat kita berpijak.', correct: true, exp: 'HEBAT MISHKA! Kerak bumi memang tipis (<1% tebal bumi) tempat daratan & lautan berada!' },
           { text: 'B. Cairan magma mendidih setebal 2.900 km tempat lava mengalir.', correct: false, exp: 'Kurang tepat! Magma mendidih ada di lapisan Mantel Bumi di bawah kerak!' },
           { text: 'C. Bola logam besi emas membara bersuhu 6.000°C di pusat terdalam.', correct: false, exp: 'Itu adalah ciri-ciri Inti Bumi di pusat terdalam!' }
         ]
@@ -2679,30 +2766,494 @@
       }
     };
 
-    function switchDioramaMode(mode) {
-      currentDioramaMode = mode;
+    // PROCEDURAL TEXTURE GENERATORS (Zero network latency, 100% offline & fast)
+    function createProceduralEarthTexture() {
+      const c = document.createElement('canvas');
+      c.width = 1024; c.height = 512;
+      const ctx = c.getContext('2d');
+
+      // Deep Ocean Gradient
+      const oceanGrad = ctx.createLinearGradient(0, 0, 0, 512);
+      oceanGrad.addColorStop(0, '#1E3A8A');
+      oceanGrad.addColorStop(0.5, '#0284C7');
+      oceanGrad.addColorStop(1, '#1E3A8A');
+      ctx.fillStyle = oceanGrad;
+      ctx.fillRect(0, 0, 1024, 512);
+
+      // Continent shapes (Procedural Ghibli Landmasses)
+      ctx.fillStyle = '#22C55E';
+      function drawLand(x, y, rx, ry, col) {
+        ctx.fillStyle = col || '#22C55E';
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      // Americas
+      drawLand(260, 180, 90, 110, '#16A34A');
+      drawLand(320, 340, 80, 130, '#15803D');
+      // Eurasia & Africa
+      drawLand(600, 170, 140, 90, '#16A34A');
+      drawLand(580, 290, 90, 110, '#15803D');
+      // Asia & Indonesia Archipelago
+      drawLand(780, 200, 110, 80, '#22C55E');
+      drawLand(820, 310, 60, 30, '#4ADE80');
+      drawLand(860, 320, 40, 25, '#86EFAC');
+      // Australia
+      drawLand(850, 390, 70, 50, '#EAB308');
+
+      // Swirling Cloud Veils
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.beginPath();
+      ctx.arc(300, 140, 80, 0, Math.PI * 2);
+      ctx.arc(680, 220, 110, 0, Math.PI * 2);
+      ctx.arc(750, 120, 70, 0, Math.PI * 2);
+      ctx.fill();
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.ClampToEdgeWrapping;
+      return tex;
+    }
+
+    function createProceduralMagmaTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512; c.height = 256;
+      const ctx = c.getContext('2d');
+      const grad = ctx.createLinearGradient(0, 0, 512, 256);
+      grad.addColorStop(0, '#9A3412');
+      grad.addColorStop(0.3, '#EA580C');
+      grad.addColorStop(0.7, '#F97316');
+      grad.addColorStop(1, '#C2410C');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 256);
+
+      // Magma convection flecks
+      ctx.fillStyle = '#FEF08A';
+      for (let i = 0; i < 40; i++) {
+        const x = Math.random() * 512, y = Math.random() * 256, r = Math.random() * 12 + 2;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      return new THREE.CanvasTexture(c);
+    }
+
+    function createProceduralGoldCoreTexture() {
+      const c = document.createElement('canvas');
+      c.width = 256; c.height = 256;
+      const ctx = c.getContext('2d');
+      const rad = ctx.createRadialGradient(128, 128, 10, 128, 128, 128);
+      rad.addColorStop(0, '#FFFFFF');
+      rad.addColorStop(0.3, '#FEF08A');
+      rad.addColorStop(0.7, '#F59E0B');
+      rad.addColorStop(1, '#B45309');
+      ctx.fillStyle = rad;
+      ctx.fillRect(0, 0, 256, 256);
+      return new THREE.CanvasTexture(c);
+    }
+
+    // INIT ASTRA AI 3D ENGINE
+    function initAstra3D() {
+      if (typeof THREE === 'undefined') {
+        console.warn("Three.js not loaded, loading dynamically...");
+        const s = document.createElement('script');
+        s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+        s.onload = () => buildAstraScene();
+        document.head.appendChild(s);
+        return;
+      }
+      buildAstraScene();
+    }
+
+    function buildAstraScene() {
+      const canvas = document.getElementById('astra-3d-canvas');
+      const container = document.getElementById('astraViewport');
+      if (!canvas || !container) return;
+
+      const width = container.clientWidth || 450;
+      const height = container.clientHeight || 440;
+
+      // 1. Scene & Camera
+      astraScene = new THREE.Scene();
+      astraCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      astraCamera.position.set(7, 4.5, 9);
+
+      // 2. Renderer
+      astraRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      astraRenderer.setSize(width, height);
+      astraRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // 3. Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+      astraScene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xfff5ea, 1.3);
+      dirLight.position.set(12, 16, 10);
+      astraScene.add(dirLight);
+
+      const corePointLight = new THREE.PointLight(0xffbe3b, 2.5, 25);
+      corePointLight.position.set(0, 0, 0);
+      astraScene.add(corePointLight);
+
+      // 4. Root Container
+      astraRootGroup = new THREE.Group();
+      astraScene.add(astraRootGroup);
+
+      // 5. Build Earth & Egg 3D Models
+      buildEarth3DModel();
+      buildEgg3DModel();
+
+      // Show Earth by default
+      astraEarthGroup.visible = true;
+      astraEggGroup.visible = false;
+
+      // 6. Setup Interactive Pointer Controls (Drag 360, Zoom, Raycast Click)
+      setupAstraPointerEvents(canvas);
+
+      // 7. Window Resize Listener
+      window.addEventListener('resize', onAstraWindowResize);
+
+      // 8. Start Animation Loop
+      animateAstraScene();
+    }
+
+    function buildEarth3DModel() {
+      astraEarthGroup = new THREE.Group();
+      astraRootGroup.add(astraEarthGroup);
+
+      const earthTex = createProceduralEarthTexture();
+      const magmaTex = createProceduralMagmaTexture();
+      const coreTex = createProceduralGoldCoreTexture();
+
+      // Cutaway angle: 270 degrees of sphere, leaving 90 deg opening (Quarter wedge cutaway)
+      const cutAngle = Math.PI * 1.55;
+      const startAngle = Math.PI * 0.45;
+
+      // 1. CRUST GROUP (Outer Shell 4.0 radius)
+      crustGroup = new THREE.Group();
+      crustGroup.name = 'crust';
+      const crustGeo = new THREE.SphereGeometry(3.8, 48, 48, startAngle, cutAngle);
+      const crustMat = new THREE.MeshStandardMaterial({
+        map: earthTex,
+        roughness: 0.65,
+        metalness: 0.1,
+        side: THREE.DoubleSide
+      });
+      const crustMesh = new THREE.Mesh(crustGeo, crustMat);
+      crustMesh.userData = { layerId: 'crust', name: 'Kerak Bumi' };
+      crustGroup.add(crustMesh);
+
+      // Atmosphere outer glow halo
+      const atmosGeo = new THREE.SphereGeometry(3.95, 32, 32);
+      const atmosMat = new THREE.MeshBasicMaterial({
+        color: 0x38BDF8,
+        transparent: true,
+        opacity: 0.2,
+        side: THREE.BackSide
+      });
+      const atmosMesh = new THREE.Mesh(atmosGeo, atmosMat);
+      crustGroup.add(atmosMesh);
+
+      astraEarthGroup.add(crustGroup);
+      astraClickableMeshes.push(crustMesh);
+
+      // 2. MANTLE GROUP (Molten Magma 3.4 radius)
+      mantleGroup = new THREE.Group();
+      mantleGroup.name = 'mantle';
+      const mantleGeo = new THREE.SphereGeometry(3.35, 40, 40, startAngle, cutAngle);
+      const mantleMat = new THREE.MeshStandardMaterial({
+        map: magmaTex,
+        roughness: 0.4,
+        emissive: 0x9A3412,
+        emissiveIntensity: 0.35,
+        side: THREE.DoubleSide
+      });
+      const mantleMesh = new THREE.Mesh(mantleGeo, mantleMat);
+      mantleMesh.userData = { layerId: 'mantle', name: 'Mantel Bumi' };
+      mantleGroup.add(mantleMesh);
+      astraEarthGroup.add(mantleGroup);
+      astraClickableMeshes.push(mantleMesh);
+
+      // 3. OUTER CORE GROUP (Liquid Core 2.2 radius)
+      outerCoreGroup = new THREE.Group();
+      outerCoreGroup.name = 'core';
+      const outerCoreGeo = new THREE.SphereGeometry(2.1, 32, 32, startAngle, cutAngle);
+      const outerCoreMat = new THREE.MeshStandardMaterial({
+        color: 0xF59E0B,
+        emissive: 0xD97706,
+        emissiveIntensity: 0.55,
+        roughness: 0.3,
+        side: THREE.DoubleSide
+      });
+      const outerCoreMesh = new THREE.Mesh(outerCoreGeo, outerCoreMat);
+      outerCoreMesh.userData = { layerId: 'core', name: 'Inti Luar' };
+      outerCoreGroup.add(outerCoreMesh);
+      astraEarthGroup.add(outerCoreGroup);
+      astraClickableMeshes.push(outerCoreMesh);
+
+      // 4. INNER CORE (Solid Sun-Like Glowing Core 1.2 radius)
+      innerCoreGroup = new THREE.Group();
+      innerCoreGroup.name = 'core';
+      const innerCoreGeo = new THREE.SphereGeometry(1.2, 32, 32);
+      const innerCoreMat = new THREE.MeshStandardMaterial({
+        map: coreTex,
+        color: 0xFEF08A,
+        emissive: 0xF59E0B,
+        emissiveIntensity: 0.85,
+        roughness: 0.2
+      });
+      const innerCoreMesh = new THREE.Mesh(innerCoreGeo, innerCoreMat);
+      innerCoreMesh.userData = { layerId: 'core', name: 'Inti Dalam' };
+      innerCoreGroup.add(innerCoreMesh);
+      astraEarthGroup.add(innerCoreGroup);
+      astraClickableMeshes.push(innerCoreMesh);
+    }
+
+    function buildEgg3DModel() {
+      astraEggGroup = new THREE.Group();
+      astraRootGroup.add(astraEggGroup);
+
+      const cutAngle = Math.PI * 1.55;
+      const startAngle = Math.PI * 0.45;
+
+      // Mathematical Ovoid Geometry function
+      function createEggGeo(radius, wSeg, hSeg, pStart, pLen) {
+        const geo = new THREE.SphereGeometry(radius, wSeg, hSeg, pStart, pLen);
+        const pos = geo.attributes.position;
+        for (let i = 0; i < pos.count; i++) {
+          let x = pos.getX(i);
+          let y = pos.getY(i);
+          let z = pos.getZ(i);
+          // Egg shape taper formula
+          const factor = 1.0 - (y / (radius * 3.2));
+          pos.setX(i, x * factor);
+          pos.setZ(i, z * factor);
+          pos.setY(i, y * 1.25);
+        }
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      // 1. EGG SHELL GROUP (Cangkang Telur)
+      eggShellGroup = new THREE.Group();
+      const shellGeo = createEggGeo(3.8, 36, 36, startAngle, cutAngle);
+      const shellMat = new THREE.MeshStandardMaterial({
+        color: 0xB07D62,
+        roughness: 0.8,
+        metalness: 0.05,
+        side: THREE.DoubleSide
+      });
+      const shellMesh = new THREE.Mesh(shellGeo, shellMat);
+      shellMesh.userData = { layerId: 'crust', name: 'Cangkang Telur' };
+      eggShellGroup.add(shellMesh);
+      astraEggGroup.add(eggShellGroup);
+      astraClickableMeshes.push(shellMesh);
+
+      // 2. EGG WHITE GROUP (Putih Telur / Mantel)
+      eggWhiteGroup = new THREE.Group();
+      const whiteGeo = createEggGeo(3.5, 32, 32, startAngle, cutAngle);
+      const whiteMat = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFF,
+        roughness: 0.25,
+        metalness: 0.1,
+        side: THREE.DoubleSide
+      });
+      const whiteMesh = new THREE.Mesh(whiteGeo, whiteMat);
+      whiteMesh.userData = { layerId: 'mantle', name: 'Putih Telur' };
+      eggWhiteGroup.add(whiteMesh);
+      astraEggGroup.add(eggWhiteGroup);
+      astraClickableMeshes.push(whiteMesh);
+
+      // 3. EGG YOLK GROUP (Kuning Telur / Inti)
+      eggYolkGroup = new THREE.Group();
+      const yolkGeo = new THREE.SphereGeometry(1.6, 32, 32);
+      const yolkMat = new THREE.MeshStandardMaterial({
+        color: 0xF59E0B,
+        emissive: 0xD97706,
+        emissiveIntensity: 0.4,
+        roughness: 0.3
+      });
+      const yolkMesh = new THREE.Mesh(yolkGeo, yolkMat);
+      yolkMesh.position.set(0, -0.2, 0);
+      yolkMesh.userData = { layerId: 'core', name: 'Kuning Telur' };
+      eggYolkGroup.add(yolkMesh);
+      astraEggGroup.add(eggYolkGroup);
+      astraClickableMeshes.push(yolkMesh);
+    }
+
+    // EXPLODE LAYERS IN 3D SPACE (ASTRA SIGNATURE)
+    function onAstraExplodeInput(val) {
+      astraExplodePercent = parseFloat(val) / 100;
+      document.getElementById('astraExplodeVal').innerText = val + '%';
+      setAstraExplode(astraExplodePercent);
+    }
+
+    function setAstraExplode(factor) {
+      const dist = factor * 2.2;
+      if (crustGroup && mantleGroup && outerCoreGroup) {
+        crustGroup.position.set(dist * 1.5, dist * 0.8, dist * 1.2);
+        mantleGroup.position.set(dist * 0.75, dist * 0.4, dist * 0.6);
+        outerCoreGroup.position.set(dist * 0.25, dist * 0.15, dist * 0.2);
+      }
+      if (eggShellGroup && eggWhiteGroup) {
+        eggShellGroup.position.set(dist * 1.5, dist * 0.8, dist * 1.2);
+        eggWhiteGroup.position.set(dist * 0.75, dist * 0.4, dist * 0.6);
+      }
+    }
+
+    // ASTRA MODEL SWITCHER
+    function setAstraModel(mode) {
+      currentAstraModel = mode;
       playSound('chime');
-      document.querySelectorAll('.diorama-mode-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-mode-' + mode);
+      document.querySelectorAll('.astra-pill-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-astra-' + mode);
       if (activeBtn) activeBtn.classList.add('active');
 
-      ['view-earth', 'view-egg', 'view-compare', 'view-diorama'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
+      const imgView = document.getElementById('astra-diorama-img-view');
+      const canvas = document.getElementById('astra-3d-canvas');
+
+      if (mode === 'art') {
+        imgView.style.display = 'flex';
+        canvas.style.display = 'none';
+        document.getElementById('astraActiveLabel').innerText = 'Diorama Seni';
+        return;
+      }
+
+      imgView.style.display = 'none';
+      canvas.style.display = 'block';
 
       if (mode === 'earth') {
-        document.getElementById('view-earth').style.display = 'flex';
+        astraEarthGroup.visible = true;
+        astraEggGroup.visible = false;
+        document.getElementById('astraActiveLabel').innerText = 'Model 3D Bumi';
       } else if (mode === 'egg') {
-        document.getElementById('view-egg').style.display = 'flex';
-      } else if (mode === 'compare') {
-        document.getElementById('view-compare').style.display = 'flex';
-      } else if (mode === 'diorama') {
-        document.getElementById('view-diorama').style.display = 'flex';
+        astraEarthGroup.visible = false;
+        astraEggGroup.visible = true;
+        document.getElementById('astraActiveLabel').innerText = 'Model 3D Telur';
       }
       highlight3DLayer(currentActiveLayer);
     }
 
+    function toggleAstraAutoRotate() {
+      astraAutoRotate = !astraAutoRotate;
+      const btn = document.getElementById('btnAstraAutoRotate');
+      if (astraAutoRotate) {
+        btn.innerHTML = '<span>🔄</span> Putar Otomatis';
+        btn.style.color = '#38BDF8';
+      } else {
+        btn.innerHTML = '<span>⏸️</span> Berhenti';
+        btn.style.color = '#94A3B8';
+      }
+    }
+
+    function resetAstraCamera() {
+      astraTargetSpherical = { radius: 10.5, theta: 0.65, phi: 1.15 };
+      document.getElementById('astraExplodeSlider').value = 0;
+      onAstraExplodeInput(0);
+      playSound('chime');
+    }
+
+    // MOUSE & TOUCH ORBIT INTERACTION
+    function setupAstraPointerEvents(canvas) {
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+
+      canvas.addEventListener('pointerdown', (e) => {
+        isAstraDragging = true;
+        astraPrevMouse = { x: e.clientX, y: e.clientY };
+        astraPointerStart = { x: e.clientX, y: e.clientY };
+        canvas.setPointerCapture(e.pointerId);
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!isAstraDragging) return;
+        const dx = e.clientX - astraPrevMouse.x;
+        const dy = e.clientY - astraPrevMouse.y;
+        astraPrevMouse = { x: e.clientX, y: e.clientY };
+
+        astraTargetSpherical.theta -= dx * 0.008;
+        astraTargetSpherical.phi -= dy * 0.008;
+        // Clamp vertical angle to prevent flipping
+        astraTargetSpherical.phi = Math.max(0.15, Math.min(Math.PI - 0.15, astraTargetSpherical.phi));
+      });
+
+      function onPointerEnd(e) {
+        if (!isAstraDragging) return;
+        isAstraDragging = false;
+        try { canvas.releasePointerCapture(e.pointerId); } catch(err){}
+
+        // Check for click/tap without drag (< 7px movement)
+        const dist = Math.hypot(e.clientX - astraPointerStart.x, e.clientY - astraPointerStart.y);
+        if (dist < 7) {
+          const rect = canvas.getBoundingClientRect();
+          mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(mouse, astraCamera);
+
+          const intersects = raycaster.intersectObjects(astraClickableMeshes, false);
+          if (intersects.length > 0) {
+            const hit = intersects[0].object;
+            if (hit.userData && hit.userData.layerId) {
+              selectEarthLayer(hit.userData.layerId);
+            }
+          }
+        }
+      }
+
+      canvas.addEventListener('pointerup', onPointerEnd);
+      canvas.addEventListener('pointercancel', onPointerEnd);
+
+      // Wheel Zoom
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        astraTargetSpherical.radius += e.deltaY * 0.008;
+        astraTargetSpherical.radius = Math.max(5.5, Math.min(18.0, astraTargetSpherical.radius));
+      }, { passive: false });
+    }
+
+    function onAstraWindowResize() {
+      const container = document.getElementById('astraViewport');
+      const canvas = document.getElementById('astra-3d-canvas');
+      if (!container || !canvas || !astraRenderer || !astraCamera) return;
+
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      astraCamera.aspect = w / h;
+      astraCamera.updateProjectionMatrix();
+      astraRenderer.setSize(w, h);
+    }
+
+    // ANIMATION & RENDER LOOP
+    function animateAstraScene() {
+      requestAnimationFrame(animateAstraScene);
+
+      // Auto rotation
+      if (astraAutoRotate && !isAstraDragging) {
+        astraTargetSpherical.theta += 0.0035;
+      }
+
+      // Smooth camera interpolation (Damping)
+      astraSpherical.theta += (astraTargetSpherical.theta - astraSpherical.theta) * 0.08;
+      astraSpherical.phi += (astraTargetSpherical.phi - astraSpherical.phi) * 0.08;
+      astraSpherical.radius += (astraTargetSpherical.radius - astraSpherical.radius) * 0.08;
+
+      // Spherical to Cartesian Coordinates
+      const r = astraSpherical.radius;
+      const phi = astraSpherical.phi;
+      const theta = astraSpherical.theta;
+
+      astraCamera.position.x = r * Math.sin(phi) * Math.sin(theta);
+      astraCamera.position.y = r * Math.cos(phi);
+      astraCamera.position.z = r * Math.sin(phi) * Math.cos(theta);
+      astraCamera.lookAt(0, 0, 0);
+
+      // Render 3D Frame
+      if (astraRenderer && astraScene) {
+        astraRenderer.render(astraScene, astraCamera);
+      }
+    }
+
+    // SELECT LAYER & HIGHLIGHT IN 3D
     function selectEarthLayer(layer, elem) {
       playSound('chime');
       currentActiveLayer = layer;
@@ -2712,7 +3263,7 @@
       const btn = document.getElementById('btn-layer-' + layer);
       if (btn) btn.classList.add('active');
 
-      // Update 3D layer highlights
+      // Update 3D layer glow & status badge
       highlight3DLayer(layer);
 
       // Update Detail Box
@@ -2720,12 +3271,15 @@
       const text = document.getElementById('layer-detail-text');
 
       if (layer === 'crust') {
+        document.getElementById('astraActiveLabel').innerText = 'Kerak Bumi (Aktif)';
         title.innerText = '🧱 Kerak Bumi (Crust) = Cangkang Telur Rebus';
         text.innerText = 'Ketebalannya hanya 5-70 km (kurang dari 1% jari-jari bumi). Seperti cangkang telur yang retak, kerak bumi terbagi menjadi lempeng-lempeng tektonik tempat manusia tinggal dan beraktivitas.';
       } else if (layer === 'mantle') {
+        document.getElementById('astraActiveLabel').innerText = 'Mantel Bumi (Aktif)';
         title.innerText = '🔥 Mantel Bumi (Mantle) = Putih Telur Rebus';
         text.innerText = 'Lapisan paling tebal (2.900 km) bersuhu hingga 3.000°C. Terdiri dari batuan magma liat yang terus bergolak perlahan, menyebabkan lempeng kerak di atasnya bergeser!';
       } else if (layer === 'core') {
+        document.getElementById('astraActiveLabel').innerText = 'Inti Bumi (Aktif)';
         title.innerText = '⚡ Inti Bumi (Core) = Kuning Telur Rebus';
         text.innerText = 'Terbagi atas Inti Luar (cair) dan Inti Dalam (padat). Suhunya mencapai 5.000 - 6.000°C (sepanas permukaan Matahari!). Kandungan besi-nikelnya menciptakan medan magnet pelindung bumi dari badai kosmis antariksa.';
       }
@@ -2735,29 +3289,17 @@
     }
 
     function highlight3DLayer(layer) {
-      // Remove all highlights
-      document.querySelectorAll('.svg-3d-layer').forEach(el => el.classList.remove('highlighted'));
-
-      if (layer === 'crust') {
-        const elCrust = document.getElementById('svg-crust');
-        if (elCrust) elCrust.classList.add('highlighted');
-        const elEggShell = document.getElementById('egg-shell-rim');
-        if (elEggShell) elEggShell.classList.add('highlighted');
-        const elEggExt = document.getElementById('egg-shell-ext');
-        if (elEggExt) elEggExt.classList.add('highlighted');
-      } else if (layer === 'mantle') {
-        const elMantle = document.getElementById('svg-mantle');
-        if (elMantle) elMantle.classList.add('highlighted');
-        const elEggWhite = document.getElementById('egg-albumen');
-        if (elEggWhite) elEggWhite.classList.add('highlighted');
-      } else if (layer === 'core') {
-        const elCore1 = document.getElementById('svg-outercore');
-        if (elCore1) elCore1.classList.add('highlighted');
-        const elCore2 = document.getElementById('svg-innercore');
-        if (elCore2) elCore2.classList.add('highlighted');
-        const elYolk = document.getElementById('egg-yolk');
-        if (elYolk) elYolk.classList.add('highlighted');
-      }
+      // Pulse emission highlight on 3D meshes
+      astraClickableMeshes.forEach(mesh => {
+        if (mesh.material && mesh.material.emissive) {
+          if (mesh.userData && mesh.userData.layerId === layer) {
+            mesh.material.emissiveIntensity = 1.0;
+            setTimeout(() => {
+              if (mesh.material) mesh.material.emissiveIntensity = (layer === 'core' ? 0.6 : 0.2);
+            }, 500);
+          }
+        }
+      });
     }
 
     function renderLayerInquiry(layer) {
@@ -2773,7 +3315,7 @@
       const fbMsg = document.getElementById('inquiry-fb-msg');
       fbMsg.style.display = 'none';
 
-      data.options.forEach((opt, idx) => {
+      data.options.forEach((opt) => {
         const btn = document.createElement('button');
         btn.className = 'inquiry-btn';
         btn.innerHTML = opt.text;
@@ -2808,10 +3350,11 @@
       }
     }
 
-    // Auto-init inquiry on load
-    setTimeout(() => {
+    // Auto-init 3D engine on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      initAstra3D();
       renderLayerInquiry('crust');
-    }, 400);
+    });
 
     // MODULE 3: TECTONIC COLLISION & SEISMOGRAPH
 
