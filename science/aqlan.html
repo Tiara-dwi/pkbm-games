@@ -854,8 +854,313 @@
 
     }
 
+  
+    /* ================= ASTRA AI 3D SKATEBOARD STYLING ================= */
+    .aqlan-3d-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 950px) {
+      .aqlan-3d-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .aqlan-viewport-container {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      background: radial-gradient(circle at 50% 40%, #0F172A 0%, #090D16 70%, #020617 100%);
+      border-radius: 24px;
+      border: 2px solid rgba(16, 185, 129, 0.35);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45), inset 0 0 30px rgba(16, 185, 129, 0.12);
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #aqlan-3d-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #aqlan-3d-canvas:active {
+      cursor: grabbing;
+    }
+
+    /* HUD Top */
+    .aqlan-hud-top {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .aqlan-hud-title {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #34D399;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: auto;
+    }
+    .aqlan-action-pills {
+      display: flex;
+      gap: 6px;
+      pointer-events: auto;
+    }
+    .aqlan-pill-btn {
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #E2E8F0;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .aqlan-pill-btn:hover {
+      background: rgba(16, 185, 129, 0.3);
+      border-color: #10B981;
+      color: #FFFFFF;
+    }
+    .aqlan-pill-btn.active {
+      background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+      border-color: #34D399;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    /* HUD Bottom */
+    .aqlan-hud-bottom {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .aqlan-explode-bar {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .aqlan-explode-bar label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #E2E8F0;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .aqlan-explode-bar input[type="range"] {
+      flex: 1;
+      accent-color: #10B981;
+      cursor: pointer;
+    }
+    .aqlan-hud-actions {
+      pointer-events: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .aqlan-tool-btn-group {
+      display: flex;
+      gap: 6px;
+    }
+    .aqlan-tool-btn {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #CBD5E1;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .aqlan-tool-btn:hover {
+      background: rgba(16, 185, 129, 0.3);
+      color: #FFFFFF;
+      border-color: #10B981;
+    }
+    .aqlan-tool-btn.active {
+      background: #10B981;
+      color: #FFFFFF;
+      border-color: #34D399;
+    }
+    .aqlan-gesture-hint {
+      font-size: 0.72rem;
+      color: rgba(226, 232, 240, 0.75);
+      background: rgba(0, 0, 0, 0.45);
+      padding: 4px 8px;
+      border-radius: 8px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Component Selection Pills outside canvas */
+    .comp-pill-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .comp-btn {
+      flex: 1;
+      min-width: 140px;
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .comp-btn:hover {
+      border-color: #10B981;
+      background: #ECFDF5;
+      color: #065F46;
+    }
+    .comp-btn.active {
+      background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+      border-color: #10B981;
+      color: #065F46;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+
+    /* Astra AI Socratic Inquiry Card */
+    .aqlan-inquiry-card {
+      background: #FFFFFF;
+      border: 2px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .inquiry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px dashed #E2E8F0;
+    }
+    .inquiry-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: #FEF3C7;
+      color: #92400E;
+      padding: 3px 9px;
+      border-radius: 12px;
+    }
+    .inquiry-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .inquiry-question {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #047857;
+      background: #ECFDF5;
+      border-left: 4px solid #10B981;
+      padding: 8px 12px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 12px;
+    }
+    .inquiry-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .inquiry-opt-btn {
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 12px;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .inquiry-opt-btn:hover {
+      border-color: #10B981;
+      background: #F0FDF4;
+      color: #065F46;
+      transform: translateX(3px);
+    }
+    .inquiry-opt-btn.correct {
+      background: #D1FAE5 !important;
+      border-color: #10B981 !important;
+      color: #065F46 !important;
+      font-weight: 800;
+    }
+    .inquiry-opt-btn.wrong {
+      background: #FEE2E2 !important;
+      border-color: #EF4444 !important;
+      color: #991B1B !important;
+    }
+    .inquiry-feedback {
+      background: #F8FAFC;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.82rem;
+      color: #475569;
+      line-height: 1.45;
+      display: none;
+    }
+
   </style>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
@@ -950,6 +1255,9 @@
 
       </button>
 
+          <button class="tab-btn" onclick="switchTab('future')">
+        <span>⚡</span> 4. Bengkel 3D Skateboard Masa Depan
+      </button>
     </div>
 
 
@@ -1492,67 +1800,132 @@
 
 
     <!-- TAB 4: ENERGI MASA DEPAN & MEMBURU VAMPIR LISTRIK -->
+        <!-- TAB 4: ASTRA AI 3D SKATEBOARD & ENERGI MASA DEPAN -->
     <div id="tab-future" class="tab-content">
       <div class="lab-card">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
           <div>
             <h2 style="font-size:1.3rem; font-weight:900; color:#059669; display:flex; align-items:center; gap:8px;">
-              <span>🌱</span> Lab Energi Masa Depan: Bersih, Abadi &amp; Cerdas!
+              <span>⚡</span> Bengkel 3D: Skateboard Masa Depan (Astra AI Style)
             </h2>
             <p style="font-size:0.9rem; color:var(--muted); margin-top:2px;">
-              IPAS Bab 4 Topik D — Mengubah ketergantungan energi fosil menjadi energi terbarukan &amp; aksi nyata hemat energi.
+              IPAS Bab 4 Topik D — Mengubah ketergantungan energi fosil dengan teknologi terbarukan: Sel Surya &amp; Dinamo Kinetik!
             </p>
           </div>
           <div id="ecoBadge" style="background:#ECFDF5; border:1.5px solid #10B981; padding:6px 16px; border-radius:20px; font-weight:800; color:#065F46; font-size:0.85rem;">
-            🌱 Skor Penghematan: <span id="vampireScore">0</span> / 4 Misi
+            🌱 Skor Pahlawan Bumi: <span id="vampireScore">0</span> / 4 Misi
           </div>
         </div>
 
-        <!-- MODULE A: FOSIL VS TERBARUKAN SIMULATOR -->
-        <div style="background:#F8FAFC; border:1.5px solid var(--border); border-radius:16px; padding:18px; margin-bottom:20px;">
-          <h3 style="font-size:1.05rem; font-weight:900; color:#1E293B; margin-bottom:10px;">
-            🛹 1. Pilih Mesin Penggerak Skateboard Masa Depan Aqlan:
-          </h3>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:14px;">
-            <!-- Pilihan Fosil -->
-            <div id="card-fossil" onclick="chooseFutureEnergy('fossil')" style="background:white; border:2px solid #CBD5E1; border-radius:14px; padding:14px; cursor:pointer; transition:all 0.2s;">
-              <div style="font-size:2rem; margin-bottom:6px;">⛽</div>
-              <h4 style="font-size:0.95rem; font-weight:800; color:#475569;">Bensin Fosil (Minyak Bumi)</h4>
-              <p style="font-size:0.8rem; color:#64748B; margin-top:4px;">Berasal dari fosil purba jutaan tahun. Sekali habis tidak bisa dibuat lagi dan berasap!</p>
+        <!-- Component Selector Bar -->
+        <div class="comp-pill-group">
+          <button class="comp-btn active" id="btn-comp-deck" onclick="selectSkaterComponent('deck')">
+            <span>☀️🛹</span> Papan Sel Surya
+          </button>
+          <button class="comp-btn" id="btn-comp-battery" onclick="selectSkaterComponent('battery')">
+            <span>🔋</span> Baterai Eco-Lithium
+          </button>
+          <button class="comp-btn" id="btn-comp-wheels" onclick="selectSkaterComponent('wheels')">
+            <span>⚙️⚡</span> Roda Dinamo Kinetik
+          </button>
+          <button class="comp-btn" id="btn-comp-lights" onclick="selectSkaterComponent('lights')">
+            <span>💡</span> Lampu LED Aero
+          </button>
+        </div>
+
+        <!-- 3D Studio & Inquiry Layout -->
+        <div class="aqlan-3d-layout">
+          <!-- Left: 3D WebGL Canvas Viewport -->
+          <div class="aqlan-viewport-container" id="aqlanViewport">
+            <canvas id="aqlan-3d-canvas"></canvas>
+
+            <!-- Top HUD inside 3D Viewport -->
+            <div class="aqlan-hud-top">
+              <div class="aqlan-hud-title">
+                <span>🛹</span> Bengkel 3D Aqlan Solar-X
+              </div>
+              <div class="aqlan-action-pills">
+                <button class="aqlan-pill-btn" id="btnSunToggle" onclick="toggleAqlanSun()">
+                  <span>☀️</span> <span id="lblSun">Nyalakan Surya</span>
+                </button>
+                <button class="aqlan-pill-btn" id="btnDynamoTest" onclick="testSkaterDynamo()">
+                  <span>⚡</span> Uji Dinamo
+                </button>
+              </div>
             </div>
-            <!-- Pilihan Surya -->
-            <div id="card-solar" onclick="chooseFutureEnergy('solar')" style="background:white; border:2px solid #CBD5E1; border-radius:14px; padding:14px; cursor:pointer; transition:all 0.2s;">
-              <div style="font-size:2rem; margin-bottom:6px;">☀️</div>
-              <h4 style="font-size:0.95rem; font-weight:800; color:#059669;">Panel Surya (Matahari)</h4>
-              <p style="font-size:0.8rem; color:#64748B; margin-top:4px;">Menyerap sinar matahari langsung jadi listrik. 100% tanpa polusi dan abadi!</p>
-            </div>
-            <!-- Pilihan Angin -->
-            <div id="card-wind" onclick="chooseFutureEnergy('wind')" style="background:white; border:2px solid #CBD5E1; border-radius:14px; padding:14px; cursor:pointer; transition:all 0.2s;">
-              <div style="font-size:2rem; margin-bottom:6px;">💨</div>
-              <h4 style="font-size:0.95rem; font-weight:800; color:#0284C7;">Mikro Turbin Angin</h4>
-              <p style="font-size:0.8rem; color:#64748B; margin-top:4px;">Memanfaatkan embusan angin saat meluncur untuk mengisi ulang daya baterai otomatis.</p>
+
+            <!-- Bottom HUD inside 3D Viewport -->
+            <div class="aqlan-hud-bottom">
+              <!-- Exploded View Slider -->
+              <div class="aqlan-explode-bar">
+                <label for="aqlanExplodeRange">
+                  <span>💥</span> Kupas Komponen 3D:
+                </label>
+                <input type="range" id="aqlanExplodeRange" min="0" max="100" value="0" oninput="onAqlanExplodeSlider(this.value)">
+                <span id="aqlanExplodeVal" style="color:#34D399; font-weight:800; font-size:0.8rem; min-width:38px;">0%</span>
+              </div>
+
+              <!-- Action Toolbar -->
+              <div class="aqlan-hud-actions">
+                <div class="aqlan-tool-btn-group">
+                  <button class="aqlan-tool-btn" id="btnAutoSpin" onclick="toggleAqlanAutoRotate()">
+                    <span>🔄</span> Putar Otomatis: <strong id="lblAutoSpin">ON</strong>
+                  </button>
+                  <button class="aqlan-tool-btn" onclick="resetAqlanCamera()">
+                    <span>🎯</span> Reset Kamera
+                  </button>
+                </div>
+                <div class="aqlan-gesture-hint">
+                  👆 Geser 360° | 🔍 Cubit/Scroll Zoom | 🎯 Klik Komponen
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Feedback Box -->
-          <div id="futureFeedback" style="background:#FFFFFF; border:1.5px dashed #A7F3D0; border-radius:12px; padding:12px 16px; font-size:0.88rem; color:#065F46; font-weight:600;">
-            👉 Klik salah satu sumber energi di atas untuk menguji dampaknya ke bumi dan performa skateboard Aqlan!
+
+          <!-- Right: Astra AI Socratic Inquiry Card -->
+          <div class="aqlan-inquiry-card" id="aqlanInquiryCard">
+            <div>
+              <div class="inquiry-header">
+                <div>
+                  <div class="inquiry-title" id="inqTitle">
+                    <span>☀️🛹</span> Papan Sel Surya
+                  </div>
+                  <div style="font-size:0.78rem; color:#64748B; margin-top:2px;" id="inqSubtitle">
+                    Komponen Pemanen Energi Matahari
+                  </div>
+                </div>
+                <div class="inquiry-badge" id="inqBadge">Tantangan Sains</div>
+              </div>
+
+              <div class="inquiry-question" id="inqQuestion">
+                ❓ Bentuk energi apa yang diserap dan diubah oleh Papan Sel Surya ini?
+              </div>
+
+              <div class="inquiry-options" id="inqOptions">
+                <!-- Options injected by JS -->
+              </div>
+            </div>
+
+            <div class="inquiry-feedback" id="inqFeedback">
+              <!-- Feedback injected by JS -->
+            </div>
           </div>
         </div>
 
         <!-- MODULE B: MISI DETEKTIF BERBURU VAMPIR LISTRIK -->
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="margin-top:24px; border-top:2px solid var(--border); padding-top:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
             <div>
-              <h3 style="font-size:1.05rem; font-weight:900; color:#1E293B;">
-                🕵️ 2. Misi Lapangan: Berburu Vampir Listrik di Rumah Aqlan
+              <h3 style="font-size:1.1rem; font-weight:900; color:#1E293B; display:flex; align-items:center; gap:8px;">
+                <span>🕵️</span> Misi Detektif: Berburu Vampir Listrik di Rumah Aqlan
               </h3>
-              <p style="font-size:0.82rem; color:var(--muted);">
-                Vampir listrik adalah alat yang diam-diam menyedot listrik tanpa kita sadari. Klik tombol aksi untuk mengalahkannya!
+              <p style="font-size:0.84rem; color:var(--muted);">
+                Vampir listrik adalah perangkat elektronik yang diam-diam menyedot daya saat tidak dipakai. Bantu Aqlan menghentikannya!
               </p>
             </div>
           </div>
 
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px;">
             <!-- Vampir 1 -->
             <div class="vampire-card" id="vamp1" style="background:white; border:1.5px solid var(--border); border-radius:14px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
@@ -1560,10 +1933,10 @@
                   <span style="font-size:1.5rem;">🔌</span>
                   <strong style="font-size:0.9rem; color:#0F172A;">Charger HP Menancap Terus</strong>
                 </div>
-                <p style="font-size:0.8rem; color:#64748B;">HP sudah penuh dicabut, tapi kepala charger dibiarkan menempel di stopkontak tembok.</p>
+                <p style="font-size:0.8rem; color:#64748B;">HP sudah 100% penuh dicabut, tapi kepala charger dibiarkan menempel di colokan tembok semalaman.</p>
               </div>
               <div style="margin-top:10px;">
-                <button class="btn-action" id="btnVamp1" onclick="defeatVampire(1)" style="width:100%; padding:8px; font-size:0.82rem; background:#EF4444;">
+                <button class="btn-action" id="btnVamp1" onclick="defeatVampire(1)" style="width:100%; padding:9px; font-size:0.82rem; background:#EF4444;">
                   Cabut Colokan Charger!
                 </button>
               </div>
@@ -1574,12 +1947,12 @@
               <div>
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
                   <span style="font-size:1.5rem;">📺</span>
-                  <strong style="font-size:0.9rem; color:#0F172A;">TV Mode Standby Malam Hari</strong>
+                  <strong style="font-size:0.9rem; color:#0F172A;">TV Mode Standby Seharian</strong>
                 </div>
-                <p style="font-size:0.8rem; color:#64748B;">Layar mati tapi lampu merah kecil menyala semalaman menyedot arus listrik terus-menerus.</p>
+                <p style="font-size:0.8rem; color:#64748B;">Layar mati tapi lampu indikator merah tetap menyala menyedot arus listrik 24 jam nonstop.</p>
               </div>
               <div style="margin-top:10px;">
-                <button class="btn-action" id="btnVamp2" onclick="defeatVampire(2)" style="width:100%; padding:8px; font-size:0.82rem; background:#EF4444;">
+                <button class="btn-action" id="btnVamp2" onclick="defeatVampire(2)" style="width:100%; padding:9px; font-size:0.82rem; background:#EF4444;">
                   Matikan Sakelar Utama TV!
                 </button>
               </div>
@@ -1592,10 +1965,10 @@
                   <span style="font-size:1.5rem;">💡</span>
                   <strong style="font-size:0.9rem; color:#0F172A;">Bohlam Pijar Kuno 60 Watt</strong>
                 </div>
-                <p style="font-size:0.8rem; color:#64748B;">Panas menyengat, 90% listrik terbuang percuma menjadi panas bukan cahaya terang.</p>
+                <p style="font-size:0.8rem; color:#64748B;">Suhu kaca membara panas! 90% listrik terbuang percuma jadi panas bukan cahaya terang.</p>
               </div>
               <div style="margin-top:10px;">
-                <button class="btn-action" id="btnVamp3" onclick="defeatVampire(3)" style="width:100%; padding:8px; font-size:0.82rem; background:#EF4444;">
+                <button class="btn-action" id="btnVamp3" onclick="defeatVampire(3)" style="width:100%; padding:9px; font-size:0.82rem; background:#EF4444;">
                   Ganti ke Lampu LED 8W!
                 </button>
               </div>
@@ -1608,10 +1981,10 @@
                   <span style="font-size:1.5rem;">🚰</span>
                   <strong style="font-size:0.9rem; color:#0F172A;">Keran Air Menetes Terus</strong>
                 </div>
-                <p style="font-size:0.8rem; color:#64748B;">Mesin pompa air otomatis menyala tiap beberapa menit, memboroskan watt listrik rumah!</p>
+                <p style="font-size:0.8rem; color:#64748B;">Tetesan bocor memicu pompa air listrik menyala otomatis tiap 10 menit, memboroskan tagihan!</p>
               </div>
               <div style="margin-top:10px;">
-                <button class="btn-action" id="btnVamp4" onclick="defeatVampire(4)" style="width:100%; padding:8px; font-size:0.82rem; background:#EF4444;">
+                <button class="btn-action" id="btnVamp4" onclick="defeatVampire(4)" style="width:100%; padding:9px; font-size:0.82rem; background:#EF4444;">
                   Rapatkan Keran Air!
                 </button>
               </div>
@@ -1619,11 +1992,11 @@
           </div>
 
           <!-- Trophy Card -->
-          <div id="vampireTrophy" style="display:none; margin-top:16px; background:linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border:2px solid #10B981; border-radius:16px; padding:16px; text-align:center;">
-            <div style="font-size:2.2rem; margin-bottom:4px;">🏆🎉</div>
-            <h4 style="font-size:1.1rem; font-weight:900; color:#065F46;">LUAR BIASA! AQLAN RESMI MENJADI PAHLAWAN ENERGI HIJAU!</h4>
-            <p style="font-size:0.88rem; color:#047857; max-width:650px; margin:4px auto 0;">
-              Semua vampir listrik berhasil ditumpas! Rumah Aqlan kini lebih ramah bumi, tagihan listrik hemat, dan cadangan energi masa depan terjaga.
+          <div id="vampireTrophy" style="display:none; margin-top:16px; background:linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border:2px solid #10B981; border-radius:16px; padding:18px; text-align:center;">
+            <div style="font-size:2.4rem; margin-bottom:6px;">🏆🎉⚡</div>
+            <h4 style="font-size:1.15rem; font-weight:900; color:#065F46;">LUAR BIASA! AQLAN RESMI MENJADI PAHLAWAN ENERGI HIJAU!</h4>
+            <p style="font-size:0.9rem; color:#047857; max-width:680px; margin:6px auto 0; font-weight:600;">
+              Semua vampir listrik berhasil ditumpas! Rumah Aqlan kini hemat energi, bumi terlindungi dari emisi karbon berlebih, dan teknologi masa depan siap digunakan.
             </p>
           </div>
         </div>
@@ -1747,19 +2120,26 @@
 
 
     function switchTab(tabId) {
-
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
       
-
-      event.currentTarget.classList.add('active');
-
-      document.getElementById('tab-' + tabId).classList.add('active');
-
+      if (typeof event !== 'undefined' && event && event.currentTarget && event.currentTarget.classList) {
+        event.currentTarget.classList.add('active');
+      } else {
+        const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick')?.includes(tabId));
+        if (btn) btn.classList.add('active');
+      }
+      
+      const tabTarget = document.getElementById('tab-' + tabId);
+      if (tabTarget) tabTarget.classList.add('active');
       playTone(600, 'sine', 0.05);
 
+      if (tabId === 'future') {
+        setTimeout(() => {
+          initAqlan3D();
+          onAqlanWindowResize();
+        }, 80);
+      }
     }
 
 
@@ -2537,6 +2917,835 @@
     }
 
 
+
+
+
+    /* ==========================================================================
+       ASTRA AI 3D SKATEBOARD ENGINE (THREE.JS WEBGL) - AQLAN IPAS BAB 4 TOPIK D
+       ========================================================================== */
+    let aqlanScene, aqlanCamera, aqlanRenderer, aqlanSkaterGroup;
+    let aqlanDeckGroup, aqlanBatteryGroup, aqlanTrucksGroup, aqlanWheelsGroup, aqlanLightsGroup;
+    let aqlanSunLight, aqlanSunOrb, aqlanCoreLight;
+    let aqlanWheelMeshes = [];
+    let aqlanClickableMeshes = [];
+    let isAqlanAutoRotate = true;
+    let isAqlanSunActive = false;
+    let isAqlanDynamoSpinning = false;
+    let aqlanDynamoSpinSpeed = 0;
+    let aqlanExplodeFactor = 0.0;
+    let aqlanCurrentComp = 'deck';
+    const aqlanVampiresDefeated = new Set();
+
+    // Spherical Camera Coordinates for smooth 360 orbit
+    let isAqlanDragging = false;
+    let aqlanPrevMouse = { x: 0, y: 0 };
+    let aqlanPointerStart = { x: 0, y: 0 };
+    let aqlanTargetSpherical = { radius: 8.5, phi: Math.PI * 0.35, theta: Math.PI * 0.28 };
+    let aqlanCurrentSpherical = { radius: 8.5, phi: Math.PI * 0.35, theta: Math.PI * 0.28 };
+    let aqlan3DInitialized = false;
+
+    // Component Educational Data (Astra AI Socratic Inquiry Challenge)
+    const skaterComponents = {
+      deck: {
+        id: 'deck',
+        title: '☀️ Papan Sel Surya (Solar Deck)',
+        subtitle: 'Komponen Pemanen Foton Cahaya Matahari',
+        badge: 'Topeng Cahaya ➡️ Listrik',
+        question: '❓ Bentuk energi apa yang diserap dan diubah langsung oleh Papan Sel Surya ini?',
+        options: [
+          { text: 'A. Energi Cahaya (Matahari) ➡️ Energi Listrik', correct: true, exp: 'Tepat sekali Aqlan! Sel fotovoltaik pada papan menyerap foton radiasi matahari dan langsung mengalirkannya menjadi arus listrik bersih untuk mengisi baterai tanpa polusi!' },
+          { text: 'B. Energi Panas ➡️ Energi Gerak', correct: false, exp: 'Kurang tepat. Papan surya bekerja menyerap partikel cahaya (foton), bukan mesin uap yang digerakkan panas mendidih.' },
+          { text: 'C. Energi Bunyi ➡️ Energi Kimia', correct: false, exp: 'Belum tepat. Suara teriakan atau klakson tidak bisa diserap menjadi listrik oleh papan sel surya.' }
+        ]
+      },
+      battery: {
+        id: 'battery',
+        title: '🔋 Baterai Cerdas Eco-Lithium',
+        subtitle: 'Pusat Penyimpan Cadangan Energi Listrik Bersih',
+        badge: 'Topeng Kimia ➡️ Listrik',
+        question: '❓ Saat baterai ini dipakai menyalakan mesin skateboard, energi apa yang berubah?',
+        options: [
+          { text: 'A. Energi Kimia ➡️ Energi Listrik ➡️ Energi Gerak', correct: true, exp: 'Luar biasa! Di dalam baterai, energi tersimpan rapi dalam ikatan kimia. Saat gas ditekan, kimia berubah jadi listrik lalu menggerakkan motor roda menjadi energi kinetik!' },
+          { text: 'B. Energi Nuklir ➡️ Energi Panas Membara', correct: false, exp: 'Kurang tepat. Skateboard ramah lingkungan tidak memakai reaktor nuklir!' },
+          { text: 'C. Energi Gravitasi ➡️ Energi Bunyi', correct: false, exp: 'Belum tepat. Baterai tidak mengandalkan ketinggian gravitasi, melainkan reaksi kimia internal.' }
+        ]
+      },
+      wheels: {
+        id: 'wheels',
+        title: '⚙️⚡ Roda Dinamo Kinetik (Induction Hub)',
+        subtitle: 'Pemanen Energi Gerak Menjadi Listrik Otomatis',
+        badge: 'Topeng Gerak ➡️ Listrik',
+        question: '❓ Bagaimana cara tromol roda dinamo menghasilkan listrik saat Aqlan meluncur atau mengerem?',
+        options: [
+          { text: 'A. Energi Gerak (Kinetik) ➡️ Energi Listrik', correct: true, exp: 'Keren sekali detektif Aqlan! Kumparan kawat tembaga di dalam roda berputar memotong medan magnet, memanen energi kinetik kembali menjadi listrik (regenerative braking)!' },
+          { text: 'B. Energi Cahaya ➡️ Energi Suara', correct: false, exp: 'Kurang tepat. Putaran roda adalah gerak fisik (kinetik), bukan cahaya.' },
+          { text: 'C. Energi Suara ➡️ Energi Panas', correct: false, exp: 'Belum tepat. Roda ini dirancang khusus untuk memanen listrik dari putaran, bukan sekadar menimbulkan suara.' }
+        ]
+      },
+      lights: {
+        id: 'lights',
+        title: '💡 Lampu LED Aero Cerdas',
+        subtitle: 'Penerangan Jalan Efisiensi Tinggi',
+        badge: 'Topeng Listrik ➡️ Cahaya',
+        question: '❓ Mengapa lampu LED dipilih untuk teknologi masa depan dibanding bohlam kuno?',
+        options: [
+          { text: 'A. Mengubah 90% Listrik jadi Cahaya (Hanya sedikit panas terbuang)', correct: true, exp: 'Tepat sekali! Lampu LED super hemat karena hampir seluruh watt listrik diubah menjadi cahaya terang benderang, bukan terbuang percuma menjadi panas membara seperti bohlam kuno!' },
+          { text: 'B. Mengubah semua listrik jadi panas membara', correct: false, exp: 'Salah, itu ciri-ciri bohlam pijar kuno yang memboroskan 90% listrik menjadi panas!' },
+          { text: 'C. Membakar bahan bakar minyak', correct: false, exp: 'Salah, LED adalah semikonduktor elektronik modern tanpa pembakaran minyak.' }
+        ]
+      }
+    };
+
+    function initAqlan3D() {
+      if (aqlan3DInitialized) return;
+      if (typeof THREE === 'undefined') {
+        console.warn("Three.js not loaded yet, retrying in 100ms...");
+        setTimeout(initAqlan3D, 100);
+        return;
+      }
+      buildAqlanScene();
+      aqlan3DInitialized = true;
+    }
+
+    function buildAqlanScene() {
+      const canvas = document.getElementById('aqlan-3d-canvas');
+      const container = document.getElementById('aqlanViewport');
+      if (!canvas || !container) return;
+
+      const width = container.clientWidth || 450;
+      const height = container.clientHeight || 460;
+
+      // 1. Scene & Camera
+      aqlanScene = new THREE.Scene();
+      aqlanCamera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+      aqlanCamera.position.set(7, 4.5, 8);
+
+      // 2. WebGL Renderer
+      aqlanRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      aqlanRenderer.setSize(width, height);
+      aqlanRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // 3. Lighting System
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+      aqlanScene.add(ambientLight);
+
+      const mainDirLight = new THREE.DirectionalLight(0xe0f2fe, 1.2);
+      mainDirLight.position.set(10, 14, 8);
+      aqlanScene.add(mainDirLight);
+
+      const rimLight = new THREE.DirectionalLight(0x10b981, 0.6);
+      rimLight.position.set(-10, -6, -8);
+      aqlanScene.add(rimLight);
+
+      // Interactive Sunlight Beam
+      aqlanSunLight = new THREE.DirectionalLight(0xffd54f, 0.0);
+      aqlanSunLight.position.set(0, 15, 6);
+      aqlanSunLight.target.position.set(0, 0, 0);
+      aqlanScene.add(aqlanSunLight);
+      aqlanScene.add(aqlanSunLight.target);
+
+      // 3D Sun Orb
+      const sunGeo = new THREE.SphereGeometry(0.7, 32, 32);
+      const sunMat = new THREE.MeshBasicMaterial({ color: 0xffb703 });
+      aqlanSunOrb = new THREE.Mesh(sunGeo, sunMat);
+      aqlanSunOrb.position.set(0, 5.2, 3.2);
+      aqlanSunOrb.visible = false;
+      aqlanScene.add(aqlanSunOrb);
+
+      // 4. Skateboard Root Container
+      aqlanSkaterGroup = new THREE.Group();
+      aqlanScene.add(aqlanSkaterGroup);
+
+      // 5. Build 3D Skateboard Parts
+      buildSkateboard3DModel();
+
+      // 6. Setup Interactive Pointer Events (360 orbit, Pinch/Wheel Zoom, Raycasting)
+      setupAqlanPointerEvents(canvas);
+
+      // 7. Window Resize Listener
+      window.addEventListener('resize', onAqlanWindowResize);
+
+      // 8. Render Initial Inquiry
+      renderAqlanInquiry('deck');
+
+      // 9. Start Animation Loop
+      animateAqlanScene();
+    }
+
+    /* --- PROCEDURAL TEXTURES (CANVAS GENERATED) --- */
+    function createProceduralSolarDeckTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512;
+      c.height = 256;
+      const ctx = c.getContext('2d');
+
+      // Dark space navy background
+      ctx.fillStyle = '#0B1528';
+      ctx.fillRect(0, 0, 512, 256);
+
+      // Photovoltaic solar cell grid (4 rows x 8 cols)
+      const cols = 8;
+      const rows = 4;
+      const padX = 14;
+      const padY = 16;
+      const cellW = (512 - padX * (cols + 1)) / cols;
+      const cellH = (256 - padY * (rows + 1)) / rows;
+
+      for (let r = 0; r < rows; r++) {
+        for (let col = 0; col < cols; col++) {
+          const x = padX + col * (cellW + padX);
+          const y = padY + r * (cellH + padY);
+
+          // Solar cell wafer gradient
+          const grad = ctx.createLinearGradient(x, y, x + cellW, y + cellH);
+          grad.addColorStop(0, '#1E3A8A');
+          grad.addColorStop(0.5, '#0F172A');
+          grad.addColorStop(1, '#0284C7');
+          ctx.fillStyle = grad;
+          ctx.fillRect(x, y, cellW, cellH);
+
+          // Silver conductive busbars & finger lines
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+          ctx.lineWidth = 1;
+          for (let f = 4; f < cellW; f += 8) {
+            ctx.beginPath();
+            ctx.moveTo(x + f, y);
+            ctx.lineTo(x + f, y + cellH);
+            ctx.stroke();
+          }
+
+          // Main vertical collector bar
+          ctx.strokeStyle = '#38BDF8';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x + cellW / 2, y);
+          ctx.lineTo(x + cellW / 2, y + cellH);
+          ctx.stroke();
+
+          // Cell outline
+          ctx.strokeStyle = '#0284C7';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(x, y, cellW, cellH);
+        }
+      }
+
+      // High-tech logo badge in center
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.strokeStyle = '#10B981';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(140, 108, 232, 40, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#34D399';
+      ctx.font = 'bold 15px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('⚡ AQLAN SOLAR-X REGEN ⚡', 256, 133);
+
+      return new THREE.CanvasTexture(c);
+    }
+
+    function createProceduralBatteryTexture() {
+      const c = document.createElement('canvas');
+      c.width = 256;
+      c.height = 128;
+      const ctx = c.getContext('2d');
+
+      // Brushed titanium casing
+      ctx.fillStyle = '#1E293B';
+      ctx.fillRect(0, 0, 256, 128);
+
+      // Carbon weave pattern
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+      for (let x = 0; x < 256; x += 8) {
+        for (let y = 0; y < 128; y += 8) {
+          if ((x + y) % 16 === 0) ctx.fillRect(x, y, 8, 8);
+        }
+      }
+
+      // Green battery status HUD
+      ctx.fillStyle = '#064E3B';
+      ctx.fillRect(16, 20, 224, 40);
+      ctx.strokeStyle = '#10B981';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(16, 20, 224, 40);
+
+      // Glowing LED charge bars
+      ctx.fillStyle = '#10B981';
+      for (let i = 0; i < 6; i++) {
+        ctx.fillRect(24 + i * 35, 26, 28, 28);
+      }
+
+      ctx.fillStyle = '#E2E8F0';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ECO-LITHIUM 96% SMART BATT', 128, 92);
+
+      return new THREE.CanvasTexture(c);
+    }
+
+    function createProceduralDynamoTexture() {
+      const c = document.createElement('canvas');
+      c.width = 256;
+      c.height = 256;
+      const ctx = c.getContext('2d');
+
+      // Center hub
+      ctx.fillStyle = '#1E293B';
+      ctx.fillRect(0, 0, 256, 256);
+
+      // Copper dynamo induction coils ring
+      const cx = 128, cy = 128;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+      ctx.fillStyle = '#B45309'; // Copper wire color
+      ctx.fill();
+
+      // Coil winding segments
+      ctx.strokeStyle = '#F59E0B';
+      ctx.lineWidth = 3;
+      for (let a = 0; a < Math.PI * 2; a += Math.PI / 12) {
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(a) * 55, cy + Math.sin(a) * 55);
+        ctx.lineTo(cx + Math.cos(a) * 90, cy + Math.sin(a) * 90);
+        ctx.stroke();
+      }
+
+      // Metallic center axle nut
+      ctx.beginPath();
+      ctx.arc(cx, cy, 38, 0, Math.PI * 2);
+      ctx.fillStyle = '#94A3B8';
+      ctx.fill();
+      ctx.strokeStyle = '#E2E8F0';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.fillStyle = '#0F172A';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+      ctx.fill();
+
+      return new THREE.CanvasTexture(c);
+    }
+
+    /* --- 3D SKATEBOARD GEOMETRY BUILDER --- */
+    function buildSkateboard3DModel() {
+      aqlanWheelMeshes = [];
+      aqlanClickableMeshes = [];
+
+      const solarDeckTex = createProceduralSolarDeckTexture();
+      const batteryTex = createProceduralBatteryTexture();
+      const dynamoTex = createProceduralDynamoTexture();
+
+      // 1. DECK GROUP
+      aqlanDeckGroup = new THREE.Group();
+      aqlanDeckGroup.name = 'deck';
+
+      // Curved skateboard deck with kicktail elevation
+      const deckGeo = new THREE.BoxGeometry(5.8, 0.16, 1.6, 24, 2, 6);
+      const pos = deckGeo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i);
+        if (Math.abs(x) > 2.0) {
+          const elev = Math.pow(Math.abs(x) - 2.0, 1.25) * 0.35;
+          pos.setY(i, pos.getY(i) + elev);
+        }
+      }
+      deckGeo.computeVertexNormals();
+
+      const deckMat = new THREE.MeshStandardMaterial({
+        map: solarDeckTex,
+        roughness: 0.35,
+        metalness: 0.3,
+      });
+
+      const deckMesh = new THREE.Mesh(deckGeo, deckMat);
+      deckMesh.userData = { compId: 'deck', name: 'Papan Sel Surya' };
+      aqlanDeckGroup.add(deckMesh);
+      aqlanClickableMeshes.push(deckMesh);
+      aqlanSkaterGroup.add(aqlanDeckGroup);
+
+      // 2. BATTERY GROUP (Under center deck)
+      aqlanBatteryGroup = new THREE.Group();
+      aqlanBatteryGroup.name = 'battery';
+
+      const battGeo = new THREE.BoxGeometry(2.3, 0.22, 1.1);
+      const battMat = new THREE.MeshStandardMaterial({
+        map: batteryTex,
+        roughness: 0.4,
+        metalness: 0.5,
+        emissive: 0x059669,
+        emissiveIntensity: 0.25
+      });
+      const battMesh = new THREE.Mesh(battGeo, battMat);
+      battMesh.position.y = -0.19;
+      battMesh.userData = { compId: 'battery', name: 'Baterai Eco-Lithium' };
+      aqlanBatteryGroup.add(battMesh);
+      aqlanClickableMeshes.push(battMesh);
+
+      // Copper power conduit cables
+      const cableMat = new THREE.MeshStandardMaterial({ color: 0xd97706, metalness: 0.7, roughness: 0.3 });
+      const cableGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.4, 12);
+      cableGeo.rotateZ(Math.PI / 2);
+      const cableFront = new THREE.Mesh(cableGeo, cableMat);
+      cableFront.position.set(1.4, -0.18, 0);
+      aqlanBatteryGroup.add(cableFront);
+      const cableRear = new THREE.Mesh(cableGeo, cableMat);
+      cableRear.position.set(-1.4, -0.18, 0);
+      aqlanBatteryGroup.add(cableRear);
+
+      aqlanSkaterGroup.add(aqlanBatteryGroup);
+
+      // 3. TRUCKS GROUP (Cast aluminum hangers & axles)
+      aqlanTrucksGroup = new THREE.Group();
+      aqlanTrucksGroup.name = 'trucks';
+
+      const truckMat = new THREE.MeshStandardMaterial({ color: 0x94A3B8, metalness: 0.85, roughness: 0.25 });
+      const bushingMat = new THREE.MeshStandardMaterial({ color: 0x10B981, roughness: 0.4 });
+
+      [-1.75, 1.75].forEach(xPos => {
+        // Baseplate
+        const baseGeo = new THREE.BoxGeometry(0.7, 0.1, 0.5);
+        const baseMesh = new THREE.Mesh(baseGeo, truckMat);
+        baseMesh.position.set(xPos, -0.14, 0);
+        aqlanTrucksGroup.add(baseMesh);
+
+        // Bushing
+        const bushGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.16, 16);
+        const bushMesh = new THREE.Mesh(bushGeo, bushingMat);
+        bushMesh.position.set(xPos, -0.27, 0);
+        aqlanTrucksGroup.add(bushMesh);
+
+        // Hanger bar
+        const hangerGeo = new THREE.CylinderGeometry(0.08, 0.08, 2.3, 16);
+        hangerGeo.rotateX(Math.PI / 2);
+        const hangerMesh = new THREE.Mesh(hangerGeo, truckMat);
+        hangerMesh.position.set(xPos, -0.38, 0);
+        hangerMesh.userData = { compId: 'trucks', name: 'Trucks Logam' };
+        aqlanTrucksGroup.add(hangerMesh);
+        aqlanClickableMeshes.push(hangerMesh);
+      });
+
+      aqlanSkaterGroup.add(aqlanTrucksGroup);
+
+      // 4. WHEELS GROUP (4 Wheels with internal visible copper dynamo induction coils)
+      aqlanWheelsGroup = new THREE.Group();
+      aqlanWheelsGroup.name = 'wheels';
+
+      const wheelPositions = [
+        { x: 1.75, y: -0.38, z: 1.15, isRight: true },
+        { x: 1.75, y: -0.38, z: -1.15, isRight: false },
+        { x: -1.75, y: -0.38, z: 1.15, isRight: true },
+        { x: -1.75, y: -0.38, z: -1.15, isRight: false }
+      ];
+
+      wheelPositions.forEach((wp, idx) => {
+        const singleWheelGroup = new THREE.Group();
+        singleWheelGroup.position.set(wp.x, wp.y, wp.z);
+        singleWheelGroup.userData = { initialX: wp.x, initialY: wp.y, initialZ: wp.z };
+
+        // Outer Polyurethane transparent tire
+        const tireGeo = new THREE.CylinderGeometry(0.48, 0.48, 0.38, 32);
+        tireGeo.rotateX(Math.PI / 2);
+        const tireMat = new THREE.MeshStandardMaterial({
+          color: 0x06B6D4,
+          roughness: 0.25,
+          metalness: 0.15,
+          transparent: true,
+          opacity: 0.78
+        });
+        const tireMesh = new THREE.Mesh(tireGeo, tireMat);
+        singleWheelGroup.add(tireMesh);
+
+        // Internal Copper Coil Dynamo Cylinder
+        const coilGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.39, 24);
+        coilGeo.rotateX(Math.PI / 2);
+        const coilMat = new THREE.MeshStandardMaterial({
+          map: dynamoTex,
+          metalness: 0.85,
+          roughness: 0.3
+        });
+        const coilMesh = new THREE.Mesh(coilGeo, coilMat);
+        singleWheelGroup.add(coilMesh);
+
+        // Outer face hubcap
+        const capGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.40, 16);
+        capGeo.rotateX(Math.PI / 2);
+        const capMat = new THREE.MeshStandardMaterial({ color: 0xE2E8F0, metalness: 0.9, roughness: 0.1 });
+        const capMesh = new THREE.Mesh(capGeo, capMat);
+        singleWheelGroup.add(capMesh);
+
+        tireMesh.userData = { compId: 'wheels', name: 'Roda Dinamo Kinetik' };
+        coilMesh.userData = { compId: 'wheels', name: 'Roda Dinamo Kinetik' };
+
+        aqlanClickableMeshes.push(tireMesh);
+        aqlanClickableMeshes.push(coilMesh);
+
+        aqlanWheelMeshes.push(singleWheelGroup);
+        aqlanWheelsGroup.add(singleWheelGroup);
+      });
+
+      aqlanSkaterGroup.add(aqlanWheelsGroup);
+
+      // 5. LIGHTS GROUP (Front Cyan Aero LEDs + Rear Red LEDs)
+      aqlanLightsGroup = new THREE.Group();
+      aqlanLightsGroup.name = 'lights';
+
+      // Dual Front Headlights
+      const frontLightMat = new THREE.MeshStandardMaterial({
+        color: 0x00F0FF,
+        emissive: 0x00F0FF,
+        emissiveIntensity: 1.8
+      });
+      [-0.45, 0.45].forEach(zOffset => {
+        const fLightGeo = new THREE.BoxGeometry(0.18, 0.12, 0.22);
+        const fLightMesh = new THREE.Mesh(fLightGeo, frontLightMat);
+        fLightMesh.position.set(2.86, 0.12, zOffset);
+        fLightMesh.userData = { compId: 'lights', name: 'Lampu LED Aero Depan' };
+        aqlanLightsGroup.add(fLightMesh);
+        aqlanClickableMeshes.push(fLightMesh);
+      });
+
+      // Dual Rear Brake Taillights
+      const rearLightMat = new THREE.MeshStandardMaterial({
+        color: 0xEF4444,
+        emissive: 0xEF4444,
+        emissiveIntensity: 1.8
+      });
+      [-0.45, 0.45].forEach(zOffset => {
+        const rLightGeo = new THREE.BoxGeometry(0.18, 0.12, 0.22);
+        const rLightMesh = new THREE.Mesh(rLightGeo, rearLightMat);
+        rLightMesh.position.set(-2.86, 0.12, zOffset);
+        rLightMesh.userData = { compId: 'lights', name: 'Lampu LED Aero Belakang' };
+        aqlanLightsGroup.add(rLightMesh);
+        aqlanClickableMeshes.push(rLightMesh);
+      });
+
+      aqlanSkaterGroup.add(aqlanLightsGroup);
+    }
+
+    /* --- INTERACTIVE POINTER CONTROLS (ORBIT DRAG, PINCH ZOOM, RAYCAST CLICK) --- */
+    function setupAqlanPointerEvents(canvas) {
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+
+      canvas.addEventListener('pointerdown', (e) => {
+        isAqlanDragging = true;
+        aqlanPrevMouse = { x: e.clientX, y: e.clientY };
+        aqlanPointerStart = { x: e.clientX, y: e.clientY };
+        canvas.setPointerCapture(e.pointerId);
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!isAqlanDragging) return;
+        const dx = e.clientX - aqlanPrevMouse.x;
+        const dy = e.clientY - aqlanPrevMouse.y;
+        aqlanPrevMouse = { x: e.clientX, y: e.clientY };
+
+        aqlanTargetSpherical.theta -= dx * 0.009;
+        aqlanTargetSpherical.phi -= dy * 0.009;
+        // Clamp vertical angle to prevent flipping
+        aqlanTargetSpherical.phi = Math.max(0.15, Math.min(Math.PI - 0.15, aqlanTargetSpherical.phi));
+      });
+
+      function onPointerEnd(e) {
+        if (!isAqlanDragging) return;
+        isAqlanDragging = false;
+        try { canvas.releasePointerCapture(e.pointerId); } catch(err){}
+
+        // Check for click without drag (< 7px movement)
+        const dist = Math.hypot(e.clientX - aqlanPointerStart.x, e.clientY - aqlanPointerStart.y);
+        if (dist < 7) {
+          const rect = canvas.getBoundingClientRect();
+          mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(mouse, aqlanCamera);
+
+          const intersects = raycaster.intersectObjects(aqlanClickableMeshes, false);
+          if (intersects.length > 0) {
+            const hit = intersects[0].object;
+            if (hit.userData && hit.userData.compId) {
+              selectSkaterComponent(hit.userData.compId);
+            }
+          }
+        }
+      }
+
+      canvas.addEventListener('pointerup', onPointerEnd);
+      canvas.addEventListener('pointercancel', onPointerEnd);
+
+      // Wheel Zoom
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        aqlanTargetSpherical.radius += e.deltaY * 0.008;
+        aqlanTargetSpherical.radius = Math.max(4.8, Math.min(14.0, aqlanTargetSpherical.radius));
+      }, { passive: false });
+    }
+
+    function onAqlanWindowResize() {
+      const container = document.getElementById('aqlanViewport');
+      const canvas = document.getElementById('aqlan-3d-canvas');
+      if (!container || !canvas || !aqlanRenderer || !aqlanCamera) return;
+
+      const width = container.clientWidth;
+      const height = container.clientHeight || 460;
+      aqlanCamera.aspect = width / height;
+      aqlanCamera.updateProjectionMatrix();
+      aqlanRenderer.setSize(width, height);
+    }
+
+    /* --- EXPLODED VIEW SLIDER (0% TO 100%) --- */
+    function onAqlanExplodeSlider(val) {
+      aqlanExplodeFactor = parseFloat(val) / 100.0;
+      const lbl = document.getElementById('aqlanExplodeVal');
+      if (lbl) lbl.innerText = `${Math.round(val)}%`;
+
+      if (!aqlanDeckGroup) return;
+
+      // Deck elevates upwards
+      aqlanDeckGroup.position.y = aqlanExplodeFactor * 1.6;
+
+      // Battery stays floating in middle
+      aqlanBatteryGroup.position.y = aqlanExplodeFactor * 0.2;
+
+      // Trucks descend
+      aqlanTrucksGroup.position.y = -aqlanExplodeFactor * 0.7;
+
+      // Wheels descend and expand laterally outwards along Z axis
+      aqlanWheelMeshes.forEach(w => {
+        const initZ = w.userData.initialZ;
+        const dirZ = Math.sign(initZ);
+        w.position.y = w.userData.initialY - aqlanExplodeFactor * 1.5;
+        w.position.z = initZ + dirZ * (aqlanExplodeFactor * 0.85);
+      });
+
+      // Lights expand forward and back
+      aqlanLightsGroup.position.y = aqlanExplodeFactor * 1.6;
+    }
+
+    /* --- COMPONENT SELECTION & SOCRATIC INQUIRY CHALLENGE --- */
+    function selectSkaterComponent(compId) {
+      if (!skaterComponents[compId]) return;
+      aqlanCurrentComp = compId;
+
+      // Update external pill buttons
+      document.querySelectorAll('.comp-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-comp-${compId}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Highlight target mesh in 3D scene (emissive pulse)
+      highlightSkaterComponent3D(compId);
+
+      // Play soft chime
+      playTone(550, 'sine', 0.08);
+
+      // Render Astra AI Socratic Inquiry Challenge
+      renderAqlanInquiry(compId);
+    }
+
+    function highlightSkaterComponent3D(compId) {
+      let targetMesh = null;
+      if (compId === 'deck' && aqlanDeckGroup) targetMesh = aqlanDeckGroup.children[0];
+      else if (compId === 'battery' && aqlanBatteryGroup) targetMesh = aqlanBatteryGroup.children[0];
+      else if (compId === 'wheels' && aqlanWheelMeshes.length > 0) targetMesh = aqlanWheelMeshes[0].children[0];
+      else if (compId === 'lights' && aqlanLightsGroup) targetMesh = aqlanLightsGroup.children[0];
+
+      if (targetMesh && targetMesh.material && targetMesh.material.emissive) {
+        const origColor = targetMesh.material.emissive.getHex();
+        const origIntensity = targetMesh.material.emissiveIntensity || 0;
+        targetMesh.material.emissive.setHex(0x34D399);
+        targetMesh.material.emissiveIntensity = 1.6;
+        setTimeout(() => {
+          targetMesh.material.emissive.setHex(origColor);
+          targetMesh.material.emissiveIntensity = origIntensity;
+        }, 500);
+      }
+    }
+
+    function renderAqlanInquiry(compId) {
+      const data = skaterComponents[compId];
+      if (!data) return;
+
+      const titleEl = document.getElementById('inqTitle');
+      const subtitleEl = document.getElementById('inqSubtitle');
+      const badgeEl = document.getElementById('inqBadge');
+      const questionEl = document.getElementById('inqQuestion');
+      const optionsEl = document.getElementById('inqOptions');
+      const feedbackEl = document.getElementById('inqFeedback');
+
+      if (titleEl) titleEl.innerHTML = data.title;
+      if (subtitleEl) subtitleEl.innerText = data.subtitle;
+      if (badgeEl) badgeEl.innerText = data.badge;
+      if (questionEl) questionEl.innerHTML = data.question;
+
+      if (optionsEl) {
+        optionsEl.innerHTML = '';
+        data.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'inquiry-opt-btn';
+          btn.innerHTML = `<span>${opt.text}</span>`;
+          btn.onclick = () => checkAqlanInquiry(btn, opt.correct, opt.exp);
+          optionsEl.appendChild(btn);
+        });
+      }
+
+      if (feedbackEl) {
+        feedbackEl.style.display = 'none';
+        feedbackEl.innerHTML = '';
+      }
+    }
+
+    function checkAqlanInquiry(btn, isCorrect, explanation) {
+      const feedbackEl = document.getElementById('inqFeedback');
+      const options = document.querySelectorAll('.inquiry-opt-btn');
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        options.forEach(b => { if (b !== btn) b.disabled = true; });
+        playSuccessChime();
+
+        if (feedbackEl) {
+          feedbackEl.style.display = 'block';
+          feedbackEl.style.background = '#ECFDF5';
+          feedbackEl.style.borderColor = '#10B981';
+          feedbackEl.style.color = '#065F46';
+          feedbackEl.innerHTML = `<strong>🎉 BENAR SEKALI!</strong><br>${explanation}`;
+        }
+      } else {
+        btn.classList.add('wrong');
+        playTone(280, 'sawtooth', 0.15);
+
+        if (feedbackEl) {
+          feedbackEl.style.display = 'block';
+          feedbackEl.style.background = '#FEF2F2';
+          feedbackEl.style.borderColor = '#FCA5A5';
+          feedbackEl.style.color = '#991B1B';
+          feedbackEl.innerHTML = `<strong>⚠️ COBA PIKIRKAN LAGI:</strong><br>${explanation}`;
+        }
+      }
+    }
+
+    /* --- SIMULATION TESTS & TOOLBAR ACTIONS --- */
+    function toggleAqlanSun() {
+      isAqlanSunActive = !isAqlanSunActive;
+      const lbl = document.getElementById('lblSun');
+      const btn = document.getElementById('btnSunToggle');
+
+      if (isAqlanSunActive) {
+        if (lbl) lbl.innerText = 'Matikan Surya';
+        if (btn) btn.classList.add('active');
+        if (aqlanSunLight) aqlanSunLight.intensity = 2.0;
+        if (aqlanSunOrb) aqlanSunOrb.visible = true;
+        playTone(680, 'sine', 0.15);
+        selectSkaterComponent('deck');
+      } else {
+        if (lbl) lbl.innerText = 'Nyalakan Surya';
+        if (btn) btn.classList.remove('active');
+        if (aqlanSunLight) aqlanSunLight.intensity = 0.0;
+        if (aqlanSunOrb) aqlanSunOrb.visible = false;
+        playTone(380, 'sine', 0.1);
+      }
+    }
+
+    function testSkaterDynamo() {
+      isAqlanDynamoSpinning = true;
+      aqlanDynamoSpinSpeed = 0.35;
+      playTone(440, 'triangle', 0.1);
+      setTimeout(() => playTone(660, 'triangle', 0.15), 100);
+      selectSkaterComponent('wheels');
+
+      const btn = document.getElementById('btnDynamoTest');
+      if (btn) btn.classList.add('active');
+
+      setTimeout(() => {
+        isAqlanDynamoSpinning = false;
+        if (btn) btn.classList.remove('active');
+      }, 3500);
+    }
+
+    function toggleAqlanAutoRotate() {
+      isAqlanAutoRotate = !isAqlanAutoRotate;
+      const lbl = document.getElementById('lblAutoSpin');
+      const btn = document.getElementById('btnAutoSpin');
+      if (lbl) lbl.innerText = isAqlanAutoRotate ? 'ON' : 'OFF';
+      if (btn) {
+        if (isAqlanAutoRotate) btn.classList.add('active');
+        else btn.classList.remove('active');
+      }
+      playTone(520, 'sine', 0.05);
+    }
+
+    function resetAqlanCamera() {
+      aqlanTargetSpherical = { radius: 8.5, phi: Math.PI * 0.35, theta: Math.PI * 0.28 };
+      playTone(480, 'sine', 0.06);
+    }
+
+    /* --- MODULE B: PEMBURU VAMPIR LISTRIK --- */
+    function defeatVampire(vampId) {
+      if (aqlanVampiresDefeated.has(vampId)) return;
+      aqlanVampiresDefeated.add(vampId);
+
+      const card = document.getElementById(`vamp${vampId}`);
+      const btn = document.getElementById(`btnVamp${vampId}`);
+      if (card) {
+        card.style.borderColor = '#10B981';
+        card.style.background = '#ECFDF5';
+      }
+      if (btn) {
+        btn.style.background = '#10B981';
+        btn.innerText = '✅ Vampir Tertumpas!';
+        btn.disabled = true;
+      }
+
+      const scoreEl = document.getElementById('vampireScore');
+      if (scoreEl) scoreEl.innerText = aqlanVampiresDefeated.size;
+
+      playSuccessChime();
+
+      if (aqlanVampiresDefeated.size === 4) {
+        const trophy = document.getElementById('vampireTrophy');
+        if (trophy) {
+          trophy.style.display = 'block';
+          trophy.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+
+    /* --- ANIMATION LOOP --- */
+    function animateAqlanScene() {
+      requestAnimationFrame(animateAqlanScene);
+
+      // Auto-rotation when not manually dragging
+      if (isAqlanAutoRotate && !isAqlanDragging) {
+        aqlanTargetSpherical.theta += 0.0035;
+      }
+
+      // Smooth camera interpolation (damping)
+      aqlanCurrentSpherical.theta += (aqlanTargetSpherical.theta - aqlanCurrentSpherical.theta) * 0.08;
+      aqlanCurrentSpherical.phi += (aqlanTargetSpherical.phi - aqlanCurrentSpherical.phi) * 0.08;
+      aqlanCurrentSpherical.radius += (aqlanTargetSpherical.radius - aqlanCurrentSpherical.radius) * 0.08;
+
+      const r = aqlanCurrentSpherical.radius;
+      const phi = aqlanCurrentSpherical.phi;
+      const theta = aqlanCurrentSpherical.theta;
+
+      aqlanCamera.position.x = r * Math.sin(phi) * Math.sin(theta);
+      aqlanCamera.position.y = r * Math.cos(phi);
+      aqlanCamera.position.z = r * Math.sin(phi) * Math.cos(theta);
+      aqlanCamera.lookAt(0, 0, 0);
+
+      // Spin wheels if dynamo test active
+      if (isAqlanDynamoSpinning) {
+        aqlanWheelMeshes.forEach(w => {
+          w.rotation.z += aqlanDynamoSpinSpeed;
+        });
+      }
+
+      if (aqlanRenderer && aqlanScene && aqlanCamera) {
+        aqlanRenderer.render(aqlanScene, aqlanCamera);
+      }
+    }
 
 </script>
 
