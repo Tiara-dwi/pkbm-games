@@ -98,9 +98,13 @@
 
     .hud-3d-toast {
       position: absolute; top: 64px; left: 50%; transform: translateX(-50%);
+      max-width: calc(100% - 28px); width: max-content; text-align: center; line-height: 1.35;
       background: rgba(15, 23, 42, 0.94); border: 1.5px solid #34D399;
       color: #ECFDF5; padding: 6px 14px; border-radius: 14px; font-size: 0.82rem;
-      font-weight: 800; z-index: 12; pointer-events: none; opacity: 0; transition: opacity 0.25s; white-space: nowrap;
+      font-weight: 800; z-index: 12; pointer-events: none; opacity: 0; transition: opacity 0.25s;
+    }
+    @media (max-width: 680px) {
+      .hud-3d-toast { top: 96px; font-size: 0.75rem; }
     }
     .hud-3d-toast.show { opacity: 1; }
 
@@ -340,6 +344,7 @@
   </div>
 
   <script src="../assets/js/three.min.js"></script>
+  <script src="../assets/js/earth_globe.js"></script>
   <script>
     let audioCtx = null;
     function getAudioCtx() {
@@ -500,21 +505,34 @@
       const h = container.clientHeight || 575;
 
       scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
+      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 120);
       renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
       renderer.setSize(w, h);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.78));
-      const sunLight = new THREE.DirectionalLight(0xfff5d6, 1.35);
+      scene.add(PKBM_EARTH.createStarfield(340));
+      scene.add(new THREE.AmbientLight(0xF1F5F9, 1.05));
+      scene.add(new THREE.HemisphereLight(0xE0F2FE, 0x1E293B, 0.55));
+      const sunLight = new THREE.DirectionalLight(0xFFFBEB, 1.35);
       sunLight.position.set(12, 8, 10);
       scene.add(sunLight);
+      const rimLight = new THREE.DirectionalLight(0x38BDF8, 0.42);
+      rimLight.position.set(-10, -4, -10);
+      scene.add(rimLight);
 
-      // Sun Orb
-      sunOrb = new THREE.Mesh(
-        new THREE.SphereGeometry(0.95, 24, 24),
+      // Sun Orb + soft corona
+      sunOrb = new THREE.Group();
+      sunOrb.add(new THREE.Mesh(
+        new THREE.SphereGeometry(0.95, 28, 28),
         new THREE.MeshBasicMaterial({ color: 0xFBBF24 })
-      );
+      ));
+      sunOrb.add(new THREE.Mesh(
+        new THREE.SphereGeometry(1.32, 24, 24),
+        new THREE.MeshBasicMaterial({
+          color: 0xF59E0B, transparent: true, opacity: 0.22,
+          side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false
+        })
+      ));
       sunOrb.position.set(6.5, 3.8, -3.5);
       scene.add(sunOrb);
 
@@ -532,24 +550,27 @@
       globeGroup = new THREE.Group();
       scene.add(globeGroup);
 
-      // Tilted Earth
+      // Tilted Realistic NASA Blue Marble Earth
       const tiltGroup = new THREE.Group();
       tiltGroup.rotation.z = THREE.MathUtils.degToRad(23.5);
       globeGroup.add(tiltGroup);
 
-      const earthMesh = new THREE.Mesh(
-        new THREE.SphereGeometry(2.75, 42, 42),
-        new THREE.MeshStandardMaterial({ map: createEarthTexture(), roughness: 0.55 })
-      );
-      earthMesh.userData = { info: 'Bumi Miring 23,5° • Berotasi 24 jam & Mengelilingi Matahari' };
-      tiltGroup.add(earthMesh);
-      globeGroup.earthMesh = earthMesh;
-      clickableParts.push(earthMesh);
+      const earthBundle = PKBM_EARTH.createRealisticEarthGroup({
+        radius: 2.75,
+        renderer,
+        fallbackTexture: createEarthTexture()
+      });
+      earthBundle.earthMesh.rotation.y = 3.055; // Start oriented toward Indonesia
+      earthBundle.earthMesh.userData = { info: 'Bumi Miring 23,5° • Berotasi 24 jam & Mengelilingi Matahari' };
+      tiltGroup.add(earthBundle.group);
+      globeGroup.earthMesh = earthBundle.earthMesh;
+      globeGroup.cloudMesh = earthBundle.cloudMesh;
+      clickableParts.push(earthBundle.earthMesh);
 
-      // Golden Equatorial Tropic Belt
+      // Sleek Glowing Golden Equatorial Tropic Belt
       const eqRing = new THREE.Mesh(
-        new THREE.TorusGeometry(2.92, 0.07, 12, 48),
-        new THREE.MeshBasicMaterial({ color: 0xFBBF24 })
+        new THREE.TorusGeometry(2.88, 0.036, 14, 72),
+        new THREE.MeshBasicMaterial({ color: 0xFBBF24, transparent: true, opacity: 0.9 })
       );
       eqRing.rotation.x = Math.PI / 2;
       eqRing.userData = { info: 'Sabuk Khatulistiwa (Iklim Tropis): Hangat & 2 Musim sepanjang tahun!' };
@@ -791,7 +812,8 @@
           mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
           mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
           raycaster.setFromCamera(mouse, camera);
-          const hits = raycaster.intersectObjects(clickableParts, false);
+          const visibleParts = clickableParts.filter(o => PKBM_EARTH.isObjectVisible(o));
+          const hits = raycaster.intersectObjects(visibleParts, false);
           if (hits.length > 0 && hits[0].object.userData.info) {
             show3DToast(hits[0].object.userData.info);
             playTone(620, 'triangle', 0.1);
@@ -828,7 +850,8 @@
       camera.lookAt(0, 0, 0);
 
       if (globeGroup && globeGroup.visible) {
-        if (globeGroup.earthMesh) globeGroup.earthMesh.rotation.y += 0.005;
+        if (globeGroup.earthMesh) globeGroup.earthMesh.rotation.y += 0.004;
+        if (globeGroup.cloudMesh) globeGroup.cloudMesh.rotation.y += 0.0011;
         if (windArrowsGroup) windArrowsGroup.rotation.y += (seasonMode === 'rain' ? 0.015 : -0.015);
         if (rainParticles && rainParticles.visible) {
           const pos = rainParticles.geometry.attributes.position.array;

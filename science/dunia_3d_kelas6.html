@@ -347,6 +347,7 @@
   </div>
 
   <script src="../assets/js/three.min.js"></script>
+  <script src="../assets/js/earth_globe.js"></script>
   <script>
     let audioCtx = null;
     function getAudioCtx() {
@@ -377,12 +378,12 @@
     }
 
     const CONTINENTS = {
-      asia:      { name: 'Asia',      px: 760, py: 185, color: 0x22C55E, fact: '🏮 ASIA: Benua terluas (±44 juta km²) & terpadat penduduknya di dunia. Indonesia berada di Asia Tenggara!' },
-      amerika:   { name: 'Amerika',   px: 265, py: 220, color: 0x10B981, fact: '🗽 AMERIKA: Benua terpanjang membentang dari Utara ke Selatan (Pegunungan Andes & Sungai Amazon).' },
-      afrika:    { name: 'Afrika',    px: 550, py: 275, color: 0xEAB308, fact: '🦁 AFRIKA: Memiliki Gurun Sahara terluas dan Sungai Nil terpanjang di dunia.' },
-      eropa:     { name: 'Eropa',     px: 540, py: 135, color: 0x38BDF8, fact: '🏰 EROPA: Dijuluki Benua Biru, menyatu daratannya dengan Asia (Eurasia) dan dibatasi Pegunungan Ural.' },
-      australia: { name: 'Australia', px: 835, py: 355, color: 0xF97316, fact: '🦘 AUSTRALIA: Benua terkecil di Bumi, sekaligus merupakan satu negara besar berfauna kanguru & koala.' },
-      antartika: { name: 'Antartika', px: 512, py: 475, color: 0xF8FAFC, fact: '🐧 ANTARTIKA: Benua es abadi di Kutub Selatan yang tidak berpenghuni tetap selain stasiun peneliti!' }
+      asia:      { name: 'Asia',      lat: 28,  lon: 102,  color: 0x22C55E, fact: '🏮 ASIA: Benua terluas (±44 juta km²) & terpadat penduduknya di dunia. Indonesia berada di Asia Tenggara!' },
+      amerika:   { name: 'Amerika',   lat: 23,  lon: -102, color: 0x10B981, fact: '🗽 AMERIKA: Benua terpanjang membentang dari Utara ke Selatan (Pegunungan Andes & Sungai Amazon).' },
+      afrika:    { name: 'Afrika',    lat: 8,   lon: 21,   color: 0xEAB308, fact: '🦁 AFRIKA: Memiliki Gurun Sahara terluas dan Sungai Nil terpanjang di dunia.' },
+      eropa:     { name: 'Eropa',     lat: 49,  lon: 14,   color: 0x38BDF8, fact: '🏰 EROPA: Dijuluki Benua Biru, menyatu daratannya dengan Asia (Eurasia) dan dibatasi Pegunungan Ural.' },
+      australia: { name: 'Australia', lat: -25, lon: 134,  color: 0xF97316, fact: '🦘 AUSTRALIA: Benua terkecil di Bumi, sekaligus merupakan satu negara besar berfauna kanguru & koala.' },
+      antartika: { name: 'Antartika', lat: -80, lon: 15,   color: 0xF8FAFC, fact: '🐧 ANTARTIKA: Benua es abadi di Kutub Selatan yang tidak berpenghuni tetap selain stasiun peneliti!' }
     };
 
     const MISSIONS = [
@@ -464,9 +465,14 @@
     let streak = 0;
     let currentView = 'globe';
 
-    let scene, camera, renderer, globeGroup, polesGroup;
+    let scene, camera, renderer, globeGroup, polesGroup, globeCloudMesh;
     let clickablePins = [];
+    let continentPinHalos = [];
     let arcticIceMeshes = [], antarcticGlacierMeshes = [], seaWaterMesh;
+    let arcticFloeMesh, arcticBearRig;
+    let polarPenguins = [];
+    let penguinBoostUntil = 0;
+    const animClock = typeof THREE !== 'undefined' ? new THREE.Clock() : { getElapsedTime: () => 0 };
     let isAutoRotate = false;
     let isDragging = false;
     let prevMouse = { x: 0, y: 0 };
@@ -533,17 +539,6 @@
       return new THREE.CanvasTexture(c);
     }
 
-    function canvasXYtoSphereVec(px, py, radius) {
-      const u = px / 1024;
-      const phi_s = u * Math.PI * 2;
-      const theta_s = (py / 512) * Math.PI;
-      return new THREE.Vector3(
-        -radius * Math.cos(phi_s) * Math.sin(theta_s),
-         radius * Math.cos(theta_s),
-         radius * Math.sin(phi_s) * Math.sin(theta_s)
-      );
-    }
-
     function init3DScene() {
       if (typeof THREE === 'undefined') { setTimeout(init3DScene, 100); return; }
       const canvas = document.getElementById('astra-canvas');
@@ -552,15 +547,20 @@
       const h = container.clientHeight || 575;
 
       scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
+      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 120);
       renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
       renderer.setSize(w, h);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
-      const key = new THREE.DirectionalLight(0xfffbeb, 1.15);
+      scene.add(PKBM_EARTH.createStarfield(360));
+      scene.add(new THREE.AmbientLight(0xF1F5F9, 1.05));
+      scene.add(new THREE.HemisphereLight(0xE0F2FE, 0x1E293B, 0.55));
+      const key = new THREE.DirectionalLight(0xFFFBEB, 1.35);
       key.position.set(12, 10, 12);
       scene.add(key);
+      const rim = new THREE.DirectionalLight(0x38BDF8, 0.42);
+      rim.position.set(-10, -5, -10);
+      scene.add(rim);
 
       buildGlobeExplorer();
       buildPolesDiorama();
@@ -577,29 +577,32 @@
       scene.add(globeGroup);
 
       const R = 2.85;
-      const earthMesh = new THREE.Mesh(
-        new THREE.SphereGeometry(R, 48, 48),
-        new THREE.MeshStandardMaterial({ map: createWorldMapTexture(), roughness: 0.5 })
-      );
-      globeGroup.add(earthMesh);
+      const earthBundle = PKBM_EARTH.createRealisticEarthGroup({
+        radius: R,
+        renderer,
+        fallbackTexture: createWorldMapTexture()
+      });
+      globeGroup.add(earthBundle.group);
+      globeCloudMesh = earthBundle.cloudMesh;
 
-      // Translucent atmosphere rim
-      const halo = new THREE.Mesh(
-        new THREE.SphereGeometry(R + 0.12, 32, 32),
-        new THREE.MeshBasicMaterial({ color: 0x38BDF8, transparent: true, opacity: 0.16, side: THREE.BackSide })
+      // Subtle glowing Equator hairline for geography orientation
+      const eqHairline = new THREE.Mesh(
+        new THREE.TorusGeometry(R + 0.015, 0.009, 8, 96),
+        new THREE.MeshBasicMaterial({ color: 0xFBBF24, transparent: true, opacity: 0.42 })
       );
-      globeGroup.add(halo);
+      eqHairline.rotation.x = Math.PI / 2;
+      globeGroup.add(eqHairline);
 
-      // 6 Clickable Continent Beacon Pins
+      // 6 Sleek Clickable Continent Beacon Pins on exact lat/lon coordinates
       Object.entries(CONTINENTS).forEach(([key, data]) => {
-        const surfacePt = canvasXYtoSphereVec(data.px, data.py, R);
+        const surfacePt = PKBM_EARTH.latLonToVec3(data.lat, data.lon, R);
         const normal = surfacePt.clone().normalize();
-        const pinPos = surfacePt.clone().addScaledVector(normal, 0.35);
+        const pinPos = surfacePt.clone().addScaledVector(normal, 0.34);
 
         const pin = new THREE.Mesh(
-          new THREE.SphereGeometry(0.24, 16, 16),
+          new THREE.SphereGeometry(0.17, 20, 20),
           new THREE.MeshStandardMaterial({
-            color: data.color, emissive: data.color, emissiveIntensity: 0.55, roughness: 0.25
+            color: data.color, emissive: data.color, emissiveIntensity: 0.65, roughness: 0.2, metalness: 0.15
           })
         );
         pin.position.copy(pinPos);
@@ -607,15 +610,101 @@
         globeGroup.add(pin);
         clickablePins.push(pin);
 
-        // Stalk connecting surface to pin orb
-        const stalk = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.04, 0.04, 0.38, 8),
-          new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
+        // Glowing halo ring flat on Earth's surface
+        const ring = new THREE.Mesh(
+          new THREE.RingGeometry(0.14, 0.24, 24),
+          new THREE.MeshBasicMaterial({ color: data.color, side: THREE.DoubleSide, transparent: true, opacity: 0.72 })
         );
-        stalk.position.copy(surfacePt).addScaledVector(normal, 0.18);
+        ring.position.copy(surfacePt).addScaledVector(normal, 0.025);
+        ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+        globeGroup.add(ring);
+        continentPinHalos.push(ring);
+
+        // Sleek metallic stalk connecting surface to beacon orb
+        const stalk = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.025, 0.035, 0.34, 10),
+          new THREE.MeshStandardMaterial({ color: 0xF8FAFC, metalness: 0.4, roughness: 0.3 })
+        );
+        stalk.position.copy(surfacePt).addScaledVector(normal, 0.17);
         stalk.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), normal);
         globeGroup.add(stalk);
       });
+    }
+
+    function createAnimatedPenguin(scale = 1) {
+      const root = new THREE.Group();
+      root.scale.setScalar(scale);
+
+      const darkMat = new THREE.MeshStandardMaterial({ color: 0x0F172A, roughness: 0.45 });
+      const whiteMat = new THREE.MeshStandardMaterial({ color: 0xF8FAFC, roughness: 0.5 });
+      const beakMat = new THREE.MeshStandardMaterial({ color: 0xF97316, roughness: 0.35 });
+      const goldMat = new THREE.MeshStandardMaterial({ color: 0xFACC15, roughness: 0.4 });
+
+      // Torso + Belly
+      const body = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.23, 0.46, 16), darkMat);
+      body.position.y = 0.28;
+      root.add(body);
+
+      const belly = new THREE.Mesh(new THREE.SphereGeometry(0.17, 14, 14), whiteMat);
+      belly.scale.set(0.86, 1.25, 0.72);
+      belly.position.set(0, 0.27, 0.09);
+      root.add(belly);
+
+      const collar = new THREE.Mesh(new THREE.TorusGeometry(0.14, 0.028, 8, 18, Math.PI), goldMat);
+      collar.rotation.x = Math.PI / 2;
+      collar.rotation.z = Math.PI;
+      collar.position.set(0, 0.47, 0.05);
+      root.add(collar);
+
+      // Articulated Head
+      const head = new THREE.Group();
+      head.position.set(0, 0.55, 0.02);
+      const skull = new THREE.Mesh(new THREE.SphereGeometry(0.155, 16, 16), darkMat);
+      head.add(skull);
+
+      [-0.062, 0.062].forEach(ex => {
+        const eyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.032, 10, 10), whiteMat);
+        eyeWhite.position.set(ex, 0.03, 0.125);
+        head.add(eyeWhite);
+        const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.018, 8, 8), darkMat);
+        pupil.position.set(ex, 0.03, 0.148);
+        head.add(pupil);
+      });
+
+      const beak = new THREE.Mesh(new THREE.ConeGeometry(0.048, 0.16, 8), beakMat);
+      beak.rotation.x = Math.PI / 2;
+      beak.position.set(0, -0.01, 0.185);
+      head.add(beak);
+      root.add(head);
+
+      // Articulated Flapping Wings (pivoting at shoulder)
+      function makeWing(side) {
+        const pivot = new THREE.Group();
+        pivot.position.set(side * 0.18, 0.42, 0.01);
+        const wingMesh = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.28, 0.12), darkMat);
+        wingMesh.position.set(side * 0.03, -0.12, 0);
+        wingMesh.rotation.z = side * -0.18;
+        pivot.add(wingMesh);
+        root.add(pivot);
+        return pivot;
+      }
+      const leftWing = makeWing(-1);
+      const rightWing = makeWing(1);
+
+      // Articulated Orange Waddling Feet
+      function makeFoot(side) {
+        const pivot = new THREE.Group();
+        pivot.position.set(side * 0.09, 0.05, 0.02);
+        const footMesh = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.045, 0.16), beakMat);
+        footMesh.position.set(0, -0.02, 0.04);
+        pivot.add(footMesh);
+        root.add(pivot);
+        return pivot;
+      }
+      const leftFoot = makeFoot(-1);
+      const rightFoot = makeFoot(1);
+
+      return { group: root, head, leftWing, rightWing, leftFoot, rightFoot };
     }
 
     function buildPolesDiorama() {
@@ -638,38 +727,44 @@
       seaWaterMesh.position.y = -1.45;
       polesGroup.add(seaWaterMesh);
 
-      // LEFT: Kutub Utara / Arktik (Floating sea ice + Polar Bear)
+      // LEFT: Kutub Utara / Arktik (Floating sea ice + Animated Polar Bear)
       const floe = new THREE.Mesh(
-        new THREE.CylinderGeometry(1.7, 1.4, 0.35, 10),
+        new THREE.CylinderGeometry(1.7, 1.4, 0.35, 12),
         new THREE.MeshStandardMaterial({ color: 0xF8FAFC, roughness: 0.4 })
       );
       floe.position.set(-2.3, -1.02, 0);
       floe.userData = { fact: '🐻‍❄️ ARKTIK (Kutub Utara): Lautan es mengapung, tidak ada benua daratan di bawahnya!' };
       polesGroup.add(floe);
+      arcticFloeMesh = floe;
       arcticIceMeshes.push(floe);
       clickablePins.push(floe);
 
-      // Stylized Polar Bear (White Cube Animal)
+      // Articulated Polar Bear
       const bear = new THREE.Group();
-      const bBody = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.48, 0.48), new THREE.MeshStandardMaterial({ color: 0xFFFFFF }));
-      bBody.position.y = 0.25;
+      const bBody = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.46, 0.46), new THREE.MeshStandardMaterial({ color: 0xFFFFFF }));
+      bBody.position.y = 0.28;
       bear.add(bBody);
-      const bHead = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.34, 0.36), new THREE.MeshStandardMaterial({ color: 0xFFFFFF }));
-      bHead.position.set(0.46, 0.42, 0);
+      const bHead = new THREE.Group();
+      const bSkull = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.32, 0.34), new THREE.MeshStandardMaterial({ color: 0xFFFFFF }));
+      bHead.add(bSkull);
+      bHead.position.set(0.45, 0.42, 0);
       bear.add(bHead);
-      bear.position.set(-2.3, -0.82, 0);
+      bear.position.set(-2.3, -0.84, 0);
+      bear.userData = { fact: '🐻‍❄️ Beruang Kutub hanya hidup di es lautan Arktik (Kutub Utara)!' };
       polesGroup.add(bear);
+      clickablePins.push(bear);
+      arcticBearRig = { group: bear, head: bHead };
 
-      // RIGHT: Kutub Selatan / Antartika (Solid Rock Bedrock + Glacier + Penguin)
+      // RIGHT: Kutub Selatan / Antartika (Solid Rock Bedrock + Glacier + Waddling Penguins)
       const rockBase = new THREE.Mesh(
-        new THREE.CylinderGeometry(1.9, 2.2, 1.1, 12),
+        new THREE.CylinderGeometry(1.9, 2.2, 1.1, 14),
         new THREE.MeshStandardMaterial({ color: 0x57534E, roughness: 0.9 })
       );
       rockBase.position.set(2.3, -1.35, 0);
       polesGroup.add(rockBase);
 
       const glacier = new THREE.Mesh(
-        new THREE.CylinderGeometry(1.7, 1.9, 0.65, 12),
+        new THREE.CylinderGeometry(1.75, 1.95, 0.65, 14),
         new THREE.MeshStandardMaterial({ color: 0xE0F2FE, roughness: 0.3 })
       );
       glacier.position.set(2.3, -0.5, 0);
@@ -678,20 +773,29 @@
       antarcticGlacierMeshes.push(glacier);
       clickablePins.push(glacier);
 
-      // Stylized Penguin (Black back + White belly + Orange beak)
-      const peng = new THREE.Group();
-      const pBody = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.56, 12), new THREE.MeshStandardMaterial({ color: 0x0F172A }));
-      pBody.position.y = 0.28;
-      peng.add(pBody);
-      const pBelly = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.4, 0.22), new THREE.MeshStandardMaterial({ color: 0xFFFFFF }));
-      pBelly.position.set(0, 0.26, 0.1);
-      peng.add(pBelly);
-      const beak = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.16, 6), new THREE.MeshStandardMaterial({ color: 0xF97316 }));
-      beak.rotation.x = Math.PI / 2;
-      beak.position.set(0, 0.45, 0.22);
-      peng.add(beak);
-      peng.position.set(2.2, -0.15, 0.2);
-      polesGroup.add(peng);
+      // Two Lively Animated Penguins on Antartika
+      const pengAdult = createAnimatedPenguin(1.0);
+      pengAdult.group.position.set(2.3, -0.17, 0.4);
+      pengAdult.group.userData = {
+        type: 'penguin',
+        fact: '🐧 Hop-hop! Penguin Kaisar berjalan & melompat riang di benua daratan es Antartika!'
+      };
+      polesGroup.add(pengAdult.group);
+      clickablePins.push(pengAdult.group);
+
+      const pengChick = createAnimatedPenguin(0.68);
+      pengChick.group.position.set(1.85, -0.17, -0.35);
+      pengChick.group.userData = {
+        type: 'penguin',
+        fact: '🐧 Cicit penguin ikut melompat & mengepakkan sayap di Kutub Selatan!'
+      };
+      polesGroup.add(pengChick.group);
+      clickablePins.push(pengChick.group);
+
+      polarPenguins = [
+        { rig: pengAdult, phase: 0, speed: 0.95, rx: 0.88, rz: 0.68, jumpPeriod: 3.6 },
+        { rig: pengChick, phase: 2.35, speed: 1.08, rx: 0.58, rz: 0.48, jumpPeriod: 2.8 }
+      ];
 
       // Tiny Coastal House in middle edge showing sea level danger!
       const coastBase = new THREE.Mesh(
@@ -743,7 +847,7 @@
       const data = CONTINENTS[contId];
       if (!data) return;
 
-      const vec = canvasXYtoSphereVec(data.px, data.py, 2.85);
+      const vec = PKBM_EARTH.latLonToVec3(data.lat, data.lon, 2.85);
       const r = vec.length();
       const targetPhi = Math.max(0.2, Math.min(Math.PI - 0.2, Math.acos(vec.y / r)));
       const targetTheta = Math.atan2(vec.x, vec.z);
@@ -822,11 +926,21 @@
           mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
           mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
           raycaster.setFromCamera(mouse, camera);
-          const hits = raycaster.intersectObjects(clickablePins, false);
+          const visibleTargets = clickablePins.filter(o => PKBM_EARTH.isObjectVisible(o));
+          const hits = raycaster.intersectObjects(visibleTargets, true);
           if (hits.length > 0) {
-            const d = hits[0].object.userData;
-            if (d.continentId) focusContinent(d.continentId);
-            else if (d.fact) { show3DToast(d.fact); playTone(600, 'triangle', 0.1); }
+            let obj = hits[0].object;
+            while (obj && (!obj.userData || (!obj.userData.continentId && !obj.userData.fact))) {
+              obj = obj.parent;
+            }
+            const d = (obj && obj.userData) || {};
+            if (d.continentId) {
+              focusContinent(d.continentId);
+            } else if (d.fact) {
+              if (d.type === 'penguin') penguinBoostUntil = Date.now() + 1800;
+              show3DToast(d.fact);
+              playTone(d.type === 'penguin' ? 760 : 600, 'triangle', 0.12);
+            }
           }
         }
       }
@@ -848,6 +962,7 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      const t = animClock.getElapsedTime();
       if (isAutoRotate && !isDragging) targetSpherical.theta += 0.003;
 
       spherical.theta += (targetSpherical.theta - spherical.theta) * 0.08;
@@ -858,6 +973,65 @@
       camera.position.y = spherical.radius * Math.cos(spherical.phi);
       camera.position.z = spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta);
       camera.lookAt(0, 0, 0);
+
+      if (globeGroup && globeGroup.visible) {
+        if (globeCloudMesh) globeCloudMesh.rotation.y += 0.0007;
+        continentPinHalos.forEach((halo, idx) => {
+          const pulse = 1 + 0.16 * Math.sin(t * 2.8 + idx);
+          halo.scale.set(pulse, pulse, 1);
+        });
+      }
+
+      if (polesGroup && polesGroup.visible) {
+        // Gentle floating bob for Arctic sea ice floe & pacing Polar Bear
+        if (arcticFloeMesh) {
+          arcticFloeMesh.position.y = -1.02 + Math.sin(t * 1.45) * 0.035;
+          const floeTopY = arcticFloeMesh.position.y + 0.175 * arcticFloeMesh.scale.y;
+          if (arcticBearRig) {
+            arcticBearRig.group.position.x = -2.3 + Math.sin(t * 0.7) * 0.25;
+            arcticBearRig.group.position.y = floeTopY;
+            arcticBearRig.group.rotation.y = Math.cos(t * 0.7) > 0 ? 0.15 : Math.PI - 0.15;
+            arcticBearRig.head.rotation.y = Math.sin(t * 1.9) * 0.25;
+            arcticBearRig.head.rotation.z = Math.sin(t * 1.5) * 0.06;
+          }
+        }
+
+        // Lively waddling, hopping & wing-flapping Penguins on Antartika
+        const glacier = antarcticGlacierMeshes[0];
+        const glacierTopY = glacier ? (-0.5 + 0.325 * glacier.scale.y) : -0.175;
+        const boostActive = Date.now() < penguinBoostUntil;
+
+        polarPenguins.forEach(p => {
+          const spd = p.speed * (boostActive ? 1.8 : 1);
+          const ang = t * spd + p.phase;
+          const nextAng = ang + 0.05;
+          const x = 2.3 + Math.cos(ang) * p.rx;
+          const z = 0.05 + Math.sin(ang) * p.rz;
+          const nx = 2.3 + Math.cos(nextAng) * p.rx;
+          const nz = 0.05 + Math.sin(nextAng) * p.rz;
+
+          const cyc = (t + p.phase) % p.jumpPeriod;
+          const jumpDur = 0.65;
+          const hop = (cyc < jumpDur || boostActive)
+            ? Math.abs(Math.sin((boostActive ? t * 7 : (cyc / jumpDur) * Math.PI))) * (boostActive ? 0.36 : 0.28)
+            : 0;
+
+          const rig = p.rig;
+          rig.group.position.set(x, glacierTopY + hop, z);
+          rig.group.rotation.y = Math.atan2(nx - x, nz - z);
+          rig.group.rotation.z = Math.sin(t * 8.5 + p.phase) * 0.14; // penguin waddle tilt
+
+          const stepSwing = Math.sin(t * 8.5 + p.phase) * 0.45;
+          rig.leftFoot.rotation.x = stepSwing;
+          rig.rightFoot.rotation.x = -stepSwing;
+
+          const flap = Math.abs(Math.sin(t * (hop > 0.02 ? 14 : 6) + p.phase)) * (hop > 0.02 ? 0.95 : 0.42);
+          rig.leftWing.rotation.z = -flap - 0.15;
+          rig.rightWing.rotation.z = flap + 0.15;
+          rig.head.rotation.x = Math.sin(t * 4.2 + p.phase) * 0.12;
+          rig.head.rotation.y = Math.sin(t * 2.5 + p.phase) * 0.22;
+        });
+      }
 
       if (renderer && scene && camera) renderer.render(scene, camera);
     }
