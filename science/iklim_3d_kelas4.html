@@ -345,6 +345,7 @@
 
   <script src="../assets/js/three.min.js"></script>
   <script src="../assets/js/earth_globe.js"></script>
+  <script src="../assets/js/space_intro.js"></script>
   <script>
     let audioCtx = null;
     function getAudioCtx() {
@@ -1021,6 +1022,14 @@
         document.getElementById('studentSelect').value = saved;
       }
       init3DScene();
+      if (window.PKBM_SPACE_INTRO) {
+        window.PKBM_SPACE_INTRO.mount({
+          badge: '🌦️ PENJELAJAH IKLIM: ACIP, KINANTI & ALISYA (KELAS 4)',
+          title: 'Iklim & Perubahannya',
+          description: 'Dari ketinggian orbit Stasiun Luar Angkasa, tataplah sabuk Khatulistiwa Nusantara dan selimut awan Bumi sebelum memulai simulasi iklim 3D!',
+          onEnter: onResize
+        });
+      }
     });
   </script>
   <script src="../assets/js/pkbm_sync.js"></script>

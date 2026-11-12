@@ -772,8 +772,7 @@
       ctx.fillStyle = "#CBD5E1";
       ctx.fillRect(tx - 4, ty - 120, 8, 120);
 
-      // Rotor Blades
-      const windVal = parseInt(document.getElementById('windSlider').value);
+      // Rotor Blades (uses windVal read above)
       turbineAngle += windVal * 0.003;
 
       ctx.save();
@@ -924,6 +923,20 @@
         setTimeout(() => t.style.display = 'none', 3000);
       });
     }
+  </script>
+  <script src="../assets/js/three.min.js"></script>
+  <script src="../assets/js/earth_globe.js"></script>
+  <script src="../assets/js/space_intro.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.PKBM_SPACE_INTRO) {
+        window.PKBM_SPACE_INTRO.mount({
+          badge: '🏙️ TIM SMART CITY: SHAN, AULYA, HENDRA & SELVI (KELAS 6)',
+          title: 'Smart City: Energi Bersih Bumi',
+          description: 'Dari ketinggian 400 KM di orbit Stasiun Luar Angkasa, tataplah Bumi kita yang butuh energi bersih sebelum mendarat mengatur kota masa depan!',
+        });
+      }
+    });
   </script>
 </body>
 </html>

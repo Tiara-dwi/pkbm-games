@@ -323,6 +323,8 @@
   </div>
 
   <script src="../assets/js/three.min.js"></script>
+  <script src="../assets/js/earth_globe.js"></script>
+  <script src="../assets/js/space_intro.js"></script>
   <script>
     let audioCtx = null;
     function getAudioCtx() {
@@ -462,11 +464,12 @@
       const h = container.clientHeight || 575;
 
       scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
+      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 120);
       renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
       renderer.setSize(w, h);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+      if (window.PKBM_EARTH) scene.add(PKBM_EARTH.createStarfield(300));
       scene.add(new THREE.AmbientLight(0xffffff, 0.85));
       const key = new THREE.DirectionalLight(0xfffbeb, 1.25);
       key.position.set(10, 14, 12);
@@ -953,6 +956,14 @@
     window.addEventListener('DOMContentLoaded', () => {
       if (window.PKBM_SYNC) window.PKBM_SYNC.setStudent('ardiansyah', 'Ardiansyah', 'Kelas 5');
       init3DScene();
+      if (window.PKBM_SPACE_INTRO) {
+        window.PKBM_SPACE_INTRO.mount({
+          badge: '🪐 DUTA BUMI: ARDIANSYAH (KELAS 5)',
+          title: 'Ayo Berkenalan dengan Bumi Kita',
+          description: 'Dari heningnya kosmos, bumi tampak seperti permata biru yang damai. Tataplah selimut awan dan keajaiban yang melindungi kita sebelum memulai penyelidikan!',
+          onEnter: onResize
+        });
+      }
     });
   </script>
   <script src="../assets/js/pkbm_sync.js"></script>

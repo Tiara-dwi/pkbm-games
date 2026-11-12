@@ -348,6 +348,7 @@
 
   <script src="../assets/js/three.min.js"></script>
   <script src="../assets/js/earth_globe.js"></script>
+  <script src="../assets/js/space_intro.js"></script>
   <script>
     let audioCtx = null;
     function getAudioCtx() {
@@ -1167,6 +1168,14 @@
         document.getElementById('studentSelect').value = saved;
       }
       init3DScene();
+      if (window.PKBM_SPACE_INTRO) {
+        window.PKBM_SPACE_INTRO.mount({
+          badge: '🧭 EKSPEDISI DUNIA: SHAN, SELVI, AULYA & HENDRA (KELAS 6)',
+          title: 'Pelesir Keliling Dunia',
+          description: 'Dari orbit Stasiun Luar Angkasa, 6 benua dan dua kutub es Bumi tampak menyatu. Siapkan kompasmu sebelum menyelidiki benua serta penguin Antartika!',
+          onEnter: onResize
+        });
+      }
     });
   </script>
   <script src="../assets/js/pkbm_sync.js"></script>
