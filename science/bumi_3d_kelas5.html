@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astra AI 3D: Lapisan Bumi, Ozon & Siklus Air (IPAS Kelas 5) — PKBM Penerus Bangsa</title>
+  <style>
+    :root {
+      --primary: #0284C7;
+      --indigo: #4F46E5;
+      --green: #16A34A;
+      --bg: #F1F5F9;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border: #E2E8F0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.5; padding: 16px;
+    }
+    .app-shell { max-width: 1260px; margin: 0 auto; }
+
+    .topbar {
+      background: white; border-radius: 18px; padding: 14px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px; border: 1.5px solid var(--border);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04); margin-bottom: 18px;
+    }
+    .brand-left { display: flex; align-items: center; gap: 12px; }
+    .brand-icon {
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, #0284C7, #4F46E5);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: white; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+    .brand-title h1 { font-size: 1.2rem; font-weight: 900; color: #0F172A; }
+    .brand-title p { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+
+    .topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .student-badge {
+      background: #EFF6FF; border: 1.5px solid #BFDBFE; color: #1E40AF;
+      padding: 6px 12px; border-radius: 12px; font-size: 0.84rem; font-weight: 800;
+    }
+    .stat-pill {
+      background: #0F172A; color: #F8FAFC; padding: 7px 14px; border-radius: 12px;
+      font-size: 0.84rem; font-weight: 800; display: flex; align-items: center; gap: 8px;
+    }
+    .nav-btn {
+      background: white; border: 1.5px solid var(--border); padding: 7px 14px;
+      border-radius: 12px; text-decoration: none; color: #334155; font-weight: 800; font-size: 0.84rem;
+    }
+    .nav-btn:hover { background: #F8FAFC; border-color: #94A3B8; }
+
+    .astra-studio {
+      display: grid; grid-template-columns: 1.28fr 0.92fr; gap: 20px; align-items: start;
+    }
+    @media (max-width: 980px) { .astra-studio { grid-template-columns: 1fr; } }
+
+    .astra-viewport-wrap {
+      background: radial-gradient(circle at 50% 38%, #1E1B4B 0%, #0B0F19 75%, #020617 100%);
+      border-radius: 24px; border: 2px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 20px 45px rgba(2, 6, 23, 0.4), inset 0 0 35px rgba(56, 189, 248, 0.16);
+      overflow: hidden; position: relative; height: 575px; touch-action: none;
+    }
+    #astra-canvas { width: 100%; height: 100%; display: block; cursor: grab; }
+    #astra-canvas:active { cursor: grabbing; }
+
+    .hud-top {
+      position: absolute; top: 14px; left: 14px; right: 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 8px; pointer-events: none; z-index: 10;
+    }
+    .hud-mode-group {
+      pointer-events: auto; display: flex; gap: 5px;
+      background: rgba(15, 23, 42, 0.86); backdrop-filter: blur(12px);
+      padding: 4px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.16);
+    }
+    .hud-pill-btn {
+      background: transparent; border: none; color: #94A3B8; font-weight: 800;
+      font-size: 0.76rem; padding: 6px 11px; border-radius: 10px; cursor: pointer; transition: all 0.2s;
+    }
+    .hud-pill-btn:hover { color: white; background: rgba(255,255,255,0.08); }
+    .hud-pill-btn.active {
+      background: linear-gradient(135deg, #0284C7, #4F46E5);
+      color: white; box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+    }
+    .hud-status-badge {
+      pointer-events: auto; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(10px);
+      border: 1px solid rgba(56, 189, 248, 0.45); color: #7DD3FC;
+      font-size: 0.78rem; font-weight: 900; padding: 6px 12px; border-radius: 20px;
+    }
+
+    .hud-3d-toast {
+      position: absolute; top: 64px; left: 50%; transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.94); border: 1.5px solid #38BDF8;
+      color: #F0F9FF; padding: 6px 14px; border-radius: 14px; font-size: 0.82rem;
+      font-weight: 800; z-index: 12; pointer-events: none; opacity: 0; transition: opacity 0.25s; white-space: nowrap;
+    }
+    .hud-3d-toast.show { opacity: 1; }
+
+    .hud-bottom {
+      position: absolute; bottom: 12px; left: 12px; right: 12px;
+      display: flex; flex-direction: column; gap: 8px; pointer-events: none; z-index: 10;
+    }
+    .controls-panel {
+      pointer-events: auto; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
+      padding: 10px 14px; color: #E2E8F0;
+    }
+    .explode-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .explode-bar input[type="range"] { flex: 1; accent-color: #38BDF8; cursor: pointer; }
+    .cycle-bar { display: none; justify-content: center; gap: 8px; flex-wrap: wrap; }
+
+    .hud-toolbar {
+      pointer-events: auto; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 8px;
+    }
+    .tool-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tool-btn {
+      background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2); color: #E2E8F0;
+      font-size: 0.76rem; font-weight: 800; padding: 7px 11px; border-radius: 11px; cursor: pointer;
+    }
+    .tool-btn:hover { background: rgba(56, 189, 248, 0.35); border-color: #38BDF8; color: white; }
+    .tool-btn.active-forest { background: #16A34A; border-color: #86EFAC; color: white; }
+    .tool-btn.active-barren { background: #DC2626; border-color: #FCA5A5; color: white; }
+    .gesture-hint {
+      background: rgba(15, 23, 42, 0.78); color: #94A3B8; font-size: 0.72rem;
+      font-weight: 700; padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Right Inquiry Card */
+    .inquiry-panel {
+      background: white; border-radius: 24px; border: 2px solid var(--border);
+      padding: 22px; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+      display: flex; flex-direction: column; gap: 15px;
+    }
+    .mission-dots { display: flex; gap: 8px; }
+    .mission-dot {
+      flex: 1; height: 8px; border-radius: 8px; background: #E2E8F0; cursor: pointer; transition: all 0.2s;
+    }
+    .mission-dot.active { background: #0284C7; transform: scaleY(1.25); }
+    .mission-dot.done { background: #10B981; }
+
+    .quest-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .quest-badge {
+      background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE;
+      padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 800;
+    }
+    .quest-title { font-size: 1.15rem; font-weight: 900; color: #0F172A; margin-top: 6px; }
+
+    .layer-pills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .layer-pill {
+      padding: 8px; border-radius: 12px; text-align: center; font-size: 0.76rem; font-weight: 800;
+      border: 1.5px solid #E2E8F0; background: #F8FAFC; color: #334155; cursor: pointer;
+    }
+    .layer-pill.active { background: #EFF6FF; border-color: #0284C7; color: #0369A1; }
+
+    .quest-question {
+      font-size: 0.96rem; font-weight: 700; color: #1E293B;
+      background: #EFF6FF; border-left: 4px solid #0284C7;
+      padding: 12px 14px; border-radius: 10px;
+    }
+    .hint-box {
+      background: #FFFBEB; border: 1.5px solid #FDE68A; color: #92400E;
+      font-size: 0.84rem; font-weight: 600; padding: 10px 14px; border-radius: 12px; display: none;
+    }
+
+    .options-list { display: flex; flex-direction: column; gap: 10px; }
+    .opt-btn {
+      width: 100%; text-align: left; background: white; border: 2px solid #E2E8F0;
+      padding: 12px 16px; border-radius: 14px; font-size: 0.94rem; font-weight: 800;
+      color: #1E293B; cursor: pointer; transition: all 0.2s;
+    }
+    .opt-btn:hover:not(:disabled) { border-color: #0284C7; background: #EFF6FF; transform: translateX(3px); }
+    .opt-btn.correct { background: #ECFDF5; border-color: #10B981; color: #065F46; }
+    .opt-btn.wrong { background: #FEF2F2; border-color: #EF4444; color: #991B1B; }
+
+    .feedback-box {
+      padding: 12px 14px; border-radius: 14px; font-size: 0.88rem; font-weight: 700; display: none; line-height: 1.5;
+    }
+    .feedback-box.ok { background: #ECFDF5; border: 1.5px solid #10B981; color: #065F46; display: block; }
+    .feedback-box.err { background: #FEF2F2; border: 1.5px solid #FCA5A5; color: #991B1B; display: block; }
+
+    .quest-footer {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      padding-top: 8px; border-top: 1px solid var(--border);
+    }
+    .btn-secondary {
+      background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155;
+      padding: 9px 14px; border-radius: 12px; font-weight: 800; font-size: 0.84rem; cursor: pointer;
+    }
+    .btn-next {
+      background: linear-gradient(135deg, #0284C7, #4F46E5);
+      border: none; color: white; padding: 10px 18px; border-radius: 12px;
+      font-weight: 900; font-size: 0.88rem; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+    .btn-next:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 16px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      background: white; border-radius: 26px; padding: 30px; max-width: 460px; width: 100%;
+      text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,0.3); border: 3px solid #0284C7;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="brand-left">
+        <div class="brand-icon">🌏</div>
+        <div class="brand-title">
+          <h1>Astra AI 3D: Lapisan Bumi, Ozon & Siklus Air</h1>
+          <p>IPAS Kelas 5 SD (Bab 4) • Ayo Berkenalan dengan Bumi Kita</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="student-badge">🌋 Ilmuwan: Ardiansyah (Kls 5)</div>
+        <div class="stat-pill">
+          <span>⭐ Skor: <strong id="scoreVal" style="color:#7DD3FC;">0</strong></span>
+          <span>|</span>
+          <span>🔥 Streak: <strong id="streakVal" style="color:#FBBF24;">0</strong></span>
+        </div>
+        <a href="index.html" class="nav-btn">🔬 Lab Sains</a>
+        <a href="../index.html" class="nav-btn">🏠 Beranda</a>
+      </div>
+    </div>
+
+    <div class="astra-studio">
+      <div class="astra-viewport-wrap" id="astraViewport">
+        <canvas id="astra-canvas"></canvas>
+
+        <div class="hud-top">
+          <div class="hud-mode-group">
+            <button class="hud-pill-btn active" id="view-layers" onclick="switchBumiView('layers')">🪐 3 Lapisan & Ozon</button>
+            <button class="hud-pill-btn" id="view-cycle" onclick="switchBumiView('cycle')">🌧️ Siklus Air & Erosi</button>
+          </div>
+          <div class="hud-status-badge" id="hudStatusBadge">Klik lapisan atau geser pengupas 3D!</div>
+        </div>
+
+        <div class="hud-3d-toast" id="hud3DToast">Lapisan Litosfer: Batuan Kerak Bumi</div>
+
+        <div class="hud-bottom">
+          <div class="controls-panel">
+            <!-- Layers Explode Slider -->
+            <div class="explode-bar" id="explodeBar">
+              <span style="font-size:0.78rem; font-weight:800;">💥 Kupas Lapisan Bumi 3D:</span>
+              <input type="range" id="explodeSlider" min="0" max="100" value="25" oninput="onExplodeSlider(this.value)">
+              <span id="lblExplode" style="font-size:0.78rem; font-weight:900; color:#7DD3FC; min-width:38px;">25%</span>
+            </div>
+            <!-- Water Cycle & Forest Erosion Toggle -->
+            <div class="cycle-bar" id="cycleBar">
+              <button class="tool-btn active-forest" id="btnForestOn" onclick="setVegetation(true)">🌳 Lereng Berhutan (Aman Erosi)</button>
+              <button class="tool-btn" id="btnForestOff" onclick="setVegetation(false)">🪓 Lereng Gundul (Bahaya Erosi!)</button>
+            </div>
+          </div>
+
+          <div class="hud-toolbar">
+            <div class="tool-group">
+              <button class="tool-btn" onclick="toggleAutoRotate()">🔄 Putar: <strong id="lblRotate">ON</strong></button>
+              <button class="tool-btn" onclick="resetCamera()">🎯 Reset Kamera</button>
+            </div>
+            <div class="gesture-hint">👆 Geser 360° • 🔍 Zoom • 🎯 Klik Lapisan 3D</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inquiry-panel">
+        <div class="mission-dots" id="missionDots"></div>
+
+        <div>
+          <div class="quest-header">
+            <span class="quest-badge" id="questStepBadge">Investigasi 1 / 5</span>
+            <button class="btn-secondary" style="padding:4px 10px; font-size:0.78rem;" onclick="toggleHint()">💡 Catatan Lapangan</button>
+          </div>
+          <h2 class="quest-title" id="questTitle">Mengenal Litosfer Daratan</h2>
+        </div>
+
+        <div class="layer-pills">
+          <button class="layer-pill active" id="pill-litosfer" onclick="focusLayer('litosfer')">⛰️ Litosfer<br><small>Daratan & Batu</small></button>
+          <button class="layer-pill" id="pill-hidrosfer" onclick="focusLayer('hidrosfer')">🌊 Hidrosfer<br><small>71% Perairan</small></button>
+          <button class="layer-pill" id="pill-atmosfer" onclick="focusLayer('atmosfer')">🛡️ Atmosfer<br><small>Udara & Ozon</small></button>
+        </div>
+
+        <div class="quest-question" id="questQuestion"></div>
+        <div class="hint-box" id="questHint"></div>
+        <div class="options-list" id="optionsList"></div>
+        <div class="feedback-box" id="feedbackBox"></div>
+
+        <div class="quest-footer">
+          <button class="btn-secondary" onclick="prevMission()" id="btnPrev">← Sebelumnya</button>
+          <button class="btn-next" onclick="nextMission()" id="btnNext" disabled>Investigasi Berikutnya →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Victory Modal -->
+  <div class="modal-backdrop" id="victoryModal">
+    <div class="modal-card">
+      <div style="font-size:3.5rem; margin-bottom:8px;">🌏🌋🏆</div>
+      <h2 style="font-size:1.5rem; font-weight:900; color:#0F172A; margin-bottom:8px;">Ahli Kebumian Kelas 5!</h2>
+      <p style="color:#475569; font-size:0.95rem; margin-bottom:18px;">
+        Luar biasa Ardiansyah! Kamu menguasai struktur Litosfer, Hidrosfer, Atmosfer & Lapisan Ozon, serta cara kerja Siklus Air dan pencegahan Erosi!
+      </p>
+      <div style="background:#EFF6FF; border:2px solid #0284C7; border-radius:16px; padding:14px; margin-bottom:20px;">
+        <div style="font-size:0.85rem; color:#1E40AF; font-weight:700;">Total Skor Eksplorasi 3D</div>
+        <div style="font-size:2rem; font-weight:900; color:#0284C7;" id="finalScoreText">500 / 500</div>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button class="btn-secondary" onclick="restartGame()">🔄 Main Ulang</button>
+        <a href="index.html" class="btn-next" style="text-decoration:none; display:inline-flex; align-items:center;">Kembali ke Lab Sains →</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/three.min.js"></script>
+  <script>
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      return audioCtx;
+    }
+    function playTone(freq, type = 'sine', dur = 0.13, gainVal = 0.11) {
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      try {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        g.gain.setValueAtTime(gainVal, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(); osc.stop(ctx.currentTime + dur);
+      } catch (e) {}
+    }
+    function playSuccessChime() {
+      playTone(523.25, 'triangle', 0.12, 0.14);
+      setTimeout(() => playTone(659.25, 'triangle', 0.14, 0.14), 110);
+      setTimeout(() => playTone(783.99, 'triangle', 0.22, 0.15), 220);
+    }
+
+    const MISSIONS = [
+      {
+        title: 'Investigasi 1: Lapisan Daratan (Litosfer)',
+        view: 'layers',
+        focus: 'litosfer',
+        question: 'Lapisan kerak batuan padat tempat kita berpijak, membangun rumah, serta terbentuknya gunung tertinggi di Indonesia (Puncak Jayawijaya) disebut...',
+        hint: 'Ingat awalan "Lito" artinya batu/daratan! Coba klik tombol atau model Litosfer di 3D!',
+        options: [
+          { text: 'A. Litosfer', correct: true, exp: 'Tepat sekali! Litosfer berasal dari kata lithos (batuan) — membentuk dataran tinggi, pegunungan, dan lembah.' },
+          { text: 'B. Hidrosfer', correct: false, exp: 'Hidro artinya air (samudra, danau, sungai), bukan lapisan daratan batu.' },
+          { text: 'C. Atmosfer', correct: false, exp: 'Atmos artinya uap/udara yang menyelimuti bagian luar angkasa Bumi.' },
+          { text: 'D. Stratosfer', correct: false, exp: 'Stratosfer adalah bagian dari lapisan udara Atmosfer tempat Lapisan Ozon berada.' }
+        ]
+      },
+      {
+        title: 'Investigasi 2: Selimut Air Bumi (Hidrosfer)',
+        view: 'layers',
+        focus: 'hidrosfer',
+        question: 'Sekitar 71% permukaan Bumi ditutupi oleh perairan (samudra, laut, sungai, hingga Palung Mariana terdalam di Bumi). Lapisan perairan ini disebut...',
+        hint: 'Amati lapisan biru lautan mengkilap di bola Bumi 3D kita! Nama awalan kata air adalah "Hidro-"!',
+        options: [
+          { text: 'A. Hidrosfer', correct: true, exp: 'Benar! Hidrosfer mencakup seluruh air di Bumi—baik lautan luas maupun air sungai dan salju kutub.' },
+          { text: 'B. Litosfer', correct: false, exp: 'Litosfer adalah daratan dan batuan kerak Bumi (hanya ±29% permukaan).' },
+          { text: 'C. Atmosfer', correct: false, exp: 'Atmosfer adalah lapisan gas udara, bukan samudra air.' },
+          { text: 'D. Magma Inti', correct: false, exp: 'Magma berada di dalam perut Bumi yang sangat panas.' }
+        ]
+      },
+      {
+        title: 'Investigasi 3: Perisai Atmosfer & Lapisan Ozon',
+        view: 'layers',
+        focus: 'atmosfer',
+        question: 'Di dalam Atmosfer terdapat LAPISAN OZON (O₃) seperti perisai ungu di model 3D. Apa fungsi sangat penting dari Lapisan Ozon bagi kehidupan manusia?',
+        hint: 'Lihat garis ungu sinar UV yang memantul di kulit terluar Bumi 3D! Ozon menyaring sinar berbahaya dari Matahari!',
+        options: [
+          { text: 'A. Menyerap & menyaring radiasi sinar Ultraviolet (UV) berbahaya dari Matahari', correct: true, exp: 'Hebat! Tanpa Ozon, sinar UV ekstrem dapat merusak kulit, mata, dan tanaman di Bumi!' },
+          { text: 'B. Membekukan seluruh air laut di Khatulistiwa', correct: false, exp: 'Ozon menjaga iklim tetap aman, bukan membekukan lautan.' },
+          { text: 'C. Menghentikan tiupan angin di permukaan Bumi', correct: false, exp: 'Angin tetap berhembus di lapisan Troposfer terbawah.' },
+          { text: 'D. Menghasilkan lava dari gunung berapi', correct: false, exp: 'Lava berasal dari magma di dalam perut Bumi (Litosfer/Mantel).' }
+        ]
+      },
+      {
+        title: 'Investigasi 4: Urutan Siklus Air 3D',
+        view: 'cycle',
+        focus: 'hidrosfer',
+        question: 'Amati Diorama 3D Siklus Air! Urutan yang benar saat air laut naik menjadi uap karena panas Matahari, lalu menjadi awan, dan jatuh ke gunung adalah...',
+        hint: 'Evaporasi = penguapan (naik), Kondensasi = pengembunan jadi awan, Presipitasi = turunnya titik hujan!',
+        options: [
+          { text: 'A. Evaporasi → Kondensasi → Presipitasi', correct: true, exp: 'Mantap! Air menguap (Evaporasi), mengembun jadi awan (Kondensasi), lalu turun hujan (Presipitasi)!' },
+          { text: 'B. Presipitasi → Evaporasi → Kondensasi', correct: false, exp: 'Presipitasi adalah turunnya hujan, bukan langkah awal penguapan laut.' },
+          { text: 'C. Kondensasi → Presipitasi → Evaporasi', correct: false, exp: 'Awan tidak bisa terbentuk sebelum air laut menguap (Evaporasi) lebih dulu!' },
+          { text: 'D. Erosi → Litosfer → Kondensasi', correct: false, exp: 'Erosi adalah pengikisan tanah oleh aliran air.' }
+        ]
+      },
+      {
+        title: 'Investigasi 5: Melawan Erosi Lereng Gunung',
+        view: 'cycle',
+        focus: 'litosfer',
+        question: 'Ubah lereng gunung 3D menjadi "Lereng Gundul" dan amati tanah yang tergerus air hujan! Cara terbaik mencegah EROSI tanah dan longsor di perbukitan adalah...',
+        hint: 'Coba klik tombol "🌳 Lereng Berhutan" dan lihat apa yang menahan lapisan tanah tetap kokoh saat hujan turun!',
+        options: [
+          { text: 'A. Melakukan Reboisasi (menanam pohon kembali) agar akar menahan tanah & menyerap air hujan', correct: true, exp: 'SEMPURNA! Akar pepohonan mencengkeram tanah dengan kuat dan memperlambat aliran air hujan!' },
+          { text: 'B. Membabat habis semua pohon agar air langsung meluncur deras', correct: false, exp: 'Lereng gundul membuat tanah rapuh terbawa arus hujan dan memicu erosi serta banjir bandang!' },
+          { text: 'C. Menggali lereng menjadi pasir licin tanpa tumbuhan', correct: false, exp: 'Tanah tanpa penutup akar vegetasi sangat mudah terkikis erosi.' },
+          { text: 'D. Menutup seluruh samudra dengan plastik', correct: false, exp: 'Menutup lautan akan menghentikan siklus air alami.' }
+        ]
+      }
+    ];
+
+    let currentMissionIdx = 0;
+    let solvedMissions = new Set();
+    let score = 0;
+    let streak = 0;
+    let currentView = 'layers';
+    let hasForest = true;
+
+    let scene, camera, renderer, layersGroup, cycleGroup;
+    let atmosGroup, hydroGroup, lithoGroup, coreGroup;
+    let vaporParticles, rainParticles, treeGroup, erosionBlocks;
+    let clickableMeshes = [];
+    let isAutoRotate = true;
+    let isDragging = false;
+    let prevMouse = { x: 0, y: 0 };
+    let startMouse = { x: 0, y: 0 };
+    let spherical = { radius: 11.5, theta: 0.45, phi: 1.08 };
+    let targetSpherical = { radius: 11.5, theta: 0.45, phi: 1.08 };
+
+    function createEarthCrustTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512; c.height = 256;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#92400E';
+      ctx.fillRect(0, 0, 512, 256);
+      const greens = ['#15803D', '#22C55E', '#65A30D', '#A16207'];
+      for (let i = 0; i < 45; i++) {
+        ctx.fillStyle = greens[i % greens.length];
+        ctx.beginPath();
+        ctx.ellipse(Math.random() * 512, Math.random() * 256, 25 + Math.random() * 45, 18 + Math.random() * 30, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      return new THREE.CanvasTexture(c);
+    }
+
+    function init3DScene() {
+      if (typeof THREE === 'undefined') { setTimeout(init3DScene, 100); return; }
+      const canvas = document.getElementById('astra-canvas');
+      const container = document.getElementById('astraViewport');
+      const w = container.clientWidth || 680;
+      const h = container.clientHeight || 575;
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      const key = new THREE.DirectionalLight(0xfffbeb, 1.25);
+      key.position.set(10, 14, 12);
+      scene.add(key);
+
+      buildEarthLayersModel();
+      buildWaterCycleModel();
+
+      setupPointerEvents(canvas);
+      window.addEventListener('resize', onResize);
+
+      renderMission(0);
+      animate();
+    }
+
+    function buildEarthLayersModel() {
+      layersGroup = new THREE.Group();
+      scene.add(layersGroup);
+
+      const startAngle = Math.PI * 0.45;
+      const cutAngle = Math.PI * 1.55;
+
+      // 1. Core (Molten Gold + Orange Mantle)
+      coreGroup = new THREE.Group();
+      const core = new THREE.Mesh(
+        new THREE.SphereGeometry(1.35, 32, 32),
+        new THREE.MeshStandardMaterial({ color: 0xF59E0B, emissive: 0xD97706, emissiveIntensity: 0.65 })
+      );
+      core.userData = { layer: 'core', info: 'Inti & Mantel Bumi (Magma panas 6.000°C)' };
+      coreGroup.add(core);
+      const mantle = new THREE.Mesh(
+        new THREE.SphereGeometry(2.1, 32, 32, startAngle, cutAngle),
+        new THREE.MeshStandardMaterial({ color: 0xEA580C, emissive: 0x9A3412, emissiveIntensity: 0.3, side: THREE.DoubleSide })
+      );
+      coreGroup.add(mantle);
+      layersGroup.add(coreGroup);
+
+      // 2. Litosfer (Rocky Crust + Mini Peak)
+      lithoGroup = new THREE.Group();
+      const litho = new THREE.Mesh(
+        new THREE.SphereGeometry(2.75, 40, 40, startAngle, cutAngle),
+        new THREE.MeshStandardMaterial({ map: createEarthCrustTexture(), roughness: 0.75, side: THREE.DoubleSide })
+      );
+      litho.userData = { layer: 'litosfer', info: 'LITOSFER: Kerak Bumi padat tempat gunung (Puncak Jayawijaya) & daratan!' };
+      lithoGroup.add(litho);
+      clickableMeshes.push(litho);
+
+      // Peak Jayawijaya Marker Cone on top crust
+      const peak = new THREE.Mesh(
+        new THREE.ConeGeometry(0.45, 0.9, 8),
+        new THREE.MeshStandardMaterial({ color: 0xE2E8F0, roughness: 0.5 })
+      );
+      peak.position.set(0, 2.95, 0);
+      peak.userData = { layer: 'litosfer', info: 'Pegunungan Puncak Jayawijaya di Litosfer!' };
+      lithoGroup.add(peak);
+      clickableMeshes.push(peak);
+      layersGroup.add(lithoGroup);
+
+      // 3. Hidrosfer (71% Blue Ocean Layer)
+      hydroGroup = new THREE.Group();
+      const hydro = new THREE.Mesh(
+        new THREE.SphereGeometry(3.2, 40, 40, startAngle + 0.15, cutAngle - 0.3),
+        new THREE.MeshStandardMaterial({
+          color: 0x0284C7, transparent: true, opacity: 0.68, roughness: 0.15, metalness: 0.25, side: THREE.DoubleSide
+        })
+      );
+      hydro.userData = { layer: 'hidrosfer', info: 'HIDROSFER: Selimut 71% perairan samudra, laut, sungai, & Palung Mariana!' };
+      hydroGroup.add(hydro);
+      clickableMeshes.push(hydro);
+      layersGroup.add(hydroGroup);
+
+      // 4. Atmosfer + Ozone Shield
+      atmosGroup = new THREE.Group();
+      const atmos = new THREE.Mesh(
+        new THREE.SphereGeometry(3.75, 40, 40, startAngle + 0.25, cutAngle - 0.4),
+        new THREE.MeshStandardMaterial({
+          color: 0x7DD3FC, transparent: true, opacity: 0.28, side: THREE.DoubleSide
+        })
+      );
+      atmos.userData = { layer: 'atmosfer', info: 'ATMOSFER & OZON (O₃): Selimut udara bernapas & perisai sinar UV Matahari!' };
+      atmosGroup.add(atmos);
+      clickableMeshes.push(atmos);
+
+      const ozoneHalo = new THREE.Mesh(
+        new THREE.TorusGeometry(3.85, 0.06, 12, 48),
+        new THREE.MeshBasicMaterial({ color: 0xA855F7 })
+      );
+      ozoneHalo.rotation.x = Math.PI / 3;
+      ozoneHalo.userData = { layer: 'atmosfer', info: 'Cincin Ozon (O₃): Memantulkan sinar UV berbahaya kembali ke luar angkasa!' };
+      atmosGroup.add(ozoneHalo);
+      clickableMeshes.push(ozoneHalo);
+      layersGroup.add(atmosGroup);
+
+      applyExplode(0.25);
+    }
+
+    function buildWaterCycleModel() {
+      cycleGroup = new THREE.Group();
+      cycleGroup.visible = false;
+      scene.add(cycleGroup);
+
+      // Ground Crust Block
+      const base = new THREE.Mesh(
+        new THREE.BoxGeometry(8.2, 0.7, 4.4),
+        new THREE.MeshStandardMaterial({ color: 0x78350F, roughness: 0.8 })
+      );
+      base.position.y = -1.9;
+      cycleGroup.add(base);
+
+      // Sloped Mountain (Left side x = -2.2)
+      const mountain = new THREE.Mesh(
+        new THREE.ConeGeometry(2.5, 3.3, 6),
+        new THREE.MeshStandardMaterial({ color: 0x15803D, roughness: 0.75 })
+      );
+      mountain.position.set(-2.1, 0.0, 0);
+      mountain.userData = { info: 'Pegunungan (Litosfer): Menampung air hujan di hutan resapan!' };
+      cycleGroup.add(mountain);
+      clickableMeshes.push(mountain);
+
+      // Ocean Basin (Right side x = +2.0)
+      const ocean = new THREE.Mesh(
+        new THREE.BoxGeometry(4.0, 0.5, 4.2),
+        new THREE.MeshStandardMaterial({ color: 0x0284C7, roughness: 0.2, metalness: 0.25 })
+      );
+      ocean.position.set(2.0, -1.35, 0);
+      ocean.userData = { info: 'Samudra (Hidrosfer): Mengalami EVAPORASI dipanaskan Matahari!' };
+      cycleGroup.add(ocean);
+      clickableMeshes.push(ocean);
+
+      // Glowing Sun above Ocean
+      const sun = new THREE.Mesh(
+        new THREE.SphereGeometry(0.65, 20, 20),
+        new THREE.MeshBasicMaterial({ color: 0xFBBF24 })
+      );
+      sun.position.set(2.6, 2.7, -0.5);
+      cycleGroup.add(sun);
+
+      // Puff Cloud (Kondensasi above mountain)
+      const cloudGroup = new THREE.Group();
+      [[0,0,0,0.65], [-0.55,-0.1,0.1,0.5], [0.58,-0.08,0,0.52]].forEach(([x,y,z,r]) => {
+        const puff = new THREE.Mesh(
+          new THREE.SphereGeometry(r, 16, 16),
+          new THREE.MeshStandardMaterial({ color: 0xE2E8F0, roughness: 0.4 })
+        );
+        puff.position.set(x, y, z);
+        cloudGroup.add(puff);
+      });
+      cloudGroup.position.set(-1.9, 2.65, 0);
+      cycleGroup.add(cloudGroup);
+
+      // Trees on Mountain Slope
+      treeGroup = new THREE.Group();
+      cycleGroup.add(treeGroup);
+      // Mudslide erosion blocks (shown when forest removed)
+      erosionBlocks = new THREE.Group();
+      for (let i = 0; i < 6; i++) {
+        const mud = new THREE.Mesh(
+          new THREE.BoxGeometry(0.45, 0.3, 0.45),
+          new THREE.MeshStandardMaterial({ color: 0x92400E })
+        );
+        mud.position.set(-0.6 + (i % 3) * 0.55, -1.3, -0.9 + Math.floor(i / 3) * 1.4);
+        erosionBlocks.add(mud);
+      }
+      erosionBlocks.visible = false;
+      cycleGroup.add(erosionBlocks);
+      setVegetation(true);
+
+      // Vapor particles rising from Ocean (x > 0.6)
+      const vCount = 45;
+      const vPos = new Float32Array(vCount * 3);
+      for (let i = 0; i < vCount; i++) {
+        vPos[i * 3] = 0.6 + Math.random() * 2.8;
+        vPos[i * 3 + 1] = -1.0 + Math.random() * 3.4;
+        vPos[i * 3 + 2] = (Math.random() - 0.5) * 2.6;
+      }
+      const vGeo = new THREE.BufferGeometry();
+      vGeo.setAttribute('position', new THREE.BufferAttribute(vPos, 3));
+      vaporParticles = new THREE.Points(vGeo, new THREE.PointsMaterial({ color: 0x7DD3FC, size: 0.14 }));
+      cycleGroup.add(vaporParticles);
+
+      // Rain particles falling onto Mountain (x around -1.9)
+      const rCount = 55;
+      const rPos = new Float32Array(rCount * 3);
+      for (let i = 0; i < rCount; i++) {
+        rPos[i * 3] = -2.8 + Math.random() * 1.9;
+        rPos[i * 3 + 1] = -0.8 + Math.random() * 3.2;
+        rPos[i * 3 + 2] = (Math.random() - 0.5) * 2.0;
+      }
+      const rGeo = new THREE.BufferGeometry();
+      rGeo.setAttribute('position', new THREE.BufferAttribute(rPos, 3));
+      rainParticles = new THREE.Points(rGeo, new THREE.PointsMaterial({ color: 0x38BDF8, size: 0.15 }));
+      cycleGroup.add(rainParticles);
+    }
+
+    function setVegetation(forestOn) {
+      hasForest = forestOn;
+      document.getElementById('btnForestOn').classList.toggle('active-forest', forestOn);
+      document.getElementById('btnForestOff').classList.toggle('active-barren', !forestOn);
+
+      while (treeGroup.children.length > 0) treeGroup.remove(treeGroup.children[0]);
+      if (forestOn) {
+        const coords = [[-1.3, 0.2, 0.7], [-1.3, 0.1, -0.7], [-2.5, 0.5, 0.6], [-2.5, 0.5, -0.6], [-1.0, -0.5, 0.1]];
+        coords.forEach(([x, y, z]) => {
+          const t = new THREE.Group();
+          const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 0.35, 8), new THREE.MeshStandardMaterial({ color: 0x78350F }));
+          trunk.position.y = 0.17;
+          t.add(trunk);
+          const crown = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.65, 8), new THREE.MeshStandardMaterial({ color: 0x22C55E }));
+          crown.position.y = 0.55;
+          t.add(crown);
+          t.position.set(x, y, z);
+          treeGroup.add(t);
+        });
+        if (erosionBlocks) erosionBlocks.visible = false;
+        document.getElementById('hudStatusBadge').innerText = '🌳 Lereng Hutan: Akar menahan tanah dari Erosi!';
+      } else {
+        if (erosionBlocks) erosionBlocks.visible = true;
+        document.getElementById('hudStatusBadge').innerText = '⚠️ Lereng Gundul: Hujan memicu Erosi & Longsor Lumpur!';
+      }
+      playTone(forestOn ? 560 : 280, 'sine', 0.1);
+    }
+
+    // =========================================================================
+    // VIEW SWITCHER & CONTROLS
+    // =========================================================================
+    function switchBumiView(view) {
+      currentView = view;
+      document.getElementById('view-layers').classList.toggle('active', view === 'layers');
+      document.getElementById('view-cycle').classList.toggle('active', view === 'cycle');
+      layersGroup.visible = view === 'layers';
+      cycleGroup.visible = view === 'cycle';
+      document.getElementById('explodeBar').style.display = view === 'layers' ? 'flex' : 'none';
+      document.getElementById('cycleBar').style.display = view === 'cycle' ? 'flex' : 'none';
+      if (view === 'layers') {
+        document.getElementById('hudStatusBadge').innerText = '🪐 Mode Irisan 3 Lapisan Bumi';
+      } else {
+        setVegetation(hasForest);
+      }
+      playTone(520, 'sine', 0.08);
+    }
+
+    function onExplodeSlider(val) {
+      document.getElementById('lblExplode').innerText = val + '%';
+      applyExplode(parseFloat(val) / 100);
+    }
+
+    function applyExplode(factor) {
+      const d = factor * 2.0;
+      if (atmosGroup) atmosGroup.position.set(d * 1.4, d * 0.7, d * 1.1);
+      if (hydroGroup) hydroGroup.position.set(d * 0.8, d * 0.4, d * 0.6);
+      if (lithoGroup) lithoGroup.position.set(d * 0.25, d * 0.12, d * 0.2);
+    }
+
+    function focusLayer(layerId) {
+      document.querySelectorAll('.layer-pill').forEach(p => p.classList.remove('active'));
+      const pill = document.getElementById('pill-' + layerId);
+      if (pill) pill.classList.add('active');
+      const labels = {
+        litosfer: '⛰️ LITOSFER: Daratan, batuan & Puncak Jayawijaya',
+        hidrosfer: '🌊 HIDROSFER: 71% perairan samudra & Palung Mariana',
+        atmosfer: '🛡️ ATMOSFER & OZON: Udara & pelindung sinar UV!'
+      };
+      show3DToast(labels[layerId]);
+      playTone(600, 'triangle', 0.1);
+    }
+
+    function show3DToast(text) {
+      const el = document.getElementById('hud3DToast');
+      el.innerText = text;
+      el.classList.add('show');
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => el.classList.remove('show'), 2800);
+    }
+
+    function toggleAutoRotate() {
+      isAutoRotate = !isAutoRotate;
+      document.getElementById('lblRotate').innerText = isAutoRotate ? 'ON' : 'OFF';
+    }
+    function resetCamera() { targetSpherical = { radius: 11.5, theta: 0.45, phi: 1.08 }; }
+
+    function setupPointerEvents(canvas) {
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+      canvas.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        prevMouse = { x: e.clientX, y: e.clientY };
+        startMouse = { x: e.clientX, y: e.clientY };
+        try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+      canvas.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - prevMouse.x;
+        const dy = e.clientY - prevMouse.y;
+        prevMouse = { x: e.clientX, y: e.clientY };
+        targetSpherical.theta -= dx * 0.008;
+        targetSpherical.phi = Math.max(0.25, Math.min(1.45, targetSpherical.phi - dy * 0.008));
+      });
+      function onEnd(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        try { canvas.releasePointerCapture(e.pointerId); } catch (err) {}
+        if (Math.hypot(e.clientX - startMouse.x, e.clientY - startMouse.y) < 7) {
+          const rect = canvas.getBoundingClientRect();
+          mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+          const hits = raycaster.intersectObjects(clickableMeshes, false);
+          if (hits.length > 0 && hits[0].object.userData.info) {
+            show3DToast(hits[0].object.userData.info);
+            if (hits[0].object.userData.layer && ['litosfer','hidrosfer','atmosfer'].includes(hits[0].object.userData.layer)) {
+              focusLayer(hits[0].object.userData.layer);
+            } else {
+              playTone(620, 'triangle', 0.1);
+            }
+          }
+        }
+      }
+      canvas.addEventListener('pointerup', onEnd);
+      canvas.addEventListener('pointercancel', onEnd);
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        targetSpherical.radius = Math.max(6.8, Math.min(18, targetSpherical.radius + e.deltaY * 0.01));
+      }, { passive: false });
+    }
+
+    function onResize() {
+      const c = document.getElementById('astraViewport');
+      if (!c || !renderer || !camera) return;
+      camera.aspect = c.clientWidth / c.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(c.clientWidth, c.clientHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (isAutoRotate && !isDragging) targetSpherical.theta += 0.003;
+
+      spherical.theta += (targetSpherical.theta - spherical.theta) * 0.09;
+      spherical.phi += (targetSpherical.phi - spherical.phi) * 0.09;
+      spherical.radius += (targetSpherical.radius - spherical.radius) * 0.09;
+
+      camera.position.x = spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta);
+      camera.position.y = spherical.radius * Math.cos(spherical.phi);
+      camera.position.z = spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta);
+      camera.lookAt(0, 0, 0);
+
+      if (cycleGroup && cycleGroup.visible) {
+        const vp = vaporParticles.geometry.attributes.position.array;
+        for (let i = 1; i < vp.length; i += 3) {
+          vp[i] += 0.024;
+          if (vp[i] > 2.5) vp[i] = -1.0;
+        }
+        vaporParticles.geometry.attributes.position.needsUpdate = true;
+
+        const rp = rainParticles.geometry.attributes.position.array;
+        for (let i = 1; i < rp.length; i += 3) {
+          rp[i] -= 0.048;
+          if (rp[i] < -0.9) rp[i] = 2.3;
+        }
+        rainParticles.geometry.attributes.position.needsUpdate = true;
+      }
+
+      if (renderer && scene && camera) renderer.render(scene, camera);
+    }
+
+    // =========================================================================
+    // MISSION LOGIC
+    // =========================================================================
+    function renderMissionDots() {
+      const container = document.getElementById('missionDots');
+      container.innerHTML = '';
+      MISSIONS.forEach((m, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'mission-dot' + (i === currentMissionIdx ? ' active' : '') + (solvedMissions.has(i) ? ' done' : '');
+        dot.onclick = () => renderMission(i);
+        container.appendChild(dot);
+      });
+    }
+
+    function renderMission(idx) {
+      currentMissionIdx = idx;
+      const m = MISSIONS[idx];
+      const solved = solvedMissions.has(idx);
+
+      switchBumiView(m.view);
+      focusLayer(m.focus);
+      renderMissionDots();
+
+      document.getElementById('questStepBadge').innerText = `Investigasi ${idx + 1} / ${MISSIONS.length}`;
+      document.getElementById('questTitle').innerText = m.title;
+      document.getElementById('questQuestion').innerText = m.question;
+      document.getElementById('questHint').innerText = '💡 ' + m.hint;
+      document.getElementById('questHint').style.display = 'none';
+
+      const optList = document.getElementById('optionsList');
+      optList.innerHTML = '';
+      const fb = document.getElementById('feedbackBox');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+
+      m.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerText = opt.text;
+        if (solved && opt.correct) btn.classList.add('correct');
+        btn.disabled = solved;
+        btn.onclick = () => handleAnswer(btn, opt);
+        optList.appendChild(btn);
+      });
+
+      document.getElementById('btnPrev').disabled = idx === 0;
+      const nextBtn = document.getElementById('btnNext');
+      nextBtn.disabled = !solved;
+      nextBtn.innerText = idx === MISSIONS.length - 1 ? '🏆 Selesai & Klaim Trofi' : 'Investigasi Berikutnya →';
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportQuestion(m.question, idx + 1, MISSIONS.length);
+      }
+    }
+
+    function handleAnswer(btn, opt) {
+      const fb = document.getElementById('feedbackBox');
+      if (opt.correct) {
+        btn.classList.add('correct');
+        document.querySelectorAll('#optionsList .opt-btn').forEach(b => b.disabled = true);
+        fb.className = 'feedback-box ok';
+        fb.innerText = '✅ ' + opt.exp;
+
+        if (!solvedMissions.has(currentMissionIdx)) {
+          solvedMissions.add(currentMissionIdx);
+          score += 100;
+          streak += 1;
+          document.getElementById('scoreVal').innerText = score;
+          document.getElementById('streakVal').innerText = streak;
+        }
+        renderMissionDots();
+        playSuccessChime();
+        document.getElementById('btnNext').disabled = false;
+
+        if (window.PKBM_SYNC) {
+          window.PKBM_SYNC.reportAnswer(opt.text, true, 100, opt.exp);
+        }
+      } else {
+        btn.classList.add('wrong');
+        btn.disabled = true;
+        streak = 0;
+        document.getElementById('streakVal').innerText = 0;
+        fb.className = 'feedback-box err';
+        fb.innerText = '❌ ' + opt.exp;
+        playTone(210, 'sawtooth', 0.18, 0.12);
+
+        if (window.PKBM_SYNC) {
+          window.PKBM_SYNC.reportAnswer(opt.text, false, 0, opt.exp);
+        }
+      }
+    }
+
+    function toggleHint() {
+      const el = document.getElementById('questHint');
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+      playTone(600, 'sine', 0.06);
+    }
+    function prevMission() { if (currentMissionIdx > 0) renderMission(currentMissionIdx - 1); }
+    function nextMission() {
+      if (currentMissionIdx < MISSIONS.length - 1) {
+        renderMission(currentMissionIdx + 1);
+      } else {
+        document.getElementById('finalScoreText').innerText = `${score} / 500`;
+        document.getElementById('victoryModal').classList.add('open');
+        playSuccessChime();
+        if (window.PKBM_SYNC) {
+          window.PKBM_SYNC.reportGameComplete(score, 500, 3, 'Menuntaskan 5 Misi 3D Bumi Kita IPAS Kelas 5');
+        }
+      }
+    }
+    function restartGame() {
+      document.getElementById('victoryModal').classList.remove('open');
+      solvedMissions.clear(); score = 0; streak = 0;
+      document.getElementById('scoreVal').innerText = 0;
+      document.getElementById('streakVal').innerText = 0;
+      renderMission(0);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.PKBM_SYNC) window.PKBM_SYNC.setStudent('ardiansyah', 'Ardiansyah', 'Kelas 5');
+      init3DScene();
+    });
+  </script>
+  <script src="../assets/js/pkbm_sync.js"></script>
+</body>
+</html>
