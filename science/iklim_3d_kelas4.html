@@ -115,9 +115,21 @@
     .controls-panel {
       pointer-events: auto; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px);
       border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px;
-      padding: 10px 14px; color: #E2E8F0;
+      padding: 8px 12px; color: #E2E8F0;
     }
     .monsoon-bar { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .climate-zone-bar {
+      display: flex; gap: 5px; justify-content: center; align-items: center; flex-wrap: wrap;
+      margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .zone-btn {
+      background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #E2E8F0; font-size: 0.72rem; font-weight: 800; padding: 4px 9px;
+      border-radius: 9px; cursor: pointer; transition: all 0.2s;
+    }
+    .zone-btn:hover, .zone-btn.active {
+      background: #059669; border-color: #6EE7B7; color: white; transform: translateY(-1px);
+    }
     .greenhouse-bar { display: none; grid-template-columns: 1fr 1fr; gap: 12px; }
     .slider-row { display: flex; flex-direction: column; gap: 3px; }
     .slider-head { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 800; }
@@ -252,6 +264,7 @@
     <div class="astra-studio">
       <div class="astra-viewport-wrap" id="astraViewport">
         <canvas id="astra-canvas"></canvas>
+        <div class="globe-pin-labels" id="globePinLabels"></div>
 
         <div class="hud-top">
           <div class="hud-mode-group">
@@ -265,10 +278,17 @@
 
         <div class="hud-bottom">
           <div class="controls-panel">
-            <!-- Monsoon controls -->
+            <!-- Monsoon + Country Atlas controls -->
             <div class="monsoon-bar" id="monsoonBar">
               <button class="tool-btn active-season" id="btnRainSeason" onclick="setSeason('rain')">🌧️ Angin Monsun Barat (Hujan)</button>
               <button class="tool-btn" id="btnDrySeason" onclick="setSeason('dry')">☀️ Angin Monsun Timur (Kemarau)</button>
+            </div>
+            <div class="climate-zone-bar" id="climateZoneBar">
+              <button class="zone-btn active" id="zone-tropis" onclick="focusClimateZone('tropis')">🌴 Tropis</button>
+              <button class="zone-btn" id="zone-subtropis" onclick="focusClimateZone('subtropis')">🍂 Subtropis</button>
+              <button class="zone-btn" id="zone-kering" onclick="focusClimateZone('kering')">🏜️ Gurun</button>
+              <button class="zone-btn" id="zone-dingin" onclick="focusClimateZone('dingin')">❄️ Kutub</button>
+              <select class="country-jump-select" id="countryQuickSelect" onchange="if(this.value) focusCountry(this.value)" title="Pilih negara termasuk negara kecil"></select>
             </div>
             <!-- Greenhouse controls -->
             <div class="greenhouse-bar" id="greenhouseBar">
@@ -292,9 +312,11 @@
           <div class="hud-toolbar">
             <div class="tool-group">
               <button class="tool-btn" onclick="toggleAutoRotate()">🔄 Putar: <strong id="lblRotate">ON</strong></button>
-              <button class="tool-btn" onclick="resetCamera()">🎯 Reset Kamera</button>
+              <button class="tool-btn" onclick="zoomCamera(-1.5)" title="Perdekat globe untuk melihat negara kecil">➕ Zoom</button>
+              <button class="tool-btn" onclick="zoomCamera(1.5)" title="Perjauh globe">➖</button>
+              <button class="tool-btn" onclick="resetCamera()">🎯 Reset</button>
             </div>
-            <div class="gesture-hint">👆 Geser 360° • 🔍 Zoom • 🎯 Klik Sabuk / Objek 3D</div>
+            <div class="gesture-hint">👆 Geser 360° • 🔍 Zoom negara kecil • 🎯 Klik Pin Negara &amp; Sabuk 3D</div>
           </div>
         </div>
       </div>
@@ -345,6 +367,7 @@
 
   <script src="../assets/js/three.min.js"></script>
   <script src="../assets/js/earth_globe.js"></script>
+  <script src="../assets/js/globe_labels.js"></script>
   <script src="../assets/js/space_intro.js"></script>
   <script>
     let audioCtx = null;
@@ -451,15 +474,17 @@
     let seasonMode = 'rain';
 
     // 3D Globals
-    let scene, camera, renderer, globeGroup, ghGroup, sunOrb;
+    let scene, camera, renderer, globeGroup, tiltGroup, ghGroup, sunOrb, globeAtlas;
     let rainParticles, ghDomeMat, heatParticles = [], treeGroup, windArrowsGroup;
     let clickableParts = [];
+    let safeInsets = { top: 58, bottom: 165 };
+    const animClock = typeof THREE !== 'undefined' ? new THREE.Clock() : { getElapsedTime: () => 0 };
     let isAutoRotate = true;
     let isDragging = false;
     let prevMouse = { x: 0, y: 0 };
     let startMouse = { x: 0, y: 0 };
-    let spherical = { radius: 11.5, theta: 0.35, phi: 1.1 };
-    let targetSpherical = { radius: 11.5, theta: 0.35, phi: 1.1 };
+    let spherical = { radius: 8.8, theta: 2.2, phi: 1.4 };
+    let targetSpherical = { radius: 8.8, theta: 2.2, phi: 1.4 };
 
     function createEarthTexture() {
       const c = document.createElement('canvas');
@@ -540,10 +565,23 @@
       buildGlobeDiorama();
       buildGreenhouseDiorama();
 
+      // Orient camera directly toward Indonesia on initial load
+      if (globeAtlas) {
+        const vec = globeAtlas.getSurfaceWorldPos('id');
+        if (vec) {
+          const r = vec.length();
+          const initPhi = Math.max(0.22, Math.min(Math.PI - 0.22, Math.acos(vec.y / r)));
+          const initTheta = Math.atan2(vec.x, vec.z);
+          spherical = { radius: 8.8, theta: initTheta, phi: initPhi };
+          targetSpherical = { radius: 8.8, theta: initTheta, phi: initPhi };
+        }
+      }
+
       setupPointerEvents(canvas);
       window.addEventListener('resize', onResize);
 
       renderMission(0);
+      refreshSafeInsets();
       animate();
     }
 
@@ -551,27 +589,39 @@
       globeGroup = new THREE.Group();
       scene.add(globeGroup);
 
-      // Tilted Realistic NASA Blue Marble Earth
-      const tiltGroup = new THREE.Group();
+      // Tilted Realistic NASA Blue Marble Earth matching Kelas 6 globe & smart country atlas
+      const R = 2.85;
+      tiltGroup = new THREE.Group();
       tiltGroup.rotation.z = THREE.MathUtils.degToRad(23.5);
       globeGroup.add(tiltGroup);
 
       const earthBundle = PKBM_EARTH.createRealisticEarthGroup({
-        radius: 2.75,
+        radius: R,
         renderer,
         fallbackTexture: createEarthTexture()
       });
-      earthBundle.earthMesh.rotation.y = 3.055; // Start oriented toward Indonesia
       earthBundle.earthMesh.userData = { info: 'Bumi Miring 23,5° • Berotasi 24 jam & Mengelilingi Matahari' };
       tiltGroup.add(earthBundle.group);
       globeGroup.earthMesh = earthBundle.earthMesh;
       globeGroup.cloudMesh = earthBundle.cloudMesh;
+
+      if (window.PKBM_GLOBE_ATLAS) {
+        globeAtlas = window.PKBM_GLOBE_ATLAS.mountAtlas({
+          targetGroup: tiltGroup,
+          globeRadius: R,
+          labelsContainer: document.getElementById('globePinLabels'),
+          mode: 'climate',
+          initialPinId: 'id',
+          onSelectCountry: (c) => focusCountry(c.id)
+        });
+        clickableParts.push(...globeAtlas.clickableMeshes);
+      }
       clickableParts.push(earthBundle.earthMesh);
 
       // Sleek Glowing Golden Equatorial Tropic Belt
       const eqRing = new THREE.Mesh(
-        new THREE.TorusGeometry(2.88, 0.036, 14, 72),
-        new THREE.MeshBasicMaterial({ color: 0xFBBF24, transparent: true, opacity: 0.9 })
+        new THREE.TorusGeometry(R + 0.015, 0.014, 12, 96),
+        new THREE.MeshBasicMaterial({ color: 0xFBBF24, transparent: true, opacity: 0.72 })
       );
       eqRing.rotation.x = Math.PI / 2;
       eqRing.userData = { info: 'Sabuk Khatulistiwa (Iklim Tropis): Hangat & 2 Musim sepanjang tahun!' };
@@ -587,9 +637,9 @@
       const rainCount = 120;
       const rPos = new Float32Array(rainCount * 3);
       for (let i = 0; i < rainCount; i++) {
-        rPos[i * 3] = (Math.random() - 0.5) * 6.5;
-        rPos[i * 3 + 1] = (Math.random() - 0.5) * 6.5;
-        rPos[i * 3 + 2] = (Math.random() - 0.5) * 6.5;
+        rPos[i * 3] = (Math.random() - 0.5) * 6.8;
+        rPos[i * 3 + 1] = (Math.random() - 0.5) * 6.8;
+        rPos[i * 3 + 2] = (Math.random() - 0.5) * 6.8;
       }
       const rGeo = new THREE.BufferGeometry();
       rGeo.setAttribute('position', new THREE.BufferAttribute(rPos, 3));
@@ -609,7 +659,7 @@
           new THREE.ConeGeometry(0.18, 0.65, 10),
           new THREE.MeshBasicMaterial({ color })
         );
-        arrow.position.set(Math.cos(ang) * 3.55, 0.2, Math.sin(ang) * 3.55);
+        arrow.position.set(Math.cos(ang) * 3.62, 0.2, Math.sin(ang) * 3.62);
         arrow.rotation.z = mode === 'rain' ? -Math.PI / 2 : Math.PI / 2;
         arrow.rotation.y = -ang;
         windArrowsGroup.add(arrow);
@@ -733,12 +783,110 @@
       document.getElementById('view-greenhouse').classList.toggle('active', view === 'greenhouse');
       globeGroup.visible = view === 'globe';
       ghGroup.visible = view === 'greenhouse';
+      if (sunOrb) sunOrb.visible = view === 'globe';
       document.getElementById('monsoonBar').style.display = view === 'globe' ? 'flex' : 'none';
+      const zoneBar = document.getElementById('climateZoneBar');
+      if (zoneBar) zoneBar.style.display = view === 'globe' ? 'flex' : 'none';
       document.getElementById('greenhouseBar').style.display = view === 'greenhouse' ? 'grid' : 'none';
+      if (globeAtlas) globeAtlas.setVisible(view === 'globe');
 
       if (view === 'greenhouse') updateGreenhouseParams();
       else setSeason(seasonMode);
+      refreshSafeInsets();
       playTone(540, 'sine', 0.08);
+    }
+
+    function nearestAngle(current, target) {
+      const twoPi = 2 * Math.PI;
+      const diff = ((((target - current + Math.PI) % twoPi) + twoPi) % twoPi) - Math.PI;
+      return target - diff;
+    }
+
+    function setAutoRotate(enabled) {
+      isAutoRotate = enabled;
+      const lbl = document.getElementById('lblRotate');
+      if (lbl) lbl.innerText = isAutoRotate ? 'ON' : 'OFF';
+    }
+
+    function aimCameraAtWorldVec(vec, radius = 8.4) {
+      if (!vec) return;
+      const r = vec.length();
+      const targetPhi = Math.max(0.22, Math.min(Math.PI - 0.22, Math.acos(vec.y / r)));
+      const targetTheta = Math.atan2(vec.x, vec.z);
+      targetSpherical = { radius, theta: targetTheta, phi: targetPhi };
+      spherical.theta = nearestAngle(spherical.theta, targetTheta);
+    }
+
+    function aimCameraAtLocalLatLon(lat, lon, radius = 8.4) {
+      const vec = PKBM_EARTH.latLonToVec3(lat, lon, 2.85);
+      if (tiltGroup) {
+        tiltGroup.updateWorldMatrix(true, false);
+        vec.applyMatrix4(tiltGroup.matrixWorld);
+      }
+      aimCameraAtWorldVec(vec, radius);
+    }
+
+    function focusClimateZone(zoneId) {
+      if (currentView !== 'globe') switchClimateView('globe');
+      const zones = window.PKBM_GLOBE_ATLAS && window.PKBM_GLOBE_ATLAS.CLIMATE_ZONES;
+      const z = zones && zones[zoneId];
+      if (!z) return;
+
+      document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('zone-' + zoneId);
+      if (btn) btn.classList.add('active');
+
+      setAutoRotate(false);
+      if (globeAtlas) globeAtlas.setActive(z.defaultPin);
+      const sel = document.getElementById('countryQuickSelect');
+      if (sel && sel.value !== z.defaultPin) sel.value = z.defaultPin;
+
+      aimCameraAtLocalLatLon(z.lat, z.lon, z.radius || 7.2);
+      show3DToast(z.fact);
+      document.getElementById('climateFact').innerText = z.fact;
+      playTone(620, 'triangle', 0.1);
+    }
+
+    function focusCountry(pinId) {
+      if (currentView !== 'globe') switchClimateView('globe');
+      const atlasData = window.PKBM_GLOBE_ATLAS;
+      const pin = atlasData && atlasData.COUNTRIES.find(p => p.id === pinId);
+      if (!pin) return;
+
+      document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+      const zBtn = document.getElementById('zone-' + pin.climateZone);
+      if (zBtn) zBtn.classList.add('active');
+
+      setAutoRotate(false);
+      if (globeAtlas) globeAtlas.setActive(pin.id);
+      const sel = document.getElementById('countryQuickSelect');
+      if (sel && sel.value !== pin.id) sel.value = pin.id;
+
+      const zoomR = pin.tier === 3 ? 5.0 : (pin.tier === 2 ? 6.6 : 8.2);
+      const worldPos = globeAtlas ? globeAtlas.getSurfaceWorldPos(pin.id) : null;
+      if (worldPos) aimCameraAtWorldVec(worldPos, zoomR);
+      else aimCameraAtLocalLatLon(pin.lat, pin.lon, zoomR);
+
+      show3DToast(pin.factClimate);
+      document.getElementById('climateFact').innerText = pin.factClimate;
+      playTone(660, 'triangle', 0.1);
+    }
+
+    function zoomCamera(delta) {
+      targetSpherical.radius = Math.max(4.4, Math.min(17, targetSpherical.radius + delta));
+    }
+
+    function refreshSafeInsets() {
+      const vp = document.getElementById('astraViewport');
+      if (!vp) return;
+      const topEl = vp.querySelector('.hud-top');
+      const botEl = vp.querySelector('.hud-bottom');
+      const topH = topEl ? topEl.offsetHeight : 44;
+      const botH = botEl ? botEl.offsetHeight : 140;
+      safeInsets = {
+        top: Math.max(52, topH + 10),
+        bottom: Math.max(125, botH + 16)
+      };
     }
 
     function setSeason(mode) {
@@ -782,10 +930,12 @@
     }
 
     function toggleAutoRotate() {
-      isAutoRotate = !isAutoRotate;
-      document.getElementById('lblRotate').innerText = isAutoRotate ? 'ON' : 'OFF';
+      setAutoRotate(!isAutoRotate);
     }
-    function resetCamera() { targetSpherical = { radius: 11.5, theta: 0.35, phi: 1.1 }; }
+    function resetCamera() {
+      if (currentView === 'globe') focusClimateZone('tropis');
+      else targetSpherical = { radius: 9.8, theta: 0.35, phi: 1.05 };
+    }
 
     function setupPointerEvents(canvas) {
       const raycaster = new THREE.Raycaster();
@@ -797,12 +947,27 @@
         try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
       });
       canvas.addEventListener('pointermove', (e) => {
-        if (!isDragging) return;
-        const dx = e.clientX - prevMouse.x;
-        const dy = e.clientY - prevMouse.y;
-        prevMouse = { x: e.clientX, y: e.clientY };
-        targetSpherical.theta -= dx * 0.008;
-        targetSpherical.phi = Math.max(0.25, Math.min(1.45, targetSpherical.phi - dy * 0.008));
+        if (isDragging) {
+          const dx = e.clientX - prevMouse.x;
+          const dy = e.clientY - prevMouse.y;
+          prevMouse = { x: e.clientX, y: e.clientY };
+          targetSpherical.theta -= dx * 0.008;
+          targetSpherical.phi = Math.max(0.2, Math.min(Math.PI - 0.2, targetSpherical.phi - dy * 0.008));
+          return;
+        }
+        if (globeAtlas && currentView === 'globe' && camera) {
+          const rect = canvas.getBoundingClientRect();
+          mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+          const hits = raycaster.intersectObjects(globeAtlas.clickableMeshes, false);
+          const hoveredId = hits.length > 0 ? hits[0].object.userData.pinId : null;
+          globeAtlas.setHovered(hoveredId);
+          canvas.style.cursor = hoveredId ? 'pointer' : 'grab';
+        }
+      });
+      canvas.addEventListener('pointerleave', () => {
+        if (globeAtlas) globeAtlas.setHovered(null);
       });
       function onEnd(e) {
         if (!isDragging) return;
@@ -815,9 +980,14 @@
           raycaster.setFromCamera(mouse, camera);
           const visibleParts = clickableParts.filter(o => PKBM_EARTH.isObjectVisible(o));
           const hits = raycaster.intersectObjects(visibleParts, false);
-          if (hits.length > 0 && hits[0].object.userData.info) {
-            show3DToast(hits[0].object.userData.info);
-            playTone(620, 'triangle', 0.1);
+          if (hits.length > 0) {
+            const pinHit = hits.find(h => h.object.userData && h.object.userData.pinId);
+            if (pinHit) {
+              focusCountry(pinHit.object.userData.pinId);
+            } else if (hits[0].object.userData && hits[0].object.userData.info) {
+              show3DToast(hits[0].object.userData.info);
+              playTone(620, 'triangle', 0.1);
+            }
           }
         }
       }
@@ -825,7 +995,7 @@
       canvas.addEventListener('pointercancel', onEnd);
       canvas.addEventListener('wheel', (e) => {
         e.preventDefault();
-        targetSpherical.radius = Math.max(6.8, Math.min(18, targetSpherical.radius + e.deltaY * 0.01));
+        targetSpherical.radius = Math.max(4.4, Math.min(17, targetSpherical.radius + e.deltaY * 0.01));
       }, { passive: false });
     }
 
@@ -835,11 +1005,13 @@
       camera.aspect = c.clientWidth / c.clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(c.clientWidth, c.clientHeight);
+      refreshSafeInsets();
     }
 
     function animate() {
       requestAnimationFrame(animate);
-      if (isAutoRotate && !isDragging) targetSpherical.theta += 0.003;
+      const t = animClock.getElapsedTime();
+      if (isAutoRotate && !isDragging) targetSpherical.theta += 0.0024;
 
       spherical.theta += (targetSpherical.theta - spherical.theta) * 0.09;
       spherical.phi += (targetSpherical.phi - spherical.phi) * 0.09;
@@ -851,9 +1023,9 @@
       camera.lookAt(0, 0, 0);
 
       if (globeGroup && globeGroup.visible) {
-        if (globeGroup.earthMesh) globeGroup.earthMesh.rotation.y += 0.004;
-        if (globeGroup.cloudMesh) globeGroup.cloudMesh.rotation.y += 0.0011;
-        if (windArrowsGroup) windArrowsGroup.rotation.y += (seasonMode === 'rain' ? 0.015 : -0.015);
+        if (globeGroup.cloudMesh) globeGroup.cloudMesh.rotation.y += 0.0007;
+        if (globeAtlas) globeAtlas.updateHalos(t);
+        if (windArrowsGroup) windArrowsGroup.rotation.y += (seasonMode === 'rain' ? 0.014 : -0.014);
         if (rainParticles && rainParticles.visible) {
           const pos = rainParticles.geometry.attributes.position.array;
           for (let i = 1; i < pos.length; i += 3) {
@@ -889,7 +1061,12 @@
         });
       }
 
-      if (renderer && scene && camera) renderer.render(scene, camera);
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+        if (globeAtlas && globeGroup && globeGroup.visible) {
+          globeAtlas.updateLabels(camera, document.getElementById('astraViewport'), safeInsets);
+        }
+      }
     }
 
     // =========================================================================
@@ -1021,13 +1198,16 @@
       if (saved && ['acip', 'kinanti', 'alisya'].includes(saved)) {
         document.getElementById('studentSelect').value = saved;
       }
+      if (window.PKBM_GLOBE_ATLAS) {
+        window.PKBM_GLOBE_ATLAS.populateCountrySelect(document.getElementById('countryQuickSelect'), 'climate');
+      }
       init3DScene();
       if (window.PKBM_SPACE_INTRO) {
         window.PKBM_SPACE_INTRO.mount({
           badge: '🌦️ PENJELAJAH IKLIM: ACIP, KINANTI & ALISYA (KELAS 4)',
           title: 'Iklim & Perubahannya',
           description: 'Dari ketinggian orbit Stasiun Luar Angkasa, tataplah sabuk Khatulistiwa Nusantara dan selimut awan Bumi sebelum memulai simulasi iklim 3D!',
-          onEnter: onResize
+          onEnter: () => { onResize(); refreshSafeInsets(); }
         });
       }
     });
