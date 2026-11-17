@@ -691,40 +691,40 @@
   <!-- MISI 3: THE INCLUSIVE ECO-CITY BLUEPRINT -->
   <!-- ========================================================================= -->
   <div class="mission-card" id="cardMisi3">
-    <div class="mission-tag tag-amber">Misi 3 • Rancang Kota Berkelanjutan (C5)</div>
-    <h2 class="mission-head-title">Cetak Biru Kota Idaman Ramah Atlet & Pelajar</h2>
+    <div class="mission-tag tag-amber">Misi 3 • Praktik Gotong Royong (C5)</div>
+    <h2 class="mission-head-title">Rencana Seru: Andai Aku Menjadi Pemimpin Lingkungan</h2>
     <p class="mission-desc">
-      Sebagai perancang kota masa depan, Mishka diberi wewenang mendesain 3 fasilitas terpadu. Klik setiap slot cetak biru di bawah ini untuk memasang zona fasilitas yang ideal!
+      Mishka diberi wewenang memimpin kegiatan seru di lingkungan tempat tinggal. Pasang 3 program kebersamaan yang disukai anak-anak di bawah ini!
     </p>
 
     <div class="blueprint-grid">
       <div class="blueprint-slot" id="bp-1" onclick="placeBlueprint(1)">
-        <span style="font-size:2rem;">🛹</span>
-        <strong>Zona Olahraga Kinetik</strong>
-        <small style="color:#64748B;">Skatepark & Aula Senam Anti-Slip</small>
+        <span style="font-size:2rem;">🌳</span>
+        <strong>Taman Bersih &amp; Asri</strong>
+        <small style="color:#64748B;">Kerja bakti ringan bersihkan taman &amp; makan bekal bareng</small>
       </div>
       <div class="blueprint-slot" id="bp-2" onclick="placeBlueprint(2)">
-        <span style="font-size:2rem;">📐</span>
-        <strong>Zona Nalar & Sains</strong>
-        <small style="color:#64748B;">Math Discovery Garden</small>
+        <span style="font-size:2rem;">🏃</span>
+        <strong>Permainan Tradisional</strong>
+        <small style="color:#64748B;">Gobak Sodor, Bentengan &amp; Lompat Tali di lapangan</small>
       </div>
       <div class="blueprint-slot" id="bp-3" onclick="placeBlueprint(3)">
-        <span style="font-size:2rem;">🌿</span>
-        <strong>Zona Ramah Lansia & Difabel</strong>
-        <small style="color:#64748B;">Pedestrian Landai Tanpa Undakan</small>
+        <span style="font-size:2rem;">📚</span>
+        <strong>Pojok Tukar Buku Cerita</strong>
+        <small style="color:#64748B;">Kumpulkan buku &amp; komik seru di balai warga</small>
       </div>
     </div>
     <div class="feedback-banner" id="fbBlueprint"></div>
 
     <!-- STUDI KASUS ETIKA RUANG BERSAMA (C4) -->
     <div style="background:#F8FAFC; border-left:5px solid #0284C7; padding:16px 18px; border-radius:0 14px 14px 0; margin:18px 0 12px;">
-      <strong>🛹 Studi Kasus Etika Bersama (Senam & Skateboard):</strong><br>
-      Saat berlatih di arena skatepark atau aula senam, kamu melihat ada botol plastik dan ceceran minyak pelumas tumpah di dekat rampa. Sebagai atlet yang beradab, apa tindakan terbaikmu?
+      <strong>🏡 Kasus Gotong Royong Anak (C4):</strong><br>
+      Saat bermain bersama teman-teman di lapangan atau taman komplek, kamu melihat ada bungkus makanan ringan dan botol plastik berserakan di dekat ayunan. Apa tindakan terbaik yang biasa dilakukan anak-anak yang peduli lingkungan?
     </div>
     <div class="choices-grid" id="qGroup3">
       <button class="choice-btn" onclick="ansEthics(this, true)">
         <span class="opt-letter">A</span>
-        <span>Segera memberi tanda peringatan bahaya, membersihkan tumpahan cairan dengan kain/serbuk kayu, dan membuang botol ke tempat sampah agar sesama atlet tidak cedera fatal.</span>
+        <span>Segera memungutnya dan membuangnya ke tempat sampah, lalu mengajak teman-teman untuk ikut menjaga kebersihan arena bermain.</span>
       </button>
       <button class="choice-btn" onclick="ansEthics(this, false)">
         <span class="opt-letter">B</span>
@@ -732,7 +732,7 @@
       </button>
       <button class="choice-btn" onclick="ansEthics(this, false)">
         <span class="opt-letter">C</span>
-        <span>Mengunggah foto tumpahan minyak ke media sosial sambil mengejek pengelola fasilitas.</span>
+        <span>Menginjak-injak sampah tersebut makin berantakan di sekitar lapangan.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbEthics"></div>
@@ -743,7 +743,7 @@
     <div class="victory-badge">🏆 MASTER ARCHITECT & DIPLOMAT NUSANTARA 🏆</div>
     <h2 class="victory-title">Luar Biasa, Mishka!</h2>
     <p class="victory-desc">
-      Mishka telah menuntaskan dekonstruksi lapisan wilayah dengan nalar himpunan, membuktikan keajaiban geopolitik Deklarasi Djuanda 1957, dan merancang kota idaman ramah anak, atlet, dan lansia!
+      Mishka telah menuntaskan dekonstruksi lapisan wilayah dengan nalar himpunan, membuktikan keajaiban geopolitik Deklarasi Djuanda 1957, dan merancang kegiatan gotong royong yang seru dan bermanfaat untuk teman-teman di lingkungan sekitar!
     </p>
     <div style="background:rgba(255,255,255,0.15); padding:16px; border-radius:14px; max-width:400px; margin:0 auto 20px;">
       <div style="font-size:1.1rem; font-weight:700;">Skor Prestasi Akhir: <span id="finalScoreVal">0</span> / 400</div>
@@ -1028,7 +1028,7 @@
     if (isCorrect) {
       btn.classList.add('correct');
       fb.className = 'feedback-banner show success';
-      fb.innerHTML = '🌱 <strong>Integritas Atlet Beradab!</strong> Seperti halnya satu peniti di matras senam atau ceceran minyak di skatepark, kepedulianmu menyelamatkan keselamatan semua orang! (+50 Poin)';
+      fb.innerHTML = '🌱 <strong>Anak Hebat & Bertanggung Jawab!</strong> Kebiasaan kecil membuang sampah pada tempatnya membuat tempat bermain selalu bersih dan nyaman untuk semua teman! (+50 Poin)';
       playJoy();
       ethicsDone = true;
       updateScore(50);
