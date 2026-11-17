@@ -358,6 +358,40 @@
       color: #991B1B;
     }
 
+    .opt-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #F1F5F9;
+      border: 2px solid #CBD5E1;
+      border-radius: 8px;
+      font-weight: 800;
+      color: #475569;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .choice-btn:hover:not(:disabled) .opt-letter {
+      background: #E0F2FE;
+      border-color: #0284C7;
+      color: #0284C7;
+    }
+
+    .choice-btn.correct .opt-letter {
+      background: #10B981;
+      border-color: #059669;
+      color: white;
+    }
+
+    .choice-btn.wrong .opt-letter {
+      background: #EF4444;
+      border-color: #DC2626;
+      color: white;
+    }
+
     /* FEEDBACK BANNERS */
     .feedback-banner {
       padding: 14px 18px;
@@ -547,13 +581,16 @@
     </div>
     <div class="choices-grid" id="qGroup1">
       <button class="choice-btn" onclick="ansScenario(this, false, 'q1', 'Menertawakan teman jatuh melanggar rasa kemanusiaan!')">
-        <span>❌</span> A. Ikut tertawa agar dianggap keren oleh anak-anak lain.
+        <span class="opt-letter">A</span>
+        <span>Ikut tertawa agar dianggap keren oleh anak-anak lain.</span>
       </button>
       <button class="choice-btn" onclick="ansScenario(this, true, 'q1', 'Hebat! Membantu teman yang jatuh dan meminjamkan alat adalah pengamalan Sila ke-2 (Kemanusiaan yang Adil dan Beradab)! (+50 Poin)')">
-        <span>✅</span> B. Segera meluncur menghampirinya, membantu berdiri, dan meminjamkan alat obeng T-tool untuk mengecek papannya.
+        <span class="opt-letter">B</span>
+        <span>Segera meluncur menghampirinya, membantu berdiri, dan meminjamkan alat obeng T-tool untuk mengecek papannya.</span>
       </button>
       <button class="choice-btn" onclick="ansScenario(this, false, 'q1', 'Ksatria Pancasila tidak bersikap cuek saat ada orang yang kesakitan!')">
-        <span>❌</span> C. Pura-pura tidak melihat dan langsung meluncur ke rampa lain.
+        <span class="opt-letter">C</span>
+        <span>Pura-pura tidak melihat dan langsung meluncur ke rampa lain.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbQ1"></div>
@@ -565,13 +602,16 @@
     </div>
     <div class="choices-grid" id="qGroup2">
       <button class="choice-btn" onclick="ansScenario(this, false, 'q2', 'Kekerasan fisik dan adu otot bertentangan dengan nilai musyawarah!')">
-        <span>❌</span> A. Menantang duel adu otot di luar skatepark.
+        <span class="opt-letter">A</span>
+        <span>Menantang duel adu otot di luar skatepark.</span>
       </button>
       <button class="choice-btn" onclick="ansScenario(this, true, 'q2', 'Tepat! Musyawarah dan membuat kesepakatan tertib adalah cerminan Sila ke-4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan)! (+50 Poin)')">
-        <span>✅</span> B. Mengajak semua anak berkumpul bermusyawarah secara tenang, lalu membuat aturan antrean bergantian: tiap anak meluncur 1 menit secara adil.
+        <span class="opt-letter">B</span>
+        <span>Mengajak semua anak berkumpul bermusyawarah secara tenang, lalu membuat aturan antrean bergantian: tiap anak meluncur 1 menit secara adil.</span>
       </button>
       <button class="choice-btn" onclick="ansScenario(this, false, 'q2', 'Mengalah dengan ngambek tidak menyelesaikan masalah aturan di ruang publik.')">
-        <span>❌</span> C. Langsung pulang ke rumah sambil menangis ngambek.
+        <span class="opt-letter">C</span>
+        <span>Langsung pulang ke rumah sambil menangis ngambek.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbQ2"></div>
@@ -583,13 +623,16 @@
     </div>
     <div class="choices-grid" id="qGroup3">
       <button class="choice-btn" onclick="ansScenario(this, true, 'q3', 'Luar biasa! Berbagi fasilitas agar teman aman dan bisa berolahraga bersama adalah cerminan Sila ke-5 (Keadilan Sosial)! (+50 Poin)')">
-        <span>✅</span> A. Ikhlas meminjamkan pelindung lutut cadanganmu agar dia terlindungi dan bisa bermain bersama secara aman.
+        <span class="opt-letter">A</span>
+        <span>Ikhlas meminjamkan pelindung lutut cadanganmu agar dia terlindungi dan bisa bermain bersama secara aman.</span>
       </button>
       <button class="choice-btn" onclick="ansScenario(this, false, 'q3', 'Pelit berbagi fasilitas olahraga umum tidak mencerminkan keadilan sosial!')">
-        <span>❌</span> B. Menyembunyikan pelindung cadangan di dalam tas karena takut kotor.
+        <span class="opt-letter">B</span>
+        <span>Menyembunyikan pelindung cadangan di dalam tas karena takut kotor.</span>
       </button>
       <button class="choice-btn" onclick="ansScenario(this, false, 'q3', 'Menyewakan barang pribadi ke teman bermain tidak mencerminkan persaudaraan.')">
-        <span>❌</span> C. Menyewakannya dengan harga mahal untuk mencari keuntungan.
+        <span class="opt-letter">C</span>
+        <span>Menyewakannya dengan harga mahal untuk mencari keuntungan.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbQ3"></div>
@@ -613,13 +656,16 @@
 
     <div class="choices-grid" id="qGroup4">
       <button class="choice-btn" onclick="ansHistory(this, true)">
-        <span>✅</span> <strong>A. Demi menjaga keutuhan & persatuan seluruh rakyat Indonesia dari Sabang sampai Merauke agar NKRI tidak terpecah-belah.</strong>
+        <span class="opt-letter">A</span>
+        <span>Demi menjaga keutuhan & persatuan seluruh rakyat Indonesia dari Sabang sampai Merauke agar NKRI tidak terpecah-belah.</span>
       </button>
       <button class="choice-btn" onclick="ansHistory(this, false)">
-        <span>❌</span> B. Karena mereka takut berdebat panjang dan ingin cepat-cepat selesai sidang.
+        <span class="opt-letter">B</span>
+        <span>Karena mereka takut berdebat panjang dan ingin cepat-cepat selesai sidang.</span>
       </button>
       <button class="choice-btn" onclick="ansHistory(this, false)">
-        <span>❌</span> C. Karena mereka dipaksa oleh pihak luar negeri yang sedang menjajah.
+        <span class="opt-letter">C</span>
+        <span>Karena mereka dipaksa oleh pihak luar negeri yang sedang menjajah.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbHistory"></div>

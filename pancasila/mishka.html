@@ -399,6 +399,40 @@
       color: #991B1B;
     }
 
+    .opt-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #F1F5F9;
+      border: 2px solid #CBD5E1;
+      border-radius: 8px;
+      font-weight: 800;
+      color: #475569;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .choice-btn:hover:not(:disabled) .opt-letter {
+      background: #E0F2FE;
+      border-color: #0284C7;
+      color: #0284C7;
+    }
+
+    .choice-btn.correct .opt-letter {
+      background: #10B981;
+      border-color: #059669;
+      color: white;
+    }
+
+    .choice-btn.wrong .opt-letter {
+      background: #EF4444;
+      border-color: #DC2626;
+      color: white;
+    }
+
     /* FEEDBACK BANNERS */
     .feedback-banner {
       padding: 14px 18px;
@@ -542,13 +576,16 @@
     </div>
     <div class="choices-grid" id="qGroup1">
       <button class="choice-btn" onclick="ansLayer(this, true)">
-        <span>✅</span> <strong>A. Karena RT adalah himpunan bagian primer yang memegang data riil warga; jika data dasar RT salah, alokasi anggaran dan bantuan di tingkat kota akan salah sasaran.</strong>
+        <span class="opt-letter">A</span>
+        <span>Karena RT adalah himpunan bagian primer yang memegang data riil warga; jika data dasar RT salah, alokasi anggaran dan bantuan di tingkat kota akan salah sasaran.</span>
       </button>
       <button class="choice-btn" onclick="ansLayer(this, false)">
-        <span>❌</span> B. Karena Pak RT adalah orang yang paling kaya di seluruh kota.
+        <span class="opt-letter">B</span>
+        <span>Karena Pak RT adalah orang yang paling kaya di seluruh kota.</span>
       </button>
       <button class="choice-btn" onclick="ansLayer(this, false)">
-        <span>❌</span> C. Karena kota tidak memiliki gedung kantor walikota.
+        <span class="opt-letter">C</span>
+        <span>Karena kota tidak memiliki gedung kantor walikota.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbLayer"></div>
@@ -635,13 +672,16 @@
     </div>
     <div class="choices-grid" id="qGroup2">
       <button class="choice-btn" onclick="ansDjuanda(this, true)">
-        <span>✅</span> <strong>A. Dengan menghubungkan titik-titik pulau terluar menjadi satu batas poligon utuh, seluruh laut di antara pulau otomatis menjadi perairan pedalaman kedaulatan mutlak NKRI tanpa letusan senjata.</strong>
+        <span class="opt-letter">A</span>
+        <span>Dengan menghubungkan titik-titik pulau terluar menjadi satu batas poligon utuh, seluruh laut di antara pulau otomatis menjadi perairan pedalaman kedaulatan mutlak NKRI tanpa letusan senjata.</span>
       </button>
       <button class="choice-btn" onclick="ansDjuanda(this, false)">
-        <span>❌</span> B. Dengan membeli ribuan kapal perang baru dari negara Eropa.
+        <span class="opt-letter">B</span>
+        <span>Dengan membeli ribuan kapal perang baru dari negara Eropa.</span>
       </button>
       <button class="choice-btn" onclick="ansDjuanda(this, false)">
-        <span>❌</span> C. Dengan menimbun seluruh laut di antara pulau Jawa dan Kalimantan menjadi tanah kering.
+        <span class="opt-letter">C</span>
+        <span>Dengan menimbun seluruh laut di antara pulau Jawa dan Kalimantan menjadi tanah kering.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbDjuanda"></div>
@@ -683,13 +723,16 @@
     </div>
     <div class="choices-grid" id="qGroup3">
       <button class="choice-btn" onclick="ansEthics(this, true)">
-        <span>✅</span> <strong>A. Segera memberi tanda peringatan bahaya, membersihkan tumpahan cairan dengan kain/serbuk kayu, dan membuang botol ke tempat sampah agar sesama atlet tidak cedera fatal.</strong>
+        <span class="opt-letter">A</span>
+        <span>Segera memberi tanda peringatan bahaya, membersihkan tumpahan cairan dengan kain/serbuk kayu, dan membuang botol ke tempat sampah agar sesama atlet tidak cedera fatal.</span>
       </button>
       <button class="choice-btn" onclick="ansEthics(this, false)">
-        <span>❌</span> B. Membiarkannya saja karena menganggap itu bukan sampah milik kita pribadi.
+        <span class="opt-letter">B</span>
+        <span>Membiarkannya saja karena menganggap itu bukan sampah milik kita pribadi.</span>
       </button>
       <button class="choice-btn" onclick="ansEthics(this, false)">
-        <span>❌</span> C. Mengunggah foto tumpahan minyak ke media sosial sambil mengejek pengelola fasilitas.
+        <span class="opt-letter">C</span>
+        <span>Mengunggah foto tumpahan minyak ke media sosial sambil mengejek pengelola fasilitas.</span>
       </button>
     </div>
     <div class="feedback-banner" id="fbEthics"></div>
