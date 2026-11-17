@@ -35,6 +35,7 @@
     if (currentPath.includes('/math/')) return 'Matematika';
     if (currentPath.includes('/science/')) return 'Sains IPAS';
     if (currentPath.includes('/pai/')) return 'PAI';
+    if (currentPath.includes('/pancasila/')) return 'Pendidikan Pancasila';
     return 'Tematik Terpadu';
   }
 

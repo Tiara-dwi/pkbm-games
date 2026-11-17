@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Pendidikan Pancasila Bab 4: Nusantara Coastline Navigator & Eco-City Architect (Mishka)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --primary: #0284C7;
+      --primary-dark: #0369A1;
+      --secondary: #0D9488;
+      --accent: #F59E0B;
+      --accent-light: #FEF3C7;
+      --bg: #F0F9FF;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --radius: 20px;
+      --shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.15), 0 8px 10px -6px rgba(2, 132, 199, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #F8FAFC 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 16px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #075985 0%, #0284C7 60%, #0D9488 100%);
+      padding: 26px 20px;
+      border-radius: var(--radius);
+      color: white;
+      box-shadow: 0 12px 28px rgba(2, 132, 199, 0.25);
+      border: 3px solid #7DD3FC;
+      position: relative;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: #FEF3C7;
+      color: #92400E;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.1rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #BAE6FD;
+      font-weight: 600;
+    }
+
+    /* STUDENT HERO CARD */
+    .hero-student {
+      background: white;
+      border-radius: 16px;
+      padding: 16px 22px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      border: 2px solid #BAE6FD;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar-icon {
+      width: 52px;
+      height: 52px;
+      background: #F0F9FF;
+      border: 2px solid #0284C7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .student-title {
+      font-size: 0.8rem;
+      color: #0369A1;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .student-name {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.35rem;
+      color: #082F49;
+    }
+
+    .score-badge {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 2px solid #FCD34D;
+      padding: 8px 18px;
+      border-radius: 14px;
+      font-family: 'Fredoka', cursive;
+      font-size: 1.3rem;
+      color: #B45309;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* MISSION SECTIONS */
+    .mission-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px 22px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      border: 2px solid #E2E8F0;
+      transition: border-color 0.3s;
+    }
+
+    .mission-card.active-mission {
+      border-color: #0284C7;
+    }
+
+    .mission-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .tag-cyan { background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD; }
+    .tag-teal { background: #CCFBF1; color: #0F766E; border: 1px solid #99F6E4; }
+    .tag-amber { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+
+    .mission-head-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.5rem;
+      color: #0C4A6E;
+      margin-bottom: 8px;
+    }
+
+    .mission-desc {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    /* ZONA 1: SET HIERARCHY & DRAINAGE */
+    .hierarchy-container {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .venn-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .venn-row {
+      background: white;
+      border: 2px solid #CBD5E1;
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .venn-row:hover {
+      border-color: #0284C7;
+      background: #F0F9FF;
+      transform: translateX(4px);
+    }
+
+    .venn-row.active-layer {
+      border-color: #0284C7;
+      background: #E0F2FE;
+      font-weight: 800;
+    }
+
+    .domino-box {
+      background: linear-gradient(135deg, #FEF2F2 0%, #FFF1F2 100%);
+      border: 2px dashed #F87171;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .domino-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: 800;
+      color: #991B1B;
+    }
+
+    .sim-btn {
+      background: #EF4444;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .sim-btn:hover { background: #DC2626; }
+
+    /* ZONA 2: DJUANDA MARITIME SIMULATOR */
+    .canvas-box {
+      background: #0F172A;
+      border-radius: 16px;
+      padding: 18px;
+      color: white;
+      margin-bottom: 18px;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .canvas-toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      flex: 1;
+      min-width: 180px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 2px solid #334155;
+      background: #1E293B;
+      color: #94A3B8;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .mode-btn.active-mode {
+      border-color: #38BDF8;
+      background: #0369A1;
+      color: white;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .map-svg-container {
+      width: 100%;
+      height: 240px;
+      background: #082F49;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #1E3A8A;
+    }
+
+    .map-metrics {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+
+    .metric-value {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.25rem;
+      color: #38BDF8;
+    }
+
+    /* ZONA 3: ECO-CITY ARCHITECT */
+    .blueprint-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 680px) {
+      .blueprint-grid { grid-template-columns: 1fr; }
+    }
+
+    .blueprint-slot {
+      background: #F8FAFC;
+      border: 2px dashed #94A3B8;
+      border-radius: 14px;
+      padding: 16px 12px;
+      text-align: center;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .blueprint-slot.placed {
+      background: #F0FDF4;
+      border: 2px solid #10B981;
+      color: #065F46;
+      animation: popIn 0.3s ease;
+    }
+
+    /* QUESTIONS & CHOICES */
+    .choices-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .choice-btn {
+      background: white;
+      border: 2px solid #CBD5E1;
+      border-radius: 14px;
+      padding: 15px 18px;
+      text-align: left;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #1E293B;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .choice-btn:hover:not(:disabled) {
+      border-color: #0284C7;
+      background: #F0F9FF;
+      transform: translateY(-2px);
+    }
+
+    .choice-btn.correct {
+      border-color: #10B981;
+      background: #ECFDF5;
+      color: #064E3B;
+    }
+
+    .choice-btn.wrong {
+      border-color: #EF4444;
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    /* FEEDBACK BANNERS */
+    .feedback-banner {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-top: 14px;
+      display: none;
+    }
+
+    .feedback-banner.show { display: block; animation: popIn 0.3s ease; }
+    .feedback-banner.success { background: #ECFDF5; color: #065F46; border: 2px solid #6EE7B7; }
+    .feedback-banner.error { background: #FEF2F2; color: #991B1B; border: 2px solid #FCA5A5; }
+
+    /* VICTORY CARD */
+    .victory-card {
+      display: none;
+      background: linear-gradient(135deg, #075985 0%, #0369A1 100%);
+      color: white;
+      text-align: center;
+      padding: 36px 24px;
+      border-radius: var(--radius);
+      box-shadow: 0 15px 35px rgba(2, 132, 199, 0.4);
+      border: 4px solid #7DD3FC;
+      margin-top: 24px;
+      animation: popIn 0.4s ease;
+    }
+
+    .victory-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.3rem;
+      margin-bottom: 12px;
+      color: #FEF3C7;
+    }
+
+    .victory-desc {
+      font-size: 1.1rem;
+      max-width: 620px;
+      margin: 0 auto 24px;
+      color: #E0F2FE;
+      line-height: 1.6;
+    }
+
+    .victory-badge {
+      display: inline-block;
+      background: #FEF3C7;
+      color: #92400E;
+      font-family: 'Fredoka', cursive;
+      font-size: 1.4rem;
+      padding: 10px 28px;
+      border-radius: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- HEADER -->
+  <header>
+    <div class="badge-top">🗺️ PENDIDIKAN PANCASILA • BAB 4</div>
+    <h1>Nusantara Coastline & Eco-City Architect</h1>
+    <div class="subtitle">Eksplorasi Wilayah Administratif, Geopolitik Deklarasi Djuanda 1957 & Desain Kota Inklusif</div>
+  </header>
+
+  <!-- STUDENT HERO CARD -->
+  <div class="hero-student">
+    <div class="student-info">
+      <div class="avatar-icon">🎀</div>
+      <div>
+        <div class="student-title">Master Architect & Atlet Nalar</div>
+        <div class="student-name">Mishka • Kelas 5 SD</div>
+      </div>
+    </div>
+    <div class="score-badge">
+      <span>⭐ Poin Prestasi:</span>
+      <span id="scoreMishka">0</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MISI 1: THE REGIONAL SET HIERARCHY & DOMINO DRAINAGE -->
+  <!-- ========================================================================= -->
+  <div class="mission-card active-mission" id="cardMisi1">
+    <div class="mission-tag tag-cyan">Misi 1 • Logika Himpunan Wilayah</div>
+    <h2 class="mission-head-title">5 Lapisan Wilayah Tempat Tinggal Kita</h2>
+    <p class="mission-desc">
+      Mishka, gunakan nalar olimpiade matematikamu! Dalam teori himpunan, wilayah administratif tersusun dari unit bagian terkecil hingga semesta perkotaan.
+    </p>
+
+    <div class="hierarchy-container">
+      <div style="font-weight:800; color:#0369A1; margin-bottom:10px;">
+        📐 Konsep Himpunan: RT ⊂ RW ⊂ Kelurahan ⊂ Kecamatan ⊂ Kabupaten/Kota
+      </div>
+      <div class="venn-layers">
+        <div class="venn-row active-layer" onclick="inspectLayer(1)">
+          <span>🏡 1. Rukun Tetangga (RT)</span>
+          <span style="font-size:0.85rem; color:#0369A1;">Himpunan Terkecil (Keluarga & Tetangga Dekat)</span>
+        </div>
+        <div class="venn-row" onclick="inspectLayer(2)">
+          <span>🏘️ 2. Rukun Warga (RW)</span>
+          <span style="font-size:0.85rem; color:#64748B;">Gabungan Beberapa RT & Lapangan Warga</span>
+        </div>
+        <div class="venn-row" onclick="inspectLayer(3)">
+          <span>🏛️ 3. Kelurahan / Desa</span>
+          <span style="font-size:0.85rem; color:#64748B;">Pelayanan Administrasi Kependudukan</span>
+        </div>
+        <div class="venn-row" onclick="inspectLayer(4)">
+          <span>🏢 4. Kecamatan</span>
+          <span style="font-size:0.85rem; color:#64748B;">Penghubung Koordinasi Wilayah</span>
+        </div>
+        <div class="venn-row" onclick="inspectLayer(5)">
+          <span>🌆 5. Kabupaten / Kota</span>
+          <span style="font-size:0.85rem; color:#64748B;">Himpunan Semesta Tata Ruang & Stadion</span>
+        </div>
+      </div>
+
+      <!-- DOMINO DRAINAGE SIMULATOR -->
+      <div class="domino-box">
+        <div class="domino-header">
+          <span>⚠️ Efek Domino Matematis Saluran Air</span>
+          <button class="sim-btn" id="btnSimDrainage" onclick="runDrainageSim()">
+            🌊 Klik untuk Simulasi Sampah RT
+          </button>
+        </div>
+        <p id="drainageResult" style="font-size:0.92rem; color:#7F1D1D; line-height:1.5;">
+          Saat saluran air di tingkat RT bersih, air hujan mengalir lancar menuju sungai kelurahan tanpa hambatan.
+        </p>
+      </div>
+    </div>
+
+    <!-- SOAL C4 LOGIKA HIMPUNAN -->
+    <div style="font-weight:800; margin-bottom:10px; color:#0F172A;">
+      Tantangan C4: Mengapa data akurat warga di tingkat RT sangat menentukan keberhasilan bantuan sosial tingkat kota?
+    </div>
+    <div class="choices-grid" id="qGroup1">
+      <button class="choice-btn" onclick="ansLayer(this, true)">
+        <span>✅</span> <strong>A. Karena RT adalah himpunan bagian primer yang memegang data riil warga; jika data dasar RT salah, alokasi anggaran dan bantuan di tingkat kota akan salah sasaran.</strong>
+      </button>
+      <button class="choice-btn" onclick="ansLayer(this, false)">
+        <span>❌</span> B. Karena Pak RT adalah orang yang paling kaya di seluruh kota.
+      </button>
+      <button class="choice-btn" onclick="ansLayer(this, false)">
+        <span>❌</span> C. Karena kota tidak memiliki gedung kantor walikota.
+      </button>
+    </div>
+    <div class="feedback-banner" id="fbLayer"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MISI 2: DJUANDA MARITIME POLYGON SIMULATOR -->
+  <!-- ========================================================================= -->
+  <div class="mission-card" id="cardMisi2">
+    <div class="mission-tag tag-teal">Misi 2 • Geopolitik Maritim</div>
+    <h2 class="mission-head-title">Simulator Deklarasi Djuanda 13 Desember 1957</h2>
+    <p class="mission-desc">
+      Sebelum tahun 1957, Indonesia belum menjadi satu kesatuan laut utuh. Uji coba kedua mode di bawah ini untuk melihat kejeniusan matematika geopolitik Perdana Menteri Djuanda!
+    </p>
+
+    <div class="canvas-box">
+      <div class="canvas-toolbar">
+        <button class="mode-btn active-mode" id="btnModeColonial" onclick="setMaritimeMode('colonial')">
+          🚫 Aturan Kolonial 1939 (Laut Terbelah)
+        </button>
+        <button class="mode-btn" id="btnModeDjuanda" onclick="setMaritimeMode('djuanda')">
+          🇮🇩 Deklarasi Djuanda 1957 (Poligon Utuh)
+        </button>
+      </div>
+
+      <!-- MAP CANVAS GRAPHICS (SVG) -->
+      <div class="map-svg-container">
+        <svg width="100%" height="100%" viewBox="0 0 700 240" id="mapSvg">
+          <!-- Background Laut -->
+          <rect width="100%" height="100%" fill="#075985" />
+          
+          <!-- Outer Baseline Polygon (Djuanda Mode) -->
+          <polygon id="djuandaPoly" points="70,90 220,50 480,70 630,130 580,210 240,200 80,180" 
+                   fill="rgba(16, 185, 129, 0.25)" stroke="#34D399" stroke-width="3" stroke-dasharray="6,4" style="display:none;" />
+          
+          <!-- Pulau-Pulau Representatif -->
+          <!-- Sumatra -->
+          <path d="M 60,90 Q 90,140 120,180 Q 90,190 70,160 Z" fill="#15803D" stroke="#86EFAC" stroke-width="2" />
+          <!-- Jawa -->
+          <path d="M 140,195 Q 220,195 280,205 Q 260,215 150,210 Z" fill="#15803D" stroke="#86EFAC" stroke-width="2" />
+          <!-- Kalimantan -->
+          <path d="M 210,80 Q 280,70 300,130 Q 250,150 200,130 Z" fill="#15803D" stroke="#86EFAC" stroke-width="2" />
+          <!-- Sulawesi -->
+          <path d="M 340,90 Q 370,110 390,160 Q 360,170 340,130 Z" fill="#15803D" stroke="#86EFAC" stroke-width="2" />
+          <!-- Papua -->
+          <path d="M 520,110 Q 620,120 640,170 Q 560,190 510,150 Z" fill="#15803D" stroke="#86EFAC" stroke-width="2" />
+
+          <!-- Colonial 3-Mile Rings -->
+          <g id="colonialRings">
+            <circle cx="90" cy="140" r="45" fill="none" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,4" />
+            <circle cx="210" cy="205" r="35" fill="none" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,4" />
+            <circle cx="250" cy="110" r="50" fill="none" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,4" />
+            <!-- Kapal Perang Asing Bebas di Tengah Laut Jawa -->
+            <text x="210" y="165" fill="#FCA5A5" font-size="12" font-weight="bold">🚢 Kapal Asing Bebas Lewat</text>
+          </g>
+
+          <!-- Djuanda Unified Label -->
+          <g id="djuandaLabel" style="display:none;">
+            <text x="260" y="160" fill="#6EE7B7" font-size="14" font-weight="bold">🌊 PERAIRAN PEDALAMAN UTUH NKRI</text>
+            <text x="275" y="180" fill="#BAE6FD" font-size="11">Diakui Dunia via PBB UNCLOS 1982</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="map-metrics">
+        <div>
+          <span style="color:#94A3B8;">Luas Teritorial Kedaulatan:</span>
+          <div class="metric-value" id="valLuas">± 2.000.000 km²</div>
+        </div>
+        <div>
+          <span style="color:#94A3B8;">Status Laut Antarpulau:</span>
+          <div class="metric-value" id="valStatus" style="color:#F87171;">Laut Bebas Asing</div>
+        </div>
+        <div>
+          <span style="color:#94A3B8;">Kalkulasi Luas Wilayah:</span>
+          <div class="metric-value" id="valRatio">1.0x Dasar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOAL C4 DEKLARASI DJUANDA -->
+    <div style="font-weight:800; margin-bottom:10px; color:#0F172A;">
+      Tantangan C4: Bagaimana konsep penarikan garis pangkal lurus (straight baseline) berhasil melipatgandakan kedaulatan Indonesia secara damai?
+    </div>
+    <div class="choices-grid" id="qGroup2">
+      <button class="choice-btn" onclick="ansDjuanda(this, true)">
+        <span>✅</span> <strong>A. Dengan menghubungkan titik-titik pulau terluar menjadi satu batas poligon utuh, seluruh laut di antara pulau otomatis menjadi perairan pedalaman kedaulatan mutlak NKRI tanpa letusan senjata.</strong>
+      </button>
+      <button class="choice-btn" onclick="ansDjuanda(this, false)">
+        <span>❌</span> B. Dengan membeli ribuan kapal perang baru dari negara Eropa.
+      </button>
+      <button class="choice-btn" onclick="ansDjuanda(this, false)">
+        <span>❌</span> C. Dengan menimbun seluruh laut di antara pulau Jawa dan Kalimantan menjadi tanah kering.
+      </button>
+    </div>
+    <div class="feedback-banner" id="fbDjuanda"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MISI 3: THE INCLUSIVE ECO-CITY BLUEPRINT -->
+  <!-- ========================================================================= -->
+  <div class="mission-card" id="cardMisi3">
+    <div class="mission-tag tag-amber">Misi 3 • Rancang Kota Berkelanjutan (C5)</div>
+    <h2 class="mission-head-title">Cetak Biru Kota Idaman Ramah Atlet & Pelajar</h2>
+    <p class="mission-desc">
+      Sebagai perancang kota masa depan, Mishka diberi wewenang mendesain 3 fasilitas terpadu. Klik setiap slot cetak biru di bawah ini untuk memasang zona fasilitas yang ideal!
+    </p>
+
+    <div class="blueprint-grid">
+      <div class="blueprint-slot" id="bp-1" onclick="placeBlueprint(1)">
+        <span style="font-size:2rem;">🛹</span>
+        <strong>Zona Olahraga Kinetik</strong>
+        <small style="color:#64748B;">Skatepark & Aula Senam Anti-Slip</small>
+      </div>
+      <div class="blueprint-slot" id="bp-2" onclick="placeBlueprint(2)">
+        <span style="font-size:2rem;">📐</span>
+        <strong>Zona Nalar & Sains</strong>
+        <small style="color:#64748B;">Math Discovery Garden</small>
+      </div>
+      <div class="blueprint-slot" id="bp-3" onclick="placeBlueprint(3)">
+        <span style="font-size:2rem;">🌿</span>
+        <strong>Zona Ramah Lansia & Difabel</strong>
+        <small style="color:#64748B;">Pedestrian Landai Tanpa Undakan</small>
+      </div>
+    </div>
+    <div class="feedback-banner" id="fbBlueprint"></div>
+
+    <!-- STUDI KASUS ETIKA RUANG BERSAMA (C4) -->
+    <div style="background:#F8FAFC; border-left:5px solid #0284C7; padding:16px 18px; border-radius:0 14px 14px 0; margin:18px 0 12px;">
+      <strong>🛹 Studi Kasus Etika Bersama (Senam & Skateboard):</strong><br>
+      Saat berlatih di arena skatepark atau aula senam, kamu melihat ada botol plastik dan ceceran minyak pelumas tumpah di dekat rampa. Sebagai atlet yang beradab, apa tindakan terbaikmu?
+    </div>
+    <div class="choices-grid" id="qGroup3">
+      <button class="choice-btn" onclick="ansEthics(this, true)">
+        <span>✅</span> <strong>A. Segera memberi tanda peringatan bahaya, membersihkan tumpahan cairan dengan kain/serbuk kayu, dan membuang botol ke tempat sampah agar sesama atlet tidak cedera fatal.</strong>
+      </button>
+      <button class="choice-btn" onclick="ansEthics(this, false)">
+        <span>❌</span> B. Membiarkannya saja karena menganggap itu bukan sampah milik kita pribadi.
+      </button>
+      <button class="choice-btn" onclick="ansEthics(this, false)">
+        <span>❌</span> C. Mengunggah foto tumpahan minyak ke media sosial sambil mengejek pengelola fasilitas.
+      </button>
+    </div>
+    <div class="feedback-banner" id="fbEthics"></div>
+  </div>
+
+  <!-- VICTORY CARD -->
+  <div class="victory-card" id="victoryCard">
+    <div class="victory-badge">🏆 MASTER ARCHITECT & DIPLOMAT NUSANTARA 🏆</div>
+    <h2 class="victory-title">Luar Biasa, Mishka!</h2>
+    <p class="victory-desc">
+      Mishka telah menuntaskan dekonstruksi lapisan wilayah dengan nalar himpunan, membuktikan keajaiban geopolitik Deklarasi Djuanda 1957, dan merancang kota idaman ramah anak, atlet, dan lansia!
+    </p>
+    <div style="background:rgba(255,255,255,0.15); padding:16px; border-radius:14px; max-width:400px; margin:0 auto 20px;">
+      <div style="font-size:1.1rem; font-weight:700;">Skor Prestasi Akhir: <span id="finalScoreVal">0</span> / 400</div>
+      <div style="font-size:0.95rem; color:#BAE6FD; margin-top:4px;">Predikat: Diplomat & Insinyur Berkelanjutan ⭐⭐⭐</div>
+    </div>
+    <button onclick="location.reload()" style="background:#FEF3C7; color:#92400E; border:none; padding:12px 28px; border-radius:30px; font-weight:800; font-size:1rem; cursor:pointer;">
+      🔄 Mainkan Misi Lagi
+    </button>
+  </div>
+</div>
+
+<script>
+  // =========================================================================
+  // AUDIO SYNTHESIZER (WEB AUDIO API)
+  // =========================================================================
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) audioCtx = new AudioCtx();
+  }
+
+  function playJoy() {
+    try {
+      initAudio();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, now);        // A4
+      osc.frequency.exponentialRampToValueAtTime(554.37, now + 0.1); // C#5
+      osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.2); // E5
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.3);    // A5
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.45);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.45);
+    } catch(e) {}
+  }
+
+  function playOops() {
+    try {
+      initAudio();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(146.83, now + 0.25);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.28);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    } catch(e) {}
+  }
+
+  function playFanfare() {
+    try {
+      initAudio();
+      const notes = [440, 554.37, 659.25, 880, 1108.73];
+      notes.forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const t = audioCtx.currentTime + i * 0.14;
+        osc.frequency.setValueAtTime(freq, t);
+        gain.gain.setValueAtTime(0.2, t);
+        gain.gain.linearRampToValueAtTime(0, t + 0.4);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t);
+        osc.stop(t + 0.4);
+      });
+    } catch(e) {}
+  }
+
+  // =========================================================================
+  // STATE & TELEMETRY
+  // =========================================================================
+  let totalScore = 0;
+  let layerDone = false;
+  let djuandaDone = false;
+  let ethicsDone = false;
+  let placedBps = { 1: false, 2: false, 3: false };
+
+  function updateScore(pts) {
+    totalScore += pts;
+    document.getElementById('scoreMishka').textContent = totalScore;
+    document.getElementById('finalScoreVal').textContent = totalScore;
+
+    if (totalScore >= 350) {
+      const vCard = document.getElementById('victoryCard');
+      vCard.style.display = 'block';
+      vCard.scrollIntoView({ behavior: 'smooth' });
+      playFanfare();
+      try {
+        if (typeof confetti === 'function') {
+          confetti({ particleCount: 140, spread: 90, origin: { y: 0.6 } });
+        }
+      } catch(e) {}
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(totalScore, 400, 3, "Menuntaskan Ekspedisi Nusantara Coastline & Eco-City Architect Mishka");
+      }
+    }
+  }
+
+  // =========================================================================
+  // MISI 1: HIERARCHY & DRAINAGE
+  // =========================================================================
+  function inspectLayer(num) {
+    initAudio();
+    const rows = document.querySelectorAll('.venn-row');
+    rows.forEach(r => r.classList.remove('active-layer'));
+    rows[num - 1].classList.add('active-layer');
+  }
+
+  let simActive = false;
+  function runDrainageSim() {
+    initAudio();
+    simActive = !simActive;
+    const res = document.getElementById('drainageResult');
+    const btn = document.getElementById('btnSimDrainage');
+
+    if (simActive) {
+      btn.innerText = '🔄 Reset Saluran Air Bersih';
+      res.innerHTML = '🚨 <strong>EFEK DOMINO TERJADI!</strong><br>1 karung sampah di selokan RT tersangkut ➔ Menyumbat gorong-gorong RW ➔ Genangan air meluap ke jalan raya Kelurahan setinggi 40 cm ➔ Puskesmas dan arena olahraga tidak bisa diakses warga!';
+      playOops();
+    } else {
+      btn.innerText = '🌊 Klik untuk Simulasi Sampah RT';
+      res.innerHTML = '✨ Saluran air RT telah dibersihkan gotong royong! Aliran air kembali lancar dan seluruh fasilitas kelurahan aman dari banjir.';
+      playJoy();
+    }
+  }
+
+  function ansLayer(btn, isCorrect) {
+    initAudio();
+    const btns = document.getElementById('qGroup1').querySelectorAll('.choice-btn');
+    const fb = document.getElementById('fbLayer');
+
+    if (layerDone) return;
+    btns.forEach(b => b.disabled = true);
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.className = 'feedback-banner show success';
+      fb.innerHTML = '📐 <strong>Nalar Analisis Luar Biasa!</strong> Sebagai himpunan bagian terkecil, data RT adalah fondasi keakuratan kebijakan publik tingkat kota! (+50 Poin)';
+      playJoy();
+      layerDone = true;
+      updateScore(50);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer("Teori himpunan RT dasar data kota", true, 50, "Nalar C4 tepat");
+      }
+    } else {
+      btn.classList.add('wrong');
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Kebijakan kota bergantung pada ketepatan data primer yang dicatat di tingkat RT.';
+      playOops();
+      setTimeout(() => {
+        btns.forEach(b => b.disabled = false);
+        btn.classList.remove('wrong');
+      }, 1500);
+    }
+  }
+
+  // =========================================================================
+  // MISI 2: DJUANDA MARITIME SIMULATOR
+  // =========================================================================
+  function setMaritimeMode(mode) {
+    initAudio();
+    const btnCol = document.getElementById('btnModeColonial');
+    const btnDju = document.getElementById('btnModeDjuanda');
+    const poly = document.getElementById('djuandaPoly');
+    const rings = document.getElementById('colonialRings');
+    const lbl = document.getElementById('djuandaLabel');
+
+    const vLuas = document.getElementById('valLuas');
+    const vStatus = document.getElementById('valStatus');
+    const vRatio = document.getElementById('valRatio');
+
+    if (mode === 'djuanda') {
+      btnCol.classList.remove('active-mode');
+      btnDju.classList.add('active-mode');
+
+      poly.style.display = 'block';
+      rings.style.display = 'none';
+      lbl.style.display = 'block';
+
+      vLuas.innerText = '± 5.193.250 km²';
+      vLuas.style.color = '#34D399';
+      vStatus.innerText = 'Perairan Pedalaman Kedaulatan Mutlak';
+      vStatus.style.color = '#34D399';
+      vRatio.innerText = '2.5x Lipat Luas!';
+      vRatio.style.color = '#34D399';
+      playJoy();
+    } else {
+      btnDju.classList.remove('active-mode');
+      btnCol.classList.add('active-mode');
+
+      poly.style.display = 'none';
+      rings.style.display = 'block';
+      lbl.style.display = 'none';
+
+      vLuas.innerText = '± 2.000.000 km²';
+      vLuas.style.color = '#38BDF8';
+      vStatus.innerText = 'Laut Bebas Asing Membelah';
+      vStatus.style.color = '#F87171';
+      vRatio.innerText = '1.0x Dasar';
+      vRatio.style.color = '#38BDF8';
+      playOops();
+    }
+  }
+
+  function ansDjuanda(btn, isCorrect) {
+    initAudio();
+    const btns = document.getElementById('qGroup2').querySelectorAll('.choice-btn');
+    const fb = document.getElementById('fbDjuanda');
+
+    if (djuandaDone) return;
+    btns.forEach(b => b.disabled = true);
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.className = 'feedback-banner show success';
+      fb.innerHTML = '🌊 <strong>Kemenangan Diplomasi & Matematika Geopolitik!</strong> Penarikan garis pangkal lurus (straight baseline) mengikat 17.000 pulau menjadi satu archipelagic state yang diakui hukum laut internasional UNCLOS 1982! (+50 Poin)';
+      playJoy();
+      djuandaDone = true;
+      updateScore(50);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer("Garis pangkal lurus Djuanda menyatukan laut", true, 50, "Geopolitik maritim C4 tepat");
+      }
+    } else {
+      btn.classList.add('wrong');
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Deklarasi Djuanda adalah kemenangan diplomasi cerdas berbasis penarikan garis batas geografis resmi, bukan pembelian senjata!';
+      playOops();
+      setTimeout(() => {
+        btns.forEach(b => b.disabled = false);
+        btn.classList.remove('wrong');
+      }, 1500);
+    }
+  }
+
+  // =========================================================================
+  // MISI 3: BLUEPRINT & ETHICS
+  // =========================================================================
+  function placeBlueprint(num) {
+    initAudio();
+    if (placedBps[num]) return;
+
+    placedBps[num] = true;
+    const elem = document.getElementById(`bp-${num}`);
+    elem.classList.add('placed');
+    elem.style.background = '#ECFDF5';
+    elem.style.borderColor = '#10B981';
+
+    playJoy();
+    updateScore(50);
+
+    const fb = document.getElementById('fbBlueprint');
+    fb.className = 'feedback-banner show success';
+    fb.innerHTML = `🏗️ <strong>Zonasi ${num} Berhasil Dipasang!</strong> Kota impian semakin ramah bagi pesenam, skater, dan seluruh pelajar cerdas! (+50 Poin)`;
+
+    if (window.PKBM_SYNC) {
+      window.PKBM_SYNC.reportAnswer(`Memasang fasilitas blueprint zona ${num}`, true, 50, "Zonasi kota terpasang");
+    }
+  }
+
+  function ansEthics(btn, isCorrect) {
+    initAudio();
+    const btns = document.getElementById('qGroup3').querySelectorAll('.choice-btn');
+    const fb = document.getElementById('fbEthics');
+
+    if (ethicsDone) return;
+    btns.forEach(b => b.disabled = true);
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.className = 'feedback-banner show success';
+      fb.innerHTML = '🌱 <strong>Integritas Atlet Beradab!</strong> Seperti halnya satu peniti di matras senam atau ceceran minyak di skatepark, kepedulianmu menyelamatkan keselamatan semua orang! (+50 Poin)';
+      playJoy();
+      ethicsDone = true;
+      updateScore(50);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer("Etika keselamatan arena senam dan skate", true, 50, "Kasus etika C4 tepat");
+      }
+    } else {
+      btn.classList.add('wrong');
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Membiarkan ceceran minyak di area publik bisa mencelakakan atlet dan anak-anak lain yang meluncur.';
+      playOops();
+      setTimeout(() => {
+        btns.forEach(b => b.disabled = false);
+        btn.classList.remove('wrong');
+      }, 1500);
+    }
+  }
+</script>
+
+<!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
+<script src="../assets/js/pkbm_sync.js"></script>
+</body>
+</html>

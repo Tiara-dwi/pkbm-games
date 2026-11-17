@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Pendidikan Pancasila Bab 4: Garuda Shield & Skatepark Detective Quest (Aqlan)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --secondary: #0284C7;
+      --accent: #F59E0B;
+      --accent-light: #FEF3C7;
+      --bg: #F0FDF4;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --radius: 20px;
+      --shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.15), 0 8px 10px -6px rgba(5, 150, 105, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 50%, #F0FDF4 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 16px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #065F46 0%, #047857 60%, #059669 100%);
+      padding: 26px 20px;
+      border-radius: var(--radius);
+      color: white;
+      box-shadow: 0 12px 28px rgba(4, 120, 87, 0.25);
+      border: 3px solid #6EE7B7;
+      position: relative;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: #FEF3C7;
+      color: #92400E;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.1rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #A7F3D0;
+      font-weight: 600;
+    }
+
+    /* STUDENT HERO CARD */
+    .hero-student {
+      background: white;
+      border-radius: 16px;
+      padding: 16px 22px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      border: 2px solid #A7F3D0;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar-icon {
+      width: 52px;
+      height: 52px;
+      background: #ECFDF5;
+      border: 2px solid #10B981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .student-title {
+      font-size: 0.8rem;
+      color: #047857;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .student-name {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.35rem;
+      color: #064E3B;
+    }
+
+    .score-badge {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 2px solid #FCD34D;
+      padding: 8px 18px;
+      border-radius: 14px;
+      font-family: 'Fredoka', cursive;
+      font-size: 1.3rem;
+      color: #B45309;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* MISSION SECTIONS */
+    .mission-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px 22px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      border: 2px solid #E2E8F0;
+      transition: border-color 0.3s;
+    }
+
+    .mission-card.active-mission {
+      border-color: #10B981;
+    }
+
+    .mission-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .tag-emerald { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+    .tag-blue { background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; }
+    .tag-amber { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+
+    .mission-head-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.5rem;
+      color: #064E3B;
+      margin-bottom: 8px;
+    }
+
+    .mission-desc {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    /* ZONA 1: GARUDA SHIELD REBUILDER */
+    .shield-arena {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: center;
+      background: #F8FAFC;
+      padding: 20px;
+      border-radius: 16px;
+      border: 2px dashed #CBD5E1;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .shield-arena { grid-template-columns: 1fr; }
+    }
+
+    .shield-display {
+      position: relative;
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 4px solid #D97706;
+      border-radius: 30px 30px 140px 140px;
+      padding: 24px 18px 40px;
+      min-height: 320px;
+      box-shadow: 0 10px 20px rgba(217, 119, 6, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .shield-title-label {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.1rem;
+      color: #92400E;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .shield-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 12px;
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .shield-slot {
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px dashed #B45309;
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #78350F;
+      min-height: 75px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .shield-slot.slot-center {
+      grid-column: span 2;
+      background: #FEF9C3;
+      border-color: #EAB308;
+    }
+
+    .shield-slot.filled {
+      background: #ECFDF5;
+      border: 2px solid #10B981;
+      color: #064E3B;
+      animation: popIn 0.3s ease;
+    }
+
+    .symbol-inventory {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .symbol-chip {
+      background: white;
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 700;
+      color: #1E293B;
+      font-size: 0.95rem;
+    }
+
+    .symbol-chip:hover {
+      border-color: #10B981;
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+
+    .symbol-chip.selected {
+      border-color: #059669;
+      background: #ECFDF5;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+    }
+
+    .symbol-chip.used {
+      opacity: 0.45;
+      pointer-events: none;
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+    }
+
+    /* ZONA 2: SKATEPARK SCENARIOS */
+    .scenario-box {
+      background: #F8FAFC;
+      border-left: 5px solid #0284C7;
+      padding: 18px 20px;
+      border-radius: 0 16px 16px 0;
+      margin-bottom: 16px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .choices-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .choice-btn {
+      background: white;
+      border: 2px solid #CBD5E1;
+      border-radius: 14px;
+      padding: 16px 18px;
+      text-align: left;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #1E293B;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .choice-btn:hover:not(:disabled) {
+      border-color: #0284C7;
+      background: #F0F9FF;
+      transform: translateY(-2px);
+    }
+
+    .choice-btn.correct {
+      border-color: #10B981;
+      background: #ECFDF5;
+      color: #064E3B;
+    }
+
+    .choice-btn.wrong {
+      border-color: #EF4444;
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    /* FEEDBACK BANNERS */
+    .feedback-banner {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-top: 14px;
+      display: none;
+    }
+
+    .feedback-banner.show { display: block; animation: popIn 0.3s ease; }
+    .feedback-banner.success { background: #ECFDF5; color: #065F46; border: 2px solid #6EE7B7; }
+    .feedback-banner.error { background: #FEF2F2; color: #991B1B; border: 2px solid #FCA5A5; }
+
+    /* VICTORY CARD */
+    .victory-card {
+      display: none;
+      background: linear-gradient(135deg, #065F46 0%, #047857 100%);
+      color: white;
+      text-align: center;
+      padding: 36px 24px;
+      border-radius: var(--radius);
+      box-shadow: 0 15px 35px rgba(4, 120, 87, 0.4);
+      border: 4px solid #6EE7B7;
+      margin-top: 24px;
+      animation: popIn 0.4s ease;
+    }
+
+    .victory-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.3rem;
+      margin-bottom: 12px;
+      color: #FEF3C7;
+    }
+
+    .victory-desc {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 24px;
+      color: #D1FAE5;
+      line-height: 1.6;
+    }
+
+    .victory-badge {
+      display: inline-block;
+      background: #FEF3C7;
+      color: #92400E;
+      font-family: 'Fredoka', cursive;
+      font-size: 1.4rem;
+      padding: 10px 28px;
+      border-radius: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- HEADER -->
+  <header>
+    <div class="badge-top">🛡️ PENDIDIKAN PANCASILA • BAB 4</div>
+    <h1>Garuda Shield & Skatepark Quest</h1>
+    <div class="subtitle">Eksplorasi Sila-Sila Pancasila, Simbol Perisai & Integritas Ksatria di Skatepark</div>
+  </header>
+
+  <!-- STUDENT HERO CARD -->
+  <div class="hero-student">
+    <div class="student-info">
+      <div class="avatar-icon">🛹</div>
+      <div>
+        <div class="student-title">Detektif Ksatria Terpilih</div>
+        <div class="student-name">Aqlan • Kelas 4 SD</div>
+      </div>
+    </div>
+    <div class="score-badge">
+      <span>⭐ Poin Ksatria:</span>
+      <span id="scoreAqlan">0</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MISI 1: THE GOLDEN SHIELD REBUILDER -->
+  <!-- ========================================================================= -->
+  <div class="mission-card active-mission" id="cardMisi1">
+    <div class="mission-tag tag-emerald">Misi 1 • Rekonstruksi Perisai</div>
+    <h2 class="mission-head-title">Bedah Perisai Sakti Garuda Pancasila</h2>
+    <p class="mission-desc">
+      Aqlan, pasang 5 simbol sakti pada perisai Garuda di bawah ini! Pilih salah satu simbol di sebelah kanan, lalu klik kotak slot yang sesuai di dalam perisai emas.
+    </p>
+
+    <div class="shield-arena">
+      <!-- PERISAI GARUDA -->
+      <div class="shield-display">
+        <div class="shield-title-label">🛡️ Perisai Garuda</div>
+        <div class="shield-grid">
+          <!-- Sila 4 (Kiri Atas) -->
+          <div class="shield-slot" id="slot-4" onclick="placeSymbol(4)">
+            <span>Kiri Atas</span>
+            <small>Sila ke-4</small>
+          </div>
+          <!-- Sila 3 (Kanan Atas) -->
+          <div class="shield-slot" id="slot-3" onclick="placeSymbol(3)">
+            <span>Kanan Atas</span>
+            <small>Sila ke-3</small>
+          </div>
+          <!-- Sila 1 (Tengah) -->
+          <div class="shield-slot slot-center" id="slot-1" onclick="placeSymbol(1)">
+            <span>Jantung Tengah</span>
+            <small>Sila ke-1</small>
+          </div>
+          <!-- Sila 5 (Kiri Bawah) -->
+          <div class="shield-slot" id="slot-5" onclick="placeSymbol(5)">
+            <span>Kiri Bawah</span>
+            <small>Sila ke-5</small>
+          </div>
+          <!-- Sila 2 (Kanan Bawah) -->
+          <div class="shield-slot" id="slot-2" onclick="placeSymbol(2)">
+            <span>Kanan Bawah</span>
+            <small>Sila ke-2</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- INVENTORI SIMBOL -->
+      <div class="symbol-inventory">
+        <div class="symbol-chip" id="chip-1" onclick="selectSymbol(1)">
+          <span style="font-size:1.5rem;">⭐</span>
+          <div>
+            <strong>Bintang Emas Bersudut Lima</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Cahaya rohani kompas iman & doa</div>
+          </div>
+        </div>
+        <div class="symbol-chip" id="chip-2" onclick="selectSymbol(2)">
+          <span style="font-size:1.5rem;">⛓️</span>
+          <div>
+            <strong>Gelang Rantai Bulat & Persegi</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Laki-laki & perempuan saling tolong</div>
+          </div>
+        </div>
+        <div class="symbol-chip" id="chip-3" onclick="selectSymbol(3)">
+          <span style="font-size:1.5rem;">🌳</span>
+          <div>
+            <strong>Pohon Beringin Sulur Rindang</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Tempat bernaung persatuan bangsa</div>
+          </div>
+        </div>
+        <div class="symbol-chip" id="chip-4" onclick="selectSymbol(4)">
+          <span style="font-size:1.5rem;">🐂</span>
+          <div>
+            <strong>Kepala Banteng Tangguh</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Kekuatan musyawarah mufakat</div>
+          </div>
+        </div>
+        <div class="symbol-chip" id="chip-5" onclick="selectSymbol(5)">
+          <span style="font-size:1.5rem;">🌾</span>
+          <div>
+            <strong>Padi & Kapas Makmur</strong>
+            <div style="font-size:0.8rem; color:#64748B;">Kebutuhan pangan & sandang adil</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feedback-banner" id="fbShield"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MISI 2: SKATEPARK MORAL DILEMMA -->
+  <!-- ========================================================================= -->
+  <div class="mission-card" id="cardMisi2">
+    <div class="mission-tag tag-blue">Misi 2 • Uji Integritas Skatepark</div>
+    <h2 class="mission-head-title">Dilema Ksatria di Arena Skateboard (Kasus C4)</h2>
+    <p class="mission-desc">
+      Pancasila bukan cuma dihafalkan, tapi dibuktikan di kehidupan sehari-hari! Bantu Aqlan mengambil keputusan ksatria terbaik saat bermain di skatepark.
+    </p>
+
+    <!-- Skenario 1 -->
+    <div class="scenario-box">
+      <strong>🛹 Kasus 1: Anak Baru Terjatuh di Bowl</strong><br>
+      Seorang anak pindahan dari luar kota jatuh di mangkok skate (bowl). Papannya retak dan dia meringis kesakitan. Dua anak di pinggir arena malah tertawa mengejeknya. Sebagai ksatria skater sejati, apa tindakanmu?
+    </div>
+    <div class="choices-grid" id="qGroup1">
+      <button class="choice-btn" onclick="ansScenario(this, false, 'q1', 'Menertawakan teman jatuh melanggar rasa kemanusiaan!')">
+        <span>❌</span> A. Ikut tertawa agar dianggap keren oleh anak-anak lain.
+      </button>
+      <button class="choice-btn" onclick="ansScenario(this, true, 'q1', 'Hebat! Membantu teman yang jatuh dan meminjamkan alat adalah pengamalan Sila ke-2 (Kemanusiaan yang Adil dan Beradab)! (+50 Poin)')">
+        <span>✅</span> B. Segera meluncur menghampirinya, membantu berdiri, dan meminjamkan alat obeng T-tool untuk mengecek papannya.
+      </button>
+      <button class="choice-btn" onclick="ansScenario(this, false, 'q1', 'Ksatria Pancasila tidak bersikap cuek saat ada orang yang kesakitan!')">
+        <span>❌</span> C. Pura-pura tidak melihat dan langsung meluncur ke rampa lain.
+      </button>
+    </div>
+    <div class="feedback-banner" id="fbQ1"></div>
+
+    <!-- Skenario 2 -->
+    <div class="scenario-box" style="margin-top:24px;">
+      <strong>🛹 Kasus 2: Rebutan Drop-In di Mini Ramp</strong><br>
+      Antrean di rampa mini sangat ramai. Seorang anak berbadan besar menyerobot antrean sambil berteriak: <em>"Aku paling senior di sini, aku meluncur duluan!"</em> Suasana mulai memanas dan saling dorong. Sila ke berapa yang harus kamu amalkan untuk mengatasi ini?
+    </div>
+    <div class="choices-grid" id="qGroup2">
+      <button class="choice-btn" onclick="ansScenario(this, false, 'q2', 'Kekerasan fisik dan adu otot bertentangan dengan nilai musyawarah!')">
+        <span>❌</span> A. Menantang duel adu otot di luar skatepark.
+      </button>
+      <button class="choice-btn" onclick="ansScenario(this, true, 'q2', 'Tepat! Musyawarah dan membuat kesepakatan tertib adalah cerminan Sila ke-4 (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan)! (+50 Poin)')">
+        <span>✅</span> B. Mengajak semua anak berkumpul bermusyawarah secara tenang, lalu membuat aturan antrean bergantian: tiap anak meluncur 1 menit secara adil.
+      </button>
+      <button class="choice-btn" onclick="ansScenario(this, false, 'q2', 'Mengalah dengan ngambek tidak menyelesaikan masalah aturan di ruang publik.')">
+        <span>❌</span> C. Langsung pulang ke rumah sambil menangis ngambek.
+      </button>
+    </div>
+    <div class="feedback-banner" id="fbQ2"></div>
+
+    <!-- Skenario 3 -->
+    <div class="scenario-box" style="margin-top:24px;">
+      <strong>🛹 Kasus 3: Keadilan Meminjamkan Fasilitas</strong><br>
+      Kamu membawa perlengkapan lengkap termasuk pelindung lutut (knee pad) cadangan. Temanmu ingin mencoba trik drop-in tinggi tetapi tidak memiliki pelindung lutut sehingga sangat rawan cedera. Apa pengamalan Sila ke-5 yang paling tepat?
+    </div>
+    <div class="choices-grid" id="qGroup3">
+      <button class="choice-btn" onclick="ansScenario(this, true, 'q3', 'Luar biasa! Berbagi fasilitas agar teman aman dan bisa berolahraga bersama adalah cerminan Sila ke-5 (Keadilan Sosial)! (+50 Poin)')">
+        <span>✅</span> A. Ikhlas meminjamkan pelindung lutut cadanganmu agar dia terlindungi dan bisa bermain bersama secara aman.
+      </button>
+      <button class="choice-btn" onclick="ansScenario(this, false, 'q3', 'Pelit berbagi fasilitas olahraga umum tidak mencerminkan keadilan sosial!')">
+        <span>❌</span> B. Menyembunyikan pelindung cadangan di dalam tas karena takut kotor.
+      </button>
+      <button class="choice-btn" onclick="ansScenario(this, false, 'q3', 'Menyewakan barang pribadi ke teman bermain tidak mencerminkan persaudaraan.')">
+        <span>❌</span> C. Menyewakannya dengan harga mahal untuk mencari keuntungan.
+      </button>
+    </div>
+    <div class="feedback-banner" id="fbQ3"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MISI 3: 18 AGUSTUS 1945 CHRONO QUEST -->
+  <!-- ========================================================================= -->
+  <div class="mission-card" id="cardMisi3">
+    <div class="mission-tag tag-amber">Misi 3 • Mesin Waktu Sejarah</div>
+    <h2 class="mission-head-title">Sidang PPKI 18 Agustus 1945: Ksatria Berlapang Dada</h2>
+    <p class="mission-desc">
+      Detektif Aqlan melompat ke momen genting sehari setelah proklamasi kemerdekaan! Pahami rahasia mengapa para pendiri bangsa rela berjiwa besar demi Indonesia.
+    </p>
+
+    <div class="scenario-box">
+      <strong>📜 Momen Penentuan 18 Agustus 1945:</strong><br>
+      Pada pagi hari sebelum sidang PPKI dimulai, Bung Hatta menyampaikan pesan dari saudara-saudara kita di kawasan Indonesia Timur mengenai 7 kata dalam Piagam Jakarta. Para tokoh Islam seperti Ki Bagus Hadikusumo dan KH Wahid Hasyim rela bermusyawarah dan sepakat mengubahnya menjadi kalimat yang mempersatukan: <em>"Ketuhanan Yang Maha Esa"</em>.<br><br>
+      <strong>Mengapa para pendiri bangsa rela mengalah dan berlapang dada?</strong>
+    </div>
+
+    <div class="choices-grid" id="qGroup4">
+      <button class="choice-btn" onclick="ansHistory(this, true)">
+        <span>✅</span> <strong>A. Demi menjaga keutuhan & persatuan seluruh rakyat Indonesia dari Sabang sampai Merauke agar NKRI tidak terpecah-belah.</strong>
+      </button>
+      <button class="choice-btn" onclick="ansHistory(this, false)">
+        <span>❌</span> B. Karena mereka takut berdebat panjang dan ingin cepat-cepat selesai sidang.
+      </button>
+      <button class="choice-btn" onclick="ansHistory(this, false)">
+        <span>❌</span> C. Karena mereka dipaksa oleh pihak luar negeri yang sedang menjajah.
+      </button>
+    </div>
+    <div class="feedback-banner" id="fbHistory"></div>
+  </div>
+
+  <!-- VICTORY CARD -->
+  <div class="victory-card" id="victoryCard">
+    <div class="victory-badge">🏆 KSATRIA GARUDA SEJATI 🏆</div>
+    <h2 class="victory-title">Selamat, Detektif Aqlan!</h2>
+    <p class="victory-desc">
+      Aqlan telah berhasil menuntaskan seluruh misi rekonstruksi perisai Garuda, menyelesaikan dilema moral di skatepark, dan memahami jiwa besar para pendiri bangsa pada 18 Agustus 1945!
+    </p>
+    <div style="background:rgba(255,255,255,0.15); padding:16px; border-radius:14px; max-width:400px; margin:0 auto 20px;">
+      <div style="font-size:1.1rem; font-weight:700;">Skor Akhir Integritas: <span id="finalScoreVal">0</span> / 400</div>
+      <div style="font-size:0.95rem; color:#A7F3D0; margin-top:4px;">Predikat: Ksatria Pancasila Teladan ⭐⭐⭐</div>
+    </div>
+    <button onclick="location.reload()" style="background:#FEF3C7; color:#92400E; border:none; padding:12px 28px; border-radius:30px; font-weight:800; font-size:1rem; cursor:pointer;">
+      🔄 Mainkan Misi Lagi
+    </button>
+  </div>
+</div>
+
+<script>
+  // =========================================================================
+  // AUDIO SYNTHESIZER (WEB AUDIO API)
+  // =========================================================================
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) audioCtx = new AudioCtx();
+  }
+
+  function playJoy() {
+    try {
+      initAudio();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(523.25, now);       // C5
+      osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
+      osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2); // G5
+      osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.3); // C6
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.4);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.4);
+    } catch(e) {}
+  }
+
+  function playOops() {
+    try {
+      initAudio();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(164.81, now + 0.25);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.28);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    } catch(e) {}
+  }
+
+  function playFanfare() {
+    try {
+      initAudio();
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const t = audioCtx.currentTime + i * 0.12;
+        osc.frequency.setValueAtTime(freq, t);
+        gain.gain.setValueAtTime(0.2, t);
+        gain.gain.linearRampToValueAtTime(0, t + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t);
+        osc.stop(t + 0.35);
+      });
+    } catch(e) {}
+  }
+
+  // =========================================================================
+  // STATE & TELEMETRY
+  // =========================================================================
+  let totalScore = 0;
+  let selectedChipId = null;
+  let placedSlots = { 1: false, 2: false, 3: false, 4: false, 5: false };
+  let scenarioDone = {};
+  let historyDone = false;
+
+  function updateScore(pts) {
+    totalScore += pts;
+    document.getElementById('scoreAqlan').textContent = totalScore;
+    document.getElementById('finalScoreVal').textContent = totalScore;
+
+    if (totalScore >= 350) {
+      const vCard = document.getElementById('victoryCard');
+      vCard.style.display = 'block';
+      vCard.scrollIntoView({ behavior: 'smooth' });
+      playFanfare();
+      try {
+        if (typeof confetti === 'function') {
+          confetti({ particleCount: 130, spread: 90, origin: { y: 0.6 } });
+        }
+      } catch(e) {}
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(totalScore, 400, 3, "Menuntaskan Ekspedisi Garuda Shield & Skatepark Quest Aqlan");
+      }
+    }
+  }
+
+  // =========================================================================
+  // MISI 1: GARUDA SHIELD LOGIC
+  // =========================================================================
+  const symbolNames = {
+    1: "Bintang Emas (Sila 1)",
+    2: "Gelang Rantai (Sila 2)",
+    3: "Pohon Beringin (Sila 3)",
+    4: "Kepala Banteng (Sila 4)",
+    5: "Padi & Kapas (Sila 5)"
+  };
+
+  const symbolIcons = {
+    1: "⭐", 2: "⛓️", 3: "🌳", 4: "🐂", 5: "🌾"
+  };
+
+  function selectSymbol(num) {
+    if (placedSlots[num]) return;
+    initAudio();
+    selectedChipId = num;
+    document.querySelectorAll('.symbol-chip').forEach(c => c.classList.remove('selected'));
+    document.getElementById(`chip-${num}`).classList.add('selected');
+
+    const fb = document.getElementById('fbShield');
+    fb.className = 'feedback-banner show success';
+    fb.innerHTML = `👉 Kamu memilih <strong>${symbolNames[num]}</strong>. Sekarang klik posisi slot yang cocok pada perisai emas!`;
+  }
+
+  function placeSymbol(slotNum) {
+    initAudio();
+    const fb = document.getElementById('fbShield');
+
+    if (!selectedChipId) {
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = '⚠️ Pilih salah satu simbol di sebelah kanan terlebih dahulu!';
+      playOops();
+      return;
+    }
+
+    if (placedSlots[slotNum]) {
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = 'Slot ini sudah terisi dengan benar!';
+      return;
+    }
+
+    if (selectedChipId === slotNum) {
+      placedSlots[slotNum] = true;
+      const slotElem = document.getElementById(`slot-${slotNum}`);
+      slotElem.classList.add('filled');
+      slotElem.innerHTML = `<span style="font-size:1.8rem;">${symbolIcons[slotNum]}</span><strong>${symbolNames[slotNum]}</strong>`;
+
+      const chipElem = document.getElementById(`chip-${slotNum}`);
+      chipElem.classList.remove('selected');
+      chipElem.classList.add('used');
+      selectedChipId = null;
+
+      playJoy();
+      updateScore(40);
+
+      fb.className = 'feedback-banner show success';
+      fb.innerHTML = `🌟 <strong>Hebat! ${symbolNames[slotNum]} berhasil terpasang sempurna!</strong> (+40 Poin)`;
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer(`Memasang ${symbolNames[slotNum]}`, true, 40, "Posisi perisai tepat");
+      }
+    } else {
+      playOops();
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = `❌ <em>Kurang tepat!</em> ${symbolNames[selectedChipId]} tidak berada di posisi tersebut. Coba periksa posisi yang lain!`;
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer(`Salah pasang ${symbolNames[selectedChipId]} ke slot ${slotNum}`, false, 0, "Slot salah");
+      }
+    }
+  }
+
+  // =========================================================================
+  // MISI 2: SKATEPARK SCENARIOS
+  // =========================================================================
+  function ansScenario(btn, isCorrect, qId, feedbackText) {
+    initAudio();
+    const container = btn.parentElement;
+    const btns = container.querySelectorAll('.choice-btn');
+    const fb = document.getElementById(`fb${qId.toUpperCase()}`);
+
+    if (scenarioDone[qId]) return;
+
+    btns.forEach(b => b.disabled = true);
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.className = 'feedback-banner show success';
+      fb.innerHTML = feedbackText;
+      playJoy();
+      scenarioDone[qId] = true;
+      updateScore(50);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer(btn.innerText.slice(0, 30), true, 50, feedbackText);
+      }
+    } else {
+      btn.classList.add('wrong');
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = feedbackText;
+      playOops();
+
+      // Izinkan mencoba lagi setelah jeda
+      setTimeout(() => {
+        btns.forEach(b => b.disabled = false);
+        btn.classList.remove('wrong');
+      }, 1500);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer(btn.innerText.slice(0, 30), false, 0, feedbackText);
+      }
+    }
+  }
+
+  // =========================================================================
+  // MISI 3: HISTORY QUEST
+  // =========================================================================
+  function ansHistory(btn, isCorrect) {
+    initAudio();
+    const btns = document.getElementById('qGroup4').querySelectorAll('.choice-btn');
+    const fb = document.getElementById('fbHistory');
+
+    if (historyDone) return;
+    btns.forEach(b => b.disabled = true);
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.className = 'feedback-banner show success';
+      fb.innerHTML = '🤝 <strong>Pemikiran Ksatria Sejati!</strong> Mengalah bukan tanda kalah, melainkan wujud cinta tanah air dan lapang dada agar Indonesia tetap utuh bersatu dari Sabang sampai Merauke! (+50 Poin)';
+      playJoy();
+      historyDone = true;
+      updateScore(50);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer("Rela berlapang dada demi persatuan", true, 50, "Nalar sejarah C4 tepat");
+      }
+    } else {
+      btn.classList.add('wrong');
+      fb.className = 'feedback-banner show error';
+      fb.innerHTML = '❌ <em>Kurang tepat.</em> Para pendiri bangsa kita adalah tokoh-tokoh berani dan cerdas. Mereka rela mengalah semata-mata demi menjaga persatuan bangsa!';
+      playOops();
+
+      setTimeout(() => {
+        btns.forEach(b => b.disabled = false);
+        btn.classList.remove('wrong');
+      }, 1500);
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportAnswer(btn.innerText.slice(0, 30), false, 0, "Opsi sejarah salah");
+      }
+    }
+  }
+</script>
+
+<!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
+<script src="../assets/js/pkbm_sync.js"></script>
+</body>
+</html>
