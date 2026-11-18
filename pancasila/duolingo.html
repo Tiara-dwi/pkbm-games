@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pancasila Quest • Duolingo Style PKBM Penerus Bangsa</title>
+  
+  <!-- Duolingo Brand Typography: Nunito & Fredoka -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================================
+       DUOLINGO DESIGN SYSTEM DNA
+       ========================================================================= */
+    :root {
+      --duo-green: #58cc02;
+      --duo-green-dark: #46a302;
+      --duo-green-light: #d7ffb8;
+      --duo-green-text: #428200;
+
+      --duo-blue: #1cb0f6;
+      --duo-blue-dark: #1899d6;
+      --duo-blue-light: #ddf4ff;
+
+      --duo-red: #ff4b4b;
+      --duo-red-dark: #ea2b2b;
+      --duo-red-light: #ffdfe0;
+      --duo-red-text: #ea2b2b;
+
+      --duo-yellow: #ffc800;
+      --duo-yellow-dark: #e5b400;
+
+      --duo-orange: #ff9600;
+      --duo-orange-dark: #e68600;
+
+      --duo-gray-border: #e5e5e5;
+      --duo-gray-dark: #cecece;
+      --duo-gray-text: #777777;
+      --duo-text-main: #3c3c3c;
+      --duo-bg: #f7f7f7;
+      --duo-card-bg: #ffffff;
+      
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--duo-bg);
+      color: var(--duo-text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* TOP HEADER BAR */
+    .duo-header {
+      background: #ffffff;
+      border-bottom: 2px solid var(--duo-gray-border);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-close {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: #afafaf;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .btn-close:hover {
+      background: #f0f0f0;
+      color: var(--duo-text-main);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      max-width: 450px;
+      height: 16px;
+      background: var(--duo-gray-border);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      margin: 0 16px;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #58cc02 0%, #7ee61b 100%);
+      border-radius: var(--radius-pill);
+      transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+    .progress-bar-fill::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      right: 6px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-pill);
+    }
+
+    .header-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
+    .stat-badge:hover {
+      background: #f0f0f0;
+    }
+    .stat-fire { color: var(--duo-orange); }
+    .stat-gem { color: var(--duo-blue); }
+    .stat-heart { color: var(--duo-red); }
+
+    /* STUDENT SELECTOR BAR (OFFLINE STUDENTS) */
+    .student-bar {
+      background: #ffffff;
+      border-bottom: 2px solid var(--duo-gray-border);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .student-bar::-webkit-scrollbar { display: none; }
+    
+    .student-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #999;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+
+    .student-pill {
+      background: var(--duo-bg);
+      border: 2px solid var(--duo-gray-border);
+      border-radius: var(--radius-pill);
+      padding: 5px 12px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--duo-text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .student-pill:hover {
+      border-color: var(--duo-blue);
+      background: var(--duo-blue-light);
+    }
+    .student-pill.active {
+      background: var(--duo-blue);
+      border-color: var(--duo-blue-dark);
+      color: #ffffff;
+      box-shadow: 0 2px 0 var(--duo-blue-dark);
+    }
+
+    /* MAIN CONTAINER */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 20px 140px;
+      max-width: 680px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* VIEW 1: DUOLINGO STEPPING-STONE PATH (PETA PETUALANGAN) */
+    #path-view {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .unit-banner {
+      width: 100%;
+      background: var(--duo-green);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      color: white;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 0 var(--duo-green-dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .unit-banner::after {
+      content: "🇮🇩";
+      position: absolute;
+      right: 15px;
+      bottom: -15px;
+      font-size: 5rem;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+    .unit-tag {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.9;
+    }
+    .unit-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .unit-desc {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      margin-top: 4px;
+    }
+
+    /* WINDING PATH NODES */
+    .path-tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      width: 100%;
+      position: relative;
+    }
+
+    .node-row {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+    }
+    .node-row:nth-child(even) {
+      transform: translateX(36px);
+    }
+    .node-row:nth-child(odd):not(:first-child) {
+      transform: translateX(-36px);
+    }
+
+    .duo-node {
+      width: 84px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--duo-green);
+      border: none;
+      border-bottom: 8px solid var(--duo-green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.2rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .duo-node:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+    .duo-node:active {
+      transform: translateY(4px);
+      border-bottom-width: 2px;
+    }
+    .duo-node.locked {
+      background: #e5e5e5;
+      border-bottom: 8px solid #cecece;
+      color: #afafaf;
+      cursor: not-allowed;
+    }
+    .duo-node.active-pulse {
+      animation: bounce 1.8s infinite ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .node-crown {
+      position: absolute;
+      top: -12px;
+      font-size: 1.2rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+    .node-tooltip {
+      position: absolute;
+      bottom: -30px;
+      background: #ffffff;
+      border: 2px solid var(--duo-gray-border);
+      border-radius: var(--radius-sm);
+      padding: 2px 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--duo-text-main);
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    /* VIEW 2: DUOLINGO LESSON QUESTION VIEW */
+    #lesson-view {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+    }
+
+    .question-header {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--duo-text-main);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    /* MASCOT & SPEECH BUBBLE */
+    .mascot-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .mascot-svg {
+      width: 90px;
+      height: 90px;
+      flex-shrink: 0;
+    }
+    .duo-bubble {
+      background: #ffffff;
+      border: 2px solid var(--duo-gray-border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      position: relative;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #4b4b4b;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .duo-bubble::before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 8px 10px 8px 0;
+      border-style: solid;
+      border-color: transparent var(--duo-gray-border) transparent transparent;
+    }
+    .duo-bubble::after {
+      content: "";
+      position: absolute;
+      left: -7px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 7px 9px 7px 0;
+      border-style: solid;
+      border-color: transparent #ffffff transparent transparent;
+    }
+
+    /* OPTION CARDS GRID */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .duo-card {
+      background: var(--duo-card-bg);
+      border: 2px solid var(--duo-gray-border);
+      border-bottom: 4px solid var(--duo-gray-dark);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #4b4b4b;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+    }
+    .duo-card:hover {
+      background: #fdfdfd;
+      border-color: #d0d0d0;
+    }
+    .duo-card.selected {
+      background: var(--duo-blue-light);
+      border-color: #84d8ff;
+      border-bottom-color: var(--duo-blue-dark);
+      color: #1899d6;
+    }
+    .duo-card:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .card-key {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--duo-gray-border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #afafaf;
+      flex-shrink: 0;
+    }
+    .duo-card.selected .card-key {
+      border-color: var(--duo-blue);
+      background: var(--duo-blue);
+      color: #ffffff;
+    }
+
+    /* WORD BANK AREA (TAP TO ASSEMBLE) */
+    .word-bank-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .word-slot-area {
+      min-height: 80px;
+      border-bottom: 2px solid var(--duo-gray-border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 6px;
+      margin-bottom: 24px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-sm);
+    }
+    .slot-placeholder {
+      color: #afafaf;
+      font-style: italic;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .word-tiles-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .word-tile {
+      background: #ffffff;
+      border: 2px solid var(--duo-gray-border);
+      border-bottom: 4px solid var(--duo-gray-dark);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #4b4b4b;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.1s ease;
+      display: inline-block;
+    }
+    .word-tile:hover {
+      background: #f7f7f7;
+    }
+    .word-tile:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+    .word-tile.placed {
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    /* PAIR MATCHING GRID */
+    .pairs-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+    .pair-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pair-btn {
+      background: #ffffff;
+      border: 2px solid var(--duo-gray-border);
+      border-bottom: 4px solid var(--duo-gray-dark);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #4b4b4b;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.12s;
+    }
+    .pair-btn:hover { background: #fafafa; }
+    .pair-btn.active {
+      background: var(--duo-blue-light);
+      border-color: var(--duo-blue);
+      border-bottom-color: var(--duo-blue-dark);
+      color: var(--duo-blue-dark);
+    }
+    .pair-btn.matched {
+      background: var(--duo-green-light);
+      border-color: var(--duo-green);
+      border-bottom-color: var(--duo-green-dark);
+      color: var(--duo-green-text);
+      pointer-events: none;
+    }
+
+    /* FIXED BOTTOM ACTION DRAWER */
+    .bottom-drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-top: 2px solid var(--duo-gray-border);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .drawer-content {
+      max-width: 680px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .feedback-message {
+      display: none;
+      align-items: center;
+      gap: 14px;
+    }
+    .feedback-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    .feedback-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .feedback-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .feedback-sub {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* DRAWER STATES */
+    .bottom-drawer.correct-state {
+      background: var(--duo-green-light);
+      border-color: #bbf08b;
+    }
+    .bottom-drawer.correct-state .feedback-message {
+      display: flex;
+    }
+    .bottom-drawer.correct-state .feedback-icon {
+      background: var(--duo-green);
+    }
+    .bottom-drawer.correct-state .feedback-title {
+      color: var(--duo-green-text);
+    }
+    .bottom-drawer.correct-state .feedback-sub {
+      color: var(--duo-green-dark);
+    }
+
+    .bottom-drawer.wrong-state {
+      background: var(--duo-red-light);
+      border-color: #ffc4c6;
+    }
+    .bottom-drawer.wrong-state .feedback-message {
+      display: flex;
+    }
+    .bottom-drawer.wrong-state .feedback-icon {
+      background: var(--duo-red);
+    }
+    .bottom-drawer.wrong-state .feedback-title {
+      color: var(--duo-red-text);
+    }
+    .bottom-drawer.wrong-state .feedback-sub {
+      color: var(--duo-red-dark);
+    }
+
+    /* ACTION BUTTON */
+    .btn-action {
+      background: var(--duo-green);
+      color: #ffffff;
+      border: none;
+      border-bottom: 4px solid var(--duo-green-dark);
+      border-radius: var(--radius-md);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 14px 36px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.12s;
+      white-space: nowrap;
+      min-width: 160px;
+    }
+    .btn-action:hover:not(:disabled) {
+      filter: brightness(1.08);
+    }
+    .btn-action:active:not(:disabled) {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+    .btn-action:disabled {
+      background: var(--duo-gray-border);
+      border-bottom-color: var(--duo-gray-dark);
+      color: var(--duo-gray-text);
+      cursor: not-allowed;
+    }
+    .btn-action.btn-red {
+      background: var(--duo-red);
+      border-bottom-color: var(--duo-red-dark);
+    }
+
+    /* VICTORY MODAL */
+    .victory-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .victory-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .victory-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 2rem;
+      color: var(--duo-yellow-dark);
+      margin-top: 12px;
+    }
+    .victory-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .v-stat-box {
+      background: var(--duo-bg);
+      border: 2px solid var(--duo-gray-border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+    .v-stat-val {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--duo-text-main);
+    }
+    .v-stat-lbl {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #999;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* CONFETTI CANVAS */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 300;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="duo-header">
+    <div class="header-left">
+      <button class="btn-close" onclick="exitToPath()" title="Kembali ke Peta">✕</button>
+    </div>
+    
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="header-stats">
+      <div class="stat-badge stat-fire" title="Streak Hari Ini">🔥 <span id="streak-val">7</span></div>
+      <div class="stat-badge stat-gem" title="Permata XP">💎 <span id="gems-val">150</span></div>
+      <div class="stat-badge stat-heart" title="Nyawa">❤️ <span id="hearts-val">5</span></div>
+    </div>
+  </header>
+
+  <!-- OFFLINE STUDENTS SELECTOR PILLS -->
+  <div class="student-bar">
+    <span class="student-label">Siswa Offline:</span>
+    <button class="student-pill active" onclick="setStudent('acip', 4)">👦 Acip (Kls 4)</button>
+    <button class="student-pill" onclick="setStudent('kinanti', 4)">👧 Kinanti (Kls 4)</button>
+    <button class="student-pill" onclick="setStudent('alisya', 4)">👧 Alisya (Kls 4)</button>
+    <button class="student-pill" onclick="setStudent('ardiansyah', 5)">👦 Ardiansyah (Kls 5)</button>
+    <button class="student-pill" onclick="setStudent('shan', 6)">🧑 Shan (Kls 6)</button>
+    <button class="student-pill" onclick="setStudent('selvi', 6)">👧 Selvi (Kls 6)</button>
+    <button class="student-pill" onclick="setStudent('aulya', 6)">👧 Aulya (Kls 6)</button>
+    <button class="student-pill" onclick="setStudent('hendra', 6)">👦 Hendra (Kls 6)</button>
+  </div>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    
+    <!-- VIEW 1: DUOLINGO WINDING PATH MAP -->
+    <div id="path-view">
+      <div class="unit-banner" id="unit-banner">
+        <div class="unit-tag" id="unit-tag">UNIT 1 • KELAS 4 SD</div>
+        <div class="unit-title" id="unit-title">Bab 4: Pancasila dalam Diriku</div>
+        <div class="unit-desc" id="unit-desc">Makna 5 Lambang Sila, Pengamalan di Masyarakat, & Sejarah BPUPKI</div>
+      </div>
+
+      <div class="path-tree">
+        <!-- Node 1: Start (Active Bouncing) -->
+        <div class="node-row">
+          <button class="duo-node active-pulse" onclick="startLesson(0)">
+            <span class="node-crown">👑</span>
+            <span>⭐</span>
+            <div class="node-tooltip">MULAI MISI 1</div>
+          </button>
+        </div>
+
+        <!-- Node 2 -->
+        <div class="node-row">
+          <button class="duo-node" onclick="startLesson(1)">
+            <span>📚</span>
+            <div class="node-tooltip">MISI 2</div>
+          </button>
+        </div>
+
+        <!-- Node 3 -->
+        <div class="node-row">
+          <button class="duo-node" onclick="startLesson(2)">
+            <span>🧩</span>
+            <div class="node-tooltip">MISI 3 (PASANGAN)</div>
+          </button>
+        </div>
+
+        <!-- Node 4 -->
+        <div class="node-row">
+          <button class="duo-node" onclick="startLesson(3)">
+            <span>✍️</span>
+            <div class="node-tooltip">MISI 4 (SUSUN KATA)</div>
+          </button>
+        </div>
+
+        <!-- Node 5: Chest Reward -->
+        <div class="node-row">
+          <button class="duo-node" onclick="startLesson(4)">
+            <span>🎁</span>
+            <div class="node-tooltip">PETI PANCASILA</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: INTERACTIVE LESSON / QUESTIONS -->
+    <div id="lesson-view">
+      <div class="mascot-row">
+        <!-- SVG Garuda / Duolingo-style Owl Mascot -->
+        <svg class="mascot-svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="42" fill="#58cc02"/>
+          <ellipse cx="50" cy="58" rx="28" ry="24" fill="#ffffff" opacity="0.3"/>
+          <!-- Big Anime Eyes -->
+          <circle cx="36" cy="42" r="14" fill="#ffffff"/>
+          <circle cx="64" cy="42" r="14" fill="#ffffff"/>
+          <circle cx="38" cy="42" r="7" fill="#3c3c3c"/>
+          <circle cx="62" cy="42" r="7" fill="#3c3c3c"/>
+          <circle cx="41" cy="39" r="2.5" fill="#ffffff"/>
+          <circle cx="65" cy="39" r="2.5" fill="#ffffff"/>
+          <!-- Cute Orange Beak -->
+          <polygon points="50,48 42,57 58,57" fill="#ff9600"/>
+          <!-- Cheeks -->
+          <circle cx="24" cy="52" r="5" fill="#ff4b4b" opacity="0.35"/>
+          <circle cx="76" cy="52" r="5" fill="#ff4b4b" opacity="0.35"/>
+          <!-- Feathers on Head -->
+          <path d="M 45 10 Q 50 2 55 10" stroke="#46a302" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+
+        <div class="duo-bubble" id="mascot-bubble">
+          Pilih jawaban yang paling tepat ya!
+        </div>
+      </div>
+
+      <h2 class="question-header" id="question-text">
+        Pertanyaan akan muncul di sini...
+      </h2>
+
+      <!-- CONTAINER DYNAMIC CONTENT (CHOICE, WORD BANK, OR PAIRS) -->
+      <div id="interactive-content"></div>
+    </div>
+
+  </div>
+
+  <!-- FIXED BOTTOM ACTION DRAWER -->
+  <div class="bottom-drawer" id="bottom-drawer">
+    <div class="drawer-content">
+      <div class="feedback-message" id="feedback-msg">
+        <div class="feedback-icon" id="feedback-icon">✓</div>
+        <div class="feedback-text">
+          <div class="feedback-title" id="feedback-title">Luar biasa!</div>
+          <div class="feedback-sub" id="feedback-sub">Jawabanmu tepat sekali.</div>
+        </div>
+      </div>
+      <button class="btn-action" id="btn-action" onclick="handleActionClick()" disabled>
+        PERIKSA
+      </button>
+    </div>
+  </div>
+
+  <!-- VICTORY MODAL -->
+  <div class="victory-modal" id="victory-modal">
+    <div class="victory-card">
+      <div style="font-size: 4rem;">🏆</div>
+      <h2 class="victory-title">Pelajaran Selesai!</h2>
+      <p style="font-weight: 700; color: #777; margin-top: 4px;" id="victory-student-msg">
+        Hebat sekali, Hasyif! Kamu menuntaskan misi ini.
+      </p>
+
+      <div class="victory-stats-grid">
+        <div class="v-stat-box">
+          <div class="v-stat-val" style="color: var(--duo-yellow-dark);" id="v-xp">+50 XP</div>
+          <div class="v-stat-lbl">Poin Prestasi</div>
+        </div>
+        <div class="v-stat-box">
+          <div class="v-stat-val" style="color: var(--duo-green);" id="v-acc">100%</div>
+          <div class="v-stat-lbl">Akurasi Nilai</div>
+        </div>
+      </div>
+
+      <button class="btn-action" style="width: 100%;" onclick="closeVictory()">
+        SELESAI & LANJUTKAN
+      </button>
+    </div>
+  </div>
+
+  <!-- CONFETTI CANVAS -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- =========================================================================
+       AUDIO SYNTHESIZER (WEB AUDIO API - ZERO LAG / 100% OFFLINE)
+       ========================================================================= -->
+  <script>
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioCtx;
+    }
+
+    // Duolingo Signature Correct Chime (E5 -> G#5 -> B5)
+    function playCorrectSound() {
+      try {
+        const ctx = getAudioCtx();
+        const now = ctx.currentTime;
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(659.25, now);
+        o.frequency.setValueAtTime(830.61, now + 0.10);
+        o.frequency.setValueAtTime(987.77, now + 0.22);
+        g.gain.setValueAtTime(0.35, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start(now);
+        o.stop(now + 0.55);
+      } catch(e) {}
+    }
+
+    // Duolingo Wrong Buzz
+    function playWrongSound() {
+      try {
+        const ctx = getAudioCtx();
+        const now = ctx.currentTime;
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sawtooth';
+        o.frequency.setValueAtTime(240, now);
+        o.frequency.setValueAtTime(180, now + 0.16);
+        g.gain.setValueAtTime(0.3, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start(now);
+        o.stop(now + 0.45);
+      } catch(e) {}
+    }
+
+    // Tactile Click / Pop Sound
+    function playTapSound() {
+      try {
+        const ctx = getAudioCtx();
+        const now = ctx.currentTime;
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(400, now);
+        o.frequency.exponentialRampToValueAtTime(700, now + 0.06);
+        g.gain.setValueAtTime(0.15, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start(now);
+        o.stop(now + 0.06);
+      } catch(e) {}
+    }
+
+    // Victory Fanfare
+    function playVictoryFanfare() {
+      try {
+        const ctx = getAudioCtx();
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, i) => {
+          const now = ctx.currentTime + (i * 0.12);
+          const o = ctx.createOscillator();
+          const g = ctx.createGain();
+          o.type = 'triangle';
+          o.frequency.setValueAtTime(freq, now);
+          g.gain.setValueAtTime(0.3, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+          o.connect(g);
+          g.connect(ctx.destination);
+          o.start(now);
+          o.stop(now + 0.4);
+        });
+      } catch(e) {}
+    }
+  </script>
+
+  <!-- =========================================================================
+       GAME ENGINE & CURRICULUM DATA
+       ========================================================================= -->
+  <script>
+    // CURRICULUM QUESTIONS PER GRADE
+    const CURRICULUM = {
+      // -----------------------------------------------------------------------
+      // KELAS 4: BAB 4 - PANCASILA DALAM DIRIKU
+      // -----------------------------------------------------------------------
+      4: {
+        bannerTag: "UNIT 1 • KELAS 4 SD (MEJA 1)",
+        bannerTitle: "Bab 4: Pancasila dalam Diriku",
+        bannerDesc: "Makna Sila 1-5, Sejarah BPUPKI/PPKI, & Sikap Luhur di Masyarakat",
+        questions: [
+          {
+            type: "choice",
+            mascotHint: "Perhatikan lambang yang melambangkan cahaya kerohanian!",
+            question: "Lambang Bintang Emas dengan latar perisai hitam pada dada Garuda melambangkan sila...",
+            options: [
+              "Sila ke-1: Ketuhanan Yang Maha Esa",
+              "Sila ke-2: Kemanusiaan yang Adil dan Beradab",
+              "Sila ke-3: Persatuan Indonesia"
+            ],
+            correct: 0,
+            explanation: "Tepat! Bintang emas melambangkan cahaya rohani dari Tuhan YME kepada seluruh umat manusia."
+          },
+          {
+            type: "wordbank",
+            mascotHint: "Ketuk balok kata secara berurutan untuk menyusun Sila ke-2!",
+            question: "Susunlah bunyi Sila ke-2 Pancasila dengan benar:",
+            targetTokens: ["Kemanusiaan", "yang", "adil", "dan", "beradab"],
+            poolTokens: ["Kemanusiaan", "adil", "Indonesia", "dan", "yang", "beradab", "Persatuan"],
+            explanation: "Sila ke-2: 'Kemanusiaan yang adil dan beradab'."
+          },
+          {
+            type: "pairs",
+            mascotHint: "Pasangkan lambang sila dengan nilai sikap pengamalannya!",
+            question: "Pasangkan lambang sila dan sikap nyatanya:",
+            pairs: [
+              { left: "⭐ Bintang", right: "Toleransi Beribadah" },
+              { left: "⛓️ Rantai", right: "Tolong Menolong" },
+              { left: "🌳 Beringin", right: "Persatuan Bangsa" },
+              { left: "🐂 Banteng", right: "Musyawarah Rapat" }
+            ],
+            explanation: "Luar biasa! Semua pasangan lambang dan nilai luhur cocok sempurna."
+          },
+          {
+            type: "choice",
+            mascotHint: "Ingat pidato bersejarah Bung Karno di sidang BPUPKI!",
+            question: "Tanggal berapakah yang diperingati bangsa Indonesia sebagai Hari Lahir Pancasila?",
+            options: [
+              "17 Agustus 1945",
+              "1 Juni 1945",
+              "18 Agustus 1945"
+            ],
+            correct: 1,
+            explanation: "1 Juni 1945 diperingati sebagai Hari Lahir Pancasila berdasarkan pidato Ir. Soekarno."
+          },
+          {
+            type: "choice",
+            mascotHint: "Sila ke-4 mengutamakan kebersamaan dalam mengambil keputusan!",
+            question: "Saat Acip dan Kinanti ingin membagi jadwal piket menyiram bunga, cara terbaik sesuai Sila ke-4 adalah...",
+            options: [
+              "Bermusyawarah mufakat bersama seluruh teman kelas",
+              "Menunjuk satu anak secara sepihak tanpa bertanya",
+              "Membiarkan tanaman kering tanpa jadwal yang jelas"
+            ],
+            correct: 0,
+            explanation: "Bagus sekali! Musyawarah mufakat adalah jalan luhur penyelesaian masalah bersama."
+          }
+        ]
+      },
+
+      // -----------------------------------------------------------------------
+      // KELAS 5: BAB 4 - AKU DAN LINGKUNGAN SEKITARKU
+      // -----------------------------------------------------------------------
+      5: {
+        bannerTag: "UNIT 1 • KELAS 5 SD (MEJA 2)",
+        bannerTitle: "Bab 4: Aku dan Lingkungan Sekitarku",
+        bannerDesc: "Hierarki Wilayah Administrasi & Tradisi Gotong Royong Nusantara",
+        questions: [
+          {
+            type: "choice",
+            mascotHint: "Unit ini terdiri dari 10 sampai 50 Kepala Keluarga (KK).",
+            question: "Satuan wilayah administrasi terkecil yang dipimpin oleh seorang ketua rukun adalah...",
+            options: [
+              "RT (Rukun Tetangga)",
+              "Kecamatan",
+              "Kabupaten"
+            ],
+            correct: 0,
+            explanation: "Benar! RT adalah kesatuan masyarakat terkecil di lingkungan tempat tinggal kita."
+          },
+          {
+            type: "pairs",
+            mascotHint: "Jodohkan nama tradisi gotong royong dengan daerah asalnya!",
+            question: "Pasangkan tradisi kearifan lokal nusantara:",
+            pairs: [
+              { left: "Gugur Gunung", right: "Jawa Tengah" },
+              { left: "Mapalus", right: "Minahasa (Sulut)" },
+              { left: "Pawonda", right: "Sumba (NTT)" },
+              { left: "Marsiadapari", right: "Batak Toba" }
+            ],
+            explanation: "Hebat! Gotong royong nusantara kaya akan nama dan nilai kearifan luhur."
+          },
+          {
+            type: "wordbank",
+            mascotHint: "Susun pesan Bung Karno tentang gotong royong!",
+            question: "Susun kalimat berikut menjadi ungkapan yang benar:",
+            targetTokens: ["Gotong", "royong", "adalah", "jiwa", "bangsa"],
+            poolTokens: ["Gotong", "adalah", "jiwa", "kota", "royong", "bangsa", "sendiri"],
+            explanation: "Gotong royong adalah intisari dari nilai-nilai luhur kepribadian bangsa."
+          },
+          {
+            type: "choice",
+            mascotHint: "Kepala Desa dipilih warga, sedangkan Lurah adalah seorang PNS.",
+            question: "Bagaimanakah cara seorang Kepala Desa (Kades) mendapatkan jabatannya?",
+            options: [
+              "Dipilih langsung oleh warga desa melalui Pilkades",
+              "Ditunjuk langsung oleh Gubernur tanpa pemilihan",
+              "Diundi secara acak setiap tahun"
+            ],
+            correct: 0,
+            explanation: "Benar! Kepala Desa dipilih secara demokratis langsung oleh masyarakat desa."
+          },
+          {
+            type: "choice",
+            mascotHint: "Kerja bakti pembersihan drainase sangat penting mencegah banjir & DBD.",
+            question: "Menjelang musim hujan, Ardiansyah melihat parit di komplek penuh sampah. Tindakan solutif yang tepat adalah...",
+            options: [
+              "Mengusulkan kerja bakti gotong royong pembersihan drainase kepada Ketua RT",
+              "Membiarkan parit tersumbat sampai meluap ke jalan",
+              "Menyalahkan tetangga di media sosial"
+            ],
+            correct: 0,
+            explanation: "Tepat sekali! Mengajak kerja bakti mencerminkan kepedulian aktif terhadap lingkungan."
+          }
+        ]
+      },
+
+      // -----------------------------------------------------------------------
+      // KELAS 6: BAB 6 - PROVINSIKU BAGIAN DARI WILAYAH NKRI
+      // -----------------------------------------------------------------------
+      6: {
+        bannerTag: "UNIT 1 • KELAS 6 SD (MEJA 3)",
+        bannerTitle: "Bab 6: Provinsiku Bagian NKRI",
+        bannerDesc: "Geopolitik 38 Provinsi, 4 DOB Papua, & Interdependensi Nasional",
+        questions: [
+          {
+            type: "choice",
+            mascotHint: "Setelah pemekaran 4 provinsi baru di Papua, berapa jumlahnya sekarang?",
+            question: "Berapakah total jumlah provinsi di Negara Kesatuan Republik Indonesia saat ini?",
+            options: [
+              "38 Provinsi",
+              "34 Provinsi",
+              "27 Provinsi"
+            ],
+            correct: 0,
+            explanation: "Tepat! Sejak tahun 2022 hingga kini, Indonesia resmi memiliki 38 Provinsi."
+          },
+          {
+            type: "pairs",
+            mascotHint: "Pasangkan 4 provinsi baru hasil pemekaran Papua dengan ibu kotanya!",
+            question: "Pasangkan Provinsi Baru Papua dengan Ibu Kotanya:",
+            pairs: [
+              { left: "Papua Selatan", right: "Merauke" },
+              { left: "Papua Tengah", right: "Nabire" },
+              { left: "Papua Pegunungan", right: "Wamena" },
+              { left: "Papua Barat Daya", right: "Sorong" }
+            ],
+            explanation: "Sempurna! 4 Daerah Otonom Baru (DOB) di Papua telah kamu kenali dengan tepat."
+          },
+          {
+            type: "choice",
+            mascotHint: "Provinsi ini berada di dataran tinggi Lembah Baliem dan tidak memiliki laut.",
+            question: "Satu-satunya provinsi di Indonesia yang tidak memiliki garis pantai laut (landlocked) adalah...",
+            options: [
+              "Papua Pegunungan (Ibu Kota: Wamena)",
+              "Papua Selatan (Ibu Kota: Merauke)",
+              "Kalimantan Timur (Ibu Kota: Samarinda)"
+            ],
+            correct: 0,
+            explanation: "Benar! Papua Pegunungan dikelilingi pegunungan tinggi tanpa batas pantai laut."
+          },
+          {
+            type: "wordbank",
+            mascotHint: "Deklarasi Djuanda menegaskan laut adalah pemersatu pulau nusantara!",
+            question: "Susunlah kalimat wawasan nusantara berikut:",
+            targetTokens: ["Laut", "adalah", "jembatan", "penghubung", "nusantara"],
+            poolTokens: ["Laut", "pemisah", "jembatan", "adalah", "penghubung", "nusantara", "tembok"],
+            explanation: "Laut bukan pemisah, melainkan jembatan emas yang menyatukan kepulauan Indonesia!"
+          },
+          {
+            type: "choice",
+            mascotHint: "Konsep saling melengkapi kebutuhan pangan dan energi antardaerah.",
+            question: "Prinsip saling ketergantungan (interdependensi) antar-provinsi menegaskan bahwa...",
+            options: [
+              "Setiap provinsi saling membutuhkan dan melengkapi kebutuhan hidup warga",
+              "Satu provinsi kaya boleh menolak membantu provinsi lain",
+              "Setiap daerah harus mandiri mutlak tanpa berdagang dengan pulau lain"
+            ],
+            correct: 0,
+            explanation: "Luar biasa! Seluruh 38 provinsi diikat oleh rasa persaudaraan dan saling melengkapi."
+          }
+        ]
+      }
+    };
+
+    // GAME STATE
+    let currentGrade = 4;
+    let activeStudent = "acip";
+    let activeStudentName = "Acip";
+    let currentQuestionIdx = 0;
+    let score = 0;
+    let hearts = 5;
+    let streak = 7;
+    let gems = 150;
+    let selectedOptionIdx = null;
+    let placedTokens = [];
+    let pairSelected = null;
+    let matchedPairsCount = 0;
+    let isChecking = false;
+
+    // DETECT URL PARAMS IF ANY
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const studentParam = urlParams.get('student');
+      const gradeParam = parseInt(urlParams.get('grade'));
+      
+      if (studentParam) {
+        setStudent(studentParam, gradeParam || detectGradeByStudent(studentParam));
+      } else {
+        setStudent('acip', 4);
+      }
+    });
+
+    function detectGradeByStudent(s) {
+      if (['acip', 'kinanti', 'alisya', 'aqlan'].includes(s.toLowerCase())) return 4;
+      if (['ardiansyah', 'mishka'].includes(s.toLowerCase())) return 5;
+      return 6;
+    }
+
+    function setStudent(id, grade) {
+      activeStudent = id;
+      currentGrade = grade;
+      activeStudentName = id.charAt(0).toUpperCase() + id.slice(1);
+      
+      localStorage.setItem('pkbm_active_student_id', id);
+
+      // Update pills
+      document.querySelectorAll('.student-pill').forEach(btn => {
+        if (btn.innerText.toLowerCase().includes(id.toLowerCase())) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Update Banner
+      const curr = CURRICULUM[grade];
+      document.getElementById('unit-tag').innerText = `${curr.bannerTag} • DUTA: ${activeStudentName.toUpperCase()}`;
+      document.getElementById('unit-title').innerText = curr.bannerTitle;
+      document.getElementById('unit-desc').innerText = curr.bannerDesc;
+
+      exitToPath();
+    }
+
+    function exitToPath() {
+      document.getElementById('path-view').style.display = 'flex';
+      document.getElementById('lesson-view').style.display = 'none';
+      document.getElementById('bottom-drawer').style.display = 'none';
+      document.getElementById('progress-fill').style.width = '0%';
+    }
+
+    function startLesson(nodeIndex) {
+      playTapSound();
+      currentQuestionIdx = 0;
+      score = 0;
+      hearts = 5;
+      document.getElementById('hearts-val').innerText = hearts;
+      
+      document.getElementById('path-view').style.display = 'none';
+      document.getElementById('lesson-view').style.display = 'flex';
+      document.getElementById('bottom-drawer').style.display = 'flex';
+
+      loadQuestion(currentQuestionIdx);
+    }
+
+    function loadQuestion(idx) {
+      const qList = CURRICULUM[currentGrade].questions;
+      if (idx >= qList.length) {
+        showVictoryScreen();
+        return;
+      }
+
+      const q = qList[idx];
+      selectedOptionIdx = null;
+      placedTokens = [];
+      pairSelected = null;
+      matchedPairsCount = 0;
+      isChecking = false;
+
+      // Reset Drawer
+      const drawer = document.getElementById('bottom-drawer');
+      drawer.className = 'bottom-drawer';
+      document.getElementById('btn-action').innerText = 'PERIKSA';
+      document.getElementById('btn-action').disabled = true;
+
+      // Update Progress
+      const pct = (idx / qList.length) * 100;
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+
+      // Header & Hint
+      document.getElementById('question-text').innerText = q.question;
+      document.getElementById('mascot-bubble').innerText = q.mascotHint || `Semangat ${activeStudentName}, kamu pasti bisa!`;
+
+      // Telemetry report
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportQuestion(q.question, idx + 1, qList.length);
+      }
+
+      // Render by type
+      const container = document.getElementById('interactive-content');
+      container.innerHTML = '';
+
+      if (q.type === 'choice') {
+        renderChoice(q, container);
+      } else if (q.type === 'wordbank') {
+        renderWordBank(q, container);
+      } else if (q.type === 'pairs') {
+        renderPairs(q, container);
+      }
+    }
+
+    // 1. RENDER CHOICE
+    function renderChoice(q, container) {
+      const grid = document.createElement('div');
+      grid.className = 'options-grid';
+      const keys = ['A', 'B', 'C'];
+
+      q.options.forEach((opt, i) => {
+        const card = document.createElement('div');
+        card.className = 'duo-card';
+        card.innerHTML = `
+          <div class="card-key">${keys[i]}</div>
+          <div style="flex:1;">${opt}</div>
+        `;
+        card.onclick = () => {
+          if (isChecking) return;
+          playTapSound();
+          grid.querySelectorAll('.duo-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          selectedOptionIdx = i;
+          document.getElementById('btn-action').disabled = false;
+        };
+        grid.appendChild(card);
+      });
+
+      container.appendChild(grid);
+    }
+
+    // 2. RENDER WORD BANK
+    function renderWordBank(q, container) {
+      const wb = document.createElement('div');
+      wb.className = 'word-bank-container';
+
+      const slotArea = document.createElement('div');
+      slotArea.className = 'word-slot-area';
+      slotArea.id = 'word-slot-area';
+      slotArea.innerHTML = `<span class="slot-placeholder">Ketuk kata di bawah untuk menyusun di sini...</span>`;
+      wb.appendChild(slotArea);
+
+      const poolArea = document.createElement('div');
+      poolArea.className = 'word-tiles-pool';
+      poolArea.id = 'word-pool-area';
+
+      q.poolTokens.forEach((token, i) => {
+        const tile = document.createElement('div');
+        tile.className = 'word-tile';
+        tile.innerText = token;
+        tile.id = `pool-tile-${i}`;
+        tile.onclick = () => {
+          if (isChecking) return;
+          playTapSound();
+          addWordToSlot(token, i);
+        };
+        poolArea.appendChild(tile);
+      });
+
+      wb.appendChild(poolArea);
+      container.appendChild(wb);
+    }
+
+    function addWordToSlot(token, poolIdx) {
+      const slotArea = document.getElementById('word-slot-area');
+      const placeholder = slotArea.querySelector('.slot-placeholder');
+      if (placeholder) placeholder.remove();
+
+      placedTokens.push({ token, poolIdx });
+      document.getElementById(`pool-tile-${poolIdx}`).classList.add('placed');
+
+      renderPlacedSlots();
+      document.getElementById('btn-action').disabled = placedTokens.length === 0;
+    }
+
+    function removeWordFromSlot(indexInPlaced) {
+      if (isChecking) return;
+      playTapSound();
+      const removed = placedTokens.splice(indexInPlaced, 1)[0];
+      document.getElementById(`pool-tile-${removed.poolIdx}`).classList.remove('placed');
+
+      renderPlacedSlots();
+      document.getElementById('btn-action').disabled = placedTokens.length === 0;
+    }
+
+    function renderPlacedSlots() {
+      const slotArea = document.getElementById('word-slot-area');
+      slotArea.innerHTML = '';
+      if (placedTokens.length === 0) {
+        slotArea.innerHTML = `<span class="slot-placeholder">Ketuk kata di bawah untuk menyusun di sini...</span>`;
+        return;
+      }
+
+      placedTokens.forEach((item, idx) => {
+        const tile = document.createElement('div');
+        tile.className = 'word-tile';
+        tile.innerText = item.token;
+        tile.onclick = () => removeWordFromSlot(idx);
+        slotArea.appendChild(tile);
+      });
+    }
+
+    // 3. RENDER PAIRS
+    function renderPairs(q, container) {
+      const pairsWrap = document.createElement('div');
+      pairsWrap.className = 'pairs-container';
+
+      const leftCol = document.createElement('div');
+      leftCol.className = 'pair-col';
+      const rightCol = document.createElement('div');
+      rightCol.className = 'pair-col';
+
+      // Shuffle right side
+      const shuffledPairs = [...q.pairs].sort(() => Math.random() - 0.5);
+
+      q.pairs.forEach((p, i) => {
+        const btnL = document.createElement('button');
+        btnL.className = 'pair-btn';
+        btnL.innerText = p.left;
+        btnL.dataset.left = p.left;
+        btnL.onclick = () => handlePairClick('left', btnL, p.left);
+        leftCol.appendChild(btnL);
+      });
+
+      shuffledPairs.forEach((p, i) => {
+        const btnR = document.createElement('button');
+        btnR.className = 'pair-btn';
+        btnR.innerText = p.right;
+        btnR.dataset.right = p.right;
+        btnR.onclick = () => handlePairClick('right', btnR, p.right);
+        rightCol.appendChild(btnR);
+      });
+
+      pairsWrap.appendChild(leftCol);
+      pairsWrap.appendChild(rightCol);
+      container.appendChild(pairsWrap);
+    }
+
+    function handlePairClick(side, btn, value) {
+      if (btn.classList.contains('matched') || isChecking) return;
+      playTapSound();
+
+      if (!pairSelected) {
+        pairSelected = { side, btn, value };
+        btn.classList.add('active');
+        return;
+      }
+
+      // If clicked same side, switch selection
+      if (pairSelected.side === side) {
+        pairSelected.btn.classList.remove('active');
+        pairSelected = { side, btn, value };
+        btn.classList.add('active');
+        return;
+      }
+
+      // Check match
+      const q = CURRICULUM[currentGrade].questions[currentQuestionIdx];
+      let isMatch = false;
+      if (pairSelected.side === 'left') {
+        const matchObj = q.pairs.find(p => p.left === pairSelected.value && p.right === value);
+        if (matchObj) isMatch = true;
+      } else {
+        const matchObj = q.pairs.find(p => p.right === pairSelected.value && p.left === value);
+        if (matchObj) isMatch = true;
+      }
+
+      if (isMatch) {
+        playCorrectSound();
+        pairSelected.btn.classList.remove('active');
+        pairSelected.btn.classList.add('matched');
+        btn.classList.add('matched');
+        pairSelected = null;
+        matchedPairsCount++;
+
+        if (matchedPairsCount === q.pairs.length) {
+          document.getElementById('btn-action').disabled = false;
+        }
+      } else {
+        playWrongSound();
+        const prevBtn = pairSelected.btn;
+        btn.classList.add('active');
+        setTimeout(() => {
+          prevBtn.classList.remove('active');
+          btn.classList.remove('active');
+          pairSelected = null;
+        }, 400);
+      }
+    }
+
+    // HANDLE CHECK & NEXT (BOTTOM DRAWER)
+    function handleActionClick() {
+      const qList = CURRICULUM[currentGrade].questions;
+      const q = qList[currentQuestionIdx];
+      const drawer = document.getElementById('bottom-drawer');
+      const actionBtn = document.getElementById('btn-action');
+
+      if (!isChecking) {
+        // STATE: VERIFY ANSWER
+        isChecking = true;
+        let isCorrect = false;
+
+        if (q.type === 'choice') {
+          isCorrect = (selectedOptionIdx === q.correct);
+        } else if (q.type === 'wordbank') {
+          const joinedPlaced = placedTokens.map(t => t.token).join(" ");
+          const joinedTarget = q.targetTokens.join(" ");
+          isCorrect = (joinedPlaced === joinedTarget);
+        } else if (q.type === 'pairs') {
+          isCorrect = (matchedPairsCount === q.pairs.length);
+        }
+
+        // Telemetry answer
+        if (window.PKBM_SYNC) {
+          window.PKBM_SYNC.reportAnswer(
+            q.type === 'choice' ? q.options[selectedOptionIdx] : "Jawaban Interaktif",
+            isCorrect,
+            isCorrect ? 10 : 0,
+            q.explanation
+          );
+        }
+
+        if (isCorrect) {
+          playCorrectSound();
+          score += 10;
+          drawer.classList.add('correct-state');
+          document.getElementById('feedback-icon').innerText = '✓';
+          document.getElementById('feedback-title').innerText = `Luar biasa, ${activeStudentName}!`;
+          document.getElementById('feedback-sub').innerText = q.explanation;
+          actionBtn.innerText = 'LANJUTKAN';
+        } else {
+          playWrongSound();
+          hearts = Math.max(0, hearts - 1);
+          document.getElementById('hearts-val').innerText = hearts;
+
+          drawer.classList.add('wrong-state');
+          document.getElementById('feedback-icon').innerText = '✕';
+          document.getElementById('feedback-title').innerText = `Kurang tepat, ${activeStudentName}!`;
+          document.getElementById('feedback-sub').innerText = q.explanation;
+          actionBtn.innerText = 'MENGERTI';
+          actionBtn.classList.add('btn-red');
+        }
+      } else {
+        // STATE: NEXT QUESTION
+        actionBtn.classList.remove('btn-red');
+        currentQuestionIdx++;
+        loadQuestion(currentQuestionIdx);
+      }
+    }
+
+    // VICTORY SCREEN
+    function showVictoryScreen() {
+      playVictoryFanfare();
+      document.getElementById('progress-fill').style.width = '100%';
+      document.getElementById('bottom-drawer').style.display = 'none';
+
+      const qTotal = CURRICULUM[currentGrade].questions.length;
+      const accuracy = Math.round((score / (qTotal * 10)) * 100) || 100;
+
+      document.getElementById('victory-student-msg').innerText = 
+        `Hebat sekali, ${activeStudentName}! Kamu berhasil menguasai materi ${CURRICULUM[currentGrade].bannerTitle}.`;
+      document.getElementById('v-xp').innerText = `+${score + 20} XP`;
+      document.getElementById('v-acc').innerText = `${accuracy}%`;
+
+      document.getElementById('victory-modal').style.display = 'flex';
+      triggerConfetti();
+
+      if (window.PKBM_SYNC) {
+        window.PKBM_SYNC.reportGameComplete(score + 20, (qTotal * 10) + 20, 5, "Tuntas Misi Duolingo Pancasila");
+      }
+    }
+
+    function closeVictory() {
+      document.getElementById('victory-modal').style.display = 'none';
+      exitToPath();
+    }
+
+    // CONFETTI ANIMATION
+    function triggerConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#58cc02', '#1cb0f6', '#ffc800', '#ff4b4b', '#ff9600'];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          r: Math.random() * 6 + 4,
+          dx: (Math.random() - 0.5) * 14,
+          dy: (Math.random() - 0.7) * 16,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          tilt: Math.random() * 10
+        });
+      }
+
+      let frame = 0;
+      function animate() {
+        if (frame > 120) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          return;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.dx;
+          p.y += p.dy;
+          p.dy += 0.28; // gravity
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        });
+        frame++;
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  </script>
+
+  <!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
+  <script src="../assets/js/pkbm_sync.js"></script>
+</body>
+</html>
