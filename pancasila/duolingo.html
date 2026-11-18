@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Pancasila Quest • Duolingo Style PKBM Penerus Bangsa</title>
   
   <!-- Duolingo Brand Typography: Nunito & Fredoka -->
@@ -755,6 +755,203 @@
       inset: 0;
       pointer-events: none;
       z-index: 300;
+    }
+
+    /* =========================================================================
+       RESPONSIVE DESIGN: AUTO-ADJUST LAPTOP & HANDPHONE (MOBILE OPTIMIZED)
+       ========================================================================= */
+    /* 1. HANDPHONE & SMALL SCREENS (<= 640px) */
+    @media (max-width: 640px) {
+      .duo-header {
+        padding: 6px 12px;
+        height: 56px;
+      }
+
+      .btn-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.25rem;
+      }
+
+      .progress-bar-container {
+        margin: 0 8px;
+        height: 12px;
+        min-width: 60px;
+      }
+
+      .header-stats {
+        gap: 6px;
+      }
+
+      .stat-badge {
+        padding: 2px 6px;
+        font-size: 0.85rem;
+      }
+      .stat-gem {
+        display: none; /* Disembunyikan di layar HP kecil agar ruang progres luas */
+      }
+
+      .student-bar {
+        padding: 6px 10px;
+        gap: 6px;
+      }
+      .student-label {
+        font-size: 0.75rem;
+      }
+      .student-pill {
+        padding: 4px 10px;
+        font-size: 0.78rem;
+      }
+
+      .main-wrapper {
+        padding: 14px 12px 160px;
+      }
+
+      .unit-banner {
+        padding: 14px 16px;
+        margin-bottom: 22px;
+        border-radius: var(--radius-sm);
+      }
+      .unit-tag {
+        font-size: 0.72rem;
+      }
+      .unit-title {
+        font-size: 1.15rem;
+      }
+      .unit-desc {
+        font-size: 0.82rem;
+      }
+
+      .duo-node {
+        width: 72px;
+        height: 66px;
+        font-size: 1.8rem;
+        border-bottom-width: 6px;
+      }
+      .node-row:nth-child(even) { transform: translateX(20px); }
+      .node-row:nth-child(odd):not(:first-child) { transform: translateX(-20px); }
+
+      .question-header {
+        font-size: 1.18rem;
+        margin-bottom: 14px;
+        line-height: 1.35;
+      }
+
+      .mascot-row {
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .mascot-svg {
+        width: 64px;
+        height: 64px;
+      }
+      .duo-bubble {
+        padding: 8px 12px;
+        font-size: 0.88rem;
+        border-radius: var(--radius-sm);
+      }
+
+      .options-grid {
+        gap: 10px;
+      }
+      .duo-card {
+        padding: 12px 14px;
+        font-size: 0.92rem;
+        gap: 10px;
+        border-radius: var(--radius-sm);
+      }
+      .card-key {
+        width: 26px;
+        height: 26px;
+        font-size: 0.78rem;
+      }
+
+      .word-slot-area {
+        min-height: 56px;
+        padding: 6px 4px;
+        margin-bottom: 16px;
+      }
+      .word-tile {
+        padding: 6px 12px;
+        font-size: 0.88rem;
+        border-radius: 8px;
+        border-bottom-width: 3px;
+        margin: 3px;
+      }
+
+      .pairs-container {
+        gap: 8px;
+      }
+      .pair-col {
+        gap: 8px;
+      }
+      .pair-btn {
+        padding: 10px 8px;
+        font-size: 0.82rem;
+        border-radius: 8px;
+        border-bottom-width: 3px;
+        word-break: break-word;
+      }
+
+      /* MOBILE BOTTOM DRAWER: TAMPILAN ELEGAN FULL WIDTH ALA APLIKASI DUOLINGO */
+      .bottom-drawer {
+        padding: 12px 16px;
+        padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+      }
+      .drawer-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .feedback-message {
+        width: 100%;
+        gap: 10px;
+      }
+      .feedback-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+      }
+      .feedback-title {
+        font-size: 1.15rem;
+      }
+      .feedback-sub {
+        font-size: 0.85rem;
+      }
+      .btn-action {
+        width: 100%;
+        min-width: unset;
+        padding: 12px 18px;
+        font-size: 1rem;
+        border-radius: var(--radius-sm);
+        text-align: center;
+      }
+
+      .victory-card {
+        padding: 24px 18px;
+      }
+      .victory-title {
+        font-size: 1.6rem;
+      }
+      .v-stat-val {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* 2. LAPTOP, DESKTOP & TABLET SCREEN (>= 641px) */
+    @media (min-width: 641px) {
+      .stat-gem {
+        display: flex;
+      }
+      .drawer-content {
+        flex-direction: row;
+      }
+      .btn-action {
+        width: auto;
+      }
+      .main-wrapper {
+        max-width: 700px;
+      }
     }
   </style>
 </head>
@@ -1670,6 +1867,27 @@
       }
       animate();
     }
+
+    // KEYBOARD SHORTCUTS FOR LAPTOP/DESKTOP USERS
+    window.addEventListener('keydown', (e) => {
+      // Numbers 1, 2, 3 to select options
+      if (['1', '2', '3'].includes(e.key)) {
+        const idx = parseInt(e.key) - 1;
+        const cards = document.querySelectorAll('.options-grid .duo-card');
+        if (cards && cards[idx]) {
+          cards[idx].click();
+        }
+      }
+      // Enter or Spacebar to press Check / Continue
+      if (e.key === 'Enter' || e.code === 'Space') {
+        const actionBtn = document.getElementById('btn-action');
+        if (actionBtn && !actionBtn.disabled && document.getElementById('bottom-drawer').style.display !== 'none') {
+          // Prevent scrolling on space
+          if (e.code === 'Space') e.preventDefault();
+          actionBtn.click();
+        }
+      }
+    });
   </script>
 
   <!-- PKBM Universal Remote Telemetry & Live Sync Engine -->
