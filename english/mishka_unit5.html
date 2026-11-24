@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What a Nice Skirt!: Architect's Wardrobe Studio (Mishka - Grade 5)</title>
+  <title>What a Nice Skirt!: School & Daily Wardrobe Studio (Mishka - Grade 5)</title>
   
-  <!-- Fonts: Poppins + Kagitingan Fallback -->
+  <!-- Fonts: Poppins + Canva Typography Fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
@@ -163,13 +163,22 @@
       justify-content: space-between;
     }
 
-    /* Module 1: Dress Code Protocol */
+    /* Phase 1: School & Daily Wardrobe Matcher */
     .protocol-box {
       background: white;
       border: 2px solid var(--border);
       border-radius: 18px;
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scenario-indicator {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--plum);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
     }
 
     .scenario-title {
@@ -224,7 +233,7 @@
     .wardrobe-item-card .w-icon { font-size: 2rem; }
     .wardrobe-item-card .w-name { font-weight: 700; font-size: 0.85rem; }
 
-    /* Module 2: Compliment Calibrator */
+    /* Phase 2: Compliment Calibrator */
     .calibrator-card {
       background: white;
       border: 3px solid var(--navy-main);
@@ -304,7 +313,7 @@
     .feedback-banner.success { background: #DCFCE7; color: #15803D; border: 2px solid #22C55E; display: block; }
     .feedback-banner.error { background: #FEE2E2; color: #B91C1C; border: 2px solid #EF4444; display: block; }
 
-    /* Module 3: Sentence Matrix */
+    /* Phase 3: Sentence Matrix */
     .matrix-pool {
       background: white;
       border: 2px dashed #94A3B8;
@@ -386,22 +395,22 @@
   <div class="container">
     <header>
       <div class="badge-bar">
-        <span class="badge-mod">📐 English Grade 5 • Unit 5</span>
+        <span class="badge-mod">👗 English Grade 5 • Unit 5</span>
         <div class="hud-stats">
           <div class="stat-pill">🏆 Score: <span id="val-score">0</span></div>
           <div class="stat-pill accuracy">🎯 Accuracy: <span id="val-acc">100%</span></div>
         </div>
       </div>
       <div>
-        <h1>Architect's Wardrobe Studio & Syntax Matrix</h1>
-        <div class="subtitle">Guide Architect Mishka in functional dress code protocols, calibrate exclamatory syntax ("What a...!"), and build attire sentences!</div>
+        <h1>What a Nice Skirt!: Wardrobe Studio & Syntax Matrix</h1>
+        <div class="subtitle">Match school uniforms and daily clothes, calibrate exclamatory syntax ("What a...!"), and build attire sentences based on the BSE textbook!</div>
       </div>
     </header>
 
     <nav class="module-nav">
       <button class="mod-btn active" id="btn-m1" onclick="switchMod(1)">
-        <span>Phase 1: Dress Code</span>
-        <span class="tag">Ergonomics & Safety</span>
+        <span>Phase 1: Wardrobe Matcher</span>
+        <span class="tag">School & Daily Outfits</span>
       </button>
       <button class="mod-btn" id="btn-m2" onclick="switchMod(2)">
         <span>Phase 2: Compliment Calibrator</span>
@@ -415,24 +424,25 @@
 
     <main class="game-card">
 
-      <!-- PHASE 1: DRESS CODE -->
+      <!-- PHASE 1: WARDROBE MATCHER -->
       <section id="mod-1">
         <div class="protocol-box">
-          <div class="scenario-title" id="scen-title">🏛️ Scenario 1: Construction Site Inspection</div>
+          <div class="scenario-indicator" id="scen-indicator">Scenario 1 of 3</div>
+          <div class="scenario-title" id="scen-title">🇮🇩 Scenario 1: Made's Monday Flag Ceremony</div>
           <div class="scenario-desc" id="scen-desc">
-            You are inspecting a 5-story building construction with scaffolds, wet cement, and dust. 
-            <b>Select 4 structurally safe & required items:</b>
+            It is Monday morning at school! Made is attending the flag ceremony. 
+            <b>Select 4 required uniform items Made must wear:</b>
           </div>
         </div>
 
-        <div style="font-size:0.9rem; font-weight:700; color:var(--navy-main);">Available Wardrobe Catalog (Tap to equip):</div>
+        <div style="font-size:0.9rem; font-weight:700; color:var(--navy-main);">Wardrobe Catalog (Tap to select):</div>
         <div class="wardrobe-grid" id="wardrobe-items-container">
           <!-- cards populated by JS -->
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-          <span style="font-size:0.9rem; color:#64748B;">Equipped: <b id="equipped-count">0</b>/4 items</span>
-          <button class="btn-action" onclick="verifyProtocolChoice()">Verify Protocol</button>
+          <span style="font-size:0.9rem; color:#64748B;">Selected: <b id="equipped-count">0</b>/<span id="required-count-label">4</span> items</span>
+          <button class="btn-action" onclick="verifyProtocolChoice()">Check Outfit</button>
         </div>
 
         <div id="m1-feedback" class="feedback-banner"></div>
@@ -475,7 +485,7 @@
 
         <div style="background:white; border:2px solid var(--border); border-radius:16px; padding:18px; margin:14px 0;">
           <div style="font-weight:700; color:var(--navy-main); font-size:1.1rem; margin-bottom:6px;" id="char-prompt-title">What does Cici wear?</div>
-          <div style="font-size:0.95rem; color:#64748B;" id="char-clue-text">Visual Clue: Pink top + purple bottom + formal school day.</div>
+          <div style="font-size:0.95rem; color:#64748B;" id="char-clue-text">Visual Clue: Pink blouse + purple skirt</div>
         </div>
 
         <div style="background:white; border:2px solid var(--navy-main); border-radius:14px; padding:16px; min-height:54px; font-size:1.1rem; font-weight:600; color:var(--navy-main);" id="matrix-assembled-box">
@@ -494,13 +504,13 @@
 
       <!-- TROPHY SCREEN -->
       <section id="trophy-screen" class="trophy-screen">
-        <div class="trophy-icon">🏛️✨</div>
-        <h2 class="trophy-title">CREDENTIAL GRANTED!</h2>
-        <div class="trophy-badge">🎖️ CERTIFIED LEAD WARDROBE ARCHITECT</div>
+        <div class="trophy-icon">🏆✨</div>
+        <h2 class="trophy-title">UNIT 5 CONQUERED!</h2>
+        <div class="trophy-badge">🎖️ MASTER OF WARDROBE SYNTAX</div>
         <p style="font-size:1.05rem; color:#475569; max-width:520px; margin:0 auto 20px; line-height:1.5;">
-          Outstanding precision, Lead Architect Mishka! You successfully mastered functional attire ergonomics, exclamatory syntax rules (<b>What a...! vs What...!</b>), and 3rd-person singular present descriptions!
+          Outstanding work, Mishka! You successfully matched all school & weekend outfits, mastered exclamatory compliments (<b>What a...! vs What...!</b>), and constructed complete present sentences!
         </p>
-        <button class="btn-action" onclick="restartMishkaGame()">🔄 Replay Studio</button>
+        <button class="btn-action" onclick="restartMishkaGame()">🔄 Play Again</button>
       </section>
 
     </main>
@@ -554,23 +564,59 @@
     let totalAttempts = 0;
     let correctAttempts = 0;
 
-    // Phase 1 Data: Scenarios
+    // Phase 1 Data: 3 Realistic School & Daily Scenarios (from BSE Textbook)
     const scenarios = [
       {
-        title: "🏛️ Scenario 1: Construction Site Safety Inspection",
-        desc: "You are inspecting a 5-story building construction with scaffolds and steel beams. Select 4 structurally safe & required items:",
-        required: ["a hat (hard hat)", "a uniform", "a pair of trousers", "a pair of shoes (boots)"],
+        indicator: "Scenario 1 of 3",
+        title: "🇮🇩 Scenario 1: Made's Monday Flag Ceremony",
+        desc: "It is Monday morning at school! Made is attending the official flag ceremony. <b>Select 4 required uniform items:</b>",
+        reqCount: 4,
+        required: ["a uniform", "a tie", "a hat", "a pair of shoes"],
         options: [
-          { name: "a hat (hard hat)", icon: "⛑️", valid: true },
-          { name: "a uniform", icon: "🦺", valid: true },
-          { name: "a pair of trousers", icon: "👖", valid: true },
-          { name: "a pair of shoes (boots)", icon: "🥾", valid: true },
-          { name: "a long dress", icon: "👗", valid: false, reason: "Dangerous! Loose skirts snag on scaffolding." },
-          { name: "a pair of shorts", icon: "🩳", valid: false, reason: "Exposes legs to abrasions and sharp debris." }
-        ]
+          { name: "a uniform", icon: "🥋" },
+          { name: "a tie", icon: "👔" },
+          { name: "a hat", icon: "🧢" },
+          { name: "a pair of shoes", icon: "👞" },
+          { name: "a pair of shorts", icon: "🩳" },
+          { name: "a long dress", icon: "👗" }
+        ],
+        successMsg: "🇮🇩 Excellent! Made wears a school uniform with a red tie, a hat, and black shoes for the flag ceremony!"
+      },
+      {
+        indicator: "Scenario 2 of 3",
+        title: "📚 Scenario 2: Cici's Study Club Day",
+        desc: "Cici is going to the school library and study club. She wants to look neat and polite! <b>Select 4 items Cici wears:</b>",
+        reqCount: 4,
+        required: ["a blouse", "a skirt", "a pair of socks", "a pair of shoes"],
+        options: [
+          { name: "a blouse", icon: "👚" },
+          { name: "a skirt", icon: "👗" },
+          { name: "a pair of socks", icon: "🧦" },
+          { name: "a pair of shoes", icon: "👞" },
+          { name: "a pair of trousers", icon: "👖" },
+          { name: "a tie", icon: "👔" }
+        ],
+        successMsg: "📚 Perfect! Cici wears a neat pink blouse, a purple skirt, socks, and shoes!"
+      },
+      {
+        indicator: "Scenario 3 of 3",
+        title: "🌳 Scenario 3: Joshua's Sunny Weekend at The Park",
+        desc: "It is Sunday morning! Joshua is playing outdoor games with his friends at the park. <b>Select 3 casual items:</b>",
+        reqCount: 3,
+        required: ["a T-shirt", "a pair of shorts", "a pair of shoes"],
+        options: [
+          { name: "a T-shirt", icon: "👕" },
+          { name: "a pair of shorts", icon: "🩳" },
+          { name: "a pair of shoes", icon: "👟" },
+          { name: "a uniform", icon: "🥋" },
+          { name: "a tie", icon: "👔" },
+          { name: "a long dress", icon: "👗" }
+        ],
+        successMsg: "🌳 Great choice! Joshua wears a green T-shirt, a pair of blue shorts, and shoes on Sunday!"
       }
     ];
 
+    let scIdx = 0;
     let equipped = [];
 
     // Phase 2 Data: 10 Items
@@ -587,7 +633,7 @@
       { phrase: "wide hat", visual: "👒", type: "a", label: "Singular Countable" }
     ];
 
-    // Phase 3 Data: 4 Characters
+    // Phase 3 Data: 4 Characters from BSE p. 46
     const m3Cases = [
       {
         title: "What does Cici wear?",
@@ -615,7 +661,6 @@
       }
     ];
 
-    let m1Idx = 0;
     let m2Idx = 0;
     let m3Idx = 0;
     let m3Placed = [];
@@ -640,13 +685,21 @@
       if (modNum === 3) renderMod3();
     }
 
-    // Phase 1
+    // Phase 1 Logic
     function renderMod1() {
-      const s = scenarios[0];
+      if (scIdx >= scenarios.length) {
+        switchMod(2);
+        return;
+      }
+      const s = scenarios[scIdx];
+      document.getElementById('scen-indicator').innerText = s.indicator;
       document.getElementById('scen-title').innerText = s.title;
       document.getElementById('scen-desc').innerHTML = s.desc;
+      document.getElementById('required-count-label').innerText = s.reqCount;
       equipped = [];
       document.getElementById('equipped-count').innerText = 0;
+      document.getElementById('m1-feedback').className = 'feedback-banner';
+      document.getElementById('m1-feedback').style.display = 'none';
 
       const cont = document.getElementById('wardrobe-items-container');
       cont.innerHTML = '';
@@ -659,7 +712,7 @@
             equipped = equipped.filter(i => i !== opt.name);
             card.classList.remove('selected');
           } else {
-            if (equipped.length < 4) {
+            if (equipped.length < s.reqCount) {
               equipped.push(opt.name);
               card.classList.add('selected');
             }
@@ -672,28 +725,31 @@
 
     function verifyProtocolChoice() {
       totalAttempts++;
-      const s = scenarios[0];
+      const s = scenarios[scIdx];
       const feedback = document.getElementById('m1-feedback');
 
-      const isExact = s.required.every(req => equipped.includes(req)) && equipped.length === 4;
+      const isExact = s.required.every(req => equipped.includes(req)) && equipped.length === s.reqCount;
 
       if (isExact) {
         correctAttempts++;
         sndSuccess();
-        score += 30;
+        score += 25;
         updateStats();
         feedback.className = 'feedback-banner success';
-        feedback.innerHTML = `📐 Protocol Approved! Outstanding ergonomic judgment, Chief Architect! (+30 pts)`;
-        setTimeout(() => switchMod(2), 1400);
+        feedback.innerHTML = `${s.successMsg} (+25 pts)`;
+        setTimeout(() => {
+          scIdx++;
+          renderMod1();
+        }, 1400);
       } else {
         sndError();
         updateStats();
         feedback.className = 'feedback-banner error';
-        feedback.innerHTML = `⚠️ Ergonomic Warning: High risk detected! Ensure you choose hard hat, uniform vest, trousers, and boots!`;
+        feedback.innerHTML = `⚠️ Outfit mismatch! Review the situation carefully and select exactly ${s.reqCount} matching items!`;
       }
     }
 
-    // Phase 2
+    // Phase 2 Logic
     function renderMod2() {
       if (m2Idx >= m2Items.length) {
         switchMod(3);
@@ -739,7 +795,7 @@
       }
     }
 
-    // Phase 3
+    // Phase 3 Logic
     function renderMod3() {
       if (m3Idx >= m3Cases.length) {
         showMishkaTrophy();
@@ -797,7 +853,7 @@
         score += 25;
         updateStats();
         feedback.className = 'feedback-banner success';
-        feedback.innerHTML = `🏛️ Blueprint Verified! "${built}" (+25 pts)`;
+        feedback.innerHTML = `✨ Sentence Verified! "${built}" (+25 pts)`;
 
         setTimeout(() => {
           m3Idx++;
@@ -824,6 +880,7 @@
       score = 0;
       totalAttempts = 0;
       correctAttempts = 0;
+      scIdx = 0;
       m2Idx = 0;
       m3Idx = 0;
       updateStats();
