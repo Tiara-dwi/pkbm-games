@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Stove is in The Kitchen: Skatehouse Spatial Detective (Aqlan - Grade 4)</title>
+  
+  <!-- Fonts: League Spartan + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400;1,9..40,700&family=League+Spartan:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-sky: #B2E8EE;
+      --bg-lime: #F4FFD3;
+      --navy-main: #2B4052;
+      --navy-dark: #1A2834;
+      --navy-light: #E8F1F5;
+      --charcoal: #091520;
+      --orange-accent: #F27A38;
+      --orange-light: #FA8C54;
+      --orange-soft: #FFF1E8;
+      --lime-border: #8EA825;
+      --green-leaf: #16A34A;
+      --gold: #F59E0B;
+      --card-white: #FFFFFF;
+      --radius: 20px;
+      --shadow: 0 10px 25px -5px rgba(43, 64, 82, 0.12), 0 4px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, var(--bg-sky) 0%, #E0F7FA 40%, var(--bg-lime) 100%);
+      color: var(--charcoal);
+      min-height: 100vh;
+      padding: 20px 12px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 820px;
+    }
+
+    /* Header & HUD */
+    header {
+      background: var(--card-white);
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      box-shadow: var(--shadow);
+      border: 3px solid var(--navy-main);
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .badge-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge-grade {
+      background: var(--orange-accent);
+      color: white;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .hud-stats {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .stat-pill {
+      background: var(--navy-light);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      color: var(--navy-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+    }
+
+    .stat-pill.score {
+      background: var(--orange-soft);
+      color: var(--orange-accent);
+      border: 2px solid var(--orange-accent);
+    }
+
+    h1 {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      color: var(--navy-main);
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #64748B;
+      font-weight: 500;
+    }
+
+    /* Stage Tabs */
+    .stage-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .stage-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: 2px solid var(--navy-main);
+      background: white;
+      border-radius: 14px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stage-btn.active {
+      background: var(--navy-main);
+      color: white;
+      box-shadow: 0 6px 15px rgba(43, 64, 82, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .stage-btn span.tag {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    /* Main Game Card */
+    .game-card {
+      background: var(--card-white);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      border: 3px solid var(--navy-main);
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Stage 1: Room Sorter */
+    .sorter-arena {
+      text-align: center;
+    }
+
+    .item-display-box {
+      background: var(--navy-light);
+      border: 3px dashed var(--navy-main);
+      border-radius: 24px;
+      padding: 24px 16px;
+      margin: 16px auto 24px;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: bounceIn 0.4s ease;
+    }
+
+    .item-emoji {
+      font-size: 4.5rem;
+      line-height: 1;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.1));
+    }
+
+    .item-word {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--navy-main);
+      letter-spacing: 0.5px;
+    }
+
+    .item-trans {
+      font-size: 0.95rem;
+      color: #64748B;
+      font-style: italic;
+    }
+
+    .btn-audio {
+      background: white;
+      border: 2px solid var(--orange-accent);
+      color: var(--orange-accent);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-audio:hover {
+      background: var(--orange-accent);
+      color: white;
+    }
+
+    .room-choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .choice-btn {
+      padding: 20px 14px;
+      border-radius: 18px;
+      border: 3px solid var(--navy-main);
+      background: white;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--navy-main);
+    }
+
+    .choice-btn.kitchen:hover {
+      background: var(--orange-soft);
+      border-color: var(--orange-accent);
+      transform: translateY(-3px);
+    }
+
+    .choice-btn.bathroom:hover {
+      background: var(--bg-sky);
+      border-color: #0284C7;
+      transform: translateY(-3px);
+    }
+
+    .choice-btn .room-icon {
+      font-size: 2.4rem;
+    }
+
+    /* Feedback Overlay */
+    .feedback-banner {
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin-top: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+
+    .feedback-banner.success {
+      background: #DCFCE7;
+      color: #15803D;
+      border: 2px solid #22C55E;
+      display: block;
+    }
+
+    .feedback-banner.error {
+      background: #FEE2E2;
+      color: #B91C1C;
+      border: 2px solid #EF4444;
+      display: block;
+    }
+
+    /* Stage 2: Half-pipe */
+    .grammar-prompt-box {
+      background: #F8FAFC;
+      border: 3px solid var(--navy-main);
+      border-radius: 20px;
+      padding: 26px 20px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .grammar-context {
+      font-size: 0.9rem;
+      color: #64748B;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .grammar-sentence {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--navy-main);
+      line-height: 1.3;
+    }
+
+    .gap-placeholder {
+      display: inline-block;
+      min-width: 120px;
+      border-bottom: 4px dashed var(--orange-accent);
+      color: var(--orange-accent);
+      font-weight: 900;
+      padding: 0 8px;
+    }
+
+    .halfpipe-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .ramp-btn {
+      padding: 20px 16px;
+      background: white;
+      border: 3px solid var(--navy-main);
+      border-radius: 18px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--navy-main);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ramp-btn:hover {
+      background: var(--navy-main);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .ramp-btn span.rule-hint {
+      font-size: 0.8rem;
+      font-weight: 500;
+      opacity: 0.75;
+    }
+
+    /* Stage 3: Room Architect */
+    .architect-board {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sentence-block-zone {
+      background: #F1F5F9;
+      border: 2px dashed #94A3B8;
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 80px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .word-chip {
+      background: var(--card-white);
+      border: 2px solid var(--navy-main);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy-main);
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+    }
+
+    .word-chip:hover {
+      background: var(--orange-soft);
+      border-color: var(--orange-accent);
+      transform: scale(1.05);
+    }
+
+    .word-chip.placed {
+      background: var(--navy-main);
+      color: white;
+    }
+
+    .built-preview {
+      background: #F8FAFC;
+      border-left: 5px solid var(--lime-border);
+      padding: 16px;
+      border-radius: 0 12px 12px 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--navy-main);
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Modal / Trophy Screen */
+    .trophy-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+      animation: zoomIn 0.4s ease;
+    }
+
+    .trophy-icon {
+      font-size: 5.5rem;
+      margin-bottom: 16px;
+      animation: float 2s infinite ease-in-out;
+    }
+
+    .trophy-title {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--navy-main);
+      margin-bottom: 10px;
+    }
+
+    .trophy-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: white;
+      padding: 8px 24px;
+      border-radius: 999px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .btn-replay {
+      background: var(--orange-accent);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(242, 122, 56, 0.35);
+      transition: all 0.2s;
+    }
+
+    .btn-replay:hover {
+      background: #D96323;
+      transform: scale(1.05);
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      70% { transform: scale(1.03); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      .room-choices, .halfpipe-options { grid-template-columns: 1fr; }
+      .stage-btn span.tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="badge-bar">
+        <span class="badge-grade">🛹 English Grade 4 • Unit 6</span>
+        <div class="hud-stats">
+          <div class="stat-pill score">🏆 Score: <span id="val-score">0</span></div>
+          <div class="stat-pill">🔥 Streak: <span id="val-streak">0</span></div>
+          <div class="stat-pill">💖 <span id="val-lives">❤️❤️❤️</span></div>
+        </div>
+      </div>
+      <div>
+        <h1>The Skatehouse Spatial Detective</h1>
+        <div class="subtitle">Help Captain Aqlan sort kitchen & bathroom gear, fix spatial mix-ups, and master "Don't vs Doesn't"!</div>
+      </div>
+    </header>
+
+    <!-- STAGE NAVIGATION -->
+    <nav class="stage-nav">
+      <button class="stage-btn active" id="btn-st1" onclick="switchStage(1)">
+        <span>Pos 1: Room Sorter</span>
+        <span class="tag">Kitchen vs Bathroom</span>
+      </button>
+      <button class="stage-btn" id="btn-st2" onclick="switchStage(2)">
+        <span>Pos 2: Grammar Ramp</span>
+        <span class="tag">Don't vs Doesn't</span>
+      </button>
+      <button class="stage-btn" id="btn-st3" onclick="switchStage(3)">
+        <span>Pos 3: Room Architect</span>
+        <span class="tag">Build Sentences</span>
+      </button>
+    </nav>
+
+    <!-- GAME CARD -->
+    <main class="game-card">
+
+      <!-- STAGE 1: ROOM SORTER -->
+      <section id="stage-1" class="sorter-arena">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-family:'League Spartan'; font-weight:700; color:#64748B;">Item <span id="s1-cur">1</span> of <span id="s1-tot">16</span></span>
+          <button class="btn-audio" onclick="speakCurrentItem()">🔊 Listen Pronunciation</button>
+        </div>
+
+        <div class="item-display-box" id="item-box">
+          <div class="item-emoji" id="item-emoji">🍳</div>
+          <div class="item-word" id="item-word">Stove</div>
+          <div class="item-trans" id="item-trans">Kompor masak</div>
+        </div>
+
+        <p style="font-weight:600; color:var(--navy-main); margin-bottom:12px;">Where does this item belong?</p>
+
+        <div class="room-choices">
+          <button class="choice-btn kitchen" onclick="handleSortChoice('kitchen')">
+            <span class="room-icon">🍳</span>
+            <span>IN THE KITCHEN</span>
+            <span style="font-size:0.8rem; font-weight:500; color:#64748B;">Dapur</span>
+          </button>
+          <button class="choice-btn bathroom" onclick="handleSortChoice('bathroom')">
+            <span class="room-icon">🛁</span>
+            <span>IN THE BATHROOM</span>
+            <span style="font-size:0.8rem; font-weight:500; color:#64748B;">Kamar Mandi</span>
+          </button>
+        </div>
+
+        <div id="s1-feedback" class="feedback-banner"></div>
+      </section>
+
+      <!-- STAGE 2: GRAMMAR HALF-PIPE -->
+      <section id="stage-2" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span style="font-family:'League Spartan'; font-weight:700; color:#64748B;">Challenge <span id="s2-cur">1</span> of 10</span>
+          <span style="font-size:0.85rem; font-weight:700; color:var(--orange-accent); background:var(--orange-soft); padding:4px 10px; border-radius:999px;">BSE Hal 63</span>
+        </div>
+
+        <div class="grammar-prompt-box">
+          <div class="grammar-context" id="s2-context">Room Absurdity Fixer</div>
+          <div class="grammar-sentence" id="s2-sentence">
+            They <span class="gap-placeholder" id="s2-gap">? ? ?</span> watch TV in the bathroom.
+          </div>
+        </div>
+
+        <p style="text-align:center; font-weight:600; color:var(--navy-main); margin-bottom:14px;">Choose the correct negative auxiliary:</p>
+
+        <div class="halfpipe-options">
+          <button class="ramp-btn" onclick="handleGrammarChoice('don't')">
+            <span>🛹 DO NOT / DON'T</span>
+            <span class="rule-hint">For I / You / We / They / Plural</span>
+          </button>
+          <button class="ramp-btn" onclick="handleGrammarChoice('doesn't')">
+            <span>🛹 DOES NOT / DOESN'T</span>
+            <span class="rule-hint">For He / She / It / 1 Name</span>
+          </button>
+        </div>
+
+        <div id="s2-feedback" class="feedback-banner"></div>
+      </section>
+
+      <!-- STAGE 3: ROOM ARCHITECT -->
+      <section id="stage-3" style="display:none;" class="architect-board">
+        <div>
+          <span style="font-family:'League Spartan'; font-weight:700; color:var(--navy-main); font-size:1.15rem;">📐 Assemble Your Skater Room Description</span>
+          <p style="font-size:0.9rem; color:#64748B; margin-top:4px;">Tap the word blocks in the right order to construct the sentence (BSE p. 64):</p>
+        </div>
+
+        <div style="font-weight:700; color:var(--navy-main); margin-top:8px;">Target: "<span id="target-phrase-text">This is my bedroom.</span>"</div>
+
+        <div class="built-preview" id="built-sentence-box">
+          <span style="color:#94A3B8; font-style:italic;">Your assembled sentence will appear here...</span>
+        </div>
+
+        <div class="sentence-block-zone" id="word-chips-pool">
+          <!-- chips populated by JS -->
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+          <button class="btn-audio" onclick="resetCurrentSentence()">🔄 Reset Words</button>
+          <button class="btn-replay" style="padding:10px 24px; font-size:0.95rem;" onclick="checkSentenceAssembly()">✅ Check Sentence</button>
+        </div>
+
+        <div id="s3-feedback" class="feedback-banner"></div>
+      </section>
+
+      <!-- TROPHY SCREEN -->
+      <section id="trophy-screen" class="trophy-screen">
+        <div class="trophy-icon">🏆🛹</div>
+        <h2 class="trophy-title">MISSION ACCOMPLISHED!</h2>
+        <div class="trophy-badge">🎖️ MASTER SKATEHOUSE DETECTIVE</div>
+        <p style="font-size:1.05rem; color:#475569; max-width:500px; margin:0 auto 20px; line-height:1.5;">
+          Awesome work, Captain Aqlan! You conquered all 16 kitchen & bathroom objects, mastered <b>Don't vs Doesn't</b>, and built complete English room descriptions!
+        </p>
+        <div style="font-size:1.4rem; font-family:'League Spartan'; font-weight:800; color:var(--navy-main); margin-bottom:24px;">
+          Final Score: <span id="final-score-val" style="color:var(--orange-accent);">0</span> Points!
+        </div>
+        <button class="btn-replay" onclick="restartGame()">🔄 Play Again</button>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // =========================================================================
+    // AUDIO ENGINE (Web Audio API Synthesizer)
+    // =========================================================================
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, type, duration, delay=0) {
+      setTimeout(() => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      }, delay);
+    }
+
+    function sndSuccess() {
+      playTone(523.25, 'triangle', 0.15, 0);   // C5
+      playTone(659.25, 'triangle', 0.15, 80);  // E5
+      playTone(783.99, 'triangle', 0.25, 160); // G5
+    }
+
+    function sndError() {
+      playTone(220, 'sawtooth', 0.25, 0);
+      playTone(180, 'sawtooth', 0.35, 120);
+    }
+
+    function sndTrophy() {
+      playTone(523.25, 'triangle', 0.2, 0);
+      playTone(659.25, 'triangle', 0.2, 100);
+      playTone(783.99, 'triangle', 0.2, 200);
+      playTone(1046.50, 'triangle', 0.5, 300);
+    }
+
+    function speakCurrentItem() {
+      if ('speechSynthesis' in window) {
+        const item = stage1Items[s1Idx];
+        const u = new SpeechSynthesisUtterance(item.word);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    // =========================================================================
+    // GAME STATE & DATA
+    // =========================================================================
+    let score = 0;
+    let streak = 0;
+    let lives = 3;
+
+    // Stage 1 Data: 16 Items
+    const stage1Items = [
+      { word: "Stove", trans: "Kompor memasak", emoji: "🍳", room: "kitchen" },
+      { word: "Bathtub", trans: "Bak mandi", emoji: "🛁", room: "bathroom" },
+      { word: "Frying Pan", trans: "Wajan penggorengan", emoji: "🍳", room: "kitchen" },
+      { word: "Soap", trans: "Sabun mandi", emoji: "🧼", room: "bathroom" },
+      { word: "Plate", trans: "Piring makan", emoji: "🍽️", room: "kitchen" },
+      { word: "Shampoo", trans: "Sampo rambut", emoji: "🧴", room: "bathroom" },
+      { word: "Spoon", trans: "Sendok makan", emoji: "🥄", room: "kitchen" },
+      { word: "Toothbrush", trans: "Sikat gigi", emoji: "🪥", room: "bathroom" },
+      { word: "Fork", trans: "Garpu makan", emoji: "🍴", room: "kitchen" },
+      { word: "Toothpaste", trans: "Pasta gigi", emoji: "🫧", room: "bathroom" },
+      { word: "Glass", trans: "Gelas minum", emoji: "🥛", room: "kitchen" },
+      { word: "Towel", trans: "Handuk mandi", emoji: "🧖", room: "bathroom" },
+      { word: "Bowl", trans: "Mangkuk sup", emoji: "🥣", room: "kitchen" },
+      { word: "Dipper", trans: "Gayung air", emoji: "🪣", room: "bathroom" },
+      { word: "Pan", trans: "Panci rebusan", emoji: "🥘", room: "kitchen" },
+      { word: "Water", trans: "Air bersih", emoji: "💧", room: "bathroom" }
+    ];
+
+    // Stage 2 Data: 10 BSE Drill Questions (Hal 63)
+    const stage2Drills = [
+      { text: "They _____ watch TV in the bathroom.", ans: "don't", subj: "They (Plural)" },
+      { text: "We _____ sleep in the kitchen.", ans: "don't", subj: "We (Plural)" },
+      { text: "Aisyah _____ listen to the radio in the bathroom.", ans: "doesn't", subj: "Aisyah (Singular 1 Name)" },
+      { text: "My parents _____ read newspapers in the bathroom.", ans: "don't", subj: "My parents (Plural - 2 people)" },
+      { text: "Lili _____ sleep in the garage.", ans: "doesn't", subj: "Lili (Singular 1 Name)" },
+      { text: "Joshua _____ study in the kitchen.", ans: "doesn't", subj: "Joshua (Singular 1 Name)" },
+      { text: "Made _____ see the sofa in the bathroom.", ans: "doesn't", subj: "Made (Singular 1 Name)" },
+      { text: "You _____ see a blanket in the kitchen.", ans: "don't", subj: "You" },
+      { text: "Mrs. Salma _____ see bolster in the kitchen.", ans: "doesn't", subj: "Mrs. Salma (Singular 1 person)" },
+      { text: "Cici _____ take a bath in the kitchen.", ans: "doesn't", subj: "Cici (Singular 1 Name)" }
+    ];
+
+    // Stage 3 Data: 3 Room Builder Sentences (Hal 64)
+    const stage3Sentences = [
+      {
+        target: "This is my bedroom.",
+        words: ["This", "is", "my", "bedroom."]
+      },
+      {
+        target: "My bedroom is big and clean.",
+        words: ["My", "bedroom", "is", "big", "and", "clean."]
+      },
+      {
+        target: "There are a bed and a skateboard.",
+        words: ["There", "are", "a", "bed", "and", "a", "skateboard."]
+      },
+      {
+        target: "I love my room!",
+        words: ["I", "love", "my", "room!"]
+      }
+    ];
+
+    let s1Idx = 0;
+    let s2Idx = 0;
+    let s3Idx = 0;
+    let s3CurrentPlaced = [];
+
+    // =========================================================================
+    // HUD & STAGE CONTROLLER
+    // =========================================================================
+    function updateHUD() {
+      document.getElementById('val-score').innerText = score;
+      document.getElementById('val-streak').innerText = streak;
+      const hearts = "❤️".repeat(Math.max(0, lives)) + "🖤".repeat(Math.max(0, 3 - lives));
+      document.getElementById('val-lives').innerText = hearts;
+    }
+
+    function switchStage(stageNum) {
+      document.querySelectorAll('.stage-btn').forEach((b, idx) => {
+        b.classList.toggle('active', idx === stageNum - 1);
+      });
+      document.getElementById('stage-1').style.display = stageNum === 1 ? 'block' : 'none';
+      document.getElementById('stage-2').style.display = stageNum === 2 ? 'block' : 'none';
+      document.getElementById('stage-3').style.display = stageNum === 3 ? 'block' : 'none';
+      document.getElementById('trophy-screen').style.display = 'none';
+
+      if (stageNum === 1) renderStage1();
+      if (stageNum === 2) renderStage2();
+      if (stageNum === 3) renderStage3();
+    }
+
+    // =========================================================================
+    // STAGE 1 LOGIC
+    // =========================================================================
+    function renderStage1() {
+      if (s1Idx >= stage1Items.length) {
+        switchStage(2);
+        return;
+      }
+      const item = stage1Items[s1Idx];
+      document.getElementById('s1-cur').innerText = s1Idx + 1;
+      document.getElementById('s1-tot').innerText = stage1Items.length;
+      document.getElementById('item-emoji').innerText = item.emoji;
+      document.getElementById('item-word').innerText = item.word;
+      document.getElementById('item-trans').innerText = item.trans;
+      document.getElementById('s1-feedback').className = 'feedback-banner';
+      document.getElementById('s1-feedback').style.display = 'none';
+      speakCurrentItem();
+    }
+
+    function handleSortChoice(chosenRoom) {
+      const item = stage1Items[s1Idx];
+      const feedback = document.getElementById('s1-feedback');
+
+      if (chosenRoom === item.room) {
+        sndSuccess();
+        score += 10;
+        streak += 1;
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `🛹 Correct! <b>The ${item.word} is in the ${item.room}!</b> (+10 pts)`;
+        updateHUD();
+
+        setTimeout(() => {
+          s1Idx++;
+          renderStage1();
+        }, 1100);
+      } else {
+        sndError();
+        streak = 0;
+        lives = Math.max(0, lives - 1);
+        updateHUD();
+        feedback.className = 'feedback-banner error';
+        feedback.innerHTML = `⚠️ Oops! The ${item.word} belongs <b>in the ${item.room}</b>, not the ${chosenRoom}!`;
+      }
+    }
+
+    // =========================================================================
+    // STAGE 2 LOGIC
+    // =========================================================================
+    function renderStage2() {
+      if (s2Idx >= stage2Drills.length) {
+        switchStage(3);
+        return;
+      }
+      const drill = stage2Drills[s2Idx];
+      document.getElementById('s2-cur').innerText = s2Idx + 1;
+      document.getElementById('s2-context').innerText = `Subject clue: ${drill.subj}`;
+      
+      const parts = drill.text.split('_____');
+      document.getElementById('s2-sentence').innerHTML = `
+        ${parts[0]} <span class="gap-placeholder" id="s2-gap">? ? ?</span> ${parts[1]}
+      `;
+      document.getElementById('s2-feedback').className = 'feedback-banner';
+      document.getElementById('s2-feedback').style.display = 'none';
+    }
+
+    function handleGrammarChoice(choice) {
+      const drill = stage2Drills[s2Idx];
+      const feedback = document.getElementById('s2-feedback');
+
+      if (choice === drill.ans) {
+        sndSuccess();
+        score += 15;
+        streak += 1;
+        document.getElementById('s2-gap').innerText = choice.toUpperCase();
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `✨ Perfect Kickflip! <b>${drill.subj}</b> takes <b>${choice.toUpperCase()}</b>! (+15 pts)`;
+        updateHUD();
+
+        setTimeout(() => {
+          s2Idx++;
+          renderStage2();
+        }, 1200);
+      } else {
+        sndError();
+        streak = 0;
+        lives = Math.max(0, lives - 1);
+        updateHUD();
+        feedback.className = 'feedback-banner error';
+        feedback.innerHTML = `🚫 Careful! ${drill.subj} uses <b>${drill.ans.toUpperCase()}</b>!`;
+      }
+    }
+
+    // =========================================================================
+    // STAGE 3 LOGIC
+    // =========================================================================
+    function renderStage3() {
+      if (s3Idx >= stage3Sentences.length) {
+        showTrophy();
+        return;
+      }
+      const sData = stage3Sentences[s3Idx];
+      document.getElementById('target-phrase-text').innerText = sData.target;
+      s3CurrentPlaced = [];
+      updatePlacedSentenceView();
+
+      const pool = document.getElementById('word-chips-pool');
+      pool.innerHTML = '';
+      
+      // Shuffle words
+      const shuffled = [...sData.words].sort(() => Math.random() - 0.5);
+      shuffled.forEach(w => {
+        const chip = document.createElement('button');
+        chip.className = 'word-chip';
+        chip.innerText = w;
+        chip.onclick = () => {
+          s3CurrentPlaced.push(w);
+          chip.disabled = true;
+          chip.classList.add('placed');
+          updatePlacedSentenceView();
+        };
+        pool.appendChild(chip);
+      });
+
+      document.getElementById('s3-feedback').className = 'feedback-banner';
+      document.getElementById('s3-feedback').style.display = 'none';
+    }
+
+    function updatePlacedSentenceView() {
+      const box = document.getElementById('built-sentence-box');
+      if (s3CurrentPlaced.length === 0) {
+        box.innerHTML = '<span style="color:#94A3B8; font-style:italic;">Your assembled sentence will appear here...</span>';
+      } else {
+        box.innerHTML = `<span style="color:var(--navy-main); font-weight:700;">${s3CurrentPlaced.join(' ')}</span>`;
+      }
+    }
+
+    function resetCurrentSentence() {
+      renderStage3();
+    }
+
+    function checkSentenceAssembly() {
+      const sData = stage3Sentences[s3Idx];
+      const built = s3CurrentPlaced.join(' ');
+      const feedback = document.getElementById('s3-feedback');
+
+      if (built === sData.target) {
+        sndSuccess();
+        score += 20;
+        streak += 1;
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `🎉 Excellent Room Blueprint! "${built}" (+20 pts)`;
+        updateHUD();
+
+        setTimeout(() => {
+          s3Idx++;
+          renderStage3();
+        }, 1200);
+      } else {
+        sndError();
+        feedback.className = 'feedback-banner error';
+        feedback.innerHTML = `Keep trying! Target sentence: "${sData.target}"`;
+      }
+    }
+
+    // =========================================================================
+    // VICTORY / TROPHY
+    // =========================================================================
+    function showTrophy() {
+      sndTrophy();
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      document.getElementById('stage-1').style.display = 'none';
+      document.getElementById('stage-2').style.display = 'none';
+      document.getElementById('stage-3').style.display = 'none';
+      document.getElementById('trophy-screen').style.display = 'block';
+      document.getElementById('final-score-val').innerText = score;
+    }
+
+    function restartGame() {
+      score = 0;
+      streak = 0;
+      lives = 3;
+      s1Idx = 0;
+      s2Idx = 0;
+      s3Idx = 0;
+      updateHUD();
+      switchStage(1);
+    }
+
+    // Initialize
+    updateHUD();
+    renderStage1();
+  </script>
+</body>
+</html>

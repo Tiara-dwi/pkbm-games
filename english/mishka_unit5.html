@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What a Nice Skirt!: Architect's Wardrobe Studio (Mishka - Grade 5)</title>
+  
+  <!-- Fonts: Poppins + Kagitingan Fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-yellow: #E8DD6A;
+      --card-parchment: #FFF7EE;
+      --card-white: #FFFFFF;
+      --navy-main: #2B4689;
+      --navy-dark: #1E3163;
+      --navy-light: #EEF2FF;
+      --plum: #954865;
+      --teal: #00C4CC;
+      --teal-soft: #E0FCFD;
+      --border: #D8CEBC;
+      --success: #059669;
+      --error: #DC2626;
+      --radius: 20px;
+      --shadow: 0 12px 28px -6px rgba(43, 70, 137, 0.12), 0 4px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top right, #FBF8CC 0%, var(--bg-yellow) 40%, #E2D75E 100%);
+      color: #1E293B;
+      min-height: 100vh;
+      padding: 20px 12px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 840px;
+    }
+
+    header {
+      background: var(--card-parchment);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      border: 3px solid var(--navy-main);
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .badge-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge-mod {
+      background: var(--plum);
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .hud-stats {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .stat-pill {
+      background: var(--navy-light);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      color: var(--navy-main);
+      font-size: 0.95rem;
+    }
+
+    .stat-pill.accuracy {
+      background: var(--teal-soft);
+      color: #0F766E;
+      border: 2px solid var(--teal);
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--navy-main);
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #475569;
+    }
+
+    /* Module Tabs */
+    .module-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .mod-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: 2px solid var(--navy-main);
+      background: var(--card-parchment);
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mod-btn.active {
+      background: var(--navy-main);
+      color: white;
+      box-shadow: 0 6px 16px rgba(43, 70, 137, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .mod-btn span.tag {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    /* Main Card */
+    .game-card {
+      background: var(--card-parchment);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      border: 3px solid var(--navy-main);
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Module 1: Dress Code Protocol */
+    .protocol-box {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .scenario-title {
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--navy-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .scenario-desc {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.4;
+    }
+
+    .wardrobe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .wardrobe-item-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wardrobe-item-card:hover {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+      transform: translateY(-2px);
+    }
+
+    .wardrobe-item-card.selected {
+      background: var(--navy-main);
+      color: white;
+      border-color: var(--navy-dark);
+    }
+
+    .wardrobe-item-card .w-icon { font-size: 2rem; }
+    .wardrobe-item-card .w-name { font-weight: 700; font-size: 0.85rem; }
+
+    /* Module 2: Compliment Calibrator */
+    .calibrator-card {
+      background: white;
+      border: 3px solid var(--navy-main);
+      border-radius: 20px;
+      padding: 28px 20px;
+      text-align: center;
+      margin: 10px auto 20px;
+      max-width: 500px;
+    }
+
+    .garment-visual {
+      font-size: 4rem;
+      margin-bottom: 8px;
+    }
+
+    .garment-pair-label {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--navy-main);
+      margin-bottom: 6px;
+    }
+
+    .garment-type-badge {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--plum);
+      background: #FDF2F8;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .syntax-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .syntax-btn {
+      padding: 18px 12px;
+      background: white;
+      border: 3px solid var(--navy-main);
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--navy-main);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .syntax-btn:hover {
+      background: var(--navy-main);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .syntax-btn span.rule-sub {
+      font-size: 0.75rem;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+
+    /* Feedback */
+    .feedback-banner {
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin-top: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: none;
+    }
+    .feedback-banner.success { background: #DCFCE7; color: #15803D; border: 2px solid #22C55E; display: block; }
+    .feedback-banner.error { background: #FEE2E2; color: #B91C1C; border: 2px solid #EF4444; display: block; }
+
+    /* Module 3: Sentence Matrix */
+    .matrix-pool {
+      background: white;
+      border: 2px dashed #94A3B8;
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 80px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .matrix-chip {
+      background: var(--card-parchment);
+      border: 2px solid var(--navy-main);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--navy-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .matrix-chip:hover {
+      background: var(--teal-soft);
+      border-color: var(--teal);
+    }
+
+    .matrix-chip.placed {
+      background: var(--navy-main);
+      color: white;
+    }
+
+    /* Trophy / Certification */
+    .trophy-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .trophy-icon { font-size: 5rem; margin-bottom: 12px; }
+    .trophy-title { font-size: 2.2rem; font-weight: 900; color: var(--navy-main); }
+    .trophy-badge {
+      display: inline-block;
+      background: var(--teal);
+      color: white;
+      padding: 8px 24px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin: 12px 0 20px;
+    }
+
+    .btn-action {
+      background: var(--navy-main);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(43, 70, 137, 0.25);
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover { background: var(--navy-dark); transform: scale(1.04); }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      .syntax-options { grid-template-columns: 1fr; }
+      .mod-btn span.tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge-bar">
+        <span class="badge-mod">📐 English Grade 5 • Unit 5</span>
+        <div class="hud-stats">
+          <div class="stat-pill">🏆 Score: <span id="val-score">0</span></div>
+          <div class="stat-pill accuracy">🎯 Accuracy: <span id="val-acc">100%</span></div>
+        </div>
+      </div>
+      <div>
+        <h1>Architect's Wardrobe Studio & Syntax Matrix</h1>
+        <div class="subtitle">Guide Architect Mishka in functional dress code protocols, calibrate exclamatory syntax ("What a...!"), and build attire sentences!</div>
+      </div>
+    </header>
+
+    <nav class="module-nav">
+      <button class="mod-btn active" id="btn-m1" onclick="switchMod(1)">
+        <span>Phase 1: Dress Code</span>
+        <span class="tag">Ergonomics & Safety</span>
+      </button>
+      <button class="mod-btn" id="btn-m2" onclick="switchMod(2)">
+        <span>Phase 2: Compliment Calibrator</span>
+        <span class="tag">What a...! vs What...!</span>
+      </button>
+      <button class="mod-btn" id="btn-m3" onclick="switchMod(3)">
+        <span>Phase 3: Attire Matrix</span>
+        <span class="tag">What Does She Wear?</span>
+      </button>
+    </nav>
+
+    <main class="game-card">
+
+      <!-- PHASE 1: DRESS CODE -->
+      <section id="mod-1">
+        <div class="protocol-box">
+          <div class="scenario-title" id="scen-title">🏛️ Scenario 1: Construction Site Inspection</div>
+          <div class="scenario-desc" id="scen-desc">
+            You are inspecting a 5-story building construction with scaffolds, wet cement, and dust. 
+            <b>Select 4 structurally safe & required items:</b>
+          </div>
+        </div>
+
+        <div style="font-size:0.9rem; font-weight:700; color:var(--navy-main);">Available Wardrobe Catalog (Tap to equip):</div>
+        <div class="wardrobe-grid" id="wardrobe-items-container">
+          <!-- cards populated by JS -->
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+          <span style="font-size:0.9rem; color:#64748B;">Equipped: <b id="equipped-count">0</b>/4 items</span>
+          <button class="btn-action" onclick="verifyProtocolChoice()">Verify Protocol</button>
+        </div>
+
+        <div id="m1-feedback" class="feedback-banner"></div>
+      </section>
+
+      <!-- PHASE 2: COMPLIMENT CALIBRATOR -->
+      <section id="mod-2" style="display:none; text-align:center;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span style="font-weight:700; color:#64748B;">Syntax Calibrator: <span id="m2-cur">1</span> of 10</span>
+          <button class="btn-action" style="padding:4px 14px; font-size:0.8rem;" onclick="speakCurrentGarment()">🔊 Pronounce</button>
+        </div>
+
+        <div class="calibrator-card">
+          <div class="garment-visual" id="cal-visual">👗</div>
+          <div class="garment-pair-label" id="cal-phrase">nice skirt</div>
+          <div class="garment-type-badge" id="cal-type">Singular Countable</div>
+          <p style="font-size:0.95rem; color:#64748B;">Choose the mathematically precise exclamatory syntax:</p>
+        </div>
+
+        <div class="syntax-options">
+          <button class="syntax-btn" onclick="handleSyntaxChoice('a')">
+            <span id="btn-label-a">✨ WHAT A / AN ... !</span>
+            <span class="rule-sub">Used for Singular Countable Items</span>
+          </button>
+          <button class="syntax-btn" onclick="handleSyntaxChoice('plural')">
+            <span id="btn-label-plural">✨ WHAT ... ! (NO 'A')</span>
+            <span class="rule-sub">Used for Plural & Paired Items</span>
+          </button>
+        </div>
+
+        <div id="m2-feedback" class="feedback-banner"></div>
+      </section>
+
+      <!-- PHASE 3: ATTIRE MATRIX -->
+      <section id="mod-3" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; color:var(--navy-main);">Case Study: Character Attire Observation (BSE p. 46)</span>
+          <span style="font-size:0.85rem; color:var(--plum); font-weight:700;" id="m3-cur">Case 1 of 4</span>
+        </div>
+
+        <div style="background:white; border:2px solid var(--border); border-radius:16px; padding:18px; margin:14px 0;">
+          <div style="font-weight:700; color:var(--navy-main); font-size:1.1rem; margin-bottom:6px;" id="char-prompt-title">What does Cici wear?</div>
+          <div style="font-size:0.95rem; color:#64748B;" id="char-clue-text">Visual Clue: Pink top + purple bottom + formal school day.</div>
+        </div>
+
+        <div style="background:white; border:2px solid var(--navy-main); border-radius:14px; padding:16px; min-height:54px; font-size:1.1rem; font-weight:600; color:var(--navy-main);" id="matrix-assembled-box">
+          <span style="color:#94A3B8; font-style:italic;">Construct the attire sentence here...</span>
+        </div>
+
+        <div class="matrix-pool" id="matrix-words-pool"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+          <button class="btn-action" style="background:#64748B;" onclick="resetMatrixWords()">🔄 Reset</button>
+          <button class="btn-action" onclick="verifyMatrixSentence()">Check Sentence</button>
+        </div>
+
+        <div id="m3-feedback" class="feedback-banner"></div>
+      </section>
+
+      <!-- TROPHY SCREEN -->
+      <section id="trophy-screen" class="trophy-screen">
+        <div class="trophy-icon">🏛️✨</div>
+        <h2 class="trophy-title">CREDENTIAL GRANTED!</h2>
+        <div class="trophy-badge">🎖️ CERTIFIED LEAD WARDROBE ARCHITECT</div>
+        <p style="font-size:1.05rem; color:#475569; max-width:520px; margin:0 auto 20px; line-height:1.5;">
+          Outstanding precision, Lead Architect Mishka! You successfully mastered functional attire ergonomics, exclamatory syntax rules (<b>What a...! vs What...!</b>), and 3rd-person singular present descriptions!
+        </p>
+        <button class="btn-action" onclick="restartMishkaGame()">🔄 Replay Studio</button>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Audio synthesizer
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playTone(freq, type, duration, delay=0) {
+      setTimeout(() => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      }, delay);
+    }
+
+    function sndSuccess() {
+      playTone(440, 'sine', 0.15, 0);
+      playTone(554.37, 'sine', 0.15, 90);
+      playTone(659.25, 'sine', 0.25, 180);
+    }
+    function sndError() {
+      playTone(200, 'triangle', 0.3, 0);
+    }
+    function sndTrophy() {
+      playTone(440, 'sine', 0.2, 0);
+      playTone(554.37, 'sine', 0.2, 100);
+      playTone(659.25, 'sine', 0.2, 200);
+      playTone(880, 'sine', 0.5, 300);
+    }
+
+    function speakCurrentGarment() {
+      if ('speechSynthesis' in window) {
+        const item = m2Items[m2Idx];
+        const text = item.type === 'a' ? `What a ${item.phrase}!` : `What ${item.phrase}!`;
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    let score = 0;
+    let totalAttempts = 0;
+    let correctAttempts = 0;
+
+    // Phase 1 Data: Scenarios
+    const scenarios = [
+      {
+        title: "🏛️ Scenario 1: Construction Site Safety Inspection",
+        desc: "You are inspecting a 5-story building construction with scaffolds and steel beams. Select 4 structurally safe & required items:",
+        required: ["a hat (hard hat)", "a uniform", "a pair of trousers", "a pair of shoes (boots)"],
+        options: [
+          { name: "a hat (hard hat)", icon: "⛑️", valid: true },
+          { name: "a uniform", icon: "🦺", valid: true },
+          { name: "a pair of trousers", icon: "👖", valid: true },
+          { name: "a pair of shoes (boots)", icon: "🥾", valid: true },
+          { name: "a long dress", icon: "👗", valid: false, reason: "Dangerous! Loose skirts snag on scaffolding." },
+          { name: "a pair of shorts", icon: "🩳", valid: false, reason: "Exposes legs to abrasions and sharp debris." }
+        ]
+      }
+    ];
+
+    let equipped = [];
+
+    // Phase 2 Data: 10 Items
+    const m2Items = [
+      { phrase: "nice skirt", visual: "👗", type: "a", label: "Singular Countable" },
+      { phrase: "shiny shoes", visual: "👞", type: "plural", label: "Plural / Paired" },
+      { phrase: "elegant long dress", visual: "👘", type: "a", label: "Singular Countable" },
+      { phrase: "cool trousers", visual: "👖", type: "plural", label: "Plural / Paired" },
+      { phrase: "smart tie", visual: "👔", type: "a", label: "Singular Countable" },
+      { phrase: "comfortable shorts", visual: "🩳", type: "plural", label: "Plural / Paired" },
+      { phrase: "colorful socks", visual: "🧦", type: "plural", label: "Plural / Paired" },
+      { phrase: "clean uniform", visual: "🥋", type: "a", label: "Singular Countable" },
+      { phrase: "casual T-shirt", visual: "👕", type: "a", label: "Singular Countable" },
+      { phrase: "wide hat", visual: "👒", type: "a", label: "Singular Countable" }
+    ];
+
+    // Phase 3 Data: 4 Characters
+    const m3Cases = [
+      {
+        title: "What does Cici wear?",
+        clue: "Visual Clue: Pink blouse + purple skirt",
+        target: "Cici wears a pink blouse and a purple skirt.",
+        words: ["Cici", "wears", "a", "pink", "blouse", "and", "a", "purple", "skirt."]
+      },
+      {
+        title: "What does Made wear?",
+        clue: "Visual Clue: School uniform + red tie",
+        target: "Made wears a school uniform and a red tie.",
+        words: ["Made", "wears", "a", "school", "uniform", "and", "a", "red", "tie."]
+      },
+      {
+        title: "What does Joshua wear?",
+        clue: "Visual Clue: Green T-shirt + blue shorts",
+        target: "Joshua wears a green T-shirt and a pair of blue shorts.",
+        words: ["Joshua", "wears", "a", "green", "T-shirt", "and", "a", "pair", "of", "blue", "shorts."]
+      },
+      {
+        title: "What does Aisyah wear?",
+        clue: "Visual Clue: Long dress + sweet hat",
+        target: "Aisyah wears a long dress and a hat.",
+        words: ["Aisyah", "wears", "a", "long", "dress", "and", "a", "hat."]
+      }
+    ];
+
+    let m1Idx = 0;
+    let m2Idx = 0;
+    let m3Idx = 0;
+    let m3Placed = [];
+
+    function updateStats() {
+      document.getElementById('val-score').innerText = score;
+      const acc = totalAttempts === 0 ? 100 : Math.round((correctAttempts / totalAttempts) * 100);
+      document.getElementById('val-acc').innerText = `${acc}%`;
+    }
+
+    function switchMod(modNum) {
+      document.querySelectorAll('.mod-btn').forEach((b, idx) => {
+        b.classList.toggle('active', idx === modNum - 1);
+      });
+      document.getElementById('mod-1').style.display = modNum === 1 ? 'block' : 'none';
+      document.getElementById('mod-2').style.display = modNum === 2 ? 'block' : 'none';
+      document.getElementById('mod-3').style.display = modNum === 3 ? 'block' : 'none';
+      document.getElementById('trophy-screen').style.display = 'none';
+
+      if (modNum === 1) renderMod1();
+      if (modNum === 2) renderMod2();
+      if (modNum === 3) renderMod3();
+    }
+
+    // Phase 1
+    function renderMod1() {
+      const s = scenarios[0];
+      document.getElementById('scen-title').innerText = s.title;
+      document.getElementById('scen-desc').innerHTML = s.desc;
+      equipped = [];
+      document.getElementById('equipped-count').innerText = 0;
+
+      const cont = document.getElementById('wardrobe-items-container');
+      cont.innerHTML = '';
+      s.options.forEach(opt => {
+        const card = document.createElement('div');
+        card.className = 'wardrobe-item-card';
+        card.innerHTML = `<span class="w-icon">${opt.icon}</span><span class="w-name">${opt.name}</span>`;
+        card.onclick = () => {
+          if (equipped.includes(opt.name)) {
+            equipped = equipped.filter(i => i !== opt.name);
+            card.classList.remove('selected');
+          } else {
+            if (equipped.length < 4) {
+              equipped.push(opt.name);
+              card.classList.add('selected');
+            }
+          }
+          document.getElementById('equipped-count').innerText = equipped.length;
+        };
+        cont.appendChild(card);
+      });
+    }
+
+    function verifyProtocolChoice() {
+      totalAttempts++;
+      const s = scenarios[0];
+      const feedback = document.getElementById('m1-feedback');
+
+      const isExact = s.required.every(req => equipped.includes(req)) && equipped.length === 4;
+
+      if (isExact) {
+        correctAttempts++;
+        sndSuccess();
+        score += 30;
+        updateStats();
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `📐 Protocol Approved! Outstanding ergonomic judgment, Chief Architect! (+30 pts)`;
+        setTimeout(() => switchMod(2), 1400);
+      } else {
+        sndError();
+        updateStats();
+        feedback.className = 'feedback-banner error';
+        feedback.innerHTML = `⚠️ Ergonomic Warning: High risk detected! Ensure you choose hard hat, uniform vest, trousers, and boots!`;
+      }
+    }
+
+    // Phase 2
+    function renderMod2() {
+      if (m2Idx >= m2Items.length) {
+        switchMod(3);
+        return;
+      }
+      const item = m2Items[m2Idx];
+      document.getElementById('m2-cur').innerText = m2Idx + 1;
+      document.getElementById('cal-visual').innerText = item.visual;
+      document.getElementById('cal-phrase').innerText = item.phrase;
+      document.getElementById('cal-type').innerText = item.label;
+      document.getElementById('m2-feedback').className = 'feedback-banner';
+      document.getElementById('m2-feedback').style.display = 'none';
+      speakCurrentGarment();
+    }
+
+    function handleSyntaxChoice(chosenType) {
+      totalAttempts++;
+      const item = m2Items[m2Idx];
+      const feedback = document.getElementById('m2-feedback');
+
+      if (chosenType === item.type) {
+        correctAttempts++;
+        sndSuccess();
+        score += 15;
+        updateStats();
+        const sentence = item.type === 'a' ? `What a ${item.phrase}!` : `What ${item.phrase}!`;
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `✨ Precision Verified! <b>"${sentence}"</b> is grammatically flawless! (+15 pts)`;
+
+        setTimeout(() => {
+          m2Idx++;
+          renderMod2();
+        }, 1200);
+      } else {
+        sndError();
+        updateStats();
+        feedback.className = 'feedback-banner error';
+        if (item.type === 'a') {
+          feedback.innerHTML = `Rule Check: <b>${item.phrase}</b> is singular! It requires <b>"WHAT A / AN"</b>!`;
+        } else {
+          feedback.innerHTML = `Rule Check: <b>${item.phrase}</b> is plural/paired! Never use 'a' with plurals!`;
+        }
+      }
+    }
+
+    // Phase 3
+    function renderMod3() {
+      if (m3Idx >= m3Cases.length) {
+        showMishkaTrophy();
+        return;
+      }
+      const c = m3Cases[m3Idx];
+      document.getElementById('m3-cur').innerText = `Case ${m3Idx + 1} of ${m3Cases.length}`;
+      document.getElementById('char-prompt-title').innerText = c.title;
+      document.getElementById('char-clue-text').innerText = c.clue;
+      m3Placed = [];
+      updateMatrixView();
+
+      const pool = document.getElementById('matrix-words-pool');
+      pool.innerHTML = '';
+      const shuffled = [...c.words].sort(() => Math.random() - 0.5);
+      shuffled.forEach(w => {
+        const chip = document.createElement('button');
+        chip.className = 'matrix-chip';
+        chip.innerText = w;
+        chip.onclick = () => {
+          m3Placed.push(w);
+          chip.disabled = true;
+          chip.classList.add('placed');
+          updateMatrixView();
+        };
+        pool.appendChild(chip);
+      });
+
+      document.getElementById('m3-feedback').className = 'feedback-banner';
+      document.getElementById('m3-feedback').style.display = 'none';
+    }
+
+    function updateMatrixView() {
+      const box = document.getElementById('matrix-assembled-box');
+      if (m3Placed.length === 0) {
+        box.innerHTML = '<span style="color:#94A3B8; font-style:italic;">Construct the attire sentence here...</span>';
+      } else {
+        box.innerHTML = `<span style="color:var(--navy-main); font-weight:700;">${m3Placed.join(' ')}</span>`;
+      }
+    }
+
+    function resetMatrixWords() {
+      renderMod3();
+    }
+
+    function verifyMatrixSentence() {
+      totalAttempts++;
+      const c = m3Cases[m3Idx];
+      const built = m3Placed.join(' ');
+      const feedback = document.getElementById('m3-feedback');
+
+      if (built === c.target) {
+        correctAttempts++;
+        sndSuccess();
+        score += 25;
+        updateStats();
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `🏛️ Blueprint Verified! "${built}" (+25 pts)`;
+
+        setTimeout(() => {
+          m3Idx++;
+          renderMod3();
+        }, 1300);
+      } else {
+        sndError();
+        updateStats();
+        feedback.className = 'feedback-banner error';
+        feedback.innerHTML = `Review needed! Target: "${c.target}"`;
+      }
+    }
+
+    function showMishkaTrophy() {
+      sndTrophy();
+      confetti({ particleCount: 140, spread: 90, origin: { y: 0.6 } });
+      document.getElementById('mod-1').style.display = 'none';
+      document.getElementById('mod-2').style.display = 'none';
+      document.getElementById('mod-3').style.display = 'none';
+      document.getElementById('trophy-screen').style.display = 'block';
+    }
+
+    function restartMishkaGame() {
+      score = 0;
+      totalAttempts = 0;
+      correctAttempts = 0;
+      m2Idx = 0;
+      m3Idx = 0;
+      updateStats();
+      switchMod(1);
+    }
+
+    updateStats();
+    renderMod1();
+  </script>
+</body>
+</html>
