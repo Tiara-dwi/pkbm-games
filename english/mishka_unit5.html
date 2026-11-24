@@ -3,115 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What a Nice Skirt!: School & Daily Wardrobe Studio (Mishka - Grade 5)</title>
+  <title>What a Nice Skirt!: Decoding Case Study & Wardrobe Studio (Mishka - Grade 5)</title>
   
-  <!-- Fonts: Poppins + Canva Typography Fallback -->
+  <!-- Fonts: Playfair Display + Poppins + League Spartan -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800;900&family=Playfair+Display:ital,wght@1,700;1,900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
+    /* =========================================================================
+       CANVA PRESENTATION DNA STYLING
+       - Hero Gradient: Electric Magenta (#FF007F / #FF0099) -> Cyber Lime (#00FF66 / #39FF14)
+       - Pill Badges: Electric Royal Blue (#0011FF) + White Bold Monospace
+       - Parchment Card: Ivory Cream (#FFFDF5 / #FFFBEB) with Dark Wood Border (#3E2723)
+       - Headline Glow: Cyber Yellow (#FFE600) with Hot Magenta Outline
+       - CRT Scanlines & Overhead Pendant Lamp Aesthetic
+       ========================================================================= */
     :root {
-      --bg-yellow: #E8DD6A;
-      --card-parchment: #FFF7EE;
-      --card-white: #FFFFFF;
-      --navy-main: #2B4689;
-      --navy-dark: #1E3163;
-      --navy-light: #EEF2FF;
-      --plum: #954865;
-      --teal: #00C4CC;
-      --teal-soft: #E0FCFD;
-      --border: #D8CEBC;
-      --success: #059669;
-      --error: #DC2626;
-      --radius: 20px;
-      --shadow: 0 12px 28px -6px rgba(43, 70, 137, 0.12), 0 4px 10px rgba(0, 0, 0, 0.04);
+      --neon-magenta: #FF0099;
+      --neon-pink-deep: #FF007F;
+      --neon-lime: #00FF66;
+      --lime-glow: #39FF14;
+      --cyber-yellow: #FFE600;
+      --royal-blue: #0011FF;
+      --parchment: #FFFDF5;
+      --parchment-border: #3E2723;
+      --ink: #1E293B;
+      --lamp-gold: #FFD54F;
+      --radius-card: 22px;
+      --shadow-canva: 0 16px 36px rgba(0, 0, 0, 0.22);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top right, #FBF8CC 0%, var(--bg-yellow) 40%, #E2D75E 100%);
-      color: #1E293B;
+      background: linear-gradient(180deg, #FF0099 0%, #FF1493 22%, #D4F972 65%, #00FF66 100%);
+      color: var(--ink);
       min-height: 100vh;
-      padding: 20px 12px 60px;
+      padding: 24px 14px 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+    }
+
+    /* Subtle CRT scanline texture */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px);
+      pointer-events: none;
+      z-index: 99;
     }
 
     .container {
       width: 100%;
-      max-width: 840px;
+      max-width: 860px;
+      position: relative;
+      z-index: 2;
     }
 
+    /* Header matching Canva Title Slide */
     header {
-      background: var(--card-parchment);
-      border-radius: var(--radius);
-      padding: 20px 24px;
-      box-shadow: var(--shadow);
-      border: 3px solid var(--navy-main);
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      text-align: center;
+      margin-bottom: 22px;
+      position: relative;
     }
 
-    .badge-bar {
+    .pill-tags-cluster {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    .badge-mod {
-      background: var(--plum);
-      color: white;
+    .canva-blue-badge {
+      background: var(--royal-blue);
+      color: #FFFFFF;
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(0, 17, 255, 0.35);
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-title-wrap {
+      margin: 8px 0 12px;
+    }
+
+    .hero-what-a {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: 2.8rem;
+      color: var(--cyber-yellow);
+      text-shadow: 3px 3px 0 var(--neon-pink-deep), -2px -2px 0 var(--neon-pink-deep), 2px -2px 0 var(--neon-pink-deep), -2px 2px 0 var(--neon-pink-deep);
+      line-height: 1;
+      display: block;
+    }
+
+    .hero-nice-skirt {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      color: var(--cyber-yellow);
+      text-shadow: 3px 3px 0 var(--neon-pink-deep), -2px -2px 0 var(--neon-pink-deep);
+      letter-spacing: 1px;
+      line-height: 1.1;
+      display: block;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .stat-chip {
+      background: white;
+      border: 2px solid var(--parchment-border);
+      border-radius: 999px;
+      padding: 4px 14px;
       font-weight: 700;
       font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      padding: 5px 14px;
-      border-radius: 999px;
-      text-transform: uppercase;
+      color: var(--ink);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    .hud-stats {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .stat-pill {
-      background: var(--navy-light);
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-weight: 700;
-      color: var(--navy-main);
-      font-size: 0.95rem;
-    }
-
-    .stat-pill.accuracy {
-      background: var(--teal-soft);
-      color: #0F766E;
-      border: 2px solid var(--teal);
-    }
-
-    h1 {
-      font-size: 1.85rem;
-      font-weight: 800;
-      color: var(--navy-main);
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      font-size: 0.95rem;
-      color: #475569;
-    }
-
-    /* Module Tabs */
+    /* Module Navigation Tabs */
     .module-nav {
       display: flex;
       gap: 10px;
@@ -119,82 +149,297 @@
       width: 100%;
     }
 
-    .mod-btn {
+    .mod-tab-btn {
       flex: 1;
       padding: 12px 8px;
-      border: 2px solid var(--navy-main);
-      background: var(--card-parchment);
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--navy-main);
+      border: 3px solid var(--parchment-border);
+      background: var(--parchment);
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--ink);
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
-    .mod-btn.active {
-      background: var(--navy-main);
+    .mod-tab-btn.active {
+      background: var(--royal-blue);
       color: white;
-      box-shadow: 0 6px 16px rgba(43, 70, 137, 0.25);
+      border-color: #000888;
+      box-shadow: 0 8px 18px rgba(0, 17, 255, 0.4);
       transform: translateY(-2px);
     }
 
-    .mod-btn span.tag {
-      font-size: 0.75rem;
-      opacity: 0.8;
+    .mod-tab-btn span.subtag {
+      font-size: 0.72rem;
       font-weight: 500;
+      opacity: 0.85;
     }
 
-    /* Main Card */
-    .game-card {
-      background: var(--card-parchment);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-      box-shadow: var(--shadow);
-      border: 3px solid var(--navy-main);
+    /* Main Parchment Study Card (matching Canva Slide 9) */
+    .parchment-card {
+      background: var(--parchment);
+      border: 3.5px solid var(--parchment-border);
+      border-radius: var(--radius-card);
+      padding: 32px 24px 28px;
+      box-shadow: var(--shadow-canva);
       position: relative;
-      min-height: 480px;
+      min-height: 520px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    /* Phase 1: School & Daily Wardrobe Matcher */
-    .protocol-box {
-      background: white;
-      border: 2px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 16px;
+    /* Overhead Hanging Lamp Visual (matching Slide 8 & 9) */
+    .lamp-cone {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 24px;
+      background: #D97706;
+      border-radius: 999px 999px 0 0;
+      border: 3px solid var(--parchment-border);
+      border-bottom: none;
+      box-shadow: 0 10px 30px rgba(255, 213, 79, 0.5);
+    }
+    .lamp-cord {
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 20px;
+      background: var(--parchment-border);
     }
 
-    .scenario-indicator {
+    /* Card Title */
+    .card-heading-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .card-heading-title {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--ink);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .card-heading-sub {
+      font-size: 0.9rem;
+      color: #64748B;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* =========================================================================
+       PHASE 1: DECODING CASE STUDY (VISUAL EVIDENCE & TYPING)
+       ========================================================================= */
+    .decoding-arena {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .case-split-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 20px;
+      align-items: center;
+      background: #FFFFFF;
+      border: 2.5px solid var(--parchment-border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .char-preview-box {
+      background: #FAF5FF;
+      border: 2px dashed #CBD5E1;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .char-img {
+      max-width: 100%;
+      height: 250px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+      border-radius: 8px;
+    }
+
+    .char-badge-tag {
+      margin-top: 8px;
+      background: var(--royal-blue);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .case-question-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .case-number-badge {
+      display: inline-block;
+      background: #F3E8FF;
+      color: #7E22CE;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .case-question-text {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .typing-input-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .typing-label {
       font-size: 0.85rem;
       font-weight: 700;
-      color: var(--plum);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
+      color: #64748B;
     }
 
-    .scenario-title {
+    .text-input-field {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 2.5px solid var(--parchment-border);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      background: #FFFFFF;
+      transition: all 0.2s;
+    }
+
+    .text-input-field:focus {
+      outline: none;
+      border-color: var(--royal-blue);
+      box-shadow: 0 0 0 4px rgba(0, 17, 255, 0.15);
+    }
+
+    .typing-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .btn-submit-typing {
+      background: var(--royal-blue);
+      color: white;
+      border: 2px solid #000888;
+      padding: 12px 24px;
+      border-radius: 12px;
       font-weight: 800;
-      font-size: 1.25rem;
-      color: var(--navy-main);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
+      gap: 6px;
+    }
+    .btn-submit-typing:hover {
+      background: #0008CC;
+      transform: translateY(-2px);
     }
 
-    .scenario-desc {
+    .btn-speak {
+      background: white;
+      border: 2px solid var(--parchment-border);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Feedback Box */
+    .feedback-banner {
+      padding: 14px 18px;
+      border-radius: 14px;
+      margin-top: 14px;
+      font-weight: 700;
       font-size: 0.95rem;
-      color: #475569;
-      line-height: 1.4;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+    .feedback-banner.success {
+      background: #DCFCE7;
+      color: #15803D;
+      border: 2.5px solid #22C55E;
+      display: block;
+    }
+    .feedback-banner.error {
+      background: #FEE2E2;
+      color: #B91C1C;
+      border: 2.5px solid #EF4444;
+      display: block;
+    }
+
+    /* =========================================================================
+       PHASE 2 & 3 STYLING
+       ========================================================================= */
+    .syntax-card {
+      background: white;
+      border: 3px solid var(--parchment-border);
+      border-radius: 20px;
+      padding: 26px 20px;
+      text-align: center;
+      margin: 10px auto 20px;
+      max-width: 500px;
+    }
+    .syntax-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .syntax-btn {
+      padding: 18px 12px;
+      background: white;
+      border: 3px solid var(--parchment-border);
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .syntax-btn:hover {
+      background: var(--royal-blue);
+      color: white;
+      transform: translateY(-3px);
     }
 
     .wardrobe-grid {
@@ -203,321 +448,192 @@
       gap: 12px;
       margin-top: 14px;
     }
-
     .wardrobe-item-card {
       background: white;
-      border: 2px solid var(--border);
+      border: 2px solid var(--parchment-border);
       border-radius: 14px;
       padding: 12px 8px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
     }
-
-    .wardrobe-item-card:hover {
-      border-color: var(--teal);
-      background: var(--teal-soft);
-      transform: translateY(-2px);
-    }
-
     .wardrobe-item-card.selected {
-      background: var(--navy-main);
-      color: white;
-      border-color: var(--navy-dark);
-    }
-
-    .wardrobe-item-card .w-icon { font-size: 2rem; }
-    .wardrobe-item-card .w-name { font-weight: 700; font-size: 0.85rem; }
-
-    /* Phase 2: Compliment Calibrator */
-    .calibrator-card {
-      background: white;
-      border: 3px solid var(--navy-main);
-      border-radius: 20px;
-      padding: 28px 20px;
-      text-align: center;
-      margin: 10px auto 20px;
-      max-width: 500px;
-    }
-
-    .garment-visual {
-      font-size: 4rem;
-      margin-bottom: 8px;
-    }
-
-    .garment-pair-label {
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: var(--navy-main);
-      margin-bottom: 6px;
-    }
-
-    .garment-type-badge {
-      display: inline-block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--plum);
-      background: #FDF2F8;
-      padding: 4px 12px;
-      border-radius: 999px;
-      margin-bottom: 16px;
-    }
-
-    .syntax-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .syntax-btn {
-      padding: 18px 12px;
-      background: white;
-      border: 3px solid var(--navy-main);
-      border-radius: 16px;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--navy-main);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .syntax-btn:hover {
-      background: var(--navy-main);
-      color: white;
-      transform: translateY(-3px);
-    }
-
-    .syntax-btn span.rule-sub {
-      font-size: 0.75rem;
-      font-weight: 500;
-      opacity: 0.8;
-    }
-
-    /* Feedback */
-    .feedback-banner {
-      padding: 12px 18px;
-      border-radius: 12px;
-      margin-top: 16px;
-      font-weight: 700;
-      font-size: 1rem;
-      display: none;
-    }
-    .feedback-banner.success { background: #DCFCE7; color: #15803D; border: 2px solid #22C55E; display: block; }
-    .feedback-banner.error { background: #FEE2E2; color: #B91C1C; border: 2px solid #EF4444; display: block; }
-
-    /* Phase 3: Sentence Matrix */
-    .matrix-pool {
-      background: white;
-      border: 2px dashed #94A3B8;
-      border-radius: 16px;
-      padding: 16px;
-      min-height: 80px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .matrix-chip {
-      background: var(--card-parchment);
-      border: 2px solid var(--navy-main);
-      padding: 8px 16px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--navy-main);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .matrix-chip:hover {
-      background: var(--teal-soft);
-      border-color: var(--teal);
-    }
-
-    .matrix-chip.placed {
-      background: var(--navy-main);
+      background: var(--royal-blue);
       color: white;
     }
 
-    /* Trophy / Certification */
+    /* Trophy / Success Screen */
     .trophy-screen {
       display: none;
       text-align: center;
-      padding: 30px 10px;
+      padding: 24px 10px;
     }
+    .trophy-icon { font-size: 5rem; margin-bottom: 8px; }
+    .trophy-title { font-family:'League Spartan'; font-size: 2.2rem; font-weight: 900; color: var(--ink); }
 
-    .trophy-icon { font-size: 5rem; margin-bottom: 12px; }
-    .trophy-title { font-size: 2.2rem; font-weight: 900; color: var(--navy-main); }
-    .trophy-badge {
-      display: inline-block;
-      background: var(--teal);
-      color: white;
-      padding: 8px 24px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 1.1rem;
-      margin: 12px 0 20px;
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    .btn-action {
-      background: var(--navy-main);
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(43, 70, 137, 0.25);
-      transition: all 0.2s;
-    }
-
-    .btn-action:hover { background: var(--navy-dark); transform: scale(1.04); }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 1.4rem; }
-      .syntax-options { grid-template-columns: 1fr; }
-      .mod-btn span.tag { display: none; }
+    @media (max-width: 650px) {
+      .case-split-grid { grid-template-columns: 1fr; }
+      .char-img { height: 180px; }
+      .hero-what-a { font-size: 2.2rem; }
+      .hero-nice-skirt { font-size: 1.8rem; }
+      .mod-tab-btn span.subtag { display: none; }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <!-- HEADER -->
     <header>
-      <div class="badge-bar">
-        <span class="badge-mod">👗 English Grade 5 • Unit 5</span>
-        <div class="hud-stats">
-          <div class="stat-pill">🏆 Score: <span id="val-score">0</span></div>
-          <div class="stat-pill accuracy">🎯 Accuracy: <span id="val-acc">100%</span></div>
-        </div>
+      <div class="pill-tags-cluster">
+        <span class="canva-blue-badge">⚡ Unit 5</span>
+        <span class="canva-blue-badge">Attire Observation</span>
+        <span class="canva-blue-badge">Decoding Case Study</span>
+        <span class="canva-blue-badge">Typing Mode</span>
       </div>
-      <div>
-        <h1>What a Nice Skirt!: Wardrobe Studio & Syntax Matrix</h1>
-        <div class="subtitle">Match school uniforms and daily clothes, calibrate exclamatory syntax ("What a...!"), and build attire sentences based on the BSE textbook!</div>
+      <div class="hero-title-wrap">
+        <span class="hero-what-a">WHAT A</span>
+        <span class="hero-nice-skirt">NICE SKIRT!</span>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-chip">🏆 Score: <b id="val-score">0</b></div>
+        <div class="stat-chip">🎯 Accuracy: <b id="val-acc">100%</b></div>
+        <div class="stat-chip">📝 Case: <b id="val-case-num">1/4</b></div>
       </div>
     </header>
 
+    <!-- TABS -->
     <nav class="module-nav">
-      <button class="mod-btn active" id="btn-m1" onclick="switchMod(1)">
-        <span>Phase 1: Wardrobe Matcher</span>
-        <span class="tag">School & Daily Outfits</span>
+      <button class="mod-tab-btn active" id="tab-btn-1" onclick="switchTab(1)">
+        <span>1. Decoding Case Study</span>
+        <span class="subtag">Visual Evidence & Typing</span>
       </button>
-      <button class="mod-btn" id="btn-m2" onclick="switchMod(2)">
-        <span>Phase 2: Compliment Calibrator</span>
-        <span class="tag">What a...! vs What...!</span>
+      <button class="mod-tab-btn" id="tab-btn-2" onclick="switchTab(2)">
+        <span>2. Compliment Syntax</span>
+        <span class="subtag">What a...! vs What...!</span>
       </button>
-      <button class="mod-btn" id="btn-m3" onclick="switchMod(3)">
-        <span>Phase 3: Attire Matrix</span>
-        <span class="tag">What Does She Wear?</span>
+      <button class="mod-tab-btn" id="tab-btn-3" onclick="switchTab(3)">
+        <span>3. Wardrobe Matcher</span>
+        <span class="subtag">School & Daily Outfits</span>
       </button>
     </nav>
 
-    <main class="game-card">
+    <!-- MAIN PARCHMENT CARD -->
+    <main class="parchment-card">
+      <div class="lamp-cord"></div>
+      <div class="lamp-cone"></div>
 
-      <!-- PHASE 1: WARDROBE MATCHER -->
-      <section id="mod-1">
-        <div class="protocol-box">
-          <div class="scenario-indicator" id="scen-indicator">Scenario 1 of 3</div>
-          <div class="scenario-title" id="scen-title">🇮🇩 Scenario 1: Made's Monday Flag Ceremony</div>
-          <div class="scenario-desc" id="scen-desc">
-            It is Monday morning at school! Made is attending the flag ceremony. 
-            <b>Select 4 required uniform items Made must wear:</b>
+      <!-- ===================================================================
+           PHASE 1: DECODING CASE STUDY (TYPING OBSERVATION LOG)
+           =================================================================== -->
+      <section id="pane-1" class="decoding-arena">
+        <div class="card-heading-box">
+          <div class="card-heading-title">POLA KALIMAT PRESENT ACTIVITIES</div>
+          <div class="card-heading-sub">Studi Kasus Karakter Buku Siswa (Halaman 46–47): Analisis Bukti Visual & Ketik Jawabanmu!</div>
+        </div>
+
+        <div class="case-split-grid">
+          <!-- Left: Character Visual Evidence -->
+          <div class="char-preview-box">
+            <img id="case-char-img" class="char-img" src="../assets/characters/cici.png" alt="Character Evidence">
+            <span class="char-badge-tag" id="case-char-name">Cici</span>
+          </div>
+
+          <!-- Right: Interactive Typing Question -->
+          <div class="case-question-panel">
+            <span class="case-number-badge" id="case-badge-step">Case 1 of 4</span>
+            <div class="case-question-text" id="case-question">Does Cici wear green trousers?</div>
+
+            <div class="typing-input-wrap">
+              <label class="typing-label" for="typing-answer">Ketik jawaban analisismu dalam bahasa Inggris:</label>
+              <input type="text" id="typing-answer" class="text-input-field" placeholder="Type your answer in English here..." autocomplete="off" onkeydown="if(event.key==='Enter') checkTypingAnswer()">
+            </div>
+
+            <div class="typing-actions">
+              <button class="btn-submit-typing" onclick="checkTypingAnswer()">
+                <span>Check Analysis</span>
+                <span>➔</span>
+              </button>
+              <button class="btn-speak" onclick="speakCurrentQuestion()">🔊 Listen Question</button>
+            </div>
           </div>
         </div>
 
-        <div style="font-size:0.9rem; font-weight:700; color:var(--navy-main);">Wardrobe Catalog (Tap to select):</div>
-        <div class="wardrobe-grid" id="wardrobe-items-container">
-          <!-- cards populated by JS -->
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-          <span style="font-size:0.9rem; color:#64748B;">Selected: <b id="equipped-count">0</b>/<span id="required-count-label">4</span> items</span>
-          <button class="btn-action" onclick="verifyProtocolChoice()">Check Outfit</button>
-        </div>
-
-        <div id="m1-feedback" class="feedback-banner"></div>
+        <div id="case-feedback" class="feedback-banner"></div>
       </section>
 
-      <!-- PHASE 2: COMPLIMENT CALIBRATOR -->
-      <section id="mod-2" style="display:none; text-align:center;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <span style="font-weight:700; color:#64748B;">Syntax Calibrator: <span id="m2-cur">1</span> of 10</span>
-          <button class="btn-action" style="padding:4px 14px; font-size:0.8rem;" onclick="speakCurrentGarment()">🔊 Pronounce</button>
+      <!-- ===================================================================
+           PHASE 2: COMPLIMENT SYNTAX (WHAT A...! vs WHAT...!)
+           =================================================================== -->
+      <section id="pane-2" style="display:none; text-align:center;">
+        <div class="card-heading-box">
+          <div class="card-heading-title">FORMULA MATEMATIS MEMUJI KEINDAHAN BUSANA</div>
+          <div class="card-heading-sub">Tentukan apakah menggunakan <b>WHAT A / AN</b> (Tunggal) atau <b>WHAT</b> (Jamak/Berpasangan):</div>
         </div>
 
-        <div class="calibrator-card">
-          <div class="garment-visual" id="cal-visual">👗</div>
-          <div class="garment-pair-label" id="cal-phrase">nice skirt</div>
-          <div class="garment-type-badge" id="cal-type">Exclamatory Challenge</div>
-          <p style="font-size:0.95rem; color:#64748B;">Choose the mathematically precise exclamatory syntax:</p>
+        <div class="syntax-card">
+          <div style="font-size:3.8rem; margin-bottom:8px;" id="p2-emoji">👗</div>
+          <div style="font-size:1.6rem; font-weight:800; color:var(--ink); margin-bottom:12px;" id="p2-phrase">nice skirt</div>
+          <button class="btn-speak" style="margin:0 auto;" onclick="speakCurrentGarment()">🔊 Pronounce Phrase</button>
         </div>
 
         <div class="syntax-options">
           <button class="syntax-btn" onclick="handleSyntaxChoice('a')">
-            <span id="btn-label-a">✨ WHAT A / AN ... !</span>
-            
+            <span>✨ WHAT A / AN ... !</span>
           </button>
           <button class="syntax-btn" onclick="handleSyntaxChoice('plural')">
-            <span id="btn-label-plural">✨ WHAT ... ! (NO 'A')</span>
-            
+            <span>✨ WHAT ... ! (NO 'A')</span>
           </button>
         </div>
 
-        <div id="m2-feedback" class="feedback-banner"></div>
+        <div id="p2-feedback" class="feedback-banner"></div>
       </section>
 
-      <!-- PHASE 3: ATTIRE MATRIX -->
-      <section id="mod-3" style="display:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-weight:700; color:var(--navy-main);">Case Study: Character Attire Observation (BSE p. 46)</span>
-          <span style="font-size:0.85rem; color:var(--plum); font-weight:700;" id="m3-cur">Case 1 of 4</span>
+      <!-- ===================================================================
+           PHASE 3: SCHOOL & DAILY WARDROBE MATCHER
+           =================================================================== -->
+      <section id="pane-3" style="display:none;">
+        <div class="card-heading-box">
+          <div class="card-heading-title">SCHOOL & DAILY WARDROBE MATCHER</div>
+          <div class="card-heading-sub" id="scen-title">🇮🇩 Scenario 1: Made's Monday Flag Ceremony</div>
         </div>
 
-        <div style="background:white; border:2px solid var(--border); border-radius:16px; padding:18px; margin:14px 0;">
-          <div style="font-weight:700; color:var(--navy-main); font-size:1.1rem; margin-bottom:6px;" id="char-prompt-title">What does Cici wear?</div>
-          <div style="font-size:0.95rem; color:#64748B;" id="char-clue-text">Visual Clue: Pink blouse + purple skirt</div>
+        <div style="background:white; border:2px solid var(--parchment-border); border-radius:14px; padding:14px; margin-bottom:12px;">
+          <p id="scen-desc" style="font-weight:600; color:var(--ink);">Select 4 required uniform items for Monday morning ceremony:</p>
         </div>
 
-        <div style="background:white; border:2px solid var(--navy-main); border-radius:14px; padding:16px; min-height:54px; font-size:1.1rem; font-weight:600; color:var(--navy-main);" id="matrix-assembled-box">
-          <span style="color:#94A3B8; font-style:italic;">Construct the attire sentence here...</span>
-        </div>
-
-        <div class="matrix-pool" id="matrix-words-pool"></div>
+        <div class="wardrobe-grid" id="wardrobe-items-container"></div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
-          <button class="btn-action" style="background:#64748B;" onclick="resetMatrixWords()">🔄 Reset</button>
-          <button class="btn-action" onclick="verifyMatrixSentence()">Check Sentence</button>
+          <span style="font-size:0.9rem; font-weight:600; color:#64748B;">Selected: <b id="equipped-count">0</b>/<span id="required-count-label">4</span></span>
+          <button class="btn-submit-typing" onclick="verifyProtocolChoice()">Verify Outfit</button>
         </div>
 
-        <div id="m3-feedback" class="feedback-banner"></div>
+        <div id="p3-feedback" class="feedback-banner"></div>
       </section>
 
-      <!-- TROPHY SCREEN -->
-      <section id="trophy-screen" class="trophy-screen">
+      <!-- ===================================================================
+           TROPHY SCREEN
+           =================================================================== -->
+      <section id="pane-trophy" class="trophy-screen">
         <div class="trophy-icon">🏆✨</div>
-        <h2 class="trophy-title">UNIT 5 CONQUERED!</h2>
-        <div class="trophy-badge">🎖️ MASTER OF WARDROBE SYNTAX</div>
+        <h2 class="trophy-title">CASE STUDY COMPLETED!</h2>
+        <div class="canva-blue-badge" style="font-size:1rem; margin:10px auto 16px;">CERTIFIED WARDROBE DETECTIVE</div>
         <p style="font-size:1.05rem; color:#475569; max-width:520px; margin:0 auto 20px; line-height:1.5;">
-          Outstanding work, Mishka! You successfully matched all school & weekend outfits, mastered exclamatory compliments (<b>What a...! vs What...!</b>), and constructed complete present sentences!
+          Outstanding work, Mishka! You decoded all 4 character visual evidence cases with typed analytical answers, mastered <b>What a...!</b>, and matched school uniforms flawlessly!
         </p>
-        <button class="btn-action" onclick="restartMishkaGame()">🔄 Play Again</button>
+        <button class="btn-submit-typing" style="margin:0 auto;" onclick="restartStudio()">Play Again 🔄</button>
       </section>
 
     </main>
   </div>
 
   <script>
-    // Audio synthesizer
+    // =========================================================================
+    // AUDIO SYNTHESIZER
+    // =========================================================================
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playTone(freq, type, duration, delay=0) {
       setTimeout(() => {
@@ -535,41 +651,101 @@
     }
 
     function sndSuccess() {
-      playTone(440, 'sine', 0.15, 0);
-      playTone(554.37, 'sine', 0.15, 90);
-      playTone(659.25, 'sine', 0.25, 180);
+      playTone(440, 'triangle', 0.12, 0);
+      playTone(554.37, 'triangle', 0.12, 80);
+      playTone(659.25, 'triangle', 0.22, 160);
     }
     function sndError() {
-      playTone(200, 'triangle', 0.3, 0);
+      playTone(220, 'sawtooth', 0.25, 0);
     }
     function sndTrophy() {
-      playTone(440, 'sine', 0.2, 0);
-      playTone(554.37, 'sine', 0.2, 100);
-      playTone(659.25, 'sine', 0.2, 200);
-      playTone(880, 'sine', 0.5, 300);
+      playTone(523.25, 'triangle', 0.15, 0);
+      playTone(659.25, 'triangle', 0.15, 100);
+      playTone(783.99, 'triangle', 0.25, 200);
+      playTone(1046.50, 'triangle', 0.5, 300);
     }
 
-    function speakCurrentGarment() {
-      if ('speechSynthesis' in window) {
-        const item = m2Items[m2Idx];
-        const text = item.type === 'a' ? `What a ${item.phrase}!` : `What ${item.phrase}!`;
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'en-US';
-        u.rate = 0.9;
-        window.speechSynthesis.speak(u);
-      }
-    }
-
+    // =========================================================================
+    // STATE & DATA
+    // =========================================================================
     let score = 0;
     let totalAttempts = 0;
     let correctAttempts = 0;
 
-    // Phase 1 Data: 3 Realistic School & Daily Scenarios (from BSE Textbook)
+    // 1. DECODING CASE STUDY DATA (BUKU SISWA HAL 46-47 & CANVA SLIDE 9)
+    const cases = [
+      {
+        charName: "Cici",
+        charImg: "../assets/characters/cici.png",
+        question: "Does Cici wear green trousers?",
+        correctExplanation: "No, she does not. She wears a pink blouse and a purple skirt!",
+        validate: function(input) {
+          const s = input.toLowerCase().trim().replace(/[.,!?'"]/g, '');
+          if (s.includes("no") && (s.includes("skirt") || s.includes("blouse") || s.includes("does not") || s.includes("doesn't") || s.includes("doesnt") || s.includes("trousers"))) return true;
+          if (s.includes("skirt") || s.includes("pink blouse") || s.includes("purple skirt")) return true;
+          if (s === "no" || s === "no she does not" || s === "no she doesnt" || s.startsWith("no she")) return true;
+          return false;
+        }
+      },
+      {
+        charName: "Made",
+        charImg: "../assets/characters/made.png",
+        question: "What does Made wear on his neck?",
+        correctExplanation: "He wears a red tie with his school uniform!",
+        validate: function(input) {
+          const s = input.toLowerCase().trim().replace(/[.,!?'"]/g, '');
+          if (s.includes("tie") || s.includes("red tie") || s.includes("dasi")) return true;
+          return false;
+        }
+      },
+      {
+        charName: "Aisyah",
+        charImg: "../assets/characters/aisyah.png",
+        question: "What does Aisyah wear on her feet?",
+        correctExplanation: "She wears a pair of black shoes and white socks!",
+        validate: function(input) {
+          const s = input.toLowerCase().trim().replace(/[.,!?'"]/g, '');
+          if (s.includes("shoe") || s.includes("sock")) return true;
+          return false;
+        }
+      },
+      {
+        charName: "Joshua",
+        charImg: "../assets/characters/joshua.png",
+        question: "Does Joshua wear a uniform today?",
+        correctExplanation: "No, he does not. He wears a casual green T-shirt and a pair of blue shorts!",
+        validate: function(input) {
+          const s = input.toLowerCase().trim().replace(/[.,!?'"]/g, '');
+          if (s.includes("no") && (s.includes("t-shirt") || s.includes("tshirt") || s.includes("t shirt") || s.includes("shirt") || s.includes("short") || s.includes("does not") || s.includes("doesn't") || s.includes("doesnt") || s.includes("uniform"))) return true;
+          if (s.includes("t-shirt") || s.includes("tshirt") || s.includes("t shirt") || s.includes("short")) return true;
+          if (s === "no" || s === "no he does not" || s === "no he doesnt" || s.startsWith("no he")) return true;
+          return false;
+        }
+      }
+    ];
+
+    let currentCaseIdx = 0;
+
+    // 2. SYNTAX CALIBRATOR DATA (CANVA SLIDE 7 & 8)
+    const p2Items = [
+      { phrase: "nice skirt", emoji: "👗", type: "a" },
+      { phrase: "shiny shoes", emoji: "👞", type: "plural" },
+      { phrase: "elegant long dress", emoji: "👘", type: "a" },
+      { phrase: "cool trousers", emoji: "👖", type: "plural" },
+      { phrase: "smart tie", emoji: "👔", type: "a" },
+      { phrase: "comfortable shorts", emoji: "🩳", type: "plural" },
+      { phrase: "colorful socks", emoji: "🧦", type: "plural" },
+      { phrase: "clean uniform", emoji: "🥋", type: "a" },
+      { phrase: "casual T-shirt", emoji: "👕", type: "a" },
+      { phrase: "wide hat", emoji: "👒", type: "a" }
+    ];
+    let p2Idx = 0;
+
+    // 3. WARDROBE MATCHER DATA
     const scenarios = [
       {
-        indicator: "Scenario 1 of 3",
         title: "🇮🇩 Scenario 1: Made's Monday Flag Ceremony",
-        desc: "It is Monday morning at school! Made is attending the official flag ceremony. <b>Select 4 required uniform items:</b>",
+        desc: "Select 4 official uniform items Made must wear:",
         reqCount: 4,
         required: ["a uniform", "a tie", "a hat", "a pair of shoes"],
         options: [
@@ -580,12 +756,11 @@
           { name: "a pair of shorts", icon: "🩳" },
           { name: "a long dress", icon: "👗" }
         ],
-        successMsg: "🇮🇩 Excellent! Made wears a school uniform with a red tie, a hat, and black shoes for the flag ceremony!"
+        successMsg: "🇮🇩 Flawless! Made wears a school uniform with a red tie, a hat, and black shoes!"
       },
       {
-        indicator: "Scenario 2 of 3",
         title: "📚 Scenario 2: Cici's Study Club Day",
-        desc: "Cici is going to the school library and study club. She wants to look neat and polite! <b>Select 4 items Cici wears:</b>",
+        desc: "Select 4 neat items Cici wears to the library:",
         reqCount: 4,
         required: ["a blouse", "a skirt", "a pair of socks", "a pair of shoes"],
         options: [
@@ -596,12 +771,11 @@
           { name: "a pair of trousers", icon: "👖" },
           { name: "a tie", icon: "👔" }
         ],
-        successMsg: "📚 Perfect! Cici wears a neat pink blouse, a purple skirt, socks, and shoes!"
+        successMsg: "📚 Perfect! Cici wears a pink blouse, a purple skirt, socks, and shoes!"
       },
       {
-        indicator: "Scenario 3 of 3",
-        title: "🌳 Scenario 3: Joshua's Sunny Weekend at The Park",
-        desc: "It is Sunday morning! Joshua is playing outdoor games with his friends at the park. <b>Select 3 casual items:</b>",
+        title: "🌳 Scenario 3: Joshua's Sunny Weekend",
+        desc: "Select 3 casual items Joshua wears at the park:",
         reqCount: 3,
         required: ["a T-shirt", "a pair of shorts", "a pair of shoes"],
         options: [
@@ -609,104 +783,191 @@
           { name: "a pair of shorts", icon: "🩳" },
           { name: "a pair of shoes", icon: "👟" },
           { name: "a uniform", icon: "🥋" },
-          { name: "a tie", icon: "👔" },
-          { name: "a long dress", icon: "👗" }
+          { name: "a tie", icon: "👔" }
         ],
-        successMsg: "🌳 Great choice! Joshua wears a green T-shirt, a pair of blue shorts, and shoes on Sunday!"
+        successMsg: "🌳 Great choice! Joshua wears a green T-shirt, blue shorts, and shoes!"
       }
     ];
-
     let scIdx = 0;
     let equipped = [];
 
-    // Phase 2 Data: 10 Items
-    const m2Items = [
-      { phrase: "nice skirt", visual: "👗", type: "a", label: "Singular Countable" },
-      { phrase: "shiny shoes", visual: "👞", type: "plural", label: "Plural / Paired" },
-      { phrase: "elegant long dress", visual: "👘", type: "a", label: "Singular Countable" },
-      { phrase: "cool trousers", visual: "👖", type: "plural", label: "Plural / Paired" },
-      { phrase: "smart tie", visual: "👔", type: "a", label: "Singular Countable" },
-      { phrase: "comfortable shorts", visual: "🩳", type: "plural", label: "Plural / Paired" },
-      { phrase: "colorful socks", visual: "🧦", type: "plural", label: "Plural / Paired" },
-      { phrase: "clean uniform", visual: "🥋", type: "a", label: "Singular Countable" },
-      { phrase: "casual T-shirt", visual: "👕", type: "a", label: "Singular Countable" },
-      { phrase: "wide hat", visual: "👒", type: "a", label: "Singular Countable" }
-    ];
-
-    // Phase 3 Data: 4 Characters from BSE p. 46
-    const m3Cases = [
-      {
-        title: "What does Cici wear?",
-        clue: "Misi: Cici memakai blus merah muda dan rok ungu.",
-        target: "Cici wears a pink blouse and a purple skirt.",
-        words: ["Cici", "wears", "a", "pink", "blouse", "and", "a", "purple", "skirt."]
-      },
-      {
-        title: "What does Made wear?",
-        clue: "Misi: Made memakai seragam sekolah dan dasi merah.",
-        target: "Made wears a school uniform and a red tie.",
-        words: ["Made", "wears", "a", "school", "uniform", "and", "a", "red", "tie."]
-      },
-      {
-        title: "What does Joshua wear?",
-        clue: "Misi: Joshua memakai kaus hijau dan celana pendek biru.",
-        target: "Joshua wears a green T-shirt and a pair of blue shorts.",
-        words: ["Joshua", "wears", "a", "green", "T-shirt", "and", "a", "pair", "of", "blue", "shorts."]
-      },
-      {
-        title: "What does Aisyah wear?",
-        clue: "Misi: Aisyah memakai gaun panjang dan sebuah topi.",
-        target: "Aisyah wears a long dress and a hat.",
-        words: ["Aisyah", "wears", "a", "long", "dress", "and", "a", "hat."]
-      }
-    ];
-
-    let m2Idx = 0;
-    let m3Idx = 0;
-    let m3Placed = [];
-
-    function updateStats() {
+    // =========================================================================
+    // HUD & TABS
+    // =========================================================================
+    function updateHUD() {
       document.getElementById('val-score').innerText = score;
       const acc = totalAttempts === 0 ? 100 : Math.round((correctAttempts / totalAttempts) * 100);
       document.getElementById('val-acc').innerText = `${acc}%`;
+      document.getElementById('val-case-num').innerText = `${currentCaseIdx + 1}/4`;
     }
 
-    function switchMod(modNum) {
-      document.querySelectorAll('.mod-btn').forEach((b, idx) => {
-        b.classList.toggle('active', idx === modNum - 1);
+    function switchTab(tabNum) {
+      document.querySelectorAll('.mod-tab-btn').forEach((b, idx) => {
+        b.classList.toggle('active', idx === tabNum - 1);
       });
-      document.getElementById('mod-1').style.display = modNum === 1 ? 'block' : 'none';
-      document.getElementById('mod-2').style.display = modNum === 2 ? 'block' : 'none';
-      document.getElementById('mod-3').style.display = modNum === 3 ? 'block' : 'none';
-      document.getElementById('trophy-screen').style.display = 'none';
+      document.getElementById('pane-1').style.display = tabNum === 1 ? 'flex' : 'none';
+      document.getElementById('pane-2').style.display = tabNum === 2 ? 'block' : 'none';
+      document.getElementById('pane-3').style.display = tabNum === 3 ? 'block' : 'none';
+      document.getElementById('pane-trophy').style.display = 'none';
 
-      if (modNum === 1) renderMod1();
-      if (modNum === 2) renderMod2();
-      if (modNum === 3) renderMod3();
+      if (tabNum === 1) renderCaseStudy();
+      if (tabNum === 2) renderSyntax();
+      if (tabNum === 3) renderMatcher();
     }
 
-    // Phase 1 Logic
-    function renderMod1() {
+    // =========================================================================
+    // PHASE 1: TYPING CASE STUDY LOGIC
+    // =========================================================================
+    function renderCaseStudy() {
+      if (currentCaseIdx >= cases.length) {
+        switchTab(2);
+        return;
+      }
+      const c = cases[currentCaseIdx];
+      document.getElementById('case-badge-step').innerText = `Case ${currentCaseIdx + 1} of 4`;
+      document.getElementById('case-char-name').innerText = c.charName;
+      document.getElementById('case-char-img').src = c.charImg;
+      document.getElementById('case-question').innerText = c.question;
+      
+      const input = document.getElementById('typing-answer');
+      input.value = '';
+      input.focus();
+
+      document.getElementById('case-feedback').className = 'feedback-banner';
+      document.getElementById('case-feedback').style.display = 'none';
+      updateHUD();
+    }
+
+    function checkTypingAnswer() {
+      const input = document.getElementById('typing-answer');
+      const val = input.value.trim();
+      if (!val) {
+        input.focus();
+        return;
+      }
+
+      totalAttempts++;
+      const c = cases[currentCaseIdx];
+      const feedback = document.getElementById('case-feedback');
+
+      if (c.validate(val)) {
+        correctAttempts++;
+        sndSuccess();
+        score += 25;
+        updateHUD();
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `✨ <b>Brilliant Analysis!</b> ${c.correctExplanation} (+25 pts)`;
+
+        setTimeout(() => {
+          currentCaseIdx++;
+          renderCaseStudy();
+        }, 1600);
+      } else {
+        sndError();
+        updateHUD();
+        feedback.className = 'feedback-banner error';
+        feedback.innerHTML = `🔍 <b>Observasi kembali gambar ${c.charName}!</b> Perhatikan apa yang sebenarnya dia pakai di gambar.`;
+      }
+    }
+
+    // Allow Enter key to submit
+    document.addEventListener('DOMContentLoaded', () => {
+      const inp = document.getElementById('typing-answer');
+      if (inp) {
+        inp.addEventListener('keyup', (e) => {
+          if (e.key === 'Enter') checkTypingAnswer();
+        });
+      }
+    });
+
+    function speakCurrentQuestion() {
+      if ('speechSynthesis' in window) {
+        const c = cases[currentCaseIdx];
+        const u = new SpeechSynthesisUtterance(c.question);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    // =========================================================================
+    // PHASE 2: SYNTAX CALIBRATOR
+    // =========================================================================
+    function renderSyntax() {
+      if (p2Idx >= p2Items.length) {
+        switchTab(3);
+        return;
+      }
+      const item = p2Items[p2Idx];
+      document.getElementById('p2-emoji').innerText = item.emoji;
+      document.getElementById('p2-phrase').innerText = item.phrase;
+      document.getElementById('p2-feedback').className = 'feedback-banner';
+      document.getElementById('p2-feedback').style.display = 'none';
+      speakCurrentGarment();
+    }
+
+    function speakCurrentGarment() {
+      if ('speechSynthesis' in window) {
+        const item = p2Items[p2Idx];
+        const text = item.type === 'a' ? `What a ${item.phrase}!` : `What ${item.phrase}!`;
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function handleSyntaxChoice(chosen) {
+      totalAttempts++;
+      const item = p2Items[p2Idx];
+      const feedback = document.getElementById('p2-feedback');
+
+      if (chosen === item.type) {
+        correctAttempts++;
+        sndSuccess();
+        score += 15;
+        updateHUD();
+        const full = item.type === 'a' ? `What a ${item.phrase}!` : `What ${item.phrase}!`;
+        feedback.className = 'feedback-banner success';
+        feedback.innerHTML = `✨ <b>Exact Syntax!</b> "${full}" is mathematically correct! (+15 pts)`;
+
+        setTimeout(() => {
+          p2Idx++;
+          renderSyntax();
+        }, 1200);
+      } else {
+        sndError();
+        updateHUD();
+        feedback.className = 'feedback-banner error';
+        feedback.innerHTML = item.type === 'a' 
+          ? `Rule Check: <b>${item.phrase}</b> is singular countable! Use <b>WHAT A / AN</b>!`
+          : `Rule Check: <b>${item.phrase}</b> is plural or paired! Never use 'A' with plurals!`;
+      }
+    }
+
+    // =========================================================================
+    // PHASE 3: WARDROBE MATCHER
+    // =========================================================================
+    function renderMatcher() {
       if (scIdx >= scenarios.length) {
-        switchMod(2);
+        showTrophy();
         return;
       }
       const s = scenarios[scIdx];
-      document.getElementById('scen-indicator').innerText = s.indicator;
       document.getElementById('scen-title').innerText = s.title;
-      document.getElementById('scen-desc').innerHTML = s.desc;
+      document.getElementById('scen-desc').innerText = s.desc;
       document.getElementById('required-count-label').innerText = s.reqCount;
       equipped = [];
       document.getElementById('equipped-count').innerText = 0;
-      document.getElementById('m1-feedback').className = 'feedback-banner';
-      document.getElementById('m1-feedback').style.display = 'none';
+      document.getElementById('p3-feedback').className = 'feedback-banner';
+      document.getElementById('p3-feedback').style.display = 'none';
 
       const cont = document.getElementById('wardrobe-items-container');
       cont.innerHTML = '';
       s.options.forEach(opt => {
         const card = document.createElement('div');
         card.className = 'wardrobe-item-card';
-        card.innerHTML = `<span class="w-icon">${opt.icon}</span><span class="w-name">${opt.name}</span>`;
+        card.innerHTML = `<div style="font-size:2rem; margin-bottom:4px;">${opt.icon}</div><div style="font-size:0.85rem; font-weight:700;">${opt.name}</div>`;
         card.onclick = () => {
           if (equipped.includes(opt.name)) {
             equipped = equipped.filter(i => i !== opt.name);
@@ -726,7 +987,7 @@
     function verifyProtocolChoice() {
       totalAttempts++;
       const s = scenarios[scIdx];
-      const feedback = document.getElementById('m1-feedback');
+      const feedback = document.getElementById('p3-feedback');
 
       const isExact = s.required.every(req => equipped.includes(req)) && equipped.length === s.reqCount;
 
@@ -734,161 +995,47 @@
         correctAttempts++;
         sndSuccess();
         score += 25;
-        updateStats();
+        updateHUD();
         feedback.className = 'feedback-banner success';
         feedback.innerHTML = `${s.successMsg} (+25 pts)`;
         setTimeout(() => {
           scIdx++;
-          renderMod1();
+          renderMatcher();
         }, 1400);
       } else {
         sndError();
-        updateStats();
+        updateHUD();
         feedback.className = 'feedback-banner error';
-        feedback.innerHTML = `⚠️ Outfit mismatch! Review the situation carefully and select exactly ${s.reqCount} matching items!`;
+        feedback.innerHTML = `⚠️ Outfit mismatch! Select exactly ${s.reqCount} items that match the situation!`;
       }
     }
 
-    // Phase 2 Logic
-    function renderMod2() {
-      if (m2Idx >= m2Items.length) {
-        switchMod(3);
-        return;
-      }
-      const item = m2Items[m2Idx];
-      document.getElementById('m2-cur').innerText = m2Idx + 1;
-      document.getElementById('cal-visual').innerText = item.visual;
-      document.getElementById('cal-phrase').innerText = item.phrase;
-      document.getElementById('cal-type').innerText = 'Exclamatory Challenge';
-      document.getElementById('m2-feedback').className = 'feedback-banner';
-      document.getElementById('m2-feedback').style.display = 'none';
-      speakCurrentGarment();
-    }
-
-    function handleSyntaxChoice(chosenType) {
-      totalAttempts++;
-      const item = m2Items[m2Idx];
-      const feedback = document.getElementById('m2-feedback');
-
-      if (chosenType === item.type) {
-        correctAttempts++;
-        sndSuccess();
-        score += 15;
-        updateStats();
-        const sentence = item.type === 'a' ? `What a ${item.phrase}!` : `What ${item.phrase}!`;
-        feedback.className = 'feedback-banner success';
-        feedback.innerHTML = `✨ Precision Verified! <b>"${sentence}"</b> is grammatically flawless! (+15 pts)`;
-
-        setTimeout(() => {
-          m2Idx++;
-          renderMod2();
-        }, 1200);
-      } else {
-        sndError();
-        updateStats();
-        feedback.className = 'feedback-banner error';
-        if (item.type === 'a') {
-          feedback.innerHTML = `Rule Check: <b>${item.phrase}</b> is singular! It requires <b>"WHAT A / AN"</b>!`;
-        } else {
-          feedback.innerHTML = `Rule Check: <b>${item.phrase}</b> is plural/paired! Never use 'a' with plurals!`;
-        }
-      }
-    }
-
-    // Phase 3 Logic
-    function renderMod3() {
-      if (m3Idx >= m3Cases.length) {
-        showMishkaTrophy();
-        return;
-      }
-      const c = m3Cases[m3Idx];
-      document.getElementById('m3-cur').innerText = `Case ${m3Idx + 1} of ${m3Cases.length}`;
-      document.getElementById('char-prompt-title').innerText = c.title;
-      document.getElementById('char-clue-text').innerText = c.clue;
-      m3Placed = [];
-      updateMatrixView();
-
-      const pool = document.getElementById('matrix-words-pool');
-      pool.innerHTML = '';
-      const shuffled = [...c.words].sort(() => Math.random() - 0.5);
-      shuffled.forEach(w => {
-        const chip = document.createElement('button');
-        chip.className = 'matrix-chip';
-        chip.innerText = w;
-        chip.onclick = () => {
-          m3Placed.push(w);
-          chip.disabled = true;
-          chip.classList.add('placed');
-          updateMatrixView();
-        };
-        pool.appendChild(chip);
-      });
-
-      document.getElementById('m3-feedback').className = 'feedback-banner';
-      document.getElementById('m3-feedback').style.display = 'none';
-    }
-
-    function updateMatrixView() {
-      const box = document.getElementById('matrix-assembled-box');
-      if (m3Placed.length === 0) {
-        box.innerHTML = '<span style="color:#94A3B8; font-style:italic;">Construct the attire sentence here...</span>';
-      } else {
-        box.innerHTML = `<span style="color:var(--navy-main); font-weight:700;">${m3Placed.join(' ')}</span>`;
-      }
-    }
-
-    function resetMatrixWords() {
-      renderMod3();
-    }
-
-    function verifyMatrixSentence() {
-      totalAttempts++;
-      const c = m3Cases[m3Idx];
-      const built = m3Placed.join(' ');
-      const feedback = document.getElementById('m3-feedback');
-
-      if (built === c.target) {
-        correctAttempts++;
-        sndSuccess();
-        score += 25;
-        updateStats();
-        feedback.className = 'feedback-banner success';
-        feedback.innerHTML = `✨ Sentence Verified! "${built}" (+25 pts)`;
-
-        setTimeout(() => {
-          m3Idx++;
-          renderMod3();
-        }, 1300);
-      } else {
-        sndError();
-        updateStats();
-        feedback.className = 'feedback-banner error';
-        feedback.innerHTML = `Susun kembali kata-kata bahasa Inggris untuk: "${c.clue}"`;
-      }
-    }
-
-    function showMishkaTrophy() {
+    // =========================================================================
+    // TROPHY
+    // =========================================================================
+    function showTrophy() {
       sndTrophy();
-      confetti({ particleCount: 140, spread: 90, origin: { y: 0.6 } });
-      document.getElementById('mod-1').style.display = 'none';
-      document.getElementById('mod-2').style.display = 'none';
-      document.getElementById('mod-3').style.display = 'none';
-      document.getElementById('trophy-screen').style.display = 'block';
+      confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+      document.getElementById('pane-1').style.display = 'none';
+      document.getElementById('pane-2').style.display = 'none';
+      document.getElementById('pane-3').style.display = 'none';
+      document.getElementById('pane-trophy').style.display = 'block';
     }
 
-    function restartMishkaGame() {
+    function restartStudio() {
       score = 0;
       totalAttempts = 0;
       correctAttempts = 0;
+      currentCaseIdx = 0;
+      p2Idx = 0;
       scIdx = 0;
-      m2Idx = 0;
-      m3Idx = 0;
-      updateStats();
-      switchMod(1);
+      updateHUD();
+      switchTab(1);
     }
 
-    updateStats();
-    renderMod1();
+    // Initialize
+    updateHUD();
+    renderCaseStudy();
   </script>
 </body>
 </html>
