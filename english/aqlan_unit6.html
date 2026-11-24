@@ -583,13 +583,11 @@
         <p style="text-align:center; font-weight:600; color:var(--navy-main); margin-bottom:14px;">Choose the correct negative auxiliary:</p>
 
         <div class="halfpipe-options">
-          <button class="ramp-btn" onclick="handleGrammarChoice('don't')">
+          <button class="ramp-btn" onclick="handleGrammarChoice('dont')">
             <span>🛹 DO NOT / DON'T</span>
-            
           </button>
-          <button class="ramp-btn" onclick="handleGrammarChoice('doesn't')">
+          <button class="ramp-btn" onclick="handleGrammarChoice('doesnt')">
             <span>🛹 DOES NOT / DOESN'T</span>
-            
           </button>
         </div>
 
@@ -850,13 +848,17 @@
       const drill = stage2Drills[s2Idx];
       const feedback = document.getElementById('s2-feedback');
 
-      if (choice === drill.ans) {
+      const cleanChoice = choice.replace("'", "").toLowerCase();
+      const cleanAns = drill.ans.replace("'", "").toLowerCase();
+
+      if (cleanChoice === cleanAns) {
         sndSuccess();
         score += 15;
         streak += 1;
-        document.getElementById('s2-gap').innerText = choice.toUpperCase();
+        const displayChoice = cleanChoice === "dont" ? "DON'T" : "DOESN'T";
+        document.getElementById('s2-gap').innerText = displayChoice;
         feedback.className = 'feedback-banner success';
-        feedback.innerHTML = `✨ Perfect Kickflip! <b>${drill.subj}</b> takes <b>${choice.toUpperCase()}</b>! (+15 pts)`;
+        feedback.innerHTML = `✨ Perfect Kickflip! <b>${drill.subj}</b> takes <b>${displayChoice}</b>! (+15 pts)`;
         updateHUD();
 
         setTimeout(() => {
@@ -868,8 +870,9 @@
         streak = 0;
         lives = Math.max(0, lives - 1);
         updateHUD();
+        const displayAns = cleanAns === "dont" ? "DON'T" : "DOESN'T";
         feedback.className = 'feedback-banner error';
-        feedback.innerHTML = `🚫 Careful! ${drill.subj} uses <b>${drill.ans.toUpperCase()}</b>!`;
+        feedback.innerHTML = `🚫 Careful! ${drill.subj} uses <b>${displayAns}</b>!`;
       }
     }
 
