@@ -458,18 +458,18 @@
         <div class="calibrator-card">
           <div class="garment-visual" id="cal-visual">👗</div>
           <div class="garment-pair-label" id="cal-phrase">nice skirt</div>
-          <div class="garment-type-badge" id="cal-type">Singular Countable</div>
+          <div class="garment-type-badge" id="cal-type">Exclamatory Challenge</div>
           <p style="font-size:0.95rem; color:#64748B;">Choose the mathematically precise exclamatory syntax:</p>
         </div>
 
         <div class="syntax-options">
           <button class="syntax-btn" onclick="handleSyntaxChoice('a')">
             <span id="btn-label-a">✨ WHAT A / AN ... !</span>
-            <span class="rule-sub">Used for Singular Countable Items</span>
+            
           </button>
           <button class="syntax-btn" onclick="handleSyntaxChoice('plural')">
             <span id="btn-label-plural">✨ WHAT ... ! (NO 'A')</span>
-            <span class="rule-sub">Used for Plural & Paired Items</span>
+            
           </button>
         </div>
 
@@ -637,25 +637,25 @@
     const m3Cases = [
       {
         title: "What does Cici wear?",
-        clue: "Visual Clue: Pink blouse + purple skirt",
+        clue: "Misi: Cici memakai blus merah muda dan rok ungu.",
         target: "Cici wears a pink blouse and a purple skirt.",
         words: ["Cici", "wears", "a", "pink", "blouse", "and", "a", "purple", "skirt."]
       },
       {
         title: "What does Made wear?",
-        clue: "Visual Clue: School uniform + red tie",
+        clue: "Misi: Made memakai seragam sekolah dan dasi merah.",
         target: "Made wears a school uniform and a red tie.",
         words: ["Made", "wears", "a", "school", "uniform", "and", "a", "red", "tie."]
       },
       {
         title: "What does Joshua wear?",
-        clue: "Visual Clue: Green T-shirt + blue shorts",
+        clue: "Misi: Joshua memakai kaus hijau dan celana pendek biru.",
         target: "Joshua wears a green T-shirt and a pair of blue shorts.",
         words: ["Joshua", "wears", "a", "green", "T-shirt", "and", "a", "pair", "of", "blue", "shorts."]
       },
       {
         title: "What does Aisyah wear?",
-        clue: "Visual Clue: Long dress + sweet hat",
+        clue: "Misi: Aisyah memakai gaun panjang dan sebuah topi.",
         target: "Aisyah wears a long dress and a hat.",
         words: ["Aisyah", "wears", "a", "long", "dress", "and", "a", "hat."]
       }
@@ -759,7 +759,7 @@
       document.getElementById('m2-cur').innerText = m2Idx + 1;
       document.getElementById('cal-visual').innerText = item.visual;
       document.getElementById('cal-phrase').innerText = item.phrase;
-      document.getElementById('cal-type').innerText = item.label;
+      document.getElementById('cal-type').innerText = 'Exclamatory Challenge';
       document.getElementById('m2-feedback').className = 'feedback-banner';
       document.getElementById('m2-feedback').style.display = 'none';
       speakCurrentGarment();
@@ -863,7 +863,7 @@
         sndError();
         updateStats();
         feedback.className = 'feedback-banner error';
-        feedback.innerHTML = `Review needed! Target: "${c.target}"`;
+        feedback.innerHTML = `Susun kembali kata-kata bahasa Inggris untuk: "${c.clue}"`;
       }
     }
 

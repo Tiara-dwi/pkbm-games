@@ -545,7 +545,7 @@
         <div class="item-display-box" id="item-box">
           <div class="item-emoji" id="item-emoji">🍳</div>
           <div class="item-word" id="item-word">Stove</div>
-          <div class="item-trans" id="item-trans">Kompor masak</div>
+          <!-- translation hint removed -->
         </div>
 
         <p style="font-weight:600; color:var(--navy-main); margin-bottom:12px;">Where does this item belong?</p>
@@ -554,12 +554,12 @@
           <button class="choice-btn kitchen" onclick="handleSortChoice('kitchen')">
             <span class="room-icon">🍳</span>
             <span>IN THE KITCHEN</span>
-            <span style="font-size:0.8rem; font-weight:500; color:#64748B;">Dapur</span>
+            
           </button>
           <button class="choice-btn bathroom" onclick="handleSortChoice('bathroom')">
             <span class="room-icon">🛁</span>
             <span>IN THE BATHROOM</span>
-            <span style="font-size:0.8rem; font-weight:500; color:#64748B;">Kamar Mandi</span>
+            
           </button>
         </div>
 
@@ -585,11 +585,11 @@
         <div class="halfpipe-options">
           <button class="ramp-btn" onclick="handleGrammarChoice('don't')">
             <span>🛹 DO NOT / DON'T</span>
-            <span class="rule-hint">For I / You / We / They / Plural</span>
+            
           </button>
           <button class="ramp-btn" onclick="handleGrammarChoice('doesn't')">
             <span>🛹 DOES NOT / DOESN'T</span>
-            <span class="rule-hint">For He / She / It / 1 Name</span>
+            
           </button>
         </div>
 
@@ -603,7 +603,7 @@
           <p style="font-size:0.9rem; color:#64748B; margin-top:4px;">Tap the word blocks in the right order to construct the sentence (BSE p. 64):</p>
         </div>
 
-        <div style="font-weight:700; color:var(--navy-main); margin-top:8px;">Target: "<span id="target-phrase-text">This is my bedroom.</span>"</div>
+        <div style="font-weight:700; color:var(--navy-main); margin-top:8px;">Misi: "<span id="target-phrase-text">Ini adalah kamar tidurku.</span>"</div>
 
         <div class="built-preview" id="built-sentence-box">
           <span style="color:#94A3B8; font-style:italic;">Your assembled sentence will appear here...</span>
@@ -731,18 +731,22 @@
     // Stage 3 Data: 3 Room Builder Sentences (Hal 64)
     const stage3Sentences = [
       {
+        prompt: "Ini adalah kamar tidurku.",
         target: "This is my bedroom.",
         words: ["This", "is", "my", "bedroom."]
       },
       {
+        prompt: "Kamar tidurku besar dan bersih.",
         target: "My bedroom is big and clean.",
         words: ["My", "bedroom", "is", "big", "and", "clean."]
       },
       {
+        prompt: "Ada sebuah tempat tidur dan sebuah skateboard.",
         target: "There are a bed and a skateboard.",
         words: ["There", "are", "a", "bed", "and", "a", "skateboard."]
       },
       {
+        prompt: "Aku suka kamarku!",
         target: "I love my room!",
         words: ["I", "love", "my", "room!"]
       }
@@ -790,7 +794,7 @@
       document.getElementById('s1-tot').innerText = stage1Items.length;
       document.getElementById('item-emoji').innerText = item.emoji;
       document.getElementById('item-word').innerText = item.word;
-      document.getElementById('item-trans').innerText = item.trans;
+      // translation hint removed
       document.getElementById('s1-feedback').className = 'feedback-banner';
       document.getElementById('s1-feedback').style.display = 'none';
       speakCurrentItem();
@@ -832,7 +836,7 @@
       }
       const drill = stage2Drills[s2Idx];
       document.getElementById('s2-cur').innerText = s2Idx + 1;
-      document.getElementById('s2-context').innerText = `Subject clue: ${drill.subj}`;
+      document.getElementById('s2-context').innerText = 'Complete the sentence with the correct negative form:';
       
       const parts = drill.text.split('_____');
       document.getElementById('s2-sentence').innerHTML = `
@@ -878,7 +882,7 @@
         return;
       }
       const sData = stage3Sentences[s3Idx];
-      document.getElementById('target-phrase-text').innerText = sData.target;
+      document.getElementById('target-phrase-text').innerText = sData.prompt;
       s3CurrentPlaced = [];
       updatePlacedSentenceView();
 
@@ -937,7 +941,7 @@
       } else {
         sndError();
         feedback.className = 'feedback-banner error';
-        feedback.innerHTML = `Keep trying! Target sentence: "${sData.target}"`;
+        feedback.innerHTML = `Susun kata-kata bahasa Inggris untuk: "${sData.prompt}"`;
       }
     }
 
